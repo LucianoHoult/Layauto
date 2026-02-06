@@ -89,7 +89,8 @@ def calculate_logic_depth(subckt: SubCircuit, primary_input_nets: set[str] | Non
         cycle = nx.find_cycle(graph)
         raise ValueError(f"Feedback loop found in MVP depth engine: {cycle}")
 
-    primary_inputs = primary_input_nets or set(subckt.ports)
+    # Respect an explicitly provided empty set; only default when argument is None.
+    primary_inputs = set(subckt.ports) if primary_input_nets is None else set(primary_input_nets)
     depths: dict[str, int] = {}
 
     for node in nx.topological_sort(graph):

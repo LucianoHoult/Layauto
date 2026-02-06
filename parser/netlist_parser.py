@@ -67,7 +67,8 @@ def parse_subcircuits(netlist_text: str) -> dict[str, SubCircuit]:
             current_instances = []
             continue
 
-        if tokens[0].startswith("X"):
+        # SPICE/CDL is case-insensitive, so allow x*/X* instance prefixes.
+        if tokens[0].upper().startswith("X"):
             if current_name is None:
                 raise ValueError(f"Instance outside .SUBCKT: {line}")
             if len(tokens) < 3:
