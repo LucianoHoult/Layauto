@@ -1,59 +1,49 @@
 # Hierarchical Logic-Depth Circuit Visualizer
 
-This repository implements **Phase 1 (MVP)** of a Google Maps-style circuit visualizer:
-- Parse SPICE/CDL-like netlists into a graph model.
-- Build an instance DAG for a top-level subcircuit.
-- Calculate logic depth using `X_i = max(X_inputs) + 1`.
+This repository now includes a transistor-aware Phase 1/2 foundation:
+- Parse SPICE/CDL-like netlists (`.SUBCKT`, `X...`, `M...`) into hierarchical models.
+- Group transistor-level structures into CCCs (Channel-Connected Components).
+- Compute logic depth with loop handling and feedback-edge marking.
+- Export frontend-ready JSON (`id/type/x/y/parent_module/pins/...`).
 
 ## Project Structure
 
 ```text
 /project-root
-├── /parser       # Netlist to graph conversion logic
-├── /layout       # Logic-depth algorithm (Phase 1)
-├── /web-ui       # Placeholder for upcoming React frontend phases
-├── /test_cases   # Unit tests for requested topologies
+├── /parser       # Netlist + hierarchical data model
+├── /layout       # CCC + logic-depth + JSON export
+├── /web-ui       # Placeholder for React frontend phases
+├── /test_cases   # Topology/unit tests (including DRAM/hierarchy)
+├── /test         # Extra regression tests
 └── /docs         # Additional documentation
 ```
 
 ## How to Input a Netlist
 
-Use SPICE/CDL text with:
-- `.SUBCKT <name> <ports...>`
-- `X...` instance lines (`Xname <pins...> <cell_type>`)
-- `.ENDS`
+Supported entries:
+- `.SUBCKT <name> <ports...>` and `.ENDS`
+- `Xname <pins...> <cell_or_subckt>` (case-insensitive)
+- `Mname <d> <g> <s> <b> <model>` (transistor-level)
 
-Example:
+## Logic Depth Rules
 
-```spice
-.SUBCKT top IN VDD VSS OUT
-XINV0 IN n1 VDD VSS INV
-XINV1 n1 OUT VDD VSS INV
-.ENDS
-```
+1. Primary-input nets are depth 0 anchors (unless explicitly passing an empty set).
+2. Default stage behavior increments depth per instance (or hierarchical internal latency).
+3. For transistor-level nets, depth increments via **gate influence edges**.
+4. Feedback loops are detected and broken by selecting/marking feedback edges for UI.
+5. Transmission gates can be configured as transparent (`tg_transparent=True`) to avoid stage increment.
 
-## Logic Depth Calculation
+## Frontend JSON Output
 
-1. Each instance contributes a directed edge from driver net to load net.
-2. Primary input nets are anchored at depth 0.
-3. Instance depth is computed in topological order:
-   - `X_i = max(input_predecessor_depths) + 1`
-4. If a feedback loop exists, the current MVP raises an error (to be handled in Phase 4).
-
-## UI Navigation Shortcuts
-
-Frontend implementation starts in Phase 3. Planned shortcuts:
-- Mouse wheel: semantic zoom in/out.
-- Left click net/pin: show fan-in/fan-out highlight paths.
-- Drag canvas: pan.
+`DepthResult.to_frontend_json(subckt)` returns:
+- node list with `id`, `type`, `x`, `y`, `parent_module`
+- `pins` with derived role (`Driver`/`Load`)
+- `bounds`, `detail_level`, `is_collapsed`
+- `feedback_edges` with `is_feedback=true`
 
 ## Run Tests
 
 ```bash
+python -m pip install -r requirements.txt
 pytest -q
 ```
-
-Covers:
-- Simple inverter chain.
-- NAND/NOR chain.
-- Latch-style loop detection.

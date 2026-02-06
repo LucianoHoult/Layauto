@@ -1,35 +1,55 @@
-"""Netlist parsing utilities for SPICE/CDL-like instance lines."""
+"""Netlist parsing + hierarchical model utilities for SPICE/CDL-like text."""
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 
 
 @dataclass(frozen=True)
+class BoundingBox:
+    """Logic-unit bounds used for semantic zooming."""
+
+    xmin: int = 0
+    ymin: int = 0
+    xmax: int = 0
+    ymax: int = 0
+
+
+@dataclass
 class Instance:
     """Represents one parsed instance in a subcircuit."""
 
     name: str
     pins: list[str]
     cell_type: str
+    # For hierarchical links resolved after parsing all subcircuits.
+    subckt_ref: "SubCircuit | None" = None
+    # UI-facing spatial and semantic metadata.
+    bounds: BoundingBox = field(default_factory=BoundingBox)
+    detail_level: int = 1
+    is_collapsed: bool = True
 
 
-@dataclass(frozen=True)
+@dataclass
 class SubCircuit:
     """Represents one .SUBCKT / .ENDS block."""
 
     name: str
     ports: list[str]
     instances: list[Instance]
+    bounds: BoundingBox = field(default_factory=BoundingBox)
+    detail_level: int = 0
+    is_collapsed: bool = False
 
 
 def parse_subcircuits(netlist_text: str) -> dict[str, SubCircuit]:
-    """Parse SPICE/CDL text into named subcircuit objects.
+    """Parse SPICE/CDL text into named hierarchical subcircuit objects.
 
-    Supported syntax for MVP:
+    Supported syntax for current phases:
     - .SUBCKT <name> <ports...>
-    - X* instances: Xname <pins...> <cell_type>
+    - X* / x* subcircuit-style instances: Xname <pins...> <cell_type>
+    - M* / m* transistor instances: Mname <d> <g> <s> <b> <model>
     - .ENDS
     """
 
@@ -67,8 +87,8 @@ def parse_subcircuits(netlist_text: str) -> dict[str, SubCircuit]:
             current_instances = []
             continue
 
-        # SPICE/CDL is case-insensitive, so allow x*/X* instance prefixes.
-        if tokens[0].upper().startswith("X"):
+        # SPICE/CDL is case-insensitive, so allow x*/X* and m*/M* prefixes.
+        if tokens[0].upper().startswith(("X", "M")):
             if current_name is None:
                 raise ValueError(f"Instance outside .SUBCKT: {line}")
             if len(tokens) < 3:
@@ -80,7 +100,18 @@ def parse_subcircuits(netlist_text: str) -> dict[str, SubCircuit]:
     if current_name is not None:
         raise ValueError("Unterminated .SUBCKT block (missing .ENDS)")
 
+    _resolve_hierarchy_links(subckts)
     return subckts
+
+
+def _resolve_hierarchy_links(subckts: dict[str, SubCircuit]) -> None:
+    """Resolve instance.subckt_ref when instance cell_type matches a known .SUBCKT."""
+
+    lowered_map = {name.lower(): subckt for name, subckt in subckts.items()}
+    for subckt in subckts.values():
+        for inst in subckt.instances:
+            inst.subckt_ref = lowered_map.get(inst.cell_type.lower())
+            inst.detail_level = 1 if inst.subckt_ref else 2
 
 
 def parse_subcircuits_file(path: str | Path) -> dict[str, SubCircuit]:

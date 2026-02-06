@@ -30,7 +30,7 @@ def test_nand_nor_depths():
     assert result.instance_depths["XNOR"] == 2
 
 
-def test_latch_feedback_detected():
+def test_latch_feedback_is_marked_not_raised():
     netlist = """
     .SUBCKT top D Q
     XINV0 n1 Q INV
@@ -38,9 +38,7 @@ def test_latch_feedback_detected():
     .ENDS
     """
     subckt = parse_subcircuits(netlist)["top"]
+    result = calculate_logic_depth(subckt, primary_input_nets={"D"})
 
-    try:
-        calculate_logic_depth(subckt, primary_input_nets={"D"})
-        assert False, "Expected feedback loop detection"
-    except ValueError as exc:
-        assert "Feedback loop" in str(exc)
+    assert result.feedback_edges
+    assert all(edge.is_feedback for edge in result.feedback_edges)
