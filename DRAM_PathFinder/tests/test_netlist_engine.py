@@ -46,6 +46,12 @@ def test_netlist_transformation_and_rewiring():
     # Target cell must be rewired from global wl_2/bl_1 to segment nodes.
     assert "XCELL_R2_C1 wl_2 bl_1 vdd vss DRAMCELL" not in out
     assert "XCELL_R2_C1 WL_n2 BL_n3 vdd vss DRAMCELL" in out
+    assert result.wl_target_node == "WL_n2"
+    assert result.bl_target_node == "BL_n3"
+
+    # PI segments are created from real decoder/sense-amplifier nets.
+    assert "* PI model WL wl_2->wl_end_2" in out
+    assert "* PI model BL bl_1->bl_end_1" in out
 
     # PI segments are created and numbered.
     for idx in range(4):

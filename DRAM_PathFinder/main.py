@@ -12,7 +12,7 @@ from utils.file_io import create_run_directory, read_text, write_text
 from utils.logger_setup import setup_logger
 
 
-def build_testbench(modified_netlist: str, stimulus: str, active_row: int) -> str:
+def build_testbench(modified_netlist: str, stimulus: str, wl_target_node: str) -> str:
     """Build top-level SPICE testbench text including measurements."""
     return (
         "* DRAM_PathFinder generated testbench\n"
@@ -21,7 +21,7 @@ def build_testbench(modified_netlist: str, stimulus: str, active_row: int) -> st
         f"{modified_netlist}\n"
         f"{stimulus}\n"
         ".tran 1p 40n\n"
-        f".meas tran t_act_to_wl trig v(ACT_CMD) val='vdd/2' rise=1 targ v(wl_{active_row}) val='vdd/2' rise=1\n"
+        f".meas tran t_act_to_wl trig v(ACT_CMD) val='vdd/2' rise=1 targ v({wl_target_node}) val='vdd/2' rise=1\n"
         ".end\n"
     )
 
@@ -48,8 +48,7 @@ def main() -> None:
     stimulus = PWLBuilder().build(config)
     logger.info("PWL stimulus generated")
 
-    active_row = config["array_topology"]["active_target"]["row"]
-    tb = build_testbench(result.netlist, stimulus, active_row)
+    tb = build_testbench(result.netlist, stimulus, result.wl_target_node)
 
     write_text(run_dir / "modified_netlist.sp", result.netlist)
     write_text(run_dir / "stimulus.sp", stimulus)

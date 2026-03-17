@@ -14,6 +14,8 @@ class TransformResult:
     netlist: str
     removed_instances: List[str]
     rewired_target_instance: str
+    wl_target_node: str
+    bl_target_node: str
 
 
 class NetlistEngine:
@@ -38,9 +40,11 @@ class NetlistEngine:
 
         wl_node = f"wl_{active_row}"
         bl_node = f"bl_{active_col}"
+        wl_far_end = f"wl_end_{active_row}"
+        bl_far_end = f"bl_end_{active_col}"
 
-        wl_target_node = self._segment_node_for_index("WL", cols, active_col)
-        bl_target_node = self._segment_node_for_index("BL", rows, active_row)
+        wl_target_node = self._segment_node_for_index("WL", cols, active_col, wl_far_end)
+        bl_target_node = self._segment_node_for_index("BL", rows, active_row, bl_far_end)
 
         out: List[str] = []
         removed: List[str] = []
@@ -104,10 +108,16 @@ class NetlistEngine:
             out.append(f"* removed inactive cell {inst}")
 
         out.append("")
-        out.extend(self._inject_pi("WL", f"drv_wl_{active_row}", wl_node, cols))
-        out.extend(self._inject_pi("BL", f"drv_bl_{active_col}", bl_node, rows))
+        out.extend(self._inject_pi("WL", wl_node, wl_far_end, cols))
+        out.extend(self._inject_pi("BL", bl_node, bl_far_end, rows))
 
-        return TransformResult(netlist="\n".join(out).strip() + "\n", removed_instances=removed, rewired_target_instance=rewired_target)
+        return TransformResult(
+            netlist="\n".join(out).strip() + "\n",
+            removed_instances=removed,
+            rewired_target_instance=rewired_target,
+            wl_target_node=wl_target_node,
+            bl_target_node=bl_target_node,
+        )
 
     def _inject_pi(self, prefix: str, start_node: str, end_node: str, span_count: int) -> List[str]:
         """Generate distributed pi-model lines for WL/BL with configurable segmentation."""
@@ -131,13 +141,12 @@ class NetlistEngine:
             lines.append(f"C{prefix}_{idx+1} {n2} 0 {c_seg/2:.6e}")
         return lines
 
-    def _segment_node_for_index(self, prefix: str, total_count: int, idx: int) -> str:
+    def _segment_node_for_index(self, prefix: str, total_count: int, idx: int, far_end_node: str) -> str:
         """Map a physical array index to the corresponding distributed RC node name."""
         segs = self.config["precision"]["pi_segments_per_wire"]
         # Convert 0-based physical index into 1..segs segment bucket.
         segment = int((idx + 1) * segs / total_count)
         segment = max(1, min(segs, segment))
         if segment == segs:
-            target = f"{prefix.lower()}_{self.config['array_topology']['active_target']['row' if prefix == 'WL' else 'col']}"
-            return target
+            return far_end_node
         return f"{prefix}_n{segment}"
