@@ -1,0 +1,15 @@
+{
+  "rc_constants": {
+    "WL_M3": {"R_per_um": 0.5, "C_per_um": 2e-16},
+    "BL_M2": {"R_per_um": 0.7, "C_per_um": 2.5e-16}
+  },
+  "precision": {
+    "pi_segments_per_wire": 4
+  },
+  "static_loads": {
+    "LWD_inactive": {"Cload": 1e-14, "Ileak": 1e-9}
+  },
+  "peripheral_pruning": [
+    {"instance": "XDEC1", "load": "LWD_inactive", "node": "ndec1"}
+  ]
+}

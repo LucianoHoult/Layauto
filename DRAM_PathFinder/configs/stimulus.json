@@ -1,0 +1,6 @@
+{
+  "operation_sequence": [
+    {"signal": "ACT_CMD", "start": "0ns", "duration": "5ns", "tr": "20ps", "tf": "20ps"},
+    {"signal": "READ_CMD", "start": "5ns", "duration": "5ns", "tr": "20ps", "tf": "20ps"}
+  ]
+}
