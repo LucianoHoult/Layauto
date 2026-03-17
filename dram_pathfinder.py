@@ -44,7 +44,7 @@ def _inject_pi_for_net(
     total_c: float,
     segments: int,
 ) -> List[str]:
-    """Create distributed pi-segments: R-series + shunt C/2 at segment boundaries."""
+    """Create distributed pi-segments with equivalent node shunt capacitance."""
     if segments < 1:
         raise ValueError("segments must be >= 1")
 
@@ -55,12 +55,14 @@ def _inject_pi_for_net(
     # Node chain n0 -> n1 -> ... -> nN
     nodes = [start_node] + [f"{prefix}_n{i}" for i in range(1, segments)] + [end_node]
 
-    lines.append(f"C{prefix}_0 {nodes[0]} 0 {c_seg / 2:.6e}")
     for idx in range(segments):
         n1 = nodes[idx]
         n2 = nodes[idx + 1]
         lines.append(f"R{prefix}_{idx} {n1} {n2} {r_seg:.6e}")
-        lines.append(f"C{prefix}_{idx+1} {n2} 0 {c_seg / 2:.6e}")
+
+    for idx, node in enumerate(nodes):
+        edge_factor = 0.5 if idx in (0, len(nodes) - 1) else 1.0
+        lines.append(f"C{prefix}_{idx} {node} 0 {c_seg * edge_factor:.6e}")
     return lines
 
 
@@ -141,7 +143,16 @@ def transform_netlist(netlist_text: str, config: Dict) -> NetlistTransformResult
 
 def generate_pwl_stimulus(config: Dict, vdd: float = 1.2) -> str:
     """Convert operation_sequence to causal PWL sources with finite rise/fall edges."""
+    def append_point(points: List[Tuple[float, float]], t: float, v: float) -> None:
+        if points and t < points[-1][0]:
+            raise ValueError("Non-causal waveform: time points must be non-decreasing")
+        if points and t == points[-1][0]:
+            points[-1] = (t, v)
+            return
+        points.append((t, v))
+
     lines = ["* Auto-generated stimulus"]
+    signal_events: Dict[str, List[Tuple[float, float, float]]] = {}
     for op in config.get("operation_sequence", []):
         signal = op["signal"]
         t_start = parse_time_to_seconds(op["start"])
@@ -152,18 +163,19 @@ def generate_pwl_stimulus(config: Dict, vdd: float = 1.2) -> str:
             raise ValueError(f"Invalid timing for signal {signal}")
         if t_dur < 2 * tr:
             raise ValueError(f"duration must be >= 2*tr for {signal}")
+        signal_events.setdefault(signal, []).append((t_start, t_end, tr))
 
-        points = [
-            (0.0, 0.0),
-            (t_start, 0.0),
-            (t_start + tr, vdd),
-            (t_end - tr, vdd),
-            (t_end, 0.0),
-        ]
-
-        for i in range(1, len(points)):
-            if points[i][0] < points[i - 1][0]:
-                raise ValueError(f"Non-causal waveform for signal {signal}")
+    for signal, events in signal_events.items():
+        points: List[Tuple[float, float]] = [(0.0, 0.0)]
+        last_end = 0.0
+        for t_start, t_end, tr in sorted(events, key=lambda event: event[0]):
+            if t_start < last_end:
+                raise ValueError(f"Overlapping operations for signal {signal}")
+            append_point(points, t_start, 0.0)
+            append_point(points, t_start + tr, vdd)
+            append_point(points, t_end - tr, vdd)
+            append_point(points, t_end, 0.0)
+            last_end = t_end
 
         point_text = " ".join(f"{t:.6e} {v:.3f}" for t, v in points)
         lines.append(f"V{signal} {signal} 0 PWL({point_text})")

@@ -4,6 +4,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 import re
 
+import pytest
+
 from dram_pathfinder import generate_pwl_stimulus, transform_netlist
 
 
@@ -44,7 +46,8 @@ XCELL_R1_C1 wl_1 bl_1 vdd vss DRAMCELL
 
 
 def test_netlist_transformation():
-    out = transform_netlist(_dummy_netlist(), _dummy_config()).modified_netlist
+    config = _dummy_config()
+    out = transform_netlist(_dummy_netlist(), config).modified_netlist
 
     assert "XDEC1 ndec1 vdd vss DECODER" not in out
     assert "CLOAD_XDEC1 ndec1 0" in out
@@ -62,6 +65,17 @@ def test_netlist_transformation():
         assert f"CWL_{idx}" in out
         assert f"CBL_{idx}" in out
 
+    wl_caps = [
+        float(value)
+        for value in re.findall(r"^CWL_\d+\s+\S+\s+0\s+([0-9.eE+-]+)$", out, re.MULTILINE)
+    ]
+    expected_wl_total_c = (
+        config["rc_constants"]["WL_M3"]["C_per_um"]
+        * config["array_topology"]["cols"]
+        * config["array_topology"]["col_pitch_um"]
+    )
+    assert sum(wl_caps) == pytest.approx(expected_wl_total_c)
+
 
 def test_pwl_generation():
     stimulus = generate_pwl_stimulus(_dummy_config())
@@ -78,3 +92,16 @@ def test_pwl_generation():
         assert times == sorted(times)
 
     assert "2.000000e-11 1.200" in stimulus
+
+
+def test_pwl_generation_merges_repeated_signal_events():
+    config = _dummy_config()
+    config["operation_sequence"] = [
+        {"signal": "ACT_CMD", "start": "0ns", "duration": "5ns", "tr": "20ps"},
+        {"signal": "ACT_CMD", "start": "7ns", "duration": "4ns", "tr": "20ps"},
+    ]
+
+    stimulus = generate_pwl_stimulus(config)
+    lines = [line for line in stimulus.splitlines() if line.startswith("VACT_CMD")]
+    assert len(lines) == 1
+    assert "7.020000e-09 1.200" in lines[0]
