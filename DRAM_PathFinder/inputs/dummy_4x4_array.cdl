@@ -1,0 +1,20 @@
+* dummy 4x4 dram array netlist
+XDEC0 ndec0 vdd vss DECODER
+XDEC1 ndec1 vdd vss DECODER
+XCELL_R0_C0 wl_0 bl_0 vdd vss DRAMCELL
+XCELL_R0_C1 wl_0 bl_1 vdd vss DRAMCELL
+XCELL_R0_C2 wl_0 bl_2 vdd vss DRAMCELL
+XCELL_R0_C3 wl_0 bl_3 vdd vss DRAMCELL
+XCELL_R1_C0 wl_1 bl_0 vdd vss DRAMCELL
+XCELL_R1_C1 wl_1 bl_1 vdd vss DRAMCELL
+XCELL_R1_C2 wl_1 bl_2 vdd vss DRAMCELL
+XCELL_R1_C3 wl_1 bl_3 vdd vss DRAMCELL
+XCELL_R2_C0 wl_2 bl_0 vdd vss DRAMCELL
+XCELL_R2_C1 wl_2 bl_1 vdd vss
++ DRAMCELL
+XCELL_R2_C2 wl_2 bl_2 vdd vss DRAMCELL
+XCELL_R2_C3 wl_2 bl_3 vdd vss DRAMCELL
+XCELL_R3_C0 wl_3 bl_0 vdd vss DRAMCELL
+XCELL_R3_C1 wl_3 bl_1 vdd vss DRAMCELL
+XCELL_R3_C2 wl_3 bl_2 vdd vss DRAMCELL
+XCELL_R3_C3 wl_3 bl_3 vdd vss DRAMCELL

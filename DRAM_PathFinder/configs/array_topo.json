@@ -1,0 +1,14 @@
+{
+  "array_topology": {
+    "rows": 4,
+    "cols": 4,
+    "row_pitch_um": 2.0,
+    "col_pitch_um": 1.5,
+    "active_target": {"row": 2, "col": 1},
+    "cell_instance_pattern": "^XCELL_R(?P<row>\\d+)_C(?P<col>\\d+)$",
+    "dummy_linear_caps": {
+      "wl_gate_cap": 3e-16,
+      "bl_junc_cap": 4e-16
+    }
+  }
+}
