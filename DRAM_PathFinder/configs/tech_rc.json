@@ -1,0 +1,15 @@
+{
+  "rc_constants": {
+    "WL_M3": {"R_per_um": 0.5, "C_per_um": 2e-16},
+    "BL_M2": {"R_per_um": 0.7, "C_per_um": 2.5e-16},
+    "CSL_M4": {"R_per_um": 0.4, "C_per_um": 1.8e-16},
+    "LIO_M5": {"R_per_um": 0.6, "C_per_um": 2.2e-16}
+  },
+  "precision": {
+    "pi_segments_per_wire": 4
+  },
+  "static_loads": {
+    "LWD_inactive": {"Cload": 1e-14, "Ileak": 1e-9},
+    "ARRAY_macro_inactive": {"Cload": 5e-14, "Ileak": 5e-9}
+  }
+}

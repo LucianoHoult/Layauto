@@ -1,0 +1,65 @@
+{
+  "array_topology": {
+    "simulator_syntax": "dot",
+    "active_target_hier_path": "XBANK.XMATRIX.XARRAY_1.XMAT_0.XCELL_R2_C1",
+    "cell_instance_pattern": "^XCELL_R(?P<row>\\d+)_C(?P<col>\\d+)$",
+    "active_target": {
+      "cell_container_subckt": "MAT",
+      "cell_instance_name": "XCELL_R2_C1",
+      "row": 2,
+      "col": 1
+    },
+    "macro_pruning": {
+      "container_subckt": "DRAM_BANK",
+      "macro_instance_pattern": "^XARRAY_[0-9]+$",
+      "active_macro_instance": "XARRAY_1",
+      "replacement_load": "ARRAY_macro_inactive"
+    },
+    "dummy_linear_caps": {
+      "wl_gate_cap": 3e-16,
+      "bl_junc_cap": 4e-16
+    },
+    "routing_targets": [
+      {
+        "name": "WL",
+        "port_name": "WL",
+        "driver_node": "DRV_WL",
+        "endpoint_node": "wl_2",
+        "length_um": 150.0,
+        "total_count": 4,
+        "active_index": 1,
+        "rc_key": "WL_M3"
+      },
+      {
+        "name": "BL",
+        "port_name": "BL",
+        "driver_node": "DRV_BL",
+        "endpoint_node": "bl_1",
+        "length_um": 220.0,
+        "total_count": 4,
+        "active_index": 2,
+        "rc_key": "BL_M2"
+      },
+      {
+        "name": "CSL",
+        "port_name": "CSL",
+        "driver_node": "DRV_CSL",
+        "endpoint_node": "csl_1",
+        "length_um": 120.0,
+        "total_count": 4,
+        "active_index": 1,
+        "rc_key": "CSL_M4"
+      },
+      {
+        "name": "LIO",
+        "port_name": "LIO",
+        "driver_node": "DRV_LIO",
+        "endpoint_node": "lio_1",
+        "length_um": 180.0,
+        "total_count": 4,
+        "active_index": 2,
+        "rc_key": "LIO_M5"
+      }
+    ]
+  }
+}
