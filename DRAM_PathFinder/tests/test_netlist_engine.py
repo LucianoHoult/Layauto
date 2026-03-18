@@ -32,6 +32,7 @@ def test_cdl_continuation_and_subckt_index():
     subckts = CDLParser.build_subckt_index(lines)
     assert "DRAM_BANK" in subckts
     assert "MAT" in subckts
+    assert "PERIPHERY" in subckts
     assert subckts["DRAMCELL"].ports[:4] == ["WL", "BL", "CSL", "LIO"]
 
 
