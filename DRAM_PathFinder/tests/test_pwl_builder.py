@@ -27,3 +27,16 @@ def test_pwl_generation_and_monotonic_time():
         vals = [float(x) for x in re.findall(r"[-+]?\d+\.\d+e[+-]\d+", body)]
         times = vals[0::2]
         assert times == sorted(times)
+
+
+def test_build_testbench_links_commands_to_route_drivers():
+    from main import build_testbench
+
+    config = ConfigParser(Path(__file__).resolve().parents[1] / "configs").load_all()
+    stimulus = PWLBuilder().build(config)
+    testbench = build_testbench("* netlist", stimulus, 2, config["array_topology"]["routing_targets"])
+
+    assert "E_DRV_WL DRV_WL 0 ACT_CMD 0 1" in testbench
+    assert "E_DRV_BL DRV_BL 0 READ_CMD 0 1" in testbench
+    assert "E_DRV_CSL DRV_CSL 0 READ_CMD 0 1" in testbench
+    assert "E_DRV_LIO DRV_LIO 0 READ_CMD 0 1" in testbench

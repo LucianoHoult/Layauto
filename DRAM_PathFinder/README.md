@@ -46,6 +46,8 @@ Artifacts generated per run:
 - `modified_netlist.sp`
 - `stimulus.sp`
 - `testbench.sp`
+
+The sample CDL now includes a placeholder `PERIPHERY` subcircuit so the bundled example remains self-contained, and the generated testbench links `ACT_CMD`/`READ_CMD` stimuli onto the extracted `DRV_*` RC ladder drivers for runnable activation/read timing experiments.
 - `run.log`
 
 ## How to Test
