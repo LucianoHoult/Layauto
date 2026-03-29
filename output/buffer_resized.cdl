@@ -1,0 +1,5 @@
+* CDL netlist for INV_N4_P6 (resized)
+.SUBCKT INV_N4_P6 VDD VSS IN OUT
+MN0 OUT IN VSS VSS nmos_finfet nfin=4 l=20n
+MP0 OUT IN VDD VDD pmos_finfet nfin=6 l=20n
+.ENDS INV_N4_P6

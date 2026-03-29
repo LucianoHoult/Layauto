@@ -1,0 +1,62 @@
+[
+  {
+    "instance": "MN0",
+    "device_type": "NMOS",
+    "parameters": {
+      "nfin": 5,
+      "nf": 1,
+      "l": 20,
+      "w": 125
+    },
+    "pins": {
+      "G": "IN",
+      "D": "OUT",
+      "S": "VSS",
+      "B": "VSS"
+    },
+    "bbox": {
+      "x1": 27,
+      "y1": 28,
+      "x2": 81,
+      "y2": 152
+    },
+    "fin_y_positions": [
+      40,
+      65,
+      90,
+      115,
+      140
+    ]
+  },
+  {
+    "instance": "MP0",
+    "device_type": "PMOS",
+    "parameters": {
+      "nfin": 7,
+      "nf": 1,
+      "l": 20,
+      "w": 175
+    },
+    "pins": {
+      "G": "IN",
+      "D": "OUT",
+      "S": "VDD",
+      "B": "VDD"
+    },
+    "bbox": {
+      "x1": 27,
+      "y1": 228,
+      "x2": 81,
+      "y2": 402
+    },
+    "fin_y_positions": [
+      240,
+      265,
+      290,
+      315,
+      340,
+      365,
+      390
+    ]
+  }
+]

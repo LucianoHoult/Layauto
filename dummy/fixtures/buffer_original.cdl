@@ -1,0 +1,5 @@
+* CDL netlist for INV_N5_P7
+.SUBCKT INV_N5_P7 VDD VSS IN OUT
+MN0 OUT IN VSS VSS nmos_finfet nfin=5 l=20n
+MP0 OUT IN VDD VDD pmos_finfet nfin=7 l=20n
+.ENDS INV_N5_P7

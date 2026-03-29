@@ -1,0 +1,174 @@
+{
+  "VSS": {
+    "type": "power",
+    "pins": [
+      [
+        "MN0",
+        "S"
+      ],
+      [
+        "MN0",
+        "B"
+      ]
+    ],
+    "shapes": [
+      {
+        "layer": "LI",
+        "x1": 18,
+        "y1": 13,
+        "x2": 35,
+        "y2": 145,
+        "desc": "li_nmos_source"
+      },
+      {
+        "layer": "VIA0",
+        "x1": 18,
+        "y1": 9,
+        "x2": 35,
+        "y2": 26,
+        "desc": "via0_nmos_source"
+      },
+      {
+        "layer": "M1",
+        "x1": 0,
+        "y1": 8,
+        "x2": 108,
+        "y2": 28,
+        "desc": "m1_vss"
+      }
+    ]
+  },
+  "VDD": {
+    "type": "power",
+    "pins": [
+      [
+        "MP0",
+        "S"
+      ],
+      [
+        "MP0",
+        "B"
+      ]
+    ],
+    "shapes": [
+      {
+        "layer": "LI",
+        "x1": 18,
+        "y1": 235,
+        "x2": 35,
+        "y2": 419,
+        "desc": "li_pmos_source"
+      },
+      {
+        "layer": "VIA0",
+        "x1": 18,
+        "y1": 405,
+        "x2": 35,
+        "y2": 422,
+        "desc": "via0_pmos_source"
+      },
+      {
+        "layer": "M1",
+        "x1": 0,
+        "y1": 404,
+        "x2": 108,
+        "y2": 424,
+        "desc": "m1_vdd"
+      }
+    ]
+  },
+  "IN": {
+    "type": "signal",
+    "pins": [
+      [
+        "MN0",
+        "G"
+      ],
+      [
+        "MP0",
+        "G"
+      ]
+    ],
+    "shapes": [
+      {
+        "layer": "POLY",
+        "x1": 44,
+        "y1": 15,
+        "x2": 64,
+        "y2": 415,
+        "desc": "active_gate"
+      },
+      {
+        "layer": "LI",
+        "x1": 45,
+        "y1": 157,
+        "x2": 62,
+        "y2": 205,
+        "desc": "li_gate_contact"
+      },
+      {
+        "layer": "VIA0",
+        "x1": 45,
+        "y1": 153,
+        "x2": 62,
+        "y2": 170,
+        "desc": "via0_gate"
+      },
+      {
+        "layer": "M1",
+        "x1": 44,
+        "y1": 152,
+        "x2": 64,
+        "y2": 172,
+        "desc": "m1_in"
+      }
+    ]
+  },
+  "OUT": {
+    "type": "signal",
+    "pins": [
+      [
+        "MN0",
+        "D"
+      ],
+      [
+        "MP0",
+        "D"
+      ]
+    ],
+    "shapes": [
+      {
+        "layer": "LI",
+        "x1": 72,
+        "y1": 35,
+        "x2": 89,
+        "y2": 203,
+        "desc": "li_nmos_drain"
+      },
+      {
+        "layer": "LI",
+        "x1": 72,
+        "y1": 193,
+        "x2": 89,
+        "y2": 395,
+        "desc": "li_pmos_drain"
+      },
+      {
+        "layer": "VIA0",
+        "x1": 72,
+        "y1": 189,
+        "x2": 89,
+        "y2": 206,
+        "desc": "via0_drain"
+      },
+      {
+        "layer": "M1",
+        "x1": 71,
+        "y1": 188,
+        "x2": 91,
+        "y2": 208,
+        "desc": "m1_out"
+      }
+    ]
+  }
+}
