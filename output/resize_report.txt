@@ -3,14 +3,15 @@ BUFFER FIN RESIZE REPORT
 
 Original: NMOS=5fin, PMOS=7fin
 Target:   NMOS=4fin, PMOS=6fin
+Source: CDL diff (/home/user/Layauto/pipeline/../dummy/fixtures/buffer_original.cdl vs /home/user/Layauto/pipeline/../dummy/fixtures/buffer_target.cdl)
 
-NMOS resize: Resize MN0 5→4 fin: 4 edit operations
+MN0 resize: Resize MN0 5→4 fin: 4 edit operations
   REMOVE FIN MN0_fin_track_4 bbox=(0, 137, 108, 143)
   RESIZE MN0_od_shrink
   RESIZE li_pmos_drain_shorten
   RESIZE li_nmos_source_shorten
 
-PMOS resize: Resize MP0 7→6 fin: 3 edit operations
+MP0 resize: Resize MP0 7→6 fin: 3 edit operations
   REMOVE FIN MP0_fin_track_14 bbox=(0, 387, 108, 393)
   RESIZE MP0_od_shrink
   RESIZE li_pmos_drain_shorten

@@ -16,7 +16,7 @@ from matplotlib.patches import FancyBboxPatch
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 from tech.layer_map import LAYER_COLORS, LAYER_MAP
-from tech.tech_params import *
+from tech.config_loader import get_tech_config
 
 
 # Layer draw order (back to front)
@@ -41,16 +41,17 @@ def draw_layout(ax, layout_data: dict, title: str = '',
     
     # Draw grid lines
     if show_grid:
+        _cfg = get_tech_config()
         # Gate pitch grid (vertical)
         for i in range(20):
-            x = i * GATE_PITCH
+            x = i * _cfg.GATE_PITCH
             if x > cell_w + 20:
                 break
             ax.axvline(x=x, color='gray', linewidth=0.3, linestyle=':', alpha=0.5)
-        
-        # Fin pitch grid (horizontal) 
+
+        # Fin pitch grid (horizontal)
         for i in range(40):
-            y = params['nmos_fin_y'][0] + i * FIN_PITCH
+            y = params['nmos_fin_y'][0] + i * _cfg.FIN_PITCH
             if y > cell_h + 20:
                 break
             ax.axhline(y=y, color='gray', linewidth=0.3, linestyle=':', alpha=0.3)

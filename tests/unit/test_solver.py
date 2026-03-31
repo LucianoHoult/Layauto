@@ -5,8 +5,10 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', '..'))
 
 from io_adapters.parser import build_layout_model
 from core.solver import LayoutSolver
+from tech.config_loader import load_tech_config
 
 FIXTURE_DIR = os.path.join(os.path.dirname(__file__), '..', '..', 'dummy', 'fixtures')
+_config = load_tech_config()
 
 
 def _get_solver():
@@ -15,8 +17,9 @@ def _get_solver():
         net_query_path=os.path.join(FIXTURE_DIR, 'calibre_net_query.json'),
         bbox_path=os.path.join(FIXTURE_DIR, 'bbox_by_layer.json'),
         layout_json_path=os.path.join(FIXTURE_DIR, 'buffer_original.json'),
+        config=_config,
     )
-    solver = LayoutSolver(model, grid)
+    solver = LayoutSolver(model, grid, _config)
     solver.setup_engine(layers_to_include=['LI', 'M1'])
     solver.load_existing_layout()
     return solver

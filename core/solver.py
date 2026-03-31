@@ -61,11 +61,12 @@ class LayoutSolver:
     Orchestrates CSP-based layout modification.
     """
     
-    def __init__(self, model: LayoutModel, grid: MultiLayerGrid):
+    def __init__(self, model: LayoutModel, grid: MultiLayerGrid, config=None):
         self.model = model
         self.grid = grid
+        self.config = config
         self.engine: Optional[ConstraintEngine] = None
-        
+
         # Collect all net IDs
         self.net_ids: Set[str] = set(model.nets.keys())
     
@@ -249,8 +250,7 @@ class LayoutSolver:
         # Physical coordinates of removed fins
         for ft in removed_fin_tracks:
             fy = fin_grid.track_to_physical(ft)
-            from tech.tech_params import FIN_WIDTH
-            hw = FIN_WIDTH // 2
+            hw = self.config.FIN_WIDTH // 2
             edit_ops.append(EditOp(
                 'remove_shape', 'FIN',
                 old_bbox=(0, fy - hw, self.model.cell_width_nm, fy + hw),
@@ -262,8 +262,7 @@ class LayoutSolver:
         new_top_fin_y = fin_grid.track_to_physical(remaining_fin_tracks[-1])
         bot_fin_y = fin_grid.track_to_physical(old_fin_tracks[0])
         
-        from tech.tech_params import OD_EXTENSION_BEYOND_FIN
-        od_ext = OD_EXTENSION_BEYOND_FIN
+        od_ext = self.config.OD_EXTENSION_BEYOND_FIN
         
         edit_ops.append(EditOp(
             'resize_device', 'OD',
@@ -311,11 +310,10 @@ class LayoutSolver:
                 # After resize, the top extent shrinks
                 
                 # Compute old physical bbox of this LI segment
-                from tech.tech_params import LI_WIDTH
                 old_phys = self.grid.segment_to_physical(
-                    seg.layer, seg.track_idx, 
+                    seg.layer, seg.track_idx,
                     seg.start_anchor, seg.end_anchor,
-                    LI_WIDTH, seg.start_offset_nm, seg.end_offset_nm
+                    self.config.LI_WIDTH, seg.start_offset_nm, seg.end_offset_nm
                 )
                 
                 # Check if this segment's physical extent covers the removed fins
@@ -341,8 +339,7 @@ class LayoutSolver:
                         via_y_positions.append(via_y)
                 
                 if via_y_positions:
-                    from tech.tech_params import VIA0_ENC_BY_LI_Y
-                    min_y_for_via = max(via_y_positions) + VIA0_ENC_BY_LI_Y
+                    min_y_for_via = max(via_y_positions) + self.config.VIA0_ENC_BY_LI_Y
                     new_y_max = max(new_y_max, min_y_for_via)
                 
                 # Only edit if the LI actually gets shorter
@@ -357,7 +354,7 @@ class LayoutSolver:
                 new_phys = self.grid.segment_to_physical(
                     seg.layer, seg.track_idx,
                     seg.start_anchor, new_end_anchor,
-                    LI_WIDTH, seg.start_offset_nm, new_end_offset
+                    self.config.LI_WIDTH, seg.start_offset_nm, new_end_offset
                 )
                 
                 edit_ops.append(EditOp(

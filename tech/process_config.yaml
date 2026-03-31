@@ -1,0 +1,47 @@
+# Process configuration for dummy 7nm-class FinFET process.
+# All dimensions in nanometers (nm).
+#
+# In production, replace these values with actual foundry parameters.
+
+process:
+  name: "dummy_7nm_finfet"
+  node: "7nm"
+
+# Track pitch definitions (nm)
+pitch:
+  FIN: 25          # Fin-to-fin pitch (Y direction)
+  GATE: 54         # Contacted poly pitch / CPP (X direction)
+  LI: 27           # LI track pitch (X direction, half gate pitch)
+  M1: 36           # M1 track pitch (Y direction)
+
+# Minimum width definitions (nm)
+width:
+  FIN: 7
+  POLY: 20
+  LI: 17
+  M1: 20
+
+# Via dimensions (nm)
+via:
+  VIA0:
+    width: 17
+    height: 17
+
+# Extension rules (nm)
+extension:
+  OD_beyond_FIN: 10        # OD extends beyond outermost fin
+  POLY_beyond_OD: 15       # Poly extends beyond OD edge
+
+# Cell-level parameters
+cell:
+  num_gate_slots: 3        # Gate pitches per cell (dummy_L + active + dummy_R)
+  np_gap_fins: 3           # Gap between NMOS and PMOS (in fin pitches)
+
+# Layer orientations
+# H = horizontal (pitch in Y), V = vertical (pitch in X), null = point object
+layer_orientation:
+  FIN: H
+  POLY: V
+  LI: V
+  VIA0: null
+  M1: H

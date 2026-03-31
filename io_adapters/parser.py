@@ -17,6 +17,7 @@ from core.data_model import (
     EndType, OccupantType, CellState, EMPTY,
 )
 from core.grid import MultiLayerGrid, create_mvp_grid
+from tech.config_loader import get_tech_config
 
 
 def parse_calibre_device_query(filepath: str) -> List[Device]:
@@ -80,27 +81,32 @@ def parse_bbox_by_layer(filepath: str) -> Dict[str, List[dict]]:
 def build_layout_model(device_query_path: str,
                        net_query_path: str,
                        bbox_path: str,
-                       layout_json_path: str = None) -> Tuple[LayoutModel, MultiLayerGrid]:
+                       layout_json_path: str = None,
+                       config=None) -> Tuple[LayoutModel, MultiLayerGrid]:
     """
     Build complete LayoutModel and grid system from parsed data.
-    
+
     This is the main entry point for Stage 2.
-    Takes raw parsed data → grid-abstracted LayoutModel.
-    
+    Takes raw parsed data -> grid-abstracted LayoutModel.
+
     Args:
         device_query_path: Path to Calibre device query JSON
         net_query_path: Path to Calibre net query JSON
         bbox_path: Path to bbox-by-layer JSON
         layout_json_path: Optional path to full layout JSON (for cell params)
-    
+        config: TechConfig instance (uses default if None)
+
     Returns:
         (LayoutModel, MultiLayerGrid)
     """
+    if config is None:
+        config = get_tech_config()
+
     # --- Parse raw data ---
     devices = parse_calibre_device_query(device_query_path)
     net_data = parse_calibre_net_query(net_query_path)
     bbox_data = parse_bbox_by_layer(bbox_path)
-    
+
     # --- Extract layout parameters for grid construction ---
     # Get fin positions from devices
     nmos_fin_y = []
@@ -111,17 +117,20 @@ def build_layout_model(device_query_path: str,
                 nmos_fin_y = dev._raw_fin_y
             elif dev.dev_type == 'pmos':
                 pmos_fin_y = dev._raw_fin_y
-    
-    # Get M1 track positions from M1 shapes
+
+    # Get M1 track positions from net_data (calibre_net_query).
+    # GDS-sourced bbox_by_layer does not contain net names, so we
+    # extract M1 track positions from the net query shapes instead.
     m1_tracks_y = {}
-    if 'M1' in bbox_data:
-        for s in bbox_data['M1']:
-            cy = (s['y1'] + s['y2']) / 2
-            if s.get('net'):
-                m1_tracks_y[s['net']] = int(cy)
-    
+    for net_name, nd in net_data.items():
+        for shape in nd.get('shapes', []):
+            if shape.get('layer') == 'M1':
+                cy = (shape['y1'] + shape['y2']) / 2
+                m1_tracks_y[net_name] = int(cy)
+
     # --- Create grid system ---
     grid = create_mvp_grid(
+        config=config,
         nmos_fin_y=nmos_fin_y,
         pmos_fin_y=pmos_fin_y,
         m1_tracks_y=m1_tracks_y,
