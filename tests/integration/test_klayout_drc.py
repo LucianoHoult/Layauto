@@ -26,12 +26,7 @@ except ImportError:
     except ImportError:
         HAS_KLAYOUT = False
 
-from tech.tech_params import (
-    LI_MIN_SPACING, M1_MIN_SPACING, LI_WIDTH, M1_WIDTH,
-    VIA0_WIDTH, VIA0_HEIGHT,
-    VIA0_ENC_BY_LI_X, VIA0_ENC_BY_LI_Y,
-    VIA0_ENC_BY_M1_X, VIA0_ENC_BY_M1_Y,
-)
+from tech.config_loader import get_tech_config
 from tech.layer_map import LAYER_MAP
 
 
@@ -63,57 +58,57 @@ def run_klayout_drc(gds_path: str, report_path: str = None) -> dict:
         gds_layer, gds_dtype = LAYER_MAP[name]
         return layout.layer(gds_layer, gds_dtype)
     
+    cfg = get_tech_config()
     results = {}
-    
+
     # --- Rule 1: LI min spacing ---
     li_layer = get_layer('LI')
     li_region = pya.Region(top_cell.begin_shapes_rec(li_layer))
-    li_space_violations = li_region.space_check(LI_MIN_SPACING)
+    li_space_violations = li_region.space_check(cfg.LI_MIN_SPACING)
     results['LI_min_spacing'] = {
-        'rule': f'LI spacing >= {LI_MIN_SPACING}nm',
+        'rule': f'LI spacing >= {cfg.LI_MIN_SPACING}nm',
         'violations': li_space_violations.size(),
     }
-    
+
     # --- Rule 2: M1 min spacing ---
     m1_layer = get_layer('M1')
     m1_region = pya.Region(top_cell.begin_shapes_rec(m1_layer))
-    m1_space_violations = m1_region.space_check(M1_MIN_SPACING)
+    m1_space_violations = m1_region.space_check(cfg.M1_MIN_SPACING)
     results['M1_min_spacing'] = {
-        'rule': f'M1 spacing >= {M1_MIN_SPACING}nm',
+        'rule': f'M1 spacing >= {cfg.M1_MIN_SPACING}nm',
         'violations': m1_space_violations.size(),
     }
-    
+
     # --- Rule 3: LI min width ---
-    li_width_violations = li_region.width_check(LI_WIDTH)
+    li_width_violations = li_region.width_check(cfg.LI_WIDTH)
     results['LI_min_width'] = {
-        'rule': f'LI width >= {LI_WIDTH}nm',
+        'rule': f'LI width >= {cfg.LI_WIDTH}nm',
         'violations': li_width_violations.size(),
     }
-    
+
     # --- Rule 4: M1 min width ---
-    m1_width_violations = m1_region.width_check(M1_WIDTH)
+    m1_width_violations = m1_region.width_check(cfg.M1_WIDTH)
     results['M1_min_width'] = {
-        'rule': f'M1 width >= {M1_WIDTH}nm',
+        'rule': f'M1 width >= {cfg.M1_WIDTH}nm',
         'violations': m1_width_violations.size(),
     }
-    
+
     # --- Rule 5: Via0 enclosure by LI ---
     via0_layer = get_layer('VIA0')
     via0_region = pya.Region(top_cell.begin_shapes_rec(via0_layer))
-    
-    # Check that LI covers Via0 with required enclosure
-    via0_sized = via0_region.sized(VIA0_ENC_BY_LI_X, VIA0_ENC_BY_LI_Y)
+
+    via0_sized = via0_region.sized(cfg.VIA0_ENC_BY_LI_X, cfg.VIA0_ENC_BY_LI_Y)
     enc_violations = via0_sized.not_inside(li_region)
     results['Via0_enc_by_LI'] = {
-        'rule': f'Via0 enclosed by LI ({VIA0_ENC_BY_LI_X}/{VIA0_ENC_BY_LI_Y}nm)',
+        'rule': f'Via0 enclosed by LI ({cfg.VIA0_ENC_BY_LI_X}/{cfg.VIA0_ENC_BY_LI_Y}nm)',
         'violations': enc_violations.size(),
     }
-    
+
     # --- Rule 6: Via0 enclosure by M1 ---
-    via0_sized_m1 = via0_region.sized(VIA0_ENC_BY_M1_X, VIA0_ENC_BY_M1_Y)
+    via0_sized_m1 = via0_region.sized(cfg.VIA0_ENC_BY_M1_X, cfg.VIA0_ENC_BY_M1_Y)
     enc_violations_m1 = via0_sized_m1.not_inside(m1_region)
     results['Via0_enc_by_M1'] = {
-        'rule': f'Via0 enclosed by M1 ({VIA0_ENC_BY_M1_X}/{VIA0_ENC_BY_M1_Y}nm)',
+        'rule': f'Via0 enclosed by M1 ({cfg.VIA0_ENC_BY_M1_X}/{cfg.VIA0_ENC_BY_M1_Y}nm)',
         'violations': enc_violations_m1.size(),
     }
     

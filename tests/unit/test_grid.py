@@ -4,6 +4,9 @@ import sys, os
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', '..'))
 
 from core.grid import LayerGrid, create_mvp_grid
+from tech.config_loader import load_tech_config
+
+_config = load_tech_config()
 
 
 def test_layer_grid_basic():
@@ -33,6 +36,7 @@ def test_layer_grid_snap():
 
 def test_mvp_grid_creation():
     grid = create_mvp_grid(
+        config=_config,
         nmos_fin_y=[40, 65, 90, 115, 140],
         pmos_fin_y=[240, 265, 290, 315, 340, 365, 390],
     )
@@ -49,14 +53,14 @@ def test_mvp_grid_creation():
 
 
 def test_grid_ortho_pairs():
-    grid = create_mvp_grid(nmos_fin_y=[40])
+    grid = create_mvp_grid(config=_config, nmos_fin_y=[40])
     assert grid.ortho_pairs['LI'] == 'M1'
     assert grid.ortho_pairs['M1'] == 'LI'
     assert grid.ortho_pairs['FIN'] == 'POLY'
 
 
 def test_physical_to_segment_coords():
-    grid = create_mvp_grid(nmos_fin_y=[40, 65, 90, 115, 140])
+    grid = create_mvp_grid(config=_config, nmos_fin_y=[40, 65, 90, 115, 140])
     
     # A vertical LI bar at x=27 spanning y=13 to y=145
     coords = grid.physical_to_segment_coords('LI', 18, 13, 36, 145)

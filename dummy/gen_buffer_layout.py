@@ -25,12 +25,12 @@ import json
 # Add project root to path
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 
-from tech.tech_params import *
+from tech.config_loader import get_tech_config
 from tech.layer_map import LAYER_MAP
 from dummy.gds_writer import GdsWriter, rect_centered
 
 
-def generate_inverter_layout(nmos_nfin: int, pmos_nfin: int) -> dict:
+def generate_inverter_layout(nmos_nfin: int, pmos_nfin: int, config=None) -> dict:
     """
     Compute all shapes for the inverter layout.
     
@@ -45,8 +45,27 @@ def generate_inverter_layout(nmos_nfin: int, pmos_nfin: int) -> dict:
     
     This is the "ground truth" from which we generate GDS, Calibre JSONs, etc.
     """
+    if config is None:
+        config = get_tech_config()
+
+    FIN_PITCH = config.FIN_PITCH
+    GATE_PITCH = config.GATE_PITCH
+    LI_PITCH = config.LI_PITCH
+    M1_PITCH = config.M1_PITCH
+    FIN_WIDTH = config.FIN_WIDTH
+    POLY_WIDTH = config.POLY_WIDTH
+    LI_WIDTH = config.LI_WIDTH
+    M1_WIDTH = config.M1_WIDTH
+    VIA0_WIDTH = config.VIA0_WIDTH
+    VIA0_HEIGHT = config.VIA0_HEIGHT
+    OD_EXTENSION_BEYOND_FIN = config.OD_EXTENSION_BEYOND_FIN
+    POLY_EXTENSION_BEYOND_OD = config.POLY_EXTENSION_BEYOND_OD
+    NP_GAP_FINS = config.NP_GAP_FINS
+    NUM_GATE_SLOTS = config.NUM_GATE_SLOTS
+    VIA0_ENC_BY_LI_Y = config.VIA0_ENC_BY_LI_Y
+
     shapes = {layer: [] for layer in LAYER_MAP}
-    
+
     def add_shape(layer, x1, y1, x2, y2, net='', desc=''):
         shapes[layer].append({
             'x1': int(x1), 'y1': int(y1),
@@ -60,7 +79,7 @@ def generate_inverter_layout(nmos_nfin: int, pmos_nfin: int) -> dict:
     # Leave margin at bottom for VSS M1 rail
     y_margin_bot = 40
     y_margin_top = 40
-    
+
     # NMOS fin positions (bottom to top)
     nmos_fin_y = [y_margin_bot + i * FIN_PITCH for i in range(nmos_nfin)]
     nmos_fin_bot = nmos_fin_y[0]
@@ -342,46 +361,41 @@ def write_layout_json(layout_data: dict, filename: str):
     print(f"  Layout JSON written: {filename}")
 
 
-def generate_calibre_device_query(layout_data: dict) -> list:
+def generate_calibre_device_query(layout_data: dict, config=None) -> list:
     """
     Simulate Calibre SVDB device query output.
-    
+
     Format mimics what you'd get from:
       calibrequery -device -type MOS -param ...
-    
-    Each device entry contains:
-      - instance name
-      - device type  
-      - parameters (nfin, w, l, nf)
-      - pin-to-net mapping
-      - bounding box
     """
+    if config is None:
+        config = get_tech_config()
+
     devices = []
     for dev in layout_data['devices']:
-        # Compute device bbox from fin positions
         fin_ys = dev['fin_y_positions']
         gate_x = dev['gate_x']
-        
+
         dev_entry = {
             'instance': dev['name'],
             'device_type': dev['type'].upper(),
             'parameters': {
                 'nfin': dev['nfin'],
                 'nf': dev['nf'],
-                'l': POLY_WIDTH,            # gate length in nm
-                'w': dev['nfin'] * FIN_PITCH,  # effective width
+                'l': config.POLY_WIDTH,
+                'w': dev['nfin'] * config.FIN_PITCH,
             },
             'pins': dev['pins'],
             'bbox': {
-                'x1': int(gate_x - GATE_PITCH // 2),
-                'y1': int(fin_ys[0] - FIN_PITCH // 2),
-                'x2': int(gate_x + GATE_PITCH // 2),
-                'y2': int(fin_ys[-1] + FIN_PITCH // 2),
+                'x1': int(gate_x - config.GATE_PITCH // 2),
+                'y1': int(fin_ys[0] - config.FIN_PITCH // 2),
+                'x2': int(gate_x + config.GATE_PITCH // 2),
+                'y2': int(fin_ys[-1] + config.FIN_PITCH // 2),
             },
             'fin_y_positions': fin_ys,
         }
         devices.append(dev_entry)
-    
+
     return devices
 
 
@@ -436,17 +450,20 @@ def generate_bbox_by_layer(layout_data: dict) -> dict:
     return result
 
 
-def generate_cdl(layout_data: dict, filename: str):
+def generate_cdl(layout_data: dict, filename: str, config=None):
     """Generate a simple CDL (SPICE) netlist."""
+    if config is None:
+        config = get_tech_config()
+
     nfin_n = layout_data['params']['nmos_nfin']
     nfin_p = layout_data['params']['pmos_nfin']
     cell_name = f'INV_N{nfin_n}_P{nfin_p}'
-    
+
     with open(filename, 'w') as f:
         f.write(f"* CDL netlist for {cell_name}\n")
         f.write(f".SUBCKT {cell_name} VDD VSS IN OUT\n")
-        f.write(f"MN0 OUT IN VSS VSS nmos_finfet nfin={nfin_n} l={POLY_WIDTH}n\n")
-        f.write(f"MP0 OUT IN VDD VDD pmos_finfet nfin={nfin_p} l={POLY_WIDTH}n\n")
+        f.write(f"MN0 OUT IN VSS VSS nmos_finfet nfin={nfin_n} l={config.POLY_WIDTH}n\n")
+        f.write(f"MP0 OUT IN VDD VDD pmos_finfet nfin={nfin_p} l={config.POLY_WIDTH}n\n")
         f.write(f".ENDS {cell_name}\n")
     print(f"  CDL written: {filename}")
 
@@ -454,45 +471,66 @@ def generate_cdl(layout_data: dict, filename: str):
 # =========================================================
 # Main: generate all dummy fixtures
 # =========================================================
-def generate_all_fixtures(output_dir: str):
-    """Generate original and resized layout fixtures."""
+def generate_all_fixtures(output_dir: str,
+                          nmos_nfin_orig: int = 5, pmos_nfin_orig: int = 7,
+                          nmos_nfin_target: int = 4, pmos_nfin_target: int = 6,
+                          config=None):
+    """Generate original and target layout fixtures.
+
+    Args:
+        output_dir: Directory to write fixture files.
+        nmos_nfin_orig: Original NMOS fin count.
+        pmos_nfin_orig: Original PMOS fin count.
+        nmos_nfin_target: Target NMOS fin count (after resize).
+        pmos_nfin_target: Target PMOS fin count (after resize).
+        config: TechConfig instance.
+    """
+    if config is None:
+        config = get_tech_config()
+
     os.makedirs(output_dir, exist_ok=True)
-    
+
+    # --- GDS truth source path: write GDS first, then read back for bbox ---
+    from io_adapters.gds_io import write_gds as gds_write, gds_to_bbox_by_layer
+
     print("=" * 60)
-    print("Generating ORIGINAL layout (NMOS=5fin, PMOS=7fin)")
+    print(f"Generating ORIGINAL layout (NMOS={nmos_nfin_orig}fin, PMOS={pmos_nfin_orig}fin)")
     print("=" * 60)
-    orig = generate_inverter_layout(NMOS_NFIN, PMOS_NFIN)
-    
-    write_gds(orig, os.path.join(output_dir, 'buffer_original.gds'))
+    orig = generate_inverter_layout(nmos_nfin_orig, pmos_nfin_orig, config)
+
+    orig_gds_path = os.path.join(output_dir, 'buffer_original.gds')
+    gds_write(orig, orig_gds_path, layer_map=config.LAYER_MAP)
     write_layout_json(orig, os.path.join(output_dir, 'buffer_original.json'))
-    generate_cdl(orig, os.path.join(output_dir, 'buffer_original.cdl'))
-    
-    # Calibre query simulations
-    cal_dev = generate_calibre_device_query(orig)
+    generate_cdl(orig, os.path.join(output_dir, 'buffer_original.cdl'), config)
+
+    # Calibre query simulations (dummy LVS output)
+    cal_dev = generate_calibre_device_query(orig, config)
     with open(os.path.join(output_dir, 'calibre_device_query.json'), 'w') as f:
         json.dump(cal_dev, f, indent=2)
     print(f"  Calibre device query JSON written")
-    
+
     cal_net = generate_calibre_net_query(orig)
     with open(os.path.join(output_dir, 'calibre_net_query.json'), 'w') as f:
         json.dump(cal_net, f, indent=2)
     print(f"  Calibre net query JSON written")
-    
-    bbox_data = generate_bbox_by_layer(orig)
+
+    # bbox_by_layer: GDS round-trip (truth source is GDS, not Python dict)
+    bbox_data = gds_to_bbox_by_layer(orig_gds_path, layer_map=config.LAYER_MAP)
     with open(os.path.join(output_dir, 'bbox_by_layer.json'), 'w') as f:
         json.dump(bbox_data, f, indent=2)
-    print(f"  Bbox-by-layer JSON written")
-    
+    print(f"  Bbox-by-layer JSON written (from GDS read-back)")
+
     print()
     print("=" * 60)
-    print("Generating TARGET layout (NMOS=4fin, PMOS=6fin)")
+    print(f"Generating TARGET layout (NMOS={nmos_nfin_target}fin, PMOS={pmos_nfin_target}fin)")
     print("=" * 60)
-    target = generate_inverter_layout(NMOS_NFIN_TARGET, PMOS_NFIN_TARGET)
-    
-    write_gds(target, os.path.join(output_dir, 'buffer_target.gds'))
+    target = generate_inverter_layout(nmos_nfin_target, pmos_nfin_target, config)
+
+    target_gds_path = os.path.join(output_dir, 'buffer_target.gds')
+    gds_write(target, target_gds_path, layer_map=config.LAYER_MAP)
     write_layout_json(target, os.path.join(output_dir, 'buffer_target.json'))
-    generate_cdl(target, os.path.join(output_dir, 'buffer_target.cdl'))
-    
+    generate_cdl(target, os.path.join(output_dir, 'buffer_target.cdl'), config)
+
     print()
     print("All fixtures generated successfully.")
     print(f"Output directory: {output_dir}")

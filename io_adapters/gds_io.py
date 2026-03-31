@@ -16,7 +16,23 @@ import sys
 from typing import Dict, List, Tuple, Optional
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
-from tech.layer_map import LAYER_MAP, GDS_TO_LAYER
+
+# Layer map can be provided explicitly or loaded from defaults
+_default_layer_map = None
+_default_gds_to_layer = None
+
+
+def _get_layer_maps(layer_map=None):
+    """Get LAYER_MAP and GDS_TO_LAYER, using defaults if not provided."""
+    global _default_layer_map, _default_gds_to_layer
+    if layer_map is not None:
+        gds_to_layer = {v: k for k, v in layer_map.items()}
+        return layer_map, gds_to_layer
+    if _default_layer_map is None:
+        from tech.layer_map import LAYER_MAP, GDS_TO_LAYER
+        _default_layer_map = LAYER_MAP
+        _default_gds_to_layer = GDS_TO_LAYER
+    return _default_layer_map, _default_gds_to_layer
 
 # --- Detect gdstk availability ---
 try:
@@ -26,24 +42,24 @@ except ImportError:
     HAS_GDSTK = False
 
 
-def write_gds(layout_data: dict, filename: str):
+def write_gds(layout_data: dict, filename: str, layer_map: dict = None):
     """
     Write layout data dict to GDS file.
     Uses gdstk if available, otherwise falls back to manual writer.
     """
     if HAS_GDSTK:
-        _write_gds_gdstk(layout_data, filename)
+        _write_gds_gdstk(layout_data, filename, layer_map)
     else:
-        _write_gds_manual(layout_data, filename)
+        _write_gds_manual(layout_data, filename, layer_map)
 
 
-def read_gds(filename: str) -> Dict[str, List[dict]]:
+def read_gds(filename: str, layer_map: dict = None) -> Dict[str, List[dict]]:
     """
     Read GDS file and return shapes per layer.
-    
+
     Returns:
         {layer_name: [{'x1','y1','x2','y2'}, ...]}
-    
+
     Requires gdstk. Raises ImportError if not available.
     """
     if not HAS_GDSTK:
@@ -51,7 +67,7 @@ def read_gds(filename: str) -> Dict[str, List[dict]]:
             "gdstk is required for GDS reading. "
             "Install with: pip install gdstk"
         )
-    return _read_gds_gdstk(filename)
+    return _read_gds_gdstk(filename, layer_map)
 
 
 def compare_gds(file_a: str, file_b: str, 
@@ -95,24 +111,50 @@ def compare_gds(file_a: str, file_b: str,
     return result
 
 
+def gds_to_bbox_by_layer(gds_path: str, layer_map: dict = None) -> dict:
+    """
+    Read a GDS file and return shapes in bbox_by_layer format.
+
+    This is the GDS-first truth source path: geometry comes from GDS,
+    not from a Python dict. Note that GDS does not contain net/desc
+    metadata, so those fields are empty strings.
+
+    Returns:
+        {layer_name: [{'x1','y1','x2','y2','net':'','desc':''}, ...]}
+    """
+    raw = read_gds(gds_path, layer_map)
+    result = {}
+    for layer_name, shapes in raw.items():
+        result[layer_name] = [
+            {
+                'x1': s['x1'], 'y1': s['y1'],
+                'x2': s['x2'], 'y2': s['y2'],
+                'net': '', 'desc': '',
+            }
+            for s in shapes
+        ]
+    return result
+
+
 # =============================================================
 # gdstk implementation
 # =============================================================
 
-def _write_gds_gdstk(layout_data: dict, filename: str):
+def _write_gds_gdstk(layout_data: dict, filename: str, layer_map: dict = None):
     """Write GDS using gdstk."""
+    lm, _ = _get_layer_maps(layer_map)
     lib = gdstk.Library(unit=1e-9, precision=1e-12)
-    
+
     nfin_n = layout_data['params']['nmos_nfin']
     nfin_p = layout_data['params']['pmos_nfin']
     cell_name = f'INV_N{nfin_n}_P{nfin_p}'
-    
+
     cell = lib.new_cell(cell_name)
-    
+
     for layer_name, shape_list in layout_data['shapes'].items():
-        if layer_name not in LAYER_MAP:
+        if layer_name not in lm:
             continue
-        gds_layer, gds_dtype = LAYER_MAP[layer_name]
+        gds_layer, gds_dtype = lm[layer_name]
         
         for s in shape_list:
             rect = gdstk.rectangle(
@@ -127,16 +169,17 @@ def _write_gds_gdstk(layout_data: dict, filename: str):
     print(f"  GDS written (gdstk): {filename} (cell: {cell_name})")
 
 
-def _read_gds_gdstk(filename: str) -> Dict[str, List[dict]]:
+def _read_gds_gdstk(filename: str, layer_map: dict = None) -> Dict[str, List[dict]]:
     """Read GDS using gdstk, return shapes grouped by layer name."""
+    _, gds_to_layer = _get_layer_maps(layer_map)
     lib = gdstk.read_gds(filename)
-    
+
     result = {}
-    
+
     for cell in lib.cells:
         for polygon in cell.polygons:
             layer_key = (polygon.layer, polygon.datatype)
-            layer_name = GDS_TO_LAYER.get(layer_key)
+            layer_name = gds_to_layer.get(layer_key)
             if layer_name is None:
                 layer_name = f"L{polygon.layer}_D{polygon.datatype}"
             
@@ -162,23 +205,24 @@ def _read_gds_gdstk(filename: str) -> Dict[str, List[dict]]:
 # Manual fallback (uses dummy/gds_writer.py)
 # =============================================================
 
-def _write_gds_manual(layout_data: dict, filename: str):
+def _write_gds_manual(layout_data: dict, filename: str, layer_map: dict = None):
     """Write GDS using the manual stdlib-only writer."""
+    lm, _ = _get_layer_maps(layer_map)
     from dummy.gds_writer import GdsWriter
-    
+
     gds = GdsWriter(filename)
     gds.begin_lib('BUFFER_LIB')
-    
+
     nfin_n = layout_data['params']['nmos_nfin']
     nfin_p = layout_data['params']['pmos_nfin']
     cell_name = f'INV_N{nfin_n}_P{nfin_p}'
-    
+
     gds.begin_cell(cell_name)
-    
+
     for layer_name, shape_list in layout_data['shapes'].items():
-        if layer_name not in LAYER_MAP:
+        if layer_name not in lm:
             continue
-        gds_layer, gds_dtype = LAYER_MAP[layer_name]
+        gds_layer, gds_dtype = lm[layer_name]
         for s in shape_list:
             gds.rectangle(gds_layer, gds_dtype,
                           s['x1'], s['y1'], s['x2'], s['y2'])

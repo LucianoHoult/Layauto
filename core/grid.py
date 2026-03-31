@@ -22,10 +22,6 @@ from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Tuple
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
-from tech.tech_params import (
-    FIN_PITCH, GATE_PITCH, LI_PITCH, M1_PITCH,
-    FIN_WIDTH, POLY_WIDTH, LI_WIDTH, M1_WIDTH,
-)
 
 
 @dataclass
@@ -247,59 +243,57 @@ class MultiLayerGrid:
 # Factory: create the grid system from tech params
 # =============================================================
 
-def create_mvp_grid(nmos_fin_y: List[int] = None,
+def create_mvp_grid(config,
+                    nmos_fin_y: List[int] = None,
                     pmos_fin_y: List[int] = None,
                     m1_tracks_y: Dict[str, int] = None) -> MultiLayerGrid:
     """
     Create the multi-layer grid for the MVP inverter.
-    
+
     Args:
+        config: TechConfig instance with process parameters.
         nmos_fin_y: Y positions of NMOS fins (to determine FIN grid offset)
         pmos_fin_y: Y positions of PMOS fins
         m1_tracks_y: Dict of M1 track Y positions (to determine M1 offset)
-    
+
     The offsets are inferred from actual layout positions when available,
     or use defaults when not.
     """
     grid = MultiLayerGrid()
-    
+
     # --- FIN grid (horizontal, Y-pitch) ---
     fin_offset = nmos_fin_y[0] if nmos_fin_y else 40
     grid.add_layer(
-        LayerGrid('FIN', pitch=FIN_PITCH, offset=fin_offset,
-                  orientation='H', min_width=7),
-        ortho_layer='POLY'  # Along-track anchors from POLY grid
+        LayerGrid('FIN', pitch=config.FIN_PITCH, offset=fin_offset,
+                  orientation='H', min_width=config.FIN_WIDTH),
+        ortho_layer='POLY'
     )
-    
+
     # --- POLY grid (vertical, X-pitch) ---
     grid.add_layer(
-        LayerGrid('POLY', pitch=GATE_PITCH, offset=0,
-                  orientation='V', min_width=POLY_WIDTH),
-        ortho_layer='FIN'  # Along-track anchors from FIN grid
+        LayerGrid('POLY', pitch=config.GATE_PITCH, offset=0,
+                  orientation='V', min_width=config.POLY_WIDTH),
+        ortho_layer='FIN'
     )
-    
+
     # --- LI grid (vertical, X-pitch at half gate pitch) ---
-    # With LI_PITCH = 27nm (half CPP), track positions are:
-    #   t0=0 (dummy_L), t1=27 (S/D), t2=54 (gate), t3=81 (S/D), t4=108 (dummy_R)
-    # This covers both S/D contacts and gate contacts on one grid.
     li_offset = 0
     grid.add_layer(
-        LayerGrid('LI', pitch=LI_PITCH, offset=li_offset,
-                  orientation='V', min_width=LI_WIDTH),
-        ortho_layer='M1'  # Along-track anchors from M1 tracks
+        LayerGrid('LI', pitch=config.LI_PITCH, offset=li_offset,
+                  orientation='V', min_width=config.LI_WIDTH),
+        ortho_layer='M1'
     )
-    
+
     # --- M1 grid (horizontal, Y-pitch) ---
-    m1_offset = M1_PITCH // 2  # = 18nm
+    m1_offset = config.M1_PITCH // 2
     if m1_tracks_y:
-        # Infer offset from actual track positions
         first_track_y = min(m1_tracks_y.values())
-        m1_offset = first_track_y % M1_PITCH
+        m1_offset = first_track_y % config.M1_PITCH
     grid.add_layer(
-        LayerGrid('M1', pitch=M1_PITCH, offset=m1_offset,
-                  orientation='H', min_width=M1_WIDTH,
-                  legal_widths=[M1_WIDTH]),
-        ortho_layer='LI'  # Along-track anchors from LI tracks
+        LayerGrid('M1', pitch=config.M1_PITCH, offset=m1_offset,
+                  orientation='H', min_width=config.M1_WIDTH,
+                  legal_widths=[config.M1_WIDTH]),
+        ortho_layer='LI'
     )
-    
+
     return grid
