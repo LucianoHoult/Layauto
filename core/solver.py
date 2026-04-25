@@ -23,29 +23,10 @@ from core.data_model import (
 from core.grid import MultiLayerGrid
 from core.csp_engine import ConstraintEngine, GridCell
 from core.drc_constraints import create_mvp_drc_rules
+from core.diff import EditOp
 
 
 @dataclass
-class EditOp:
-    """A single layout edit operation."""
-    op_type: str            # 'remove_shape', 'add_shape', 'resize_device'
-    layer: str
-    old_bbox: Optional[Tuple] = None  # (x1, y1, x2, y2) in nm
-    new_bbox: Optional[Tuple] = None  # (x1, y1, x2, y2) in nm
-    net_id: str = ''
-    desc: str = ''
-    
-    def __repr__(self):
-        if self.op_type == 'remove_shape':
-            return f"REMOVE {self.layer} {self.desc} bbox={self.old_bbox}"
-        elif self.op_type == 'add_shape':
-            return f"ADD    {self.layer} {self.desc} bbox={self.new_bbox}"
-        elif self.op_type == 'resize_device':
-            return f"RESIZE {self.desc}"
-        return f"{self.op_type} {self.desc}"
-
-
-@dataclass 
 class ResizeResult:
     """Result of a resize operation."""
     success: bool

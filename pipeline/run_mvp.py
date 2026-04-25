@@ -17,7 +17,6 @@ Produces:
 import sys
 import os
 import json
-import copy
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 
@@ -26,133 +25,7 @@ from io_adapters.parser import build_layout_model
 from io_adapters.cdl_parser import parse_cdl, diff_cdl, get_device_param
 from io_adapters.gds_io import write_gds, gds_to_bbox_by_layer, HAS_GDSTK
 from core.solver import LayoutSolver
-
-
-def apply_edits_to_layout_data(orig_data: dict,
-                                edit_ops_n, edit_ops_p,
-                                new_nmos_nfin: int,
-                                new_pmos_nfin: int,
-                                config=None) -> dict:
-    """
-    Apply resize edit operations to the raw layout data dict.
-
-    This directly modifies shapes (coordinates) to produce the resized layout,
-    which can then be written to GDS and visualized.
-    """
-    if config is None:
-        from tech.config_loader import get_tech_config
-        config = get_tech_config()
-
-    OD_EXTENSION_BEYOND_FIN = config.OD_EXTENSION_BEYOND_FIN
-    POLY_EXTENSION_BEYOND_OD = config.POLY_EXTENSION_BEYOND_OD
-    VIA0_ENC_BY_LI_Y = config.VIA0_ENC_BY_LI_Y
-
-    result = copy.deepcopy(orig_data)
-    params = result['params']
-
-    old_nmos_nfin = params['nmos_nfin']
-    old_pmos_nfin = params['pmos_nfin']
-
-    # --- Recompute fin positions ---
-    nmos_fin_y_old = params['nmos_fin_y']
-    pmos_fin_y_old = params['pmos_fin_y']
-
-    nmos_fin_y_new = nmos_fin_y_old[:new_nmos_nfin]
-    pmos_fin_y_new = pmos_fin_y_old[:new_pmos_nfin]
-
-    # --- Update FIN layer: remove fins ---
-    new_fin_shapes = []
-    removed_nmos_ys = set(nmos_fin_y_old[new_nmos_nfin:])
-    removed_pmos_ys = set(pmos_fin_y_old[new_pmos_nfin:])
-
-    for s in result['shapes']['FIN']:
-        cy = (s['y1'] + s['y2']) / 2
-        cy_rounded = round(cy)
-        if cy_rounded in removed_nmos_ys or cy_rounded in removed_pmos_ys:
-            continue
-        new_fin_shapes.append(s)
-    result['shapes']['FIN'] = new_fin_shapes
-
-    # --- Update OD layer ---
-    od_ext = OD_EXTENSION_BEYOND_FIN
-    for s in result['shapes']['OD']:
-        cy = (s['y1'] + s['y2']) / 2
-        nmos_center = (nmos_fin_y_old[0] + nmos_fin_y_old[-1]) / 2
-        pmos_center = (pmos_fin_y_old[0] + pmos_fin_y_old[-1]) / 2
-
-        if abs(cy - nmos_center) < abs(cy - pmos_center):
-            s['y2'] = int(nmos_fin_y_new[-1] + od_ext)
-        else:
-            s['y2'] = int(pmos_fin_y_new[-1] + od_ext)
-
-    # --- Update POLY layer ---
-    nmos_od_bot = nmos_fin_y_new[0] - OD_EXTENSION_BEYOND_FIN
-    pmos_od_top = pmos_fin_y_new[-1] + OD_EXTENSION_BEYOND_FIN
-    poly_ext = POLY_EXTENSION_BEYOND_OD
-    poly_y_bot = nmos_od_bot - poly_ext
-    poly_y_top = pmos_od_top + poly_ext
-
-    for s in result['shapes']['POLY']:
-        s['y1'] = int(poly_y_bot)
-        s['y2'] = int(poly_y_top)
-
-    # --- Update LI layer ---
-    li_ext_y = 5
-    for s in result['shapes']['LI']:
-        desc = s.get('desc', '')
-        if 'nmos_source' in desc or 'nmos_drain' in desc:
-            s['y2'] = int(nmos_fin_y_new[-1] + li_ext_y)
-        elif 'pmos_source' in desc or 'pmos_drain' in desc:
-            s['y2'] = int(pmos_fin_y_new[-1] + li_ext_y)
-
-    # Re-extend LI if needed to cover via positions
-    m1_tracks = params['m1_tracks']
-    for s in result['shapes']['LI']:
-        desc = s.get('desc', '')
-        via_y = None
-        if 'nmos_source' in desc and 'VSS' in m1_tracks:
-            via_y = m1_tracks['VSS']
-        elif 'pmos_source' in desc and 'VDD' in m1_tracks:
-            via_y = m1_tracks['VDD']
-        elif 'drain' in desc and 'OUT' in m1_tracks:
-            via_y = m1_tracks['OUT']
-        elif 'gate' in desc and 'IN' in m1_tracks:
-            via_y = m1_tracks['IN']
-
-        if via_y is not None:
-            needed_bot = via_y - VIA0_ENC_BY_LI_Y
-            needed_top = via_y + VIA0_ENC_BY_LI_Y
-            if s['y1'] > needed_bot:
-                s['y1'] = int(needed_bot)
-            if s['y2'] < needed_top:
-                s['y2'] = int(needed_top)
-
-    # --- Update NWELL ---
-    nwell_margin = 30
-    for s in result['shapes']['NWELL']:
-        s['y2'] = int(pmos_fin_y_new[-1] + nwell_margin)
-
-    # --- Update cell height + BOUNDARY ---
-    new_cell_height = pmos_fin_y_new[-1] + 40
-    for s in result['shapes']['BOUNDARY']:
-        s['y2'] = int(new_cell_height)
-
-    # --- Update params ---
-    params['nmos_nfin'] = new_nmos_nfin
-    params['pmos_nfin'] = new_pmos_nfin
-    params['nmos_fin_y'] = nmos_fin_y_new
-    params['pmos_fin_y'] = pmos_fin_y_new
-    params['cell_height'] = int(new_cell_height)
-
-    for dev in result['devices']:
-        if dev['type'] == 'nmos':
-            dev['nfin'] = new_nmos_nfin
-            dev['fin_y_positions'] = nmos_fin_y_new
-        elif dev['type'] == 'pmos':
-            dev['nfin'] = new_pmos_nfin
-            dev['fin_y_positions'] = pmos_fin_y_new
-
-    return result
+from core.decoder import WritebackDecoder
 
 
 def generate_three_way_comparison(orig_data, resized_data, target_data,
@@ -422,9 +295,10 @@ def run_full_pipeline(original_cdl_path: str = None,
             new_pmos_nfin = t['new']
             edit_ops_p = results['MP0'].edit_ops
 
-    resized_data = apply_edits_to_layout_data(
-        orig_data, edit_ops_n, edit_ops_p,
-        new_nmos_nfin, new_pmos_nfin, config
+    decoder = WritebackDecoder(grid, config)
+    resized_data = decoder.apply(
+        orig_data, edit_ops_n + edit_ops_p,
+        new_nmos_nfin, new_pmos_nfin,
     )
 
     # Write GDS

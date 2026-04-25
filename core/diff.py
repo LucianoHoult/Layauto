@@ -15,8 +15,13 @@ from core.grid import MultiLayerGrid
 
 @dataclass
 class EditOp:
-    """A single layout edit operation."""
-    op_type: str            # 'remove_shape', 'add_shape', 'modify_shape'
+    """A single layout edit operation.
+
+    Canonical op_type values: 'remove_shape', 'add_shape', 'modify_shape',
+    'resize_device'. This class is the L1 record consumed by writeback
+    (GDS/SKILL emitters) — see docs/architecture_roadmap.md (M1).
+    """
+    op_type: str
     layer: str
     old_bbox: Optional[Tuple] = None  # (x1, y1, x2, y2) in nm
     new_bbox: Optional[Tuple] = None  # (x1, y1, x2, y2) in nm
@@ -30,6 +35,8 @@ class EditOp:
             return f"ADD    {self.layer} {self.desc} bbox={self.new_bbox}"
         elif self.op_type == 'modify_shape':
             return f"MODIFY {self.layer} {self.desc} {self.old_bbox} → {self.new_bbox}"
+        elif self.op_type == 'resize_device':
+            return f"RESIZE {self.desc}"
         return f"{self.op_type} {self.desc}"
 
 

@@ -2,7 +2,7 @@
 
 **Purpose.** Living tracker for the multi-milestone architectural evolution of the Layauto layout pipeline. This document is the canonical handoff artifact: any new contributor (human or Claude session) should read it first, re-verify the file/line references in [Verification Snapshot](#verification-snapshot), then pick the next milestone from [Milestone Roadmap](#milestone-roadmap).
 
-**Last verified:** 2026-04-25 on branch `claude/check-stream-env-vars-N5suX`.
+**Last verified:** 2026-04-25 on branch `claude/m1-decoder-writeback` (post-M1).
 
 **How to update.**
 - When a milestone moves status, flip its checkbox and append a [Change Log](#change-log) entry (date, milestone, what changed).
@@ -32,8 +32,8 @@ The roadmap below assumes specific file/line locations. These were confirmed on 
 
 | # | Claim | Where (verified 2026-04-25) | State |
 |---|-------|-----------------------------|-------|
-| 1 | Two `EditOp` classes coexist | `core/diff.py:16-33` and `core/solver.py:28-45` | drift target |
-| 2 | Per-layer hardcoded y1/y2 in writeback | `pipeline/run_mvp.py:31-155` (loops at 63-138) | drift target |
+| 1 | ~~Two `EditOp` classes coexist~~ | Single canonical class at `core/diff.py:16-37`; `core/solver.py:26` imports it | resolved by M1 (2026-04-25) |
+| 2 | ~~Per-layer hardcoded y1/y2 in writeback~~ | `apply_edits_to_layout_data` removed; writeback consolidated in `core/decoder.py::WritebackDecoder` (`pipeline/run_mvp.py:297-301` is the sole call site) | resolved by M1 (2026-04-25) |
 | 3 | `resize_device` bypasses CSP for geometry | `core/solver.py:208-419` | drift target |
 | 4 | CSP engine has only `checkpoint`/`restore` + stateless `unassign` (no `propose_assign`/`commit_with_delta`) | `core/csp_engine.py:296-300, 334` | drift target |
 | 5 | Anchor-layer propagation filter exists | `core/csp_engine.py:250-254` | OK to keep |
@@ -42,7 +42,7 @@ The roadmap below assumes specific file/line locations. These were confirmed on 
 | 8 | `OccupantType.DEVICE_GATE` / `DEVICE_DIFF` defined but unused; no `CUT` | `core/data_model.py:21-28` | placeholder only |
 | 9 | `MultiLayerGrid` is 1D-track only; no `CellOccupancy` | `core/grid.py:87-240` | not built |
 | 10 | No net-equivalence union-find in CSP | `core/csp_engine.py` (whole file) | not built |
-| 11 | NWELL / BOUNDARY produced by hardcoded loops | `pipeline/run_mvp.py:130-138` | drift target |
+| 11 | NWELL / BOUNDARY produced by hardcoded formulas | Loops removed from `pipeline/run_mvp.py` in M1c; formulas now live as transitional Phase 2 helpers in `core/decoder.py` (`_derive_nwell`, `_derive_boundary`); will be evicted in M5 | drift target (consolidated, awaiting M5) |
 | 12 | No `core/drc_derivator.py`; no `is_derived` field | absent | not built |
 | 13 | No `core/macros/` directory; no `pick_macro` dispatch | absent | not built |
 | 14 | `diff_to_edit_ops` handles add/remove only (no device-level) | `core/diff.py:66-74` | drift target |
@@ -134,20 +134,25 @@ Each milestone has a status checkbox (Not started / In progress / Done / Blocked
 
 ### M1 — Unify `EditOp` and route writeback through a decoder
 
-- **Status:** [ ] Not started
-- **Owner:** _unassigned_
-- **Goal.** Eliminate the duplicate `EditOp` between `core/diff.py` and `core/solver.py`. Replace per-layer hardcoded geometry recomputation in `apply_edits_to_layout_data` with a decoder that consumes a unified `EditOp` stream and routes coordinate computation through `MultiLayerGrid.segment_to_physical`.
+- **Status:** [x] Done (2026-04-25)
+- **Owner:** Claude (`claude/m1-decoder-writeback`)
+- **Goal.** Eliminate the duplicate `EditOp` between `core/diff.py` and `core/solver.py`. Replace per-layer hardcoded geometry recomputation in `apply_edits_to_layout_data` with a decoder that consumes a unified `EditOp` stream.
+- **Sub-milestones (all complete).**
+  - **M1a (Done, 2026-04-25):** Deleted the duplicate `EditOp` in `core/solver.py`; canonical class lives at `core/diff.py:16-37` with all four op_types (`remove_shape`, `add_shape`, `modify_shape`, `resize_device`).
+  - **M1b (Done, 2026-04-25):** Built `core/decoder.py::WritebackDecoder` — Phase 1 applies explicit EditOps (FIN remove by center-Y match; OD modify by old-bbox match), Phase 2 derives geometry the solver does not yet emit (POLY span, LI shrink + via-coverage extension, NWELL/BOUNDARY extents), Phase 3 updates params + device metadata. The Phase 2 surface is the seam where the M5 derivator and richer M2 EditOps will land.
+  - **M1c (Done, 2026-04-25):** Removed the legacy `apply_edits_to_layout_data` function from `pipeline/run_mvp.py`; the pipeline now calls `WritebackDecoder(grid, config).apply(...)` once at `pipeline/run_mvp.py:297-301`.
 - **Files touched.**
-  - `core/diff.py` — sole `EditOp` definition: `ShapeAdd` / `ShapeRemove` / `ShapeModify` + `layer` + `bbox_nm` + `provenance`.
-  - `core/solver.py:208-419` — drop the local `EditOp` class; `resize_device` emits the unified format.
-  - `pipeline/run_mvp.py:31-155` — `apply_edits_to_layout_data` becomes a decoder loop; keep the `deepcopy` transaction boundary.
-  - `core/grid.py` — strengthen `segment_to_physical` to cover FIN / OD / POLY / LI / NWELL / BOUNDARY completely.
-- **Change outline.**
-  - Stop branching on layer to recompute y1/y2; iterate `EditOp`s and patch in place.
-  - Migration strategy: dual-write — keep the legacy hardcoded path alongside the decoder, byte-diff golden against the live MVP, then remove the legacy path.
-- **Acceptance.** Buffer resize (nfin 5↔7, 5↔3) passes end-to-end; output GDS/JSON byte-identical to current MVP golden.
+  - `core/diff.py` — sole `EditOp` definition (M1a).
+  - `core/solver.py:26` — imports `EditOp` from `core.diff` (M1a).
+  - **New** `core/decoder.py` — `WritebackDecoder` class (M1b).
+  - `pipeline/run_mvp.py` — removed 125-line `apply_edits_to_layout_data`; replaced with single decoder invocation (M1c).
+  - **New** `tests/unit/test_decoder.py` — five direct decoder tests.
+- **Acceptance (verified).** Pipeline buffer resize (5/7 → 4/6) byte-identical: JSON, CDL, and `resize_report.txt` byte-equal under fixed `PYTHONHASHSEED`; GDS polygons identical (30/30 (layer, datatype, points) tuples match). Pytest 38/38 green (33 existing + 5 new decoder tests).
 - **Dependencies.** None — first PR.
-- **Risks.** Hidden ordering coupling inside the legacy hardcoded branches (e.g., POLY y1 depending on OD already adjusted).
+- **Notes for downstream milestones.**
+  - `core/grid.py::segment_to_physical` was *not* strengthened in M1; the decoder operates on shape dicts directly using EditOp bbox truth. M4 will add cell-grid coordinate translation when B-tier `CellOccupancy` lands.
+  - The decoder's Phase 2 derivation (POLY span, NWELL/BOUNDARY) is where M5's `drc_derivator.py` will plug in. Each Phase 2 helper is named `_derive_*` to make the eviction surface explicit.
+  - The shrink-then-extend ordering for LI (Phase 2 `_shrink_li_sd_bars` followed by `_extend_li_for_vias`) preserves the legacy ordering coupling identified in the original risk note.
 
 ### M2 — CSP genuinely drives resize decisions, with strict layer-1/2/3 split
 
@@ -158,7 +163,7 @@ Each milestone has a status checkbox (Not started / In progress / Done / Blocked
   - `core/solver.py:208-419` — `resize_device` becomes an L3 macro; geometry recomputation moves out to the decoder.
   - `core/csp_engine.py` — expose stable API: `propose_assign` / `propose_release` / `checkpoint` / `restore` / `commit_with_delta`. Returns feasibility + cell delta.
   - **New** `core/atomic_ops.py` — L2 primitives: `add_segment`, `remove_segment`, `modify_segment`, `add_via`, `remove_via`, `add_cell_occupancy`, `remove_cell_occupancy`, `extend_od`, `extend_poly`, `add_fin_strip`, `remove_fin_strip`, `add_cut_cell`, `remove_cut_cell`, `mark_shared_diffusion`.
-  - **New** `core/decoder.py` — subscribes to commit deltas; emits L1 `EditOp`s and updates `LayoutModel` indexes; sole holder of `segment_to_physical`.
+  - `core/decoder.py` (existing, M1) — extend `WritebackDecoder` to subscribe to CSP commit deltas; the solver now emits POLY EditOps so the transitional `_derive_poly_span` Phase 2 helper is dead code and is deleted in this milestone. `_extend_li_for_vias` likewise becomes obsolete once LI extension is a CSP-emitted constraint and is deleted.
 - **Change outline.**
   - L2 must not touch `LayoutModel`, must not produce L1, must not decide feasibility.
   - `device_resize` macro: metadata delta → ordered sequence of `extend_od` + `extend_poly` + `add/remove_fin_strip` calls, wrapped by `engine.checkpoint`/`restore`.
@@ -216,7 +221,7 @@ Each milestone has a status checkbox (Not started / In progress / Done / Blocked
 - **Goal.** Pull all C1 derived markings out of `pipeline/run_mvp.py` hardcoded loops. A `drc_derivator` subscribes to CSP commit deltas and emits these shapes as a pure function of A/B-tier state + Device metadata.
 - **Files touched.**
   - **New** `core/drc_derivator.py` — subscribes to CSP commit deltas; pure-function derivation of C1 shape sets.
-  - `pipeline/run_mvp.py` — delete the NWELL and BOUNDARY hardcoded loops.
+  - `core/decoder.py` (existing, M1) — delete the transitional Phase 2 helpers `_derive_nwell` and `_derive_boundary`; the derivator now emits these as L1 EditOps post-CSP-commit, consumed by the decoder's Phase 1 path.
   - `core/drc_constraints.py` — tabulate NWELL-to-OD, VT-to-OD, PP-to-NMOS, NP-to-PMOS, BOUNDARY margin, DNW-to-NWELL rules.
   - `core/data_model.py` — add `ShapeRecord.is_derived`; the decoder rejects direct edits to derived shapes.
 - **Change outline.**
@@ -284,7 +289,7 @@ Each milestone has a status checkbox (Not started / In progress / Done / Blocked
 
 ## Minimal Starter PR
 
-If only one milestone is in scope: **start with M1.** It addresses the largest writeback inconsistency (the duplicate `EditOp` + per-layer hardcoded geometry), and every later milestone depends on a unified `EditOp` plus a decoder. M2 onward layer in transactional CSP, parser inversion, B-tier cells, derivators, macros, and tool closure on top of the M1 foundation.
+M1 has landed (see [M1 milestone block](#m1--unify-editop-and-route-writeback-through-a-decoder)). The next minimal-blast-radius starter is **M2** — give the CSP engine a real transactional API (`propose_assign` / `commit_with_delta` / strengthen `restore`) and demote `resize_device` to an L3 macro that expands into L2 primitives. M2 unblocks every later milestone (parser inversion, B-tier cells, derivators, macros, tool closure) and is the first PR where CSP genuinely drives geometry rather than passively sanity-checking it.
 
 ---
 
@@ -400,4 +405,6 @@ Append entries when status flips, when verification snapshot is refreshed, or wh
 
 | Date | Author | Change |
 |------|--------|--------|
+| 2026-04-25 | Claude (`claude/m1-decoder-writeback`) | Roadmap refinement after M1 implementation: M2 milestone block now records that it deletes the decoder's `_derive_poly_span` and `_extend_li_for_vias` helpers; M5 block records that it deletes `_derive_nwell` / `_derive_boundary`. Verification snapshot row 11 updated — the NWELL/BOUNDARY formulas are no longer in `pipeline/run_mvp.py:130-138` (M1c removed those loops); they are consolidated as transitional Phase 2 helpers in `core/decoder.py` awaiting the M5 derivator. Makes the M1 → M2 / M5 eviction path mechanical rather than implicit. |
+| 2026-04-25 | Claude (`claude/m1-decoder-writeback`) | **M1 complete.** M1a: unified `EditOp` (`core/diff.py:16-37`; `core/solver.py:26` imports); duplicate dataclass removed. M1b: built `core/decoder.py::WritebackDecoder` consolidating writeback geometry into Phase 1 (explicit EditOp apply: FIN remove + OD modify) and Phase 2 (derived: POLY span, LI shrink + via-coverage extension, NWELL/BOUNDARY extents). M1c: removed legacy 125-line `apply_edits_to_layout_data` from `pipeline/run_mvp.py`; sole call site is the decoder. Verification snapshot rows 1 and 2 marked resolved. Acceptance: pipeline JSON/CDL/report byte-identical under fixed `PYTHONHASHSEED`; GDS polygons identical (30/30); pytest 38/38 (added 5 decoder tests). Discovery: M1's "decoder consumes EditOp stream" goal is partial — the solver emits EditOps for FIN/OD/LI but not POLY/NWELL/BOUNDARY; the decoder's Phase 2 fills the gap and is the seam where M5's derivator will plug in. |
 | 2026-04-25 | Claude (session `claude/check-stream-env-vars-N5suX`) | Initial English roadmap created from Chinese architecture-analysis source. Verification snapshot generated against branch state on this date. All seven milestones marked Not started. |
