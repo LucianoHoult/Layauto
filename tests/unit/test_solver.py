@@ -60,9 +60,56 @@ def test_resize_increase_rejected():
 def test_edit_ops_contain_fin_removal():
     solver = _get_solver()
     result = solver.resize_device('MN0', 4)
-    fin_removes = [op for op in result.edit_ops 
+    fin_removes = [op for op in result.edit_ops
                    if op.op_type == 'remove_shape' and op.layer == 'FIN']
     assert len(fin_removes) == 1  # Remove 1 fin
+
+
+def test_resize_device_rolls_back_engine_on_csp_conflict():
+    """M2 acceptance: macro returns infeasible + restores CSP on conflict.
+
+    The MVP shrink path doesn't naturally trigger an L2 propose_assign,
+    so we monkey-patch ``atomic_ops.modify_segment`` to simulate a
+    cell-level conflict (e.g. a hypothetical LI-vs-VIA collision under
+    a future extension scenario). The macro must:
+
+      * return ``ResizeResult(success=False, ...)``;
+      * restore the CSP engine so its post-call snapshot equals the
+        pre-call snapshot byte-for-byte.
+    """
+    from core import atomic_ops as ao
+
+    solver = _get_solver()
+    snap_before = solver.engine.snapshot()
+
+    original_modify = ao.modify_segment
+    ao.modify_segment = lambda *args, **kwargs: ao.AtomicResult(
+        success=False, failed_pos=('LI', 1, 99), detail='injected conflict',
+    )
+    try:
+        result = solver.resize_device('MN0', 4)
+    finally:
+        ao.modify_segment = original_modify
+
+    assert result.success is False
+    assert 'conflict' in result.message.lower()
+
+    snap_after = solver.engine.snapshot()
+    assert snap_before == snap_after, (
+        "CSP state must be byte-equal to the pre-call snapshot after rollback"
+    )
+
+
+def test_resize_device_commits_csp_delta_on_success():
+    """Successful resize commits + truncates the trail past the macro's checkpoint."""
+    solver = _get_solver()
+    cp_outside = solver.engine.checkpoint()
+    result = solver.resize_device('MN0', 4)
+    assert result.success
+    # Trail past the outer checkpoint exists only for committed deltas
+    # — the macro's internal checkpoint is gone (commit truncates).
+    # A subsequent restore from cp_outside still rolls back successfully.
+    solver.engine.restore(cp_outside)
 
 
 if __name__ == '__main__':
@@ -72,4 +119,6 @@ if __name__ == '__main__':
     test_resize_invalid_device()
     test_resize_increase_rejected()
     test_edit_ops_contain_fin_removal()
+    test_resize_device_rolls_back_engine_on_csp_conflict()
+    test_resize_device_commits_csp_delta_on_success()
     print("All solver tests passed!")

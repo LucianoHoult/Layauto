@@ -3,19 +3,25 @@ Writeback decoder: consumes EditOp stream + new device parameters,
 produces a modified layout data dict that downstream writers (GDS / SKILL /
 JSON) can serialize.
 
-Per docs/architecture_roadmap.md (M1), this consolidates writeback geometry
-into a single class. Two paths run in sequence:
+Per ``docs/architecture_roadmap.md`` (M1) this consolidates writeback
+geometry into a single class. After M2 the EditOp surface widened: the
+``device_resize`` L3 macro now emits L1 records for FIN, OD, **LI**
+(post-shrink + post-via-coverage extent), and **POLY** (partial-bbox
+endpoint shifts). The transitional Phase 2 helpers
+``_shrink_li_sd_bars`` / ``_extend_li_for_vias`` / ``_derive_poly_span``
+are gone.
 
-  1. EditOp consumer — apply explicit shape edits emitted by the solver
-     (FIN removes, OD resize). Identifies target shapes by old_bbox.
-  2. Derived synthesis — recompute geometry the solver does not yet emit
-     (POLY span, LI shrink + via-coverage extension, NWELL/BOUNDARY
-     extents). M5 will move C1 derivation (NWELL/BOUNDARY/etc.) to
-     core/drc_derivator.py; M2 will let CSP-emitted EditOps cover more
-     A/B-tier geometry, shrinking the derivation surface.
+Phases:
 
-The decoder is the sole place writeback geometry lives; pipeline/run_mvp.py
-only invokes WritebackDecoder.apply().
+  1. **EditOp consumer** — apply explicit shape edits emitted by the
+     macro: FIN remove, OD modify, LI modify, POLY modify (partial).
+  2. **Derived synthesis** — recompute geometry the macro still does
+     not emit. After M2 this is just NWELL/BOUNDARY, both flagged for
+     deletion in M5 once ``core/drc_derivator.py`` lands.
+  3. **Metadata update** — params + device records.
+
+The decoder is the sole place writeback geometry lives;
+``pipeline/run_mvp.py`` only invokes ``WritebackDecoder.apply()``.
 """
 
 import copy
@@ -44,14 +50,14 @@ class WritebackDecoder:
         nmos_fin_y_new = nmos_fin_y_old[:new_nmos_nfin]
         pmos_fin_y_new = pmos_fin_y_old[:new_pmos_nfin]
 
-        # Phase 1: apply explicit EditOps from the solver.
+        # Phase 1: apply explicit EditOps from the L3 macro.
         self._apply_fin_removes(result, edit_ops)
         self._apply_od_modifies(result, edit_ops)
+        self._apply_li_modifies(result, edit_ops)
+        self._apply_poly_modifies(result, edit_ops)
 
-        # Phase 2: derive layer geometry not yet emitted as EditOps.
-        self._shrink_li_sd_bars(result, nmos_fin_y_new, pmos_fin_y_new)
-        self._derive_poly_span(result, nmos_fin_y_new, pmos_fin_y_new)
-        self._extend_li_for_vias(result, params)
+        # Phase 2: derive C1 geometry the macro still does not emit
+        # (NWELL / BOUNDARY). M5 evicts these into core/drc_derivator.py.
         self._derive_nwell(result, pmos_fin_y_new)
         self._derive_boundary(result, pmos_fin_y_new)
 
@@ -102,50 +108,62 @@ class WritebackDecoder:
                 )
                 break
 
-    # --- Phase 2 ---
+    def _apply_li_modifies(self, result: dict, edit_ops: List[EditOp]) -> None:
+        """Apply LI modify_shape ops emitted by the L3 macro (M2).
 
-    def _shrink_li_sd_bars(self, result, nmos_fin_y_new, pmos_fin_y_new):
-        li_ext_y = 5
-        for s in result['shapes'].get('LI', []):
-            desc = s.get('desc', '')
-            if 'nmos_source' in desc or 'nmos_drain' in desc:
-                s['y2'] = int(nmos_fin_y_new[-1] + li_ext_y)
-            elif 'pmos_source' in desc or 'pmos_drain' in desc:
-                s['y2'] = int(pmos_fin_y_new[-1] + li_ext_y)
-
-    def _derive_poly_span(self, result, nmos_fin_y_new, pmos_fin_y_new):
-        od_ext = self.config.OD_EXTENSION_BEYOND_FIN
-        poly_ext = self.config.POLY_EXTENSION_BEYOND_OD
-        nmos_od_bot = nmos_fin_y_new[0] - od_ext
-        pmos_od_top = pmos_fin_y_new[-1] + od_ext
-        poly_y_bot = nmos_od_bot - poly_ext
-        poly_y_top = pmos_od_top + poly_ext
-        for s in result['shapes'].get('POLY', []):
-            s['y1'] = int(poly_y_bot)
-            s['y2'] = int(poly_y_top)
-
-    def _extend_li_for_vias(self, result, params):
-        m1_tracks = params.get('m1_tracks', {})
-        enc = self.config.VIA0_ENC_BY_LI_Y
-        for s in result['shapes'].get('LI', []):
-            desc = s.get('desc', '')
-            via_y = None
-            if 'nmos_source' in desc and 'VSS' in m1_tracks:
-                via_y = m1_tracks['VSS']
-            elif 'pmos_source' in desc and 'VDD' in m1_tracks:
-                via_y = m1_tracks['VDD']
-            elif 'drain' in desc and 'OUT' in m1_tracks:
-                via_y = m1_tracks['OUT']
-            elif 'gate' in desc and 'IN' in m1_tracks:
-                via_y = m1_tracks['IN']
-            if via_y is None:
+        The macro embeds the *final* bbox (post-shrink, post-via-coverage)
+        so the decoder is a passive applier. Old code's
+        ``_shrink_li_sd_bars`` + ``_extend_li_for_vias`` derivation is
+        deleted.
+        """
+        for op in edit_ops:
+            if op.layer != 'LI':
                 continue
-            needed_bot = via_y - enc
-            needed_top = via_y + enc
-            if s['y1'] > needed_bot:
-                s['y1'] = int(needed_bot)
-            if s['y2'] < needed_top:
-                s['y2'] = int(needed_top)
+            if op.op_type not in ('modify_shape', 'resize_device'):
+                continue
+            if op.old_bbox is None or op.new_bbox is None:
+                continue
+            ox1, oy1, ox2, oy2 = op.old_bbox
+            nx1, ny1, nx2, ny2 = op.new_bbox
+            for s in result['shapes'].get('LI', []):
+                if (s['x1'], s['y1'], s['x2'], s['y2']) != (ox1, oy1, ox2, oy2):
+                    continue
+                s['x1'], s['y1'], s['x2'], s['y2'] = (
+                    int(nx1), int(ny1), int(nx2), int(ny2),
+                )
+                break
+
+    def _apply_poly_modifies(self, result: dict, edit_ops: List[EditOp]) -> None:
+        """Apply POLY modify_shape ops (M2).
+
+        POLY ops are emitted with **partial bboxes**: ``None`` in slots
+        the macro doesn't change. The convention is one endpoint per op
+        (NMOS macro shifts y1; PMOS macro shifts y2). For each op, we
+        find every POLY shape whose matching coord equals ``old`` and
+        update it to ``new`` — the partial-edit pattern keeps the
+        side-channel narrow until POLY enters the shape_pool in M3.
+        Old ``_derive_poly_span`` derivation is deleted.
+        """
+        for op in edit_ops:
+            if op.layer != 'POLY':
+                continue
+            if op.op_type not in ('modify_shape', 'resize_device'):
+                continue
+            if op.old_bbox is None or op.new_bbox is None:
+                continue
+            ox1, oy1, ox2, oy2 = op.old_bbox
+            nx1, ny1, nx2, ny2 = op.new_bbox
+            for s in result['shapes'].get('POLY', []):
+                if oy1 is not None and ny1 is not None and s['y1'] == oy1:
+                    s['y1'] = int(ny1)
+                if oy2 is not None and ny2 is not None and s['y2'] == oy2:
+                    s['y2'] = int(ny2)
+                if ox1 is not None and nx1 is not None and s['x1'] == ox1:
+                    s['x1'] = int(nx1)
+                if ox2 is not None and nx2 is not None and s['x2'] == ox2:
+                    s['x2'] = int(nx2)
+
+    # --- Phase 2 (transitional; M5 evicts both) ---
 
     def _derive_nwell(self, result, pmos_fin_y_new):
         nwell_margin = 30

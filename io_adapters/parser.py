@@ -184,7 +184,7 @@ def build_layout_model(device_query_path: str,
             elif layer in grid.layers:
                 # Wire segment: map to track coordinates
                 coords = grid.physical_to_segment_coords(layer, x1, y1, x2, y2)
-                
+
                 seg = TrackSegment(
                     layer=layer,
                     track_idx=coords['track_idx'],
@@ -194,6 +194,7 @@ def build_layout_model(device_query_path: str,
                     start_offset_nm=coords['start_offset_nm'],
                     end_offset_nm=coords['end_offset_nm'],
                     desc=shape.get('desc', ''),
+                    bbox_nm=(int(x1), int(y1), int(x2), int(y2)),
                 )
                 net.segments.append(seg)
         

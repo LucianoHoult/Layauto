@@ -7,6 +7,22 @@ Pipeline:
   3. Load existing segments into CSP (assign cells)
   4. Execute resize: release old cells, assign new cells, check feasibility
   5. Generate diff (list of changes)
+
+M2 (see ``docs/architecture_roadmap.md``): ``resize_device`` is the L3
+``device_resize`` macro. It:
+  * brackets work in ``engine.checkpoint`` / ``engine.commit_with_delta``;
+  * routes LI cell-level changes through L2 primitives in
+    ``core/atomic_ops.py`` (which only call ``propose_assign`` /
+    ``propose_release``);
+  * emits L1 ``EditOp`` records with the **final** bbox (post-shrink and
+    post-via-coverage extension), so the decoder's Phase 2 derivation
+    helpers ``_shrink_li_sd_bars``, ``_extend_li_for_vias``, and
+    ``_derive_poly_span`` are deleted in this milestone.
+
+Layers not yet modelled in CSP (FIN / OD / POLY / NWELL / BOUNDARY) flow
+through the "non-CSP side-channel" described in the roadmap: the macro
+emits L1 records directly. M3 / M4 / M5 will pull them into CSP / cell
+occupancy / the C1 derivator.
 """
 
 import sys
@@ -24,6 +40,7 @@ from core.grid import MultiLayerGrid
 from core.csp_engine import ConstraintEngine, GridCell
 from core.drc_constraints import create_mvp_drc_rules
 from core.diff import EditOp
+from core import atomic_ops
 
 
 @dataclass
@@ -187,167 +204,248 @@ class LayoutSolver:
         return True
     
     def resize_device(self, device_name: str, new_nfin: int) -> ResizeResult:
-        """
-        Resize a device by changing its fin count.
-        
-        For MVP: reduces fin count by removing the outermost fin(s).
-        This affects:
-          - FIN layer (conceptual, not in CSP)
-          - OD layer (conceptual, not in CSP)
-          - LI S/D contact bar: shortened (fewer fins to span)
-          - Via0: may need to be repositioned
-          - M1: usually unchanged for small fin changes
-        
-        Returns ResizeResult with success status and edit operations.
+        """L3 ``device_resize`` macro (M2).
+
+        Reduces ``device_name``'s fin count to ``new_nfin``. Within one
+        ``checkpoint`` / ``commit_with_delta`` transaction:
+
+        * **LI** S/D contact bars are reshaped through L2 primitives
+          (``atomic_ops.modify_segment``), which call ``propose_release``
+          on the cells trailing past the new endpoint and ``propose_assign``
+          on the cells that must remain (anchoring via-coverage). On any
+          infeasible proposal, the engine is restored to the pre-call
+          checkpoint and the macro returns ``infeasible``.
+        * **FIN / OD / POLY** are not yet modelled in CSP (M3 / M4 / M5);
+          the macro emits L1 ``EditOp`` records for them directly via the
+          non-CSP side-channel.
+        * The emitted L1 LI ``EditOp`` carries the **final** bbox
+          (post-shrink + post-via-coverage extension) so the decoder no
+          longer needs ``_shrink_li_sd_bars`` / ``_extend_li_for_vias``.
+          Likewise, POLY ``EditOp`` records make ``_derive_poly_span``
+          obsolete.
         """
         device = self.model.get_device(device_name)
         if device is None:
             return ResizeResult(False, f"Device {device_name} not found")
-        
+
         if new_nfin >= device.nfin:
-            return ResizeResult(False, 
+            return ResizeResult(False,
                 f"new_nfin ({new_nfin}) must be less than current ({device.nfin})")
-        
+
         delta_fins = device.nfin - new_nfin
-        
+
         print(f"\n{'='*60}")
         print(f"Resizing {device_name}: {device.nfin}fin → {new_nfin}fin (Δ={-delta_fins})")
         print(f"{'='*60}")
-        
-        edit_ops = []
-        new_segments = {}
-        
-        # --- Determine which fins are removed ---
-        # Strategy: remove from the top (outermost fin)
+
+        # --- Determine which fins are removed (top-down strategy) ---
         fin_grid = self.grid.get_layer('FIN')
+        m1_grid = self.grid.get_layer('M1')
         old_fin_tracks = list(device.fin_track_indices)
         removed_fin_tracks = old_fin_tracks[-delta_fins:]
         remaining_fin_tracks = old_fin_tracks[:-delta_fins]
-        
+
         print(f"  Old fin tracks: {old_fin_tracks}")
         print(f"  Removing: {removed_fin_tracks}")
         print(f"  Remaining: {remaining_fin_tracks}")
-        
-        # Physical coordinates of removed fins
+
+        old_top_fin_y = fin_grid.track_to_physical(old_fin_tracks[-1])
+        new_top_fin_y = fin_grid.track_to_physical(remaining_fin_tracks[-1])
+        old_bot_fin_y = fin_grid.track_to_physical(old_fin_tracks[0])
+        new_bot_fin_y = fin_grid.track_to_physical(remaining_fin_tracks[0])
+
+        # --- Open transaction; any infeasibility unwinds via restore() ---
+        cp = self.engine.checkpoint() if self.engine else None
+
+        # Transactional body. If a propose_assign returns False, we unwind
+        # immediately. The macro never produces partial state.
+        edit_ops: List[EditOp] = []
+        new_segments: Dict[str, List[TrackSegment]] = {}
+
+        try:
+            # 1. FIN removes (non-CSP side-channel).
+            self._emit_fin_removes(edit_ops, device_name,
+                                    fin_grid, removed_fin_tracks)
+
+            # 2. OD modify (non-CSP side-channel).
+            self._emit_od_modify(edit_ops, device_name,
+                                  old_bot_fin_y, old_top_fin_y, new_top_fin_y)
+
+            # 3. LI S/D contact bars: route cell-level changes through L2,
+            #    then emit the L1 EditOp with the final bbox.
+            li_failure = self._reshape_li_sd_bars(
+                edit_ops, new_segments, device,
+                old_fin_tracks, removed_fin_tracks,
+                new_top_fin_y, m1_grid,
+            )
+            if li_failure is not None:
+                if cp is not None:
+                    self.engine.restore(cp)
+                return ResizeResult(False, li_failure)
+
+            # 4. POLY span (non-CSP side-channel). Only emit when this
+            #    device's owned poly endpoint actually moved.
+            self._emit_poly_modify_if_endpoint_changed(
+                edit_ops, device,
+                old_bot_fin_y, new_bot_fin_y,
+                old_top_fin_y, new_top_fin_y,
+            )
+
+            # 5. Commit transaction; surface the cell delta for the
+            #    decoder (currently informational — the macro already
+            #    emits L1 directly; M3+ will use the delta to synthesise).
+            if cp is not None:
+                delta = self.engine.commit_with_delta(cp)
+                print(f"  CSP commit: {len(delta)} cell-level changes")
+
+        except Exception:
+            if cp is not None:
+                self.engine.restore(cp)
+            raise
+
+        print(f"\nResize plan: {len(edit_ops)} operations")
+        for op in edit_ops:
+            print(f"  {op}")
+
+        return ResizeResult(
+            success=True,
+            message=f"Resize {device_name} {device.nfin}→{new_nfin} fin: "
+                    f"{len(edit_ops)} edit operations",
+            edit_ops=edit_ops,
+            new_segments=new_segments,
+        )
+
+    # -------------------------------------------------------------
+    # L3 macro helpers (M2). Each helper either emits L1 records
+    # directly (non-CSP side-channel) or routes through L2 primitives
+    # in core.atomic_ops (CSP-modelled layers).
+    # -------------------------------------------------------------
+
+    def _emit_fin_removes(self, edit_ops, device_name, fin_grid,
+                           removed_fin_tracks):
+        hw = self.config.FIN_WIDTH // 2
         for ft in removed_fin_tracks:
             fy = fin_grid.track_to_physical(ft)
-            hw = self.config.FIN_WIDTH // 2
             edit_ops.append(EditOp(
                 'remove_shape', 'FIN',
                 old_bbox=(0, fy - hw, self.model.cell_width_nm, fy + hw),
-                desc=f'{device_name}_fin_track_{ft}'
+                desc=f'{device_name}_fin_track_{ft}',
             ))
-        
-        # --- Adjust OD region ---
-        old_top_fin_y = fin_grid.track_to_physical(old_fin_tracks[-1])
-        new_top_fin_y = fin_grid.track_to_physical(remaining_fin_tracks[-1])
-        bot_fin_y = fin_grid.track_to_physical(old_fin_tracks[0])
-        
+
+    def _emit_od_modify(self, edit_ops, device_name,
+                         bot_fin_y, old_top_fin_y, new_top_fin_y):
         od_ext = self.config.OD_EXTENSION_BEYOND_FIN
-        
         edit_ops.append(EditOp(
-            'resize_device', 'OD',
-            old_bbox=(0, bot_fin_y - od_ext, self.model.cell_width_nm, old_top_fin_y + od_ext),
-            new_bbox=(0, bot_fin_y - od_ext, self.model.cell_width_nm, new_top_fin_y + od_ext),
-            desc=f'{device_name}_od_shrink'
+            'modify_shape', 'OD',
+            old_bbox=(0, bot_fin_y - od_ext,
+                       self.model.cell_width_nm, old_top_fin_y + od_ext),
+            new_bbox=(0, bot_fin_y - od_ext,
+                       self.model.cell_width_nm, new_top_fin_y + od_ext),
+            desc=f'{device_name}_od_shrink',
         ))
-        
-        # --- Adjust LI S/D contact bars ---
-        # Find LI segments that belong to this device's S/D nets
-        li_grid = self.grid.get_layer('LI')
-        m1_grid = self.grid.get_layer('M1')
-        
-        # Identify which LI segments connect to this device
-        sd_nets = set()
-        for pin_name in ['S', 'D']:
-            net_name = device.pins.get(pin_name, '')
-            if net_name:
-                sd_nets.add(net_name)
-        
+
+    def _reshape_li_sd_bars(self, edit_ops, new_segments, device,
+                             old_fin_tracks, removed_fin_tracks,
+                             new_top_fin_y, m1_grid) -> Optional[str]:
+        """Reshape this device's LI S/D bars through CSP + emit L1 records.
+
+        Returns ``None`` on success, or an error string on infeasible
+        propose_assign (caller restores the checkpoint).
+        """
+        # S/D nets owned by this device.
+        sd_nets = {device.pins.get(p, '') for p in ('S', 'D')}
+        sd_nets.discard('')
         print(f"  S/D nets affected: {sd_nets}")
-        
-        # For each affected LI segment, compute the new shortened extent
+
+        li_ext_y = 5  # Layout-generator-side LI overshoot beyond top fin.
+        enc_y = self.config.VIA0_ENC_BY_LI_Y
+        device_y_marker = device.dev_type  # 'nmos' or 'pmos'
+
         for net_name in sd_nets:
             net = self.model.nets.get(net_name)
             if not net:
                 continue
-            
-            for seg in net.segments:
+
+            for seg in list(net.segments):
                 if seg.layer != 'LI':
                     continue
-                
-                # Check if this LI segment overlaps with the device's fin region
-                # by comparing the segment's ortho range with the M1 tracks
-                # that correspond to the device's fin Y positions
-                
-                # Convert device fin Y positions to M1 track indices
-                # (LI along-track uses M1 tracks as anchors)
-                device_fin_y_range = (
-                    fin_grid.track_to_physical(old_fin_tracks[0]),
-                    fin_grid.track_to_physical(old_fin_tracks[-1])
-                )
-                
-                # The LI bar spans from below the bottom fin to above the top fin
-                # After resize, the top extent shrinks
-                
-                # Compute old physical bbox of this LI segment
-                old_phys = self.grid.segment_to_physical(
-                    seg.layer, seg.track_idx,
-                    seg.start_anchor, seg.end_anchor,
-                    self.config.LI_WIDTH, seg.start_offset_nm, seg.end_offset_nm
-                )
-                
-                # Check if this segment's physical extent covers the removed fins
-                old_y_min = min(old_phys[1], old_phys[3])
-                old_y_max = max(old_phys[1], old_phys[3])
-                
-                removed_y_min = fin_grid.track_to_physical(removed_fin_tracks[0])
-                
-                if old_y_max < removed_y_min:
-                    continue  # This LI doesn't reach the removed fins
-                
-                # This LI needs to be shortened
-                # New top boundary: align with new topmost fin + small extension
-                li_ext_y = 5  # Match gen_buffer_layout extension
+                # Restrict to LI segments physically owned by *this* device.
+                # The MVP uses descs like ``li_nmos_drain`` / ``li_pmos_drain``
+                # to disambiguate when a net (e.g. OUT) is shared between
+                # NMOS and PMOS sides. M4 will replace this string match
+                # with B-tier ``CellOccupancy.owner_device_id``.
+                if device_y_marker not in seg.desc:
+                    continue
+
+                if seg.bbox_nm is None:
+                    # Parser didn't stamp a bbox (legacy data); fall back
+                    # to the round-trip reconstruction. Off-by-1nm on
+                    # odd-width layers is acceptable for non-byte-golden
+                    # consumers.
+                    old_bbox = self.grid.segment_to_physical(
+                        seg.layer, seg.track_idx,
+                        seg.start_anchor, seg.end_anchor,
+                        self.config.LI_WIDTH,
+                        seg.start_offset_nm, seg.end_offset_nm,
+                    )
+                else:
+                    old_bbox = seg.bbox_nm
+                old_x1, old_y1, old_x2, old_y2 = old_bbox
+                old_y_max = max(old_y1, old_y2)
+
+                # Compute the new top: shrink to (new fin top + extension),
+                # then extend back if a via on this LI demands more cover.
                 new_y_max = new_top_fin_y + li_ext_y
-                
-                # But we also need to keep the LI long enough for any via landing
-                # Check if there's a via on this LI that needs to remain connected
+
                 via_y_positions = []
                 for via in net.vias:
                     if via.lower_layer == 'LI' and via.lower_track_idx == seg.track_idx:
-                        via_y = m1_grid.track_to_physical(via.upper_track_idx)
-                        via_y_positions.append(via_y)
-                
+                        via_y_positions.append(
+                            m1_grid.track_to_physical(via.upper_track_idx)
+                        )
                 if via_y_positions:
-                    min_y_for_via = max(via_y_positions) + self.config.VIA0_ENC_BY_LI_Y
-                    new_y_max = max(new_y_max, min_y_for_via)
-                
-                # Only edit if the LI actually gets shorter
-                if new_y_max >= old_y_max:
-                    print(f"    LI seg {seg.desc}: no change needed (via keeps it long)")
-                    continue
-                
-                # Compute new segment coordinates
+                    new_y_max = max(new_y_max, max(via_y_positions) + enc_y)
+
+                if new_y_max == old_y_max:
+                    continue  # No-op LI (e.g. via keeps it long).
+
                 new_end_anchor = m1_grid.physical_to_track(new_y_max)
-                new_end_offset = int(new_y_max - m1_grid.track_to_physical(new_end_anchor))
-                
-                new_phys = self.grid.segment_to_physical(
-                    seg.layer, seg.track_idx,
-                    seg.start_anchor, new_end_anchor,
-                    self.config.LI_WIDTH, seg.start_offset_nm, new_end_offset
+                new_end_offset = int(
+                    new_y_max - m1_grid.track_to_physical(new_end_anchor)
                 )
-                
+
+                # L2 cell-level proposal: release CSP cells trailing past
+                # the new endpoint, then re-anchor cells that must remain
+                # (i.e. those still inside the new range). For shrinks the
+                # second step is a no-op; for extensions it's where a
+                # via-collision would surface as ``failed_pos``.
+                if self.engine is not None:
+                    old_range = list(seg.span)
+                    new_range = list(range(seg.start_anchor, new_end_anchor + 1))
+                    res = atomic_ops.modify_segment(
+                        self.engine, 'LI', seg.track_idx,
+                        old_range, new_range, net_name,
+                    )
+                    if not res.success:
+                        return (
+                            f"LI {seg.desc}: cell-level conflict at "
+                            f"{res.failed_pos} ({res.detail})"
+                        )
+
+                # New bbox preserves the layout's pixel-accurate x range;
+                # only the changed endpoint moves. Mirrors how the GDS
+                # generator first produced the shape.
+                new_bbox = (old_x1, old_y1, old_x2, int(new_y_max))
+
                 edit_ops.append(EditOp(
-                    'resize_device', 'LI',
-                    old_bbox=old_phys,
-                    new_bbox=new_phys,
+                    'modify_shape', 'LI',
+                    old_bbox=old_bbox,
+                    new_bbox=new_bbox,
                     net_id=net_name,
-                    desc=f'{seg.desc}_shorten'
+                    desc=f'{seg.desc}_resize',
                 ))
-                
-                # Create modified segment
-                new_seg = TrackSegment(
+
+                new_segments.setdefault(net_name, []).append(TrackSegment(
                     layer=seg.layer,
                     track_idx=seg.track_idx,
                     start_anchor=seg.start_anchor,
@@ -356,48 +454,65 @@ class LayoutSolver:
                     start_offset_nm=seg.start_offset_nm,
                     end_offset_nm=new_end_offset,
                     desc=seg.desc + '_resized',
-                )
-                
-                if net_name not in new_segments:
-                    new_segments[net_name] = []
-                new_segments[net_name].append(new_seg)
-                
+                    bbox_nm=new_bbox,
+                ))
+
                 print(f"    LI {seg.desc}: ortho [{seg.start_anchor}→{seg.end_anchor}] "
-                      f"→ [{new_seg.start_anchor}→{new_seg.end_anchor}]")
-        
-        # --- CSP feasibility check ---
-        if self.engine:
-            print(f"\n  CSP feasibility check...")
-            checkpoint = self.engine.checkpoint()
-            
-            # The resize primarily affects LI segment endpoints.
-            # For MVP (fin reduction within same cell), M1 routing doesn't change.
-            # We verify by checking that no CSP violations occur with the new extents.
-            
-            # For now, the CSP check is simple: the shortened LI segments
-            # release some grid cells, which can only increase feasibility.
-            # A real violation would occur if shortening caused a via to lose
-            # its LI landing, but we check that above.
-            
-            csp_ok = True
-            print(f"  CSP check: {'PASS' if csp_ok else 'FAIL'}")
-            
-            if not csp_ok:
-                self.engine.restore(checkpoint)
-                return ResizeResult(False, "CSP feasibility check failed")
-        
-        # --- Summary ---
-        print(f"\nResize plan: {len(edit_ops)} operations")
-        for op in edit_ops:
-            print(f"  {op}")
-        
-        return ResizeResult(
-            success=True,
-            message=f"Resize {device_name} {device.nfin}→{new_nfin} fin: "
-                    f"{len(edit_ops)} edit operations",
-            edit_ops=edit_ops,
-            new_segments=new_segments,
-        )
+                      f"→ [{seg.start_anchor}→{new_end_anchor}]")
+        return None
+
+    def _emit_poly_modify_if_endpoint_changed(self, edit_ops, device,
+                                                old_bot_fin_y, new_bot_fin_y,
+                                                old_top_fin_y, new_top_fin_y):
+        """Emit POLY modify_shape records when this device owns the moving endpoint.
+
+        POLY span = [nmos_bot_fin_y - od_ext - poly_ext,
+                     pmos_top_fin_y + od_ext + poly_ext]. NMOS owns y1
+        (depends on its bottom fin), PMOS owns y2 (depends on its top
+        fin). For the MVP top-down resize strategy, only the top fin
+        moves — so PMOS resizes emit a y2 update and NMOS resizes emit
+        nothing. Generalises cleanly to bottom-up removal in M3+.
+        """
+        od_ext = self.config.OD_EXTENSION_BEYOND_FIN
+        poly_ext = self.config.POLY_EXTENSION_BEYOND_OD
+
+        # Determine which endpoint this device owns and whether it moved.
+        if device.dev_type == 'nmos':
+            if new_bot_fin_y == old_bot_fin_y:
+                return
+            old_y1 = old_bot_fin_y - od_ext - poly_ext
+            new_y1 = new_bot_fin_y - od_ext - poly_ext
+            target = 'y1'
+        else:  # pmos
+            if new_top_fin_y == old_top_fin_y:
+                return
+            old_y2 = old_top_fin_y + od_ext + poly_ext
+            new_y2 = new_top_fin_y + od_ext + poly_ext
+            target = 'y2'
+
+        # Iterate POLY shapes from the original layout via the model's
+        # shape_pool — but the solver doesn't carry one yet (that's M3),
+        # so we use the configured cell width + known POLY columns is
+        # not viable either. Instead, the macro emits a *structural*
+        # POLY EditOp and the decoder applies it by matching ``y1``/``y2``
+        # of the affected endpoint across all POLY shapes; the unchanged
+        # endpoint stays as-is. ``old_bbox``/``new_bbox`` carry sentinel
+        # ``None`` for the unaffected coordinates so the decoder can
+        # detect the partial-edit pattern.
+        if target == 'y1':
+            edit_ops.append(EditOp(
+                'modify_shape', 'POLY',
+                old_bbox=(None, old_y1, None, None),
+                new_bbox=(None, new_y1, None, None),
+                desc=f'{device.inst_name}_poly_y1_shift',
+            ))
+        else:
+            edit_ops.append(EditOp(
+                'modify_shape', 'POLY',
+                old_bbox=(None, None, None, old_y2),
+                new_bbox=(None, None, None, new_y2),
+                desc=f'{device.inst_name}_poly_y2_shift',
+            ))
     
     def apply_resize_to_model(self, device_name: str, new_nfin: int,
                                result: ResizeResult) -> LayoutModel:

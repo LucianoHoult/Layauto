@@ -99,10 +99,10 @@ class WidthCode:
 class TrackSegment:
     """
     A wire/contact segment on a single track.
-    
+
     The key abstraction: a shape is not a point on the grid,
     but an interval on a track, with discrete attributes.
-    
+
     - Cross-track position: track_idx (fully discrete, defined by layer pitch)
     - Along-track extent: [start_anchor, end_anchor] in orthogonal track indices
     - Width: discrete code from layer's legal width set
@@ -114,15 +114,21 @@ class TrackSegment:
     end_anchor: int               # End position as orthogonal track index
     net_id: str = ''              # Net this segment belongs to
     width_code: int = 0           # Width index
-    
+
     # Endpoint refinement (physical offsets, not part of CSP search)
     start_type: EndType = EndType.OPEN_END
     start_offset_nm: int = 0      # Physical offset from start_anchor position
     end_type: EndType = EndType.OPEN_END
     end_offset_nm: int = 0        # Physical offset from end_anchor position
-    
+
     # Metadata
     desc: str = ''                # Description for debugging
+    # Original physical bbox (x1, y1, x2, y2) as parsed from the input
+    # layout. Stored verbatim so L3 macros can emit ``EditOp.old_bbox``
+    # that matches the layout's exact pixel-accurate rectangle, avoiding
+    # half-width rounding drift on odd-width layers (e.g. LI = 17 nm).
+    # M3 ``shape_pool`` will replace this with a ``ShapeRecord`` link.
+    bbox_nm: Optional[Tuple[int, int, int, int]] = None
     
     @property
     def span(self) -> range:

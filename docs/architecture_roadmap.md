@@ -2,7 +2,7 @@
 
 **Purpose.** Living tracker for the multi-milestone architectural evolution of the Layauto layout pipeline. This document is the canonical handoff artifact: any new contributor (human or Claude session) should read it first, re-verify the file/line references in [Verification Snapshot](#verification-snapshot), then pick the next milestone from [Milestone Roadmap](#milestone-roadmap).
 
-**Last verified:** 2026-04-25 on branch `claude/m1-decoder-writeback` (post-M1).
+**Last verified:** 2026-04-26 on branch `claude/review-arch-plan-Li1Az` (post-M2).
 
 **How to update.**
 - When a milestone moves status, flip its checkbox and append a [Change Log](#change-log) entry (date, milestone, what changed).
@@ -30,27 +30,28 @@ This document captures the agreed evolution path: a 7-milestone refactor that do
 
 The roadmap below assumes specific file/line locations. These were confirmed on the date stamped above. Any contributor picking up the work should re-run the checks (file paths and line ranges drift with refactors).
 
-| # | Claim | Where (verified 2026-04-25) | State |
+| # | Claim | Where (verified 2026-04-26) | State |
 |---|-------|-----------------------------|-------|
-| 1 | ~~Two `EditOp` classes coexist~~ | Single canonical class at `core/diff.py:16-37`; `core/solver.py:26` imports it | resolved by M1 (2026-04-25) |
-| 2 | ~~Per-layer hardcoded y1/y2 in writeback~~ | `apply_edits_to_layout_data` removed; writeback consolidated in `core/decoder.py::WritebackDecoder` (`pipeline/run_mvp.py:297-301` is the sole call site) | resolved by M1 (2026-04-25) |
-| 3 | `resize_device` bypasses CSP for geometry | `core/solver.py:208-419` | drift target |
-| 4 | CSP engine has only `checkpoint`/`restore` + stateless `unassign` (no `propose_assign`/`commit_with_delta`) | `core/csp_engine.py:296-300, 334` | drift target |
-| 5 | Anchor-layer propagation filter exists | `core/csp_engine.py:250-254` | OK to keep |
-| 6 | Parser is net-primary, bbox auxiliary | `io_adapters/parser.py:71-198` | drift target |
-| 7 | `OccupantType.BLOCKAGE` exists and is used by solver, but not for unannotated shapes | `core/data_model.py:21-28`, `core/solver.py:21` | half-built |
+| 1 | ~~Two `EditOp` classes coexist~~ | Single canonical class at `core/diff.py:16-40`; `core/solver.py:50` imports it | resolved by M1 (2026-04-25) |
+| 2 | ~~Per-layer hardcoded y1/y2 in writeback~~ | `apply_edits_to_layout_data` removed; writeback consolidated in `core/decoder.py::WritebackDecoder` (`pipeline/run_mvp.py:298-302` is the sole call site) | resolved by M1 (2026-04-25) |
+| 3 | ~~`resize_device` bypasses CSP for geometry~~ | `resize_device` is the L3 macro at `core/solver.py:226-322`; LI cell-level changes go through `core/atomic_ops.py::modify_segment` (L2 → CSP); FIN/OD/POLY emitted as L1 via the non-CSP side-channel pending M3/M4/M5 | resolved by M2 (2026-04-26) |
+| 4 | ~~CSP engine has only `checkpoint`/`restore`~~ | Engine exposes `propose_assign` / `propose_release` / `commit_with_delta` at `core/csp_engine.py:206-285`; trail captures `(pos, prev_domain, prev_assignment)` so `restore` reverts both | resolved by M2 (2026-04-26) |
+| 5 | Anchor-layer propagation filter exists | `core/csp_engine.py:265-269` | OK to keep |
+| 6 | Parser is net-primary, bbox auxiliary | `io_adapters/parser.py:71-200`; M2 added a parser-side `bbox_nm` stamp on `TrackSegment` so L1 EditOps can carry the layout's pixel-accurate rectangle, but the inversion (shape_pool primary) is still pending | drift target |
+| 7 | `OccupantType.BLOCKAGE` exists and is used by solver, but not for unannotated shapes | `core/data_model.py:21-28`, `core/solver.py:45` | half-built |
 | 8 | `OccupantType.DEVICE_GATE` / `DEVICE_DIFF` defined but unused; no `CUT` | `core/data_model.py:21-28` | placeholder only |
 | 9 | `MultiLayerGrid` is 1D-track only; no `CellOccupancy` | `core/grid.py:87-240` | not built |
 | 10 | No net-equivalence union-find in CSP | `core/csp_engine.py` (whole file) | not built |
-| 11 | NWELL / BOUNDARY produced by hardcoded formulas | Loops removed from `pipeline/run_mvp.py` in M1c; formulas now live as transitional Phase 2 helpers in `core/decoder.py` (`_derive_nwell`, `_derive_boundary`); will be evicted in M5 | drift target (consolidated, awaiting M5) |
+| 11 | NWELL / BOUNDARY produced by hardcoded formulas | Loops removed from `pipeline/run_mvp.py` in M1c; formulas live as transitional Phase 2 helpers in `core/decoder.py` (`_derive_nwell`, `_derive_boundary`); the M2 milestone deleted the LI/POLY Phase 2 helpers; NWELL/BOUNDARY remain pending M5 | drift target (smaller surface, awaiting M5) |
 | 12 | No `core/drc_derivator.py`; no `is_derived` field | absent | not built |
-| 13 | No `core/macros/` directory; no `pick_macro` dispatch | absent | not built |
-| 14 | `diff_to_edit_ops` handles add/remove only (no device-level) | `core/diff.py:66-74` | drift target |
+| 13 | No `core/macros/` directory; no `pick_macro` dispatch | absent — but `resize_device` is now an explicit L3 macro inside `core/solver.py` and the M6 dispatch table will lift it into `core/macros/` | half-built |
+| 14 | `diff_to_edit_ops` handles add/remove only (no device-level) | `core/diff.py:73-81` | drift target |
 | 15 | SKILL emitter is `printf` placeholder | `io_adapters/writer_skill_script.py:76-78` | drift target |
 | 16 | Three dummy Calibre JSON generators | `dummy/gen_buffer_layout.py:364, 402, 434` | OK for now |
 | 17 | Per-layer DRC rule registration | `core/drc_constraints.py:131-161` | OK to keep |
 | 18 | Layer map has no tier markers | `tech/layer_map.py:8-18` | drift target |
-| 19 | Six-stage pipeline order: diff_cdl → build_layout_model → setup_engine → load_existing_layout → resize_device → apply_edits → write_gds | `pipeline/run_mvp.py:326-469` | OK structure |
+| 19 | Six-stage pipeline order: diff_cdl → build_layout_model → setup_engine → load_existing_layout → resize_device → apply_edits → write_gds | `pipeline/run_mvp.py:222-411` | OK structure |
+| 20 | L2 atomic ops module exists with `release_segment_cells` / `assign_segment_cells` / `modify_segment` | `core/atomic_ops.py` (M2 minimal subset; `extend_od`, `extend_poly`, `add/remove_fin_strip`, `add/remove_cut_cell`, `mark_shared_diffusion` deferred to M4) | half-built |
 
 ---
 
@@ -156,21 +157,33 @@ Each milestone has a status checkbox (Not started / In progress / Done / Blocked
 
 ### M2 — CSP genuinely drives resize decisions, with strict layer-1/2/3 split
 
-- **Status:** [ ] Not started
-- **Owner:** _unassigned_
+- **Status:** [x] Done (2026-04-26)
+- **Owner:** Claude (`claude/review-arch-plan-Li1Az`)
 - **Goal.** Demote `resize_device` to a true L3 macro that expands into L2 primitives. L2 only proposes cell-level changes to the engine; the decoder synthesizes L1; the engine handles feasibility and transactions.
+- **Sub-milestones (all complete).**
+  - **M2a (Done, 2026-04-26):** Strengthened the CSP engine trail format to `(pos, prev_domain, prev_assignment)` so `restore` reverts both. Added `propose_assign` / `propose_release` / `commit_with_delta` (`core/csp_engine.py:206-285`). `unassign` is documented as legacy and superseded by `propose_release`. Six new unit tests cover round-trip restore, trail truncation on commit, propose-assign-failure rollback, and release-then-reassign within a transaction.
+  - **M2b (Done, 2026-04-26):** Created `core/atomic_ops.py` with the M2 minimal L2 subset (`release_segment_cells`, `assign_segment_cells`, `modify_segment`). `AtomicResult.failed_pos` localises infeasible proposals. The fuller primitives listed in §C (`extend_od`, `extend_poly`, `add/remove_fin_strip`, `add/remove_cut_cell`, `mark_shared_diffusion`) wait for the B-tier `CellOccupancy` work in M4 — FIN/OD/POLY currently flow on the non-CSP side-channel.
+  - **M2c (Done, 2026-04-26):** Refactored `resize_device` (`core/solver.py:226-322`) into the L3 `device_resize` macro: opens a checkpoint, drives LI cell-level changes through `atomic_ops.modify_segment`, emits L1 records, and `commit_with_delta`s on success / `restore`s on infeasibility. Per-helper split: `_emit_fin_removes`, `_emit_od_modify`, `_reshape_li_sd_bars`, `_emit_poly_modify_if_endpoint_changed`. Stricter device-marker filtering on LI (NMOS macros only touch `li_nmos_*`, PMOS only `li_pmos_*`) fixes the M1-era cross-net leakage in the resize report.
+  - **M2d (Done, 2026-04-26):** Deleted the transitional Phase 2 helpers `_shrink_li_sd_bars`, `_derive_poly_span`, `_extend_li_for_vias` from `core/decoder.py`. Phase 1 grew `_apply_li_modifies` and `_apply_poly_modifies`; the latter accepts partial bboxes (`None` sentinels) so PMOS macros can shift POLY y2 without touching y1 / x. `_derive_nwell` and `_derive_boundary` remain — M5 will evict them.
+  - **M2e (Done, 2026-04-26):** Added `bbox_nm: Optional[Tuple[int,int,int,int]]` to `TrackSegment` (`core/data_model.py`); `io_adapters/parser.py` stamps the layout's pixel-accurate rectangle on each segment. The L3 macro emits `EditOp.old_bbox = seg.bbox_nm` directly, avoiding off-by-1nm drift on odd-width layers (LI = 17 nm) that round-tripping through `segment_to_physical` would otherwise introduce.
 - **Files touched.**
-  - `core/solver.py:208-419` — `resize_device` becomes an L3 macro; geometry recomputation moves out to the decoder.
-  - `core/csp_engine.py` — expose stable API: `propose_assign` / `propose_release` / `checkpoint` / `restore` / `commit_with_delta`. Returns feasibility + cell delta.
-  - **New** `core/atomic_ops.py` — L2 primitives: `add_segment`, `remove_segment`, `modify_segment`, `add_via`, `remove_via`, `add_cell_occupancy`, `remove_cell_occupancy`, `extend_od`, `extend_poly`, `add_fin_strip`, `remove_fin_strip`, `add_cut_cell`, `remove_cut_cell`, `mark_shared_diffusion`.
-  - `core/decoder.py` (existing, M1) — extend `WritebackDecoder` to subscribe to CSP commit deltas; the solver now emits POLY EditOps so the transitional `_derive_poly_span` Phase 2 helper is dead code and is deleted in this milestone. `_extend_li_for_vias` likewise becomes obsolete once LI extension is a CSP-emitted constraint and is deleted.
-- **Change outline.**
-  - L2 must not touch `LayoutModel`, must not produce L1, must not decide feasibility.
-  - `device_resize` macro: metadata delta → ordered sequence of `extend_od` + `extend_poly` + `add/remove_fin_strip` calls, wrapped by `engine.checkpoint`/`restore`.
-  - Decoder + derivator push L1 in commit-delta order.
-- **Acceptance.** Inject a deliberate conflict (e.g., LI shrink collides with a VIA enclosure) → macro returns `infeasible`, CSP state is restored to pre-call snapshot. Byte-golden with M1 baseline preserved on the no-conflict path.
+  - `core/csp_engine.py` — new trail format + transactional API (M2a).
+  - **New** `core/atomic_ops.py` — L2 primitives subset (M2b).
+  - `core/solver.py` — L3 macro + helpers (M2c).
+  - `core/decoder.py` — Phase 1 grows; Phase 2 LI/POLY helpers deleted (M2d).
+  - `core/data_model.py` + `io_adapters/parser.py` — `TrackSegment.bbox_nm` stamping (M2e).
+  - **New** `tests/unit/test_atomic_ops.py` (4 tests); `tests/unit/test_csp_engine.py` (+6 transactional API tests); `tests/unit/test_solver.py` (+2 rollback / commit tests).
+- **Acceptance (verified).**
+  - Conflict-injection: monkey-patching `atomic_ops.modify_segment` to return failure causes `resize_device` to return `success=False` and the engine snapshot to match the pre-call snapshot byte-for-byte (`tests/unit/test_solver.py::test_resize_device_rolls_back_engine_on_csp_conflict`).
+  - L2-level conflict: extending a segment into a cell pre-assigned to a conflicting net surfaces `failed_pos` and leaves the engine restorable (`tests/unit/test_atomic_ops.py::test_modify_segment_extension_conflict_returns_failure`).
+  - Byte-golden: pipeline GDS, JSON, and CDL outputs are byte-identical to the M1 baseline under fixed `PYTHONHASHSEED`. (Note: `output/resize_report.txt` evolves intentionally — the macro now emits LI modify_shape ops with full bboxes and a POLY modify_shape op with partial bbox, lifting derivation that previously hid in the decoder.)
+  - Pytest 50/50 green (38 pre-M2 + 12 new).
 - **Dependencies.** M1.
-- **Risks.** CSP rollback semantics are currently weak (`unassign` does not restore domains). Land checkpoint/restore unit tests *before* wiring primitives. Decoder + L1 emission order must be deterministic to preserve golden.
+- **Notes for downstream milestones.**
+  - CSP cell delta from `commit_with_delta` is currently **informational** — the macro still emits L1 records directly. M3+ will drive L1 synthesis from the cell delta, at which point the decoder's Phase 1 LI/POLY apply paths can be re-keyed by delta rather than EditOp.
+  - The `device_y_marker` desc-substring filter inside `_reshape_li_sd_bars` is the disambiguator for a net (e.g. `OUT`) that fans across NMOS and PMOS sides. M4's `CellOccupancy.owner_device_id` replaces this string match.
+  - `TrackSegment.bbox_nm` is the seam where the M3 `ShapeRecord` provenance backlink will plug in. The current single-tuple field becomes a `ShapeRecord` reference there.
+  - The L3 macro emits POLY ops with **partial bboxes** (`None` sentinels). When `shape_pool` lands in M3, the decoder's `_apply_poly_modifies` partial-edit path can be re-keyed off `ShapeRecord` ids and the sentinel pattern retired.
 
 ### M3 — `shape_pool` parser inversion + unannotated-shape BLOCKAGE projection
 
@@ -289,7 +302,7 @@ Each milestone has a status checkbox (Not started / In progress / Done / Blocked
 
 ## Minimal Starter PR
 
-M1 has landed (see [M1 milestone block](#m1--unify-editop-and-route-writeback-through-a-decoder)). The next minimal-blast-radius starter is **M2** — give the CSP engine a real transactional API (`propose_assign` / `commit_with_delta` / strengthen `restore`) and demote `resize_device` to an L3 macro that expands into L2 primitives. M2 unblocks every later milestone (parser inversion, B-tier cells, derivators, macros, tool closure) and is the first PR where CSP genuinely drives geometry rather than passively sanity-checking it.
+M1 and M2 have landed. The next minimal-blast-radius starter is **M3** — invert the parser to "GDS `shape_pool` is geometric truth, LVS is annotation overlay" and project unannotated shapes into CSP as `BLOCKAGE`. M3 unblocks (a) the M4 B-tier `CellOccupancy` work, because shapes need to enter CSP as cell-typed occupants before the OD-share / CUT semantics can be modelled, and (b) the M5 derivator, which expects a complete shape inventory to subscribe to. The half-built `TrackSegment.bbox_nm` field added in M2 is the natural seam where M3's `ShapeRecord` provenance backlink replaces the per-segment bbox stamp.
 
 ---
 
@@ -306,9 +319,9 @@ Entry: `pipeline/run_mvp.py::run_full_pipeline()` (line 326). The `__main__` blo
 | 3. Set up CSP engine | `solver.setup_engine()` | `pipeline/run_mvp.py:388`, `core/solver.py:73` |
 | 4. Load existing layout into CSP | `solver.load_existing_layout()` | `pipeline/run_mvp.py:389`, `core/solver.py:137` |
 | 5. Solve resize | `solver.resize_device()` | `pipeline/run_mvp.py:398`, `core/solver.py:208` |
-| 6. Emit output | `apply_edits_to_layout_data()` → `write_gds()` | `pipeline/run_mvp.py:425, 432` |
+| 6. Emit output | `WritebackDecoder.apply()` → `write_gds()` | `pipeline/run_mvp.py:298-302, 305-306` |
 
-The pipeline is **incremental, not from-scratch**: `build_layout_model` reads existing layout, `load_existing_layout` pre-stamps every existing segment as `FIXED`, and `apply_edits_to_layout_data` deep-copies + patches per-layer rather than re-laying out.
+The pipeline is **incremental, not from-scratch**: `build_layout_model` reads existing layout, `load_existing_layout` pre-stamps every existing segment as `FIXED`, and the decoder deep-copies + patches per-layer rather than re-laying out. After M2, the decoder's Phase 1 applies explicit FIN / OD / LI / POLY EditOps; Phase 2 derives only NWELL / BOUNDARY (M5 will move those into `core/drc_derivator.py`).
 
 ### Dummy Calibre JSONs
 
@@ -359,7 +372,7 @@ Mapping in `tech/layer_map.py:8-18`. Tier markers will be added in M4.
 
 ### Writeback steps and atomicity
 
-`pipeline/run_mvp.py::apply_edits_to_layout_data()` (line 31-155). Inputs: `orig_data` + solver `edit_ops_n` / `edit_ops_p` + new `nfin`. `EditOp` is *parameter-level*, not GDS-level patch; geometry is recomputed per-layer.
+`core/decoder.py::WritebackDecoder.apply()` (post-M1). Inputs: `orig_data` + macro `edit_ops_n` / `edit_ops_p` + new `nfin`. `EditOp` is **shape-level** after M2 (the macro now emits LI bbox-accurate modifies and POLY partial-bbox endpoint shifts in addition to the M1-era FIN remove + OD modify). Phase 2 still derives NWELL / BOUNDARY pending M5.
 
 Steps (line 50-138, sequential per-layer loops):
 
@@ -405,6 +418,7 @@ Append entries when status flips, when verification snapshot is refreshed, or wh
 
 | Date | Author | Change |
 |------|--------|--------|
+| 2026-04-26 | Claude (`claude/review-arch-plan-Li1Az`) | **M2 complete.** M2a: extended CSP trail to `(pos, prev_domain, prev_assignment)` and added `propose_assign` / `propose_release` / `commit_with_delta` (`core/csp_engine.py:206-285`); 6 new unit tests cover round-trip restore, trail truncation, propose-assign rollback, and intra-transaction release+reassign. M2b: created `core/atomic_ops.py` with the M2 minimal L2 subset (`release_segment_cells`, `assign_segment_cells`, `modify_segment` with `failed_pos` localisation). M2c: refactored `resize_device` (`core/solver.py:226-322`) into the L3 `device_resize` macro, routing LI cell-level changes through L2 + CSP, with stricter device-marker filtering on LI segments. M2d: deleted Phase 2 helpers `_shrink_li_sd_bars`, `_derive_poly_span`, `_extend_li_for_vias` from the decoder; Phase 1 grew `_apply_li_modifies` and `_apply_poly_modifies` (the latter accepts partial-bbox EditOps with `None` sentinels). M2e: added `TrackSegment.bbox_nm` stamping in the parser so emitted L1 `old_bbox` records are pixel-accurate even on odd-width layers (LI = 17 nm). Verification snapshot rows 3, 4 marked resolved; row 11 noted as smaller; new row 20 records the L2 module. Acceptance: `output/buffer_resized.{gds,json,cdl}` byte-identical to M1 baseline; conflict-injection test exercises macro-level rollback; pytest 50/50 (12 new). Resize report now lists 7 ops vs M1's 6 — the macro lifted POLY span derivation (and the M1 cross-net leakage in MN0's report) into explicit L1 EditOps. Minimal Starter PR pointer flipped to M3. |
 | 2026-04-25 | Claude (`claude/m1-decoder-writeback`) | Roadmap refinement after M1 implementation: M2 milestone block now records that it deletes the decoder's `_derive_poly_span` and `_extend_li_for_vias` helpers; M5 block records that it deletes `_derive_nwell` / `_derive_boundary`. Verification snapshot row 11 updated — the NWELL/BOUNDARY formulas are no longer in `pipeline/run_mvp.py:130-138` (M1c removed those loops); they are consolidated as transitional Phase 2 helpers in `core/decoder.py` awaiting the M5 derivator. Makes the M1 → M2 / M5 eviction path mechanical rather than implicit. |
 | 2026-04-25 | Claude (`claude/m1-decoder-writeback`) | **M1 complete.** M1a: unified `EditOp` (`core/diff.py:16-37`; `core/solver.py:26` imports); duplicate dataclass removed. M1b: built `core/decoder.py::WritebackDecoder` consolidating writeback geometry into Phase 1 (explicit EditOp apply: FIN remove + OD modify) and Phase 2 (derived: POLY span, LI shrink + via-coverage extension, NWELL/BOUNDARY extents). M1c: removed legacy 125-line `apply_edits_to_layout_data` from `pipeline/run_mvp.py`; sole call site is the decoder. Verification snapshot rows 1 and 2 marked resolved. Acceptance: pipeline JSON/CDL/report byte-identical under fixed `PYTHONHASHSEED`; GDS polygons identical (30/30); pytest 38/38 (added 5 decoder tests). Discovery: M1's "decoder consumes EditOp stream" goal is partial — the solver emits EditOps for FIN/OD/LI but not POLY/NWELL/BOUNDARY; the decoder's Phase 2 fills the gap and is the seam where M5's derivator will plug in. |
 | 2026-04-25 | Claude (session `claude/check-stream-env-vars-N5suX`) | Initial English roadmap created from Chinese architecture-analysis source. Verification snapshot generated against branch state on this date. All seven milestones marked Not started. |
