@@ -23,9 +23,13 @@ class OccupantType(Enum):
     EMPTY = auto()
     WIRE = auto()         # Metal or LI routing segment
     VIA = auto()          # Via connecting two layers
-    DEVICE_GATE = auto()  # Poly gate over active
-    DEVICE_DIFF = auto()  # Fin/OD (diffusion region)
+    DEVICE_GATE = auto()  # Poly gate over active (B-tier; activated in M4)
+    DEVICE_DIFF = auto()  # Fin/OD (diffusion region; activated in M4)
     BLOCKAGE = auto()     # Cannot be used (dummy gate, boundary, etc.)
+    # M4a seam: CPO / M0_CUT / FIN_CUT shapes occupy cells as cutters that
+    # break net-equivalence across the cut location. The engine will treat
+    # CUT as a hard barrier in the union-find work landing in M4b.
+    CUT = auto()
 
 
 class EndType(Enum):
@@ -143,6 +147,116 @@ class WidthCode:
     """
     code: int           # Index (0 = min width)
     physical_nm: int    # Actual width in nm
+
+
+# =============================================================
+# Cell Occupancy — B-tier 2D-grid record (M4a)
+# =============================================================
+#
+# Per docs/architecture_roadmap.md §B, B-tier layers (OD, VIA0, CPO,
+# M0_CUT, FIN_CUT) are 2D-cell, not 1D-track. Each cell is keyed by a
+# pair of orthogonal track indices (track_a, track_b) on its layer's
+# tier-B grid. OD cells additionally carry diffusion-sharing metadata:
+# ``owner_device_id`` is the primary device that owns the cell, and
+# ``shared_with`` lists secondary devices that physically share the
+# diffusion. SKILL/GDS still emits a single OD shape per contiguous
+# cell run regardless of how many devices share it.
+#
+# CUT cells use ``occ_type=OccupantType.CUT``; ``owner_device_id`` /
+# ``shared_with`` are unused for them (left as defaults).
+#
+# This dataclass is the M4a seam — it is *defined* here so that the
+# M4b CSP-engine work, the M4c parser projection, and the M4d
+# diffusion-share L2 op (``mark_shared_diffusion``) all have a stable
+# target type. M4a does not yet wire it into the parser or engine, so
+# ``LayoutModel`` still presents only ``shape_pool`` + ``nets`` to
+# downstream code; the byte-golden pipeline is unaffected.
+
+@dataclass
+class CellOccupancy:
+    """A single B-tier (2D) cell occupant.
+
+    Position is identified by the layer plus a pair of orthogonal track
+    indices ``(track_a, track_b)``. ``track_a`` is the layer's own track
+    (cross-track for V layers, X-track for H layers); ``track_b`` is the
+    orthogonal partner track that anchors the along-track position. This
+    mirrors the M4 grid convention: a B-tier cell is a 2D rectangle, not a
+    1D interval.
+
+    For OD cells, ``owner_device_id`` is the primary device's
+    ``Device.inst_name``; ``shared_with`` lists secondary devices that
+    physically share the diffusion through this cell. Two adjacent gates
+    that share S/D have the OD cells between them carrying both devices.
+
+    For CUT cells (CPO / M0_CUT / FIN_CUT), ``occ_type`` is
+    ``OccupantType.CUT``; ``owner_device_id`` / ``shared_with`` are unused
+    and stay at their defaults. The CSP engine's net-equivalence
+    union-find (M4b) will treat a CUT as a hard barrier between adjacent
+    cells of the cut layer.
+
+    The ``shape_record`` backlink mirrors the ``TrackSegment.shape_record``
+    seam from M3: when the parser projects a B-tier ``ShapeRecord`` into a
+    set of ``CellOccupancy`` records, every cell points back at the
+    geometric source of truth for SKILL/DRC provenance closure (M7).
+    """
+    layer: str
+    track_a: int
+    track_b: int
+    occ_type: OccupantType
+    net_id: Optional[str] = None
+    owner_device_id: Optional[str] = None
+    shared_with: List[str] = field(default_factory=list)
+    shape_record: Optional['ShapeRecord'] = None
+
+    def __post_init__(self):
+        if self.occ_type not in (
+            OccupantType.DEVICE_DIFF,
+            OccupantType.DEVICE_GATE,
+            OccupantType.VIA,
+            OccupantType.CUT,
+            OccupantType.BLOCKAGE,
+            OccupantType.EMPTY,
+        ):
+            raise ValueError(
+                f"CellOccupancy is for B-tier occupants; got {self.occ_type!r}"
+            )
+
+    @property
+    def pos(self) -> Tuple[str, int, int]:
+        """``(layer, track_a, track_b)`` — the canonical grid key."""
+        return (self.layer, self.track_a, self.track_b)
+
+    def add_sharer(self, device_inst: str) -> bool:
+        """Append ``device_inst`` to ``shared_with`` if not already present.
+
+        Returns ``True`` if the list grew, ``False`` if it was a no-op.
+        Refuses to share if the cell has no primary owner (caller must
+        set ``owner_device_id`` first), since "shared with whom?" is
+        ambiguous without an owner.
+        """
+        if self.owner_device_id is None:
+            raise ValueError(
+                f"{self!r} has no owner_device_id; cannot record a sharer"
+            )
+        if device_inst == self.owner_device_id:
+            return False
+        if device_inst in self.shared_with:
+            return False
+        self.shared_with.append(device_inst)
+        return True
+
+    def remove_sharer(self, device_inst: str) -> bool:
+        """Remove ``device_inst`` from ``shared_with``. Returns whether it shrank."""
+        if device_inst in self.shared_with:
+            self.shared_with.remove(device_inst)
+            return True
+        return False
+
+    def __repr__(self):
+        owner = self.owner_device_id or '-'
+        extra = f"+{','.join(self.shared_with)}" if self.shared_with else ''
+        return (f"Cell({self.layer} ({self.track_a},{self.track_b}) "
+                f"{self.occ_type.name} owner={owner}{extra})")
 
 
 # =============================================================
