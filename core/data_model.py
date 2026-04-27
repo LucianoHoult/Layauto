@@ -209,6 +209,19 @@ class CellOccupancy:
     shape_record: Optional['ShapeRecord'] = None
 
     def __post_init__(self):
+        # Layer must be B-tier — A-tier (FIN/POLY/LI/M1) lives on
+        # ``TrackSegment``; C1/C2 don't enter CSP at all. Importing here
+        # (deferred from module load) avoids a hard ``core <-> tech``
+        # cycle and keeps the dataclass cheap to construct in tests that
+        # don't care about tier. ``KeyError`` from ``tier_of`` propagates
+        # — an unmapped layer is a parser bug we want loud.
+        from tech.layer_map import tier_of  # local import: see comment above
+        tier = tier_of(self.layer)
+        if tier != 'B':
+            raise ValueError(
+                f"CellOccupancy is for B-tier layers; "
+                f"layer {self.layer!r} is tier {tier!r}"
+            )
         if self.occ_type not in (
             OccupantType.DEVICE_DIFF,
             OccupantType.DEVICE_GATE,
@@ -232,8 +245,16 @@ class CellOccupancy:
         Returns ``True`` if the list grew, ``False`` if it was a no-op.
         Refuses to share if the cell has no primary owner (caller must
         set ``owner_device_id`` first), since "shared with whom?" is
-        ambiguous without an owner.
+        ambiguous without an owner. Per §B, diffusion sharing is
+        meaningful only on OD cells (``DEVICE_DIFF``) — sharing on a
+        CUT / VIA / BLOCKAGE cell is not a valid model state and is
+        rejected to keep downstream diffusion-share logic honest.
         """
+        if self.occ_type != OccupantType.DEVICE_DIFF:
+            raise ValueError(
+                f"shared_with is OD/diffusion-only; "
+                f"cannot record a sharer on {self.occ_type.name} cell {self.pos}"
+            )
         if self.owner_device_id is None:
             raise ValueError(
                 f"{self!r} has no owner_device_id; cannot record a sharer"

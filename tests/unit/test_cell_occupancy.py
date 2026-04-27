@@ -42,13 +42,57 @@ def test_cell_occupancy_defaults():
 def test_cell_occupancy_rejects_non_b_tier_occupant():
     """``CellOccupancy`` is for B-tier occupants. WIRE belongs on a TrackSegment.
 
-    The runtime check guards against silently mis-projecting an A-tier
-    layer through the B-tier path. Other A-tier-ish types are not allowed
-    here, but EMPTY / BLOCKAGE / VIA / CUT / DEVICE_* are fine.
+    The occ_type guard catches mis-projected A-tier *occupant types*; the
+    layer-tier guard (separate test below) catches mis-projected
+    *layers*. Use a B-tier layer here to isolate the occ_type check.
     """
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match='B-tier occupants'):
         CellOccupancy(
-            layer='LI', track_a=0, track_b=0, occ_type=OccupantType.WIRE,
+            layer='OD', track_a=0, track_b=0, occ_type=OccupantType.WIRE,
+        )
+
+
+def test_cell_occupancy_rejects_a_tier_layer():
+    """An A-tier layer (LI / M1 / FIN / POLY) is rejected even if the
+    ``occ_type`` would otherwise be valid for B-tier (e.g. BLOCKAGE).
+
+    Without this check, parser tier-dispatch in M4c could silently
+    construct a B-tier ``CellOccupancy`` on, say, an LI layer — bypassing
+    the A-tier ``TrackSegment`` projection. The fail-loud guard locks the
+    invariant that B-tier layers go through B-tier records exclusively.
+    """
+    with pytest.raises(ValueError, match='B-tier layers'):
+        CellOccupancy(
+            layer='LI', track_a=0, track_b=0, occ_type=OccupantType.BLOCKAGE,
+        )
+    with pytest.raises(ValueError, match='B-tier layers'):
+        CellOccupancy(
+            layer='M1', track_a=0, track_b=0, occ_type=OccupantType.EMPTY,
+        )
+
+
+def test_cell_occupancy_rejects_c1_c2_layers():
+    """C1 (derived) and C2 (annotation) layers also don't get cell records."""
+    with pytest.raises(ValueError, match='B-tier layers'):
+        CellOccupancy(
+            layer='NWELL', track_a=0, track_b=0,
+            occ_type=OccupantType.DEVICE_DIFF,
+        )
+    with pytest.raises(ValueError, match='B-tier layers'):
+        CellOccupancy(
+            layer='DIODE', track_a=0, track_b=0,
+            occ_type=OccupantType.BLOCKAGE,
+        )
+
+
+def test_cell_occupancy_unknown_layer_raises():
+    """An unmapped layer name (not in ``LAYER_TIER``) propagates a
+    ``KeyError`` from ``tier_of`` — surfaces parser bugs loudly rather
+    than silently constructing an invalid cell."""
+    with pytest.raises(KeyError):
+        CellOccupancy(
+            layer='NO_SUCH_LAYER', track_a=0, track_b=0,
+            occ_type=OccupantType.DEVICE_DIFF,
         )
 
 
@@ -67,8 +111,38 @@ def test_add_sharer_requires_owner():
     cell = CellOccupancy(
         layer='OD', track_a=0, track_b=0, occ_type=OccupantType.DEVICE_DIFF,
     )
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match='owner_device_id'):
         cell.add_sharer('MN1')
+
+
+def test_add_sharer_requires_device_diff():
+    """``shared_with`` is OD/diffusion-only per §B. A CUT / VIA / BLOCKAGE
+    cell with an ``owner_device_id`` set must still reject ``add_sharer``;
+    otherwise downstream diffusion-share logic could misinterpret a cell
+    that isn't actually a diffusion region."""
+    # CUT cell on a CUT layer (CPO) — even with an owner, sharing is invalid.
+    cut_cell = CellOccupancy(
+        layer='CPO', track_a=0, track_b=0,
+        occ_type=OccupantType.CUT, owner_device_id='MN0',
+    )
+    with pytest.raises(ValueError, match='OD/diffusion-only'):
+        cut_cell.add_sharer('MN1')
+
+    # VIA0 cell with an owner — also rejected.
+    via_cell = CellOccupancy(
+        layer='VIA0', track_a=0, track_b=0,
+        occ_type=OccupantType.VIA, owner_device_id='MN0',
+    )
+    with pytest.raises(ValueError, match='OD/diffusion-only'):
+        via_cell.add_sharer('MN1')
+
+    # BLOCKAGE on a B-tier layer — also rejected.
+    blk_cell = CellOccupancy(
+        layer='OD', track_a=0, track_b=0,
+        occ_type=OccupantType.BLOCKAGE, owner_device_id='MN0',
+    )
+    with pytest.raises(ValueError, match='OD/diffusion-only'):
+        blk_cell.add_sharer('MN1')
 
 
 def test_add_sharer_idempotent_and_owner_excluded():
@@ -132,8 +206,12 @@ if __name__ == '__main__':
     test_cut_occupant_type_exists()
     test_cell_occupancy_defaults()
     test_cell_occupancy_rejects_non_b_tier_occupant()
+    test_cell_occupancy_rejects_a_tier_layer()
+    test_cell_occupancy_rejects_c1_c2_layers()
+    test_cell_occupancy_unknown_layer_raises()
     test_cell_occupancy_accepts_cut()
     test_add_sharer_requires_owner()
+    test_add_sharer_requires_device_diff()
     test_add_sharer_idempotent_and_owner_excluded()
     test_remove_sharer_round_trip()
     test_shape_record_backlink()
