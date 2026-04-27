@@ -132,6 +132,59 @@ class LayoutSolver:
             print(f"  {layer}: tracks=[{dims[0]},{dims[1]}) ortho=[{dims[2]},{dims[3]})")
         print(f"  Total cells: {len(self.engine.cells)}")
     
+    def project_unannotated_blockages(self) -> Dict[str, int]:
+        """Project unannotated ``shape_pool`` entries into CSP as BLOCKAGE (M3).
+
+        For every ``ShapeRecord`` in ``model.shape_pool`` that LVS did not
+        annotate (``net_id is None``) and lives on a CSP-modelled layer,
+        the shape's bbox is mapped to grid cells via the ``MultiLayerGrid``
+        and each cell is marked ``BLOCKAGE`` on the engine.
+
+        Per docs/architecture_roadmap.md §A and §D, this turns "GDS-known
+        but LVS-unknown" geometry — filler, ESD stubs, dummy gates,
+        hand-edits — into hard obstacles for the L2 ``propose_assign``
+        path, instead of leaving the engine ignorant of them.
+
+        The MVP fixture has zero unannotated LI / M1 shapes (the only two
+        layers wired into CSP today), so this is a no-op for the
+        byte-golden buffer-resize case. Tests inject a synthetic LI stub
+        into shape_pool to exercise the projection end-to-end.
+
+        Returns ``{layer: n_cells_marked, ..., 'skipped_conflict': n}``.
+        ``skipped_conflict`` counts cells that were already non-EMPTY and
+        therefore not overwritten — the conservative-default red flag.
+        """
+        result: Dict[str, int] = {}
+        skipped = 0
+        if self.engine is None:
+            return result
+
+        csp_layers = set(self.engine.layer_dims.keys())
+
+        for sr in self.model.shape_pool:
+            if sr.is_annotated:
+                continue
+            if sr.layer not in csp_layers:
+                continue
+            x1, y1, x2, y2 = sr.bbox_nm
+            coords = self.grid.physical_to_segment_coords(
+                sr.layer, x1, y1, x2, y2,
+            )
+            track_idx = coords['track_idx']
+            for o in range(coords['start_anchor'], coords['end_anchor'] + 1):
+                pos = (sr.layer, track_idx, o)
+                cell = self.engine.get_cell(pos)
+                if cell is None:
+                    continue
+                if self.engine.mark_blockage(pos):
+                    result[sr.layer] = result.get(sr.layer, 0) + 1
+                else:
+                    skipped += 1
+
+        if skipped:
+            result['skipped_conflict'] = skipped
+        return result
+
     def load_existing_layout(self) -> bool:
         """
         Load existing layout segments into CSP.

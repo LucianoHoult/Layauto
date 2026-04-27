@@ -263,6 +263,14 @@ def run_full_pipeline(original_cdl_path: str = None,
     if not load_ok:
         print("FATAL: Failed to load layout into CSP")
         return
+    # M3: project unannotated GDS shapes into CSP as BLOCKAGE so they
+    # obstruct any subsequent propose_assign rather than being silently
+    # overwritten. No-op for the MVP fixture (zero unannotated LI/M1
+    # shapes), but the seam exists for hand-edited / filler-bearing
+    # production layouts.
+    blockage_stats = solver.project_unannotated_blockages()
+    if blockage_stats:
+        print(f"  Unannotated blockage projection: {blockage_stats}")
 
     # ---- Stage 5: Resize (driven by CDL diff) ----
     print("\n[Stage 5] Executing resize (driven by CDL diff)...")
@@ -317,6 +325,27 @@ def run_full_pipeline(original_cdl_path: str = None,
     cell_name = f'INV_N{nfin_n}_P{nfin_p}'
     from io_adapters.writer_cdl import write_cdl
     write_cdl(cdl_path, cell_name, nfin_n, nfin_p, config.POLY_WIDTH)
+
+    # M3: emit per-layer LVS annotation coverage report. Helps spot the
+    # parser-inversion failure mode: a production GDS where most LI/M1
+    # shapes are unannotated would surface here as low coverage and
+    # feed straight into the BLOCKAGE projection budget.
+    coverage = model.annotation_coverage()
+    coverage_path = os.path.join(output_dir, 'annotation_coverage.txt')
+    with open(coverage_path, 'w') as f:
+        f.write("LVS ANNOTATION COVERAGE REPORT\n")
+        f.write("=" * 50 + "\n\n")
+        f.write(f"{'Layer':<10} {'Total':>6} {'Annotated':>10} {'Unannotated':>12}\n")
+        f.write("-" * 50 + "\n")
+        for layer in sorted(coverage):
+            s = coverage[layer]
+            f.write(f"{layer:<10} {s['total']:>6} {s['annotated']:>10} {s['unannotated']:>12}\n")
+        total = sum(s['total'] for s in coverage.values())
+        ann = sum(s['annotated'] for s in coverage.values())
+        unann = sum(s['unannotated'] for s in coverage.values())
+        f.write("-" * 50 + "\n")
+        f.write(f"{'TOTAL':<10} {total:>6} {ann:>10} {unann:>12}\n")
+    print(f"  Coverage report written: {coverage_path}")
 
     # Write resize report
     report_path = os.path.join(output_dir, 'resize_report.txt')

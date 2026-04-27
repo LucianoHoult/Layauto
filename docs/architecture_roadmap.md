@@ -2,7 +2,7 @@
 
 **Purpose.** Living tracker for the multi-milestone architectural evolution of the Layauto layout pipeline. This document is the canonical handoff artifact: any new contributor (human or Claude session) should read it first, re-verify the file/line references in [Verification Snapshot](#verification-snapshot), then pick the next milestone from [Milestone Roadmap](#milestone-roadmap).
 
-**Last verified:** 2026-04-26 on branch `claude/review-arch-plan-Li1Az` (post-M2).
+**Last verified:** 2026-04-27 on branch `claude/review-arch-plan-LKbJL` (post-M3).
 
 **How to update.**
 - When a milestone moves status, flip its checkbox and append a [Change Log](#change-log) entry (date, milestone, what changed).
@@ -30,28 +30,30 @@ This document captures the agreed evolution path: a 7-milestone refactor that do
 
 The roadmap below assumes specific file/line locations. These were confirmed on the date stamped above. Any contributor picking up the work should re-run the checks (file paths and line ranges drift with refactors).
 
-| # | Claim | Where (verified 2026-04-26) | State |
+| # | Claim | Where (verified 2026-04-27) | State |
 |---|-------|-----------------------------|-------|
 | 1 | ~~Two `EditOp` classes coexist~~ | Single canonical class at `core/diff.py:16-40`; `core/solver.py:50` imports it | resolved by M1 (2026-04-25) |
 | 2 | ~~Per-layer hardcoded y1/y2 in writeback~~ | `apply_edits_to_layout_data` removed; writeback consolidated in `core/decoder.py::WritebackDecoder` (`pipeline/run_mvp.py:298-302` is the sole call site) | resolved by M1 (2026-04-25) |
-| 3 | ~~`resize_device` bypasses CSP for geometry~~ | `resize_device` is the L3 macro at `core/solver.py:226-322`; LI cell-level changes go through `core/atomic_ops.py::modify_segment` (L2 → CSP); FIN/OD/POLY emitted as L1 via the non-CSP side-channel pending M3/M4/M5 | resolved by M2 (2026-04-26) |
+| 3 | ~~`resize_device` bypasses CSP for geometry~~ | `resize_device` is the L3 macro at `core/solver.py:226-322`; LI cell-level changes go through `core/atomic_ops.py::modify_segment` (L2 → CSP); FIN/OD/POLY emitted as L1 via the non-CSP side-channel pending M4/M5 | resolved by M2 (2026-04-26) |
 | 4 | ~~CSP engine has only `checkpoint`/`restore`~~ | Engine exposes `propose_assign` / `propose_release` / `commit_with_delta` at `core/csp_engine.py:206-285`; trail captures `(pos, prev_domain, prev_assignment)` so `restore` reverts both | resolved by M2 (2026-04-26) |
 | 5 | Anchor-layer propagation filter exists | `core/csp_engine.py:265-269` | OK to keep |
-| 6 | Parser is net-primary, bbox auxiliary | `io_adapters/parser.py:71-200`; M2 added a parser-side `bbox_nm` stamp on `TrackSegment` so L1 EditOps can carry the layout's pixel-accurate rectangle, but the inversion (shape_pool primary) is still pending | drift target |
-| 7 | `OccupantType.BLOCKAGE` exists and is used by solver, but not for unannotated shapes | `core/data_model.py:21-28`, `core/solver.py:45` | half-built |
+| 6 | ~~Parser is net-primary, bbox auxiliary~~ | M3 inverted: `parse_bbox_by_layer` → `build_shape_pool` is geometric-first (`io_adapters/parser.py:80-100`); `apply_lvs_overlay` (`io_adapters/parser.py:113-160`) stamps `net_id` / `device_id` / `pin_role` onto matching records by `(layer, bbox)` key. `LayoutModel.shape_pool` carries the result; `TrackSegment.shape_record` is the per-segment backlink. | resolved by M3 (2026-04-27) |
+| 7 | ~~`OccupantType.BLOCKAGE` exists and is used by solver, but not for unannotated shapes~~ | M3 added `core/csp_engine.py::ConstraintEngine.mark_blockage` and `core/solver.py::LayoutSolver.project_unannotated_blockages`. Pipeline calls the projection in `pipeline/run_mvp.py:262-269` after `load_existing_layout`. No-op for the MVP fixture (zero unannotated LI/M1 shapes); test scaffolding exercises end-to-end. | resolved by M3 (2026-04-27) |
 | 8 | `OccupantType.DEVICE_GATE` / `DEVICE_DIFF` defined but unused; no `CUT` | `core/data_model.py:21-28` | placeholder only |
 | 9 | `MultiLayerGrid` is 1D-track only; no `CellOccupancy` | `core/grid.py:87-240` | not built |
 | 10 | No net-equivalence union-find in CSP | `core/csp_engine.py` (whole file) | not built |
 | 11 | NWELL / BOUNDARY produced by hardcoded formulas | Loops removed from `pipeline/run_mvp.py` in M1c; formulas live as transitional Phase 2 helpers in `core/decoder.py` (`_derive_nwell`, `_derive_boundary`); the M2 milestone deleted the LI/POLY Phase 2 helpers; NWELL/BOUNDARY remain pending M5 | drift target (smaller surface, awaiting M5) |
-| 12 | No `core/drc_derivator.py`; no `is_derived` field | absent | not built |
+| 12 | ~~No `is_derived` field~~ | M3 added `ShapeRecord.is_derived` (defaulting `False`); `core/drc_derivator.py` is still pending M5 | half-built (M3 added the field; M5 lights it up) |
 | 13 | No `core/macros/` directory; no `pick_macro` dispatch | absent — but `resize_device` is now an explicit L3 macro inside `core/solver.py` and the M6 dispatch table will lift it into `core/macros/` | half-built |
 | 14 | `diff_to_edit_ops` handles add/remove only (no device-level) | `core/diff.py:73-81` | drift target |
 | 15 | SKILL emitter is `printf` placeholder | `io_adapters/writer_skill_script.py:76-78` | drift target |
 | 16 | Three dummy Calibre JSON generators | `dummy/gen_buffer_layout.py:364, 402, 434` | OK for now |
 | 17 | Per-layer DRC rule registration | `core/drc_constraints.py:131-161` | OK to keep |
 | 18 | Layer map has no tier markers | `tech/layer_map.py:8-18` | drift target |
-| 19 | Six-stage pipeline order: diff_cdl → build_layout_model → setup_engine → load_existing_layout → resize_device → apply_edits → write_gds | `pipeline/run_mvp.py:222-411` | OK structure |
+| 19 | Six-stage pipeline order: diff_cdl → build_layout_model → setup_engine → load_existing_layout → resize_device → apply_edits → write_gds | `pipeline/run_mvp.py:222-411` (M3 added `project_unannotated_blockages` between stages 4 and 5) | OK structure |
 | 20 | L2 atomic ops module exists with `release_segment_cells` / `assign_segment_cells` / `modify_segment` | `core/atomic_ops.py` (M2 minimal subset; `extend_od`, `extend_poly`, `add/remove_fin_strip`, `add/remove_cut_cell`, `mark_shared_diffusion` deferred to M4) | half-built |
+| 21 | `ShapeRecord` (geometric truth) + `LayoutModel.shape_pool` exist | `core/data_model.py::ShapeRecord` (with `provenance`, `is_derived`, `suspect_tags`); `LayoutModel.shape_pool` carries the pool; `LayoutModel.annotation_coverage()` returns per-layer LVS-coverage stats | resolved by M3 (2026-04-27) |
+| 22 | Annotation-coverage report emitted by pipeline | `output/annotation_coverage.txt` written from `pipeline/run_mvp.py` after Stage 6 | resolved by M3 (2026-04-27) |
 
 ---
 
@@ -187,20 +189,35 @@ Each milestone has a status checkbox (Not started / In progress / Done / Blocked
 
 ### M3 — `shape_pool` parser inversion + unannotated-shape BLOCKAGE projection
 
-- **Status:** [ ] Not started
-- **Owner:** _unassigned_
+- **Status:** [x] Done (2026-04-27)
+- **Owner:** Claude (`claude/review-arch-plan-LKbJL`)
 - **Goal.** Invert the parser to "GDS `shape_pool` is geometric truth, LVS is annotation overlay." All unannotated shapes enter CSP as `BLOCKAGE`.
+- **Sub-milestones (all complete).**
+  - **M3a (Done, 2026-04-27):** Added `core/data_model.py::ShapeRecord` (geometric record with optional LVS overlay: `net_id` / `device_id` / `pin_role`; plus `provenance`, `is_derived`, and `suspect_tags` seams that M5 / M7 will light up). Added `LayoutModel.shape_pool: List[ShapeRecord]` and `LayoutModel.annotation_coverage()`. The M2-era `TrackSegment.bbox_nm` stamp is retained as a denormalised cache; the new `TrackSegment.shape_record` field is the canonical backlink to the matching pool entry.
+  - **M3b (Done, 2026-04-27):** Inverted `io_adapters/parser.py`. New `build_shape_pool(bbox_data)` is the geometric-first pass — every GDS rectangle becomes a `ShapeRecord` with `net_id=None`. New `apply_lvs_overlay(pool, net_data, devices)` is the annotation pass — stamps `net_id` / `device_id` / `pin_role` onto matching records by `(layer, bbox)` key. `build_layout_model` now runs both, attaches the pool to `LayoutModel`, and stamps each `TrackSegment.shape_record` from the pool index. Net-primary loop kept for backward-compat (still drives `Net.segments` / `Net.vias`); the inversion shows up at the data-model level.
+  - **M3c (Done, 2026-04-27):** Added `ConstraintEngine.mark_blockage(pos)` (`core/csp_engine.py`). Sets `cell.assignment = BLOCKAGE`, `cell.domain = {BLOCKAGE}`, `cell.fixed = True`. Idempotent on already-blocked cells; refuses to overwrite cells already carrying a non-EMPTY annotated assignment (conservative-default rule from §D — "treat collisions as real conflicts"). Subsequent `propose_assign(pos, *)` returns `False` because the cell is fixed and the requested state isn't in the singleton domain — no engine logic change required, the existing `assign` short-circuit handles it.
+  - **M3d (Done, 2026-04-27):** Added `LayoutSolver.project_unannotated_blockages()` (`core/solver.py`). Iterates `model.shape_pool`; for every unannotated record on a CSP-modelled layer (today LI / M1) it maps the bbox to grid cells via `MultiLayerGrid.physical_to_segment_coords` and calls `engine.mark_blockage`. Returns per-layer cell counts plus a `skipped_conflict` count for cells that the engine refused to overwrite. Pipeline calls it after `load_existing_layout` (`pipeline/run_mvp.py:262-269`).
+  - **M3e (Done, 2026-04-27):** Pipeline emits `output/annotation_coverage.txt` from `LayoutModel.annotation_coverage()` — per-layer total / annotated / unannotated counts. The MVP fixture today reports 14 / 32 LVS-annotated shapes (LI 5/5, M1 4/4, VIA0 4/4, POLY 1/3 — the two boundary dummy gates are unannotated; FIN / OD / NWELL / BOUNDARY are unannotated since LVS doesn't enumerate them).
 - **Files touched.**
-  - `io_adapters/parser.py:71-198` — `parse_bbox_by_layer` becomes a `shape_pool` builder; `parse_calibre_net_query` becomes annotation-apply.
-  - `core/data_model.py` — add `ShapeRecord` with `provenance` field; enable backlinks.
-  - `core/csp_engine.py` — accept `BLOCKAGE`-typed occupants on all relevant layers (currently only used by solver setup).
-  - `dummy/gen_buffer_layout.py` — deliberately retain a few unannotated filler shapes as test scaffolding.
-- **Change outline.**
-  - Geometric-overlap cross-check: shapes touching multiple LVS-tagged neighbors but lacking a tag get `SUSPECT_CONNECTED_TO_*`.
-  - Conservative defaults: don't traverse, don't silently delete, don't auto-merge.
-- **Acceptance.** An unannotated LI stub blocking a resize path causes the solver to return `infeasible` rather than silently overwriting it. Annotation coverage report emitted.
-- **Dependencies.** M1 (decoder must understand `ShapeRecord`).
-- **Risks.** Dummy data may not exercise real LVS gaps — extend `gen_buffer_layout` first.
+  - `core/data_model.py` — `ShapeRecord` dataclass + `LayoutModel.shape_pool` field + `annotation_coverage` helper + `TrackSegment.shape_record` backlink.
+  - `io_adapters/parser.py` — `build_shape_pool` + `apply_lvs_overlay` helpers; `build_layout_model` rewired to shape_pool-primary; segments stamp the per-record backlink.
+  - `core/csp_engine.py` — `mark_blockage` primitive.
+  - `core/solver.py` — `project_unannotated_blockages` projection method.
+  - `pipeline/run_mvp.py` — calls projection after Stage 4; emits annotation-coverage report after Stage 6.
+  - **New** `tests/unit/test_shape_pool.py` (7 tests) — covers ShapeRecord defaults, overlay stamping, dummy-gate non-annotation, model exposure, and the per-segment backlink.
+  - **New** `tests/unit/test_blockage.py` (8 tests) — covers `mark_blockage` semantics, conservative-default refusal, fixture no-op, synthetic LI-stub projection, and the M3 acceptance: an unannotated LI stub makes `assign_segment_cells` return `failed_pos` instead of silently overwriting.
+- **Acceptance (verified).**
+  - **M3 acceptance contract.** `tests/unit/test_blockage.py::test_li_stub_makes_assign_segment_cells_infeasible` injects an unannotated LI ShapeRecord on an empty cell, runs `project_unannotated_blockages`, then attempts `atomic_ops.assign_segment_cells` against that cell; the result is `success=False` with `failed_pos` pinned to the blocked position, and `engine.restore` returns the engine to its pre-call state.
+  - **Annotation coverage report emitted.** `output/annotation_coverage.txt` lists per-layer total / annotated / unannotated counts.
+  - **Byte-golden preservation.** `output/buffer_resized.json` and `output/buffer_resized.cdl` are byte-identical to the M2 baseline; `output/resize_report.txt` is byte-identical (the resize report comes from `EditOp.__repr__` which M3 didn't touch); `output/buffer_resized.gds` is polygon-set-identical (30/30 (layer, datatype, points) tuples match — the GDS library timestamp differs per write call but is not part of the golden contract).
+  - **Tests:** pytest 65/65 green (50 pre-M3 + 15 new).
+- **Dependencies.** M1 (decoder must understand `ShapeRecord` — backlink seam was wired in M2).
+- **Notes for downstream milestones.**
+  - The `(layer, bbox_nm)` overlay key works because the dummy generator's GDS shapes and the dummy LVS shapes share an exact bbox-tuple representation. Production LVS geometry can drift by sub-nm; M7 will need a tolerance / containment match.
+  - `pin_role` inference uses `Device.pins[role] -> net_name` to back-stamp the role. When a net hits multiple pins on the same device (e.g. VSS = S + B for an NMOS), the stamp records the last role iterated. M4's B-tier `CellOccupancy.owner_device_id` + per-cell `pin_role` rasterisation is the principled fix.
+  - `ShapeRecord.is_derived` is currently always `False`. M5's `core/drc_derivator.py` will set it to `True` when emitting NWELL / BOUNDARY / VT / PP / NP / DNW shapes; the decoder should then reject direct edits to derived shapes.
+  - The geometric-overlap cross-check in §D ("`SUSPECT_CONNECTED_TO_*` tagging") is not implemented — `ShapeRecord.suspect_tags` exists as the seam but stays empty for the MVP fixture, where unannotated shapes are FIN / OD / POLY (non-CSP) and NWELL / BOUNDARY (cell-level wrappers). The cross-check will earn its keep on a real production layout where filler / ESD shapes overlap LVS-tagged routing.
+  - Dummy fixture left unchanged. `dummy/gen_buffer_layout.py` already produces the two unannotated POLY dummy gates (`dummy_gate_0`, `dummy_gate_2`); they don't enter CSP because POLY isn't a CSP-modelled layer today. Adding more unannotated fillers would have shifted the byte-golden envelope without exercising any new code path. Tests inject scaffolding inline.
 
 ### M4 — B-tier `CellOccupancy` + diffusion sharing + CUT + net-equivalence
 
@@ -302,7 +319,7 @@ Each milestone has a status checkbox (Not started / In progress / Done / Blocked
 
 ## Minimal Starter PR
 
-M1 and M2 have landed. The next minimal-blast-radius starter is **M3** — invert the parser to "GDS `shape_pool` is geometric truth, LVS is annotation overlay" and project unannotated shapes into CSP as `BLOCKAGE`. M3 unblocks (a) the M4 B-tier `CellOccupancy` work, because shapes need to enter CSP as cell-typed occupants before the OD-share / CUT semantics can be modelled, and (b) the M5 derivator, which expects a complete shape inventory to subscribe to. The half-built `TrackSegment.bbox_nm` field added in M2 is the natural seam where M3's `ShapeRecord` provenance backlink replaces the per-segment bbox stamp.
+M1, M2, and M3 have landed. The next move is **M4** — promote 2D-grid layers (OD, VIA0, CPO / M0_CUT / FIN_CUT) into first-class `CellOccupancy(track_a, track_b)` and grow the CSP engine with an internal net-equivalence union-find. M4 directly unlocks (a) shared-diffusion semantics (the `_reshape_li_sd_bars` `device_y_marker` desc-substring filter inside `core/solver.py:362-377` retires once OD cells carry `owner_device_id` + `shared_with[]`), (b) CUT support (`OccupantType.CUT` + cut-aware net-equivalence merge / split), and (c) cell-level conflict detection on B-tier layers. The M3 `shape_pool` is the natural feed: `ShapeRecord`s on B-tier layers project into `CellOccupancy` instead of `TrackSegment`, and unannotated B-tier shapes already carry the `BLOCKAGE` plumbing M3 wired up. Performance instrumentation should be added on the same milestone — incremental net-equivalence over a growing grid is the first place the engine's `_propagate` complexity becomes visible.
 
 ---
 
@@ -418,6 +435,7 @@ Append entries when status flips, when verification snapshot is refreshed, or wh
 
 | Date | Author | Change |
 |------|--------|--------|
+| 2026-04-27 | Claude (`claude/review-arch-plan-LKbJL`) | **M3 complete.** M3a: added `core/data_model.py::ShapeRecord` (geometric record with optional LVS overlay — `net_id` / `device_id` / `pin_role` — plus `provenance` / `is_derived` / `suspect_tags` seams) and `LayoutModel.shape_pool` + `LayoutModel.annotation_coverage()`. `TrackSegment.shape_record` is the canonical per-segment backlink; the M2 `bbox_nm` cache is retained for byte-golden writeback. M3b: inverted `io_adapters/parser.py`. New `build_shape_pool(bbox_data)` + `apply_lvs_overlay(pool, net_data, devices)` make GDS the geometric truth and LVS an annotation overlay matched by `(layer, bbox)`; `build_layout_model` runs both, attaches the pool, and stamps each `TrackSegment.shape_record`. M3c: `core/csp_engine.py::ConstraintEngine.mark_blockage` — sets `cell.assignment=BLOCKAGE`, `domain={BLOCKAGE}`, `fixed=True`, idempotent, and refuses to overwrite annotated assignments (conservative-default rule §D). The existing `assign` short-circuit (`if cell.fixed: return cell.assignment == state`) makes subsequent `propose_assign` rejections automatic. M3d: `core/solver.py::LayoutSolver.project_unannotated_blockages` — iterates `model.shape_pool`, projects unannotated CSP-layer shapes through `MultiLayerGrid.physical_to_segment_coords`, marks each cell as BLOCKAGE; pipeline calls it after `load_existing_layout`. M3e: pipeline emits `output/annotation_coverage.txt` from `LayoutModel.annotation_coverage()`. Verification snapshot rows 6 and 7 marked resolved; row 12 marked half-built (M3 added the `is_derived` field, M5 lights it up); rows 21 and 22 added for shape_pool + coverage report. Acceptance: `tests/unit/test_blockage.py::test_li_stub_makes_assign_segment_cells_infeasible` injects an unannotated LI stub, projects to BLOCKAGE, then verifies `atomic_ops.assign_segment_cells` returns `failed_pos` with engine state restorable. Byte-golden: `buffer_resized.{json,cdl}` and `resize_report.txt` byte-identical to M2 baseline; `buffer_resized.gds` polygon-set identical (30/30) — only the GDS library timestamp differs per write. Pytest 65/65 (50 pre-M3 + 15 new). Minimal Starter PR pointer flipped to M4. |
 | 2026-04-26 | Claude (`claude/review-arch-plan-Li1Az`) | **M2 complete.** M2a: extended CSP trail to `(pos, prev_domain, prev_assignment)` and added `propose_assign` / `propose_release` / `commit_with_delta` (`core/csp_engine.py:206-285`); 6 new unit tests cover round-trip restore, trail truncation, propose-assign rollback, and intra-transaction release+reassign. M2b: created `core/atomic_ops.py` with the M2 minimal L2 subset (`release_segment_cells`, `assign_segment_cells`, `modify_segment` with `failed_pos` localisation). M2c: refactored `resize_device` (`core/solver.py:226-322`) into the L3 `device_resize` macro, routing LI cell-level changes through L2 + CSP, with stricter device-marker filtering on LI segments. M2d: deleted Phase 2 helpers `_shrink_li_sd_bars`, `_derive_poly_span`, `_extend_li_for_vias` from the decoder; Phase 1 grew `_apply_li_modifies` and `_apply_poly_modifies` (the latter accepts partial-bbox EditOps with `None` sentinels). M2e: added `TrackSegment.bbox_nm` stamping in the parser so emitted L1 `old_bbox` records are pixel-accurate even on odd-width layers (LI = 17 nm). Verification snapshot rows 3, 4 marked resolved; row 11 noted as smaller; new row 20 records the L2 module. Acceptance: `output/buffer_resized.{gds,json,cdl}` byte-identical to M1 baseline; conflict-injection test exercises macro-level rollback; pytest 50/50 (12 new). Resize report now lists 7 ops vs M1's 6 — the macro lifted POLY span derivation (and the M1 cross-net leakage in MN0's report) into explicit L1 EditOps. Minimal Starter PR pointer flipped to M3. |
 | 2026-04-25 | Claude (`claude/m1-decoder-writeback`) | Roadmap refinement after M1 implementation: M2 milestone block now records that it deletes the decoder's `_derive_poly_span` and `_extend_li_for_vias` helpers; M5 block records that it deletes `_derive_nwell` / `_derive_boundary`. Verification snapshot row 11 updated — the NWELL/BOUNDARY formulas are no longer in `pipeline/run_mvp.py:130-138` (M1c removed those loops); they are consolidated as transitional Phase 2 helpers in `core/decoder.py` awaiting the M5 derivator. Makes the M1 → M2 / M5 eviction path mechanical rather than implicit. |
 | 2026-04-25 | Claude (`claude/m1-decoder-writeback`) | **M1 complete.** M1a: unified `EditOp` (`core/diff.py:16-37`; `core/solver.py:26` imports); duplicate dataclass removed. M1b: built `core/decoder.py::WritebackDecoder` consolidating writeback geometry into Phase 1 (explicit EditOp apply: FIN remove + OD modify) and Phase 2 (derived: POLY span, LI shrink + via-coverage extension, NWELL/BOUNDARY extents). M1c: removed legacy 125-line `apply_edits_to_layout_data` from `pipeline/run_mvp.py`; sole call site is the decoder. Verification snapshot rows 1 and 2 marked resolved. Acceptance: pipeline JSON/CDL/report byte-identical under fixed `PYTHONHASHSEED`; GDS polygons identical (30/30); pytest 38/38 (added 5 decoder tests). Discovery: M1's "decoder consumes EditOp stream" goal is partial — the solver emits EditOps for FIN/OD/LI but not POLY/NWELL/BOUNDARY; the decoder's Phase 2 fills the gap and is the seam where M5's derivator will plug in. |
