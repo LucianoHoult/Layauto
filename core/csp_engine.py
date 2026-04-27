@@ -431,6 +431,37 @@ class ConstraintEngine:
                 cell.assignment = assignment
                 cell.domain = set(domain)
     
+    def mark_blockage(self, pos: Tuple) -> bool:
+        """Mark a cell as ``BLOCKAGE`` — an immovable obstacle (M3).
+
+        Projects an unannotated GDS shape into CSP. After marking,
+        subsequent ``propose_assign(pos, *)`` returns ``False`` because
+        the cell becomes ``fixed`` with a singleton ``{BLOCKAGE}`` domain
+        — the ``assign`` short-circuit at the top of the method
+        ("``if cell.fixed: return cell.assignment == state``") rejects
+        any non-BLOCKAGE state.
+
+        Returns:
+          ``True`` if the cell was marked (or was already a blockage).
+          ``False`` if the position is outside the grid, or the cell
+          already carries a non-EMPTY annotated assignment — that
+          signals a parser-level conflict between LVS coverage and the
+          unannotated shape pool, and the conservative-defaults rule
+          (§D) says "treat collisions as real conflicts." The caller
+          should surface the conflict; we do not silently overwrite.
+        """
+        cell = self.cells.get(pos)
+        if cell is None:
+            return False
+        if cell.fixed and cell.assignment == BLOCKAGE:
+            return True  # idempotent
+        if cell.assignment != EMPTY:
+            return False  # see docstring — caller reconciles
+        cell.assignment = BLOCKAGE
+        cell.domain = {BLOCKAGE}
+        cell.fixed = True
+        return True
+
     def unassign(self, pos: Tuple):
         """
         Release a cell assignment (set back to EMPTY) without trail recording.
