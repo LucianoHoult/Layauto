@@ -5,15 +5,15 @@ Original: NMOS=5fin, PMOS=7fin
 Target:   NMOS=4fin, PMOS=6fin
 Source: CDL diff (/home/user/Layauto/pipeline/../dummy/fixtures/buffer_original.cdl vs /home/user/Layauto/pipeline/../dummy/fixtures/buffer_target.cdl)
 
-MN0 resize: Resize MN0 5→4 fin: 4 edit operations
+MN0 resize: Resize MN0 5→4 fin: 3 edit operations
   REMOVE FIN MN0_fin_track_4 bbox=(0, 137, 108, 143)
-  RESIZE MN0_od_shrink
-  RESIZE li_pmos_drain_shorten
-  RESIZE li_nmos_source_shorten
+  MODIFY OD MN0_od_shrink (0, 30, 108, 150) → (0, 30, 108, 125)
+  MODIFY LI li_nmos_source_resize (18, 13, 35, 145) → (18, 13, 35, 120)
 
-MP0 resize: Resize MP0 7→6 fin: 3 edit operations
+MP0 resize: Resize MP0 7→6 fin: 4 edit operations
   REMOVE FIN MP0_fin_track_14 bbox=(0, 387, 108, 393)
-  RESIZE MP0_od_shrink
-  RESIZE li_pmos_drain_shorten
+  MODIFY OD MP0_od_shrink (0, 230, 108, 400) → (0, 230, 108, 375)
+  MODIFY LI li_pmos_drain_resize (72, 193, 89, 395) → (72, 193, 89, 370)
+  MODIFY POLY MP0_poly_y2_shift (None, None, None, 415) → (None, None, None, 390)
 
 Total edit operations: 7
