@@ -16,6 +16,20 @@ both prior domain *and* prior assignment, so ``restore`` reverts both.
 ``commit_with_delta`` summarises the cell-level changes since a checkpoint
 and truncates the trail (commit is non-restorable). See
 ``docs/architecture_roadmap.md`` § M2.
+
+Net-equivalence (M4b): the engine now keeps an internal union-find over
+cell positions to track which routed cells are electrically connected.
+``union(pos_a, pos_b)`` merges two adjacent same-net cells into one
+equivalence class; ``net_of(pos)`` and ``connected_to(pos)`` query the
+class. The union precondition "no CUT between adjacent cells" is
+enforced by refusing to union when either endpoint's assignment is a
+CUT — combined with adjacent-only union, this means a chain of unions
+along an axis cannot cross a CUT cell. ``commit_with_full_delta``
+returns both the cell delta and the union delta atomically; the
+M2-era ``commit_with_delta`` is preserved for backward compatibility.
+``restore`` undoes unions performed since the checkpoint along with
+the cell-level changes, so transactional rollback covers both axes.
+See ``docs/architecture_roadmap.md`` § B and § M4.
 """
 
 from collections import deque
@@ -30,6 +44,27 @@ from core.data_model import CellState, OccupantType, EMPTY, BLOCKAGE
 # fully revert a cell, including its assignment — the M1-era trail saved only
 # domain, which left ``unassign`` unable to restore neighbour assignments.
 TrailEntry = Tuple[Tuple, FrozenSet[CellState], CellState]
+
+
+@dataclass
+class CommitDelta:
+    """Return value of ``ConstraintEngine.commit_with_full_delta`` (M4b).
+
+    ``cells``: same shape as the legacy ``commit_with_delta`` return —
+    one ``(pos, prev_assignment, new_assignment)`` tuple per cell whose
+    assignment changed since the checkpoint, sorted by ``(layer,
+    track, ortho)``.
+
+    ``unions``: chronological list of ``(child_root, parent_root)``
+    pairs for every successful ``union`` since the checkpoint. The
+    original argument order to ``union`` is not preserved — the engine
+    always stores the smaller-tree root as ``child`` for union-by-size.
+    Consumers (M4d ``mark_shared_diffusion``, M6 ``share_diffusion`` /
+    ``split_diffusion``) treat this as an unordered "these two cells
+    became electrically equivalent" record.
+    """
+    cells: List[Tuple[Tuple, CellState, CellState]] = field(default_factory=list)
+    unions: List[Tuple[Tuple, Tuple]] = field(default_factory=list)
 
 
 @dataclass
@@ -133,6 +168,30 @@ class ConstraintEngine:
         # Trail for incremental backtracking. Each entry is a ``TrailEntry``:
         # (pos, prev_domain, prev_assignment). See module docstring.
         self.trail: List[TrailEntry] = []
+
+        # M4b net-equivalence union-find. ``_uf_parent[pos]`` is the cell
+        # parent (self for a root); ``_uf_size[root]`` is the component
+        # size. Cells appear lazily — a position is in the union-find
+        # only after it has been part of a ``union`` call. Path
+        # compression is intentionally NOT used so that ``restore`` can
+        # undo unions by simply popping the trail; the size penalty is
+        # bounded by the number of unions per checkpoint, which is small
+        # for the M4 fan-out.
+        self._uf_parent: Dict[Tuple, Tuple] = {}
+        self._uf_size: Dict[Tuple, int] = {}
+
+        # Per-checkpoint union trail. Each entry is
+        # ``(child_root, prev_parent_of_child_root, parent_root, prev_size_of_parent)``
+        # so ``_uf_undo_one`` can fully revert one union step. Truncated
+        # by ``commit_with_full_delta`` (commit is non-restorable);
+        # popped pair-wise by ``restore``.
+        self._uf_trail: List[Tuple[Tuple, Tuple, Tuple, int]] = []
+
+        # Maps each ``checkpoint()`` return value (``len(self.trail)`` at
+        # checkpoint time) to the matching ``len(self._uf_trail)`` so
+        # ``restore`` and ``commit_with_full_delta`` can bracket union
+        # events without expanding the public ``checkpoint`` return type.
+        self._uf_checkpoints: Dict[int, int] = {}
     
     def add_layer(self, layer_name: str, n_tracks: int, n_ortho: int,
                   track_range: Tuple[int, int] = None,
@@ -288,6 +347,66 @@ class ConstraintEngine:
 
         Decoder consumes this delta to synthesize L1 ``EditOp``s.
         """
+        cell_delta = self._compute_cell_delta(checkpoint)
+
+        # Truncate trail; commit is non-restorable.
+        del self.trail[checkpoint:]
+        # Drop union-trail entries since the checkpoint and matching
+        # checkpoint stash entries — committing without surfacing the
+        # union delta is allowed (callers that don't care about
+        # net-equivalence stay on this method).
+        uf_target = self._uf_checkpoints.pop(checkpoint, 0)
+        del self._uf_trail[uf_target:]
+        stale = [k for k in self._uf_checkpoints if k > checkpoint]
+        for k in stale:
+            self._uf_checkpoints.pop(k, None)
+        return cell_delta
+
+    def commit_with_full_delta(self, checkpoint: int) -> 'CommitDelta':
+        """Finalize and return both the cell delta *and* the net-equivalence delta (M4b).
+
+        ``CommitDelta.cells`` is the same list ``commit_with_delta``
+        returns. ``CommitDelta.unions`` is the list of ``(pos_a, pos_b)``
+        union events — one per successful ``union`` call since the
+        checkpoint, in chronological order. Decoder / L3 macro
+        consumers that need to track net-equivalence (M4d's
+        ``mark_shared_diffusion``, M6's ``share_diffusion`` /
+        ``split_diffusion`` macros) call this variant; M2-era callers
+        stay on ``commit_with_delta``.
+
+        Trail truncation semantics match ``commit_with_delta``: both
+        the cell trail and the union-find trail are truncated past
+        the checkpoint. Commit is non-restorable.
+        """
+        cell_delta = self._compute_cell_delta(checkpoint)
+
+        uf_target = self._uf_checkpoints.pop(checkpoint, 0)
+        # Each entry on ``_uf_trail`` was appended by a successful
+        # ``union(child, parent)``. The original argument order is not
+        # preserved (we always store the smaller-tree root as
+        # ``child``); for the public delta we surface ``(child,
+        # parent)`` which is sufficient for "these two cells were
+        # merged" — the L3 consumer doesn't depend on argument order.
+        union_delta: List[Tuple[Tuple, Tuple]] = [
+            (entry[0], entry[2]) for entry in self._uf_trail[uf_target:]
+        ]
+
+        # Truncate trails; commit is non-restorable.
+        del self.trail[checkpoint:]
+        del self._uf_trail[uf_target:]
+        stale = [k for k in self._uf_checkpoints if k > checkpoint]
+        for k in stale:
+            self._uf_checkpoints.pop(k, None)
+
+        return CommitDelta(cells=cell_delta, unions=union_delta)
+
+    def _compute_cell_delta(self, checkpoint: int) -> List[Tuple[Tuple, CellState, CellState]]:
+        """Inner helper: build the (pos, prev, new) cell delta for a checkpoint.
+
+        Pulled out of ``commit_with_delta`` so ``commit_with_full_delta``
+        can reuse the same logic without duplicating the
+        first-prev-per-cell tracking.
+        """
         first_prev: Dict[Tuple, CellState] = {}
         for entry in self.trail[checkpoint:]:
             pos, _prev_domain, prev_assignment = entry
@@ -306,9 +425,6 @@ class ConstraintEngine:
             cur = cell.assignment
             if prev != cur:
                 delta.append((pos, prev, cur))
-
-        # Truncate trail; commit is non-restorable.
-        del self.trail[checkpoint:]
         return delta
 
     def _initial_domain(self) -> Set[CellState]:
@@ -398,23 +514,50 @@ class ConstraintEngine:
         return True
     
     def checkpoint(self) -> int:
-        """Return current trail position for backtracking."""
-        return len(self.trail)
+        """Return current trail position for backtracking.
+
+        The returned integer indexes into ``self.trail``. M4b also
+        snapshots the union-find trail length under the same key so
+        ``restore`` and ``commit_with_full_delta`` can revert / report
+        union events landed since the checkpoint, without changing
+        this method's return type (callers stash an int).
+        """
+        cp = len(self.trail)
+        # Stash the matching ``_uf_trail`` length so a later ``restore``
+        # or ``commit_with_full_delta(cp)`` can bracket union events.
+        # Indexing by the cell-trail length is safe because the cell
+        # trail is append-only between checkpoints; if the same length
+        # is reused (e.g., back-to-back checkpoints with no cell
+        # changes), the latest value wins, which is also the one we
+        # want — the second checkpoint logically supersedes the first.
+        self._uf_checkpoints[cp] = len(self._uf_trail)
+        return cp
 
     def restore(self, checkpoint: int):
         """
         Undo all domain *and* assignment changes back to the given checkpoint.
 
-        Restores entries in reverse order of modification. Each trail entry
-        carries the prior (domain, assignment) pair, so the post-restore
-        state is exactly the pre-checkpoint state.
+        Also undoes any union-find merges performed since the checkpoint,
+        in reverse order, so net-equivalence is consistent with the
+        cell-level state on rollback.
         """
+        # Undo union-find first so any subsequent ``net_of`` queries
+        # during rollback see a consistent component graph.
+        uf_target = self._uf_checkpoints.get(checkpoint, 0)
+        while len(self._uf_trail) > uf_target:
+            self._uf_undo_one()
+
         while len(self.trail) > checkpoint:
             pos, old_domain, old_assignment = self.trail.pop()
             cell = self.cells.get(pos)
             if cell is not None:
                 cell.domain = set(old_domain)
                 cell.assignment = old_assignment
+
+        # Drop checkpoint stash entries past the restore point.
+        stale = [k for k in self._uf_checkpoints if k > checkpoint]
+        for k in stale:
+            self._uf_checkpoints.pop(k, None)
     
     def snapshot(self) -> Dict[Tuple, Tuple[CellState, FrozenSet[CellState]]]:
         """Full state snapshot (expensive, use checkpoint/restore when possible)."""
@@ -461,6 +604,197 @@ class ConstraintEngine:
         cell.domain = {BLOCKAGE}
         cell.fixed = True
         return True
+
+    # =========================================================
+    # Net-equivalence union-find (M4b)
+    # =========================================================
+
+    def mark_cut(self, pos: Tuple) -> bool:
+        """Mark a cell as ``CUT`` — a cutter that breaks net-equivalence.
+
+        Mirrors ``mark_blockage`` (M3). Sets ``cell.assignment`` to a
+        synthetic ``CellState(CUT)``, collapses ``cell.domain`` to a
+        singleton, and pins the cell as ``fixed=True``. After marking,
+        the cell can no longer participate in ``union`` (the cut layer
+        check below rejects it), so a chain of unions along the cut
+        axis cannot cross this cell — the §B "no CUT between adjacent
+        cells" rule.
+
+        Returns:
+            ``True`` if the cell was marked (or was already CUT).
+            ``False`` if the position is outside the grid, or carries a
+            non-EMPTY annotated assignment — same conservative-defaults
+            stance as ``mark_blockage``.
+        """
+        cell = self.cells.get(pos)
+        if cell is None:
+            return False
+        cut_state = CellState(OccupantType.CUT)
+        if cell.fixed and cell.assignment == cut_state:
+            return True
+        if cell.assignment != EMPTY:
+            return False
+        cell.assignment = cut_state
+        cell.domain = {cut_state}
+        cell.fixed = True
+        return True
+
+    def _uf_find(self, pos: Tuple) -> Tuple:
+        """Walk parent pointers to the component root.
+
+        No path compression — keeps ``restore`` simple by making every
+        union reversible by popping its trail entry. Lazy: positions
+        not yet in the union-find are treated as their own root.
+        """
+        if pos not in self._uf_parent:
+            return pos
+        cur = pos
+        while self._uf_parent[cur] != cur:
+            cur = self._uf_parent[cur]
+        return cur
+
+    @staticmethod
+    def _adjacent(pos_a: Tuple, pos_b: Tuple) -> bool:
+        """True iff both cells are on the same layer with Manhattan-1 spacing."""
+        if pos_a[0] != pos_b[0]:
+            return False
+        d_track = abs(pos_a[1] - pos_b[1])
+        d_ortho = abs(pos_a[2] - pos_b[2])
+        return (d_track + d_ortho) == 1
+
+    def union(self, pos_a: Tuple, pos_b: Tuple) -> bool:
+        """Merge two adjacent same-net cells into one equivalence class.
+
+        Preconditions:
+          * Both cells exist (``get_cell(pos) is not None``).
+          * Same layer + Manhattan-1 adjacency.
+          * Neither cell's assignment is ``OccupantType.CUT`` — that
+            enforces §B's "no CUT between adjacent cells" rule (a chain
+            of adjacent unions cannot cross a CUT cell because the
+            union step *at* the CUT would be rejected here).
+          * Both cells share the same ``net_id`` (or both are EMPTY,
+            which is a no-op success).
+
+        Returns ``True`` on a successful union (or a no-op when both
+        cells are already in the same component); ``False`` when any
+        precondition fails.
+
+        The union is recorded on ``_uf_trail`` so ``restore`` can undo
+        it. Path compression is intentionally not used.
+        """
+        cell_a = self.cells.get(pos_a)
+        cell_b = self.cells.get(pos_b)
+        if cell_a is None or cell_b is None:
+            return False
+        if not self._adjacent(pos_a, pos_b):
+            return False
+        for cell in (cell_a, cell_b):
+            if cell.assignment.occ_type == OccupantType.CUT:
+                return False
+        # Same-net check: both EMPTY is OK; both same non-empty net_id is OK.
+        if cell_a.assignment.net_id != cell_b.assignment.net_id:
+            return False
+
+        root_a = self._uf_find(pos_a)
+        root_b = self._uf_find(pos_b)
+        if root_a == root_b:
+            return True  # already unioned
+
+        # Union by size: smaller tree hangs under larger.
+        size_a = self._uf_size.get(root_a, 1)
+        size_b = self._uf_size.get(root_b, 1)
+        if size_a < size_b:
+            child, parent = root_a, root_b
+            child_size, parent_size = size_a, size_b
+        else:
+            child, parent = root_b, root_a
+            child_size, parent_size = size_b, size_a
+
+        # Materialise both roots before mutating so ``_uf_undo_one``
+        # can restore the prior state (a root has parent==self).
+        prev_child_parent = self._uf_parent.get(child, child)
+        self._uf_parent[child] = parent
+        self._uf_parent.setdefault(parent, parent)
+        self._uf_size[parent] = parent_size + child_size
+        # Drop the child's size entry; not needed once it's not a root.
+        self._uf_size.pop(child, None)
+
+        self._uf_trail.append((child, prev_child_parent, parent, parent_size))
+        return True
+
+    def _uf_undo_one(self):
+        """Pop one entry off ``_uf_trail`` and revert the corresponding union."""
+        if not self._uf_trail:
+            return
+        child, prev_child_parent, parent, prev_parent_size = self._uf_trail.pop()
+        # Restore the child's parent pointer.
+        if prev_child_parent == child:
+            # Was a root; reinstate the root entry and its size.
+            self._uf_parent[child] = child
+            # Recover the lost size by subtracting child component from
+            # parent's running size — what we stored was parent's size
+            # *before* this union, so we can directly restore.
+            current_parent_size = self._uf_size.get(parent, 1)
+            child_size = current_parent_size - prev_parent_size
+            self._uf_size[child] = max(1, child_size)
+        else:
+            self._uf_parent[child] = prev_child_parent
+        # Restore parent size.
+        self._uf_size[parent] = prev_parent_size
+
+    def net_of(self, pos: Tuple) -> Optional[str]:
+        """Return the net_id of the cell's union-find component.
+
+        Falls back to the cell's own assignment net_id when the position
+        is not yet in the union-find (single-cell component). Returns
+        ``None`` for unassigned / out-of-grid cells.
+        """
+        cell = self.cells.get(pos)
+        if cell is None:
+            return None
+        root = self._uf_find(pos)
+        root_cell = self.cells.get(root)
+        if root_cell is None:
+            return cell.assignment.net_id
+        return root_cell.assignment.net_id
+
+    def connected_to(self, pos: Tuple) -> List[Tuple]:
+        """All cells in the same union-find component as ``pos``.
+
+        Output is sorted for determinism. A cell that has never been
+        unioned is its own singleton component, so this returns
+        ``[pos]`` in that case (provided ``pos`` is a valid cell).
+        """
+        if self.cells.get(pos) is None:
+            return []
+        root = self._uf_find(pos)
+        members: List[Tuple] = []
+        if root not in self._uf_parent:
+            # Singleton: the cell is its own root; nothing else has been
+            # unioned to it.
+            return [pos]
+        for p in self._uf_parent.keys():
+            if self._uf_find(p) == root:
+                members.append(p)
+        # ``pos`` itself may not be in ``_uf_parent`` keys yet if it's a
+        # root that hasn't been unioned *from*; ensure it's included.
+        if pos not in members:
+            members.append(pos)
+        return sorted(members)
+
+    def connected_cells(self, net_id: str) -> List[Tuple]:
+        """Return all assigned cells whose ``net_of`` agrees on ``net_id``.
+
+        Walks every cell with a matching assignment net_id; the
+        union-find is consulted only to disambiguate when CUT-driven
+        splits land in M4d. For now this is approximately ``[c.pos for
+        c in cells if c.assignment.net_id == net_id]``, sorted.
+        """
+        out: List[Tuple] = []
+        for pos, cell in self.cells.items():
+            if cell.assignment.net_id == net_id:
+                out.append(pos)
+        return sorted(out)
 
     def unassign(self, pos: Tuple):
         """

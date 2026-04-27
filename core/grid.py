@@ -11,17 +11,28 @@ Layer stack for MVP:
   Layer   Orientation   Pitch    Cross-track axis
   FIN     H             25nm     Y (fin positions)
   POLY    V             54nm     X (gate positions)
-  LI      V             54nm     X (contact positions) 
+  LI      V             54nm     X (contact positions)
   M1      H             36nm     Y (M1 track positions)
   VIA0    -             -        At LI×M1 intersections
+
+M4b cell-grid axis (B-tier layers): in addition to the per-layer 1D
+``LayerGrid`` track abstractions used by A-tier layers, ``MultiLayerGrid``
+holds a parallel 2D cell-grid for B-tier layers (OD, VIA0, CPO, M0_CUT,
+FIN_CUT). A B-tier cell is keyed by ``(layer, track_a, track_b)`` where
+``track_a`` and ``track_b`` are integer indices on a pair of orthogonal
+A-tier track grids supplied by the parser. The parser's tier-dispatch
+work in M4c will project ``ShapeRecord``s on B-tier layers through
+``bbox_to_b_tier_cells`` and stamp each cell as a ``CellOccupancy``.
 """
 
 import sys
 import os
 from dataclasses import dataclass, field
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, Iterable, List, Optional, Tuple
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
+
+from core.data_model import CellOccupancy
 
 
 @dataclass
@@ -84,21 +95,47 @@ class LayerGrid:
         return range(t_min, t_max + 1)
 
 
-@dataclass  
+@dataclass
 class MultiLayerGrid:
     """
     Complete multi-layer grid system.
-    
+
     Manages coordinate transformations across all layers
     and computes via landing positions (layer intersections).
+
+    Two parallel grid axes co-exist:
+      * ``layers`` / ``ortho_pairs`` — A-tier 1D track grids (existing).
+      * ``b_tier_axes`` / ``b_tier_cells`` — M4b B-tier 2D cell grids
+        (OD, VIA0, CPO, M0_CUT, FIN_CUT). A B-tier cell is identified by
+        ``(layer, track_a, track_b)`` where ``track_a`` and ``track_b``
+        are integer indices on a pair of A-tier ``LayerGrid``s registered
+        as the layer's axes (e.g., OD might use POLY × FIN; VIA0 uses
+        LI × M1). The parser's tier-dispatch work in M4c stamps a
+        ``CellOccupancy`` into ``b_tier_cells[layer][(a, b)]`` for every
+        cell a B-tier ``ShapeRecord`` covers.
+
+    M4b ships the storage + projection helpers; the parser doesn't yet
+    populate them, so the byte-golden pipeline is unaffected.
     """
     layers: Dict[str, LayerGrid] = field(default_factory=dict)
-    
+
     # Orthogonal layer pairs: for each layer, which layer provides
     # the along-track grid. E.g., LI (vertical) uses M1 (horizontal)
     # tracks as along-track anchors.
     ortho_pairs: Dict[str, str] = field(default_factory=dict)
-    
+
+    # B-tier axis registry (M4b). Maps ``b_tier_layer -> (axis_a_layer,
+    # axis_b_layer)`` where the two axis layers are A-tier LayerGrid
+    # names whose track indices key the 2D cell grid. Set via
+    # ``register_b_tier_axes``; consumed by ``bbox_to_b_tier_cells``.
+    b_tier_axes: Dict[str, Tuple[str, str]] = field(default_factory=dict)
+
+    # B-tier cell storage (M4b). ``b_tier_cells[layer][(track_a, track_b)]``
+    # is a ``CellOccupancy``. Sparse: only populated cells are present.
+    b_tier_cells: Dict[str, Dict[Tuple[int, int], CellOccupancy]] = field(
+        default_factory=dict
+    )
+
     def add_layer(self, grid: LayerGrid, ortho_layer: Optional[str] = None):
         """Register a layer grid and its orthogonal partner."""
         self.layers[grid.name] = grid
@@ -228,6 +265,136 @@ class MultiLayerGrid:
             # Lower is H (y-tracks), Upper is V (x-tracks)
             return (upper_coord, lower_coord)
     
+    # ---------------------------------------------------------------
+    # B-tier cell-grid axis (M4b)
+    # ---------------------------------------------------------------
+
+    def is_b_tier_layer(self, layer: str) -> bool:
+        """True iff ``layer`` is a B-tier layer per ``tech.layer_map``.
+
+        Deferred import to avoid a module-load-time ``core <-> tech``
+        cycle. Mirrors the pattern used by ``CellOccupancy.__post_init__``.
+        ``KeyError`` from ``tier_of`` propagates — an unmapped layer is
+        a parser bug we want loud.
+        """
+        from tech.layer_map import tier_of
+        return tier_of(layer) == 'B'
+
+    def register_b_tier_axes(self, layer: str,
+                              axis_a_layer: str, axis_b_layer: str):
+        """Register the two A-tier ``LayerGrid``s that define the cell axes.
+
+        After this call, ``bbox_to_b_tier_cells(layer, ...)`` projects a
+        physical bbox to a list of ``(track_a, track_b)`` cell positions
+        using ``axis_a_layer`` for the first index and ``axis_b_layer``
+        for the second. The two axis layers must already be registered
+        via ``add_layer``.
+
+        Raises:
+            ValueError: ``layer`` is not B-tier per ``tech.layer_map``,
+                or either axis layer is not registered.
+        """
+        if not self.is_b_tier_layer(layer):
+            raise ValueError(
+                f"register_b_tier_axes: {layer!r} is not a B-tier layer"
+            )
+        for axis_name in (axis_a_layer, axis_b_layer):
+            if axis_name not in self.layers:
+                raise ValueError(
+                    f"register_b_tier_axes: axis {axis_name!r} not registered "
+                    f"on this MultiLayerGrid (call add_layer first)"
+                )
+        self.b_tier_axes[layer] = (axis_a_layer, axis_b_layer)
+        self.b_tier_cells.setdefault(layer, {})
+
+    def get_b_tier_axes(self, layer: str) -> Tuple[str, str]:
+        """Return ``(axis_a_layer, axis_b_layer)`` for a B-tier layer.
+
+        Raises:
+            KeyError: layer has not been registered via
+                ``register_b_tier_axes``.
+        """
+        return self.b_tier_axes[layer]
+
+    def bbox_to_b_tier_cells(self, layer: str,
+                              x1: int, y1: int,
+                              x2: int, y2: int) -> List[Tuple[int, int]]:
+        """Project a physical bbox to the B-tier cells it covers.
+
+        For each integer ``(track_a, track_b)`` whose center on the
+        registered axis grids falls inside ``[x1, x2] x [y1, y2]``,
+        emit a cell tuple. ``track_a`` runs along ``axis_a_layer``'s
+        cross-track axis; ``track_b`` runs along ``axis_b_layer``'s.
+        For OD (axes POLY × FIN) this means ``track_a`` is the gate
+        index and ``track_b`` is the fin index.
+
+        Output is sorted by ``(track_a, track_b)`` for determinism.
+
+        Raises:
+            KeyError: ``layer`` has not been registered via
+                ``register_b_tier_axes``.
+        """
+        axis_a_name, axis_b_name = self.b_tier_axes[layer]
+        lg_a = self.layers[axis_a_name]
+        lg_b = self.layers[axis_b_name]
+
+        # ``axis_a_layer``'s tracks are perpendicular to its orientation
+        # — V layers (POLY/LI) have X-coordinate tracks, H layers
+        # (FIN/M1) have Y-coordinate tracks. Pick the right pair for
+        # each axis.
+        a_min, a_max = self._axis_track_range(lg_a, x1, y1, x2, y2)
+        b_min, b_max = self._axis_track_range(lg_b, x1, y1, x2, y2)
+
+        cells: List[Tuple[int, int]] = []
+        for ta in range(a_min, a_max + 1):
+            for tb in range(b_min, b_max + 1):
+                cells.append((ta, tb))
+        return cells
+
+    @staticmethod
+    def _axis_track_range(lg: 'LayerGrid',
+                           x1: int, y1: int,
+                           x2: int, y2: int) -> Tuple[int, int]:
+        """Return ``(t_min, t_max)`` track indices on ``lg`` that the bbox
+        covers along ``lg``'s cross-track axis. V layers project the
+        X-extent, H layers project the Y-extent."""
+        if lg.orientation == 'V':
+            return (lg.physical_to_track(x1), lg.physical_to_track(x2))
+        else:
+            return (lg.physical_to_track(y1), lg.physical_to_track(y2))
+
+    def set_b_tier_cell(self, layer: str,
+                         track_a: int, track_b: int,
+                         occ: CellOccupancy) -> None:
+        """Stamp a ``CellOccupancy`` into the B-tier grid.
+
+        ``occ.layer`` / ``occ.track_a`` / ``occ.track_b`` must agree
+        with the explicit arguments — guards against pasting a cell
+        record at the wrong key.
+        """
+        if (occ.layer, occ.track_a, occ.track_b) != (layer, track_a, track_b):
+            raise ValueError(
+                f"set_b_tier_cell: occ.pos {occ.pos} disagrees with key "
+                f"({layer!r}, {track_a}, {track_b})"
+            )
+        if layer not in self.b_tier_cells:
+            self.b_tier_cells[layer] = {}
+        self.b_tier_cells[layer][(track_a, track_b)] = occ
+
+    def get_b_tier_cell(self, layer: str,
+                         track_a: int, track_b: int) -> Optional[CellOccupancy]:
+        """Return the cell at the position, or ``None`` if unstamped."""
+        layer_cells = self.b_tier_cells.get(layer)
+        if layer_cells is None:
+            return None
+        return layer_cells.get((track_a, track_b))
+
+    def b_tier_cells_of(self, layer: str) -> Iterable[CellOccupancy]:
+        """Iterate the populated cells on a B-tier layer in (a, b) order."""
+        layer_cells = self.b_tier_cells.get(layer, {})
+        for key in sorted(layer_cells.keys()):
+            yield layer_cells[key]
+
     def summary(self) -> str:
         lines = ["MultiLayerGrid:"]
         for name, lg in self.layers.items():
@@ -236,6 +403,11 @@ class MultiLayerGrid:
                 f"  {name:6s}: pitch={lg.pitch:3d}nm  orient={lg.orientation}  "
                 f"offset={lg.offset:3d}nm  ortho={ortho}"
             )
+        if self.b_tier_axes:
+            lines.append("  B-tier axes:")
+            for layer, (a, b) in self.b_tier_axes.items():
+                n_cells = len(self.b_tier_cells.get(layer, {}))
+                lines.append(f"    {layer:6s}: {a} x {b}  ({n_cells} cells)")
         return '\n'.join(lines)
 
 
