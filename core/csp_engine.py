@@ -9,6 +9,13 @@ Core mechanism:
   - Solutions found by the engine are DRC-correct by construction
 
 Grid cells are indexed as (track_idx, ortho_track_idx, layer_name).
+
+Transactional API (M2): ``propose_assign`` / ``propose_release`` are the
+public interface for L2 atomic ops. They append trail entries that capture
+both prior domain *and* prior assignment, so ``restore`` reverts both.
+``commit_with_delta`` summarises the cell-level changes since a checkpoint
+and truncates the trail (commit is non-restorable). See
+``docs/architecture_roadmap.md`` § M2.
 """
 
 from collections import deque
@@ -17,6 +24,12 @@ from typing import Dict, Set, List, Optional, Tuple, FrozenSet
 from copy import deepcopy
 
 from core.data_model import CellState, OccupantType, EMPTY, BLOCKAGE
+
+
+# Trail entry: (pos, prev_domain, prev_assignment). Captures enough state to
+# fully revert a cell, including its assignment — the M1-era trail saved only
+# domain, which left ``unassign`` unable to restore neighbour assignments.
+TrailEntry = Tuple[Tuple, FrozenSet[CellState], CellState]
 
 
 @dataclass
@@ -113,12 +126,13 @@ class ConstraintEngine:
         self.cells: Dict[Tuple, GridCell] = {}
         self.constraints: List[DRCConstraintTemplate] = []
         self.net_ids: Set[str] = set()
-        
+
         # Layer dimensions for iteration
         self.layer_dims: Dict[str, Tuple[int, int]] = {}  # layer -> (n_tracks, n_ortho)
-        
-        # Trail for incremental backtracking
-        self.trail: List[Tuple[Tuple, FrozenSet[CellState]]] = []
+
+        # Trail for incremental backtracking. Each entry is a ``TrailEntry``:
+        # (pos, prev_domain, prev_assignment). See module docstring.
+        self.trail: List[TrailEntry] = []
     
     def add_layer(self, layer_name: str, n_tracks: int, n_ortho: int,
                   track_range: Tuple[int, int] = None,
@@ -181,40 +195,128 @@ class ConstraintEngine:
         """Get cell at position, or None if out of bounds."""
         return self.cells.get(pos)
     
-    def assign(self, pos: Tuple, state: CellState, 
+    def assign(self, pos: Tuple, state: CellState,
                record_trail: bool = True) -> bool:
         """
         Assign a state to a cell and propagate constraints.
-        
+
         Returns False if the assignment leads to any domain becoming empty
         (DRC violation detected). In that case, use restore() to undo.
-        
+
         Args:
             pos: (layer_name, track_idx, ortho_track_idx)
             state: State to assign
-            record_trail: If True, record domain changes for backtracking
+            record_trail: If True, record domain + assignment changes for backtracking
         """
         cell = self.cells.get(pos)
         if cell is None:
             return False
-        
+
         if cell.fixed:
             # Fixed cells can only keep their current assignment
             return cell.assignment == state
-        
+
         if state not in cell.domain:
             return False  # Already ruled out by constraints
-        
-        # Record previous domain for trail
+
+        # Record previous domain AND assignment for trail (M2: trail captures
+        # both, so restore can revert assignment, not just domain).
         if record_trail:
-            self.trail.append((pos, frozenset(cell.domain)))
-        
+            self.trail.append((pos, frozenset(cell.domain), cell.assignment))
+
         # Collapse domain to single value
         cell.assignment = state
         cell.domain = {state}
-        
+
         # Propagate constraints
         return self._propagate(pos, record_trail)
+
+    # ---------------------------------------------------------------
+    # Transactional API (M2)
+    #
+    # ``propose_assign`` and ``propose_release`` are the public interface
+    # used by L2 atomic ops in ``core/atomic_ops.py``. They are thin wrappers
+    # over the underlying ``assign`` / domain-rebuild machinery, but the
+    # naming makes the contract explicit: a proposal can fail (DRC
+    # violation), and the caller is expected to bracket related proposals
+    # with ``checkpoint()`` / ``commit_with_delta()`` (or ``restore()``).
+    # ---------------------------------------------------------------
+
+    def propose_assign(self, pos: Tuple, state: CellState) -> bool:
+        """Propose a cell assignment within an open transaction.
+
+        Identical to ``assign`` with trail recording. Returns ``False`` if
+        the assignment is infeasible; the caller should ``restore`` the
+        most recent checkpoint.
+        """
+        return self.assign(pos, state, record_trail=True)
+
+    def propose_release(self, pos: Tuple) -> bool:
+        """Propose releasing a cell back to EMPTY within an open transaction.
+
+        Unlike the legacy ``unassign``, this method records a trail entry
+        that captures both the prior domain and the prior assignment, so
+        ``restore`` can put the cell back exactly. The cell's domain is
+        rebuilt from the engine's allowed-state set so future propagation
+        can re-shrink it.
+        """
+        cell = self.cells.get(pos)
+        if cell is None:
+            return False
+        if cell.fixed:
+            return False
+        # No-op fast-path: cell is already EMPTY *and* its domain is the
+        # full state set. Saves trail churn during repeated calls.
+        full_domain = self._initial_domain()
+        if cell.assignment == EMPTY and cell.domain == full_domain:
+            return True
+
+        # Record prior state for restore.
+        self.trail.append((pos, frozenset(cell.domain), cell.assignment))
+
+        cell.assignment = EMPTY
+        cell.domain = set(full_domain)
+        return True
+
+    def commit_with_delta(self, checkpoint: int) -> List[Tuple[Tuple, CellState, CellState]]:
+        """Finalize all proposals made since ``checkpoint`` and return the cell delta.
+
+        Returns a list of ``(pos, prev_assignment, new_assignment)`` tuples,
+        one per cell whose *assignment* (not just domain) changed since the
+        checkpoint. The trail is truncated past the checkpoint; commit is
+        non-restorable.
+
+        Decoder consumes this delta to synthesize L1 ``EditOp``s.
+        """
+        first_prev: Dict[Tuple, CellState] = {}
+        for entry in self.trail[checkpoint:]:
+            pos, _prev_domain, prev_assignment = entry
+            # Keep the *earliest* prev_assignment for each cell so the delta
+            # reflects assignment(checkpoint) -> assignment(now).
+            if pos not in first_prev:
+                first_prev[pos] = prev_assignment
+
+        delta: List[Tuple[Tuple, CellState, CellState]] = []
+        # Deterministic ordering: by (layer, track, ortho).
+        for pos in sorted(first_prev.keys()):
+            cell = self.cells.get(pos)
+            if cell is None:
+                continue
+            prev = first_prev[pos]
+            cur = cell.assignment
+            if prev != cur:
+                delta.append((pos, prev, cur))
+
+        # Truncate trail; commit is non-restorable.
+        del self.trail[checkpoint:]
+        return delta
+
+    def _initial_domain(self) -> Set[CellState]:
+        """Reconstruct the full per-cell allowed-state set used at init time."""
+        domain = {EMPTY}
+        for net_id in self.net_ids:
+            domain.add(CellState(OccupantType.WIRE, net_id=net_id))
+        return domain
     
     def _propagate(self, changed_pos: Tuple, record_trail: bool) -> bool:
         """
@@ -275,11 +377,13 @@ class ConstraintEngine:
                     
                     # Remove forbidden states from neighbor's domain
                     new_domain = neighbor.domain - forbidden
-                    
+
                     if new_domain != neighbor.domain:
                         if record_trail:
-                            self.trail.append((n_pos, frozenset(neighbor.domain)))
-                        
+                            self.trail.append(
+                                (n_pos, frozenset(neighbor.domain), neighbor.assignment)
+                            )
+
                         neighbor.domain = new_domain
                         
                         if not neighbor.is_feasible:
@@ -296,25 +400,21 @@ class ConstraintEngine:
     def checkpoint(self) -> int:
         """Return current trail position for backtracking."""
         return len(self.trail)
-    
+
     def restore(self, checkpoint: int):
         """
-        Undo all domain changes back to the given checkpoint.
-        
-        Restores domains in reverse order of modification.
+        Undo all domain *and* assignment changes back to the given checkpoint.
+
+        Restores entries in reverse order of modification. Each trail entry
+        carries the prior (domain, assignment) pair, so the post-restore
+        state is exactly the pre-checkpoint state.
         """
         while len(self.trail) > checkpoint:
-            pos, old_domain = self.trail.pop()
+            pos, old_domain, old_assignment = self.trail.pop()
             cell = self.cells.get(pos)
             if cell is not None:
                 cell.domain = set(old_domain)
-                # Restore assignment
-                if EMPTY in old_domain and len(old_domain) > 1:
-                    cell.assignment = EMPTY
-                elif len(old_domain) == 1:
-                    cell.assignment = next(iter(old_domain))
-                else:
-                    cell.assignment = EMPTY
+                cell.assignment = old_assignment
     
     def snapshot(self) -> Dict[Tuple, Tuple[CellState, FrozenSet[CellState]]]:
         """Full state snapshot (expensive, use checkpoint/restore when possible)."""
@@ -333,11 +433,12 @@ class ConstraintEngine:
     
     def unassign(self, pos: Tuple):
         """
-        Release a cell assignment (set back to EMPTY).
-        
-        WARNING: This does NOT automatically restore neighbor domains.
-        For proper undo, use checkpoint/restore instead.
-        This is a "soft release" used when we know we'll re-propagate.
+        Release a cell assignment (set back to EMPTY) without trail recording.
+
+        WARNING: This does NOT automatically restore neighbor domains and
+        does NOT participate in checkpoint/restore. New code should use
+        :meth:`propose_release` (M2) which records a trail entry and lets
+        the engine drive cell-delta computation on commit.
         """
         cell = self.cells.get(pos)
         if cell is not None and not cell.fixed:
