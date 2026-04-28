@@ -412,7 +412,6 @@ class LayoutSolver:
 
         li_ext_y = 5  # Layout-generator-side LI overshoot beyond top fin.
         enc_y = self.config.VIA0_ENC_BY_LI_Y
-        device_y_marker = device.dev_type  # 'nmos' or 'pmos'
 
         for net_name in sd_nets:
             net = self.model.nets.get(net_name)
@@ -422,13 +421,28 @@ class LayoutSolver:
             for seg in list(net.segments):
                 if seg.layer != 'LI':
                     continue
-                # Restrict to LI segments physically owned by *this* device.
-                # The MVP uses descs like ``li_nmos_drain`` / ``li_pmos_drain``
-                # to disambiguate when a net (e.g. OUT) is shared between
-                # NMOS and PMOS sides. M4 will replace this string match
-                # with B-tier ``CellOccupancy.owner_device_id``.
-                if device_y_marker not in seg.desc:
-                    continue
+                # M4c: restrict to LI segments physically owned by *this*
+                # device. The M3 ``ShapeRecord`` backlink, refined by the
+                # M4c per-shape geometric ``device_id`` stamp in
+                # ``io_adapters/parser.py::apply_lvs_overlay``, is the
+                # source of truth. Pre-M4c (and the legacy ``desc``
+                # substring filter ``device_y_marker not in seg.desc``)
+                # this check fell back to ``li_nmos_*`` / ``li_pmos_*``
+                # naming convention. The new path keys off geometry
+                # (device-bbox containment of the shape's center) so
+                # nets bridged across NMOS and PMOS (e.g. OUT) get the
+                # correct per-segment device.
+                if seg.shape_record is not None:
+                    if seg.shape_record.device_id != device.inst_name:
+                        continue
+                else:
+                    # Legacy fallback for callers that built TrackSegments
+                    # directly without going through ``build_layout_model``
+                    # (older tests, ad-hoc fixtures). The desc-substring
+                    # check stays available for those paths until the
+                    # last caller migrates.
+                    if device.dev_type not in seg.desc:
+                        continue
 
                 if seg.bbox_nm is None:
                     # Parser didn't stamp a bbox (legacy data); fall back
