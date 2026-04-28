@@ -258,11 +258,18 @@ def run_full_pipeline(original_cdl_path: str = None,
     # ---- Stage 3-4: CSP setup + load ----
     print("\n[Stage 3-4] Setting up CSP engine and loading layout...")
     solver = LayoutSolver(model, grid, config)
+    # M4e: ``setup_engine`` now also lifts OD/VIA0 into CSP when the
+    # parser populated their B-tier cell-grid. ``load_b_tier_cells_into_engine``
+    # follows ``load_existing_layout`` to seed the new engine cells from
+    # the M4c parser stamps.
     solver.setup_engine(layers_to_include=['LI', 'M1'])
     load_ok = solver.load_existing_layout()
     if not load_ok:
         print("FATAL: Failed to load layout into CSP")
         return
+    n_b_tier = solver.load_b_tier_cells_into_engine()
+    if n_b_tier:
+        print(f"  Loaded {n_b_tier} B-tier cell assignments into CSP")
     # M3: project unannotated GDS shapes into CSP as BLOCKAGE so they
     # obstruct any subsequent propose_assign rather than being silently
     # overwritten. No-op for the MVP fixture (zero unannotated LI/M1
