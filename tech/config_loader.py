@@ -114,6 +114,23 @@ class TechConfig:
         return self._process['extension']['POLY_beyond_OD']
 
     # =============================================================
+    # C1 derivation margins (M5)
+    #
+    # Pure-function derivation rules consumed by
+    # ``core/drc_derivator.py``. These were hardcoded literals
+    # (30 / 40 nm) inline in ``core/decoder.py::_derive_*`` before
+    # M5; lifted into config so the derivator reads named constants
+    # and downstream PDK swaps stay tractable.
+    # =============================================================
+    @property
+    def NWELL_MARGIN_BEYOND_FIN(self) -> int:
+        return self._process['derivation']['nwell_margin_beyond_fin']
+
+    @property
+    def BOUNDARY_MARGIN_BEYOND_FIN(self) -> int:
+        return self._process['derivation']['boundary_margin_beyond_fin']
+
+    # =============================================================
     # Cell properties
     # =============================================================
     @property

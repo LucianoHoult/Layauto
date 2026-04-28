@@ -5,20 +5,18 @@ JSON) can serialize.
 
 Per ``docs/architecture_roadmap.md`` (M1) this consolidates writeback
 geometry into a single class. After M2 the EditOp surface widened: the
-``device_resize`` L3 macro now emits L1 records for FIN, OD, **LI**
-(post-shrink + post-via-coverage extent), and **POLY** (partial-bbox
-endpoint shifts). The transitional Phase 2 helpers
-``_shrink_li_sd_bars`` / ``_extend_li_for_vias`` / ``_derive_poly_span``
-are gone.
+``device_resize`` L3 macro emits L1 records for FIN, OD, LI (post-shrink
++ post-via-coverage extent), and POLY (partial-bbox endpoint shifts).
+M5 lifts NWELL / BOUNDARY out of the decoder's transitional Phase 2
+into ``core/drc_derivator.py``, which emits the same modify_shape ops
+the macro does — the decoder is now a pure L1 consumer.
 
 Phases:
 
   1. **EditOp consumer** — apply explicit shape edits emitted by the
-     macro: FIN remove, OD modify, LI modify, POLY modify (partial).
-  2. **Derived synthesis** — recompute geometry the macro still does
-     not emit. After M2 this is just NWELL/BOUNDARY, both flagged for
-     deletion in M5 once ``core/drc_derivator.py`` lands.
-  3. **Metadata update** — params + device records.
+     macro and the M5 derivator: FIN remove, OD / LI / POLY / NWELL /
+     BOUNDARY modify.
+  2. **Metadata update** — params + device records.
 
 The decoder is the sole place writeback geometry lives;
 ``pipeline/run_mvp.py`` only invokes ``WritebackDecoder.apply()``.
@@ -50,18 +48,18 @@ class WritebackDecoder:
         nmos_fin_y_new = nmos_fin_y_old[:new_nmos_nfin]
         pmos_fin_y_new = pmos_fin_y_old[:new_pmos_nfin]
 
-        # Phase 1: apply explicit EditOps from the L3 macro.
+        # Phase 1: apply explicit EditOps. FIN / OD / LI / POLY come
+        # from the L3 ``device_resize`` macro; NWELL / BOUNDARY come
+        # from the M5 ``DRCDerivator`` (which the pipeline runs after
+        # the macro and prepends / appends to the same edit_ops list).
         self._apply_fin_removes(result, edit_ops)
         self._apply_od_modifies(result, edit_ops)
         self._apply_li_modifies(result, edit_ops)
         self._apply_poly_modifies(result, edit_ops)
+        self._apply_nwell_modifies(result, edit_ops)
+        self._apply_boundary_modifies(result, edit_ops)
 
-        # Phase 2: derive C1 geometry the macro still does not emit
-        # (NWELL / BOUNDARY). M5 evicts these into core/drc_derivator.py.
-        self._derive_nwell(result, pmos_fin_y_new)
-        self._derive_boundary(result, pmos_fin_y_new)
-
-        # Phase 3: update params + device metadata.
+        # Phase 2: update params + device metadata.
         self._update_metadata(result, new_nmos_nfin, new_pmos_nfin,
                               nmos_fin_y_new, pmos_fin_y_new)
 
@@ -163,19 +161,59 @@ class WritebackDecoder:
                 if ox2 is not None and nx2 is not None and s['x2'] == ox2:
                     s['x2'] = int(nx2)
 
-    # --- Phase 2 (transitional; M5 evicts both) ---
+    def _apply_nwell_modifies(self, result: dict, edit_ops: List[EditOp]) -> None:
+        """Apply NWELL modify_shape ops (M5 — emitted by ``DRCDerivator``).
 
-    def _derive_nwell(self, result, pmos_fin_y_new):
-        nwell_margin = 30
-        for s in result['shapes'].get('NWELL', []):
-            s['y2'] = int(pmos_fin_y_new[-1] + nwell_margin)
+        Same passive-applier pattern as ``_apply_od_modifies``: match
+        by exact ``old_bbox`` and replace. The M5 derivator runs after
+        the L3 macro commits, so ``old_bbox`` is the *pre-derive* NWELL
+        record from ``model.shape_pool`` (which mirrors the input
+        layout JSON).
+        """
+        for op in edit_ops:
+            if op.layer != 'NWELL':
+                continue
+            if op.op_type != 'modify_shape':
+                continue
+            if op.old_bbox is None or op.new_bbox is None:
+                continue
+            ox1, oy1, ox2, oy2 = op.old_bbox
+            nx1, ny1, nx2, ny2 = op.new_bbox
+            for s in result['shapes'].get('NWELL', []):
+                if (s['x1'], s['y1'], s['x2'], s['y2']) != (ox1, oy1, ox2, oy2):
+                    continue
+                s['x1'], s['y1'], s['x2'], s['y2'] = (
+                    int(nx1), int(ny1), int(nx2), int(ny2),
+                )
+                break
 
-    def _derive_boundary(self, result, pmos_fin_y_new):
-        new_cell_height = pmos_fin_y_new[-1] + 40
-        for s in result['shapes'].get('BOUNDARY', []):
-            s['y2'] = int(new_cell_height)
+    def _apply_boundary_modifies(self, result: dict, edit_ops: List[EditOp]) -> None:
+        """Apply BOUNDARY modify_shape ops (M5 — emitted by ``DRCDerivator``).
 
-    # --- Phase 3 ---
+        Same shape as ``_apply_nwell_modifies``; tied to a different
+        layer string. BOUNDARY is the cell-outline shape, not a real
+        process layer in production, but it's geometrically derived
+        from the same fin-position rule and so flows through the
+        derivator's L1 stream alongside NWELL.
+        """
+        for op in edit_ops:
+            if op.layer != 'BOUNDARY':
+                continue
+            if op.op_type != 'modify_shape':
+                continue
+            if op.old_bbox is None or op.new_bbox is None:
+                continue
+            ox1, oy1, ox2, oy2 = op.old_bbox
+            nx1, ny1, nx2, ny2 = op.new_bbox
+            for s in result['shapes'].get('BOUNDARY', []):
+                if (s['x1'], s['y1'], s['x2'], s['y2']) != (ox1, oy1, ox2, oy2):
+                    continue
+                s['x1'], s['y1'], s['x2'], s['y2'] = (
+                    int(nx1), int(ny1), int(nx2), int(ny2),
+                )
+                break
+
+    # --- Phase 2: metadata ---
 
     def _update_metadata(self, result,
                          new_nmos_nfin, new_pmos_nfin,
@@ -185,7 +223,12 @@ class WritebackDecoder:
         params['pmos_nfin'] = new_pmos_nfin
         params['nmos_fin_y'] = nmos_fin_y_new
         params['pmos_fin_y'] = pmos_fin_y_new
-        params['cell_height'] = int(pmos_fin_y_new[-1] + 40)
+        # Cell height tracks the BOUNDARY's y2 (same derivation rule
+        # as the M5 ``_derive_boundary`` helper). Reads from the same
+        # config knob so a PDK swap cascades through both surfaces.
+        params['cell_height'] = int(
+            pmos_fin_y_new[-1] + self.config.BOUNDARY_MARGIN_BEYOND_FIN
+        )
         for dev in result.get('devices', []):
             t = dev.get('type')
             if t == 'nmos':

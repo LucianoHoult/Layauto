@@ -32,6 +32,19 @@ extension:
   OD_beyond_FIN: 10        # OD extends beyond outermost fin
   POLY_beyond_OD: 15       # Poly extends beyond OD edge
 
+# C1 derivation margins (M5).
+# Pure-function derivation rules consumed by core/drc_derivator.py:
+#   * NWELL Y-extent extends ``nwell_margin_beyond_fin`` past the topmost
+#     PMOS fin so the well safely encloses every PFET.
+#   * BOUNDARY (cell outline) Y-extent extends ``boundary_margin_beyond_fin``
+#     past the topmost PMOS fin so the cell box doesn't clip the well or
+#     the topmost finnage.
+# These were hardcoded literals (30 / 40 nm) inline in core/decoder.py
+# before M5; lifted here so the derivator reads named constants.
+derivation:
+  nwell_margin_beyond_fin: 30      # nm
+  boundary_margin_beyond_fin: 40   # nm
+
 # Cell-level parameters
 cell:
   num_gate_slots: 3        # Gate pitches per cell (dummy_L + active + dummy_R)
