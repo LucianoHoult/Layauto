@@ -320,8 +320,10 @@ class LayoutSolver:
             self._emit_fin_removes(edit_ops, device_name,
                                     fin_grid, removed_fin_tracks)
 
-            # 2. OD modify (non-CSP side-channel).
-            self._emit_od_modify(edit_ops, device_name,
+            # 2. OD modify — routed through the M4d ``extend_od`` L2
+            #    atomic so the B-tier cell-grid stays in sync with the
+            #    new bbox; the L1 record is still emitted by the macro.
+            self._emit_od_modify(edit_ops, device_name, device,
                                   old_bot_fin_y, old_top_fin_y, new_top_fin_y)
 
             # 3. LI S/D contact bars: route cell-level changes through L2,
@@ -376,24 +378,64 @@ class LayoutSolver:
 
     def _emit_fin_removes(self, edit_ops, device_name, fin_grid,
                            removed_fin_tracks):
-        hw = self.config.FIN_WIDTH // 2
+        """Emit ``remove_shape`` FIN EditOps via the M4d L2 atomic.
+
+        Each track is processed by ``atomic_ops.remove_fin_strip`` which
+        mutates ``model.shape_pool`` (drops the matching ShapeRecord)
+        and returns the removed shape's bbox + desc; the macro then
+        builds the L1 record from that result. Byte-golden parity with
+        the legacy inline emission is preserved by ``FinStripResult``
+        carrying the same ``(0, fy - hw, cell_width, fy + hw)`` bbox
+        the legacy helper computed.
+        """
         for ft in removed_fin_tracks:
-            fy = fin_grid.track_to_physical(ft)
+            res = atomic_ops.remove_fin_strip(
+                self.model, fin_grid, ft,
+                x1=0, x2=self.model.cell_width_nm,
+                fin_width=self.config.FIN_WIDTH,
+                owner_device_id=device_name,
+            )
             edit_ops.append(EditOp(
                 'remove_shape', 'FIN',
-                old_bbox=(0, fy - hw, self.model.cell_width_nm, fy + hw),
-                desc=f'{device_name}_fin_track_{ft}',
+                old_bbox=res.bbox,
+                desc=res.desc,
             ))
 
-    def _emit_od_modify(self, edit_ops, device_name,
+    def _emit_od_modify(self, edit_ops, device_name, device,
                          bot_fin_y, old_top_fin_y, new_top_fin_y):
+        """Emit ``modify_shape`` OD EditOp via the M4d L2 atomic.
+
+        Computes the old / new full-cell-width OD bbox the same way the
+        legacy helper did. ``atomic_ops.extend_od`` re-projects the
+        cell-grid coverage and updates the matching ShapeRecord's
+        ``bbox_nm`` so post-resize queries reflect the new geometry.
+        The L1 record is byte-identical to the legacy emission.
+        """
         od_ext = self.config.OD_EXTENSION_BEYOND_FIN
+        old_bbox = (0, bot_fin_y - od_ext,
+                     self.model.cell_width_nm, old_top_fin_y + od_ext)
+        new_bbox = (0, bot_fin_y - od_ext,
+                     self.model.cell_width_nm, new_top_fin_y + od_ext)
+
+        # Find the OD ShapeRecord this device owns; pass it to extend_od
+        # so the cell-grid stays in sync. Skip if shape_pool wasn't
+        # populated (legacy callers).
+        target_sr = None
+        for sr in self.model.shape_pool:
+            if sr.layer != 'OD':
+                continue
+            if sr.device_id == device.inst_name or sr.bbox_nm == old_bbox:
+                target_sr = sr
+                break
+        if target_sr is not None:
+            atomic_ops.extend_od(
+                self.grid, self.model.devices, target_sr, new_bbox,
+            )
+
         edit_ops.append(EditOp(
             'modify_shape', 'OD',
-            old_bbox=(0, bot_fin_y - od_ext,
-                       self.model.cell_width_nm, old_top_fin_y + od_ext),
-            new_bbox=(0, bot_fin_y - od_ext,
-                       self.model.cell_width_nm, new_top_fin_y + od_ext),
+            old_bbox=old_bbox,
+            new_bbox=new_bbox,
             desc=f'{device_name}_od_shrink',
         ))
 
@@ -557,27 +599,26 @@ class LayoutSolver:
             new_y2 = new_top_fin_y + od_ext + poly_ext
             target = 'y2'
 
-        # Iterate POLY shapes from the original layout via the model's
-        # shape_pool — but the solver doesn't carry one yet (that's M3),
-        # so we use the configured cell width + known POLY columns is
-        # not viable either. Instead, the macro emits a *structural*
-        # POLY EditOp and the decoder applies it by matching ``y1``/``y2``
-        # of the affected endpoint across all POLY shapes; the unchanged
-        # endpoint stays as-is. ``old_bbox``/``new_bbox`` carry sentinel
-        # ``None`` for the unaffected coordinates so the decoder can
-        # detect the partial-edit pattern.
+        # M4d: route partial-bbox endpoint updates through
+        # ``atomic_ops.extend_poly`` so the L2 surface owns the
+        # primitive. The macro then emits the L1 ``modify_shape``
+        # EditOp with sentinel ``None`` for the unaffected coordinates
+        # — the decoder's Phase 1 ``_apply_poly_modifies`` keys off
+        # that pattern unchanged.
         if target == 'y1':
+            res = atomic_ops.extend_poly('y1', old_y1, new_y1)
             edit_ops.append(EditOp(
                 'modify_shape', 'POLY',
-                old_bbox=(None, old_y1, None, None),
-                new_bbox=(None, new_y1, None, None),
+                old_bbox=(None, res.old_value, None, None),
+                new_bbox=(None, res.new_value, None, None),
                 desc=f'{device.inst_name}_poly_y1_shift',
             ))
         else:
+            res = atomic_ops.extend_poly('y2', old_y2, new_y2)
             edit_ops.append(EditOp(
                 'modify_shape', 'POLY',
-                old_bbox=(None, None, None, old_y2),
-                new_bbox=(None, None, None, new_y2),
+                old_bbox=(None, None, None, res.old_value),
+                new_bbox=(None, None, None, res.new_value),
                 desc=f'{device.inst_name}_poly_y2_shift',
             ))
     
