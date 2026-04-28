@@ -22,11 +22,12 @@ from typing import Dict, List, Optional, Tuple
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 
 from core.data_model import (
-    Device, Net, ShapeRecord, TrackSegment, ViaInstance, LayoutModel,
-    EndType, OccupantType, CellState, EMPTY,
+    CellOccupancy, Device, Net, ShapeRecord, TrackSegment, ViaInstance,
+    LayoutModel, EndType, OccupantType, CellState, EMPTY,
 )
 from core.grid import MultiLayerGrid, create_mvp_grid
 from tech.config_loader import get_tech_config
+from tech.layer_map import is_cut_layer
 
 
 def parse_calibre_device_query(filepath: str) -> List[Device]:
@@ -129,6 +130,79 @@ def _device_pin_lookup(devices: List[Device]) -> Dict[Tuple[str, str], str]:
     return lookup
 
 
+def _shape_center(bbox: Tuple[int, int, int, int]) -> Tuple[float, float]:
+    x1, y1, x2, y2 = bbox
+    return ((x1 + x2) / 2.0, (y1 + y2) / 2.0)
+
+
+def _device_bbox_contains_point(dev: Device, x: float, y: float) -> bool:
+    """True iff ``(x, y)`` falls inside ``dev.bbox_nm`` (inclusive)."""
+    if not dev.bbox_nm:
+        return False
+    return (dev.bbox_nm['x1'] <= x <= dev.bbox_nm['x2'] and
+            dev.bbox_nm['y1'] <= y <= dev.bbox_nm['y2'])
+
+
+def _device_bbox_overlaps_shape(dev: Device,
+                                  bbox: Tuple[int, int, int, int]) -> bool:
+    """True iff the shape bbox and the device's bbox have any overlap."""
+    if not dev.bbox_nm:
+        return False
+    sx1, sy1, sx2, sy2 = bbox
+    return not (sx2 < dev.bbox_nm['x1'] or dev.bbox_nm['x2'] < sx1 or
+                sy2 < dev.bbox_nm['y1'] or dev.bbox_nm['y2'] < sy1)
+
+
+def _device_for_shape(sr: ShapeRecord,
+                       devices: List[Device],
+                       candidates: Optional[List[str]] = None) -> Optional[Device]:
+    """Pick the device whose bbox best owns ``sr`` by geometric overlap (M4c).
+
+    Selection rule:
+      1. If ``candidates`` is given (e.g. the LVS net's pin device list),
+         restrict the search to those instances. Otherwise consider every
+         device.
+      2. Prefer a device whose bbox *contains* the shape's center point —
+         this is unambiguous for shapes wholly inside one device's
+         footprint (LI source/drain bars on a single FET, for example).
+      3. Fall back to the device with the largest bbox-overlap area when
+         no device contains the center (e.g. a shape spanning the gap
+         between NMOS and PMOS).
+
+    Returns ``None`` if no candidate is found (shape sits outside every
+    device's bbox); callers treat that as "no device ownership" which
+    matches the MVP semantics for filler / boundary shapes.
+    """
+    pool: List[Device] = list(devices)
+    if candidates is not None:
+        names = set(candidates)
+        pool = [d for d in pool if d.inst_name in names]
+    if not pool:
+        return None
+
+    cx, cy = _shape_center(sr.bbox_nm)
+    for dev in pool:
+        if _device_bbox_contains_point(dev, cx, cy):
+            return dev
+
+    # Fallback: maximum overlap area.
+    best: Optional[Device] = None
+    best_area = 0
+    for dev in pool:
+        if not dev.bbox_nm:
+            continue
+        ox1 = max(sr.bbox_nm[0], dev.bbox_nm['x1'])
+        oy1 = max(sr.bbox_nm[1], dev.bbox_nm['y1'])
+        ox2 = min(sr.bbox_nm[2], dev.bbox_nm['x2'])
+        oy2 = min(sr.bbox_nm[3], dev.bbox_nm['y2'])
+        if ox2 > ox1 and oy2 > oy1:
+            area = (ox2 - ox1) * (oy2 - oy1)
+            if area > best_area:
+                best_area = area
+                best = dev
+    return best
+
+
 def apply_lvs_overlay(pool: List[ShapeRecord],
                       net_data: Dict[str, dict],
                       devices: List[Device]) -> Dict[str, int]:
@@ -138,6 +212,14 @@ def apply_lvs_overlay(pool: List[ShapeRecord],
     so by construction LVS shapes either align exactly with a GDS shape or
     they don't. Returns the per-net count of matched shapes (diagnostic
     for the coverage report).
+
+    M4c refinement: for nets that pin to multiple devices (e.g. ``OUT``
+    bridging an NMOS drain and a PMOS drain), ``device_id`` is now
+    chosen *per shape* by geometric containment via ``_device_for_shape``
+    rather than the M3 "first-pin-wins" placeholder. This is what lets
+    ``core/solver.py::_reshape_li_sd_bars`` walk LI segments by
+    ``shape_record.device_id`` instead of falling back to the
+    ``li_nmos_*`` / ``li_pmos_*`` ``desc`` substring filter.
     """
     by_key: Dict[Tuple[str, Tuple[int, int, int, int]], ShapeRecord] = {}
     for sr in pool:
@@ -147,14 +229,11 @@ def apply_lvs_overlay(pool: List[ShapeRecord],
     matched_per_net: Dict[str, int] = {}
 
     for net_name, nd in net_data.items():
-        # Pick a representative device for this net (first pin entry that
-        # the device list resolves). This is best-effort metadata — the
-        # B-tier owner_device_id work in M4 supersedes it once
-        # CellOccupancy lands.
-        owner_device: Optional[str] = None
-        for dev_name, _pin in nd.get('pins', []):
-            owner_device = dev_name
-            break
+        # Per-net pin device list — restricts the per-shape device pick
+        # to instances that actually claim this net. For VSS / VDD /
+        # IN the list has one device; for OUT it has both, and the
+        # geometric tiebreaker picks correctly.
+        pin_devices = [d_name for d_name, _pin in nd.get('pins', [])]
 
         for shape in nd.get('shapes', []):
             layer = shape['layer']
@@ -170,12 +249,140 @@ def apply_lvs_overlay(pool: List[ShapeRecord],
                 # don't auto-merge, don't traverse, don't silently delete.
                 continue
             sr.net_id = net_name
-            if owner_device:
-                sr.device_id = owner_device
-                sr.pin_role = pin_lookup.get((owner_device, net_name))
+            owner = _device_for_shape(sr, devices, candidates=pin_devices)
+            if owner is not None:
+                sr.device_id = owner.inst_name
+                sr.pin_role = pin_lookup.get((owner.inst_name, net_name))
             matched_per_net[net_name] = matched_per_net.get(net_name, 0) + 1
 
     return matched_per_net
+
+
+# =============================================================
+# M4c: parser tier-dispatch + B-tier projection
+# =============================================================
+#
+# After ``build_shape_pool`` + ``apply_lvs_overlay`` have populated the
+# geometric pool with LVS annotation, ``project_b_tier_shapes`` walks
+# every B-tier ``ShapeRecord`` and stamps a ``CellOccupancy`` per cell
+# the shape covers on the registered ``MultiLayerGrid`` cell-grid axis.
+# OD cells get ``owner_device_id`` from device-bbox containment;
+# ``shared_with`` is appended whenever a sibling device's bbox also
+# overlaps the OD shape (diffusion sharing). The MVP fixture has no
+# diffusion-sharing, so ``shared_with`` stays empty there — but the
+# framework is in place for fixtures that grow it.
+
+# Default B-tier axis assignment per layer. Layers absent from the
+# layout (no ShapeRecord on that layer) are skipped silently. M4d/M4e
+# will tune these once the engine actually models B-tier layers in CSP.
+_B_TIER_AXIS_DEFAULTS: Dict[str, Tuple[str, str]] = {
+    'OD':      ('POLY', 'FIN'),
+    'VIA0':    ('LI',   'M1'),
+    'CPO':     ('POLY', 'FIN'),
+    'M0_CUT':  ('LI',   'M1'),
+    'FIN_CUT': ('POLY', 'FIN'),
+}
+
+
+def _b_tier_occ_type(layer: str) -> OccupantType:
+    """Map a B-tier layer name to the ``OccupantType`` that fills its cells.
+
+    OD cells carry diffusion (``DEVICE_DIFF``); VIA0 cells carry vias;
+    CPO / M0_CUT / FIN_CUT cells are cutters (``CUT``). Anything else
+    that lands here is a parser bug — surface loud.
+    """
+    if layer == 'OD':
+        return OccupantType.DEVICE_DIFF
+    if layer == 'VIA0':
+        return OccupantType.VIA
+    if is_cut_layer(layer):
+        return OccupantType.CUT
+    raise ValueError(
+        f"_b_tier_occ_type: no occ_type defined for B-tier layer {layer!r}"
+    )
+
+
+def project_b_tier_shapes(model: LayoutModel,
+                           grid: MultiLayerGrid,
+                           devices: List[Device]) -> Dict[str, int]:
+    """Stamp ``CellOccupancy``s for every B-tier shape in ``model.shape_pool``.
+
+    Returns a per-layer ``{layer: cell_count}`` summary (diagnostic for
+    logging / coverage reports). Idempotent over re-invocation: an
+    earlier stamp at the same ``(layer, track_a, track_b)`` is
+    overwritten with the latest, so the parser can re-run without
+    leaving stale cells behind.
+
+    Side effects:
+      * ``grid.b_tier_axes`` gains entries for every layer that is both
+        present in ``model.shape_pool`` *and* listed in
+        ``_B_TIER_AXIS_DEFAULTS`` *and* whose axis layers are
+        registered on the grid (so axis-less B-tier layers like a
+        future ``CPO`` skipped on a grid without POLY are no-ops).
+      * ``grid.b_tier_cells[layer]`` is populated.
+      * For OD: a sibling device's bbox overlapping an OD shape causes
+        every cell on that shape to gain the sibling's instance name on
+        ``shared_with[]`` (diffusion sharing).
+    """
+    layers_in_pool = {sr.layer for sr in model.shape_pool}
+    cell_counts: Dict[str, int] = {}
+
+    # 1. Register axes for every B-tier layer that has shapes and axes.
+    for layer, (axis_a, axis_b) in _B_TIER_AXIS_DEFAULTS.items():
+        if layer not in layers_in_pool:
+            continue
+        if axis_a not in grid.layers or axis_b not in grid.layers:
+            # Axis layer missing from grid (e.g., FIN/POLY not yet
+            # registered for a layout that uses CPO). Skip silently —
+            # M4d/M4e fixtures grow these layers as the engine learns
+            # to model them in CSP.
+            continue
+        if not grid.is_b_tier_layer(layer):
+            continue
+        grid.register_b_tier_axes(layer, axis_a, axis_b)
+
+    # 2. Project each B-tier shape into cells.
+    for sr in model.shape_pool:
+        if sr.layer not in grid.b_tier_axes:
+            continue   # not registered (axes missing or not in axis_map)
+        if not grid.is_b_tier_layer(sr.layer):
+            continue
+
+        cells = grid.bbox_to_b_tier_cells(sr.layer, *sr.bbox_nm)
+        owner = _device_for_shape(sr, devices)
+        occ_type = _b_tier_occ_type(sr.layer)
+
+        for ta, tb in cells:
+            occ = CellOccupancy(
+                layer=sr.layer, track_a=ta, track_b=tb,
+                occ_type=occ_type, net_id=sr.net_id,
+                owner_device_id=owner.inst_name if owner else None,
+                shape_record=sr,
+            )
+            grid.set_b_tier_cell(sr.layer, ta, tb, occ)
+        cell_counts[sr.layer] = cell_counts.get(sr.layer, 0) + len(cells)
+
+    # 3. Diffusion sharing: walk OD shapes; if any sibling device's
+    #    bbox overlaps the shape, append that sibling to every cell's
+    #    ``shared_with`` (additive over multiple sharers).
+    if 'OD' in grid.b_tier_axes:
+        for sr in model.shape_pool:
+            if sr.layer != 'OD':
+                continue
+            cells = grid.bbox_to_b_tier_cells('OD', *sr.bbox_nm)
+            for ta, tb in cells:
+                cell = grid.get_b_tier_cell('OD', ta, tb)
+                if cell is None or cell.occ_type != OccupantType.DEVICE_DIFF:
+                    continue
+                if cell.owner_device_id is None:
+                    continue
+                for dev in devices:
+                    if dev.inst_name == cell.owner_device_id:
+                        continue
+                    if _device_bbox_overlaps_shape(dev, sr.bbox_nm):
+                        cell.add_sharer(dev.inst_name)
+
+    return cell_counts
 
 
 def build_layout_model(device_query_path: str,
@@ -330,6 +537,14 @@ def build_layout_model(device_query_path: str,
         cell_width_nm=cell_width,
         cell_height_nm=cell_height,
     )
+
+    # --- M4c: project B-tier shapes into the cell-grid axis ---
+    # Stamps OD / VIA0 / CUT cells with owner_device_id + shared_with[]
+    # so the M4d L2 atomics (extend_od, mark_shared_diffusion, etc.) and
+    # the M4c retirement of the desc-substring filter in
+    # ``core/solver.py::_reshape_li_sd_bars`` have a per-cell device
+    # ownership map to read from. Idempotent over re-invocation.
+    project_b_tier_shapes(model, grid, devices)
 
     return model, grid
 
