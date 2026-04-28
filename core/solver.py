@@ -68,27 +68,33 @@ class LayoutSolver:
         # Collect all net IDs
         self.net_ids: Set[str] = set(model.nets.keys())
     
-    def setup_engine(self, layers_to_include: List[str] = None):
+    def setup_engine(self, layers_to_include: List[str] = None,
+                      b_tier_layers: List[str] = None):
         """
         Create CSP engine and load existing layout.
-        
+
         Args:
-            layers_to_include: Which layers to model in CSP (default: LI, M1)
+            layers_to_include: A-tier layers to model in CSP (default: LI, M1)
+            b_tier_layers: M4e B-tier layers to also model in CSP
+                (default: ``['OD', 'VIA0']`` if those layers exist on the
+                grid's ``b_tier_axes``). Each B-tier layer's bounds are
+                derived from ``grid.b_tier_cells`` so the engine spans
+                exactly the cells the parser stamped.
         """
         if layers_to_include is None:
             layers_to_include = ['LI', 'M1']
-        
+
         self.engine = ConstraintEngine()
-        
-        # Determine grid bounds from existing segments
+
+        # Determine grid bounds from existing segments (A-tier path).
         for layer in layers_to_include:
             lg = self.grid.get_layer(layer)
             ortho = self.grid.get_ortho_layer(layer)
-            
+
             # Find track and ortho ranges from existing segments
             tracks = set()
             orthos = set()
-            
+
             for net in self.model.nets.values():
                 for seg in net.segments:
                     if seg.layer == layer:
@@ -100,32 +106,79 @@ class LayoutSolver:
                         tracks.add(via.lower_track_idx)
                     if via.upper_layer == layer:
                         tracks.add(via.upper_track_idx)
-            
+
             if not tracks or not orthos:
                 continue
-            
+
             # Add margin for possible rerouting
             margin = 2
             t_min = min(tracks) - margin
             t_max = max(tracks) + margin + 1
             o_min = min(orthos) - margin
             o_max = max(orthos) + margin + 1
-            
+
             self.engine.add_layer(
-                layer, 
-                n_tracks=t_max - t_min, 
+                layer,
+                n_tracks=t_max - t_min,
                 n_ortho=o_max - o_min,
                 track_range=(t_min, t_max),
                 ortho_range=(o_min, o_max),
             )
-        
+
+        # M4e: also add B-tier layers to the engine if the parser
+        # populated their cell-grid. The bounds come from the actual
+        # populated cell positions plus a one-cell margin.
+        if b_tier_layers is None:
+            b_tier_layers = [layer for layer in ('OD', 'VIA0')
+                              if layer in self.grid.b_tier_cells
+                              and self.grid.b_tier_cells[layer]]
+
+        layer_occ_types: Dict[str, set] = {}
+        for layer in b_tier_layers:
+            cells = self.grid.b_tier_cells.get(layer, {})
+            if not cells:
+                continue
+            tas = [a for (a, _b) in cells.keys()]
+            tbs = [b for (_a, b) in cells.keys()]
+            margin = 1
+            t_min, t_max = min(tas) - margin, max(tas) + margin + 1
+            o_min, o_max = min(tbs) - margin, max(tbs) + margin + 1
+            self.engine.add_layer(
+                layer,
+                n_tracks=t_max - t_min,
+                n_ortho=o_max - o_min,
+                track_range=(t_min, t_max),
+                ortho_range=(o_min, o_max),
+            )
+            # Set the layer's allowed occupant types — DEVICE_DIFF for
+            # OD, VIA for VIA0, CUT for cut layers. The B-tier domain
+            # also keeps EMPTY so cells outside the populated region can
+            # remain unassigned.
+            if layer == 'OD':
+                layer_occ_types[layer] = {OccupantType.EMPTY,
+                                            OccupantType.DEVICE_DIFF}
+            elif layer == 'VIA0':
+                layer_occ_types[layer] = {OccupantType.EMPTY,
+                                            OccupantType.VIA}
+            else:
+                # Cut layers (CPO / M0_CUT / FIN_CUT) — fixtures don't
+                # use them yet, but the dispatch lands cleanly when
+                # they show up.
+                layer_occ_types[layer] = {OccupantType.EMPTY,
+                                            OccupantType.CUT}
+
         # Register DRC rules
         for rule in create_mvp_drc_rules():
             if rule.layer if hasattr(rule, 'layer') else True:
                 self.engine.register_drc(rule)
-        
-        # Initialize domains
-        self.engine.initialize_domains(self.net_ids)
+
+        # Initialize domains. M4e per-layer override controls B-tier
+        # cells' allowed occupants without disturbing the A-tier WIRE
+        # domain.
+        self.engine.initialize_domains(
+            self.net_ids,
+            layer_occ_types=layer_occ_types,
+        )
         
         print(f"CSP engine created:")
         for layer, dims in self.engine.layer_dims.items():
@@ -165,6 +218,15 @@ class LayoutSolver:
             if sr.is_annotated:
                 continue
             if sr.layer not in csp_layers:
+                continue
+            # M4e: ``physical_to_segment_coords`` is an A-tier projection
+            # that uses ``MultiLayerGrid.layers`` (1D per-layer track
+            # grid). B-tier layers (OD, VIA0, cuts) — newly added to the
+            # engine in M4e via ``setup_engine`` — don't have a
+            # ``LayerGrid`` entry; their cells are stamped directly via
+            # ``load_b_tier_cells_into_engine``. Skip them here so the
+            # A-tier-only blockage projection path stays sound.
+            if sr.layer not in self.grid.layers:
                 continue
             x1, y1, x2, y2 = sr.bbox_nm
             coords = self.grid.physical_to_segment_coords(
@@ -253,9 +315,40 @@ class LayoutSolver:
         stats = self.engine.domain_stats()
         print(f"  Loaded {assignment_count} cell assignments")
         print(f"  CSP stats: {stats}")
-        
+
         return True
-    
+
+    def load_b_tier_cells_into_engine(self) -> int:
+        """Seed engine state from ``grid.b_tier_cells`` (M4e).
+
+        For every populated ``CellOccupancy`` on a B-tier layer the
+        engine modelled (OD / VIA0 / cut layers, when present), assigns
+        the corresponding engine cell to its grid-side occupant via
+        ``engine.assign``. Cells outside the engine's bounds are
+        skipped silently — the engine bounds are already the populated
+        region plus a 1-cell margin, so the only cells skipped are
+        unannotated B-tier shapes that didn't make it into the parser
+        projection.
+
+        Returns the number of cells loaded. Called by the pipeline
+        after ``load_existing_layout``; harmless to call when the
+        engine doesn't model any B-tier layer (no-op).
+        """
+        loaded = 0
+        for layer in ('OD', 'VIA0'):
+            if layer not in self.engine.layer_dims:
+                continue
+            for cell in self.grid.b_tier_cells_of(layer):
+                pos = cell.pos
+                if self.engine.get_cell(pos) is None:
+                    continue
+                state = CellState(cell.occ_type, net_id=cell.net_id)
+                if self.engine.get_cell(pos).is_assigned:
+                    continue
+                if self.engine.assign(pos, state):
+                    loaded += 1
+        return loaded
+
     def resize_device(self, device_name: str, new_nfin: int) -> ResizeResult:
         """L3 ``device_resize`` macro (M2).
 

@@ -32,12 +32,20 @@ the cell-level changes, so transactional rollback covers both axes.
 See ``docs/architecture_roadmap.md`` § B and § M4.
 """
 
+import time
 from collections import deque
 from dataclasses import dataclass, field
 from typing import Dict, Set, List, Optional, Tuple, FrozenSet
 from copy import deepcopy
 
 from core.data_model import CellState, OccupantType, EMPTY, BLOCKAGE
+
+
+# Module-level alias so tests can monkey-patch a deterministic clock.
+# ``time.perf_counter_ns`` is monotonic and high-resolution; defined as a
+# module attribute (not a method) to keep the hot ``_propagate`` loop
+# cheap and to allow tests to replace it with a fake.
+_perf_counter_ns = time.perf_counter_ns
 
 
 # Trail entry: (pos, prev_domain, prev_assignment). Captures enough state to
@@ -192,6 +200,25 @@ class ConstraintEngine:
         # ``restore`` and ``commit_with_full_delta`` can bracket union
         # events without expanding the public ``checkpoint`` return type.
         self._uf_checkpoints: Dict[int, int] = {}
+
+        # M4e perf instrumentation. ``propagate_stats[layer]`` holds
+        # ``{'calls': N, 'cells_visited': M, 'time_ns': T}`` so the L3
+        # macro / pipeline can detect propagation hot spots as the grid
+        # grows — the §M4 risk note flags this as the first place engine
+        # complexity becomes visible. Updated per ``_propagate`` call,
+        # keyed by the *seed* cell's layer (the cell that triggered the
+        # cascade); cross-layer cells visited during cascade still count
+        # toward the seed layer's tally.
+        self.propagate_stats: Dict[str, Dict[str, int]] = {}
+
+        # M4e per-layer occ_type tables, populated by
+        # ``initialize_domains``. ``_default_occ_types`` is the fallback
+        # for layers not in ``_layer_occ_types`` (legacy A-tier
+        # behaviour: EMPTY + WIRE).
+        self._default_occ_types: Set[OccupantType] = {
+            OccupantType.EMPTY, OccupantType.WIRE
+        }
+        self._layer_occ_types: Dict[str, Set[OccupantType]] = {}
     
     def add_layer(self, layer_name: str, n_tracks: int, n_ortho: int,
                   track_range: Tuple[int, int] = None,
@@ -222,33 +249,68 @@ class ConstraintEngine:
         """Register a DRC rule. Can be called anytime (before or after initialize)."""
         self.constraints.append(constraint)
     
-    def initialize_domains(self, net_ids: Set[str], 
-                           occ_types: Set[OccupantType] = None):
+    def initialize_domains(self, net_ids: Set[str],
+                           occ_types: Set[OccupantType] = None,
+                           layer_occ_types: Optional[Dict[str, Set[OccupantType]]] = None):
         """
         Initialize all cell domains with the full set of possible states.
-        
+
         Must be called after add_layer() and before assign().
-        
+
         Args:
             net_ids: Set of net IDs that can appear in this region
-            occ_types: Occupant types to include (default: EMPTY + WIRE)
+            occ_types: Default occupant types (default: EMPTY + WIRE)
+            layer_occ_types: M4e per-layer override. ``{layer: {occ_types}}``
+                is consulted before falling back to ``occ_types``. B-tier
+                layers (OD / VIA0 / cut layers) need ``DEVICE_DIFF`` /
+                ``VIA`` / ``CUT`` in their domain so ``engine.assign``
+                accepts the M4d L2 atomics' state stamps. ``None`` -nets
+                are always allowed for non-WIRE occupants — OD shapes in
+                the MVP fixture carry ``net_id=None`` because LVS does
+                not enumerate diffusion regions.
         """
         self.net_ids = net_ids
         if occ_types is None:
             occ_types = {OccupantType.EMPTY, OccupantType.WIRE}
-        
-        # Build the full state set
-        all_states = {EMPTY}
-        for net_id in net_ids:
-            for ot in occ_types:
-                if ot == OccupantType.EMPTY:
-                    continue
-                all_states.add(CellState(ot, net_id=net_id))
-        
+        self._default_occ_types: Set[OccupantType] = set(occ_types)
+        self._layer_occ_types: Dict[str, Set[OccupantType]] = dict(
+            layer_occ_types or {}
+        )
+
         for cell in self.cells.values():
-            if not cell.fixed:
-                cell.domain = set(all_states)
-                cell.assignment = EMPTY
+            if cell.fixed:
+                continue
+            layer = cell.pos[0]
+            cell.domain = self._initial_domain_for_layer(layer)
+            cell.assignment = EMPTY
+
+    def _initial_domain_for_layer(self, layer: str) -> Set[CellState]:
+        """Reconstruct the per-layer allowed-state set used at init.
+
+        Falls back to the default ``occ_types`` for layers not listed
+        in ``layer_occ_types`` (i.e. legacy A-tier behaviour). For
+        non-WIRE occupants like ``DEVICE_DIFF`` / ``VIA`` / ``CUT``,
+        the state set always includes the ``net_id=None`` variant so
+        unannotated B-tier shapes (LVS doesn't enumerate diffusion)
+        can be assigned without a net id.
+        """
+        ot_set = self._layer_occ_types.get(layer, self._default_occ_types)
+        domain = {EMPTY}
+        for ot in ot_set:
+            if ot == OccupantType.EMPTY:
+                continue
+            if ot == OccupantType.WIRE:
+                # WIRE always carries a net id — match the M2 / M3 state set.
+                for net_id in self.net_ids:
+                    domain.add(CellState(ot, net_id=net_id))
+            else:
+                # DEVICE_DIFF / VIA / CUT / DEVICE_GATE — allow both the
+                # un-netted variant (``None`` for unannotated shapes)
+                # and per-net variants (for shapes LVS does cover).
+                domain.add(CellState(ot))   # net_id=None
+                for net_id in self.net_ids:
+                    domain.add(CellState(ot, net_id=net_id))
+        return domain
     
     def get_cell(self, pos: Tuple) -> Optional[GridCell]:
         """Get cell at position, or None if out of bounds."""
@@ -325,8 +387,11 @@ class ConstraintEngine:
         if cell.fixed:
             return False
         # No-op fast-path: cell is already EMPTY *and* its domain is the
-        # full state set. Saves trail churn during repeated calls.
-        full_domain = self._initial_domain()
+        # full state set. Saves trail churn during repeated calls. M4e:
+        # the full domain is per-layer so B-tier cells round-trip through
+        # ``propose_release`` without losing their DEVICE_DIFF / VIA /
+        # CUT options.
+        full_domain = self._initial_domain_for_layer(pos[0])
         if cell.assignment == EMPTY and cell.domain == full_domain:
             return True
 
@@ -427,91 +492,104 @@ class ConstraintEngine:
                 delta.append((pos, prev, cur))
         return delta
 
-    def _initial_domain(self) -> Set[CellState]:
-        """Reconstruct the full per-cell allowed-state set used at init time."""
-        domain = {EMPTY}
-        for net_id in self.net_ids:
-            domain.add(CellState(OccupantType.WIRE, net_id=net_id))
-        return domain
     
     def _propagate(self, changed_pos: Tuple, record_trail: bool) -> bool:
         """
         Constraint propagation from changed_pos.
-        
+
         CRITICAL: Only propagate from DETERMINED cells (domain size = 1).
-        
+
         Why: If a cell has domain {EMPTY, VSS} (not yet assigned), we cannot
         propagate VSS's spacing constraints — the cell might end up EMPTY.
         Propagating from undetermined cells causes false constraint cascading
         (e.g., removing VDD from a distant cell just because an intermediate
         cell MIGHT be VSS).
-        
+
         Cascade only occurs when propagation causes a neighbor's domain to
         collapse to size 1 (auto-determined), which then triggers further
         propagation from that newly-determined cell.
+
+        M4e perf instrumentation: every call increments
+        ``self.propagate_stats[seed_layer]`` with ``calls += 1`` and
+        ``cells_visited += <queue pops>``. The seed layer is the layer
+        of ``changed_pos``; cross-layer cells visited during a cascade
+        still count toward the seed layer's tally so the L3 macro sees
+        which layer triggered hot propagation. ``time_ns`` uses
+        ``time.perf_counter_ns`` for monotonic deltas.
         """
-        queue = deque([changed_pos])
-        
-        while queue:
-            pos = queue.popleft()
-            
-            cell = self.cells.get(pos)
-            if cell is None or not cell.is_feasible:
-                return False
-            
-            # ONLY propagate from determined cells (domain = 1 value)
-            if cell.domain_size != 1:
-                continue
-            
-            determined_state = next(iter(cell.domain))
-            
-            for constraint in self.constraints:
-                # Skip constraints that don't apply to this cell's layer
-                if (constraint.anchor_layer is not None and 
-                    constraint.anchor_layer != pos[0]):
+        seed_layer = changed_pos[0]
+        stats = self.propagate_stats.setdefault(
+            seed_layer, {'calls': 0, 'cells_visited': 0, 'time_ns': 0}
+        )
+        stats['calls'] += 1
+        t_start_ns = _perf_counter_ns()
+
+        try:
+            queue = deque([changed_pos])
+
+            while queue:
+                pos = queue.popleft()
+                stats['cells_visited'] += 1
+
+                cell = self.cells.get(pos)
+                if cell is None or not cell.is_feasible:
+                    return False
+
+                # ONLY propagate from determined cells (domain = 1 value)
+                if cell.domain_size != 1:
                     continue
-                
-                if not constraint.trigger(determined_state):
-                    continue
-                
-                forbidden = constraint.forbidden_states(determined_state, self.net_ids)
-                if not forbidden:
-                    continue
-                
-                for delta in constraint.stencil:
-                    d_layer, d_track, d_ortho = delta
-                    
-                    # Compute neighbor position
-                    if d_layer == pos[0]:
-                        n_pos = (pos[0], pos[1] + d_track, pos[2] + d_ortho)
-                    else:
-                        n_pos = (d_layer, pos[1] + d_track, pos[2] + d_ortho)
-                    
-                    neighbor = self.cells.get(n_pos)
-                    if neighbor is None or neighbor.fixed:
+
+                determined_state = next(iter(cell.domain))
+
+                for constraint in self.constraints:
+                    # Skip constraints that don't apply to this cell's layer
+                    if (constraint.anchor_layer is not None and
+                        constraint.anchor_layer != pos[0]):
                         continue
-                    
-                    # Remove forbidden states from neighbor's domain
-                    new_domain = neighbor.domain - forbidden
 
-                    if new_domain != neighbor.domain:
-                        if record_trail:
-                            self.trail.append(
-                                (n_pos, frozenset(neighbor.domain), neighbor.assignment)
-                            )
+                    if not constraint.trigger(determined_state):
+                        continue
 
-                        neighbor.domain = new_domain
-                        
-                        if not neighbor.is_feasible:
-                            return False  # Contradiction!
-                        
-                        # If neighbor just became determined, auto-assign
-                        # and add to queue for cascading propagation
-                        if len(new_domain) == 1:
-                            neighbor.assignment = next(iter(new_domain))
-                            queue.append(n_pos)
-        
-        return True
+                    forbidden = constraint.forbidden_states(determined_state, self.net_ids)
+                    if not forbidden:
+                        continue
+
+                    for delta in constraint.stencil:
+                        d_layer, d_track, d_ortho = delta
+
+                        # Compute neighbor position
+                        if d_layer == pos[0]:
+                            n_pos = (pos[0], pos[1] + d_track, pos[2] + d_ortho)
+                        else:
+                            n_pos = (d_layer, pos[1] + d_track, pos[2] + d_ortho)
+
+                        neighbor = self.cells.get(n_pos)
+                        if neighbor is None or neighbor.fixed:
+                            continue
+
+                        # Remove forbidden states from neighbor's domain
+                        new_domain = neighbor.domain - forbidden
+
+                        if new_domain != neighbor.domain:
+                            if record_trail:
+                                self.trail.append(
+                                    (n_pos, frozenset(neighbor.domain), neighbor.assignment)
+                                )
+
+                            neighbor.domain = new_domain
+
+                            if not neighbor.is_feasible:
+                                return False  # Contradiction!
+
+                            # If neighbor just became determined, auto-assign
+                            # and add to queue for cascading propagation
+                            if len(new_domain) == 1:
+                                neighbor.assignment = next(iter(new_domain))
+                                queue.append(n_pos)
+
+            return True
+        finally:
+            stats['time_ns'] += _perf_counter_ns() - t_start_ns
     
     def checkpoint(self) -> int:
         """Return current trail position for backtracking.
@@ -818,6 +896,33 @@ class ConstraintEngine:
         """Check if any cell has an empty domain."""
         return all(cell.is_feasible for cell in self.cells.values())
     
+    def get_propagate_stats(self, layer: str = None) -> Dict:
+        """Return the M4e perf counters captured by ``_propagate``.
+
+        With ``layer`` set, returns the per-layer dict
+        ``{'calls': N, 'cells_visited': M, 'time_ns': T}`` (or an empty
+        zero dict if that layer never seeded a propagation). Without
+        ``layer``, returns the full per-layer mapping.
+
+        These counters are intended for the L3 macro / pipeline to
+        observe propagation hot spots — the §M4 risk note flags
+        per-layer ``_propagate`` complexity as the first place engine
+        cost surfaces. The hot loop only does an ``int += 1`` and a
+        ``perf_counter_ns`` subtraction, so the runtime overhead is
+        negligible and on by default.
+        """
+        if layer is not None:
+            return dict(self.propagate_stats.get(
+                layer, {'calls': 0, 'cells_visited': 0, 'time_ns': 0}
+            ))
+        return {l: dict(s) for l, s in self.propagate_stats.items()}
+
+    def reset_propagate_stats(self):
+        """Clear all per-layer propagate counters. Useful between
+        macro phases when comparing propagation cost on isolated
+        sub-operations."""
+        self.propagate_stats.clear()
+
     def domain_stats(self, layer: str = None) -> dict:
         """Get statistics about domain sizes."""
         cells = self.cells.values()

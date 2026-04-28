@@ -20,27 +20,38 @@ from core.csp_engine import DRCConstraintTemplate
 from core.data_model import CellState, OccupantType, EMPTY
 
 
+_DEFAULT_TRIGGER_TYPES = (OccupantType.WIRE, OccupantType.VIA)
+
+
 class SameLayerMinSpacing(DRCConstraintTemplate):
     """
     Same-layer minimum spacing rule.
-    
+
     If a grid cell is occupied by net_A, then cells within
     'spacing_tracks' distance on the same layer cannot be occupied
     by a different net (net_B ≠ net_A).
-    
+
     Same-net adjacent cells are allowed (they form wider wires or
     continuous segments).
-    
+
     Stencil: same-layer cells within Manhattan distance ≤ spacing_tracks
-    Trigger: any WIRE or VIA occupancy
-    Forbidden: WIRE or VIA of a different net
+    Trigger: configurable; default ``(WIRE, VIA)``. M4e adds
+        ``trigger_types=(DEVICE_DIFF,)`` for OD spacing rules and
+        ``trigger_types=(VIA, DEVICE_DIFF, CUT)`` for B-tier layers
+        that mix occupant kinds.
+    Forbidden: same set of occupant types of a different net.
     """
-    
-    def __init__(self, layer: str, spacing_tracks: int):
+
+    def __init__(self, layer: str, spacing_tracks: int,
+                 trigger_types: tuple = _DEFAULT_TRIGGER_TYPES):
         """
         Args:
             layer: Layer this rule applies to
             spacing_tracks: Minimum spacing in track units (cross-track direction)
+            trigger_types: Tuple of ``OccupantType``s that activate the
+                rule. Default is ``(WIRE, VIA)`` — A-tier layers.
+                B-tier layers pass ``(DEVICE_DIFF,)`` (OD),
+                ``(VIA,)`` (VIA0), or ``(CUT,)`` (cut layers).
         """
         # Generate stencil: same-layer, cross-track neighbors within spacing
         # For routing layers, spacing is primarily in the cross-track direction
@@ -51,64 +62,80 @@ class SameLayerMinSpacing(DRCConstraintTemplate):
                 continue
             # Same layer, shift in track direction, no ortho shift
             stencil.append((layer, dt, 0))
-        
+
         super().__init__(
             name=f"min_spacing_{layer}_{spacing_tracks}trk",
             stencil=stencil,
             anchor_layer=layer
         )
         self.layer = layer
-    
+        self.trigger_types = tuple(trigger_types)
+
     def trigger(self, state: CellState) -> bool:
-        return state.occ_type in (OccupantType.WIRE, OccupantType.VIA)
-    
+        return state.occ_type in self.trigger_types
+
     def forbidden_states(self, trigger_state: CellState,
                          all_net_ids: Set[str]) -> Set[CellState]:
-        """Forbid: any wire/via of a DIFFERENT net."""
+        """Forbid: any same-occ-type cell of a DIFFERENT net.
+
+        The rule is symmetric across the trigger set — if we accept
+        DEVICE_DIFF as a trigger, we also forbid neighbouring
+        DEVICE_DIFF of a different net. ``net_id is None`` cells (the
+        unannotated B-tier path) are treated as "same net" with each
+        other so the MVP fixture's two unowned OD shapes don't clash.
+        """
         my_net = trigger_state.net_id
         forbidden = set()
         for net_id in all_net_ids:
-            if net_id != my_net:
-                forbidden.add(CellState(OccupantType.WIRE, net_id=net_id))
-                forbidden.add(CellState(OccupantType.VIA, net_id=net_id))
+            if net_id == my_net:
+                continue
+            for ot in self.trigger_types:
+                forbidden.add(CellState(ot, net_id=net_id))
         return forbidden
 
 
 class SameLayerAlongTrackSpacing(DRCConstraintTemplate):
     """
     Along-track spacing between different nets on the same track.
-    
+
     Prevents two different nets from being on adjacent ortho positions
     of the same track without sufficient gap.
-    
+
     This is essentially end-to-end spacing for segments on the same track.
+
+    M4e: ``trigger_types`` mirrors ``SameLayerMinSpacing`` so B-tier
+    layers can register an along-track variant (OD diffusion regions
+    abutting end-to-end on the same fin track without being shared).
     """
-    
-    def __init__(self, layer: str, spacing_ortho: int):
+
+    def __init__(self, layer: str, spacing_ortho: int,
+                 trigger_types: tuple = _DEFAULT_TRIGGER_TYPES):
         stencil = []
         for do in range(-spacing_ortho, spacing_ortho + 1):
             if do == 0:
                 continue
             stencil.append((layer, 0, do))
-        
+
         super().__init__(
             name=f"along_track_spacing_{layer}_{spacing_ortho}",
             stencil=stencil,
             anchor_layer=layer
         )
         self.layer = layer
-    
+        self.trigger_types = tuple(trigger_types)
+
     def trigger(self, state: CellState) -> bool:
-        return state.occ_type in (OccupantType.WIRE, OccupantType.VIA)
-    
+        return state.occ_type in self.trigger_types
+
     def forbidden_states(self, trigger_state: CellState,
                          all_net_ids: Set[str]) -> Set[CellState]:
         my_net = trigger_state.net_id
         forbidden = set()
         for net_id in all_net_ids:
-            if net_id != my_net:
-                forbidden.add(CellState(OccupantType.WIRE, net_id=net_id))
-                forbidden.add(CellState(OccupantType.VIA, net_id=net_id))
+            if net_id == my_net:
+                continue
+            for ot in self.trigger_types:
+                forbidden.add(CellState(ot, net_id=net_id))
         return forbidden
 
 
@@ -131,12 +158,15 @@ class SameNetContinuity(DRCConstraintTemplate):
 def create_mvp_drc_rules(layers: dict = None) -> List[DRCConstraintTemplate]:
     """
     Create the MVP DRC rule set.
-    
+
     For the MVP (fin resize within a single cell), the relevant DRC checks are:
     - LI along-track spacing: VSS and VDD share LI track 1, need gap between them
     - M1 cross-track spacing: different nets on adjacent M1 tracks
     - M1 along-track spacing: different nets on same M1 track
-    
+    - **M4e**: OD cross-track spacing on DEVICE_DIFF cells (different nets
+      cannot be one fin track apart unless diffusion-shared via the M4b
+      union-find). VIA0 same-layer spacing on VIA cells.
+
     LI cross-track spacing is NOT included because:
     - At half-pitch (27nm), adjacent LI tracks (S/D vs gate contact) are
       physically closer than min spacing, but their Y extents don't overlap.
@@ -144,12 +174,12 @@ def create_mvp_drc_rules(layers: dict = None) -> List[DRCConstraintTemplate]:
     - This will be validated by post-DRC (Calibre) in production.
     """
     rules = []
-    
+
     # --- LI along-track spacing (same track, different nets) ---
     # Critical: VSS and VDD share LI track 1 at different Y positions.
     # They must maintain min spacing along-track.
     rules.append(SameLayerAlongTrackSpacing('LI', spacing_ortho=1))
-    
+
     # --- M1 same-layer min spacing ---
     # M1 pitch=36nm, width=20nm, spacing=16nm
     # Center-to-center min = 20+16 = 36nm = exactly one pitch
@@ -157,7 +187,32 @@ def create_mvp_drc_rules(layers: dict = None) -> List[DRCConstraintTemplate]:
     # → spacing_tracks = 1
     rules.append(SameLayerMinSpacing('M1', spacing_tracks=1))
     rules.append(SameLayerAlongTrackSpacing('M1', spacing_ortho=1))
-    
+
+    # --- M4e B-tier rules ---
+    # OD cross-track + along-track spacing on DEVICE_DIFF cells. Triggers
+    # only when a cell carries a non-None net id; adjacent ``net_id=None``
+    # OD cells (the MVP fixture's unannotated diffusion shapes) coexist
+    # peacefully because the rule's "different net" check treats
+    # None-vs-None as same. Once M5/M6 stamps OD cells with real net ids
+    # (S/D nets), the rule fires and ``mark_shared_diffusion``-driven
+    # ``engine.union`` is the safety valve: cells in the same UF
+    # component count as same-net for the rule.
+    rules.append(SameLayerMinSpacing(
+        'OD', spacing_tracks=1,
+        trigger_types=(OccupantType.DEVICE_DIFF,),
+    ))
+    rules.append(SameLayerAlongTrackSpacing(
+        'OD', spacing_ortho=1,
+        trigger_types=(OccupantType.DEVICE_DIFF,),
+    ))
+    # VIA0 same-layer spacing — different-net VIA cells one track apart
+    # are forbidden (the same DRC the LI/M1 rules enforce, applied to
+    # the via grid). Triggers only on VIA cells.
+    rules.append(SameLayerMinSpacing(
+        'VIA0', spacing_tracks=1,
+        trigger_types=(OccupantType.VIA,),
+    ))
+
     return rules
 
 
