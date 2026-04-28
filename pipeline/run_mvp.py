@@ -26,6 +26,7 @@ from io_adapters.cdl_parser import parse_cdl, diff_cdl, get_device_param
 from io_adapters.gds_io import write_gds, gds_to_bbox_by_layer, HAS_GDSTK
 from core.solver import LayoutSolver
 from core.decoder import WritebackDecoder
+from core.drc_derivator import DRCDerivator
 
 
 def generate_three_way_comparison(orig_data, resized_data, target_data,
@@ -310,9 +311,19 @@ def run_full_pipeline(original_cdl_path: str = None,
             new_pmos_nfin = t['new']
             edit_ops_p = results['MP0'].edit_ops
 
+    # M5: run the C1 derivator after the L3 macro commits. The derivator
+    # walks model.shape_pool for NWELL / BOUNDARY shapes and emits
+    # modify_shape EditOps the decoder's Phase 1 applies alongside
+    # the macro's FIN / OD / LI / POLY ops. Replaces the decoder's
+    # transitional Phase 2 ``_derive_*`` helpers.
+    nmos_fin_y_new = orig_data['params']['nmos_fin_y'][:new_nmos_nfin]
+    pmos_fin_y_new = orig_data['params']['pmos_fin_y'][:new_pmos_nfin]
+    derivator = DRCDerivator(model, grid, config)
+    edit_ops_c1 = derivator.derive_c1(nmos_fin_y_new, pmos_fin_y_new)
+
     decoder = WritebackDecoder(grid, config)
     resized_data = decoder.apply(
-        orig_data, edit_ops_n + edit_ops_p,
+        orig_data, edit_ops_n + edit_ops_p + edit_ops_c1,
         new_nmos_nfin, new_pmos_nfin,
     )
 
