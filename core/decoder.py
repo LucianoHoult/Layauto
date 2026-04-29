@@ -18,15 +18,49 @@ Phases:
      BOUNDARY modify.
   2. **Metadata update** — params + device records.
 
+M6 (this milestone) adds an entry-side check: any incoming ``EditOp``
+that targets a ShapeRecord stamped ``is_derived=True`` is rejected
+loud (``DerivedShapeEditError``). Only the M5 derivator is allowed to
+mutate C1 shapes; macros that reach for them directly indicate a layer
+violation in the §C four-layer split. The check consults
+``LayoutModel.shape_pool`` when supplied; legacy callers that pass no
+model see the prior behaviour unchanged.
+
 The decoder is the sole place writeback geometry lives;
 ``pipeline/run_mvp.py`` only invokes ``WritebackDecoder.apply()``.
 """
 
 import copy
-from typing import List
+from typing import List, Optional
 
+from core.data_model import LayoutModel, ShapeRecord
 from core.diff import EditOp
 from core.grid import MultiLayerGrid
+
+
+class DerivedShapeEditError(ValueError):
+    """Raised when an ``EditOp`` targets a derived (``is_derived=True``) shape.
+
+    Per docs/architecture_roadmap.md §C, C1 markings (NWELL / VT / PP /
+    NP / BOUNDARY / DNW) are emitted by the M5 ``DRCDerivator`` and
+    must not be edited by L3 macros directly. The M5 derivator stamps
+    ``provenance='drc_derivator._derive_<layer>'`` on every C1 shape
+    it owns; the M6 decoder check rejects any non-derivator EditOp
+    that matches such a record by ``(layer, old_bbox)``.
+
+    The ``op`` and ``shape_record`` fields carry enough context for
+    the caller (or a test) to localise responsibility.
+    """
+
+    def __init__(self, op: EditOp, shape_record: ShapeRecord):
+        self.op = op
+        self.shape_record = shape_record
+        super().__init__(
+            f"refusing to apply {op.op_type} on derived shape "
+            f"{shape_record.layer} {shape_record.bbox_nm} "
+            f"(provenance={shape_record.provenance!r}); "
+            f"only the M5 derivator may modify C1 markings"
+        )
 
 
 class WritebackDecoder:
@@ -39,7 +73,15 @@ class WritebackDecoder:
               orig_data: dict,
               edit_ops: List[EditOp],
               new_nmos_nfin: int,
-              new_pmos_nfin: int) -> dict:
+              new_pmos_nfin: int,
+              model: Optional[LayoutModel] = None) -> dict:
+        # M6: reject any EditOp that targets a derived shape before
+        # touching ``orig_data``. The check is a no-op for callers that
+        # don't pass a model (legacy entry path) or whose pool carries
+        # no derived records.
+        if model is not None:
+            self._reject_derived_edits(edit_ops, model)
+
         result = copy.deepcopy(orig_data)
         params = result['params']
 
@@ -64,6 +106,59 @@ class WritebackDecoder:
                               nmos_fin_y_new, pmos_fin_y_new)
 
         return result
+
+    # --- M6: derived-shape rejection ---
+
+    _DERIVATOR_PREFIX = 'drc_derivator.'
+
+    def _reject_derived_edits(self, edit_ops: List[EditOp],
+                                model: LayoutModel) -> None:
+        """Raise ``DerivedShapeEditError`` for ops targeting derived shapes.
+
+        An EditOp is "targeting a derived shape" when its
+        ``(layer, old_bbox)`` matches a ``ShapeRecord`` in
+        ``model.shape_pool`` whose ``is_derived`` is True. The match is
+        exact-bbox (the M5 derivator emits ops whose ``old_bbox`` is the
+        pool record's pre-derive bbox) — that is the same key the
+        decoder's Phase 1 NWELL/BOUNDARY appliers use.
+
+        Ops emitted by the M5 derivator itself are exempt: the
+        derivator both emits and stamps ``is_derived``, so without the
+        exemption a re-application of its own ops would self-reject.
+        We detect derivator-emitted ops by the ``provenance`` /
+        ``desc`` hint ``derived_<layer>_y2_shift`` the derivator stamps
+        on its EditOps.
+        """
+        if not edit_ops:
+            return
+        derived_index = {}
+        for sr in model.shape_pool:
+            if not sr.is_derived:
+                continue
+            derived_index[(sr.layer, sr.bbox_nm)] = sr
+        if not derived_index:
+            return
+        for op in edit_ops:
+            if op.old_bbox is None:
+                continue
+            key = (op.layer, op.old_bbox)
+            sr = derived_index.get(key)
+            if sr is None:
+                continue
+            if self._is_derivator_op(op):
+                continue
+            raise DerivedShapeEditError(op, sr)
+
+    @classmethod
+    def _is_derivator_op(cls, op: EditOp) -> bool:
+        """True iff ``op`` was emitted by the M5 ``DRCDerivator``.
+
+        The derivator stamps ``desc='derived_<layer>_y2_shift'`` on every
+        C1 EditOp it produces (see ``core/drc_derivator.py``). The
+        ``derived_`` prefix is the disambiguator — macro-emitted ops
+        do not use it.
+        """
+        return bool(op.desc) and op.desc.startswith('derived_')
 
     # --- Phase 1 ---
 

@@ -325,6 +325,7 @@ def run_full_pipeline(original_cdl_path: str = None,
     resized_data = decoder.apply(
         orig_data, edit_ops_n + edit_ops_p + edit_ops_c1,
         new_nmos_nfin, new_pmos_nfin,
+        model=model,
     )
 
     # Write GDS
