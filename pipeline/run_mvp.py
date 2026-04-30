@@ -280,14 +280,23 @@ def run_full_pipeline(original_cdl_path: str = None,
     if blockage_stats:
         print(f"  Unannotated blockage projection: {blockage_stats}")
 
-    # ---- Stage 5: Resize (driven by CDL diff) ----
-    print("\n[Stage 5] Executing resize (driven by CDL diff)...")
+    # ---- Stage 5: Resize (driven by CDL diff via pick_macro) ----
+    # M6b: route CDL deltas through ``core/macros/pick_macro.py`` so the
+    # L4 ``diff_cdl → pick_macro → apply`` pattern from
+    # ``docs/architecture_roadmap.md`` §C is wired through. The dispatch
+    # table currently routes only ``nfin`` parameter changes to
+    # ``device_resize``; layout-side intent (share/split/cut) is exposed
+    # as importable Python API and not auto-invoked from CDL.
+    print("\n[Stage 5] Executing resize (driven by CDL diff via pick_macro)...")
+    from core.macros import pick_macros
+    macro_calls = pick_macros(nfin_targets, model=model)
     results = {}
-    for target in nfin_targets:
-        r = solver.resize_device(target['inst'], target['new'])
-        results[target['inst']] = r
+    for call in macro_calls:
+        print(f"  dispatch: {call}")
+        r = call.execute(solver)
+        results[call.diff['inst']] = r
         if not r.success:
-            print(f"FATAL: Resize of {target['inst']} failed: {r.message}")
+            print(f"FATAL: {call} failed: {r.message}")
             return
 
     # ---- Stage 6: Generate output ----
