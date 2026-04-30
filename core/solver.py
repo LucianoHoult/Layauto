@@ -439,12 +439,19 @@ class LayoutSolver:
                 old_top_fin_y, new_top_fin_y,
             )
 
-            # 5. Commit transaction; surface the cell delta for the
-            #    decoder (currently informational — the macro already
-            #    emits L1 directly; M3+ will use the delta to synthesise).
+            # 5. Commit transaction. M6 flipped to ``commit_with_full_delta``
+            #    so the union-find delta (net-equivalence merges since
+            #    the checkpoint) lands alongside the cell-level delta.
+            #    The cell delta still drives the decoder's existing
+            #    Phase 1 path (currently informational — the macro
+            #    emits L1 directly); the union delta is the seam M6's
+            #    ``share_diffusion`` / ``split_diffusion`` macros and
+            #    the M5 derivator's incremental-recompute follow-up
+            #    will subscribe to.
             if cp is not None:
-                delta = self.engine.commit_with_delta(cp)
-                print(f"  CSP commit: {len(delta)} cell-level changes")
+                full_delta = self.engine.commit_with_full_delta(cp)
+                print(f"  CSP commit: {len(full_delta.cells)} cell-level changes, "
+                      f"{len(full_delta.unions)} union events")
 
         except Exception:
             if cp is not None:
