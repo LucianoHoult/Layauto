@@ -1,44 +1,101 @@
-# DRC rule parameters for dummy 7nm-class FinFET process.
+# =============================================================
+# DRC rule deck (unified rule-record format).
 # All dimensions in nanometers (nm).
 #
-# Severity levels:
-#   critical    - Must pass; violation blocks tapeout
-#   recommended - Should pass; waived only with justification
-#   advisory    - Informational; best-practice guidance
+# Schema (each entry under `rules:`):
+#   id         - stable identifier. Convention is ASAP7-style:
+#                <LAYER>.<TYPE_CODE>.<NUM>  (e.g. M1.W.1, V0.E.LI)
+#                Type codes: P=pitch, W=width, S=spacing,
+#                            E=enclosure, X=extension, SZ=size
+#   type       - rule kind, one of:
+#                  min_pitch       single-layer minimum pitch
+#                  min_width       single-layer minimum drawn width
+#                  min_spacing     single-layer minimum spacing
+#                  min_enclosure   inner layer must be enclosed by outer ≥ value
+#                  min_extension   first layer must extend past second ≥ value
+#                  exact_size      fixed shape size (vias, contacts)
+#   layers     - list of layer names. 1 entry for single-layer rules,
+#                2 entries for enclosure / extension. By convention:
+#                  enclosure: [inner, outer]   (inner = via, outer = metal)
+#                  extension: [outer, anchor]  (outer extends past anchor)
+#   value_nm   - numeric value. Either:
+#                  - scalar:        17                        (isotropic)
+#                  - axis-keyed:    {x: 1, y: 5}              (per-axis)
+#   severity   - critical | recommended | advisory
+#   condition  - optional dict for context-specific rules
+#                (e.g. {fin_role: pmos} for "topmost-PMOS-fin" derivation)
+#   notes      - optional free-form description
 #
-# In production, replace with foundry DRM values.
+# Style modeled after ASAP7 / OpenROAD academic-PDK conventions so a
+# foundry DRM can later be machine-parsed into this format. New rule
+# types (min_area, min_eol_spacing, min_cut_spacing, density) can be
+# added to the `type` enum without touching consumers that don't read
+# them.
+# =============================================================
+
+process:
+  name: dummy_7nm_finfet
+  node: 7nm
 
 rules:
-  spacing:
-    - name: LI_min_spacing
-      layer: LI
-      type: same_layer_min_space
-      value_nm: 17
-      severity: critical
+  # --- Pitch (also defines CSP grid axis) ----------------------
+  - { id: FIN.P.1,  type: min_pitch, layers: [FIN],  value_nm: 25, severity: critical, notes: "fin-to-fin (Y)" }
+  - { id: POLY.P.1, type: min_pitch, layers: [POLY], value_nm: 54, severity: critical, notes: "contacted poly pitch / CPP (X)" }
+  - { id: LI.P.1,   type: min_pitch, layers: [LI],   value_nm: 27, severity: critical, notes: "half-CPP" }
+  - { id: M1.P.1,   type: min_pitch, layers: [M1],   value_nm: 36, severity: critical }
 
-    - name: M1_min_spacing
-      layer: M1
-      type: same_layer_min_space
-      value_nm: 16
-      severity: critical
+  # --- Width ---------------------------------------------------
+  - { id: FIN.W.1,  type: min_width, layers: [FIN],  value_nm: 7,  severity: critical }
+  - { id: POLY.W.1, type: min_width, layers: [POLY], value_nm: 20, severity: critical }
+  - { id: LI.W.1,   type: min_width, layers: [LI],   value_nm: 17, severity: critical }
+  - { id: M1.W.1,   type: min_width, layers: [M1],   value_nm: 20, severity: critical }
 
-    - name: VIA0_min_spacing
-      layer: VIA0
-      type: same_layer_min_space
-      value_nm: 20
-      severity: critical
+  # --- Via exact size -----------------------------------------
+  - { id: V0.SZ.1,  type: exact_size, layers: [VIA0], value_nm: {x: 17, y: 17}, severity: critical }
 
-  enclosure:
-    - name: VIA0_enc_by_LI
-      via_layer: VIA0
-      metal_layer: LI
-      enc_x_nm: 1
-      enc_y_nm: 5
-      severity: critical
+  # --- Same-layer spacing -------------------------------------
+  - { id: LI.S.1,   type: min_spacing, layers: [LI],   value_nm: 17, severity: critical }
+  - { id: M1.S.1,   type: min_spacing, layers: [M1],   value_nm: 16, severity: critical }
+  - { id: V0.S.1,   type: min_spacing, layers: [VIA0], value_nm: 20, severity: critical }
 
-    - name: VIA0_enc_by_M1
-      via_layer: VIA0
-      metal_layer: M1
-      enc_x_nm: 5
-      enc_y_nm: 1
-      severity: critical
+  # --- Via enclosure (inner enclosed by outer) ----------------
+  - id: V0.E.LI
+    type: min_enclosure
+    layers: [VIA0, LI]
+    value_nm: {x: 1, y: 5}
+    severity: critical
+    notes: "VIA0 enclosed by LI ≥1nm (X), ≥5nm (Y)"
+  - id: V0.E.M1
+    type: min_enclosure
+    layers: [VIA0, M1]
+    value_nm: {x: 5, y: 1}
+    severity: critical
+    notes: "VIA0 enclosed by M1 ≥5nm (X), ≥1nm (Y)"
+
+  # --- Extension (one layer past another) ---------------------
+  - id: OD.X.FIN
+    type: min_extension
+    layers: [OD, FIN]
+    value_nm: 10
+    severity: critical
+    notes: "OD must extend ≥10nm beyond outermost FIN"
+  - id: POLY.X.OD
+    type: min_extension
+    layers: [POLY, OD]
+    value_nm: 15
+    severity: critical
+    notes: "Poly extends ≥15nm beyond OD edge"
+  - id: NWELL.X.FIN
+    type: min_extension
+    layers: [NWELL, FIN]
+    value_nm: 30
+    severity: critical
+    condition: {fin_role: pmos}
+    notes: "NWELL extends ≥30nm past topmost PMOS fin (consumed by drc_derivator)"
+  - id: BOUNDARY.X.FIN
+    type: min_extension
+    layers: [BOUNDARY, FIN]
+    value_nm: 40
+    severity: critical
+    condition: {fin_role: pmos}
+    notes: "Cell boundary extends ≥40nm past topmost PMOS fin (consumed by drc_derivator)"

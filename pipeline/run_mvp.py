@@ -2,25 +2,35 @@
 End-to-end MVP pipeline:
   Parse → Load CSP → Resize → Generate output GDS → Visualize diff
 
-Inputs:
-  - original.gds + original.cdl (original design)
-  - modified.cdl (target netlist with changed parameters)
-  - process_config.yaml + drc_rules.yaml (tech config)
+Inputs (composed via tech/site_config.yaml):
+  - original.cdl + modified.cdl (CDL diff drives resize targets)
+  - calibre_device_query.json + calibre_net_query.json + bbox_by_layer.json
+  - tech/drc_rules.yaml + tech/layer_map.yaml (tech bundle)
 
 Produces:
   - buffer_resized.gds: GDS with resized layout
   - buffer_resized.json: Layout data for the resized version
   - resize_diff.png: Visual comparison (original vs resized vs target)
   - resize_report.txt: Text report of all edit operations
+
+Usage:
+  # default site_config (tech/site_config.yaml)
+  python3 pipeline/run_mvp.py
+
+  # custom site_config
+  python3 pipeline/run_mvp.py --config /path/to/my_site.yaml
 """
 
+import argparse
 import sys
 import os
 import json
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 
-from tech.config_loader import load_tech_config
+from tech.config_loader import (
+    load_tech_config, load_tech_config_from_site, load_site_config,
+)
 from io_adapters.parser import build_layout_model
 from io_adapters.cdl_parser import parse_cdl, diff_cdl, get_device_param
 from io_adapters.gds_io import write_gds, gds_to_bbox_by_layer, HAS_GDSTK
@@ -197,31 +207,49 @@ def generate_diff_overlay(orig_data, resized_data, output_path):
     print(f"  Diff overlay saved: {output_path}")
 
 
-def run_full_pipeline(original_cdl_path: str = None,
-                      modified_cdl_path: str = None,
+def _default_site_config_path() -> str:
+    return os.path.join(
+        os.path.dirname(__file__), '..', 'tech', 'site_config.yaml'
+    )
+
+
+def run_full_pipeline(site_config_path: str = None,
                       config=None):
     """Execute the complete MVP pipeline.
 
     Args:
-        original_cdl_path: Path to original CDL netlist.
-        modified_cdl_path: Path to modified CDL netlist (resize targets).
-        config: TechConfig instance.
+        site_config_path: Path to a site_config.yaml that lists
+            tech sources (drc_rules, layer_map) and run inputs/outputs.
+            If None, uses ``tech/site_config.yaml`` next to the repo.
+        config: Pre-loaded TechConfig (skips tech reload). Useful for
+            tests that already have a config in hand.
     """
-    if config is None:
-        config = load_tech_config()
+    if site_config_path is None:
+        site_config_path = _default_site_config_path()
 
-    fixture_dir = os.path.join(os.path.dirname(__file__), '..', 'dummy', 'fixtures')
-    output_dir = os.path.join(os.path.dirname(__file__), '..', 'output')
+    site = load_site_config(site_config_path)
+
+    if config is None:
+        config = load_tech_config_from_site(site_config_path)
+
+    inputs = site.get('inputs', {})
+    output_dir = site.get('output', {}).get('dir')
+    if output_dir is None:
+        output_dir = os.path.join(os.path.dirname(__file__), '..', 'output')
     os.makedirs(output_dir, exist_ok=True)
 
-    # Default CDL paths
-    if original_cdl_path is None:
-        original_cdl_path = os.path.join(fixture_dir, 'buffer_original.cdl')
-    if modified_cdl_path is None:
-        modified_cdl_path = os.path.join(fixture_dir, 'buffer_target.cdl')
+    original_cdl_path = inputs.get('original_cdl')
+    modified_cdl_path = inputs.get('modified_cdl')
+    device_query_path = inputs.get('device_query')
+    net_query_path    = inputs.get('net_query')
+    bbox_path         = inputs.get('bbox_by_layer')
+    layout_json_path  = inputs.get('layout_json')
+    target_json_path  = inputs.get('target_json')
+    target_gds_path   = inputs.get('target_gds')
 
     print("=" * 70)
     print("  BUFFER FIN RESIZE MVP - FULL PIPELINE")
+    print(f"  site_config: {site_config_path}")
     print("=" * 70)
 
     # ---- Stage 1: CDL diff → resize targets ----
@@ -248,10 +276,10 @@ def run_full_pipeline(original_cdl_path: str = None,
     # ---- Stage 2: Parse layout ----
     print("\n[Stage 2] Parsing layout data...")
     model, grid = build_layout_model(
-        device_query_path=os.path.join(fixture_dir, 'calibre_device_query.json'),
-        net_query_path=os.path.join(fixture_dir, 'calibre_net_query.json'),
-        bbox_path=os.path.join(fixture_dir, 'bbox_by_layer.json'),
-        layout_json_path=os.path.join(fixture_dir, 'buffer_original.json'),
+        device_query_path=device_query_path,
+        net_query_path=net_query_path,
+        bbox_path=bbox_path,
+        layout_json_path=layout_json_path,
         config=config,
     )
     print(f"  {model.summary()}")
@@ -293,9 +321,9 @@ def run_full_pipeline(original_cdl_path: str = None,
     # ---- Stage 6: Generate output ----
     print("\n[Stage 6] Generating output files...")
 
-    with open(os.path.join(fixture_dir, 'buffer_original.json')) as f:
+    with open(layout_json_path) as f:
         orig_data = json.load(f)
-    with open(os.path.join(fixture_dir, 'buffer_target.json')) as f:
+    with open(target_json_path) as f:
         target_data = json.load(f)
 
     # Determine new nfin values from CDL diff
@@ -421,11 +449,10 @@ def run_full_pipeline(original_cdl_path: str = None,
     # ---- Validation: compare resized vs target ----
     print("\n[Validation] Comparing resized output vs target...")
 
-    if HAS_GDSTK:
+    if HAS_GDSTK and target_gds_path and os.path.exists(target_gds_path):
         from io_adapters.gds_io import compare_gds
         resized_gds = os.path.join(output_dir, 'buffer_resized.gds')
-        target_gds = os.path.join(fixture_dir, 'buffer_target.gds')
-        diff = compare_gds(resized_gds, target_gds,
+        diff = compare_gds(resized_gds, target_gds_path,
                            layers=['FIN', 'OD', 'POLY', 'LI', 'VIA0', 'M1'])
         mismatches = 0
         for layer, info in sorted(diff.items()):
@@ -458,5 +485,17 @@ def run_full_pipeline(original_cdl_path: str = None,
     print(f"\nAll output files in: {os.path.abspath(output_dir)}")
 
 
+def _build_arg_parser():
+    p = argparse.ArgumentParser(
+        description='Buffer fin-resize MVP pipeline.'
+    )
+    p.add_argument(
+        '--config', '-c', dest='site_config', default=None,
+        help='Path to site_config.yaml (default: tech/site_config.yaml)',
+    )
+    return p
+
+
 if __name__ == '__main__':
-    run_full_pipeline()
+    args = _build_arg_parser().parse_args()
+    run_full_pipeline(site_config_path=args.site_config)

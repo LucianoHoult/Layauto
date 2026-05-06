@@ -1,0 +1,52 @@
+# =============================================================
+# Site / run configuration — the only file you should edit
+# per-experiment in production.
+#
+# Composes the tech bundle (drc_rules + layer_map) with the
+# input/output paths for one pipeline run. Numbers live in
+# the referenced YAML files; this file just points to them.
+#
+# Paths can be absolute or relative to this file's directory.
+# `null` means "use parser default" or "skip optional input".
+# =============================================================
+
+# ---- Tech sources --------------------------------------------
+tech:
+  drc_rules:         drc_rules.yaml
+  layer_map:         layer_map.yaml
+  # Optional .layermap file from the foundry; if set, its
+  # (layer_number, datatype) entries override the `gds:` field
+  # of matching `layer_map.yaml` rows (other fields are kept).
+  layermap_override: null
+
+# ---- Run inputs ----------------------------------------------
+inputs:
+  # CDL pair drives the resize via diff_cdl()
+  original_cdl:   ../dummy/fixtures/buffer_original.cdl
+  modified_cdl:   ../dummy/fixtures/buffer_target.cdl
+  # Calibre SVDB queries (or production-environment equivalents)
+  device_query:   ../dummy/fixtures/calibre_device_query.json
+  net_query:      ../dummy/fixtures/calibre_net_query.json
+  # GDS-derived geometry pool (truth source for shape_pool)
+  bbox_by_layer:  ../dummy/fixtures/bbox_by_layer.json
+  # Optional richer JSON (full layout dict) — falls back to
+  # bbox_by_layer + BOUNDARY shape if null
+  layout_json:    ../dummy/fixtures/buffer_original.json
+  # Target-layout JSON for the validation diff at end of pipeline
+  target_json:    ../dummy/fixtures/buffer_target.json
+  # Optional target GDS for shape-by-shape comparison via gdstk
+  target_gds:     ../dummy/fixtures/buffer_target.gds
+
+# ---- Run outputs ---------------------------------------------
+output:
+  dir:            ../output
+
+# ---- Deferred to follow-up discussion ------------------------
+# calibre:
+#   svdb_dir:   ...
+#   drc_rules:  ...
+#   lvs_rules:  ...
+# virtuoso:
+#   lib_name:   ...
+#   cell_name:  ...
+#   view_name:  ...

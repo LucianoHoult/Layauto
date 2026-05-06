@@ -30,6 +30,19 @@ from tech.layer_map import LAYER_MAP
 from dummy.gds_writer import GdsWriter, rect_centered
 
 
+# =========================================================
+# Cell-template constants (dummy fixture only).
+#
+# These describe how the dummy generator builds the inverter layout —
+# they are not DRC rules, not foundry parameters, and not consumed by
+# any production code path. The production parser sees the cell
+# topology directly from the input GDS / Calibre device query (gate
+# count, NMOS-PMOS gap, etc.).
+# =========================================================
+NUM_GATE_SLOTS = 3   # gate pitches per cell (dummy_L + active + dummy_R)
+NP_GAP_FINS    = 3   # gap between NMOS and PMOS in fin pitches
+
+
 def generate_inverter_layout(nmos_nfin: int, pmos_nfin: int, config=None) -> dict:
     """
     Compute all shapes for the inverter layout.
@@ -60,8 +73,6 @@ def generate_inverter_layout(nmos_nfin: int, pmos_nfin: int, config=None) -> dic
     VIA0_HEIGHT = config.VIA0_HEIGHT
     OD_EXTENSION_BEYOND_FIN = config.OD_EXTENSION_BEYOND_FIN
     POLY_EXTENSION_BEYOND_OD = config.POLY_EXTENSION_BEYOND_OD
-    NP_GAP_FINS = config.NP_GAP_FINS
-    NUM_GATE_SLOTS = config.NUM_GATE_SLOTS
     VIA0_ENC_BY_LI_Y = config.VIA0_ENC_BY_LI_Y
 
     shapes = {layer: [] for layer in LAYER_MAP}
