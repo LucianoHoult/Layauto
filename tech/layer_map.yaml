@@ -1,0 +1,106 @@
+# =============================================================
+# Layer definition table.
+#
+# Schema (each entry under `layers:`):
+#   name         - layer name string (referenced by drc rules,
+#                  the parser, the solver, the derivator)
+#   gds          - [layer_number, datatype] OR null. Layers without a
+#                  GDS pair are tier-only markers — they exist in the
+#                  tier dispatch table but no fixture geometry uses
+#                  them yet.
+#   tier         - A | B | C1 | C2  (architecture roadmap §B):
+#                    A  = 1D track  (CSP TrackSegment)
+#                    B  = 2D cell   (CSP CellOccupancy)
+#                    C1 = derived   (drc_derivator output)
+#                    C2 = annotation (direct edit, never CSP)
+#   orientation  - H | V | null   (null = point/area, no track axis)
+#   role         - fin | poly | interconnect | via | cut | diffusion |
+#                  well | boundary | marker | annotation
+#   connects     - [lower_layer, upper_layer]  (for vias only)
+#   derived      - true   (synthesized by drc_derivator; never edited
+#                  directly by L3 macros)
+#   color        - [r, g, b, alpha] for visualization (optional)
+#
+# Style modeled after the LEF tech-section + KLayout .lyp record-per-
+# layer conventions so a foundry .layermap or display.drf can later
+# be machine-imported into this format.
+# =============================================================
+
+layers:
+  # ----- A-tier (1D track, CSP-modelled) ----------------------
+  - name: FIN
+    gds:         [1, 0]
+    tier:        A
+    orientation: H
+    role:        fin
+    color:       [0.2, 0.8, 0.2, 0.5]
+
+  - name: POLY
+    gds:         [2, 0]
+    tier:        A
+    orientation: V
+    role:        poly
+    color:       [0.8, 0.2, 0.2, 0.6]
+
+  - name: LI
+    gds:         [3, 0]
+    tier:        A
+    orientation: V
+    role:        interconnect
+    color:       [0.2, 0.2, 0.9, 0.5]
+
+  - name: M1
+    gds:         [5, 0]
+    tier:        A
+    orientation: H
+    role:        interconnect
+    color:       [0.8, 0.4, 0.0, 0.5]
+
+  # ----- B-tier (2D cell, CSP-modelled) -----------------------
+  - name: VIA0
+    gds:         [4, 0]
+    tier:        B
+    orientation: null
+    role:        via
+    connects:    [LI, M1]
+    color:       [0.9, 0.9, 0.0, 0.8]
+
+  - name: OD
+    gds:         [6, 0]
+    tier:        B
+    orientation: null
+    role:        diffusion
+    color:       [0.2, 0.6, 0.2, 0.2]
+
+  # B-tier cut layers (no fixture geometry yet — tier markers)
+  - { name: CPO,     gds: null, tier: B, orientation: null, role: cut }
+  - { name: M0_CUT,  gds: null, tier: B, orientation: null, role: cut }
+  - { name: FIN_CUT, gds: null, tier: B, orientation: null, role: cut }
+
+  # ----- C1-tier (derived markings) ---------------------------
+  - name: NWELL
+    gds:         [7, 0]
+    tier:        C1
+    orientation: null
+    role:        well
+    derived:     true
+    color:       [0.6, 0.6, 0.6, 0.1]
+
+  - name: BOUNDARY
+    gds:         [10, 0]
+    tier:        C1
+    orientation: null
+    role:        boundary
+    derived:     true
+    color:       [0.5, 0.5, 0.5, 0.3]
+
+  # C1 markers without fixture geometry (tier markers only)
+  - { name: VT,  gds: null, tier: C1, orientation: null, role: marker, derived: true }
+  - { name: PP,  gds: null, tier: C1, orientation: null, role: marker, derived: true }
+  - { name: NP,  gds: null, tier: C1, orientation: null, role: marker, derived: true }
+  - { name: DNW, gds: null, tier: C1, orientation: null, role: marker, derived: true }
+
+  # ----- C2-tier (editable annotation, never CSP) -------------
+  - { name: DIODE, gds: null, tier: C2, orientation: null, role: annotation }
+  - { name: ESD,   gds: null, tier: C2, orientation: null, role: annotation }
+  - { name: TEXT,  gds: null, tier: C2, orientation: null, role: annotation }

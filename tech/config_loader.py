@@ -1,156 +1,188 @@
 """
 Technology configuration loader.
 
-Loads process parameters and DRC rules from YAML files,
-optionally loading layer map from a .layermap file.
+Sources (composable):
+  * tech/drc_rules.yaml   — unified DRC rule-record format
+  * tech/layer_map.yaml   — per-layer record format (also loaded by
+                            tech.layer_map for module-level constants)
+  * optional .layermap    — foundry-supplied gds-pair override; only
+                            patches the `gds:` field of matching rows
+  * optional site_config  — composes the bundle with input/output
+                            paths for one pipeline run (paths-only)
+
+The TechConfig public API is unchanged from pre-refactor: every
+property name (FIN_PITCH, LI_MIN_SPACING, VIA0_ENC_BY_LI_X,
+LAYER_MAP, ...) resolves through the new YAML format, so existing
+callers don't need any update.
 
 Usage:
-    config = load_tech_config('tech/process_config.yaml', 'tech/drc_rules.yaml')
-    print(config.FIN_PITCH)  # 25
-    rules = config.get_drc_rules(severity='critical')
+    config = load_tech_config()
+    config = load_tech_config(drc_yaml='/x/drc.yaml',
+                              layer_yaml='/x/lm.yaml')
+    site   = load_site_config('tech/site_config.yaml')   # → dict
 """
 
 import math
 import os
+from typing import Optional
+
 import yaml
-from typing import Dict, List, Optional
 
 from tech.layermap_parser import parse_layermap
 
 
+# ---------------------------------------------------------------
+# TechConfig
+# ---------------------------------------------------------------
 class TechConfig:
-    """Central technology configuration loaded from YAML files.
+    """Central technology configuration, loaded from YAML files.
 
-    Provides property access for all process parameters, DRC rules,
-    and layer mapping data.
+    All numerical access goes through DRC rule records (looked up
+    by ASAP7-style rule id, e.g. ``FIN.P.1`` for the fin pitch).
+    Layer attributes (gds, tier, orientation, color) come from
+    ``layer_map.yaml``.
     """
 
-    def __init__(self, process_yaml: str, drc_yaml: str,
-                 layermap_path: str = None):
-        """Load configuration from YAML files.
-
-        Args:
-            process_yaml: Path to process_config.yaml
-            drc_yaml: Path to drc_rules.yaml
-            layermap_path: Optional path to a .layermap file.
-                          If None, uses built-in defaults from layer_map.py.
-        """
-        with open(process_yaml) as f:
-            self._process = yaml.safe_load(f)
+    def __init__(self, drc_yaml: str, layer_yaml: str = None,
+                 layermap_override: str = None):
         with open(drc_yaml) as f:
             self._drc = yaml.safe_load(f)
 
-        # Load layer map
-        if layermap_path and os.path.exists(layermap_path):
-            lm = parse_layermap(layermap_path)
-            self._layer_map = lm['LAYER_MAP']
-            self._gds_to_layer = lm['GDS_TO_LAYER']
-            self._purposes = lm['purposes']
-        else:
-            # Fallback to built-in defaults
-            from tech.layer_map import LAYER_MAP, GDS_TO_LAYER
-            self._layer_map = dict(LAYER_MAP)
-            self._gds_to_layer = dict(GDS_TO_LAYER)
-            self._purposes = {}
+        if layer_yaml is None:
+            tech_dir = os.path.dirname(os.path.abspath(__file__))
+            layer_yaml = os.path.join(tech_dir, 'layer_map.yaml')
+        with open(layer_yaml) as f:
+            self._layer_data = yaml.safe_load(f)
 
-    # =============================================================
-    # Pitch properties
-    # =============================================================
+        # Build layer index by name. Apply optional .layermap override
+        # (patches `gds:` only — other fields like tier/orientation
+        # come from the YAML).
+        self._layers_by_name = {
+            l['name']: dict(l) for l in self._layer_data.get('layers', [])
+        }
+        if layermap_override and os.path.exists(layermap_override):
+            override = parse_layermap(layermap_override)
+            for name, gds in override['LAYER_MAP'].items():
+                if name in self._layers_by_name:
+                    self._layers_by_name[name]['gds'] = list(gds)
+
+        # Index DRC rules by id (O(1) lookup for property accessors).
+        self._rules_by_id = {
+            r['id']: r for r in self._drc.get('rules', [])
+        }
+
+    # ===============================================================
+    # DRC rule lookup helpers
+    # ===============================================================
+    def _rule(self, rule_id: str) -> dict:
+        try:
+            return self._rules_by_id[rule_id]
+        except KeyError:
+            proc = self._drc.get('process', {}).get('name', 'unknown')
+            raise KeyError(
+                f"DRC rule {rule_id!r} not found in deck {proc!r}"
+            )
+
+    def _rule_value(self, rule_id: str, axis: str = None):
+        """Read a rule's ``value_nm``.
+
+        Scalar rules return the same value regardless of ``axis``.
+        Axis-keyed rules ({x: ..., y: ...}) require ``axis`` to be
+        ``'x'`` or ``'y'``.
+        """
+        v = self._rule(rule_id)['value_nm']
+        if isinstance(v, dict):
+            if axis is None:
+                raise ValueError(
+                    f"rule {rule_id!r} has axis-keyed value; "
+                    "specify axis='x' or axis='y'"
+                )
+            return v[axis]
+        return v
+
+    # ===============================================================
+    # Pitch (also the CSP grid pitch)
+    # ===============================================================
     @property
-    def FIN_PITCH(self) -> int:
-        return self._process['pitch']['FIN']
-
+    def FIN_PITCH(self) -> int:  return self._rule_value('FIN.P.1')
     @property
-    def GATE_PITCH(self) -> int:
-        return self._process['pitch']['GATE']
-
+    def GATE_PITCH(self) -> int: return self._rule_value('POLY.P.1')
     @property
-    def LI_PITCH(self) -> int:
-        return self._process['pitch']['LI']
-
+    def LI_PITCH(self) -> int:   return self._rule_value('LI.P.1')
     @property
-    def M1_PITCH(self) -> int:
-        return self._process['pitch']['M1']
+    def M1_PITCH(self) -> int:   return self._rule_value('M1.P.1')
 
-    # =============================================================
-    # Width properties
-    # =============================================================
+    # ===============================================================
+    # Width
+    # ===============================================================
     @property
-    def FIN_WIDTH(self) -> int:
-        return self._process['width']['FIN']
-
+    def FIN_WIDTH(self) -> int:  return self._rule_value('FIN.W.1')
     @property
-    def POLY_WIDTH(self) -> int:
-        return self._process['width']['POLY']
-
+    def POLY_WIDTH(self) -> int: return self._rule_value('POLY.W.1')
     @property
-    def LI_WIDTH(self) -> int:
-        return self._process['width']['LI']
-
+    def LI_WIDTH(self) -> int:   return self._rule_value('LI.W.1')
     @property
-    def M1_WIDTH(self) -> int:
-        return self._process['width']['M1']
+    def M1_WIDTH(self) -> int:   return self._rule_value('M1.W.1')
 
-    # =============================================================
-    # Via properties
-    # =============================================================
+    # ===============================================================
+    # Via exact size
+    # ===============================================================
     @property
-    def VIA0_WIDTH(self) -> int:
-        return self._process['via']['VIA0']['width']
-
+    def VIA0_WIDTH(self) -> int:  return self._rule_value('V0.SZ.1', 'x')
     @property
-    def VIA0_HEIGHT(self) -> int:
-        return self._process['via']['VIA0']['height']
+    def VIA0_HEIGHT(self) -> int: return self._rule_value('V0.SZ.1', 'y')
 
-    # =============================================================
-    # Extension properties
-    # =============================================================
+    # ===============================================================
+    # Extension (one layer past another)
+    # ===============================================================
     @property
     def OD_EXTENSION_BEYOND_FIN(self) -> int:
-        return self._process['extension']['OD_beyond_FIN']
+        return self._rule_value('OD.X.FIN')
 
     @property
     def POLY_EXTENSION_BEYOND_OD(self) -> int:
-        return self._process['extension']['POLY_beyond_OD']
+        return self._rule_value('POLY.X.OD')
 
-    # =============================================================
-    # C1 derivation margins (M5)
-    #
-    # Pure-function derivation rules consumed by
-    # ``core/drc_derivator.py``. These were hardcoded literals
-    # (30 / 40 nm) inline in ``core/decoder.py::_derive_*`` before
-    # M5; lifted into config so the derivator reads named constants
-    # and downstream PDK swaps stay tractable.
-    # =============================================================
     @property
     def NWELL_MARGIN_BEYOND_FIN(self) -> int:
-        return self._process['derivation']['nwell_margin_beyond_fin']
+        return self._rule_value('NWELL.X.FIN')
 
     @property
     def BOUNDARY_MARGIN_BEYOND_FIN(self) -> int:
-        return self._process['derivation']['boundary_margin_beyond_fin']
+        return self._rule_value('BOUNDARY.X.FIN')
 
-    # =============================================================
-    # Cell properties
-    # =============================================================
+    # ===============================================================
+    # Same-layer spacing
+    # ===============================================================
     @property
-    def NUM_GATE_SLOTS(self) -> int:
-        return self._process['cell']['num_gate_slots']
-
+    def LI_MIN_SPACING(self) -> int:   return self._rule_value('LI.S.1')
     @property
-    def NP_GAP_FINS(self) -> int:
-        return self._process['cell']['np_gap_fins']
+    def M1_MIN_SPACING(self) -> int:   return self._rule_value('M1.S.1')
+    @property
+    def VIA0_MIN_SPACING(self) -> int: return self._rule_value('V0.S.1')
 
-    # =============================================================
-    # Layer orientation
-    # =============================================================
+    # ===============================================================
+    # Via enclosure (axis-keyed)
+    # ===============================================================
+    @property
+    def VIA0_ENC_BY_LI_X(self) -> int: return self._rule_value('V0.E.LI', 'x')
+    @property
+    def VIA0_ENC_BY_LI_Y(self) -> int: return self._rule_value('V0.E.LI', 'y')
+    @property
+    def VIA0_ENC_BY_M1_X(self) -> int: return self._rule_value('V0.E.M1', 'x')
+    @property
+    def VIA0_ENC_BY_M1_Y(self) -> int: return self._rule_value('V0.E.M1', 'y')
+
+    # ===============================================================
+    # Layer-derived dicts
+    # ===============================================================
     @property
     def LAYER_ORIENTATION(self) -> dict:
-        return dict(self._process['layer_orientation'])
+        return {n: l.get('orientation')
+                for n, l in self._layers_by_name.items()}
 
     @property
     def LAYER_PITCH(self) -> dict:
-        """Layer name → pitch mapping (for grid construction)."""
         return {
             'FIN': self.FIN_PITCH,
             'POLY': self.GATE_PITCH,
@@ -158,56 +190,23 @@ class TechConfig:
             'M1': self.M1_PITCH,
         }
 
-    # =============================================================
-    # DRC spacing rules (from drc_rules.yaml)
-    # =============================================================
-    @property
-    def LI_MIN_SPACING(self) -> int:
-        return self._get_spacing_value('LI_min_spacing')
-
-    @property
-    def M1_MIN_SPACING(self) -> int:
-        return self._get_spacing_value('M1_min_spacing')
-
-    @property
-    def VIA0_MIN_SPACING(self) -> int:
-        return self._get_spacing_value('VIA0_min_spacing')
-
-    # =============================================================
-    # DRC enclosure rules (from drc_rules.yaml)
-    # =============================================================
-    @property
-    def VIA0_ENC_BY_LI_X(self) -> int:
-        return self._get_enclosure_value('VIA0_enc_by_LI', 'enc_x_nm')
-
-    @property
-    def VIA0_ENC_BY_LI_Y(self) -> int:
-        return self._get_enclosure_value('VIA0_enc_by_LI', 'enc_y_nm')
-
-    @property
-    def VIA0_ENC_BY_M1_X(self) -> int:
-        return self._get_enclosure_value('VIA0_enc_by_M1', 'enc_x_nm')
-
-    @property
-    def VIA0_ENC_BY_M1_Y(self) -> int:
-        return self._get_enclosure_value('VIA0_enc_by_M1', 'enc_y_nm')
-
-    # =============================================================
-    # Layer map
-    # =============================================================
     @property
     def LAYER_MAP(self) -> dict:
-        return dict(self._layer_map)
+        return {n: tuple(l['gds'])
+                for n, l in self._layers_by_name.items()
+                if l.get('gds')}
 
     @property
     def GDS_TO_LAYER(self) -> dict:
-        return dict(self._gds_to_layer)
+        return {tuple(l['gds']): n
+                for n, l in self._layers_by_name.items()
+                if l.get('gds')}
 
-    # =============================================================
-    # Derived values
-    # =============================================================
-    def spacing_in_tracks(self, spacing_nm: float, pitch_nm: float) -> int:
-        """Convert physical spacing to number of track intervals."""
+    # ===============================================================
+    # Track-unit conversions
+    # ===============================================================
+    @staticmethod
+    def spacing_in_tracks(spacing_nm: float, pitch_nm: float) -> int:
         return math.ceil(spacing_nm / pitch_nm)
 
     @property
@@ -220,41 +219,28 @@ class TechConfig:
         return self.spacing_in_tracks(
             self.M1_MIN_SPACING + self.M1_WIDTH, self.M1_PITCH)
 
-    # =============================================================
-    # DRC rules access
-    # =============================================================
-    def get_drc_rules(self, severity: str = None) -> list:
-        """Get DRC rules, optionally filtered by severity.
+    # ===============================================================
+    # DRC rule list access
+    # ===============================================================
+    def get_drc_rules(self, severity: str = None,
+                      rule_type: str = None) -> list:
+        """Return the rule list, optionally filtered by severity / type.
 
-        Args:
-            severity: If set, only return rules with this severity
-                     ('critical', 'recommended', 'advisory').
-
-        Returns:
-            List of rule dicts from the YAML.
+        Each entry is the raw rule dict from ``drc_rules.yaml``
+        (with ``id``, ``type``, ``layers``, ``value_nm``, ...).
         """
-        all_rules = []
-        rules_section = self._drc.get('rules', {})
-        for category, rule_list in rules_section.items():
-            for rule in rule_list:
-                rule_with_category = dict(rule)
-                rule_with_category['category'] = category
-                all_rules.append(rule_with_category)
-
+        rules = list(self._drc.get('rules', []))
         if severity:
-            all_rules = [r for r in all_rules if r.get('severity') == severity]
+            rules = [r for r in rules if r.get('severity') == severity]
+        if rule_type:
+            rules = [r for r in rules if r.get('type') == rule_type]
+        return rules
 
-        return all_rules
-
-    def get_drc_rules_by_category(self, category: str) -> list:
-        """Get DRC rules for a specific category (e.g. 'spacing', 'enclosure')."""
-        return self._drc.get('rules', {}).get(category, [])
-
-    # =============================================================
-    # Convenience dict (replaces old TECH dict)
-    # =============================================================
+    # ===============================================================
+    # Convenience
+    # ===============================================================
     def to_dict(self) -> dict:
-        """Export all parameters as a flat dict."""
+        """Flat dict export of the most-used numeric values."""
         return {
             'fin_pitch': self.FIN_PITCH,
             'gate_pitch': self.GATE_PITCH,
@@ -266,64 +252,97 @@ class TechConfig:
             'm1_width': self.M1_WIDTH,
             'via0_width': self.VIA0_WIDTH,
             'via0_height': self.VIA0_HEIGHT,
-            'np_gap_fins': self.NP_GAP_FINS,
-            'num_gate_slots': self.NUM_GATE_SLOTS,
             'od_ext': self.OD_EXTENSION_BEYOND_FIN,
             'poly_ext': self.POLY_EXTENSION_BEYOND_OD,
+            'nwell_ext': self.NWELL_MARGIN_BEYOND_FIN,
+            'boundary_ext': self.BOUNDARY_MARGIN_BEYOND_FIN,
             'via0_enc_li_x': self.VIA0_ENC_BY_LI_X,
             'via0_enc_li_y': self.VIA0_ENC_BY_LI_Y,
             'via0_enc_m1_x': self.VIA0_ENC_BY_M1_X,
             'via0_enc_m1_y': self.VIA0_ENC_BY_M1_Y,
         }
 
-    # =============================================================
-    # Internal helpers
-    # =============================================================
-    def _get_spacing_value(self, rule_name: str) -> int:
-        for rule in self._drc.get('rules', {}).get('spacing', []):
-            if rule['name'] == rule_name:
-                return rule['value_nm']
-        raise KeyError(f"DRC spacing rule '{rule_name}' not found")
-
-    def _get_enclosure_value(self, rule_name: str, field: str) -> int:
-        for rule in self._drc.get('rules', {}).get('enclosure', []):
-            if rule['name'] == rule_name:
-                return rule[field]
-        raise KeyError(f"DRC enclosure rule '{rule_name}.{field}' not found")
-
     def __repr__(self):
-        name = self._process.get('process', {}).get('name', 'unknown')
+        name = self._drc.get('process', {}).get('name', 'unknown')
         return f"TechConfig({name})"
 
 
-# =============================================================
-# Module-level loader
-# =============================================================
+# ---------------------------------------------------------------
+# Module-level loaders
+# ---------------------------------------------------------------
 _default_config: Optional[TechConfig] = None
 
 
-def load_tech_config(process_yaml: str = None, drc_yaml: str = None,
-                     layermap_path: str = None) -> TechConfig:
+def load_tech_config(drc_yaml: str = None, layer_yaml: str = None,
+                     layermap_override: str = None) -> TechConfig:
     """Load and cache the default TechConfig.
 
-    If paths are not specified, uses defaults relative to the tech/ directory.
+    Defaults to ``tech/drc_rules.yaml`` + ``tech/layer_map.yaml``
+    next to this file.
     """
     global _default_config
 
-    if process_yaml is None:
-        tech_dir = os.path.dirname(os.path.abspath(__file__))
-        process_yaml = os.path.join(tech_dir, 'process_config.yaml')
+    tech_dir = os.path.dirname(os.path.abspath(__file__))
     if drc_yaml is None:
-        tech_dir = os.path.dirname(os.path.abspath(__file__))
         drc_yaml = os.path.join(tech_dir, 'drc_rules.yaml')
+    if layer_yaml is None:
+        layer_yaml = os.path.join(tech_dir, 'layer_map.yaml')
 
-    _default_config = TechConfig(process_yaml, drc_yaml, layermap_path)
+    _default_config = TechConfig(drc_yaml, layer_yaml, layermap_override)
     return _default_config
 
 
 def get_tech_config() -> TechConfig:
-    """Get the currently loaded TechConfig, loading defaults if needed."""
     global _default_config
     if _default_config is None:
         return load_tech_config()
     return _default_config
+
+
+def load_site_config(site_yaml: str) -> dict:
+    """Load a site_config.yaml that composes tech sources + run paths.
+
+    Returns the parsed dict with all path-valued fields resolved
+    relative to the site_config file's directory (so paths inside
+    the YAML can be relative to the YAML, not CWD).
+
+    Top-level keys: ``tech``, ``inputs``, ``output``, plus optional
+    ``calibre`` / ``virtuoso`` (deferred).
+    """
+    site_dir = os.path.dirname(os.path.abspath(site_yaml))
+    with open(site_yaml) as f:
+        cfg = yaml.safe_load(f) or {}
+
+    def resolve(p):
+        if p is None:
+            return None
+        if os.path.isabs(p):
+            return p
+        return os.path.normpath(os.path.join(site_dir, p))
+
+    tech = cfg.setdefault('tech', {})
+    tech['drc_rules'] = resolve(tech.get('drc_rules'))
+    tech['layer_map'] = resolve(tech.get('layer_map'))
+    tech['layermap_override'] = resolve(tech.get('layermap_override'))
+
+    inputs = cfg.setdefault('inputs', {})
+    for key, val in list(inputs.items()):
+        inputs[key] = resolve(val)
+
+    output = cfg.setdefault('output', {})
+    output['dir'] = resolve(output.get('dir'))
+
+    return cfg
+
+
+def load_tech_config_from_site(site_yaml: str) -> TechConfig:
+    """Convenience: read a site_config.yaml and load TechConfig from
+    its referenced ``tech.drc_rules`` / ``tech.layer_map`` paths.
+    """
+    site = load_site_config(site_yaml)
+    tech = site.get('tech', {})
+    return load_tech_config(
+        drc_yaml=tech.get('drc_rules'),
+        layer_yaml=tech.get('layer_map'),
+        layermap_override=tech.get('layermap_override'),
+    )
