@@ -342,11 +342,14 @@ def load_site_config(site_yaml: str) -> dict:
     calibre['nxref_temp']            = resolve(calibre.get('nxref_temp'))
     calibre['net_names_txt']         = resolve(calibre.get('net_names_txt'))
     calibre['device_info_dir']       = resolve(calibre.get('device_info_dir'))
+    calibre['net_shapes_dir']        = resolve(calibre.get('net_shapes_dir'))
     calibre['dummy_ixref']           = resolve(calibre.get('dummy_ixref'))
     calibre['dummy_nxref']           = resolve(calibre.get('dummy_nxref'))
     calibre['dummy_net_names']       = resolve(calibre.get('dummy_net_names'))
     calibre['dummy_device_info_dir'] = resolve(
         calibre.get('dummy_device_info_dir'))
+    calibre['dummy_net_shapes_dir']  = resolve(
+        calibre.get('dummy_net_shapes_dir'))
     calibre.setdefault('mode', 'dummy')
     calibre.setdefault('timeout_s', 300)
 

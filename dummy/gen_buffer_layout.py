@@ -674,6 +674,85 @@ def generate_calibre_device_info(layout_data: dict,
     print(f"  device_info_{layout_inst}.txt written: {filename}")
 
 
+# Layers reported by the dummy ``NET SHAPES`` query, in the order
+# Calibre would emit them. GDS layer names are reused per the user's
+# 1.5 spec: "LVS-derived-shape layer names can be kept the same with
+# gds … only contain the actual/effective region". Layer-name mapping
+# / cut+extension trimming will be addressed in 1.6.
+NET_SHAPES_LAYERS = ['LI', 'VIA0', 'M1']
+
+
+def generate_calibre_net_shapes(layout_data: dict,
+                                 lvs_name: str,
+                                 filename: str,
+                                 timestamp: str = 'May 07 03:00:00 2026'):
+    """Simulate Calibre HDB ``NET SHAPES <lvs_name>`` response.
+
+    Writes the verbatim block Calibre would stream to stdout between
+    ``Net_Shapes <precision>`` and ``END OF RESPONSE``. Layers reported
+    are :data:`NET_SHAPES_LAYERS` (LI / VIA0 / M1); shapes are sourced
+    from ``layout_data['nets'][lvs_name]['shapes']`` filtered by layer.
+
+    For our dummy cell ``lvs_name == schematic_name`` for every net
+    (no internal nets are renumbered), so the lookup against
+    ``layout_data['nets']`` works directly.
+    """
+    if lvs_name not in layout_data['nets']:
+        raise ValueError(
+            f"generate_calibre_net_shapes: net {lvs_name!r} not in "
+            f"layout_data['nets'] (have: {sorted(layout_data['nets'])!r})"
+        )
+
+    # Group net shapes by layer, restricted to NET_SHAPES_LAYERS.
+    # Walk layout_data['shapes'][layer] (the truth source) and pick
+    # the rows whose ``net`` field matches.
+    by_layer = {ly: [] for ly in NET_SHAPES_LAYERS}
+    for ly in NET_SHAPES_LAYERS:
+        for s in layout_data['shapes'].get(ly, []):
+            if s.get('net') == lvs_name:
+                by_layer[ly].append(s)
+    # Drop layers with no shapes — Calibre wouldn't emit them.
+    layer_blocks = [(ly, by_layer[ly]) for ly in NET_SHAPES_LAYERS
+                    if by_layer[ly]]
+    if not layer_blocks:
+        raise ValueError(
+            f"generate_calibre_net_shapes: net {lvs_name!r} has no "
+            f"shapes on any of {NET_SHAPES_LAYERS!r}"
+        )
+
+    nm_to_unit = DEVICE_INFO_PRECISION / 1000   # 1 nm = 20 unit
+
+    def _verts(s):
+        x1, y1, x2, y2 = (int(round(s['x1'] * nm_to_unit)),
+                          int(round(s['y1'] * nm_to_unit)),
+                          int(round(s['x2'] * nm_to_unit)),
+                          int(round(s['y2'] * nm_to_unit)))
+        # User spec: pairs are (y, x); listed LL → LR → UR → UL.
+        return [(y1, x1), (y2, x1), (y2, x2), (y1, x2)]
+
+    n_metadata = 1   # just the seed layer name (NET SHAPES has no
+                     # device_type_number / pin_nets analog).
+
+    first_layer = layer_blocks[0][0]
+
+    with open(filename, 'w') as f:
+        f.write(f'Net_Shapes {DEVICE_INFO_PRECISION}\n')
+        f.write('Info:\n')
+        f.write(f'0 0 {n_metadata} {timestamp}\n')
+        f.write(f'{first_layer}\n')
+        for li, (layer, shapes) in enumerate(layer_blocks):
+            if li > 0:
+                f.write(f'{layer}\n')
+            f.write(f'{len(shapes)} 1 0 {timestamp}\n')
+            for si, s in enumerate(shapes, start=1):
+                verts = _verts(s)
+                f.write(f'p {si} {len(verts)}\n')
+                for y, x in verts:
+                    f.write(f'{y} {x}\n')
+        f.write('END OF RESPONSE\n')
+    print(f"  net_shapes_{lvs_name}.txt written: {filename}")
+
+
 # =========================================================
 # Main: generate all dummy fixtures
 # =========================================================
@@ -738,6 +817,15 @@ def generate_all_fixtures(output_dir: str,
         generate_calibre_device_info(
             orig, layout_inst,
             os.path.join(output_dir, f'device_info_{layout_inst}.txt'),
+        )
+
+    # NET SHAPES (per-net LVS-derived metal/via bboxes). One file per
+    # net, keyed by its LVS name. Inverter has no internal nets, so
+    # lvs_name == schematic_name for every net here.
+    for net_name in orig['nets']:
+        generate_calibre_net_shapes(
+            orig, net_name,
+            os.path.join(output_dir, f'net_shapes_{net_name}.txt'),
         )
 
     # bbox_by_layer: GDS round-trip (truth source is GDS, not Python dict)

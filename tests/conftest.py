@@ -66,3 +66,13 @@ def device_info_M0_path():
 @pytest.fixture
 def device_info_M1_path():
     return os.path.join(FIXTURE_DIR, 'device_info_M1.txt')
+
+
+@pytest.fixture
+def net_shapes_OUT_path():
+    return os.path.join(FIXTURE_DIR, 'net_shapes_OUT.txt')
+
+
+@pytest.fixture
+def net_shapes_VDD_path():
+    return os.path.join(FIXTURE_DIR, 'net_shapes_VDD.txt')
