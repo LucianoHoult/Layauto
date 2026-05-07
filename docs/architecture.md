@@ -21,7 +21,7 @@ Entry point: `pipeline/run_mvp.py::run_full_pipeline(site_config_path)`.
 | Stage | What it does | Implementation |
 |-------|--------------|----------------|
 | 1. Diff CDL | Parses original + modified `.cdl`; finds parameter-level differences (today: `nfin`) and emits `(inst, param, old, new)` tuples that drive macro dispatch. | `io_adapters/cdl_parser.py::parse_cdl` + `diff_cdl` |
-| 1.5. LVS extract (iXref) | Either spawns `calibre -query <svdb_dir>` and streams `INSTANCE XREF WRITE` over stdin (`mode=calibre`) or copies a pre-staged `dummy/fixtures/iXref.temp` (`mode=dummy`, default). Parses the SVDB ixf format into `{cell, devices, header_lines}` and writes `output/ixref.yaml` as a saved-for-later middle file. Not consumed by Stage 2 yet. | `io_adapters/calibre_query.py::extract_ixref` |
+| 1.5. LVS extract (iXref + nXref + NET NAMES) | Either spawns `calibre -query <svdb_dir>` and streams `INSTANCE XREF WRITE` / `NET XREF WRITE` / `NET NAMES` over stdin (`mode=calibre`) or copies pre-staged `dummy/fixtures/{iXref,nXref}.temp` + `net_names.txt` (`mode=dummy`, default). Parses each format and writes `output/ixref.yaml` (devices) plus `output/net_xref.yaml` (joined `schematic_name → lvs_name → lvs_index`) as saved-for-later middle files. Not consumed by Stage 2 yet. | `io_adapters/calibre_query.py::extract_ixref`, `extract_net_xref` |
 | 2. Build `LayoutModel` + `MultiLayerGrid` | Parses Calibre device + net JSONs and the bbox-by-layer dump; constructs the geometric `shape_pool` first, then applies LVS as an annotation overlay; builds a per-layer `MultiLayerGrid` (A-tier track grids + B-tier cell grids). | `io_adapters/parser.py::build_layout_model` |
 | 3. Set up CSP engine | Registers DRC constraint templates, initialises per-cell domains for every CSP-modelled layer (LI / M1 + the B-tier OD / VIA0). | `core/solver.py::LayoutSolver.setup_engine` |
 | 4. Load existing layout into CSP | Walks every `TrackSegment` and B-tier cell from stage 2; stamps each cell as `FIXED` so propagation runs against existing geometry. Then projects unannotated shapes as `BLOCKAGE`. | `core/solver.py::load_existing_layout`, `load_b_tier_cells_into_engine`, `project_unannotated_blockages` |
@@ -346,6 +346,41 @@ Producer (production): `io_adapters/calibre_query.py::run_calibre_ixref` spawns 
 
 Consumer: `parse_ixref` returns ``{cell, devices, header_lines}``; ``write_ixref_yaml`` serializes the same structure as ``output/ixref.yaml`` (also committed at `dummy/fixtures/ixref.yaml` as a byte-golden reference). The middle file is reserved for future LVS feedback closure (M7) — net-equivalence overrides for swapped S/D, layout-vs-source device-identity reconciliation. Stage 2's `build_layout_model` does not consume it today.
 
+### `nXref.temp`, `net_names.txt`, and `net_xref.yaml`
+
+Calibre HDB ``NET XREF WRITE`` writes an nxf file mirroring the iXref structure but at net granularity:
+
+```
+# SVDB: Net Cross Reference (nxf) (File format 1)
+# SVDB: ...
+# SVDB: End of header.
+% INV_N5_P7 4 INV_N5_P7 4
+0 VDD 0 VDD
+0 IN  0 IN
+0 2   0 net9          <- LVS renumbered an unnamed schematic net
+```
+
+The cell-summary row carries a leading ``%`` per the spec; net rows are ``<layout_idx> <layout_net> <source_idx> <source_net>``. When schematic and layout names match (power / top-level pins) both columns coincide; LVS-renumbered internal nets surface as numeric layout names mapped to schematic-side strings.
+
+The companion ``NET NAMES`` query streams its response over stdout (Calibre never writes a file) — Layauto captures the bounded ``Net_Names ... END OF RESPONSE`` block and persists it as `output/net_names.txt`:
+
+```
+Net_Names 20000
+Nets:
+0 0 4 May 07 03:00:00 2026
+IN
+OUT
+VSS
+VDD
+END OF RESPONSE
+```
+
+Net rows are 1-indexed: position 1 → IN, position 2 → OUT, etc.
+
+Producers: `run_calibre_nxref` (NET XREF) and `run_calibre_net_names` (NET NAMES) for production; `generate_calibre_nxref` + `generate_calibre_net_names` for dummy regen. Dummy fixtures live at `dummy/fixtures/{nXref.temp, net_names.txt}`.
+
+Consumer: `parse_nxref` + `parse_net_names` are joined by `join_net_xref` into ``{cell, nets: [{schematic_name, lvs_name, lvs_index}, ...]}``; `write_net_xref_yaml` emits this as `output/net_xref.yaml` (committed reference at `dummy/fixtures/net_xref.yaml`). The middle file is reserved for the same M7 LVS feedback closure as `ixref.yaml`. Stage 2's `build_layout_model` does not consume it today.
+
 ## 10. Production integration model
 
 The `core/` directory does not change for production. Integration touches three seams: tech bundle, IO adapters, and tooling scripts.
@@ -363,7 +398,7 @@ The single editable file is `tech/site_config.yaml` (§ 6). It points at `drc_ru
 
 - **`scripts/virtuoso_apply_edit.il`** — SKILL placeholder. Production needs real `_removeShapeByBBox` / `_resizeShapeByBBox` implementations bound to the foundry PDK. See [`backlog.md`](backlog.md) § M7.
 - **`scripts/calibre_run_drc.sh` / `calibre_run_lvs.sh`** — production needs the actual `calibre` invocation lines uncommented and parameterised.
-- **iXref query (Stage 1.5) — landed 2026-05-07.** `io_adapters/calibre_query.py::run_calibre_ixref` runs the `calibre -query <svdb_dir>` subprocess for real (full Popen + stdin scripting + timeout + missing-binary diagnostics). The dummy/real switch lives in `tech/site_config.yaml::calibre.mode` (CLI override: `--lvs-mode {dummy,calibre}`). Replaces the previous shell-script seam.
+- **iXref + nXref + NET NAMES query (Stage 1.5) — landed 2026-05-07.** `io_adapters/calibre_query.py` runs the `calibre -query <svdb_dir>` subprocess for real (full Popen + stdin scripting + timeout + missing-binary diagnostics) for `INSTANCE XREF WRITE`, `NET XREF WRITE`, and `NET NAMES`. The dummy/real switch lives in `tech/site_config.yaml::calibre.mode` (CLI override: `--lvs-mode {dummy,calibre}`). Replaces the previous shell-script seam.
 
 ### 10.4 Known format risks for first production run
 
@@ -385,7 +420,7 @@ Validation checklist: (1) Calibre query scripts produce valid JSON; (2) parser c
 ## 12. Key file index
 
 - `pipeline/run_mvp.py` — pipeline orchestration; `--config <site_config.yaml>`, `--lvs-mode {dummy,calibre}`.
-- `io_adapters/calibre_query.py` — `parse_ixref`, `write_ixref_yaml`, `run_calibre_ixref`, `run_dummy_ixref`, `extract_ixref` (Stage 1.5).
+- `io_adapters/calibre_query.py` — `parse_ixref`, `parse_nxref`, `parse_net_names`, `join_net_xref`, `write_ixref_yaml`, `write_net_xref_yaml`, `run_calibre_ixref`, `run_calibre_nxref`, `run_calibre_net_names`, `run_dummy_ixref`, `run_dummy_nxref`, `run_dummy_net_names`, `extract_ixref`, `extract_net_xref` (Stage 1.5).
 - `core/solver.py` — `LayoutSolver`, `setup_engine`, `load_existing_layout`, `load_b_tier_cells_into_engine`, `project_unannotated_blockages`, `resize_device` (L3 macro).
 - `core/data_model.py` — `ShapeRecord`, `TrackSegment`, `CellOccupancy`, `Device`, `Net`, `LayoutModel`.
 - `core/grid.py` — `LayerGrid`, `MultiLayerGrid` (track grids + B-tier cell grids).

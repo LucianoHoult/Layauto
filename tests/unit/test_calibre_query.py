@@ -27,6 +27,15 @@ from io_adapters.calibre_query import (
     run_dummy_ixref,
     run_calibre_ixref,
     extract_ixref,
+    parse_nxref,
+    parse_net_names,
+    join_net_xref,
+    write_net_xref_yaml,
+    run_dummy_nxref,
+    run_dummy_net_names,
+    run_calibre_nxref,
+    run_calibre_net_names,
+    extract_net_xref,
     CalibreNotFoundError,
     CalibreQueryError,
 )
@@ -442,3 +451,509 @@ def test_yaml_matches_committed_reference(ixref_temp_path, fixture_dir,
     with open(out) as f:
         written_dict = yaml.safe_load(f)
     assert written_dict == ref_dict
+
+
+# =====================================================================
+# nXref parser
+# =====================================================================
+
+def _write_nxref(tmp_path, body, header=None):
+    if header is None:
+        header = (
+            "# SVDB: Net Cross Reference (nxf) (File format 1)\n"
+            "# SVDB: Layout Primary CELL\n"
+            "# SVDB: End of header.\n"
+        )
+    path = tmp_path / "in.nxf"
+    path.write_text(header + body)
+    return str(path)
+
+
+def test_parse_nxref_committed_fixture(nxref_temp_path):
+    """Committed dummy nXref.temp parses into the expected schema."""
+    parsed = parse_nxref(nxref_temp_path)
+    assert parsed['cell'] == {
+        'layout_name':       'INV_N5_P7',
+        'source_name':       'INV_N5_P7',
+        'layout_pin_count':  4,
+        'source_pin_count':  4,
+    }
+    nets = {n['layout_net']: n for n in parsed['nets']}
+    assert set(nets) == {'VDD', 'VSS', 'IN', 'OUT'}
+    for n in parsed['nets']:
+        # Inverter cell has only external pins → layout name == source name.
+        assert n['source_net'] == n['layout_net']
+        assert n['layout_idx'] == 0
+        assert n['source_idx'] == 0
+
+
+def test_parse_nxref_renumbered_internal_net(tmp_path):
+    """Schematic 'net9' renumbered to LVS layout-side '2' (the user's
+    canonical example for an internal net)."""
+    body = "% BUFLVT 6 BUFLVT 6\n0 VDD 0 VDD\n0 2 0 net9\n"
+    path = _write_nxref(tmp_path, body)
+    parsed = parse_nxref(path)
+    assert parsed['cell']['layout_pin_count'] == 6
+    by_src = {n['source_net']: n for n in parsed['nets']}
+    assert by_src['net9']['layout_net'] == '2'
+    assert by_src['VDD']['layout_net'] == 'VDD'
+
+
+def test_parse_nxref_missing_file_raises(tmp_path):
+    with pytest.raises(FileNotFoundError):
+        parse_nxref(str(tmp_path / "nope.nxf"))
+
+
+def test_parse_nxref_missing_terminator_raises(tmp_path):
+    path = tmp_path / "bad.nxf"
+    path.write_text(
+        "# SVDB: Net Cross Reference (nxf) (File format 1)\n"
+        "% CELL 4 CELL 4\n0 VDD 0 VDD\n"
+    )
+    with pytest.raises(ValueError, match="missing required terminator"):
+        parse_nxref(str(path))
+
+
+def test_parse_nxref_empty_body_raises(tmp_path):
+    path = _write_nxref(tmp_path, "")
+    with pytest.raises(ValueError, match="body is empty"):
+        parse_nxref(path)
+
+
+def test_parse_nxref_summary_without_percent_prefix(tmp_path):
+    """The ``%`` prefix is conventional but optional; parser tolerates
+    either to handle real-world Calibre output variations."""
+    body = "CELL 4 CELL 4\n0 VDD 0 VDD\n"
+    path = _write_nxref(tmp_path, body)
+    parsed = parse_nxref(path)
+    assert parsed['cell']['layout_name'] == 'CELL'
+
+
+def test_parse_nxref_malformed_summary_raises(tmp_path):
+    body = "% CELL 4 CELL\n0 VDD 0 VDD\n"
+    path = _write_nxref(tmp_path, body)
+    with pytest.raises(ValueError, match="cell-summary line malformed"):
+        parse_nxref(path)
+
+
+def test_parse_nxref_summary_non_int_pin_count_raises(tmp_path):
+    body = "% CELL four CELL 4\n0 VDD 0 VDD\n"
+    path = _write_nxref(tmp_path, body)
+    with pytest.raises(ValueError, match="pin counts not int"):
+        parse_nxref(path)
+
+
+def test_parse_nxref_malformed_net_row_raises(tmp_path):
+    body = "% CELL 4 CELL 4\n0 VDD 0 VDD EXTRA\n"
+    path = _write_nxref(tmp_path, body)
+    with pytest.raises(ValueError, match="net row malformed"):
+        parse_nxref(path)
+
+
+def test_parse_nxref_non_int_idx_raises(tmp_path):
+    body = "% CELL 4 CELL 4\nfoo VDD 0 VDD\n"
+    path = _write_nxref(tmp_path, body)
+    with pytest.raises(ValueError, match="net row index not int"):
+        parse_nxref(path)
+
+
+# =====================================================================
+# NET NAMES parser
+# =====================================================================
+
+def _write_net_names(tmp_path, names, count=None, prefix='Net_Names 20000\nNets:\n',
+                     suffix='END OF RESPONSE\n', timestamp='Jan 01 00:00:00 2026'):
+    if count is None:
+        count = len(names)
+    path = tmp_path / "net_names.txt"
+    body = prefix + f'0 0 {count} {timestamp}\n'
+    body += '\n'.join(names)
+    if names:
+        body += '\n'
+    body += suffix
+    path.write_text(body)
+    return str(path)
+
+
+def test_parse_net_names_committed_fixture(net_names_path):
+    parsed = parse_net_names(net_names_path)
+    assert parsed['count'] == 4
+    # Committed fixture order: IN(1), OUT(2), VSS(3), VDD(4).
+    assert parsed['index_to_name'] == {1: 'IN', 2: 'OUT',
+                                        3: 'VSS', 4: 'VDD'}
+    assert parsed['name_to_index'] == {'IN': 1, 'OUT': 2,
+                                        'VSS': 3, 'VDD': 4}
+
+
+def test_parse_net_names_user_buflvt_example(tmp_path):
+    """Reproduces the user's BUFLVT NET NAMES example: 19 nets where
+    'I' is at index 1, 'Z' at 3, 'VSS' at 4, etc."""
+    names = ['I', '2', 'Z', 'VSS', 'VDD',
+             '6', '7', '8', '9', '10',
+             '11', '12', '13', '14', '15',
+             'VPP', 'VBB', '18', '19']
+    path = _write_net_names(tmp_path, names,
+                            timestamp='Feb 27 14:38:27 2026')
+    parsed = parse_net_names(path)
+    assert parsed['count'] == 19
+    assert parsed['name_to_index']['I'] == 1
+    assert parsed['name_to_index']['Z'] == 3
+    assert parsed['name_to_index']['VSS'] == 4
+    assert parsed['name_to_index']['VPP'] == 16
+
+
+def test_parse_net_names_missing_file_raises(tmp_path):
+    with pytest.raises(FileNotFoundError):
+        parse_net_names(str(tmp_path / "nope.txt"))
+
+
+def test_parse_net_names_missing_anchor_raises(tmp_path):
+    path = tmp_path / "bad.txt"
+    path.write_text("Net_Names 20000\n0 0 1 ts\nIN\nEND OF RESPONSE\n")
+    with pytest.raises(ValueError, match="missing 'Nets:' anchor"):
+        parse_net_names(str(path))
+
+
+def test_parse_net_names_missing_count_line_raises(tmp_path):
+    path = tmp_path / "bad.txt"
+    path.write_text("Net_Names 20000\nNets:\n")
+    with pytest.raises(ValueError, match="count line missing"):
+        parse_net_names(str(path))
+
+
+def test_parse_net_names_malformed_count_line_raises(tmp_path):
+    path = tmp_path / "bad.txt"
+    path.write_text(
+        "Net_Names 20000\nNets:\nNOT A COUNT LINE\nIN\nEND OF RESPONSE\n"
+    )
+    with pytest.raises(ValueError, match="malformed count line"):
+        parse_net_names(str(path))
+
+
+def test_parse_net_names_count_mismatch_raises(tmp_path):
+    """Declared count=5 but only 2 names listed."""
+    path = _write_net_names(tmp_path, ['IN', 'OUT'], count=5)
+    with pytest.raises(ValueError, match="declared count=5"):
+        parse_net_names(path)
+
+
+def test_parse_net_names_no_terminator_uses_count(tmp_path):
+    """If 'END OF RESPONSE' is missing the parser still reads exactly
+    ``count`` names (defends against stdout truncation in practice)."""
+    body = (
+        "Net_Names 20000\nNets:\n0 0 2 ts\nIN\nOUT\n"
+    )
+    path = tmp_path / "no_terminator.txt"
+    path.write_text(body)
+    parsed = parse_net_names(str(path))
+    assert parsed['count'] == 2
+
+
+# =====================================================================
+# Joiner
+# =====================================================================
+
+def test_join_net_xref_committed_fixtures(nxref_temp_path, net_names_path):
+    nxref = parse_nxref(nxref_temp_path)
+    nn    = parse_net_names(net_names_path)
+    joined = join_net_xref(nxref, nn)
+    by_src = {n['schematic_name']: n for n in joined['nets']}
+    assert by_src['IN']  == {'schematic_name': 'IN',  'lvs_name': 'IN',  'lvs_index': 1}
+    assert by_src['OUT'] == {'schematic_name': 'OUT', 'lvs_name': 'OUT', 'lvs_index': 2}
+    assert by_src['VSS'] == {'schematic_name': 'VSS', 'lvs_name': 'VSS', 'lvs_index': 3}
+    assert by_src['VDD'] == {'schematic_name': 'VDD', 'lvs_name': 'VDD', 'lvs_index': 4}
+    assert joined['cell'] == nxref['cell']
+
+
+def test_join_net_xref_renumbered_internal_net(tmp_path):
+    """Synthetic case: schematic ``net9`` → layout ``2`` → LVS index 2.
+    Encodes the user's canonical 1.2+1.3 example
+    ('for inner net9, record net9, 2, 2')."""
+    nxref_body = "% CELL 4 CELL 4\n0 VDD 0 VDD\n0 2 0 net9\n"
+    nxref_path = _write_nxref(tmp_path, nxref_body)
+    names_path = _write_net_names(tmp_path, ['VDD', '2'])
+    joined = join_net_xref(parse_nxref(nxref_path),
+                           parse_net_names(names_path))
+    by_src = {n['schematic_name']: n for n in joined['nets']}
+    assert by_src['net9'] == {'schematic_name': 'net9',
+                              'lvs_name': '2', 'lvs_index': 2}
+    assert by_src['VDD']  == {'schematic_name': 'VDD',
+                              'lvs_name': 'VDD', 'lvs_index': 1}
+
+
+def test_join_net_xref_missing_lvs_name_raises(tmp_path):
+    """An nXref layout net not present in NET NAMES is a real LVS
+    inconsistency — fail loud, don't paper over."""
+    nxref_body = "% CELL 4 CELL 4\n0 VDD 0 VDD\n0 STRANGE 0 net9\n"
+    nxref_path = _write_nxref(tmp_path, nxref_body)
+    names_path = _write_net_names(tmp_path, ['VDD'])
+    with pytest.raises(KeyError, match="STRANGE"):
+        join_net_xref(parse_nxref(nxref_path),
+                      parse_net_names(names_path))
+
+
+def test_write_net_xref_yaml_roundtrip(nxref_temp_path, net_names_path,
+                                        tmp_path):
+    nxref = parse_nxref(nxref_temp_path)
+    nn    = parse_net_names(net_names_path)
+    joined = join_net_xref(nxref, nn)
+    out = tmp_path / "net_xref.yaml"
+    write_net_xref_yaml(joined, str(out))
+    with open(out) as f:
+        reloaded = yaml.safe_load(f)
+    assert reloaded == joined
+
+
+def test_net_xref_yaml_matches_committed_reference(
+        nxref_temp_path, net_names_path, fixture_dir, tmp_path):
+    nxref = parse_nxref(nxref_temp_path)
+    nn    = parse_net_names(net_names_path)
+    joined = join_net_xref(nxref, nn)
+    out = tmp_path / "net_xref.yaml"
+    write_net_xref_yaml(joined, str(out))
+    reference = os.path.join(fixture_dir, 'net_xref.yaml')
+    with open(reference) as f:
+        ref_dict = yaml.safe_load(f)
+    with open(out) as f:
+        written_dict = yaml.safe_load(f)
+    assert written_dict == ref_dict
+
+
+# =====================================================================
+# Dummy net dispatchers
+# =====================================================================
+
+def test_run_dummy_nxref_copies_fixture(nxref_temp_path, tmp_path):
+    dst = tmp_path / "nXref.temp"
+    run_dummy_nxref(svdb_dir=None, nxref_path=str(dst),
+                    dummy_source=nxref_temp_path)
+    assert dst.exists()
+    assert dst.read_text() == open(nxref_temp_path).read()
+
+
+def test_run_dummy_net_names_copies_fixture(net_names_path, tmp_path):
+    dst = tmp_path / "net_names.txt"
+    run_dummy_net_names(svdb_dir=None, net_names_path=str(dst),
+                        dummy_source=net_names_path)
+    assert dst.exists()
+    assert dst.read_text() == open(net_names_path).read()
+
+
+def test_run_dummy_nxref_missing_source_raises(tmp_path):
+    with pytest.raises(FileNotFoundError):
+        run_dummy_nxref(svdb_dir=None,
+                        nxref_path=str(tmp_path / "out.nxf"),
+                        dummy_source=str(tmp_path / "missing.nxf"))
+
+
+def test_run_dummy_net_names_missing_source_raises(tmp_path):
+    with pytest.raises(FileNotFoundError):
+        run_dummy_net_names(svdb_dir=None,
+                            net_names_path=str(tmp_path / "out.txt"),
+                            dummy_source=str(tmp_path / "missing.txt"))
+
+
+# =====================================================================
+# extract_net_xref orchestrator
+# =====================================================================
+
+def test_extract_net_xref_dummy_mode_end_to_end(
+        nxref_temp_path, net_names_path, tmp_path):
+    nxref_out = tmp_path / "nXref.temp"
+    nn_out    = tmp_path / "net_names.txt"
+    joined = extract_net_xref(
+        mode='dummy',
+        svdb_dir='/nonexistent',
+        nxref_path=str(nxref_out),
+        net_names_path=str(nn_out),
+        dummy_nxref_source=nxref_temp_path,
+        dummy_net_names_source=net_names_path,
+    )
+    assert nxref_out.exists()
+    assert nn_out.exists()
+    assert joined['cell']['layout_name'] == 'INV_N5_P7'
+    assert len(joined['nets']) == 4
+    assert all('lvs_index' in n for n in joined['nets'])
+
+
+def test_extract_net_xref_unknown_mode_raises(tmp_path):
+    with pytest.raises(ValueError, match="unknown mode"):
+        extract_net_xref(mode='gibberish', svdb_dir=None,
+                         nxref_path=str(tmp_path / "x"),
+                         net_names_path=str(tmp_path / "y"))
+
+
+def test_extract_net_xref_dummy_mode_requires_sources(tmp_path):
+    with pytest.raises(ValueError, match="requires both"):
+        extract_net_xref(mode='dummy', svdb_dir=None,
+                         nxref_path=str(tmp_path / "x"),
+                         net_names_path=str(tmp_path / "y"))
+
+
+def test_extract_net_xref_calibre_mode_requires_svdb(tmp_path):
+    with pytest.raises(ValueError, match="requires svdb_dir"):
+        extract_net_xref(mode='calibre', svdb_dir=None,
+                         nxref_path=str(tmp_path / "x"),
+                         net_names_path=str(tmp_path / "y"))
+
+
+# =====================================================================
+# Real-mode dispatchers (mocked subprocess) — nXref + NET NAMES
+# =====================================================================
+
+def test_run_calibre_nxref_subprocess_invocation(
+        tmp_path, nxref_temp_path):
+    svdb = tmp_path / "svdb_dir"
+    svdb.mkdir()
+    out = tmp_path / "out.nxf"
+    captured = {}
+
+    def fake_run(cmd, **kwargs):
+        captured['cmd'] = cmd
+        captured['input'] = kwargs.get('input')
+        shutil.copyfile(nxref_temp_path, str(out))
+        return _FakeCompleted(returncode=0)
+
+    with patch('io_adapters.calibre_query.shutil.which',
+               return_value='/usr/bin/calibre'), \
+         patch('io_adapters.calibre_query.subprocess.run',
+               side_effect=fake_run):
+        run_calibre_nxref(str(svdb), str(out))
+
+    assert captured['cmd'] == ['calibre', '-query', str(svdb)]
+    assert captured['input'] == f"NET XREF WRITE {out}\nEXIT\n"
+
+
+def test_run_calibre_nxref_missing_binary_raises(tmp_path):
+    with patch('io_adapters.calibre_query.shutil.which', return_value=None):
+        with pytest.raises(CalibreNotFoundError):
+            run_calibre_nxref(str(tmp_path), str(tmp_path / "x.nxf"))
+
+
+def test_run_calibre_nxref_no_output_file_raises(tmp_path):
+    svdb = tmp_path / "svdb_dir"
+    svdb.mkdir()
+    with patch('io_adapters.calibre_query.shutil.which',
+               return_value='/usr/bin/calibre'), \
+         patch('io_adapters.calibre_query.subprocess.run',
+               return_value=_FakeCompleted(returncode=0)):
+        with pytest.raises(CalibreQueryError, match="did not"):
+            run_calibre_nxref(str(svdb), str(tmp_path / "x.nxf"))
+
+
+def test_run_calibre_net_names_subprocess_invocation(
+        tmp_path, net_names_path):
+    svdb = tmp_path / "svdb_dir"
+    svdb.mkdir()
+    out = tmp_path / "out.txt"
+    captured = {}
+
+    fake_stdout = (
+        "Some leading interactive banner...\n"
+        + open(net_names_path).read()
+        + "\nQuery server exiting.\n"
+    )
+
+    def fake_run(cmd, **kwargs):
+        captured['cmd'] = cmd
+        captured['input'] = kwargs.get('input')
+        return _FakeCompleted(returncode=0, stdout=fake_stdout)
+
+    with patch('io_adapters.calibre_query.shutil.which',
+               return_value='/usr/bin/calibre'), \
+         patch('io_adapters.calibre_query.subprocess.run',
+               side_effect=fake_run):
+        run_calibre_net_names(str(svdb), str(out))
+
+    assert captured['cmd'] == ['calibre', '-query', str(svdb)]
+    assert captured['input'] == "NET NAMES\nEXIT\n"
+    # Captured block is parseable and contains the same nets.
+    parsed = parse_net_names(str(out))
+    assert parsed['count'] == 4
+
+
+def test_run_calibre_net_names_missing_block_raises(tmp_path):
+    """If stdout doesn't contain a 'Net_Names' header, fail loud."""
+    svdb = tmp_path / "svdb_dir"
+    svdb.mkdir()
+    with patch('io_adapters.calibre_query.shutil.which',
+               return_value='/usr/bin/calibre'), \
+         patch('io_adapters.calibre_query.subprocess.run',
+               return_value=_FakeCompleted(returncode=0,
+                                            stdout='garbage\n')):
+        with pytest.raises(CalibreQueryError, match="Net_Names"):
+            run_calibre_net_names(str(svdb), str(tmp_path / "x.txt"))
+
+
+def test_run_calibre_net_names_missing_terminator_raises(tmp_path):
+    svdb = tmp_path / "svdb_dir"
+    svdb.mkdir()
+    truncated = "Net_Names 20000\nNets:\n0 0 1 ts\nIN\n"
+    with patch('io_adapters.calibre_query.shutil.which',
+               return_value='/usr/bin/calibre'), \
+         patch('io_adapters.calibre_query.subprocess.run',
+               return_value=_FakeCompleted(returncode=0, stdout=truncated)):
+        with pytest.raises(CalibreQueryError, match="END OF RESPONSE"):
+            run_calibre_net_names(str(svdb), str(tmp_path / "x.txt"))
+
+
+def test_extract_net_xref_calibre_mode_end_to_end(
+        tmp_path, nxref_temp_path, net_names_path):
+    """Full calibre-mode path with mocked subprocess for both queries."""
+    svdb = tmp_path / "svdb_dir"
+    svdb.mkdir()
+    nxref_out = tmp_path / "out.nxf"
+    nn_out    = tmp_path / "out.txt"
+
+    fake_stdout_net_names = open(net_names_path).read()
+
+    def fake_run(cmd, **kwargs):
+        stdin = kwargs.get('input', '')
+        if 'NET XREF WRITE' in stdin:
+            shutil.copyfile(nxref_temp_path, str(nxref_out))
+            return _FakeCompleted(returncode=0)
+        elif 'NET NAMES' in stdin:
+            return _FakeCompleted(returncode=0, stdout=fake_stdout_net_names)
+        return _FakeCompleted(returncode=1, stderr='unexpected stdin')
+
+    with patch('io_adapters.calibre_query.shutil.which',
+               return_value='/usr/bin/calibre'), \
+         patch('io_adapters.calibre_query.subprocess.run',
+               side_effect=fake_run):
+        joined = extract_net_xref(
+            mode='calibre',
+            svdb_dir=str(svdb),
+            nxref_path=str(nxref_out),
+            net_names_path=str(nn_out),
+        )
+    assert len(joined['nets']) == 4
+    assert {n['lvs_index'] for n in joined['nets']} == {1, 2, 3, 4}
+
+
+# =====================================================================
+# Generator vs committed-fixture parity (nXref + NET NAMES)
+# =====================================================================
+
+def test_nxref_generator_matches_committed_fixture(
+        nxref_temp_path, tmp_path):
+    """``generate_calibre_nxref`` reproduces the committed fixture
+    byte-for-byte. Drift detector for fin-count regen scenarios."""
+    from dummy.gen_buffer_layout import (
+        generate_inverter_layout, generate_calibre_nxref,
+    )
+    layout = generate_inverter_layout(nmos_nfin=5, pmos_nfin=7)
+    out = tmp_path / "nXref.temp"
+    generate_calibre_nxref(layout, str(out))
+    assert out.read_text() == open(nxref_temp_path).read()
+
+
+def test_net_names_generator_matches_committed_fixture(
+        net_names_path, tmp_path):
+    from dummy.gen_buffer_layout import (
+        generate_inverter_layout, generate_calibre_net_names,
+    )
+    layout = generate_inverter_layout(nmos_nfin=5, pmos_nfin=7)
+    out = tmp_path / "net_names.txt"
+    generate_calibre_net_names(layout, str(out),
+                                timestamp='May 07 03:00:00 2026')
+    assert out.read_text() == open(net_names_path).read()

@@ -1,0 +1,8 @@
+Net_Names 20000
+Nets:
+0 0 4 May 07 03:00:00 2026
+IN
+OUT
+VSS
+VDD
+END OF RESPONSE

@@ -276,47 +276,84 @@ def run_full_pipeline(site_config_path: str = None,
     orig_pmos_nfin = get_device_param(orig_cdl, 'MP0', 'nfin', 7)
     print(f"  Original: NMOS={orig_nmos_nfin}fin, PMOS={orig_pmos_nfin}fin")
 
-    # ---- Stage 1.5: LVS extract (iXref middle file) ----
+    # ---- Stage 1.5: LVS extract (iXref + nXref + NET NAMES middles) ----
     # First pre-Stage-2 step that touches Calibre as a tool. In
-    # mode='dummy', a pre-staged iXref.temp is copied into the run-
-    # output path; in mode='calibre', `calibre -query <svdb_dir>` is
-    # invoked with `INSTANCE XREF WRITE` streamed over stdin. Either
-    # way the file is parsed and a YAML middle file is written; the
-    # parsed dict is "saved for later use" — Stage 2 does not consume
-    # it today (M7 will).
-    from io_adapters.calibre_query import extract_ixref, write_ixref_yaml
+    # mode='dummy', pre-staged iXref / nXref / NET-NAMES fixtures are
+    # copied into the run-output paths; in mode='calibre',
+    # `calibre -query <svdb_dir>` is invoked with `INSTANCE XREF
+    # WRITE`, `NET XREF WRITE`, and `NET NAMES` streamed over stdin.
+    # Either way each file is parsed and a YAML middle file is
+    # written; the parsed dicts are "saved for later use" — Stage 2
+    # does not consume them today (M7 will).
+    from io_adapters.calibre_query import (
+        extract_ixref, write_ixref_yaml,
+        extract_net_xref, write_net_xref_yaml,
+    )
     calibre_cfg = site.get('calibre', {}) or {}
     effective_lvs_mode = lvs_mode or calibre_cfg.get('mode') or 'dummy'
+
     ixref_temp_path = (calibre_cfg.get('ixref_temp')
                        or os.path.join(output_dir, 'iXref.temp'))
+    nxref_temp_path = (calibre_cfg.get('nxref_temp')
+                       or os.path.join(output_dir, 'nXref.temp'))
+    net_names_path  = (calibre_cfg.get('net_names_txt')
+                       or os.path.join(output_dir, 'net_names.txt'))
     ixref_yaml_path = (inputs.get('ixref_yaml')
                        or os.path.join(output_dir, 'ixref.yaml'))
+    net_xref_yaml_path = (inputs.get('net_xref_yaml')
+                          or os.path.join(output_dir, 'net_xref.yaml'))
 
-    # Fall back to the committed dummy fixture so legacy site_configs
-    # without a calibre: block still resolve a sensible source. The
-    # default sits next to this repo at ``dummy/fixtures/iXref.temp``.
-    dummy_source = calibre_cfg.get('dummy_ixref')
-    if effective_lvs_mode == 'dummy' and not dummy_source:
-        dummy_source = os.path.join(
-            os.path.dirname(__file__), '..',
-            'dummy', 'fixtures', 'iXref.temp',
-        )
+    # Fall back to committed dummy fixtures so legacy site_configs
+    # without a populated calibre: block still resolve a sensible
+    # source. Defaults sit next to the repo under dummy/fixtures/.
+    fixture_dir = os.path.join(
+        os.path.dirname(__file__), '..', 'dummy', 'fixtures',
+    )
+    dummy_ixref = calibre_cfg.get('dummy_ixref')
+    dummy_nxref = calibre_cfg.get('dummy_nxref')
+    dummy_net_names = calibre_cfg.get('dummy_net_names')
+    if effective_lvs_mode == 'dummy':
+        if not dummy_ixref:
+            dummy_ixref = os.path.join(fixture_dir, 'iXref.temp')
+        if not dummy_nxref:
+            dummy_nxref = os.path.join(fixture_dir, 'nXref.temp')
+        if not dummy_net_names:
+            dummy_net_names = os.path.join(fixture_dir, 'net_names.txt')
 
-    print(f"\n[Stage 1.5] Extracting LVS iXref (mode={effective_lvs_mode})...")
+    print(f"\n[Stage 1.5] Extracting LVS xrefs (mode={effective_lvs_mode})...")
     parsed_ixref = extract_ixref(
         mode=effective_lvs_mode,
         svdb_dir=calibre_cfg.get('svdb_dir'),
         ixref_path=ixref_temp_path,
-        dummy_source=dummy_source,
+        dummy_source=dummy_ixref,
         timeout=calibre_cfg.get('timeout_s', 300),
     )
     write_ixref_yaml(parsed_ixref, ixref_yaml_path)
     n_devs = len(parsed_ixref['devices'])
     n_swap = sum(1 for d in parsed_ixref['devices'] if d['sd_swapped'])
-    print(f"  cell={parsed_ixref['cell']['layout_name']!r}  "
+    print(f"  iXref:  cell={parsed_ixref['cell']['layout_name']!r}  "
           f"devices={n_devs}  S/D-swaps={n_swap}")
-    print(f"  iXref.temp:  {ixref_temp_path}")
-    print(f"  ixref.yaml:  {ixref_yaml_path}")
+
+    parsed_net_xref = extract_net_xref(
+        mode=effective_lvs_mode,
+        svdb_dir=calibre_cfg.get('svdb_dir'),
+        nxref_path=nxref_temp_path,
+        net_names_path=net_names_path,
+        dummy_nxref_source=dummy_nxref,
+        dummy_net_names_source=dummy_net_names,
+        timeout=calibre_cfg.get('timeout_s', 300),
+    )
+    write_net_xref_yaml(parsed_net_xref, net_xref_yaml_path)
+    n_nets = len(parsed_net_xref['nets'])
+    n_renumbered = sum(1 for n in parsed_net_xref['nets']
+                       if n['schematic_name'] != n['lvs_name'])
+    print(f"  nXref:  cell={parsed_net_xref['cell']['layout_name']!r}  "
+          f"nets={n_nets}  renumbered={n_renumbered}")
+    print(f"  iXref.temp:    {ixref_temp_path}")
+    print(f"  nXref.temp:    {nxref_temp_path}")
+    print(f"  net_names.txt: {net_names_path}")
+    print(f"  ixref.yaml:    {ixref_yaml_path}")
+    print(f"  net_xref.yaml: {net_xref_yaml_path}")
 
     # ---- Stage 2: Parse layout ----
     print("\n[Stage 2] Parsing layout data...")
