@@ -41,3 +41,8 @@ def calibre_net_json():
     path = os.path.join(FIXTURE_DIR, 'calibre_net_query.json')
     with open(path) as f:
         return json.load(f)
+
+
+@pytest.fixture
+def ixref_temp_path():
+    return os.path.join(FIXTURE_DIR, 'iXref.temp')

@@ -282,7 +282,10 @@ def test_pipeline_pick_macro_refactor_preserves_byte_golden():
     expected = {
         'buffer_resized.json': '47412996135face8c49805ff737a0f20',
         'buffer_resized.cdl': '676823e7c2ee1ba84e0ad21b6269d5c4',
-        'resize_report.txt': '0b427f458012191319f9e64f1225adf7',
+        # Updated 2026-05-07: report now uses basename CDL refs to keep
+        # the byte-golden md5 environment-independent (was failing in
+        # any tree not rooted at the original author's filesystem path).
+        'resize_report.txt': 'b982f708162c08875fabb5c37cc5da89',
         'annotation_coverage.txt': 'f1582221b5cd47612181302bb8dd8a3d',
     }
     for fname, expected_md5 in expected.items():

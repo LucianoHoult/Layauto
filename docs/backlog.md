@@ -62,16 +62,19 @@ The recommended starter PR. Unblocks M6d (the routing-dependent macros).
 
 **Goal.** Replace placeholder SKILL emission and dummy Calibre with real tool integration. First exit from the dummy environment.
 
+**In flight (precursor).** The LVS iXref extraction slice landed 2026-05-07 — `io_adapters/calibre_query.py` runs `calibre -query <svdb_dir>` for real, parses the SVDB ixf format, and saves `output/ixref.yaml` as a middle file. Stage 1.5 in the pipeline. CLI: `--lvs-mode {dummy,calibre}`. Save-only today; M7-main will wire the YAML into LVS-driven macros (net-equivalence overrides for swapped S/D, layout-vs-source device-identity reconciliation).
+
 **Files to create / replace.**
 - **New** `io_adapters/skill_emitter.py` — replaces the `printf` placeholder in `writer_skill_script.py`. Walks `shape_pool` + `EditOp` records; every emitted edit gets a provenance comment.
-- **New** `io_adapters/calibre_runner.py` — replaces dummy Calibre JSON for real LVS/DRC.
-- `pipeline/run_mvp.py` — append DRC/LVS calls; feed results back to L3 macro provenance.
+- **Extend** `io_adapters/calibre_query.py` (or rename to `calibre_runner.py` if it outgrows its current scope) to also host real DRC + LVS subprocess invocations. Reuse the `mode` / `svdb_dir` / `timeout_s` plumbing already in place.
+- `io_adapters/parser.py::build_layout_model` — optional `ixref_yaml` param; when supplied, S/D-swapped devices use the iXref-corrected pin map.
+- `pipeline/run_mvp.py` — append DRC/LVS calls; feed results back to L3 macro provenance; consume `ixref_yaml` for net-equivalence overrides.
 
 **Acceptance.** Real PDK environment: buffer resize → SKILL load → DRC clean → LVS match. Inject a violating edit → DRC fail localizes to the responsible L2 op.
 
 **Risks.** PDK redaction may block end-to-end validation. Keep an injection harness that mocks DRC violations.
 
-**Dependencies.** M1–M6 all complete.
+**Dependencies.** M1–M6 all complete; iXref slice already in.
 
 ---
 
@@ -96,6 +99,17 @@ A path-aware union-find (or a fully recomputed component on each split) is neede
 ### LVS bbox tolerance
 
 The M3 `(layer, bbox_nm)` overlay key works because the dummy generator's GDS shapes and the dummy LVS shapes share an exact bbox-tuple representation. Production LVS geometry can drift sub-nm. M7 will need a tolerance / containment match in `apply_lvs_overlay`.
+
+### iXref consumption
+
+The `output/ixref.yaml` middle file produced by Stage 1.5 (2026-05-07) is currently write-only. Future consumers — once we land them — should:
+- Cross-check the iXref's source-side instance ids against the parsed CDL `Device.inst_name` set; flag mismatches.
+- Use the `sd_swapped` flag when projecting LVS shapes through `apply_lvs_overlay` to flip source/drain pin roles for any device the layout-side LVS run flipped.
+- Feed mismatches into the L3 macro provenance for blast-radius computation in the LVS feedback closure (M7 main).
+
+### Calibre HDB command-string drift
+
+`run_calibre_ixref` hard-codes `INSTANCE XREF WRITE <path>` + `EXIT` as the stdin script. Some Calibre versions accept lower-case `iXref`, `Quit` instead of `EXIT`, or require additional preamble lines. Today the commands are not exposed as configuration; if a production user hits a version mismatch, they can monkey-patch the function or extend it to accept a `commands:` list. Make this a config field once a second deployment surfaces a real conflict.
 
 ### Multi-cell C1 derivation
 

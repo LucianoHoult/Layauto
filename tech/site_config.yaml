@@ -36,14 +36,29 @@ inputs:
   target_json:    ../dummy/fixtures/buffer_target.json
   # Optional target GDS for shape-by-shape comparison via gdstk
   target_gds:     ../dummy/fixtures/buffer_target.gds
+  # Parsed iXref middle file produced by Stage 1.5 (LVS extract).
+  # Saved for later use; not consumed by build_layout_model today.
+  ixref_yaml:     ../output/ixref.yaml
 
 # ---- Run outputs ---------------------------------------------
 output:
   dir:            ../output
 
+# ---- LVS extraction (Stage 1.5) ------------------------------
+# mode='dummy' (default): copy a pre-staged iXref.temp into ixref_temp
+#                         and parse. No subprocess.
+# mode='calibre': spawn `calibre -query <svdb_dir>` and stream
+#                 `INSTANCE XREF WRITE <ixref_temp>` over stdin.
+# CLI --lvs-mode overrides this field.
+calibre:
+  mode:        dummy
+  svdb_dir:    ../dummy/fixtures/svdb_dir       # placeholder for dummy mode
+  ixref_temp:  ../output/iXref.temp             # produced by query
+  dummy_ixref: ../dummy/fixtures/iXref.temp     # source for dummy mode
+  timeout_s:   300
+
 # ---- Deferred to follow-up discussion ------------------------
 # calibre:
-#   svdb_dir:   ...
 #   drc_rules:  ...
 #   lvs_rules:  ...
 # virtuoso:

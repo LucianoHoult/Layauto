@@ -214,7 +214,8 @@ def _default_site_config_path() -> str:
 
 
 def run_full_pipeline(site_config_path: str = None,
-                      config=None):
+                      config=None,
+                      lvs_mode: str = None):
     """Execute the complete MVP pipeline.
 
     Args:
@@ -223,6 +224,8 @@ def run_full_pipeline(site_config_path: str = None,
             If None, uses ``tech/site_config.yaml`` next to the repo.
         config: Pre-loaded TechConfig (skips tech reload). Useful for
             tests that already have a config in hand.
+        lvs_mode: Override ``site_config.calibre.mode`` ('dummy' or
+            'calibre'). When None, the value from site_config is used.
     """
     if site_config_path is None:
         site_config_path = _default_site_config_path()
@@ -272,6 +275,38 @@ def run_full_pipeline(site_config_path: str = None,
     orig_nmos_nfin = get_device_param(orig_cdl, 'MN0', 'nfin', 5)
     orig_pmos_nfin = get_device_param(orig_cdl, 'MP0', 'nfin', 7)
     print(f"  Original: NMOS={orig_nmos_nfin}fin, PMOS={orig_pmos_nfin}fin")
+
+    # ---- Stage 1.5: LVS extract (iXref middle file) ----
+    # First pre-Stage-2 step that touches Calibre as a tool. In
+    # mode='dummy', a pre-staged iXref.temp is copied into the run-
+    # output path; in mode='calibre', `calibre -query <svdb_dir>` is
+    # invoked with `INSTANCE XREF WRITE` streamed over stdin. Either
+    # way the file is parsed and a YAML middle file is written; the
+    # parsed dict is "saved for later use" — Stage 2 does not consume
+    # it today (M7 will).
+    from io_adapters.calibre_query import extract_ixref, write_ixref_yaml
+    calibre_cfg = site.get('calibre', {}) or {}
+    effective_lvs_mode = lvs_mode or calibre_cfg.get('mode') or 'dummy'
+    ixref_temp_path = (calibre_cfg.get('ixref_temp')
+                       or os.path.join(output_dir, 'iXref.temp'))
+    ixref_yaml_path = (inputs.get('ixref_yaml')
+                       or os.path.join(output_dir, 'ixref.yaml'))
+
+    print(f"\n[Stage 1.5] Extracting LVS iXref (mode={effective_lvs_mode})...")
+    parsed_ixref = extract_ixref(
+        mode=effective_lvs_mode,
+        svdb_dir=calibre_cfg.get('svdb_dir'),
+        ixref_path=ixref_temp_path,
+        dummy_source=calibre_cfg.get('dummy_ixref'),
+        timeout=calibre_cfg.get('timeout_s', 300),
+    )
+    write_ixref_yaml(parsed_ixref, ixref_yaml_path)
+    n_devs = len(parsed_ixref['devices'])
+    n_swap = sum(1 for d in parsed_ixref['devices'] if d['sd_swapped'])
+    print(f"  cell={parsed_ixref['cell']['layout_name']!r}  "
+          f"devices={n_devs}  S/D-swaps={n_swap}")
+    print(f"  iXref.temp:  {ixref_temp_path}")
+    print(f"  ixref.yaml:  {ixref_yaml_path}")
 
     # ---- Stage 2: Parse layout ----
     print("\n[Stage 2] Parsing layout data...")
@@ -410,7 +445,11 @@ def run_full_pipeline(site_config_path: str = None,
         f.write("=" * 50 + "\n\n")
         f.write(f"Original: NMOS={orig_nmos_nfin}fin, PMOS={orig_pmos_nfin}fin\n")
         f.write(f"Target:   NMOS={new_nmos_nfin}fin, PMOS={new_pmos_nfin}fin\n")
-        f.write(f"Source: CDL diff ({original_cdl_path} vs {modified_cdl_path})\n\n")
+        # Basename only — keeps the report reproducible across
+        # environments (md5-stable for the byte-golden test).
+        f.write(f"Source: CDL diff "
+                f"({os.path.basename(original_cdl_path)} vs "
+                f"{os.path.basename(modified_cdl_path)})\n\n")
 
         for inst, r in results.items():
             f.write(f"{inst} resize: {r.message}\n")
@@ -503,9 +542,19 @@ def _build_arg_parser():
         '--config', '-c', dest='site_config', default=None,
         help='Path to site_config.yaml (default: tech/site_config.yaml)',
     )
+    p.add_argument(
+        '--lvs-mode', dest='lvs_mode', default=None,
+        choices=['dummy', 'calibre'],
+        help="Override calibre.mode in site_config "
+             "(dummy=copy fixture, calibre=invoke `calibre -query`). "
+             "Default: read from site_config.calibre.mode.",
+    )
     return p
 
 
 if __name__ == '__main__':
     args = _build_arg_parser().parse_args()
-    run_full_pipeline(site_config_path=args.site_config)
+    run_full_pipeline(
+        site_config_path=args.site_config,
+        lvs_mode=args.lvs_mode,
+    )

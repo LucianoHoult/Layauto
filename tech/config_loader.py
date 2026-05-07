@@ -332,6 +332,17 @@ def load_site_config(site_yaml: str) -> dict:
     output = cfg.setdefault('output', {})
     output['dir'] = resolve(output.get('dir'))
 
+    # Calibre block (Stage 1.5 — LVS extract). Path-valued keys are
+    # resolved relative to the YAML; ``mode`` and ``timeout_s`` pass
+    # through verbatim. ``mode`` defaults to ``'dummy'`` when absent so
+    # legacy site_configs (pre-2026-05-07) continue to load.
+    calibre = cfg.setdefault('calibre', {})
+    calibre['svdb_dir']    = resolve(calibre.get('svdb_dir'))
+    calibre['ixref_temp']  = resolve(calibre.get('ixref_temp'))
+    calibre['dummy_ixref'] = resolve(calibre.get('dummy_ixref'))
+    calibre.setdefault('mode', 'dummy')
+    calibre.setdefault('timeout_s', 300)
+
     return cfg
 
 

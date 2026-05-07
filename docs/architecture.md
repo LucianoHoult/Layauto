@@ -21,6 +21,7 @@ Entry point: `pipeline/run_mvp.py::run_full_pipeline(site_config_path)`.
 | Stage | What it does | Implementation |
 |-------|--------------|----------------|
 | 1. Diff CDL | Parses original + modified `.cdl`; finds parameter-level differences (today: `nfin`) and emits `(inst, param, old, new)` tuples that drive macro dispatch. | `io_adapters/cdl_parser.py::parse_cdl` + `diff_cdl` |
+| 1.5. LVS extract (iXref) | Either spawns `calibre -query <svdb_dir>` and streams `INSTANCE XREF WRITE` over stdin (`mode=calibre`) or copies a pre-staged `dummy/fixtures/iXref.temp` (`mode=dummy`, default). Parses the SVDB ixf format into `{cell, devices, header_lines}` and writes `output/ixref.yaml` as a saved-for-later middle file. Not consumed by Stage 2 yet. | `io_adapters/calibre_query.py::extract_ixref` |
 | 2. Build `LayoutModel` + `MultiLayerGrid` | Parses Calibre device + net JSONs and the bbox-by-layer dump; constructs the geometric `shape_pool` first, then applies LVS as an annotation overlay; builds a per-layer `MultiLayerGrid` (A-tier track grids + B-tier cell grids). | `io_adapters/parser.py::build_layout_model` |
 | 3. Set up CSP engine | Registers DRC constraint templates, initialises per-cell domains for every CSP-modelled layer (LI / M1 + the B-tier OD / VIA0). | `core/solver.py::LayoutSolver.setup_engine` |
 | 4. Load existing layout into CSP | Walks every `TrackSegment` and B-tier cell from stage 2; stamps each cell as `FIXED` so propagation runs against existing geometry. Then projects unannotated shapes as `BLOCKAGE`. | `core/solver.py::load_existing_layout`, `load_b_tier_cells_into_engine`, `project_unannotated_blockages` |
@@ -325,6 +326,26 @@ Consumer: `parse_calibre_net_query`. Each shape passes through `MultiLayerGrid.p
 
 Consumer: `parse_bbox_by_layer`. The geometric-truth pass (M3): every entry becomes a `ShapeRecord` with `net_id=None` until LVS overlay stamps it.
 
+### `iXref.temp` and `ixref.yaml`
+
+Calibre HDB ``INSTANCE XREF WRITE`` output (file format 1):
+
+```
+# SVDB: Instance Cross Reference (ixf) (File format 1)
+# SVDB: Layout Primary INV_N5_P7
+# SVDB: ...
+# SVDB: End of header.
+INV_N5_P7 4 INV_N5_P7 4
+0 M0 0 MN0
+0 M1 0 MP0 X
+```
+
+Header lines start with ``# SVDB:`` and terminate with ``# SVDB: End of header.``. The first body line is the cell summary (``<layout_cell> <layout_pin_count> <source_cell> <source_pin_count>``); subsequent lines are device rows (``<layout_idx> <layout_inst> <source_idx> <source_inst> [X]`` — trailing ``X`` flags an LVS-detected S/D swap on MOS devices).
+
+Producer (production): `io_adapters/calibre_query.py::run_calibre_ixref` spawns ``calibre -query <svdb_dir>``, streams ``INSTANCE XREF WRITE <path>`` + ``EXIT`` over stdin, captures stdout/stderr, and raises informative errors on missing binary / non-zero exit / missing output file. Producer (dummy): the file is pre-staged at `dummy/fixtures/iXref.temp` (also reproducible from `dummy/gen_buffer_layout.py::generate_calibre_ixref` for parametric regen).
+
+Consumer: `parse_ixref` returns ``{cell, devices, header_lines}``; ``write_ixref_yaml`` serializes the same structure as ``output/ixref.yaml`` (also committed at `dummy/fixtures/ixref.yaml` as a byte-golden reference). The middle file is reserved for future LVS feedback closure (M7) — net-equivalence overrides for swapped S/D, layout-vs-source device-identity reconciliation. Stage 2's `build_layout_model` does not consume it today.
+
 ## 10. Production integration model
 
 The `core/` directory does not change for production. Integration touches three seams: tech bundle, IO adapters, and tooling scripts.
@@ -342,7 +363,7 @@ The single editable file is `tech/site_config.yaml` (§ 6). It points at `drc_ru
 
 - **`scripts/virtuoso_apply_edit.il`** — SKILL placeholder. Production needs real `_removeShapeByBBox` / `_resizeShapeByBBox` implementations bound to the foundry PDK. See [`backlog.md`](backlog.md) § M7.
 - **`scripts/calibre_run_drc.sh` / `calibre_run_lvs.sh`** — production needs the actual `calibre` invocation lines uncommented and parameterised.
-- **`scripts/calibre_query_extract.sh`** — production needs the actual `calibrequery` invocation. Output format must match § 9.
+- **iXref query (Stage 1.5) — landed 2026-05-07.** `io_adapters/calibre_query.py::run_calibre_ixref` runs the `calibre -query <svdb_dir>` subprocess for real (full Popen + stdin scripting + timeout + missing-binary diagnostics). The dummy/real switch lives in `tech/site_config.yaml::calibre.mode` (CLI override: `--lvs-mode {dummy,calibre}`). Replaces the previous shell-script seam.
 
 ### 10.4 Known format risks for first production run
 
@@ -363,7 +384,8 @@ Validation checklist: (1) Calibre query scripts produce valid JSON; (2) parser c
 
 ## 12. Key file index
 
-- `pipeline/run_mvp.py` — pipeline orchestration; `--config <site_config.yaml>`.
+- `pipeline/run_mvp.py` — pipeline orchestration; `--config <site_config.yaml>`, `--lvs-mode {dummy,calibre}`.
+- `io_adapters/calibre_query.py` — `parse_ixref`, `write_ixref_yaml`, `run_calibre_ixref`, `run_dummy_ixref`, `extract_ixref` (Stage 1.5).
 - `core/solver.py` — `LayoutSolver`, `setup_engine`, `load_existing_layout`, `load_b_tier_cells_into_engine`, `project_unannotated_blockages`, `resize_device` (L3 macro).
 - `core/data_model.py` — `ShapeRecord`, `TrackSegment`, `CellOccupancy`, `Device`, `Net`, `LayoutModel`.
 - `core/grid.py` — `LayerGrid`, `MultiLayerGrid` (track grids + B-tier cell grids).
