@@ -213,6 +213,90 @@ def _default_site_config_path() -> str:
     )
 
 
+def _run_calibre_query_extract(calibre_cfg: dict,
+                                ixref_path: str,
+                                output_dir: str,
+                                original_cdl_path: str) -> str:
+    """Stage-0: produce the iXref artifact + parsed-YAML middle file.
+
+    Returns the path to the *raw* iXref artifact that the downstream
+    parser should read. Side effect: also writes the parsed YAML
+    middle file to ``calibre.ixref.parsed_yaml`` (or, if null, next
+    to the iXref output) so future runs can skip re-parsing.
+
+    Three flow modes, picked by ``calibre.dummy_mode``:
+
+    * ``dummy_mode: true`` (default for the MVP): treat the
+      ``inputs.ixref`` path as a pre-baked artifact, parse it,
+      and emit the YAML middle file. The actual ``calibre`` binary
+      is never invoked. This is what the test suite exercises.
+    * ``dummy_mode: false`` *and* the ``calibre`` binary is on
+      ``PATH``: shell out to ``scripts/calibre_query_extract.sh``,
+      passing the resolved ``svdb_dir`` + ``cell`` + the
+      pattern-expanded output path. Parse the resulting iXref.
+    * ``dummy_mode: false`` and *no* ``calibre`` binary: the shell
+      script runs but skips the actual call (its own dummy fallback);
+      we still try to parse whatever the user staged at
+      ``inputs.ixref`` so the rest of the pipeline can run.
+    """
+    from io_adapters.lvs_xref_parser import (
+        parse_ixref, write_xref_yaml, expand_ixref_pattern,
+    )
+
+    dummy_mode = calibre_cfg.get('dummy_mode', True)
+    cell_name  = calibre_cfg.get('cell_name')
+    if not cell_name and original_cdl_path:
+        cell_name = parse_cdl(original_cdl_path).get('subckt_name') or 'CELL'
+
+    ixref_block       = calibre_cfg.get('ixref') or {}
+    ixref_pattern     = ixref_block.get('output')
+    timestamp_format  = ixref_block.get('timestamp_format', '%Y%m%d_%H%M%S')
+    parsed_yaml_path  = ixref_block.get('parsed_yaml')
+
+    if dummy_mode:
+        raw_path = ixref_path
+    else:
+        # Real mode: invoke the shell harness with a freshly-expanded
+        # iXref output path so the shell + Python sides agree byte for
+        # byte. The harness writes the .temp; we read it right back.
+        if ixref_pattern:
+            raw_path = expand_ixref_pattern(
+                ixref_pattern, cell=cell_name, ts_format=timestamp_format,
+            )
+        else:
+            raw_path = os.path.join(
+                output_dir, f'iXref_{cell_name}.temp'
+            )
+        os.makedirs(os.path.dirname(raw_path) or '.', exist_ok=True)
+        import subprocess
+        script = os.path.join(os.path.dirname(__file__), '..',
+                              'scripts', 'calibre_query_extract.sh')
+        subprocess.run([
+            'bash', script,
+            calibre_cfg.get('svdb_dir') or '/local/svdb_dir',
+            cell_name, output_dir,
+            '--steps', 'ixref',
+            '--ixref-out', raw_path,
+        ], check=True)
+        # If the shell fallback skipped the actual call, fall back to
+        # the user-staged path so downstream stages still see something.
+        if not os.path.exists(raw_path) and ixref_path:
+            print(f"  [Stage 0] using staged iXref fallback: {ixref_path}")
+            raw_path = ixref_path
+
+    xref = parse_ixref(raw_path)
+
+    if parsed_yaml_path is None:
+        parsed_yaml_path = os.path.splitext(raw_path)[0] + '.yaml'
+    out = write_xref_yaml(xref, parsed_yaml_path)
+    print(f"  iXref parsed YAML written: {out}")
+    print(f"  iXref summary: {xref.layout_cell} "
+          f"({xref.layout_count} schematic / "
+          f"{xref.source_count} svdb instances)")
+
+    return raw_path
+
+
 def run_full_pipeline(site_config_path: str = None,
                       config=None):
     """Execute the complete MVP pipeline.
@@ -246,11 +330,26 @@ def run_full_pipeline(site_config_path: str = None,
     layout_json_path  = inputs.get('layout_json')
     target_json_path  = inputs.get('target_json')
     target_gds_path   = inputs.get('target_gds')
+    ixref_path        = inputs.get('ixref')
+    calibre_cfg       = site.get('calibre') or {}
 
     print("=" * 70)
     print("  BUFFER FIN RESIZE MVP - FULL PIPELINE")
     print(f"  site_config: {site_config_path}")
     print("=" * 70)
+
+    # ---- Stage 0: Calibre query extract (iXref) ----
+    # In dummy_mode this just round-trips the pre-baked
+    # iXref.temp into the parsed YAML middle file so downstream
+    # stages exercise the same code paths a production run will.
+    # In real mode this is where the shell harness would run
+    # `scripts/calibre_query_extract.sh`. M7 closes the loop.
+    if ixref_path:
+        print("\n[Stage 0] Extracting / parsing Calibre iXref...")
+        ixref_path = _run_calibre_query_extract(
+            calibre_cfg, ixref_path, output_dir, original_cdl_path,
+        )
+        print(f"  iXref source : {ixref_path}")
 
     # ---- Stage 1: CDL diff → resize targets ----
     print("\n[Stage 1] Parsing CDL netlists and computing diff...")
@@ -280,6 +379,7 @@ def run_full_pipeline(site_config_path: str = None,
         net_query_path=net_query_path,
         bbox_path=bbox_path,
         layout_json_path=layout_json_path,
+        ixref_path=ixref_path,
         config=config,
     )
     print(f"  {model.summary()}")

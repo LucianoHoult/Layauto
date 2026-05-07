@@ -332,6 +332,21 @@ def load_site_config(site_yaml: str) -> dict:
     output = cfg.setdefault('output', {})
     output['dir'] = resolve(output.get('dir'))
 
+    # ---- Calibre integration block (optional) --------------
+    # Path-valued fields are resolved here so downstream
+    # consumers (calibre_query_extract.sh, lvs_xref_parser)
+    # always see absolute paths. The output-file fields keep
+    # their {ts} / {cell} pattern tokens — those are expanded
+    # at write time, not at config-load time.
+    calibre = cfg.get('calibre')
+    if calibre is not None:
+        calibre['svdb_dir']          = resolve(calibre.get('svdb_dir'))
+        calibre['dummy_fixture_dir'] = resolve(calibre.get('dummy_fixture_dir'))
+        ixref = calibre.get('ixref')
+        if ixref is not None:
+            ixref['output']      = resolve(ixref.get('output'))
+            ixref['parsed_yaml'] = resolve(ixref.get('parsed_yaml'))
+
     return cfg
 
 

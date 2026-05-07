@@ -28,6 +28,7 @@ from core.data_model import (
 from core.grid import MultiLayerGrid, create_mvp_grid
 from tech.config_loader import get_tech_config
 from tech.layer_map import is_cut_layer
+from io_adapters.lvs_xref_parser import InstanceXref
 
 
 def parse_calibre_device_query(filepath: str) -> List[Device]:
@@ -86,6 +87,27 @@ def parse_bbox_by_layer(filepath: str) -> Dict[str, List[dict]]:
     """
     with open(filepath) as f:
         return json.load(f)
+
+
+def _load_xref_if_present(path: Optional[str]) -> Optional[InstanceXref]:
+    """Resolve an ``ixref_path`` argument into an ``InstanceXref``.
+
+    ``None`` and missing-file are both treated as "no xref"; the
+    pipeline keeps running with the dummy fixture that already
+    speaks schematic names. The extension picks the parser:
+    ``.yaml``/``.yml`` reads the middle file via
+    ``load_xref_yaml``; everything else is treated as the raw
+    ``iXref.temp`` and parsed by ``parse_ixref``.
+    """
+    if not path or not os.path.exists(path):
+        return None
+    from io_adapters.lvs_xref_parser import (
+        parse_ixref, load_xref_yaml,
+    )
+    ext = os.path.splitext(path)[1].lower()
+    if ext in ('.yaml', '.yml'):
+        return load_xref_yaml(path)
+    return parse_ixref(path)
 
 
 # =============================================================
@@ -205,7 +227,8 @@ def _device_for_shape(sr: ShapeRecord,
 
 def apply_lvs_overlay(pool: List[ShapeRecord],
                       net_data: Dict[str, dict],
-                      devices: List[Device]) -> Dict[str, int]:
+                      devices: List[Device],
+                      xref: Optional[InstanceXref] = None) -> Dict[str, int]:
     """Stamp ``net_id`` / ``device_id`` / ``pin_role`` onto matching records.
 
     Matches by ``(layer, bbox_nm)`` — the same key the GDS round-trip uses,
@@ -220,6 +243,14 @@ def apply_lvs_overlay(pool: List[ShapeRecord],
     ``core/solver.py::_reshape_li_sd_bars`` walk LI segments by
     ``shape_record.device_id`` instead of falling back to the
     ``li_nmos_*`` / ``li_pmos_*`` ``desc`` substring filter.
+
+    Production hook: ``xref`` (parsed Calibre iXref.temp) is the
+    SVDB ↔ schematic device-name bridge. Net pin entries that
+    reference an SVDB-side name (e.g. ``MMM0``) get translated to
+    the schematic name (e.g. ``MP0``) before the per-shape device
+    pick. The dummy fixture's net query already speaks schematic
+    names, so the translation is a no-op for it; the seam is what
+    a production SVDB query needs.
     """
     by_key: Dict[Tuple[str, Tuple[int, int, int, int]], ShapeRecord] = {}
     for sr in pool:
@@ -228,12 +259,26 @@ def apply_lvs_overlay(pool: List[ShapeRecord],
     pin_lookup = _device_pin_lookup(devices)
     matched_per_net: Dict[str, int] = {}
 
+    schematic_names = {d.inst_name for d in devices}
+    by_source = xref.by_source if xref is not None else {}
+
+    def to_schematic(name: str) -> str:
+        # Already a schematic name → no translation; otherwise look
+        # up the iXref. Unknown names (no schematic device, no xref
+        # entry) are returned verbatim and will simply fail the
+        # candidate filter — same conservative-defaults behaviour
+        # the rest of the parser uses.
+        if name in schematic_names:
+            return name
+        return by_source.get(name, name)
+
     for net_name, nd in net_data.items():
         # Per-net pin device list — restricts the per-shape device pick
         # to instances that actually claim this net. For VSS / VDD /
         # IN the list has one device; for OUT it has both, and the
         # geometric tiebreaker picks correctly.
-        pin_devices = [d_name for d_name, _pin in nd.get('pins', [])]
+        pin_devices = [to_schematic(d_name)
+                       for d_name, _pin in nd.get('pins', [])]
 
         for shape in nd.get('shapes', []):
             layer = shape['layer']
@@ -389,6 +434,7 @@ def build_layout_model(device_query_path: str,
                        net_query_path: str,
                        bbox_path: str,
                        layout_json_path: str = None,
+                       ixref_path: str = None,
                        config=None) -> Tuple[LayoutModel, MultiLayerGrid]:
     """
     Build complete LayoutModel and grid system from parsed data.
@@ -401,6 +447,10 @@ def build_layout_model(device_query_path: str,
         net_query_path: Path to Calibre net query JSON
         bbox_path: Path to bbox-by-layer JSON
         layout_json_path: Optional path to full layout JSON (for cell params)
+        ixref_path: Optional path to a parsed iXref artifact. Two
+            forms are accepted: the raw ``iXref.temp`` (auto-parsed
+            via ``parse_ixref``) or the YAML middle file produced
+            by ``write_xref_yaml`` (auto-detected by extension).
         config: TechConfig instance (uses default if None)
 
     Returns:
@@ -413,10 +463,11 @@ def build_layout_model(device_query_path: str,
     devices = parse_calibre_device_query(device_query_path)
     net_data = parse_calibre_net_query(net_query_path)
     bbox_data = parse_bbox_by_layer(bbox_path)
+    xref = _load_xref_if_present(ixref_path)
 
     # --- M3: build geometric shape_pool first (GDS truth) ---
     shape_pool = build_shape_pool(bbox_data)
-    apply_lvs_overlay(shape_pool, net_data, devices)
+    apply_lvs_overlay(shape_pool, net_data, devices, xref=xref)
     # Index for stamping the per-segment backlink below.
     pool_by_key = {(sr.layer, sr.bbox_nm): sr for sr in shape_pool}
 

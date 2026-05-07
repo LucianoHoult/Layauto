@@ -27,6 +27,11 @@ inputs:
   # Calibre SVDB queries (or production-environment equivalents)
   device_query:   ../dummy/fixtures/calibre_device_query.json
   net_query:      ../dummy/fixtures/calibre_net_query.json
+  # Optional: SVDB INSTANCE XREF dump (raw .temp or parsed .yaml).
+  # Used to translate SVDB-extracted device names back to schematic
+  # names during apply_lvs_overlay. Null = skip translation
+  # (production runs that share names between schematic and SVDB).
+  ixref:          ../dummy/fixtures/iXref.temp
   # GDS-derived geometry pool (truth source for shape_pool)
   bbox_by_layer:  ../dummy/fixtures/bbox_by_layer.json
   # Optional richer JSON (full layout dict) — falls back to
@@ -41,11 +46,39 @@ inputs:
 output:
   dir:            ../output
 
-# ---- Deferred to follow-up discussion ------------------------
-# calibre:
-#   svdb_dir:   ...
-#   drc_rules:  ...
-#   lvs_rules:  ...
+# ---- Calibre integration ------------------------------------
+# Production knobs for the SVDB query / xref extraction step.
+# `dummy_mode: true` short-circuits the actual `calibre -query`
+# call and reads pre-baked fixtures from `dummy_fixture_dir`,
+# which is what every test + the MVP pipeline uses today.
+# Flipping `dummy_mode: false` and pointing `svdb_dir` at a real
+# SVDB is the only edit needed when moving to production.
+calibre:
+  dummy_mode:           true
+  # SVDB database directory. In dummy_mode this is unused, but
+  # the path is still validated by `load_site_config`.
+  svdb_dir:             /local/svdb_dir
+  # Top cell name to query inside the SVDB (the `BUFLVT`-style
+  # token in iXref headers). Falls back to the cell parsed from
+  # `inputs.original_cdl` if null.
+  cell_name:            null
+  # Where to look for pre-baked fixture artifacts when
+  # dummy_mode is true. Production runs ignore this.
+  dummy_fixture_dir:    ../dummy/fixtures
+  # Instance Cross Reference (`INSTANCE XREF WRITE`) — pairs
+  # each schematic device name with its SVDB-extracted name.
+  ixref:
+    # Output file. Pattern tokens get expanded at write time:
+    #   {ts}    → strftime(timestamp_format)
+    #   {cell}  → calibre.cell_name
+    # Resolved relative to this site_config's directory.
+    output:             ../output/iXref_{cell}_{ts}.temp
+    timestamp_format:   "%Y%m%d_%H%M%S"
+    # Parsed-form middle file consumed by `apply_lvs_overlay`.
+    # If null, the parser writes alongside `output` with `.yaml`.
+    parsed_yaml:        ../output/lvs_device_xref.yaml
+
+# ---- Virtuoso integration (deferred — M7) -------------------
 # virtuoso:
 #   lib_name:   ...
 #   cell_name:  ...
