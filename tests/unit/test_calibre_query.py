@@ -841,6 +841,57 @@ def test_run_calibre_nxref_no_output_file_raises(tmp_path):
             run_calibre_nxref(str(svdb), str(tmp_path / "x.nxf"))
 
 
+def test_run_calibre_ixref_rejects_stale_output(tmp_path):
+    """Pre-existing iXref.temp from a prior run must be deleted before
+    invoking Calibre, so the post-subprocess existence check catches
+    Calibre exiting 0 without rewriting (e.g., query-version mismatch
+    or silently ignored output path)."""
+    svdb = tmp_path / "svdb_dir"
+    svdb.mkdir()
+    out = tmp_path / "iXref.temp"
+    out.write_text("STALE CONTENT FROM PRIOR RUN\n")
+
+    seen_during_subprocess = {}
+
+    def fake_run(cmd, **kwargs):
+        # By the time the subprocess is invoked, the stale file must
+        # already be gone — otherwise a Calibre that silently no-ops
+        # would let stale data through.
+        seen_during_subprocess['out_exists'] = out.exists()
+        return _FakeCompleted(returncode=0)
+
+    with patch('io_adapters.calibre_query.shutil.which',
+               return_value='/usr/bin/calibre'), \
+         patch('io_adapters.calibre_query.subprocess.run',
+               side_effect=fake_run):
+        with pytest.raises(CalibreQueryError, match="did not"):
+            run_calibre_ixref(str(svdb), str(out))
+    assert seen_during_subprocess['out_exists'] is False
+
+
+def test_run_calibre_nxref_rejects_stale_output(tmp_path):
+    """Same stale-output protection as ixref — required so a Calibre
+    silent failure can't leak stale nets into the join with NET NAMES."""
+    svdb = tmp_path / "svdb_dir"
+    svdb.mkdir()
+    out = tmp_path / "nXref.temp"
+    out.write_text("STALE CONTENT FROM PRIOR RUN\n")
+
+    seen_during_subprocess = {}
+
+    def fake_run(cmd, **kwargs):
+        seen_during_subprocess['out_exists'] = out.exists()
+        return _FakeCompleted(returncode=0)
+
+    with patch('io_adapters.calibre_query.shutil.which',
+               return_value='/usr/bin/calibre'), \
+         patch('io_adapters.calibre_query.subprocess.run',
+               side_effect=fake_run):
+        with pytest.raises(CalibreQueryError, match="did not"):
+            run_calibre_nxref(str(svdb), str(out))
+    assert seen_during_subprocess['out_exists'] is False
+
+
 def test_run_calibre_net_names_subprocess_invocation(
         tmp_path, net_names_path):
     svdb = tmp_path / "svdb_dir"

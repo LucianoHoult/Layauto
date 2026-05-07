@@ -246,6 +246,12 @@ def run_calibre_ixref(svdb_dir: str,
     output file, raises ``CalibreQueryError`` with the captured streams
     in the message. Pre-spawn, raises ``CalibreNotFoundError`` if
     ``shutil.which(calibre_bin)`` returns ``None``.
+
+    Any pre-existing file at ``ixref_path`` is removed before the
+    subprocess runs so the post-spawn existence check actually
+    verifies that *this* invocation wrote the file (Calibre is known
+    to exit 0 without rewriting on query-version mismatch or silently
+    ignored output paths).
     """
     if shutil.which(calibre_bin) is None:
         raise CalibreNotFoundError(
@@ -257,6 +263,9 @@ def run_calibre_ixref(svdb_dir: str,
         raise CalibreQueryError(
             f"SVDB directory not found: {svdb_dir!r}"
         )
+
+    if os.path.exists(ixref_path):
+        os.remove(ixref_path)
 
     cmds = (
         f"INSTANCE XREF WRITE {ixref_path}\n"
@@ -689,7 +698,11 @@ def run_calibre_nxref(svdb_dir: str,
         NET XREF WRITE <nxref_path>
         EXIT
 
-    Same diagnostics as :func:`run_calibre_ixref`.
+    Same diagnostics as :func:`run_calibre_ixref`, including stale-
+    output protection: any pre-existing file at ``nxref_path`` is
+    removed before the subprocess runs, so a Calibre-side silent
+    failure (exit 0 but no rewrite) cannot leak stale data into the
+    downstream join.
     """
     if shutil.which(calibre_bin) is None:
         raise CalibreNotFoundError(
@@ -701,6 +714,9 @@ def run_calibre_nxref(svdb_dir: str,
         raise CalibreQueryError(
             f"SVDB directory not found: {svdb_dir!r}"
         )
+
+    if os.path.exists(nxref_path):
+        os.remove(nxref_path)
 
     cmds = (
         f"NET XREF WRITE {nxref_path}\n"
