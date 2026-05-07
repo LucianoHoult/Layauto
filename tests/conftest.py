@@ -56,3 +56,13 @@ def nxref_temp_path():
 @pytest.fixture
 def net_names_path():
     return os.path.join(FIXTURE_DIR, 'net_names.txt')
+
+
+@pytest.fixture
+def device_info_M0_path():
+    return os.path.join(FIXTURE_DIR, 'device_info_M0.txt')
+
+
+@pytest.fixture
+def device_info_M1_path():
+    return os.path.join(FIXTURE_DIR, 'device_info_M1.txt')

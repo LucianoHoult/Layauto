@@ -4,7 +4,37 @@
 
 **Format.** One block per shipped milestone or sub-milestone. Each block carries: date / branch / what shipped / files touched / acceptance evidence / notes.
 
-**Test-count series** (cumulative): M0 33 → M1 38 → M2 50 → M3 65 → M4a 81+4 → M4b 119 → M4c 134 → M4d 155 → M4e 174 → M5 187 → M6a 201 → M6b 214 (+ config-consolidation: no test delta) → iXref 243 → nXref+NET-NAMES 284.
+**Test-count series** (cumulative): M0 33 → M1 38 → M2 50 → M3 65 → M4a 81+4 → M4b 119 → M4c 134 → M4d 155 → M4e 174 → M5 187 → M6a 201 → M6b 214 (+ config-consolidation: no test delta) → iXref 243 → nXref+NET-NAMES 284 → DEVICE-INFO 316.
+
+---
+
+## 2026-05-07 — Stage 1.5 extended: DEVICE INFO (M7 seam, third slice)
+
+**Branch:** `claude/refine-test-fixtures-nIkdZ`
+
+Adds the per-device `DEVICE INFO <layout_inst>` Calibre HDB query — the third query in Stage 1.5 — and produces an `output/device_info.yaml` middle file that records, per layout instance, the seed-shape bbox of every LVS-derived layer attached to that device.
+
+`DEVICE INFO` is invoked once per device, with `<layout_inst>` taken from the parsed iXref (`devices[*].layout_inst`, e.g. `M0`, `M1`). The response is stdout-only — Calibre never writes a file — so the runner captures stdout and slices the bounded `Device_Info ... END OF RESPONSE` block via `_extract_device_info_block`. Vertex coordinates land as `<y> <x>` integer pairs in `1 / precision` micrometres (precision=20000 → 1 unit = 0.05 nm); the middle file converts them to a `bbox_um` dict per shape.
+
+- **`io_adapters/calibre_query.py`** — five new functions:
+  - `parse_device_info` — locates `Device_Info <precision>` header, the `Info:` anchor, the `0 0 <n> <date>` count line; reads `n` opaque metadata lines (the first is `device_type_number`, the last is the seed layer name; pin nets and property values in between are preserved as raw strings since per-device-type counts vary). Walks the post-metadata block parsing `p <idx> <nvert>` shape headers, count lines (skipped), and bare layer-name strings (start a new layer). Robust against the `1 1 0 <date>` vs `<count> 0 <date>` count-line ambiguity in the manual.
+  - `write_device_info_yaml` — serialises only what the user asked for (`layout_inst`, `device_type_number`, per-layer `{name, shapes: [{bbox_um}]}`); pin nets, property values, and raw vertex tuples are intentionally elided.
+  - `run_calibre_device_info` — `calibre -query` subprocess; stdin `DEVICE INFO <inst>\nEXIT\n`; stdout-block extraction; missing-binary / non-zero-exit / missing-block / missing-terminator diagnostics.
+  - `run_dummy_device_info` — copies a per-instance `dummy/fixtures/device_info_<inst>.txt`.
+  - `extract_device_info` — top-level orchestrator: iterates `layout_insts`, dispatches one query per device, returns `{devices: [...]}`.
+- **New `dummy/fixtures/device_info_M0.txt`** — hand-written-equivalent NMOS dummy (auto-regenerated from `generate_calibre_device_info` so the two stay byte-consistent). Seed layer `ngate_lvt`, gate bbox 0.044 × 0.0275 → 0.064 × 0.1525 um (poly width × fin span with half-pitch margins).
+- **New `dummy/fixtures/device_info_M1.txt`** — PMOS analogue. Seed layer `pgate_lvt`, gate bbox 0.044 × 0.2275 → 0.064 × 0.4025 um.
+- **New `dummy/fixtures/device_info.yaml`** — committed parsed reference for byte-comparison in tests.
+- **`dummy/gen_buffer_layout.py`** — `generate_calibre_device_info(layout_data, layout_inst, filename)` reproduces both per-device fixtures from the inverter layout dict; `DEVICE_INFO_PRECISION` constant lifts the 20000 magic number; wired into `generate_all_fixtures` to emit one file per device.
+- **`tech/site_config.yaml`** — adds `calibre.{device_info_dir, dummy_device_info_dir}` and `inputs.device_info_yaml`.
+- **`tech/config_loader.py`** — resolves the two new path-valued fields under `calibre:`.
+- **`pipeline/run_mvp.py`** — Stage 1.5 now also runs `extract_device_info` after the iXref / net-xref pair (driven by `parsed_ixref['devices'][*].layout_inst`); banner adds a `DevInfo: devices=N  layers=N  shapes=N` summary; legacy site_configs without `calibre.dummy_device_info_dir` get the same repo-default fallback as the prior slices (`dummy/fixtures/`).
+
+**Files touched.** `io_adapters/calibre_query.py`, `dummy/gen_buffer_layout.py`, `tech/site_config.yaml`, `tech/config_loader.py`, `pipeline/run_mvp.py`, `tests/conftest.py`, `tests/unit/test_calibre_query.py`, `docs/architecture.md`, `docs/changelog.md`. New: `dummy/fixtures/device_info_M0.txt`, `dummy/fixtures/device_info_M1.txt`, `dummy/fixtures/device_info.yaml`.
+
+**Acceptance.** Pytest 316/316 (286 pre + 30 new in `test_calibre_query.py`). Existing four golden artifacts (`buffer_resized.{json,cdl}`, `resize_report.txt`, `annotation_coverage.txt`) md5-identical to the nXref baseline. New artifacts: `output/device_info_<inst>.txt` (one per device) plus `output/device_info.yaml`. `python3 pipeline/run_mvp.py` adds `DevInfo: devices=2  layers=2  shapes=2` to the Stage 1.5 banner.
+
+**Notes.** One subprocess per device matches the per-query pattern of the prior slices. Production-side consolidation into a single interactive HDB session that runs all queries together is M7 work (per backlog). The parser preserves opaque pin nets / property values / vertex tuples in memory but elides them from the YAML middle file, since the user's stated need is "each device's related layers' name and shapes' bbox(converted to original values in um)". The corner-ordering convention (LL→LR→UR→UL with `(y, x)` pairs) is per the user's spec; the parser computes the bbox via min/max so the convention is irrelevant for the saved output.
 
 ---
 

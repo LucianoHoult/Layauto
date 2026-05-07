@@ -288,6 +288,7 @@ def run_full_pipeline(site_config_path: str = None,
     from io_adapters.calibre_query import (
         extract_ixref, write_ixref_yaml,
         extract_net_xref, write_net_xref_yaml,
+        extract_device_info, write_device_info_yaml,
     )
     calibre_cfg = site.get('calibre', {}) or {}
     effective_lvs_mode = lvs_mode or calibre_cfg.get('mode') or 'dummy'
@@ -302,6 +303,10 @@ def run_full_pipeline(site_config_path: str = None,
                        or os.path.join(output_dir, 'ixref.yaml'))
     net_xref_yaml_path = (inputs.get('net_xref_yaml')
                           or os.path.join(output_dir, 'net_xref.yaml'))
+    device_info_yaml_path = (inputs.get('device_info_yaml')
+                              or os.path.join(output_dir, 'device_info.yaml'))
+    device_info_dir = (calibre_cfg.get('device_info_dir')
+                       or output_dir)
 
     # Fall back to committed dummy fixtures so legacy site_configs
     # without a populated calibre: block still resolve a sensible
@@ -312,6 +317,7 @@ def run_full_pipeline(site_config_path: str = None,
     dummy_ixref = calibre_cfg.get('dummy_ixref')
     dummy_nxref = calibre_cfg.get('dummy_nxref')
     dummy_net_names = calibre_cfg.get('dummy_net_names')
+    dummy_device_info_dir = calibre_cfg.get('dummy_device_info_dir')
     if effective_lvs_mode == 'dummy':
         if not dummy_ixref:
             dummy_ixref = os.path.join(fixture_dir, 'iXref.temp')
@@ -319,6 +325,8 @@ def run_full_pipeline(site_config_path: str = None,
             dummy_nxref = os.path.join(fixture_dir, 'nXref.temp')
         if not dummy_net_names:
             dummy_net_names = os.path.join(fixture_dir, 'net_names.txt')
+        if not dummy_device_info_dir:
+            dummy_device_info_dir = fixture_dir
 
     print(f"\n[Stage 1.5] Extracting LVS xrefs (mode={effective_lvs_mode})...")
     parsed_ixref = extract_ixref(
@@ -349,11 +357,33 @@ def run_full_pipeline(site_config_path: str = None,
                        if n['schematic_name'] != n['lvs_name'])
     print(f"  nXref:  cell={parsed_net_xref['cell']['layout_name']!r}  "
           f"nets={n_nets}  renumbered={n_renumbered}")
-    print(f"  iXref.temp:    {ixref_temp_path}")
-    print(f"  nXref.temp:    {nxref_temp_path}")
-    print(f"  net_names.txt: {net_names_path}")
-    print(f"  ixref.yaml:    {ixref_yaml_path}")
-    print(f"  net_xref.yaml: {net_xref_yaml_path}")
+
+    # DEVICE INFO — one query per layout instance, driven by iXref.
+    layout_insts = [d['layout_inst'] for d in parsed_ixref['devices']]
+    parsed_device_info = extract_device_info(
+        mode=effective_lvs_mode,
+        svdb_dir=calibre_cfg.get('svdb_dir'),
+        layout_insts=layout_insts,
+        out_dir=device_info_dir,
+        dummy_source_dir=dummy_device_info_dir,
+        timeout=calibre_cfg.get('timeout_s', 300),
+    )
+    write_device_info_yaml(parsed_device_info, device_info_yaml_path)
+    n_total_layers = sum(len(d['layers']) for d in parsed_device_info['devices'])
+    n_total_shapes = sum(
+        len(layer['shapes'])
+        for d in parsed_device_info['devices']
+        for layer in d['layers']
+    )
+    print(f"  DevInfo: devices={len(layout_insts)}  "
+          f"layers={n_total_layers}  shapes={n_total_shapes}")
+    print(f"  iXref.temp:        {ixref_temp_path}")
+    print(f"  nXref.temp:        {nxref_temp_path}")
+    print(f"  net_names.txt:     {net_names_path}")
+    print(f"  device_info_*.txt: {device_info_dir}")
+    print(f"  ixref.yaml:        {ixref_yaml_path}")
+    print(f"  net_xref.yaml:     {net_xref_yaml_path}")
+    print(f"  device_info.yaml:  {device_info_yaml_path}")
 
     # ---- Stage 2: Parse layout ----
     print("\n[Stage 2] Parsing layout data...")

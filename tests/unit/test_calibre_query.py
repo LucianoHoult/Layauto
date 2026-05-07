@@ -36,6 +36,11 @@ from io_adapters.calibre_query import (
     run_calibre_nxref,
     run_calibre_net_names,
     extract_net_xref,
+    parse_device_info,
+    write_device_info_yaml,
+    run_dummy_device_info,
+    run_calibre_device_info,
+    extract_device_info,
     CalibreNotFoundError,
     CalibreQueryError,
 )
@@ -1008,3 +1013,506 @@ def test_net_names_generator_matches_committed_fixture(
     generate_calibre_net_names(layout, str(out),
                                 timestamp='May 07 03:00:00 2026')
     assert out.read_text() == open(net_names_path).read()
+
+
+# =====================================================================
+# DEVICE INFO parser
+# =====================================================================
+
+def _write_device_info(tmp_path,
+                        seed_layer='ngate_lvt',
+                        n_metadata=11,
+                        metadata_lines=None,
+                        layer_blocks=None,
+                        precision=20000,
+                        timestamp='May 07 03:00:00 2026'):
+    """Build a synthetic DEVICE INFO response file.
+
+    ``metadata_lines`` defaults to 9 lines (4 pin nets + 5 properties)
+    so the total block lands at n_metadata=11 (1 device_type +
+    9 + seed_layer).
+
+    ``layer_blocks`` is a list of ``(layer_name, [list_of_vertex_lists])``;
+    if None, a single ngate_lvt with one 4-vertex shape is used.
+    """
+    if metadata_lines is None:
+        metadata_lines = ['IN', 'OUT', 'VSS', 'VSS',
+                          '2e-08', '1.25e-07', '5', '1', '1']
+    if layer_blocks is None:
+        layer_blocks = [
+            (seed_layer, [[(560, 880), (3040, 880),
+                            (3040, 1280), (560, 1280)]]),
+        ]
+
+    lines = [f'Device_Info {precision}', 'Info:',
+             f'0 0 {n_metadata} {timestamp}', '0']
+    lines.extend(metadata_lines)
+    # First layer name is the last metadata line.
+    lines.append(layer_blocks[0][0])
+    for li, (name, shapes) in enumerate(layer_blocks):
+        if li > 0:
+            lines.append(name)
+        lines.append(f'{len(shapes)} 1 0 {timestamp}')
+        for si, verts in enumerate(shapes, start=1):
+            lines.append(f'p {si} {len(verts)}')
+            for y, x in verts:
+                lines.append(f'{y} {x}')
+    lines.append('END OF RESPONSE')
+
+    path = tmp_path / 'device_info.txt'
+    path.write_text('\n'.join(lines) + '\n')
+    return str(path)
+
+
+def test_parse_device_info_committed_M0(device_info_M0_path):
+    """Committed M0 dummy parses into the expected schema and bbox."""
+    parsed = parse_device_info(device_info_M0_path)
+    assert parsed['precision'] == 20000
+    assert parsed['device_type_number'] == 0
+    assert len(parsed['layers']) == 1
+    layer = parsed['layers'][0]
+    assert layer['name'] == 'ngate_lvt'
+    assert len(layer['shapes']) == 1
+    bbox = layer['shapes'][0]['bbox_um']
+    # 1 unit = 0.05 nm = 5e-5 um, so /20000 yields um directly.
+    assert bbox == {'x1': 0.044, 'y1': 0.0275,
+                    'x2': 0.064, 'y2': 0.1525}
+
+
+def test_parse_device_info_committed_M1(device_info_M1_path):
+    parsed = parse_device_info(device_info_M1_path)
+    assert parsed['device_type_number'] == 1
+    layer = parsed['layers'][0]
+    assert layer['name'] == 'pgate_lvt'
+    bbox = layer['shapes'][0]['bbox_um']
+    assert bbox == {'x1': 0.044, 'y1': 0.2275,
+                    'x2': 0.064, 'y2': 0.4025}
+
+
+def test_parse_device_info_metadata_block_opaque(device_info_M0_path):
+    """Pin nets and property values stay in ``metadata_lines`` as raw
+    strings (we don't know per-device-type pin/property counts)."""
+    parsed = parse_device_info(device_info_M0_path)
+    assert parsed['metadata_lines'] == [
+        'IN', 'OUT', 'VSS', 'VSS',
+        '2e-08', '1.25e-07', '5', '1', '1',
+    ]
+
+
+def test_parse_device_info_user_buflvt_example(tmp_path):
+    """Reproduces the user's BUFLVT DEVICE INFO example: pins
+    [I, 2, VSS, VBB], 5 properties, ngate_lvt with one 4-vertex
+    shape at (1800,630)..(1800,1890)."""
+    path = _write_device_info(
+        tmp_path,
+        n_metadata=11,
+        metadata_lines=['I', '2', 'VSS', 'VBB',
+                        '9e-09', '4e-08', '1', '2', '1'],
+        layer_blocks=[(
+            'ngate_lvt',
+            [[(1800, 630), (1980, 630), (1980, 1890), (1800, 1890)]],
+        )],
+        timestamp='Feb 27 11:36:00 2026',
+    )
+    parsed = parse_device_info(path)
+    assert parsed['layers'][0]['name'] == 'ngate_lvt'
+    bbox = parsed['layers'][0]['shapes'][0]['bbox_um']
+    # x range 630..1890 → 0.0315..0.0945 um;
+    # y range 1800..1980 → 0.09..0.099 um.
+    assert bbox == {'x1': 0.0315, 'y1': 0.09,
+                    'x2': 0.0945, 'y2': 0.099}
+
+
+def test_parse_device_info_multiple_shapes_one_layer(tmp_path):
+    path = _write_device_info(
+        tmp_path,
+        layer_blocks=[(
+            'ngate_lvt',
+            [
+                [(0, 0), (200, 0), (200, 100), (0, 100)],
+                [(400, 0), (600, 0), (600, 100), (400, 100)],
+            ],
+        )],
+    )
+    parsed = parse_device_info(path)
+    layer = parsed['layers'][0]
+    assert len(layer['shapes']) == 2
+    assert layer['shapes'][0]['bbox_um'] == {'x1': 0.0, 'y1': 0.0,
+                                              'x2': 0.005, 'y2': 0.01}
+    assert layer['shapes'][1]['bbox_um'] == {'x1': 0.0, 'y1': 0.02,
+                                              'x2': 0.005, 'y2': 0.03}
+
+
+def test_parse_device_info_multiple_layers(tmp_path):
+    path = _write_device_info(
+        tmp_path,
+        layer_blocks=[
+            ('ngate_lvt',
+             [[(560, 880), (3040, 880), (3040, 1280), (560, 1280)]]),
+            ('od_seed',
+             [[(0, 0), (200, 0), (200, 100), (0, 100)]]),
+        ],
+    )
+    parsed = parse_device_info(path)
+    assert [l['name'] for l in parsed['layers']] == ['ngate_lvt',
+                                                       'od_seed']
+    assert len(parsed['layers'][1]['shapes']) == 1
+
+
+def test_parse_device_info_missing_file_raises(tmp_path):
+    with pytest.raises(FileNotFoundError):
+        parse_device_info(str(tmp_path / 'nope.txt'))
+
+
+def test_parse_device_info_missing_header_raises(tmp_path):
+    path = tmp_path / 'bad.txt'
+    path.write_text('Info:\n0 0 1 ts\n0\nngate_lvt\n'
+                    '1 1 0 ts\np 1 4\n0 0\n10 0\n10 10\n0 10\n'
+                    'END OF RESPONSE\n')
+    with pytest.raises(ValueError, match="missing 'Device_Info'"):
+        parse_device_info(str(path))
+
+
+def test_parse_device_info_missing_info_anchor_raises(tmp_path):
+    path = tmp_path / 'bad.txt'
+    path.write_text('Device_Info 20000\n0 0 1 ts\n0\nngate_lvt\n'
+                    '1 1 0 ts\np 1 4\n0 0\n10 0\n10 10\n0 10\n'
+                    'END OF RESPONSE\n')
+    with pytest.raises(ValueError, match="missing 'Info:' anchor"):
+        parse_device_info(str(path))
+
+
+def test_parse_device_info_malformed_count_line_raises(tmp_path):
+    path = tmp_path / 'bad.txt'
+    path.write_text('Device_Info 20000\nInfo:\nNOT A COUNT\n0\n'
+                    'ngate_lvt\n1 1 0 ts\np 1 4\n0 0\n10 0\n'
+                    '10 10\n0 10\nEND OF RESPONSE\n')
+    with pytest.raises(ValueError, match="malformed count line"):
+        parse_device_info(str(path))
+
+
+def test_parse_device_info_truncated_metadata_raises(tmp_path):
+    """Declared n=20 but only 3 metadata lines available."""
+    path = tmp_path / 'bad.txt'
+    path.write_text('Device_Info 20000\nInfo:\n0 0 20 ts\n0\nIN\n'
+                    'ngate_lvt\nEND OF RESPONSE\n')
+    with pytest.raises(ValueError, match="metadata line"):
+        parse_device_info(str(path))
+
+
+def test_parse_device_info_truncated_vertex_raises(tmp_path):
+    """Shape declares 4 vertices but the next non-vertex line
+    (`END OF RESPONSE`) shows up after only 2 — surface the malformed
+    vertex line so the caller can localise the truncation."""
+    path = tmp_path / 'bad.txt'
+    path.write_text('Device_Info 20000\nInfo:\n0 0 1 ts\n0\n'
+                    'ngate_lvt\n1 1 0 ts\np 1 4\n0 0\n10 0\n'
+                    'END OF RESPONSE\n')
+    with pytest.raises(ValueError, match='vertex line malformed'):
+        parse_device_info(str(path))
+
+
+def test_parse_device_info_non_int_vertex_raises(tmp_path):
+    path = _write_device_info(tmp_path)
+    # Corrupt one vertex line.
+    text = open(path).read().replace('560 880', 'foo 880', 1)
+    open(path, 'w').write(text)
+    with pytest.raises(ValueError, match="vertex tokens"):
+        parse_device_info(path)
+
+
+def test_parse_device_info_missing_terminator_raises(tmp_path):
+    """A capture truncated after a complete shape (no END OF RESPONSE)
+    must fail loud — otherwise a partial Calibre stdout-grab silently
+    persists an incomplete device_info.yaml."""
+    path = tmp_path / 'truncated.txt'
+    path.write_text(
+        'Device_Info 20000\n'
+        'Info:\n'
+        '0 0 1 ts\n'
+        '0\n'
+        'ngate_lvt\n'
+        '1 1 0 ts\n'
+        'p 1 4\n'
+        '0 0\n'
+        '10 0\n'
+        '10 10\n'
+        '0 10\n'
+        # No END OF RESPONSE.
+    )
+    with pytest.raises(ValueError, match="END OF RESPONSE"):
+        parse_device_info(str(path))
+
+
+def test_parse_device_info_terminator_at_eof_ok(tmp_path):
+    """Sanity check: terminator present (even without trailing
+    newline) parses cleanly."""
+    path = tmp_path / 'ok.txt'
+    # n_metadata=2: device_type_number + seed_layer_name (no
+    # pin nets / property values for this synthetic input).
+    path.write_text(
+        'Device_Info 20000\n'
+        'Info:\n'
+        '0 0 2 ts\n'
+        '0\n'
+        'ngate_lvt\n'
+        '1 1 0 ts\n'
+        'p 1 4\n'
+        '0 0\n'
+        '10 0\n'
+        '10 10\n'
+        '0 10\n'
+        'END OF RESPONSE'
+    )
+    parsed = parse_device_info(str(path))
+    assert parsed['layers'][0]['name'] == 'ngate_lvt'
+
+
+# =====================================================================
+# DEVICE INFO YAML writer
+# =====================================================================
+
+def test_device_info_yaml_matches_committed_reference(
+        device_info_M0_path, device_info_M1_path,
+        fixture_dir, tmp_path):
+    parsed_M0 = parse_device_info(device_info_M0_path)
+    parsed_M1 = parse_device_info(device_info_M1_path)
+    payload = {
+        'devices': [
+            {'layout_inst': 'M0', **parsed_M0},
+            {'layout_inst': 'M1', **parsed_M1},
+        ],
+    }
+    out = tmp_path / 'device_info.yaml'
+    write_device_info_yaml(payload, str(out))
+    reference = os.path.join(fixture_dir, 'device_info.yaml')
+    with open(reference) as f:
+        ref_dict = yaml.safe_load(f)
+    with open(out) as f:
+        written_dict = yaml.safe_load(f)
+    assert written_dict == ref_dict
+
+
+def test_write_device_info_yaml_drops_metadata_and_vertices(
+        device_info_M0_path, tmp_path):
+    """The middle file deliberately serialises only what the user
+    asked for (per-device layer name + bbox_um); raw vertices and
+    opaque pin / property metadata are intentionally omitted."""
+    parsed = parse_device_info(device_info_M0_path)
+    out = tmp_path / 'di.yaml'
+    write_device_info_yaml(
+        {'devices': [{'layout_inst': 'M0', **parsed}]},
+        str(out),
+    )
+    with open(out) as f:
+        loaded = yaml.safe_load(f)
+    dev = loaded['devices'][0]
+    assert 'metadata_lines' not in dev
+    shape = dev['layers'][0]['shapes'][0]
+    assert set(shape.keys()) == {'bbox_um'}
+
+
+# =====================================================================
+# Dummy + Calibre dispatchers
+# =====================================================================
+
+def test_run_dummy_device_info_copies_fixture(device_info_M0_path,
+                                                tmp_path):
+    dst = tmp_path / 'device_info_M0.txt'
+    run_dummy_device_info(svdb_dir=None, layout_inst='M0',
+                          out_path=str(dst),
+                          dummy_source=device_info_M0_path)
+    assert dst.exists()
+    assert dst.read_text() == open(device_info_M0_path).read()
+
+
+def test_run_dummy_device_info_missing_source_raises(tmp_path):
+    with pytest.raises(FileNotFoundError):
+        run_dummy_device_info(svdb_dir=None, layout_inst='M0',
+                              out_path=str(tmp_path / 'out.txt'),
+                              dummy_source=str(tmp_path / 'missing.txt'))
+
+
+def test_run_calibre_device_info_subprocess_invocation(
+        tmp_path, device_info_M0_path):
+    svdb = tmp_path / 'svdb_dir'
+    svdb.mkdir()
+    out = tmp_path / 'out.txt'
+    captured = {}
+    fake_stdout = (
+        "Some banner...\n"
+        + open(device_info_M0_path).read()
+        + "\nQuery server exiting.\n"
+    )
+
+    def fake_run(cmd, **kwargs):
+        captured['cmd'] = cmd
+        captured['input'] = kwargs.get('input')
+        return _FakeCompleted(returncode=0, stdout=fake_stdout)
+
+    with patch('io_adapters.calibre_query.shutil.which',
+               return_value='/usr/bin/calibre'), \
+         patch('io_adapters.calibre_query.subprocess.run',
+               side_effect=fake_run):
+        run_calibre_device_info(str(svdb), 'M0', str(out))
+
+    assert captured['cmd'] == ['calibre', '-query', str(svdb)]
+    assert captured['input'] == "DEVICE INFO M0\nEXIT\n"
+    parsed = parse_device_info(str(out))
+    assert parsed['layers'][0]['name'] == 'ngate_lvt'
+
+
+def test_run_calibre_device_info_missing_binary_raises(tmp_path):
+    with patch('io_adapters.calibre_query.shutil.which',
+               return_value=None):
+        with pytest.raises(CalibreNotFoundError):
+            run_calibre_device_info(str(tmp_path), 'M0',
+                                     str(tmp_path / 'x.txt'))
+
+
+def test_run_calibre_device_info_missing_block_raises(tmp_path):
+    svdb = tmp_path / 'svdb_dir'
+    svdb.mkdir()
+    with patch('io_adapters.calibre_query.shutil.which',
+               return_value='/usr/bin/calibre'), \
+         patch('io_adapters.calibre_query.subprocess.run',
+               return_value=_FakeCompleted(returncode=0,
+                                            stdout='garbage\n')):
+        with pytest.raises(CalibreQueryError, match='Device_Info'):
+            run_calibre_device_info(str(svdb), 'M0',
+                                     str(tmp_path / 'x.txt'))
+
+
+def test_run_calibre_device_info_missing_terminator_raises(tmp_path):
+    svdb = tmp_path / 'svdb_dir'
+    svdb.mkdir()
+    truncated = "Device_Info 20000\nInfo:\n"
+    with patch('io_adapters.calibre_query.shutil.which',
+               return_value='/usr/bin/calibre'), \
+         patch('io_adapters.calibre_query.subprocess.run',
+               return_value=_FakeCompleted(returncode=0,
+                                            stdout=truncated)):
+        with pytest.raises(CalibreQueryError, match='END OF RESPONSE'):
+            run_calibre_device_info(str(svdb), 'M0',
+                                     str(tmp_path / 'x.txt'))
+
+
+# =====================================================================
+# extract_device_info orchestrator
+# =====================================================================
+
+def test_extract_device_info_dummy_mode_end_to_end(
+        fixture_dir, tmp_path):
+    out_dir = tmp_path / 'out'
+    parsed = extract_device_info(
+        mode='dummy',
+        svdb_dir=None,
+        layout_insts=['M0', 'M1'],
+        out_dir=str(out_dir),
+        dummy_source_dir=fixture_dir,
+    )
+    assert (out_dir / 'device_info_M0.txt').exists()
+    assert (out_dir / 'device_info_M1.txt').exists()
+    assert len(parsed['devices']) == 2
+    assert parsed['devices'][0]['layout_inst'] == 'M0'
+    assert parsed['devices'][0]['layers'][0]['name'] == 'ngate_lvt'
+    assert parsed['devices'][1]['layout_inst'] == 'M1'
+    assert parsed['devices'][1]['layers'][0]['name'] == 'pgate_lvt'
+
+
+def test_extract_device_info_calibre_mode_end_to_end(
+        tmp_path, device_info_M0_path, device_info_M1_path):
+    svdb = tmp_path / 'svdb_dir'
+    svdb.mkdir()
+    out_dir = tmp_path / 'out'
+    payloads = {
+        'M0': open(device_info_M0_path).read(),
+        'M1': open(device_info_M1_path).read(),
+    }
+
+    def fake_run(cmd, **kwargs):
+        stdin = kwargs.get('input', '')
+        for inst, payload in payloads.items():
+            if f'DEVICE INFO {inst}' in stdin:
+                return _FakeCompleted(returncode=0, stdout=payload)
+        return _FakeCompleted(returncode=1, stderr='unexpected stdin')
+
+    with patch('io_adapters.calibre_query.shutil.which',
+               return_value='/usr/bin/calibre'), \
+         patch('io_adapters.calibre_query.subprocess.run',
+               side_effect=fake_run):
+        parsed = extract_device_info(
+            mode='calibre', svdb_dir=str(svdb),
+            layout_insts=['M0', 'M1'],
+            out_dir=str(out_dir),
+        )
+    assert parsed['devices'][0]['layers'][0]['name'] == 'ngate_lvt'
+    assert parsed['devices'][1]['layers'][0]['name'] == 'pgate_lvt'
+
+
+def test_extract_device_info_unknown_mode_raises(tmp_path):
+    with pytest.raises(ValueError, match='unknown mode'):
+        extract_device_info(mode='gibberish', svdb_dir=None,
+                            layout_insts=['M0'],
+                            out_dir=str(tmp_path / 'o'))
+
+
+def test_extract_device_info_dummy_mode_requires_source_dir(tmp_path):
+    with pytest.raises(ValueError, match='requires dummy_source_dir'):
+        extract_device_info(mode='dummy', svdb_dir=None,
+                            layout_insts=['M0'],
+                            out_dir=str(tmp_path / 'o'))
+
+
+def test_extract_device_info_calibre_mode_requires_svdb(tmp_path):
+    with pytest.raises(ValueError, match='requires svdb_dir'):
+        extract_device_info(mode='calibre', svdb_dir=None,
+                            layout_insts=['M0'],
+                            out_dir=str(tmp_path / 'o'))
+
+
+def test_extract_device_info_empty_inst_list_returns_empty(tmp_path):
+    parsed = extract_device_info(
+        mode='dummy', svdb_dir=None, layout_insts=[],
+        out_dir=str(tmp_path / 'out'),
+        dummy_source_dir=str(tmp_path),
+    )
+    assert parsed == {'devices': []}
+
+
+# =====================================================================
+# Generator vs committed-fixture parity
+# =====================================================================
+
+def test_device_info_generator_matches_committed_M0(
+        device_info_M0_path, tmp_path):
+    from dummy.gen_buffer_layout import (
+        generate_inverter_layout, generate_calibre_device_info,
+    )
+    layout = generate_inverter_layout(nmos_nfin=5, pmos_nfin=7)
+    out = tmp_path / 'device_info_M0.txt'
+    generate_calibre_device_info(layout, 'M0', str(out),
+                                  timestamp='May 07 03:00:00 2026')
+    assert out.read_text() == open(device_info_M0_path).read()
+
+
+def test_device_info_generator_matches_committed_M1(
+        device_info_M1_path, tmp_path):
+    from dummy.gen_buffer_layout import (
+        generate_inverter_layout, generate_calibre_device_info,
+    )
+    layout = generate_inverter_layout(nmos_nfin=5, pmos_nfin=7)
+    out = tmp_path / 'device_info_M1.txt'
+    generate_calibre_device_info(layout, 'M1', str(out),
+                                  timestamp='May 07 03:00:00 2026')
+    assert out.read_text() == open(device_info_M1_path).read()
+
+
+def test_device_info_generator_invalid_inst_raises(tmp_path):
+    from dummy.gen_buffer_layout import (
+        generate_inverter_layout, generate_calibre_device_info,
+    )
+    layout = generate_inverter_layout(nmos_nfin=5, pmos_nfin=7)
+    with pytest.raises(ValueError, match='out of range'):
+        generate_calibre_device_info(layout, 'M99',
+                                      str(tmp_path / 'x.txt'))
