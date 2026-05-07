@@ -1,0 +1,21 @@
+devices:
+- layout_inst: M0
+  device_type_number: 0
+  layers:
+  - name: ngate_lvt
+    shapes:
+    - bbox_um:
+        x1: 0.044
+        y1: 0.0275
+        x2: 0.064
+        y2: 0.1525
+- layout_inst: M1
+  device_type_number: 1
+  layers:
+  - name: pgate_lvt
+    shapes:
+    - bbox_um:
+        x1: 0.044
+        y1: 0.2275
+        x2: 0.064
+        y2: 0.4025

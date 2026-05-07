@@ -571,6 +571,109 @@ def generate_calibre_net_names(layout_data: dict, filename: str,
     print(f"  net_names.txt written: {filename}")
 
 
+# Calibre HDB DEVICE INFO precision (units per micrometer). Matches the
+# user's example value of 20000 → 1 unit = 0.05 nm.
+DEVICE_INFO_PRECISION = 20000
+
+
+def generate_calibre_device_info(layout_data: dict,
+                                  layout_inst: str,
+                                  filename: str,
+                                  timestamp: str = 'May 07 03:00:00 2026'):
+    """Simulate Calibre HDB ``DEVICE INFO <layout_inst>`` response.
+
+    The response is stdout-only in production; this generator writes
+    the same block Calibre would stream between ``Device_Info`` and
+    ``END OF RESPONSE``.
+
+    For the inverter cell, ``layout_inst='M0'`` corresponds to the
+    NMOS device (seed layer ``ngate_lvt``) and ``layout_inst='M1'`` to
+    the PMOS device (seed layer ``pgate_lvt``). The seed-shape bbox
+    covers the gate region (poly width × fin span) and is written in
+    units of ``1 / DEVICE_INFO_PRECISION`` micrometres so the parser
+    recovers the original geometry.
+    """
+    devs = layout_data['devices']
+    layout_idx = int(layout_inst.lstrip('M'))
+    if layout_idx < 0 or layout_idx >= len(devs):
+        raise ValueError(
+            f"generate_calibre_device_info: layout_inst={layout_inst!r} "
+            f"is out of range for {len(devs)} devices"
+        )
+    dev = devs[layout_idx]
+    is_pmos = dev['type'].lower() == 'pmos'
+    seed_layer = 'pgate_lvt' if is_pmos else 'ngate_lvt'
+
+    # Pin nets in G/D/S/B order, matching the CDL pin table for the
+    # inverter (`MN0 OUT IN VSS VSS` etc.). The dummy CDL emits the
+    # device line with order D G S B; the LVS device-table order for
+    # MOS devices is G/D/S/B → IN/OUT/{VSS|VDD}/{VSS|VDD}.
+    body_net = 'VDD' if is_pmos else 'VSS'
+    pin_nets = ['IN', 'OUT', body_net, body_net]
+
+    # Property values: SPICE-like raw scientific notation for L (m), W
+    # (m), nfin, nf, vt-flag — matches the 5-field user example.
+    poly_width_nm   = 20
+    fin_pitch_nm    = 25
+    width_m  = (dev['nfin'] * fin_pitch_nm) * 1e-9
+    length_m = poly_width_nm * 1e-9
+    property_values = [f'{length_m:g}',
+                       f'{width_m:g}',
+                       str(dev['nfin']),
+                       str(dev['nf']),
+                       '1']
+
+    # Gate bbox in nm: poly width centred at gate_x; y span is the fin
+    # range plus half-pitch margins (matches calibre_device_query bbox).
+    gate_x = dev['gate_x']
+    fin_ys = dev['fin_y_positions']
+    half_w = poly_width_nm / 2
+    half_p = fin_pitch_nm / 2
+    x_lo_nm = gate_x - half_w
+    x_hi_nm = gate_x + half_w
+    y_lo_nm = fin_ys[0]  - half_p
+    y_hi_nm = fin_ys[-1] + half_p
+
+    nm_to_unit = DEVICE_INFO_PRECISION / 1000   # 1 nm = 20 unit
+
+    def to_unit(val_nm):
+        return int(round(val_nm * nm_to_unit))
+
+    x_lo, x_hi = to_unit(x_lo_nm), to_unit(x_hi_nm)
+    y_lo, y_hi = to_unit(y_lo_nm), to_unit(y_hi_nm)
+
+    # Vertex order per user spec: (y, x) pairs, traversed
+    # LL → LR → UR → UL.
+    verts = [
+        (y_lo, x_lo),
+        (y_hi, x_lo),
+        (y_hi, x_hi),
+        (y_lo, x_hi),
+    ]
+
+    n_metadata = (1                       # device_type_number
+                  + len(pin_nets)
+                  + len(property_values)
+                  + 1)                    # seed_layer_name
+
+    with open(filename, 'w') as f:
+        f.write(f'Device_Info {DEVICE_INFO_PRECISION}\n')
+        f.write('Info:\n')
+        f.write(f'0 0 {n_metadata} {timestamp}\n')
+        f.write(f'{1 if is_pmos else 0}\n')
+        for net in pin_nets:
+            f.write(f'{net}\n')
+        for val in property_values:
+            f.write(f'{val}\n')
+        f.write(f'{seed_layer}\n')
+        f.write(f'1 1 0 {timestamp}\n')
+        f.write(f'p 1 {len(verts)}\n')
+        for y, x in verts:
+            f.write(f'{y} {x}\n')
+        f.write('END OF RESPONSE\n')
+    print(f"  device_info_{layout_inst}.txt written: {filename}")
+
+
 # =========================================================
 # Main: generate all dummy fixtures
 # =========================================================
@@ -626,6 +729,16 @@ def generate_all_fixtures(output_dir: str,
     # Same scope rule: original layout only.
     generate_calibre_nxref(orig, os.path.join(output_dir, 'nXref.temp'))
     generate_calibre_net_names(orig, os.path.join(output_dir, 'net_names.txt'))
+
+    # DEVICE INFO (per-device LVS-derived-shape bbox). One file per
+    # layout device; the layout name is M<idx> (matching the dummy
+    # iXref's layout_inst convention).
+    for layout_idx, _dev in enumerate(orig['devices']):
+        layout_inst = f'M{layout_idx}'
+        generate_calibre_device_info(
+            orig, layout_inst,
+            os.path.join(output_dir, f'device_info_{layout_inst}.txt'),
+        )
 
     # bbox_by_layer: GDS round-trip (truth source is GDS, not Python dict)
     bbox_data = gds_to_bbox_by_layer(orig_gds_path, layer_map=config.LAYER_MAP)

@@ -42,6 +42,9 @@ inputs:
   # Joined net-xref middle file (schematic_name -> lvs_name -> lvs_index).
   # Saved for later use; not consumed by build_layout_model today.
   net_xref_yaml: ../output/net_xref.yaml
+  # Per-device LVS-derived-shape middle file
+  # (layout_inst -> {layer -> [bbox_um, ...]}).
+  device_info_yaml: ../output/device_info.yaml
 
 # ---- Run outputs ---------------------------------------------
 output:
@@ -52,7 +55,7 @@ output:
 #                         subprocess.
 # mode='calibre': spawn `calibre -query <svdb_dir>` and stream
 #                 `INSTANCE XREF WRITE` / `NET XREF WRITE` /
-#                 `NET NAMES` over stdin.
+#                 `NET NAMES` / `DEVICE INFO <inst>` over stdin.
 # CLI --lvs-mode overrides this field.
 calibre:
   mode:             dummy
@@ -61,10 +64,15 @@ calibre:
   ixref_temp:       ../output/iXref.temp
   nxref_temp:       ../output/nXref.temp
   net_names_txt:    ../output/net_names.txt
+  # Per-device DEVICE INFO outputs land here as device_info_<inst>.txt.
+  device_info_dir:  ../output
   # Dummy sources (used only when mode=dummy).
   dummy_ixref:      ../dummy/fixtures/iXref.temp
   dummy_nxref:      ../dummy/fixtures/nXref.temp
   dummy_net_names:  ../dummy/fixtures/net_names.txt
+  # Directory containing dummy device_info_<inst>.txt files
+  # (one per layout instance the dummy iXref names).
+  dummy_device_info_dir: ../dummy/fixtures
   timeout_s:        300
 
 # ---- Deferred to follow-up discussion ------------------------

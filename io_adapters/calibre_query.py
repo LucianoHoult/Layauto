@@ -912,3 +912,529 @@ def extract_net_xref(*,
     nxref     = parse_nxref(nxref_path)
     net_names = parse_net_names(net_names_path)
     return join_net_xref(nxref, net_names)
+
+
+# =====================================================================
+# DEVICE INFO parser (per-device LVS-derived-shape bbox)
+# =====================================================================
+#
+# Calibre HDB ``DEVICE INFO <layout_inst>`` returns the device's LVS-
+# annotated metadata plus the seed shapes of every layer attached to
+# the device. The layout_inst here is the *LVS* device name (e.g. M0,
+# M1) — the same name iXref's ``layout_inst`` field carries — not the
+# schematic instance name (MN0, MP0).
+#
+# Response shape (stdout-only; Calibre never writes a file):
+#
+#   Device_Info <precision>
+#   Info:
+#   0 0 <n_metadata> <date>
+#   <device_type_number>           |
+#   <pin_net_1>                    |
+#   <pin_net_2>                    |
+#   ...                            | n_metadata lines (1 + n_pins +
+#   <property_value_1>             | n_props + optional text_model_name
+#   <property_value_2>             | + seed_layer_name)
+#   ...                            |
+#   [<text_model_name>]            |
+#   <seed_layer_name>              |
+#   <a> <b> [c] <date>             ← per-layer count line (1+ ints + date)
+#   p <shape_idx> <n_vertices>
+#   <vert_1_y> <vert_1_x>          ← user spec: pairs are (y, x)
+#   <vert_2_y> <vert_2_x>          (each in `precision`-units; um =
+#   ...                              value / precision)
+#   <vert_n_y> <vert_n_x>
+#   p <shape_idx_2> <n_vertices_2>
+#   ...                            ← additional shapes for same layer
+#   <new_layer_name>               ← additional layer
+#   <a> <b> [c] <date>
+#   p 1 <n_vertices>
+#   ...
+#   END OF RESPONSE
+#
+# We don't know the per-device-type pin count or property count, so the
+# n_metadata block (between device_type_number and seed_layer_name) is
+# preserved as opaque text. The seed_layer_name is always the last line
+# of the metadata block — that's the convention the parser anchors on.
+
+_DEVICE_INFO_HEADER_RE = re.compile(r'^\s*Device_Info\s+(?P<precision>\d+)')
+_DEVICE_INFO_COUNT_RE = re.compile(
+    r'^\s*\d+\s+\d+\s+(?P<n>\d+)\s+'
+)
+
+
+def _looks_like_count_line(tokens):
+    """True if ``tokens`` matches the per-layer count line shape:
+    1+ leading ints followed by a date that uses month-name + numbers.
+    Examples: "1 1 0 May 07 03:00:00 2026", "11 0 Feb 27 11:36:00 2026".
+    """
+    if len(tokens) < 2:
+        return False
+    # First two tokens are ints.
+    for t in tokens[:2]:
+        if not (t.lstrip('-').isdigit()):
+            return False
+    return True
+
+
+def _looks_like_shape_header(tokens):
+    """True for ``p <shape_idx> <n_vertices>`` rows."""
+    return (len(tokens) == 3
+            and tokens[0] == 'p'
+            and tokens[1].isdigit()
+            and tokens[2].isdigit())
+
+
+def parse_device_info(filepath: str) -> dict:
+    """Parse a Calibre HDB ``DEVICE INFO`` response (stdout-only).
+
+    Returns:
+        {
+          'precision':            int,
+          'device_type_number':   int,
+          'metadata_lines':       [str, ...],   # opaque pin nets +
+                                                # property values +
+                                                # optional text_model_name
+          'layers': [
+            {
+              'name': str,
+              'shapes': [
+                {
+                  'vertices_unit': [(y, x), ...],  # per user spec
+                  'bbox_um': {'x1': float, 'y1': float,
+                              'x2': float, 'y2': float},
+                },
+                ...
+              ],
+            },
+            ...
+          ],
+        }
+
+    Coordinate convention (per user / Calibre manual): each vertex line
+    is two integers ``<y> <x>`` in units of ``1 / precision`` micrometers
+    (for ``precision=20000`` that's 0.05 nm). Vertices for one shape are
+    listed as four corners (LL, LR, UR, UL) for rectangles; the parser
+    just takes ``min / max`` of each coordinate to derive the bbox, so
+    the corner-ordering convention is irrelevant for the saved bbox.
+
+    Raises:
+        FileNotFoundError: if ``filepath`` does not exist.
+        ValueError: on header / count-line / metadata / vertex
+            malformation.
+    """
+    if not os.path.exists(filepath):
+        raise FileNotFoundError(
+            f"DEVICE INFO file not found: {filepath!r}"
+        )
+
+    with open(filepath) as f:
+        lines = [ln.rstrip('\n') for ln in f]
+
+    # Header: ``Device_Info <precision>``.
+    di_idx = None
+    precision = None
+    for i, ln in enumerate(lines):
+        m = _DEVICE_INFO_HEADER_RE.match(ln)
+        if m:
+            di_idx = i
+            precision = int(m.group('precision'))
+            break
+    if di_idx is None:
+        raise ValueError(
+            f"DEVICE INFO {filepath!r}: missing 'Device_Info' header"
+        )
+
+    # Anchor: ``Info:``
+    info_idx = None
+    for j in range(di_idx + 1, len(lines)):
+        if lines[j].strip() == 'Info:':
+            info_idx = j
+            break
+    if info_idx is None:
+        raise ValueError(
+            f"DEVICE INFO {filepath!r}: missing 'Info:' anchor"
+        )
+
+    # Count line: ``0 0 <n_metadata> <date>``
+    if info_idx + 1 >= len(lines):
+        raise ValueError(
+            f"DEVICE INFO {filepath!r}: count line missing after 'Info:'"
+        )
+    count_line = lines[info_idx + 1]
+    m = _DEVICE_INFO_COUNT_RE.match(count_line)
+    if not m:
+        raise ValueError(
+            f"DEVICE INFO {filepath!r}: malformed count line "
+            f"{count_line!r} (expected '<int> <int> <n> <timestamp>')"
+        )
+    n_metadata = int(m.group('n'))
+
+    # n_metadata lines follow.
+    metadata_start = info_idx + 2
+    metadata_end = metadata_start + n_metadata
+    if metadata_end > len(lines):
+        raise ValueError(
+            f"DEVICE INFO {filepath!r}: only "
+            f"{len(lines) - metadata_start} metadata line(s) "
+            f"available, expected {n_metadata}"
+        )
+    metadata = [lines[i] for i in range(metadata_start, metadata_end)]
+    if not metadata:
+        raise ValueError(
+            f"DEVICE INFO {filepath!r}: empty metadata block"
+        )
+
+    try:
+        device_type_number = int(metadata[0].strip())
+    except ValueError as e:
+        raise ValueError(
+            f"DEVICE INFO {filepath!r}: device_type_number "
+            f"not int: {metadata[0]!r}"
+        ) from e
+
+    first_layer_name = metadata[-1].strip()
+    if not first_layer_name:
+        raise ValueError(
+            f"DEVICE INFO {filepath!r}: seed layer name (last "
+            f"metadata line) is blank"
+        )
+
+    metadata_lines = metadata[1:-1]   # opaque, may be empty
+
+    # Walk the post-metadata block, collecting shapes per layer.
+    layers: list = [{'name': first_layer_name, 'shapes': []}]
+
+    def _bbox_um(verts_unit):
+        ys = [v[0] for v in verts_unit]
+        xs = [v[1] for v in verts_unit]
+        return {
+            'x1': min(xs) / precision,
+            'y1': min(ys) / precision,
+            'x2': max(xs) / precision,
+            'y2': max(ys) / precision,
+        }
+
+    i = metadata_end
+    while i < len(lines):
+        raw = lines[i]
+        ln = raw.strip()
+        if not ln:
+            i += 1
+            continue
+        if ln == 'END OF RESPONSE':
+            break
+
+        tokens = ln.split()
+
+        if _looks_like_shape_header(tokens):
+            n_verts = int(tokens[2])
+            verts: list = []
+            for j in range(n_verts):
+                if i + 1 + j >= len(lines):
+                    raise ValueError(
+                        f"DEVICE INFO {filepath!r}: shape declared "
+                        f"{n_verts} vertices but file ended early"
+                    )
+                vt = lines[i + 1 + j].split()
+                if len(vt) != 2:
+                    raise ValueError(
+                        f"DEVICE INFO {filepath!r}: vertex line "
+                        f"malformed (expected 2 ints): "
+                        f"{lines[i + 1 + j]!r}"
+                    )
+                try:
+                    verts.append((int(vt[0]), int(vt[1])))
+                except ValueError as e:
+                    raise ValueError(
+                        f"DEVICE INFO {filepath!r}: vertex tokens "
+                        f"not int: {lines[i + 1 + j]!r}"
+                    ) from e
+            layers[-1]['shapes'].append({
+                'vertices_unit': verts,
+                'bbox_um':       _bbox_um(verts),
+            })
+            i += 1 + n_verts
+            continue
+
+        if _looks_like_count_line(tokens):
+            # Per-layer count line. We don't try to validate the
+            # declared shape count against actually-parsed shapes (the
+            # spec is ambiguous between "1 1 0 <date>" and "11 0
+            # <date>" forms). Skip and continue.
+            i += 1
+            continue
+
+        # Anything else that isn't blank / END OF RESPONSE / shape /
+        # count line is a new layer name. Single-token strings like
+        # "ngate_lvt" / "pgate_lvt" / "od_seed" land here.
+        layers.append({'name': ln, 'shapes': []})
+        i += 1
+
+    return {
+        'precision':           precision,
+        'device_type_number':  device_type_number,
+        'metadata_lines':      metadata_lines,
+        'layers':              layers,
+    }
+
+
+def write_device_info_yaml(parsed: dict, out_path: str) -> None:
+    """Persist the joined DEVICE INFO middle dict as YAML.
+
+    Schema:
+
+        devices:
+          - layout_inst: str            # M0, M1, ...
+            device_type_number: int
+            layers:
+              - name: str
+                shapes:
+                  - bbox_um:
+                      x1: float          # micrometers
+                      y1: float
+                      x2: float
+                      y2: float
+
+    Per-shape ``vertices_unit`` and per-device ``metadata_lines``
+    (pin nets + property values) are intentionally *not* serialised —
+    the user's stated need is "each device's related layers' name
+    and shapes' bbox(converted to original values in um)".
+    """
+    out_dir = os.path.dirname(os.path.abspath(out_path))
+    if out_dir:
+        os.makedirs(out_dir, exist_ok=True)
+
+    devices_out = []
+    for d in parsed['devices']:
+        layers_out = []
+        for layer in d['layers']:
+            layers_out.append({
+                'name':   layer['name'],
+                'shapes': [{'bbox_um': sh['bbox_um']}
+                           for sh in layer['shapes']],
+            })
+        devices_out.append({
+            'layout_inst':         d['layout_inst'],
+            'device_type_number':  d['device_type_number'],
+            'layers':              layers_out,
+        })
+
+    payload = {'devices': devices_out}
+    with open(out_path, 'w') as f:
+        yaml.safe_dump(payload, f, sort_keys=False,
+                       default_flow_style=False)
+
+
+# =====================================================================
+# Calibre subprocess runner (DEVICE INFO)
+# =====================================================================
+
+_DEVICE_INFO_BEGIN_RE = re.compile(r'^\s*Device_Info\b')
+
+
+def _extract_device_info_block(stdout: str, layout_inst: str) -> str:
+    """Slice the ``Device_Info ... END OF RESPONSE`` block out of stdout.
+
+    Calibre's HDB query server may interleave other output around the
+    response (banners, prompts). Identify the block bounded by the
+    ``Device_Info`` opener and the next ``END OF RESPONSE``.
+    """
+    lines = stdout.splitlines()
+    begin = None
+    for i, ln in enumerate(lines):
+        if _DEVICE_INFO_BEGIN_RE.match(ln):
+            begin = i
+            break
+    if begin is None:
+        raise CalibreQueryError(
+            f"calibre stdout did not contain a 'Device_Info' "
+            f"response for {layout_inst!r}.\n"
+            f"--- stdout (truncated) ---\n{stdout[:2000]}"
+        )
+    end = None
+    for j in range(begin + 1, len(lines)):
+        if lines[j].strip() == 'END OF RESPONSE':
+            end = j
+            break
+    if end is None:
+        raise CalibreQueryError(
+            f"calibre stdout missing 'END OF RESPONSE' terminator "
+            f"after 'Device_Info' for {layout_inst!r}.\n"
+            f"--- stdout (truncated) ---\n{stdout[:2000]}"
+        )
+    return '\n'.join(lines[begin:end + 1]) + '\n'
+
+
+def run_calibre_device_info(svdb_dir: str,
+                             layout_inst: str,
+                             out_path: str,
+                             *,
+                             timeout: float = 300.0,
+                             calibre_bin: str = 'calibre') -> None:
+    """Spawn ``calibre -query <svdb_dir>``, run ``DEVICE INFO <inst>``.
+
+    ``DEVICE INFO`` streams its response over stdout — Calibre never
+    writes a file. This function captures stdout, slices the bounded
+    ``Device_Info ... END OF RESPONSE`` block, and writes that block
+    to ``out_path`` so downstream parsing has the same file-on-disk
+    shape as the dummy fixture. ``layout_inst`` is the LVS device name
+    (e.g. ``M0`` / ``M1``) — *not* the schematic instance name.
+
+    Stdin commands:
+
+        DEVICE INFO <layout_inst>
+        EXIT
+
+    Same diagnostics as :func:`run_calibre_ixref` (missing binary,
+    missing svdb dir, non-zero exit, timeout). No stale-output
+    protection is required: the function captures stdout and writes
+    ``out_path`` itself with ``'w'`` mode.
+    """
+    if shutil.which(calibre_bin) is None:
+        raise CalibreNotFoundError(
+            f"Calibre binary {calibre_bin!r} not found on PATH. "
+            f"For dummy mode, pass --lvs-mode=dummy or set "
+            f"calibre.mode=dummy in site_config.yaml."
+        )
+    if not os.path.isdir(svdb_dir):
+        raise CalibreQueryError(
+            f"SVDB directory not found: {svdb_dir!r}"
+        )
+
+    cmds = (
+        f"DEVICE INFO {layout_inst}\n"
+        f"EXIT\n"
+    )
+    try:
+        result = subprocess.run(
+            [calibre_bin, '-query', svdb_dir],
+            input=cmds,
+            capture_output=True,
+            text=True,
+            timeout=timeout,
+            check=False,
+        )
+    except subprocess.TimeoutExpired as e:
+        raise CalibreQueryError(
+            f"calibre -query {svdb_dir!r} timed out after {timeout}s"
+        ) from e
+    if result.returncode != 0:
+        raise CalibreQueryError(
+            f"calibre -query {svdb_dir!r} exited {result.returncode}\n"
+            f"--- stdout ---\n{result.stdout}\n"
+            f"--- stderr ---\n{result.stderr}"
+        )
+
+    block = _extract_device_info_block(result.stdout, layout_inst)
+    out_dir = os.path.dirname(os.path.abspath(out_path))
+    if out_dir:
+        os.makedirs(out_dir, exist_ok=True)
+    with open(out_path, 'w') as f:
+        f.write(block)
+
+
+def run_dummy_device_info(svdb_dir: Optional[str],
+                           layout_inst: str,
+                           out_path: str,
+                           dummy_source: str) -> None:
+    """Stage a dummy DEVICE INFO output at ``out_path``.
+
+    ``svdb_dir`` and ``layout_inst`` are accepted for API symmetry with
+    :func:`run_calibre_device_info` (they're ignored — the dummy file
+    is the source of truth). ``dummy_source`` is the per-instance
+    fixture path (e.g. ``dummy/fixtures/device_info_M0.txt``).
+    """
+    if not os.path.exists(dummy_source):
+        raise FileNotFoundError(
+            f"Dummy DEVICE INFO source not found: {dummy_source!r}"
+        )
+    abs_src = os.path.abspath(dummy_source)
+    abs_dst = os.path.abspath(out_path)
+    if abs_src == abs_dst:
+        return
+    out_dir = os.path.dirname(abs_dst)
+    if out_dir:
+        os.makedirs(out_dir, exist_ok=True)
+    shutil.copyfile(abs_src, abs_dst)
+
+
+# =====================================================================
+# Top-level orchestrator (DEVICE INFO across all layout devices)
+# =====================================================================
+
+def extract_device_info(*,
+                         mode: str,
+                         svdb_dir: Optional[str],
+                         layout_insts: list,
+                         out_dir: str,
+                         dummy_source_dir: Optional[str] = None,
+                         timeout: float = 300.0,
+                         calibre_bin: str = 'calibre') -> dict:
+    """Run ``DEVICE INFO`` for each layout instance, collect results.
+
+    One subprocess per device in ``calibre`` mode; one file copy per
+    device in ``dummy`` mode. Per-device raw responses land at
+    ``<out_dir>/device_info_<inst>.txt``.
+
+    Args:
+        mode: 'dummy' or 'calibre'.
+        svdb_dir: Required for 'calibre' mode.
+        layout_insts: List of LVS device names (e.g. ['M0', 'M1']).
+            Typically read from a parsed iXref middle file's
+            ``devices[*].layout_inst``.
+        out_dir: Directory to write per-instance ``device_info_*.txt``
+            files into.
+        dummy_source_dir: Required for 'dummy' mode. Directory holding
+            ``device_info_<inst>.txt`` fixtures.
+        timeout: subprocess timeout in seconds (calibre mode only).
+        calibre_bin: Calibre binary name on PATH.
+
+    Returns:
+        {
+          'devices': [
+            {
+              'layout_inst':         str,
+              'precision':           int,
+              'device_type_number':  int,
+              'metadata_lines':      [str, ...],
+              'layers':              [...],   # see parse_device_info
+            },
+            ...
+          ],
+        }
+    """
+    if mode == 'dummy':
+        if dummy_source_dir is None:
+            raise ValueError(
+                "extract_device_info(mode='dummy') requires "
+                "dummy_source_dir"
+            )
+    elif mode == 'calibre':
+        if svdb_dir is None:
+            raise ValueError(
+                "extract_device_info(mode='calibre') requires svdb_dir"
+            )
+    else:
+        raise ValueError(
+            f"extract_device_info: unknown mode {mode!r} "
+            f"(expected 'dummy' or 'calibre')"
+        )
+
+    os.makedirs(out_dir, exist_ok=True)
+    devices = []
+    for inst in layout_insts:
+        out_path = os.path.join(out_dir, f'device_info_{inst}.txt')
+        if mode == 'dummy':
+            src = os.path.join(dummy_source_dir,
+                               f'device_info_{inst}.txt')
+            run_dummy_device_info(svdb_dir, inst, out_path, src)
+        else:
+            run_calibre_device_info(
+                svdb_dir, inst, out_path,
+                timeout=timeout, calibre_bin=calibre_bin,
+            )
+        parsed = parse_device_info(out_path)
+        devices.append({'layout_inst': inst, **parsed})
+
+    return {'devices': devices}
