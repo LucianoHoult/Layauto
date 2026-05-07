@@ -46,3 +46,13 @@ def calibre_net_json():
 @pytest.fixture
 def ixref_temp_path():
     return os.path.join(FIXTURE_DIR, 'iXref.temp')
+
+
+@pytest.fixture
+def nxref_temp_path():
+    return os.path.join(FIXTURE_DIR, 'nXref.temp')
+
+
+@pytest.fixture
+def net_names_path():
+    return os.path.join(FIXTURE_DIR, 'net_names.txt')

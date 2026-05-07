@@ -337,9 +337,13 @@ def load_site_config(site_yaml: str) -> dict:
     # through verbatim. ``mode`` defaults to ``'dummy'`` when absent so
     # legacy site_configs (pre-2026-05-07) continue to load.
     calibre = cfg.setdefault('calibre', {})
-    calibre['svdb_dir']    = resolve(calibre.get('svdb_dir'))
-    calibre['ixref_temp']  = resolve(calibre.get('ixref_temp'))
-    calibre['dummy_ixref'] = resolve(calibre.get('dummy_ixref'))
+    calibre['svdb_dir']         = resolve(calibre.get('svdb_dir'))
+    calibre['ixref_temp']       = resolve(calibre.get('ixref_temp'))
+    calibre['nxref_temp']       = resolve(calibre.get('nxref_temp'))
+    calibre['net_names_txt']    = resolve(calibre.get('net_names_txt'))
+    calibre['dummy_ixref']      = resolve(calibre.get('dummy_ixref'))
+    calibre['dummy_nxref']      = resolve(calibre.get('dummy_nxref'))
+    calibre['dummy_net_names']  = resolve(calibre.get('dummy_net_names'))
     calibre.setdefault('mode', 'dummy')
     calibre.setdefault('timeout_s', 300)
 

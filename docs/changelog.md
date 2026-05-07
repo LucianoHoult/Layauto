@@ -4,7 +4,35 @@
 
 **Format.** One block per shipped milestone or sub-milestone. Each block carries: date / branch / what shipped / files touched / acceptance evidence / notes.
 
-**Test-count series** (cumulative): M0 33 → M1 38 → M2 50 → M3 65 → M4a 81+4 → M4b 119 → M4c 134 → M4d 155 → M4e 174 → M5 187 → M6a 201 → M6b 214 (+ config-consolidation: no test delta) → iXref 243.
+**Test-count series** (cumulative): M0 33 → M1 38 → M2 50 → M3 65 → M4a 81+4 → M4b 119 → M4c 134 → M4d 155 → M4e 174 → M5 187 → M6a 201 → M6b 214 (+ config-consolidation: no test delta) → iXref 243 → nXref+NET-NAMES 284.
+
+---
+
+## 2026-05-07 — Stage 1.5 extended: nXref + NET NAMES (M7 seam, second slice)
+
+**Branch:** `claude/refine-test-fixtures-nIkdZ`
+
+Extends the iXref slice with the two remaining LVS query commands needed for net-level cross-reference:
+
+  * `NET XREF WRITE nXref.temp` — net-granular cross-reference between schematic and LVS svdb. Same SVDB nxf format (file format 1) as iXref but with a leading `%` on the cell-summary line and net rows in the form `<layout_idx> <layout_net> <source_idx> <source_net>`.
+  * `NET NAMES` — stdout-only Calibre HDB response listing every net in the svdb in 1-indexed order. Parsed from the bounded `Net_Names ... END OF RESPONSE` block.
+
+The two outputs are joined into a `schematic_name → lvs_name → lvs_index` middle file (`output/net_xref.yaml`) that tells downstream code which schematic-side net corresponds to which LVS svdb index — including renumbered internal nets (`net9 → 2 → 2`) where LVS replaces an unnamed schematic net with its numeric position. Saved for later use; not consumed by `build_layout_model` today.
+
+- **`io_adapters/calibre_query.py`** — six new functions: `parse_nxref` (header skip + cell summary `%`-tolerant + net-row parsing), `parse_net_names` (locates the `Nets:` anchor, reads the count line, validates `count == len(names)`, accepts truncated stdout when `END OF RESPONSE` is missing), `join_net_xref` (raises `KeyError` if any nXref layout net is missing from the index — that's a real LVS inconsistency), `write_net_xref_yaml`, `run_calibre_nxref` / `run_calibre_net_names` / `run_dummy_nxref` / `run_dummy_net_names` runners, and `extract_net_xref` orchestrator (mirrors `extract_ixref` for both dummy and calibre modes). NET NAMES production runner slices the bounded response block from stdout via `_extract_net_names_block` so the on-disk shape matches the dummy fixture.
+- **New `dummy/fixtures/nXref.temp`** — hand-written dummy nxf for `INV_N5_P7` (4 pins; layout names match source names since the inverter has no internal nets). Renumbering case (`0 2 0 net9`) is exercised in unit tests via synthetic input rather than committing inconsistent fixture data.
+- **New `dummy/fixtures/net_names.txt`** — hand-written dummy NET NAMES response (4 nets: IN=1, OUT=2, VSS=3, VDD=4).
+- **New `dummy/fixtures/net_xref.yaml`** — committed parsed reference for byte-comparison in tests.
+- **`dummy/gen_buffer_layout.py`** — `generate_calibre_nxref` + `generate_calibre_net_names` wired into `generate_all_fixtures`. The order of nets is module-level (`DUMMY_NET_ORDER`) so the two generators stay byte-consistent.
+- **`tech/site_config.yaml`** — adds `calibre.{nxref_temp, net_names_txt, dummy_nxref, dummy_net_names}` and `inputs.net_xref_yaml`.
+- **`tech/config_loader.py::load_site_config`** — resolves the four new path-valued fields under `calibre:`.
+- **`pipeline/run_mvp.py`** — Stage 1.5 now runs both `extract_ixref` and `extract_net_xref`. Banner shows iXref/nXref summaries (cell, device count, S/D-swap count; cell, net count, renumbered count). Legacy site_configs without `calibre:` paths get the same repo-default fallback as the iXref slice (`dummy/fixtures/{nXref.temp,net_names.txt}`).
+
+**Files touched.** `io_adapters/calibre_query.py`, `dummy/gen_buffer_layout.py`, `tech/site_config.yaml`, `tech/config_loader.py`, `pipeline/run_mvp.py`, `tests/conftest.py`, `tests/unit/test_calibre_query.py`, `docs/architecture.md`, `docs/changelog.md`. New: `dummy/fixtures/nXref.temp`, `dummy/fixtures/net_names.txt`, `dummy/fixtures/net_xref.yaml`.
+
+**Acceptance.** Pytest 284/284 (243 pre + 41 new in `test_calibre_query.py`). Existing four golden artifacts (`buffer_resized.{gds,json,cdl}`, `annotation_coverage.txt`) md5-identical to the iXref baseline. The new artifacts are `output/{nXref.temp, net_names.txt, net_xref.yaml}`. `python3 pipeline/run_mvp.py` prints `[Stage 1.5] Extracting LVS xrefs (mode=dummy)` followed by separate iXref / nXref summary lines.
+
+**Notes.** Each Calibre query spawns its own subprocess; M7 may consolidate to a single interactive HDB session that runs all queries together (only relevant when actual `calibre` binaries are exercised in CI/production). The parser is tolerant of the missing `%` prefix and missing `END OF RESPONSE` terminator so real-world Calibre output variations don't trip it up.
 
 ---
 

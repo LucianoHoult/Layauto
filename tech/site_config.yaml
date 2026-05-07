@@ -38,24 +38,34 @@ inputs:
   target_gds:     ../dummy/fixtures/buffer_target.gds
   # Parsed iXref middle file produced by Stage 1.5 (LVS extract).
   # Saved for later use; not consumed by build_layout_model today.
-  ixref_yaml:     ../output/ixref.yaml
+  ixref_yaml:    ../output/ixref.yaml
+  # Joined net-xref middle file (schematic_name -> lvs_name -> lvs_index).
+  # Saved for later use; not consumed by build_layout_model today.
+  net_xref_yaml: ../output/net_xref.yaml
 
 # ---- Run outputs ---------------------------------------------
 output:
   dir:            ../output
 
 # ---- LVS extraction (Stage 1.5) ------------------------------
-# mode='dummy' (default): copy a pre-staged iXref.temp into ixref_temp
-#                         and parse. No subprocess.
+# mode='dummy' (default): copy pre-staged fixtures and parse. No
+#                         subprocess.
 # mode='calibre': spawn `calibre -query <svdb_dir>` and stream
-#                 `INSTANCE XREF WRITE <ixref_temp>` over stdin.
+#                 `INSTANCE XREF WRITE` / `NET XREF WRITE` /
+#                 `NET NAMES` over stdin.
 # CLI --lvs-mode overrides this field.
 calibre:
-  mode:        dummy
-  svdb_dir:    ../dummy/fixtures/svdb_dir       # placeholder for dummy mode
-  ixref_temp:  ../output/iXref.temp             # produced by query
-  dummy_ixref: ../dummy/fixtures/iXref.temp     # source for dummy mode
-  timeout_s:   300
+  mode:             dummy
+  svdb_dir:         ../dummy/fixtures/svdb_dir       # placeholder for dummy mode
+  # Run-output paths (where the raw query results land each run).
+  ixref_temp:       ../output/iXref.temp
+  nxref_temp:       ../output/nXref.temp
+  net_names_txt:    ../output/net_names.txt
+  # Dummy sources (used only when mode=dummy).
+  dummy_ixref:      ../dummy/fixtures/iXref.temp
+  dummy_nxref:      ../dummy/fixtures/nXref.temp
+  dummy_net_names:  ../dummy/fixtures/net_names.txt
+  timeout_s:        300
 
 # ---- Deferred to follow-up discussion ------------------------
 # calibre:
