@@ -1221,6 +1221,53 @@ def test_parse_device_info_non_int_vertex_raises(tmp_path):
         parse_device_info(path)
 
 
+def test_parse_device_info_missing_terminator_raises(tmp_path):
+    """A capture truncated after a complete shape (no END OF RESPONSE)
+    must fail loud — otherwise a partial Calibre stdout-grab silently
+    persists an incomplete device_info.yaml."""
+    path = tmp_path / 'truncated.txt'
+    path.write_text(
+        'Device_Info 20000\n'
+        'Info:\n'
+        '0 0 1 ts\n'
+        '0\n'
+        'ngate_lvt\n'
+        '1 1 0 ts\n'
+        'p 1 4\n'
+        '0 0\n'
+        '10 0\n'
+        '10 10\n'
+        '0 10\n'
+        # No END OF RESPONSE.
+    )
+    with pytest.raises(ValueError, match="END OF RESPONSE"):
+        parse_device_info(str(path))
+
+
+def test_parse_device_info_terminator_at_eof_ok(tmp_path):
+    """Sanity check: terminator present (even without trailing
+    newline) parses cleanly."""
+    path = tmp_path / 'ok.txt'
+    # n_metadata=2: device_type_number + seed_layer_name (no
+    # pin nets / property values for this synthetic input).
+    path.write_text(
+        'Device_Info 20000\n'
+        'Info:\n'
+        '0 0 2 ts\n'
+        '0\n'
+        'ngate_lvt\n'
+        '1 1 0 ts\n'
+        'p 1 4\n'
+        '0 0\n'
+        '10 0\n'
+        '10 10\n'
+        '0 10\n'
+        'END OF RESPONSE'
+    )
+    parsed = parse_device_info(str(path))
+    assert parsed['layers'][0]['name'] == 'ngate_lvt'
+
+
 # =====================================================================
 # DEVICE INFO YAML writer
 # =====================================================================

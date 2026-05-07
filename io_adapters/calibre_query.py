@@ -1116,6 +1116,7 @@ def parse_device_info(filepath: str) -> dict:
         }
 
     i = metadata_end
+    saw_terminator = False
     while i < len(lines):
         raw = lines[i]
         ln = raw.strip()
@@ -1123,6 +1124,7 @@ def parse_device_info(filepath: str) -> dict:
             i += 1
             continue
         if ln == 'END OF RESPONSE':
+            saw_terminator = True
             break
 
         tokens = ln.split()
@@ -1170,6 +1172,19 @@ def parse_device_info(filepath: str) -> dict:
         # "ngate_lvt" / "pgate_lvt" / "od_seed" land here.
         layers.append({'name': ln, 'shapes': []})
         i += 1
+
+    if not saw_terminator:
+        # Falling off EOF without a terminator means the capture was
+        # truncated mid-response. The shape-count line is ambiguous in
+        # the manual (``1 1 0`` vs ``11 0`` forms) so we can't fall
+        # back to per-layer shape-count validation; require the
+        # terminator instead. ``run_calibre_device_info`` already
+        # guards this for the live subprocess path; this protects the
+        # dummy / pre-saved-file path.
+        raise ValueError(
+            f"DEVICE INFO {filepath!r}: missing 'END OF RESPONSE' "
+            f"terminator (truncated capture?)"
+        )
 
     return {
         'precision':           precision,
