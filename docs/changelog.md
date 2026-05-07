@@ -4,7 +4,30 @@
 
 **Format.** One block per shipped milestone or sub-milestone. Each block carries: date / branch / what shipped / files touched / acceptance evidence / notes.
 
-**Test-count series** (cumulative): M0 33 → M1 38 → M2 50 → M3 65 → M4a 81+4 → M4b 119 → M4c 134 → M4d 155 → M4e 174 → M5 187 → M6a 201 → M6b 214 (+ config-consolidation: no test delta).
+**Test-count series** (cumulative): M0 33 → M1 38 → M2 50 → M3 65 → M4a 81+4 → M4b 119 → M4c 134 → M4d 155 → M4e 174 → M5 187 → M6a 201 → M6b 214 (+ config-consolidation: no test delta) → iXref 243.
+
+---
+
+## 2026-05-07 — Stage 1.5: LVS iXref extraction (M7 seam, partial)
+
+**Branch:** `claude/refine-test-fixtures-nIkdZ`
+
+First real Calibre subprocess seam in the codebase. Adds a Stage 1.5 LVS query that produces an `output/ixref.yaml` middle file from either a pre-staged `iXref.temp` (`mode=dummy`, default) or by spawning `calibre -query <svdb_dir>` and streaming HDB query commands (`mode=calibre`, production). The middle file is "saved for later use"; no current consumer reads it. M7 will wire it into LVS feedback closure (net-equivalence overrides for swapped S/D, layout-vs-source device-identity reconciliation).
+
+- **New `io_adapters/calibre_query.py`** — `parse_ixref` (header skipping, cell-row + device-row + S/D-swap-marker parsing; loud `ValueError`s on every malformed-input path), `write_ixref_yaml` (round-trip-safe YAML), `run_calibre_ixref` (full `subprocess.run` with `INSTANCE XREF WRITE <path>` + `EXIT` over stdin, timeout, `CalibreNotFoundError` / `CalibreQueryError` for missing binary / non-zero exit / missing output), `run_dummy_ixref` (copy a fixture; no-op when src == dst), and `extract_ixref` as the top-level `mode={dummy,calibre}` dispatcher.
+- **New `dummy/fixtures/iXref.temp`** — hand-written dummy SVDB ixf (cell `INV_N5_P7`, 4 pins, M0→MN0, M1→MP0 with S/D swap). Reproducible byte-identically from `dummy/gen_buffer_layout.py::generate_calibre_ixref` (parametric generator wired into `generate_all_fixtures`).
+- **New `dummy/fixtures/ixref.yaml`** — committed parsed reference for byte-comparison in tests (`test_yaml_matches_committed_reference`).
+- **`tech/site_config.yaml`** — replaced the deferred-placeholder `calibre:` block with a real one (`mode`, `svdb_dir`, `ixref_temp`, `dummy_ixref`, `timeout_s`); `inputs.ixref_yaml` names the parsed middle file.
+- **`tech/config_loader.py::load_site_config`** — resolves the new path-valued fields under `calibre:` and defaults `calibre.mode` to `'dummy'` so legacy site_configs keep working.
+- **`pipeline/run_mvp.py`** — new `--lvs-mode {dummy,calibre}` flag (overrides `calibre.mode` in the YAML); inserts "Stage 1.5: LVS extract" between Stage 1 (CDL diff) and Stage 2 (`build_layout_model`); prints a per-run summary (cell name, device count, S/D-swap count, output paths). The parsed dict is *not* fed into `build_layout_model` — save-only, by design.
+- **`pipeline/run_mvp.py::resize_report.txt`** — switched to writing CDL basenames (was absolute paths), making the report md5-stable across environments. Existing byte-golden md5 in `tests/unit/test_m6b_macros.py` updated accordingly.
+- **`tests/conftest.py`** — added `ixref_temp_path` fixture.
+
+**Files touched.** New `io_adapters/calibre_query.py`, `dummy/fixtures/iXref.temp`, `dummy/fixtures/ixref.yaml`, `tests/unit/test_calibre_query.py`; `dummy/gen_buffer_layout.py`, `tech/site_config.yaml`, `tech/config_loader.py`, `pipeline/run_mvp.py`, `tests/conftest.py`, `tests/unit/test_m6b_macros.py`, `docs/architecture.md`, `docs/backlog.md`.
+
+**Acceptance.** Pytest 243/243 (214 pre + 29 new). All four byte-golden artifacts (`buffer_resized.{json,cdl}`, `resize_report.txt`, `annotation_coverage.txt`) md5-clean to the updated baseline (`resize_report.txt` re-baselined per the basename change). The new `output/ixref.yaml` and `output/iXref.temp` are the only added runtime outputs; `dummy/fixtures/iXref.temp` and `dummy/fixtures/ixref.yaml` are the only added committed fixtures. Generator round-trip: `generate_calibre_ixref(generate_inverter_layout(5,7))` → byte-identical to the committed `dummy/fixtures/iXref.temp`.
+
+**Notes.** `--lvs-mode calibre` was implemented in full but is untested with a real Calibre binary on this machine — `shutil.which('calibre')` returns `None`, so the runner raises `CalibreNotFoundError` cleanly. The subprocess wiring (`subprocess.run` args, stdin commands, capture_output, timeout, non-zero / missing-output diagnostics) is covered by `unittest.mock.patch`-driven tests so the call shape will not silently regress before the first real Calibre run.
 
 ---
 
