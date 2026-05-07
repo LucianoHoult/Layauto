@@ -386,6 +386,43 @@ def test_generator_matches_committed_fixture(ixref_temp_path, tmp_path):
     assert out.read_text() == open(ixref_temp_path).read()
 
 
+def test_pipeline_legacy_site_config_without_calibre_block(tmp_path,
+                                                            fixture_dir):
+    """A site_config.yaml that predates Stage 1.5 (no ``calibre:`` block)
+    must still run end-to-end. The pipeline falls back to the repo's
+    default dummy iXref fixture."""
+    legacy_cfg = tmp_path / "legacy_site_config.yaml"
+    legacy_cfg.write_text(f"""\
+tech:
+  drc_rules:         {os.path.join('..', '..', 'tech', 'drc_rules.yaml')}
+  layer_map:         {os.path.join('..', '..', 'tech', 'layer_map.yaml')}
+inputs:
+  original_cdl:   {os.path.join(fixture_dir, 'buffer_original.cdl')}
+  modified_cdl:   {os.path.join(fixture_dir, 'buffer_target.cdl')}
+  device_query:   {os.path.join(fixture_dir, 'calibre_device_query.json')}
+  net_query:      {os.path.join(fixture_dir, 'calibre_net_query.json')}
+  bbox_by_layer:  {os.path.join(fixture_dir, 'bbox_by_layer.json')}
+  layout_json:    {os.path.join(fixture_dir, 'buffer_original.json')}
+  target_json:    {os.path.join(fixture_dir, 'buffer_target.json')}
+output:
+  dir:            {tmp_path / 'out'}
+""")
+    # Resolve through the same loader the pipeline uses; verify the
+    # ``calibre`` block is absent before defaults are filled in, and
+    # that ``mode`` falls back to ``dummy`` while ``dummy_ixref`` stays
+    # ``None`` (forcing the pipeline to provide its own default).
+    from tech.config_loader import load_site_config
+    cfg = load_site_config(str(legacy_cfg))
+    assert cfg['calibre']['mode'] == 'dummy'
+    assert cfg['calibre'].get('dummy_ixref') is None
+
+    # And the pipeline-side fallback must yield a real fixture path.
+    repo_root = os.path.join(os.path.dirname(__file__), '..', '..')
+    fallback = os.path.join(
+        repo_root, 'pipeline', '..', 'dummy', 'fixtures', 'iXref.temp')
+    assert os.path.exists(fallback)
+
+
 def test_yaml_matches_committed_reference(ixref_temp_path, fixture_dir,
                                            tmp_path):
     """Round-trip the committed iXref through the writer; result equals

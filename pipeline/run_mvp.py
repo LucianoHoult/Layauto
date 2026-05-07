@@ -292,12 +292,22 @@ def run_full_pipeline(site_config_path: str = None,
     ixref_yaml_path = (inputs.get('ixref_yaml')
                        or os.path.join(output_dir, 'ixref.yaml'))
 
+    # Fall back to the committed dummy fixture so legacy site_configs
+    # without a calibre: block still resolve a sensible source. The
+    # default sits next to this repo at ``dummy/fixtures/iXref.temp``.
+    dummy_source = calibre_cfg.get('dummy_ixref')
+    if effective_lvs_mode == 'dummy' and not dummy_source:
+        dummy_source = os.path.join(
+            os.path.dirname(__file__), '..',
+            'dummy', 'fixtures', 'iXref.temp',
+        )
+
     print(f"\n[Stage 1.5] Extracting LVS iXref (mode={effective_lvs_mode})...")
     parsed_ixref = extract_ixref(
         mode=effective_lvs_mode,
         svdb_dir=calibre_cfg.get('svdb_dir'),
         ixref_path=ixref_temp_path,
-        dummy_source=calibre_cfg.get('dummy_ixref'),
+        dummy_source=dummy_source,
         timeout=calibre_cfg.get('timeout_s', 300),
     )
     write_ixref_yaml(parsed_ixref, ixref_yaml_path)
