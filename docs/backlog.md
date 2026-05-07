@@ -62,25 +62,31 @@ The recommended starter PR. Unblocks M6d (the routing-dependent macros).
 
 **Goal.** Replace placeholder SKILL emission and dummy Calibre with real tool integration. First exit from the dummy environment.
 
-**In flight (precursor).** Three LVS-query slices have landed (all 2026-05-07):
+**In flight (precursor).** Four LVS-query slices have landed (all 2026-05-07):
 
   * **iXref** (`INSTANCE XREF WRITE`) — saves `output/ixref.yaml` mapping layout devices to source devices (with the `X` swap flag).
   * **nXref + NET NAMES** (`NET XREF WRITE` + `NET NAMES`) — saves `output/net_xref.yaml` joining schematic_name → lvs_name → lvs_index.
   * **DEVICE INFO** (per-device `DEVICE INFO <layout_inst>`) — saves `output/device_info.yaml` per-device {layer → [bbox_um, ...]} for LVS-derived seed shapes.
+  * **NET SHAPES** (per-net `NET SHAPES <lvs_name>`) — saves `output/net_shapes.yaml` per-net {layer → [bbox_um, ...]} for routing-layer (LI / VIA0 / M1) shapes that belong to each net.
 
-All three run from `io_adapters/calibre_query.py`'s Stage 1.5 with `mode={dummy,calibre}` (CLI `--lvs-mode`). Save-only today; M7-main will wire the YAMLs into LVS-driven macros (net-equivalence overrides for swapped S/D, layout-vs-source device-identity reconciliation, schematic-net → lvs-index lookup for DRC-violation localisation, derived-shape bbox lookup for per-device DRC error mapping).
+All four run from `io_adapters/calibre_query.py`'s Stage 1.5 with `mode={dummy,calibre}` (CLI `--lvs-mode`). Save-only today; M7-main will wire the YAMLs into LVS-driven macros (net-equivalence overrides for swapped S/D, layout-vs-source device-identity reconciliation, schematic-net → lvs-index lookup for DRC-violation localisation, derived-shape bbox lookup for per-device DRC error mapping, per-net routing-shape bbox lookup for net-aware DRC violation tracing).
 
 **Files to create / replace.**
 - **New** `io_adapters/skill_emitter.py` — replaces the `printf` placeholder in `writer_skill_script.py`. Walks `shape_pool` + `EditOp` records; every emitted edit gets a provenance comment.
 - **Extend** `io_adapters/calibre_query.py` (or rename to `calibre_runner.py` if it outgrows its current scope) to also host real DRC + LVS subprocess invocations. Reuse the `mode` / `svdb_dir` / `timeout_s` plumbing already in place. Consider consolidating the per-query subprocess calls into a single interactive HDB session (one Popen, multiple commands streamed in order) — the current per-query pattern is fine for testing but needlessly slow against a real `calibre` binary.
-- `io_adapters/parser.py::build_layout_model` — optional `ixref_yaml` / `net_xref_yaml` / `device_info_yaml` params; when supplied, S/D-swapped devices use the iXref-corrected pin map, net annotations look up via `net_xref.yaml`'s lvs_index, and per-device derived-shape bboxes from `device_info.yaml` feed into the C1 derivator's coverage check.
-- `pipeline/run_mvp.py` — append DRC/LVS calls; feed results back to L3 macro provenance; consume `ixref_yaml` + `net_xref_yaml` + `device_info_yaml` for net-equivalence overrides and DRC-error → device-name localisation.
+- `io_adapters/parser.py::build_layout_model` — optional `ixref_yaml` / `net_xref_yaml` / `device_info_yaml` / `net_shapes_yaml` params; when supplied, S/D-swapped devices use the iXref-corrected pin map, net annotations look up via `net_xref.yaml`'s lvs_index, and per-device + per-net derived-shape bboxes from `device_info.yaml` / `net_shapes.yaml` feed into the C1 derivator's coverage check + DRC violation tracing.
+- `pipeline/run_mvp.py` — append DRC/LVS calls; feed results back to L3 macro provenance; consume `ixref_yaml` + `net_xref_yaml` + `device_info_yaml` + `net_shapes_yaml` for net-equivalence overrides, DRC-error → device-name localisation, and DRC-error → schematic-net localisation.
+
+**Sub-slice 1.6 (deferred): LVS layer-name mapping + effective-region trimming.** The current 1.5 slices use GDS layer names directly (`LI` / `VIA0` / `M1` / `ngate_lvt` / `pgate_lvt`) and report whatever bbox the parametric generator emits. Production LVS may use different layer-name conventions (e.g., `ngate_lvt_eff`, `m1_routing`) and must trim cut/extension regions so the bbox represents the effective conducting (or device-active) region only. 1.6 will land:
+  * a layer-name mapping table in `tech/layer_map.yaml` (or a sibling `lvs_layer_map.yaml`) translating GDS → LVS-derived layer names per direction.
+  * a trimming pass in `io_adapters/calibre_query.py` (or a downstream consumer) that subtracts cut shapes / extension margins from the raw seed bbox before reporting `bbox_um`.
+  * tests exercising both the mapped layer name and the trimmed bbox against synthetic inputs that include cuts.
 
 **Acceptance.** Real PDK environment: buffer resize → SKILL load → DRC clean → LVS match. Inject a violating edit → DRC fail localizes to the responsible L2 op.
 
 **Risks.** PDK redaction may block end-to-end validation. Keep an injection harness that mocks DRC violations.
 
-**Dependencies.** M1–M6 all complete; iXref + nXref + DEVICE INFO slices already in.
+**Dependencies.** M1–M6 all complete; iXref + nXref + DEVICE INFO + NET SHAPES slices already in.
 
 ---
 
@@ -106,13 +112,14 @@ A path-aware union-find (or a fully recomputed component on each split) is neede
 
 The M3 `(layer, bbox_nm)` overlay key works because the dummy generator's GDS shapes and the dummy LVS shapes share an exact bbox-tuple representation. Production LVS geometry can drift sub-nm. M7 will need a tolerance / containment match in `apply_lvs_overlay`.
 
-### iXref + net_xref + device_info consumption
+### iXref + net_xref + device_info + net_shapes consumption
 
-The three middle files produced by Stage 1.5 — `output/ixref.yaml` (devices), `output/net_xref.yaml` (nets + lvs_index), and `output/device_info.yaml` (per-device LVS-derived-shape bboxes) — are currently write-only. Future consumers — once we land them — should:
+The four middle files produced by Stage 1.5 — `output/ixref.yaml` (devices), `output/net_xref.yaml` (nets + lvs_index), `output/device_info.yaml` (per-device LVS-derived-shape bboxes), and `output/net_shapes.yaml` (per-net LVS-derived metal/via bboxes) — are currently write-only. Future consumers — once we land them — should:
 - Cross-check the iXref's source-side instance ids against the parsed CDL `Device.inst_name` set; flag mismatches.
 - Use the `sd_swapped` flag when projecting LVS shapes through `apply_lvs_overlay` to flip source/drain pin roles for any device the layout-side LVS run flipped.
 - Use `net_xref.yaml`'s `schematic_name → lvs_index` map to localise DRC/LVS errors back to the schematic net the engineer recognises (Calibre reports errors against `lvs_index`).
 - Use `device_info.yaml`'s per-device derived-shape bboxes to map per-device DRC violations back to the responsible L2 op — the M5 derivator already produces NWELL / BOUNDARY shapes from device metadata, so a DRC error on `pgate_lvt` localises immediately to the device whose seed shape contains the violation point.
+- Use `net_shapes.yaml`'s per-net routing-layer bboxes for DRC error → net-name traceback: a spacing violation on M1 between two shapes lands directly on the two `lvs_name`s that own the shapes; the join with `net_xref.yaml` then yields the `schematic_name`s the engineer recognises.
 - Feed all mismatches into the L3 macro provenance for blast-radius computation in the LVS feedback closure (M7 main).
 
 ### Calibre HDB command-string drift

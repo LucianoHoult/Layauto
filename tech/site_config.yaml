@@ -45,6 +45,9 @@ inputs:
   # Per-device LVS-derived-shape middle file
   # (layout_inst -> {layer -> [bbox_um, ...]}).
   device_info_yaml: ../output/device_info.yaml
+  # Per-net LVS-derived-shape middle file
+  # (lvs_index -> {layer -> [bbox_um, ...]}).
+  net_shapes_yaml: ../output/net_shapes.yaml
 
 # ---- Run outputs ---------------------------------------------
 output:
@@ -66,6 +69,8 @@ calibre:
   net_names_txt:    ../output/net_names.txt
   # Per-device DEVICE INFO outputs land here as device_info_<inst>.txt.
   device_info_dir:  ../output
+  # Per-net NET SHAPES outputs land here as net_shapes_<lvs_name>.txt.
+  net_shapes_dir:   ../output
   # Dummy sources (used only when mode=dummy).
   dummy_ixref:      ../dummy/fixtures/iXref.temp
   dummy_nxref:      ../dummy/fixtures/nXref.temp
@@ -73,6 +78,9 @@ calibre:
   # Directory containing dummy device_info_<inst>.txt files
   # (one per layout instance the dummy iXref names).
   dummy_device_info_dir: ../dummy/fixtures
+  # Directory containing dummy net_shapes_<lvs_name>.txt files
+  # (one per net the dummy net_xref names).
+  dummy_net_shapes_dir:  ../dummy/fixtures
   timeout_s:        300
 
 # ---- Deferred to follow-up discussion ------------------------

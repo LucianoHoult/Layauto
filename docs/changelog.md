@@ -4,7 +4,38 @@
 
 **Format.** One block per shipped milestone or sub-milestone. Each block carries: date / branch / what shipped / files touched / acceptance evidence / notes.
 
-**Test-count series** (cumulative): M0 33 → M1 38 → M2 50 → M3 65 → M4a 81+4 → M4b 119 → M4c 134 → M4d 155 → M4e 174 → M5 187 → M6a 201 → M6b 214 (+ config-consolidation: no test delta) → iXref 243 → nXref+NET-NAMES 284 → DEVICE-INFO 316.
+**Test-count series** (cumulative): M0 33 → M1 38 → M2 50 → M3 65 → M4a 81+4 → M4b 119 → M4c 134 → M4d 155 → M4e 174 → M5 187 → M6a 201 → M6b 214 (+ config-consolidation: no test delta) → iXref 243 → nXref+NET-NAMES 284 → DEVICE-INFO 316 → NET-SHAPES 344.
+
+---
+
+## 2026-05-07 — Stage 1.5 extended: NET SHAPES (M7 seam, fourth slice)
+
+**Branch:** `claude/refine-test-fixtures-nIkdZ`
+
+Adds the per-net `NET SHAPES <lvs_name>` Calibre HDB query — the fourth query in Stage 1.5 — and produces `output/net_shapes.yaml`, a per-net middle file recording every metal/via shape attached to a given net's lvs_index. Joined with the prior net_xref middle file: each entry carries `{lvs_index, lvs_name, schematic_name, layers}`.
+
+`NET SHAPES` is per-net (one subprocess per query). The query argument is the LVS-side net name from NET NAMES — top-level pins keep their schematic strings (`VDD`, `OUT`, …); LVS-renumbered internal nets surface as numeric strings (the user's BUFLVT example uses `NET SHAPES 2` for the renumbered `net9`). Layer names match GDS layer names directly (LI, VIA0, M1) and bbox represents the *effective* conducting region per the user's spec — cuts and extension margins are excluded; layer-name mapping and trimming convention will be tightened in 1.6.
+
+Like DEVICE INFO, the response is stdout-only — Calibre never writes a file — so the runner captures stdout, slices the bounded `Net_Shapes ... END OF RESPONSE` block via `_extract_net_shapes_block`, and persists it as `output/net_shapes_<lvs_name>.txt`. Vertex coordinates land as `<y> <x>` integer pairs in `1 / precision` µm.
+
+- **`io_adapters/calibre_query.py`** — five new functions:
+  - `parse_net_shapes` — anchors on `Net_Shapes <precision>` + `Info:` + count line + n_metadata block (last line = first layer name). Walks the post-metadata block parsing `p` shape headers / count lines (skipped) / bare layer-name strings. Terminator-required (raises `ValueError` if EOF without `END OF RESPONSE`).
+  - `write_net_shapes_yaml` — serialises only `lvs_index`, `lvs_name`, `schematic_name`, and per-layer `{name, shapes: [{bbox_um}]}`; vertex tuples and opaque metadata stay in memory.
+  - `run_calibre_net_shapes` — `calibre -query` subprocess; stdin `NET SHAPES <lvs_name>\nEXIT\n`; same diagnostics as DEVICE INFO. The runner forwards `lvs_name` verbatim, so numeric LVS names (the renumbered case) work without special handling.
+  - `run_dummy_net_shapes` — copies a per-net `dummy/fixtures/net_shapes_<lvs_name>.txt`.
+  - `extract_net_shapes` — top-level orchestrator: iterates `nets` (typed as the parsed net_xref `nets` list), dispatches one query per net, joins each parsed result with `lvs_index/lvs_name/schematic_name` from the input.
+- **New `dummy/fixtures/net_shapes_{IN,OUT,VSS,VDD}.txt`** — auto-generated from `generate_calibre_net_shapes`, sourced from `layout_data['shapes'][layer]` filtered by net + `NET_SHAPES_LAYERS = ['LI', 'VIA0', 'M1']`. Each file mirrors the inverter's actual layer/shape composition (e.g. OUT has 2 LI bars + 1 VIA0 + 1 M1; VDD M1 spans the full cell width 0.0 → 0.108 µm).
+- **New `dummy/fixtures/net_shapes.yaml`** — committed parsed reference for byte-comparison in tests.
+- **`dummy/gen_buffer_layout.py`** — `generate_calibre_net_shapes(layout_data, lvs_name, filename)` reproduces each per-net fixture from the inverter layout dict; `NET_SHAPES_LAYERS` constant lifts the layer list. Wired into `generate_all_fixtures` to emit one file per net.
+- **`tech/site_config.yaml`** — adds `calibre.{net_shapes_dir, dummy_net_shapes_dir}` and `inputs.net_shapes_yaml`.
+- **`tech/config_loader.py`** — resolves the two new path-valued fields under `calibre:`.
+- **`pipeline/run_mvp.py`** — Stage 1.5 now also runs `extract_net_shapes` after device_info (driven by `parsed_net_xref['nets']`); banner adds `NetShapes: nets=N  layers=N  shapes=N`; legacy site_configs without `calibre.dummy_net_shapes_dir` get the same repo-default fallback (`dummy/fixtures/`).
+
+**Files touched.** `io_adapters/calibre_query.py`, `dummy/gen_buffer_layout.py`, `tech/site_config.yaml`, `tech/config_loader.py`, `pipeline/run_mvp.py`, `tests/conftest.py`, `tests/unit/test_calibre_query.py`, `docs/architecture.md`, `docs/changelog.md`. New: `dummy/fixtures/net_shapes_{IN,OUT,VSS,VDD}.txt`, `dummy/fixtures/net_shapes.yaml`.
+
+**Acceptance.** Pytest 344/344 (316 pre + 28 new in `test_calibre_query.py`). Existing four golden artifacts (`buffer_resized.{json,cdl}`, `resize_report.txt`, `annotation_coverage.txt`) md5-identical to the DEVICE INFO baseline. New artifacts: `output/net_shapes_<lvs_name>.txt` (one per net) plus `output/net_shapes.yaml`. `python3 pipeline/run_mvp.py` adds `NetShapes: nets=4  layers=12  shapes=13` to the Stage 1.5 banner.
+
+**Notes.** As with prior slices, one subprocess per net matches the per-query pattern of the rest of Stage 1.5; M7 may consolidate to a single interactive HDB session. The user's BUFLVT renumbered-internal-net case (`NET SHAPES 2` for schematic `net9`) is exercised in `test_parse_net_shapes_user_renumbered_internal_net` and `test_run_calibre_net_shapes_numeric_lvs_name_passes_through`. Layer-name mapping and cut/extension trimming are deferred to 1.6.
 
 ---
 

@@ -1,0 +1,106 @@
+nets:
+- lvs_index: 1
+  lvs_name: IN
+  schematic_name: IN
+  layers:
+  - name: LI
+    shapes:
+    - bbox_um:
+        x1: 0.045
+        y1: 0.157
+        x2: 0.062
+        y2: 0.205
+  - name: VIA0
+    shapes:
+    - bbox_um:
+        x1: 0.045
+        y1: 0.153
+        x2: 0.062
+        y2: 0.17
+  - name: M1
+    shapes:
+    - bbox_um:
+        x1: 0.044
+        y1: 0.152
+        x2: 0.064
+        y2: 0.172
+- lvs_index: 2
+  lvs_name: OUT
+  schematic_name: OUT
+  layers:
+  - name: LI
+    shapes:
+    - bbox_um:
+        x1: 0.072
+        y1: 0.035
+        x2: 0.089
+        y2: 0.203
+    - bbox_um:
+        x1: 0.072
+        y1: 0.193
+        x2: 0.089
+        y2: 0.395
+  - name: VIA0
+    shapes:
+    - bbox_um:
+        x1: 0.072
+        y1: 0.189
+        x2: 0.089
+        y2: 0.206
+  - name: M1
+    shapes:
+    - bbox_um:
+        x1: 0.071
+        y1: 0.188
+        x2: 0.091
+        y2: 0.208
+- lvs_index: 3
+  lvs_name: VSS
+  schematic_name: VSS
+  layers:
+  - name: LI
+    shapes:
+    - bbox_um:
+        x1: 0.018
+        y1: 0.013
+        x2: 0.035
+        y2: 0.145
+  - name: VIA0
+    shapes:
+    - bbox_um:
+        x1: 0.018
+        y1: 0.009
+        x2: 0.035
+        y2: 0.026
+  - name: M1
+    shapes:
+    - bbox_um:
+        x1: 0.0
+        y1: 0.008
+        x2: 0.108
+        y2: 0.028
+- lvs_index: 4
+  lvs_name: VDD
+  schematic_name: VDD
+  layers:
+  - name: LI
+    shapes:
+    - bbox_um:
+        x1: 0.018
+        y1: 0.235
+        x2: 0.035
+        y2: 0.419
+  - name: VIA0
+    shapes:
+    - bbox_um:
+        x1: 0.018
+        y1: 0.405
+        x2: 0.035
+        y2: 0.422
+  - name: M1
+    shapes:
+    - bbox_um:
+        x1: 0.0
+        y1: 0.404
+        x2: 0.108
+        y2: 0.424

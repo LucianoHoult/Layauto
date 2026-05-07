@@ -41,6 +41,11 @@ from io_adapters.calibre_query import (
     run_dummy_device_info,
     run_calibre_device_info,
     extract_device_info,
+    parse_net_shapes,
+    write_net_shapes_yaml,
+    run_dummy_net_shapes,
+    run_calibre_net_shapes,
+    extract_net_shapes,
     CalibreNotFoundError,
     CalibreQueryError,
 )
@@ -1515,4 +1520,421 @@ def test_device_info_generator_invalid_inst_raises(tmp_path):
     layout = generate_inverter_layout(nmos_nfin=5, pmos_nfin=7)
     with pytest.raises(ValueError, match='out of range'):
         generate_calibre_device_info(layout, 'M99',
+                                      str(tmp_path / 'x.txt'))
+
+
+# =====================================================================
+# NET SHAPES parser
+# =====================================================================
+
+def _write_net_shapes(tmp_path, layer_blocks, n_metadata=1,
+                       precision=20000,
+                       timestamp='May 07 03:00:00 2026',
+                       extra_metadata=None):
+    """Build a synthetic NET SHAPES response file.
+
+    ``layer_blocks`` is a list of ``(layer_name, [list_of_vertex_lists])``.
+    """
+    if extra_metadata is None:
+        extra_metadata = []
+    lines = [f'Net_Shapes {precision}', 'Info:',
+             f'0 0 {n_metadata} {timestamp}']
+    lines.extend(extra_metadata)
+    lines.append(layer_blocks[0][0])
+    for li, (name, shapes) in enumerate(layer_blocks):
+        if li > 0:
+            lines.append(name)
+        lines.append(f'{len(shapes)} 1 0 {timestamp}')
+        for si, verts in enumerate(shapes, start=1):
+            lines.append(f'p {si} {len(verts)}')
+            for y, x in verts:
+                lines.append(f'{y} {x}')
+    lines.append('END OF RESPONSE')
+    path = tmp_path / 'net_shapes.txt'
+    path.write_text('\n'.join(lines) + '\n')
+    return str(path)
+
+
+def test_parse_net_shapes_committed_OUT(net_shapes_OUT_path):
+    """Committed OUT-net dummy parses into the expected schema and
+    bbox set (2 LI bars, 1 VIA0, 1 M1)."""
+    parsed = parse_net_shapes(net_shapes_OUT_path)
+    assert parsed['precision'] == 20000
+    by_name = {l['name']: l for l in parsed['layers']}
+    assert set(by_name) == {'LI', 'VIA0', 'M1'}
+    assert len(by_name['LI']['shapes']) == 2
+    assert len(by_name['VIA0']['shapes']) == 1
+    assert len(by_name['M1']['shapes']) == 1
+    # First LI bar (NMOS drain side) — bbox in um.
+    assert by_name['LI']['shapes'][0]['bbox_um'] == {
+        'x1': 0.072, 'y1': 0.035,
+        'x2': 0.089, 'y2': 0.203,
+    }
+
+
+def test_parse_net_shapes_committed_VDD_full_width_M1(
+        net_shapes_VDD_path):
+    """VDD power rail spans full cell width on M1 — 0.0 to 0.108 um.
+    Catches a regression that would shrink the rail to its
+    intersection with the device footprint."""
+    parsed = parse_net_shapes(net_shapes_VDD_path)
+    by_name = {l['name']: l for l in parsed['layers']}
+    m1 = by_name['M1']['shapes'][0]['bbox_um']
+    assert m1 == {'x1': 0.0, 'y1': 0.404,
+                  'x2': 0.108, 'y2': 0.424}
+
+
+def test_parse_net_shapes_user_renumbered_internal_net(tmp_path):
+    """Synthetic case mirroring the user's BUFLVT example: lvs_name
+    is the numeric '2' (LVS-renumbered net9). Parser doesn't care
+    about the lvs_name itself — only the file structure — so the
+    same shape rules apply."""
+    path = _write_net_shapes(
+        tmp_path,
+        layer_blocks=[
+            ('M1', [[(1800, 630), (1980, 630), (1980, 1890),
+                     (1800, 1890)]]),
+        ],
+    )
+    parsed = parse_net_shapes(path)
+    assert parsed['layers'][0]['name'] == 'M1'
+    assert parsed['layers'][0]['shapes'][0]['bbox_um'] == {
+        'x1': 0.0315, 'y1': 0.09,
+        'x2': 0.0945, 'y2': 0.099,
+    }
+
+
+def test_parse_net_shapes_multi_layer_multi_shape(tmp_path):
+    path = _write_net_shapes(
+        tmp_path,
+        layer_blocks=[
+            ('LI', [
+                [(0, 0), (200, 0), (200, 100), (0, 100)],
+                [(400, 0), (600, 0), (600, 100), (400, 100)],
+            ]),
+            ('M1', [[(0, 0), (200, 0), (200, 100), (0, 100)]]),
+        ],
+    )
+    parsed = parse_net_shapes(path)
+    assert [(l['name'], len(l['shapes'])) for l in parsed['layers']] \
+        == [('LI', 2), ('M1', 1)]
+
+
+def test_parse_net_shapes_missing_terminator_raises(tmp_path):
+    path = tmp_path / 'truncated.txt'
+    path.write_text(
+        'Net_Shapes 20000\nInfo:\n0 0 1 ts\nM1\n1 1 0 ts\np 1 4\n'
+        '0 0\n10 0\n10 10\n0 10\n'   # no END OF RESPONSE
+    )
+    with pytest.raises(ValueError, match='END OF RESPONSE'):
+        parse_net_shapes(str(path))
+
+
+def test_parse_net_shapes_missing_header_raises(tmp_path):
+    path = tmp_path / 'bad.txt'
+    path.write_text('Info:\n0 0 1 ts\nM1\n1 1 0 ts\np 1 4\n'
+                    '0 0\n10 0\n10 10\n0 10\nEND OF RESPONSE\n')
+    with pytest.raises(ValueError, match="missing 'Net_Shapes'"):
+        parse_net_shapes(str(path))
+
+
+def test_parse_net_shapes_missing_anchor_raises(tmp_path):
+    path = tmp_path / 'bad.txt'
+    path.write_text('Net_Shapes 20000\n0 0 1 ts\nM1\n1 1 0 ts\n'
+                    'p 1 4\n0 0\n10 0\n10 10\n0 10\n'
+                    'END OF RESPONSE\n')
+    with pytest.raises(ValueError, match="missing 'Info:' anchor"):
+        parse_net_shapes(str(path))
+
+
+def test_parse_net_shapes_blank_seed_layer_raises(tmp_path):
+    path = tmp_path / 'bad.txt'
+    path.write_text('Net_Shapes 20000\nInfo:\n0 0 1 ts\n\n'
+                    '1 1 0 ts\np 1 4\n0 0\n10 0\n10 10\n0 10\n'
+                    'END OF RESPONSE\n')
+    # Blank metadata lines are dropped by the loop; the file's
+    # n_metadata=1 then can't supply a non-blank seed name.
+    with pytest.raises(ValueError):
+        parse_net_shapes(str(path))
+
+
+# =====================================================================
+# NET SHAPES YAML writer
+# =====================================================================
+
+def test_write_net_shapes_yaml_matches_committed_reference(
+        fixture_dir, tmp_path):
+    parsed = extract_net_shapes(
+        mode='dummy', svdb_dir=None,
+        nets=[
+            {'lvs_index': 1, 'lvs_name': 'IN',  'schematic_name': 'IN'},
+            {'lvs_index': 2, 'lvs_name': 'OUT', 'schematic_name': 'OUT'},
+            {'lvs_index': 3, 'lvs_name': 'VSS', 'schematic_name': 'VSS'},
+            {'lvs_index': 4, 'lvs_name': 'VDD', 'schematic_name': 'VDD'},
+        ],
+        out_dir=str(tmp_path / 'out'),
+        dummy_source_dir=fixture_dir,
+    )
+    out = tmp_path / 'net_shapes.yaml'
+    write_net_shapes_yaml(parsed, str(out))
+    reference = os.path.join(fixture_dir, 'net_shapes.yaml')
+    with open(reference) as f:
+        ref_dict = yaml.safe_load(f)
+    with open(out) as f:
+        written_dict = yaml.safe_load(f)
+    assert written_dict == ref_dict
+
+
+def test_write_net_shapes_yaml_drops_vertices(net_shapes_OUT_path,
+                                                tmp_path):
+    parsed = parse_net_shapes(net_shapes_OUT_path)
+    out = tmp_path / 'ns.yaml'
+    write_net_shapes_yaml(
+        {'nets': [{'lvs_index': 2, 'lvs_name': 'OUT',
+                   'schematic_name': 'OUT', **parsed}]},
+        str(out),
+    )
+    with open(out) as f:
+        loaded = yaml.safe_load(f)
+    shape = loaded['nets'][0]['layers'][0]['shapes'][0]
+    assert set(shape.keys()) == {'bbox_um'}
+
+
+# =====================================================================
+# Dummy + Calibre dispatchers (NET SHAPES)
+# =====================================================================
+
+def test_run_dummy_net_shapes_copies_fixture(net_shapes_OUT_path,
+                                                tmp_path):
+    dst = tmp_path / 'net_shapes_OUT.txt'
+    run_dummy_net_shapes(svdb_dir=None, lvs_name='OUT',
+                         out_path=str(dst),
+                         dummy_source=net_shapes_OUT_path)
+    assert dst.exists()
+    assert dst.read_text() == open(net_shapes_OUT_path).read()
+
+
+def test_run_dummy_net_shapes_missing_source_raises(tmp_path):
+    with pytest.raises(FileNotFoundError):
+        run_dummy_net_shapes(svdb_dir=None, lvs_name='OUT',
+                             out_path=str(tmp_path / 'out.txt'),
+                             dummy_source=str(tmp_path / 'missing.txt'))
+
+
+def test_run_calibre_net_shapes_subprocess_invocation(
+        tmp_path, net_shapes_OUT_path):
+    svdb = tmp_path / 'svdb_dir'
+    svdb.mkdir()
+    out = tmp_path / 'out.txt'
+    captured = {}
+    fake_stdout = (
+        "Some banner...\n"
+        + open(net_shapes_OUT_path).read()
+        + "\nQuery server exiting.\n"
+    )
+
+    def fake_run(cmd, **kwargs):
+        captured['cmd'] = cmd
+        captured['input'] = kwargs.get('input')
+        return _FakeCompleted(returncode=0, stdout=fake_stdout)
+
+    with patch('io_adapters.calibre_query.shutil.which',
+               return_value='/usr/bin/calibre'), \
+         patch('io_adapters.calibre_query.subprocess.run',
+               side_effect=fake_run):
+        run_calibre_net_shapes(str(svdb), 'OUT', str(out))
+
+    assert captured['cmd'] == ['calibre', '-query', str(svdb)]
+    assert captured['input'] == "NET SHAPES OUT\nEXIT\n"
+    parsed = parse_net_shapes(str(out))
+    by_name = {l['name']: l for l in parsed['layers']}
+    assert set(by_name) == {'LI', 'VIA0', 'M1'}
+
+
+def test_run_calibre_net_shapes_numeric_lvs_name_passes_through(
+        tmp_path):
+    """User's BUFLVT example queries `NET SHAPES 2` for the
+    LVS-renumbered net9. The runner just forwards lvs_name verbatim."""
+    svdb = tmp_path / 'svdb_dir'
+    svdb.mkdir()
+    captured = {}
+    payload = (
+        "Net_Shapes 20000\nInfo:\n0 0 1 ts\nM1\n"
+        "1 1 0 ts\np 1 4\n0 0\n10 0\n10 10\n0 10\n"
+        "END OF RESPONSE\n"
+    )
+
+    def fake_run(cmd, **kwargs):
+        captured['input'] = kwargs.get('input')
+        return _FakeCompleted(returncode=0, stdout=payload)
+
+    with patch('io_adapters.calibre_query.shutil.which',
+               return_value='/usr/bin/calibre'), \
+         patch('io_adapters.calibre_query.subprocess.run',
+               side_effect=fake_run):
+        run_calibre_net_shapes(str(svdb), '2',
+                                str(tmp_path / 'out.txt'))
+    assert captured['input'] == "NET SHAPES 2\nEXIT\n"
+
+
+def test_run_calibre_net_shapes_missing_binary_raises(tmp_path):
+    with patch('io_adapters.calibre_query.shutil.which',
+               return_value=None):
+        with pytest.raises(CalibreNotFoundError):
+            run_calibre_net_shapes(str(tmp_path), 'OUT',
+                                     str(tmp_path / 'x.txt'))
+
+
+def test_run_calibre_net_shapes_missing_block_raises(tmp_path):
+    svdb = tmp_path / 'svdb_dir'
+    svdb.mkdir()
+    with patch('io_adapters.calibre_query.shutil.which',
+               return_value='/usr/bin/calibre'), \
+         patch('io_adapters.calibre_query.subprocess.run',
+               return_value=_FakeCompleted(returncode=0,
+                                            stdout='garbage\n')):
+        with pytest.raises(CalibreQueryError, match='Net_Shapes'):
+            run_calibre_net_shapes(str(svdb), 'OUT',
+                                     str(tmp_path / 'x.txt'))
+
+
+def test_run_calibre_net_shapes_missing_terminator_raises(tmp_path):
+    svdb = tmp_path / 'svdb_dir'
+    svdb.mkdir()
+    truncated = "Net_Shapes 20000\nInfo:\n"
+    with patch('io_adapters.calibre_query.shutil.which',
+               return_value='/usr/bin/calibre'), \
+         patch('io_adapters.calibre_query.subprocess.run',
+               return_value=_FakeCompleted(returncode=0,
+                                            stdout=truncated)):
+        with pytest.raises(CalibreQueryError, match='END OF RESPONSE'):
+            run_calibre_net_shapes(str(svdb), 'OUT',
+                                     str(tmp_path / 'x.txt'))
+
+
+# =====================================================================
+# extract_net_shapes orchestrator
+# =====================================================================
+
+def test_extract_net_shapes_dummy_mode_end_to_end(fixture_dir,
+                                                    tmp_path):
+    out_dir = tmp_path / 'out'
+    parsed = extract_net_shapes(
+        mode='dummy', svdb_dir=None,
+        nets=[
+            {'lvs_index': 2, 'lvs_name': 'OUT', 'schematic_name': 'OUT'},
+            {'lvs_index': 4, 'lvs_name': 'VDD', 'schematic_name': 'VDD'},
+        ],
+        out_dir=str(out_dir),
+        dummy_source_dir=fixture_dir,
+    )
+    assert (out_dir / 'net_shapes_OUT.txt').exists()
+    assert (out_dir / 'net_shapes_VDD.txt').exists()
+    assert len(parsed['nets']) == 2
+    out_net = parsed['nets'][0]
+    assert out_net['lvs_index'] == 2
+    assert out_net['lvs_name'] == 'OUT'
+    assert out_net['schematic_name'] == 'OUT'
+    assert {l['name'] for l in out_net['layers']} == {'LI', 'VIA0', 'M1'}
+
+
+def test_extract_net_shapes_calibre_mode_end_to_end(
+        tmp_path, net_shapes_OUT_path, net_shapes_VDD_path):
+    svdb = tmp_path / 'svdb_dir'
+    svdb.mkdir()
+    out_dir = tmp_path / 'out'
+    payloads = {
+        'OUT': open(net_shapes_OUT_path).read(),
+        'VDD': open(net_shapes_VDD_path).read(),
+    }
+
+    def fake_run(cmd, **kwargs):
+        stdin = kwargs.get('input', '')
+        for nm, payload in payloads.items():
+            if f'NET SHAPES {nm}' in stdin:
+                return _FakeCompleted(returncode=0, stdout=payload)
+        return _FakeCompleted(returncode=1, stderr='unexpected stdin')
+
+    with patch('io_adapters.calibre_query.shutil.which',
+               return_value='/usr/bin/calibre'), \
+         patch('io_adapters.calibre_query.subprocess.run',
+               side_effect=fake_run):
+        parsed = extract_net_shapes(
+            mode='calibre', svdb_dir=str(svdb),
+            nets=[
+                {'lvs_index': 2, 'lvs_name': 'OUT',
+                 'schematic_name': 'OUT'},
+                {'lvs_index': 4, 'lvs_name': 'VDD',
+                 'schematic_name': 'VDD'},
+            ],
+            out_dir=str(out_dir),
+        )
+    assert {n['lvs_name'] for n in parsed['nets']} == {'OUT', 'VDD'}
+
+
+def test_extract_net_shapes_unknown_mode_raises(tmp_path):
+    with pytest.raises(ValueError, match='unknown mode'):
+        extract_net_shapes(mode='gibberish', svdb_dir=None,
+                            nets=[],
+                            out_dir=str(tmp_path / 'o'))
+
+
+def test_extract_net_shapes_dummy_mode_requires_source_dir(tmp_path):
+    with pytest.raises(ValueError, match='requires dummy_source_dir'):
+        extract_net_shapes(mode='dummy', svdb_dir=None,
+                            nets=[{'lvs_index': 1, 'lvs_name': 'IN',
+                                    'schematic_name': 'IN'}],
+                            out_dir=str(tmp_path / 'o'))
+
+
+def test_extract_net_shapes_calibre_mode_requires_svdb(tmp_path):
+    with pytest.raises(ValueError, match='requires svdb_dir'):
+        extract_net_shapes(mode='calibre', svdb_dir=None,
+                            nets=[{'lvs_index': 1, 'lvs_name': 'IN',
+                                    'schematic_name': 'IN'}],
+                            out_dir=str(tmp_path / 'o'))
+
+
+def test_extract_net_shapes_empty_nets_returns_empty(tmp_path):
+    parsed = extract_net_shapes(
+        mode='dummy', svdb_dir=None, nets=[],
+        out_dir=str(tmp_path / 'out'),
+        dummy_source_dir=str(tmp_path),
+    )
+    assert parsed == {'nets': []}
+
+
+# =====================================================================
+# Generator parity (NET SHAPES)
+# =====================================================================
+
+def test_net_shapes_generator_matches_committed_OUT(
+        net_shapes_OUT_path, tmp_path):
+    from dummy.gen_buffer_layout import (
+        generate_inverter_layout, generate_calibre_net_shapes,
+    )
+    layout = generate_inverter_layout(nmos_nfin=5, pmos_nfin=7)
+    out = tmp_path / 'net_shapes_OUT.txt'
+    generate_calibre_net_shapes(layout, 'OUT', str(out))
+    assert out.read_text() == open(net_shapes_OUT_path).read()
+
+
+def test_net_shapes_generator_matches_committed_VDD(
+        net_shapes_VDD_path, tmp_path):
+    from dummy.gen_buffer_layout import (
+        generate_inverter_layout, generate_calibre_net_shapes,
+    )
+    layout = generate_inverter_layout(nmos_nfin=5, pmos_nfin=7)
+    out = tmp_path / 'net_shapes_VDD.txt'
+    generate_calibre_net_shapes(layout, 'VDD', str(out))
+    assert out.read_text() == open(net_shapes_VDD_path).read()
+
+
+def test_net_shapes_generator_unknown_net_raises(tmp_path):
+    from dummy.gen_buffer_layout import (
+        generate_inverter_layout, generate_calibre_net_shapes,
+    )
+    layout = generate_inverter_layout(nmos_nfin=5, pmos_nfin=7)
+    with pytest.raises(ValueError, match='not in'):
+        generate_calibre_net_shapes(layout, 'NOPE',
                                       str(tmp_path / 'x.txt'))

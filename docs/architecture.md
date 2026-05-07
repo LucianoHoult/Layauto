@@ -21,7 +21,7 @@ Entry point: `pipeline/run_mvp.py::run_full_pipeline(site_config_path)`.
 | Stage | What it does | Implementation |
 |-------|--------------|----------------|
 | 1. Diff CDL | Parses original + modified `.cdl`; finds parameter-level differences (today: `nfin`) and emits `(inst, param, old, new)` tuples that drive macro dispatch. | `io_adapters/cdl_parser.py::parse_cdl` + `diff_cdl` |
-| 1.5. LVS extract (iXref + nXref + NET NAMES + DEVICE INFO) | Either spawns `calibre -query <svdb_dir>` and streams `INSTANCE XREF WRITE` / `NET XREF WRITE` / `NET NAMES` / `DEVICE INFO <inst>` over stdin (`mode=calibre`) or copies pre-staged `dummy/fixtures/{iXref,nXref}.temp` + `net_names.txt` + `device_info_<inst>.txt` (`mode=dummy`, default). Parses each format and writes `output/ixref.yaml` (devices), `output/net_xref.yaml` (joined `schematic_name → lvs_name → lvs_index`), and `output/device_info.yaml` (per-device `layout_inst → {layer → [bbox_um, ...]}`) as saved-for-later middle files. Not consumed by Stage 2 yet. | `io_adapters/calibre_query.py::extract_ixref`, `extract_net_xref`, `extract_device_info` |
+| 1.5. LVS extract (iXref + nXref + NET NAMES + DEVICE INFO + NET SHAPES) | Either spawns `calibre -query <svdb_dir>` and streams `INSTANCE XREF WRITE` / `NET XREF WRITE` / `NET NAMES` / `DEVICE INFO <inst>` / `NET SHAPES <lvs_name>` over stdin (`mode=calibre`) or copies pre-staged `dummy/fixtures/{iXref,nXref}.temp` + `net_names.txt` + `device_info_<inst>.txt` + `net_shapes_<lvs_name>.txt` (`mode=dummy`, default). Parses each format and writes `output/ixref.yaml` (devices), `output/net_xref.yaml` (joined `schematic_name → lvs_name → lvs_index`), `output/device_info.yaml` (per-device `layout_inst → {layer → [bbox_um, ...]}`), and `output/net_shapes.yaml` (per-net `lvs_index/lvs_name/schematic_name → {layer → [bbox_um, ...]}`) as saved-for-later middle files. Not consumed by Stage 2 yet. | `io_adapters/calibre_query.py::extract_ixref`, `extract_net_xref`, `extract_device_info`, `extract_net_shapes` |
 | 2. Build `LayoutModel` + `MultiLayerGrid` | Parses Calibre device + net JSONs and the bbox-by-layer dump; constructs the geometric `shape_pool` first, then applies LVS as an annotation overlay; builds a per-layer `MultiLayerGrid` (A-tier track grids + B-tier cell grids). | `io_adapters/parser.py::build_layout_model` |
 | 3. Set up CSP engine | Registers DRC constraint templates, initialises per-cell domains for every CSP-modelled layer (LI / M1 + the B-tier OD / VIA0). | `core/solver.py::LayoutSolver.setup_engine` |
 | 4. Load existing layout into CSP | Walks every `TrackSegment` and B-tier cell from stage 2; stamps each cell as `FIXED` so propagation runs against existing geometry. Then projects unannotated shapes as `BLOCKAGE`. | `core/solver.py::load_existing_layout`, `load_b_tier_cells_into_engine`, `project_unannotated_blockages` |
@@ -415,6 +415,53 @@ Producer: `run_calibre_device_info` spawns `calibre -query <svdb_dir>` with stdi
 
 Consumer: `parse_device_info` returns `{precision, device_type_number, metadata_lines, layers}` per device; `extract_device_info` orchestrates one query per `layout_inst` (driven by the parsed iXref) and returns `{devices: [...]}`. `write_device_info_yaml` serialises only the user-requested fields — `layout_inst`, `device_type_number`, and per-layer `{name, shapes: [{bbox_um}]}` — to `output/device_info.yaml` (committed reference at `dummy/fixtures/device_info.yaml`). Pin nets, property values, and raw vertex coordinates stay in memory but do not land in the middle file. The middle file is reserved for M7 LVS feedback closure (DRC error localisation by device + derived layer).
 
+### `net_shapes_<lvs_name>.txt` and `net_shapes.yaml`
+
+Calibre HDB ``NET SHAPES <lvs_name>`` is a per-net query for the metal/via shapes that belong to a single net. ``<lvs_name>`` is the value NET NAMES gave for that net's index — top-level pins keep their schematic strings (`VDD`, `VSS`, …), LVS-renumbered internal nets surface as numeric strings (`2`, `6`, …; the user's BUFLVT example uses `NET SHAPES 2` for the renumbered `net9`).
+
+Layer names match GDS layer names directly (`LI`, `VIA0`, `M1`, …) and each shape's bbox represents the *effective* conducting region — cuts and extension margins are excluded. Layer-name mapping and trimming convention will be tightened in 1.6 (deferred per [`backlog.md`](backlog.md)).
+
+The response is stdout-only:
+
+```
+Net_Shapes 20000
+Info:
+0 0 1 May 07 03:00:00 2026
+LI
+2 1 0 May 07 03:00:00 2026
+p 1 4
+700 1440
+4060 1440
+4060 1780
+700 1780
+p 2 4
+3860 1440
+7900 1440
+7900 1780
+3860 1780
+VIA0
+1 1 0 May 07 03:00:00 2026
+p 1 4
+3780 1440
+4120 1440
+4120 1780
+3780 1780
+M1
+1 1 0 May 07 03:00:00 2026
+p 1 4
+3760 1420
+4160 1420
+4160 1820
+3760 1820
+END OF RESPONSE
+```
+
+Shape format mirrors DEVICE INFO: `<a> <b> [c] <date>` per-layer count line followed by `p <shape_idx> <n_vertices>` and `<n_vertices>` `<y> <x>` integer pairs in `1 / precision` µm. Multiple shapes for one layer iterate the `p` blocks; multiple layers append a new layer-name line followed by another count + shape sequence.
+
+Producer: `run_calibre_net_shapes` spawns `calibre -query <svdb_dir>` with stdin `NET SHAPES <lvs_name>\nEXIT\n`, captures stdout, slices the `Net_Shapes ... END OF RESPONSE` block via `_extract_net_shapes_block`, and writes that block to `<out_dir>/net_shapes_<lvs_name>.txt`. Dummy fixtures live at `dummy/fixtures/net_shapes_<lvs_name>.txt`; the parametric generator is `generate_calibre_net_shapes(layout_data, lvs_name, filename)`, which sources shapes from `layout_data['shapes'][layer]` filtered to `NET_SHAPES_LAYERS = ['LI', 'VIA0', 'M1']` by the shape's `net` field.
+
+Consumer: `parse_net_shapes` returns `{precision, metadata_lines, layers}` per net (terminator-required, same defence as DEVICE INFO); `extract_net_shapes` orchestrates one query per net (driven by the parsed net_xref middle file's `nets` list) and returns `{nets: [{lvs_index, lvs_name, schematic_name, layers, ...}, ...]}`. `write_net_shapes_yaml` serialises `lvs_index`, `lvs_name`, `schematic_name`, and per-layer `{name, shapes: [{bbox_um}]}` — vertex tuples and opaque metadata are intentionally elided. The middle file is reserved for M7 LVS feedback closure (DRC error → schematic-net localisation).
+
 ## 10. Production integration model
 
 The `core/` directory does not change for production. Integration touches three seams: tech bundle, IO adapters, and tooling scripts.
@@ -432,7 +479,7 @@ The single editable file is `tech/site_config.yaml` (§ 6). It points at `drc_ru
 
 - **`scripts/virtuoso_apply_edit.il`** — SKILL placeholder. Production needs real `_removeShapeByBBox` / `_resizeShapeByBBox` implementations bound to the foundry PDK. See [`backlog.md`](backlog.md) § M7.
 - **`scripts/calibre_run_drc.sh` / `calibre_run_lvs.sh`** — production needs the actual `calibre` invocation lines uncommented and parameterised.
-- **iXref + nXref + NET NAMES + DEVICE INFO queries (Stage 1.5) — landed 2026-05-07.** `io_adapters/calibre_query.py` runs the `calibre -query <svdb_dir>` subprocess for real (full Popen + stdin scripting + timeout + missing-binary diagnostics) for `INSTANCE XREF WRITE`, `NET XREF WRITE`, `NET NAMES`, and per-device `DEVICE INFO <inst>`. The dummy/real switch lives in `tech/site_config.yaml::calibre.mode` (CLI override: `--lvs-mode {dummy,calibre}`). Replaces the previous shell-script seam.
+- **iXref + nXref + NET NAMES + DEVICE INFO + NET SHAPES queries (Stage 1.5) — landed 2026-05-07.** `io_adapters/calibre_query.py` runs the `calibre -query <svdb_dir>` subprocess for real (full Popen + stdin scripting + timeout + missing-binary diagnostics) for `INSTANCE XREF WRITE`, `NET XREF WRITE`, `NET NAMES`, per-device `DEVICE INFO <inst>`, and per-net `NET SHAPES <lvs_name>`. The dummy/real switch lives in `tech/site_config.yaml::calibre.mode` (CLI override: `--lvs-mode {dummy,calibre}`). Replaces the previous shell-script seam.
 
 ### 10.4 Known format risks for first production run
 
@@ -454,7 +501,7 @@ Validation checklist: (1) Calibre query scripts produce valid JSON; (2) parser c
 ## 12. Key file index
 
 - `pipeline/run_mvp.py` — pipeline orchestration; `--config <site_config.yaml>`, `--lvs-mode {dummy,calibre}`.
-- `io_adapters/calibre_query.py` — `parse_ixref`, `parse_nxref`, `parse_net_names`, `parse_device_info`, `join_net_xref`, `write_ixref_yaml`, `write_net_xref_yaml`, `write_device_info_yaml`, `run_calibre_ixref`, `run_calibre_nxref`, `run_calibre_net_names`, `run_calibre_device_info`, `run_dummy_ixref`, `run_dummy_nxref`, `run_dummy_net_names`, `run_dummy_device_info`, `extract_ixref`, `extract_net_xref`, `extract_device_info` (Stage 1.5).
+- `io_adapters/calibre_query.py` — `parse_ixref`, `parse_nxref`, `parse_net_names`, `parse_device_info`, `parse_net_shapes`, `join_net_xref`, `write_ixref_yaml`, `write_net_xref_yaml`, `write_device_info_yaml`, `write_net_shapes_yaml`, `run_calibre_ixref`, `run_calibre_nxref`, `run_calibre_net_names`, `run_calibre_device_info`, `run_calibre_net_shapes`, `run_dummy_ixref`, `run_dummy_nxref`, `run_dummy_net_names`, `run_dummy_device_info`, `run_dummy_net_shapes`, `extract_ixref`, `extract_net_xref`, `extract_device_info`, `extract_net_shapes` (Stage 1.5).
 - `core/solver.py` — `LayoutSolver`, `setup_engine`, `load_existing_layout`, `load_b_tier_cells_into_engine`, `project_unannotated_blockages`, `resize_device` (L3 macro).
 - `core/data_model.py` — `ShapeRecord`, `TrackSegment`, `CellOccupancy`, `Device`, `Net`, `LayoutModel`.
 - `core/grid.py` — `LayerGrid`, `MultiLayerGrid` (track grids + B-tier cell grids).

@@ -1453,3 +1453,470 @@ def extract_device_info(*,
         devices.append({'layout_inst': inst, **parsed})
 
     return {'devices': devices}
+
+
+# =====================================================================
+# NET SHAPES parser (per-net LVS-derived metal/via-shape bboxes)
+# =====================================================================
+#
+# Calibre HDB ``NET SHAPES <lvs_name_or_index>`` returns the set of
+# routing-layer (LI / VIA0 / M1 / ...) shapes that belong to one net.
+# The layer names match the GDS layer names directly (M1, VIA0, LI),
+# and each shape's bbox represents the *effective* conducting region
+# (the LVS-mapped sub-rectangle of the GDS shape — cuts and extension
+# margins are excluded; layer-name mapping is M7's job, see backlog).
+#
+# The query argument ``<lvs_name>`` is whatever NET NAMES gave for that
+# net's index — top-level pins keep their schematic names ('VDD', 'IN',
+# ...); LVS-renumbered internal nets surface as numeric strings ('2',
+# '6', ...).
+#
+# Response shape (stdout-only; Calibre never writes a file):
+#
+#   Net_Shapes <precision>
+#   Info:
+#   0 0 <n_metadata> <date>
+#   <metadata_line_1>              | n_metadata lines, last one is the
+#   ...                            | first layer name (same anchor
+#   <seed_layer_name>              | convention as DEVICE INFO).
+#   <a> <b> [c] <date>             ← per-layer count line
+#   p <shape_idx> <n_vertices>
+#   <vert_1_y> <vert_1_x>          ← (y, x) pairs in 1/precision µm
+#   ...
+#   p <shape_idx_2> <n_vertices_2>
+#   ...
+#   <new_layer_name>
+#   ...
+#   END OF RESPONSE
+#
+# We don't validate per-layer shape counts (the count line is ambiguous
+# in the manual — see DEVICE INFO note); the END OF RESPONSE terminator
+# is required.
+
+_NET_SHAPES_HEADER_RE = re.compile(r'^\s*Net_Shapes\s+(?P<precision>\d+)')
+_NET_SHAPES_COUNT_RE  = re.compile(
+    r'^\s*\d+\s+\d+\s+(?P<n>\d+)\s+'
+)
+
+
+def parse_net_shapes(filepath: str) -> dict:
+    """Parse a Calibre HDB ``NET SHAPES`` response (stdout-only).
+
+    Returns:
+        {
+          'precision':       int,
+          'metadata_lines':  [str, ...],  # opaque (excluding seed layer)
+          'layers': [
+            {
+              'name': str,
+              'shapes': [
+                {'vertices_unit': [(y, x), ...],
+                 'bbox_um': {'x1': float, 'y1': float,
+                             'x2': float, 'y2': float}},
+                ...
+              ],
+            },
+            ...
+          ],
+        }
+
+    Coordinate convention matches DEVICE INFO: each vertex is a
+    ``<y> <x>`` pair in ``1 / precision`` µm. ``END OF RESPONSE`` is
+    required — falling off EOF without seeing it raises ``ValueError``.
+
+    Raises:
+        FileNotFoundError, ValueError.
+    """
+    if not os.path.exists(filepath):
+        raise FileNotFoundError(
+            f"NET SHAPES file not found: {filepath!r}"
+        )
+
+    with open(filepath) as f:
+        lines = [ln.rstrip('\n') for ln in f]
+
+    ns_idx = None
+    precision = None
+    for i, ln in enumerate(lines):
+        m = _NET_SHAPES_HEADER_RE.match(ln)
+        if m:
+            ns_idx = i
+            precision = int(m.group('precision'))
+            break
+    if ns_idx is None:
+        raise ValueError(
+            f"NET SHAPES {filepath!r}: missing 'Net_Shapes' header"
+        )
+
+    info_idx = None
+    for j in range(ns_idx + 1, len(lines)):
+        if lines[j].strip() == 'Info:':
+            info_idx = j
+            break
+    if info_idx is None:
+        raise ValueError(
+            f"NET SHAPES {filepath!r}: missing 'Info:' anchor"
+        )
+
+    if info_idx + 1 >= len(lines):
+        raise ValueError(
+            f"NET SHAPES {filepath!r}: count line missing after 'Info:'"
+        )
+    count_line = lines[info_idx + 1]
+    m = _NET_SHAPES_COUNT_RE.match(count_line)
+    if not m:
+        raise ValueError(
+            f"NET SHAPES {filepath!r}: malformed count line "
+            f"{count_line!r} (expected '<int> <int> <n> <timestamp>')"
+        )
+    n_metadata = int(m.group('n'))
+
+    metadata_start = info_idx + 2
+    metadata_end = metadata_start + n_metadata
+    if metadata_end > len(lines):
+        raise ValueError(
+            f"NET SHAPES {filepath!r}: only "
+            f"{len(lines) - metadata_start} metadata line(s) "
+            f"available, expected {n_metadata}"
+        )
+    metadata = [lines[i] for i in range(metadata_start, metadata_end)]
+    if not metadata:
+        raise ValueError(
+            f"NET SHAPES {filepath!r}: empty metadata block"
+        )
+
+    first_layer_name = metadata[-1].strip()
+    if not first_layer_name:
+        raise ValueError(
+            f"NET SHAPES {filepath!r}: seed layer name (last "
+            f"metadata line) is blank"
+        )
+    metadata_lines = metadata[:-1]   # opaque, may be empty
+
+    layers: list = [{'name': first_layer_name, 'shapes': []}]
+
+    def _bbox_um(verts_unit):
+        ys = [v[0] for v in verts_unit]
+        xs = [v[1] for v in verts_unit]
+        return {
+            'x1': min(xs) / precision,
+            'y1': min(ys) / precision,
+            'x2': max(xs) / precision,
+            'y2': max(ys) / precision,
+        }
+
+    i = metadata_end
+    saw_terminator = False
+    while i < len(lines):
+        ln = lines[i].strip()
+        if not ln:
+            i += 1
+            continue
+        if ln == 'END OF RESPONSE':
+            saw_terminator = True
+            break
+
+        tokens = ln.split()
+
+        if _looks_like_shape_header(tokens):
+            n_verts = int(tokens[2])
+            verts: list = []
+            for j in range(n_verts):
+                if i + 1 + j >= len(lines):
+                    raise ValueError(
+                        f"NET SHAPES {filepath!r}: shape declared "
+                        f"{n_verts} vertices but file ended early"
+                    )
+                vt = lines[i + 1 + j].split()
+                if len(vt) != 2:
+                    raise ValueError(
+                        f"NET SHAPES {filepath!r}: vertex line "
+                        f"malformed (expected 2 ints): "
+                        f"{lines[i + 1 + j]!r}"
+                    )
+                try:
+                    verts.append((int(vt[0]), int(vt[1])))
+                except ValueError as e:
+                    raise ValueError(
+                        f"NET SHAPES {filepath!r}: vertex tokens "
+                        f"not int: {lines[i + 1 + j]!r}"
+                    ) from e
+            layers[-1]['shapes'].append({
+                'vertices_unit': verts,
+                'bbox_um':       _bbox_um(verts),
+            })
+            i += 1 + n_verts
+            continue
+
+        if _looks_like_count_line(tokens):
+            i += 1
+            continue
+
+        # New layer name (single token like "M1", "VIA0", "LI", or a
+        # numeric LVS layer id like "11").
+        layers.append({'name': ln, 'shapes': []})
+        i += 1
+
+    if not saw_terminator:
+        raise ValueError(
+            f"NET SHAPES {filepath!r}: missing 'END OF RESPONSE' "
+            f"terminator (truncated capture?)"
+        )
+
+    return {
+        'precision':       precision,
+        'metadata_lines':  metadata_lines,
+        'layers':          layers,
+    }
+
+
+def write_net_shapes_yaml(parsed: dict, out_path: str) -> None:
+    """Persist the joined NET SHAPES middle dict as YAML.
+
+    Schema:
+
+        nets:
+          - lvs_index: int            # NET NAMES position (1-indexed)
+            lvs_name: str             # 'OUT', '2', ...
+            schematic_name: str       # net_xref join: 'OUT', 'net9', ...
+            layers:
+              - name: str             # GDS layer name (LI / VIA0 / M1)
+                shapes:
+                  - bbox_um:
+                      x1: float       # micrometers
+                      y1: float
+                      x2: float
+                      y2: float
+
+    Vertex tuples and opaque metadata stay in memory but aren't
+    serialised — same policy as DEVICE INFO.
+    """
+    out_dir = os.path.dirname(os.path.abspath(out_path))
+    if out_dir:
+        os.makedirs(out_dir, exist_ok=True)
+
+    nets_out = []
+    for net in parsed['nets']:
+        layers_out = []
+        for layer in net['layers']:
+            layers_out.append({
+                'name':   layer['name'],
+                'shapes': [{'bbox_um': sh['bbox_um']}
+                           for sh in layer['shapes']],
+            })
+        nets_out.append({
+            'lvs_index':       net['lvs_index'],
+            'lvs_name':        net['lvs_name'],
+            'schematic_name':  net['schematic_name'],
+            'layers':          layers_out,
+        })
+
+    payload = {'nets': nets_out}
+    with open(out_path, 'w') as f:
+        yaml.safe_dump(payload, f, sort_keys=False,
+                       default_flow_style=False)
+
+
+# =====================================================================
+# Calibre subprocess runner (NET SHAPES)
+# =====================================================================
+
+_NET_SHAPES_BEGIN_RE = re.compile(r'^\s*Net_Shapes\b')
+
+
+def _extract_net_shapes_block(stdout: str, lvs_name: str) -> str:
+    """Slice the ``Net_Shapes ... END OF RESPONSE`` block out of stdout."""
+    lines = stdout.splitlines()
+    begin = None
+    for i, ln in enumerate(lines):
+        if _NET_SHAPES_BEGIN_RE.match(ln):
+            begin = i
+            break
+    if begin is None:
+        raise CalibreQueryError(
+            f"calibre stdout did not contain a 'Net_Shapes' "
+            f"response for {lvs_name!r}.\n"
+            f"--- stdout (truncated) ---\n{stdout[:2000]}"
+        )
+    end = None
+    for j in range(begin + 1, len(lines)):
+        if lines[j].strip() == 'END OF RESPONSE':
+            end = j
+            break
+    if end is None:
+        raise CalibreQueryError(
+            f"calibre stdout missing 'END OF RESPONSE' terminator "
+            f"after 'Net_Shapes' for {lvs_name!r}.\n"
+            f"--- stdout (truncated) ---\n{stdout[:2000]}"
+        )
+    return '\n'.join(lines[begin:end + 1]) + '\n'
+
+
+def run_calibre_net_shapes(svdb_dir: str,
+                            lvs_name: str,
+                            out_path: str,
+                            *,
+                            timeout: float = 300.0,
+                            calibre_bin: str = 'calibre') -> None:
+    """Spawn ``calibre -query <svdb_dir>``, run ``NET SHAPES <lvs_name>``.
+
+    Stdin commands:
+
+        NET SHAPES <lvs_name>
+        EXIT
+
+    ``lvs_name`` is the LVS-side net name from NET NAMES — top-level
+    pins keep their schematic strings ('VDD', 'OUT'); LVS-renumbered
+    internal nets surface as numeric strings ('2', '6', ...). Captures
+    stdout, slices the bounded block, writes to ``out_path``. Same
+    error semantics as :func:`run_calibre_device_info`.
+    """
+    if shutil.which(calibre_bin) is None:
+        raise CalibreNotFoundError(
+            f"Calibre binary {calibre_bin!r} not found on PATH. "
+            f"For dummy mode, pass --lvs-mode=dummy or set "
+            f"calibre.mode=dummy in site_config.yaml."
+        )
+    if not os.path.isdir(svdb_dir):
+        raise CalibreQueryError(
+            f"SVDB directory not found: {svdb_dir!r}"
+        )
+
+    cmds = (
+        f"NET SHAPES {lvs_name}\n"
+        f"EXIT\n"
+    )
+    try:
+        result = subprocess.run(
+            [calibre_bin, '-query', svdb_dir],
+            input=cmds,
+            capture_output=True,
+            text=True,
+            timeout=timeout,
+            check=False,
+        )
+    except subprocess.TimeoutExpired as e:
+        raise CalibreQueryError(
+            f"calibre -query {svdb_dir!r} timed out after {timeout}s"
+        ) from e
+    if result.returncode != 0:
+        raise CalibreQueryError(
+            f"calibre -query {svdb_dir!r} exited {result.returncode}\n"
+            f"--- stdout ---\n{result.stdout}\n"
+            f"--- stderr ---\n{result.stderr}"
+        )
+
+    block = _extract_net_shapes_block(result.stdout, lvs_name)
+    out_dir = os.path.dirname(os.path.abspath(out_path))
+    if out_dir:
+        os.makedirs(out_dir, exist_ok=True)
+    with open(out_path, 'w') as f:
+        f.write(block)
+
+
+def run_dummy_net_shapes(svdb_dir: Optional[str],
+                          lvs_name: str,
+                          out_path: str,
+                          dummy_source: str) -> None:
+    """Stage a dummy NET SHAPES output at ``out_path``."""
+    if not os.path.exists(dummy_source):
+        raise FileNotFoundError(
+            f"Dummy NET SHAPES source not found: {dummy_source!r}"
+        )
+    abs_src = os.path.abspath(dummy_source)
+    abs_dst = os.path.abspath(out_path)
+    if abs_src == abs_dst:
+        return
+    out_dir = os.path.dirname(abs_dst)
+    if out_dir:
+        os.makedirs(out_dir, exist_ok=True)
+    shutil.copyfile(abs_src, abs_dst)
+
+
+# =====================================================================
+# Top-level orchestrator (NET SHAPES across selected nets)
+# =====================================================================
+
+def extract_net_shapes(*,
+                        mode: str,
+                        svdb_dir: Optional[str],
+                        nets: list,
+                        out_dir: str,
+                        dummy_source_dir: Optional[str] = None,
+                        timeout: float = 300.0,
+                        calibre_bin: str = 'calibre') -> dict:
+    """Run ``NET SHAPES <lvs_name>`` for each net, collect results.
+
+    One subprocess per net in ``calibre`` mode; one file copy per net
+    in ``dummy`` mode. Per-net raw responses land at
+    ``<out_dir>/net_shapes_<lvs_name>.txt``.
+
+    Args:
+        mode: 'dummy' or 'calibre'.
+        svdb_dir: Required for 'calibre' mode.
+        nets: List of dicts with at least
+            ``{'lvs_name', 'lvs_index', 'schematic_name'}`` — typically
+            taken straight from a parsed net_xref middle file's
+            ``nets`` list.
+        out_dir: Directory to write per-net ``net_shapes_*.txt`` into.
+        dummy_source_dir: Required for 'dummy' mode. Holds
+            ``net_shapes_<lvs_name>.txt`` fixtures.
+        timeout: subprocess timeout in seconds (calibre mode only).
+        calibre_bin: Calibre binary name on PATH.
+
+    Returns:
+        {
+          'nets': [
+            {
+              'lvs_index':       int,
+              'lvs_name':        str,
+              'schematic_name':  str,
+              'precision':       int,
+              'metadata_lines':  [str, ...],
+              'layers':          [...],   # see parse_net_shapes
+            },
+            ...
+          ],
+        }
+    """
+    if mode == 'dummy':
+        if dummy_source_dir is None:
+            raise ValueError(
+                "extract_net_shapes(mode='dummy') requires "
+                "dummy_source_dir"
+            )
+    elif mode == 'calibre':
+        if svdb_dir is None:
+            raise ValueError(
+                "extract_net_shapes(mode='calibre') requires svdb_dir"
+            )
+    else:
+        raise ValueError(
+            f"extract_net_shapes: unknown mode {mode!r} "
+            f"(expected 'dummy' or 'calibre')"
+        )
+
+    os.makedirs(out_dir, exist_ok=True)
+    out_nets = []
+    for net in nets:
+        lvs_name = net['lvs_name']
+        out_path = os.path.join(out_dir,
+                                 f'net_shapes_{lvs_name}.txt')
+        if mode == 'dummy':
+            src = os.path.join(dummy_source_dir,
+                               f'net_shapes_{lvs_name}.txt')
+            run_dummy_net_shapes(svdb_dir, lvs_name, out_path, src)
+        else:
+            run_calibre_net_shapes(
+                svdb_dir, lvs_name, out_path,
+                timeout=timeout, calibre_bin=calibre_bin,
+            )
+        parsed = parse_net_shapes(out_path)
+        out_nets.append({
+            'lvs_index':       net['lvs_index'],
+            'lvs_name':        lvs_name,
+            'schematic_name':  net['schematic_name'],
+            **parsed,
+        })
+
+    return {'nets': out_nets}
