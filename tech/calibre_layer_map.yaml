@@ -1,0 +1,239 @@
+# tech/agf_layer_map.yaml
+#
+# Constructed from public ASAP7 documentation + standard FinFET extraction
+# conventions. Authoritative sources marked. Entries flagged [VERIFY] need
+# production reconciliation against the actual Calibre deck.
+
+# =====================================================================
+# CATEGORY 1: GDS-canonical (AGF layer geometry equals GDS geometry)
+# These are the routing/structural layers Calibre passes through unmodified.
+# =====================================================================
+
+- name: M1
+  associates_with: [M1]               # GDS pair 19/0
+  carries: [net_id]
+  derivation_doc: "passthrough from GDS M1"
+
+- name: M2
+  associates_with: [M2]               # GDS pair 20/0
+  carries: [net_id]
+  derivation_doc: "passthrough from GDS M2"
+
+- name: M3
+  associates_with: [M3]               # GDS pair 30/0
+  carries: [net_id]
+  derivation_doc: "passthrough from GDS M3"
+
+- name: V0
+  associates_with: [V0]               # GDS pair 18/0
+  carries: [net_id]
+  derivation_doc: "passthrough from GDS V0"
+
+- name: V1
+  associates_with: [V1]               # GDS pair 21/0
+  carries: [net_id]
+  derivation_doc: "passthrough from GDS V1"
+
+- name: V2
+  associates_with: [V2]               # GDS pair 25/0
+  carries: [net_id]
+  derivation_doc: "passthrough from GDS V2"
+
+# Higher metals follow the same pattern: V3-V8, M4-M9 (verified in lyp)
+# Layauto MVP only cares through M1, but include them for completeness:
+- name: M4
+  associates_with: [M4]
+  carries: [net_id]
+  derivation_doc: "passthrough"
+# ... M5-M9, V3-V8 omitted for brevity, all follow the same passthrough pattern
+
+- name: LIG
+  associates_with: [LIG]              # GDS pair 16/0
+  carries: [net_id]
+  derivation_doc: "passthrough; local interconnect gate-side"
+
+- name: LISD
+  associates_with: [LISD]             # GDS pair 17/0
+  carries: [net_id]
+  derivation_doc: "passthrough; local interconnect S/D-side"
+
+- name: SDT
+  associates_with: [SDT]              # GDS pair 88/0
+  carries: [net_id]
+  derivation_doc: "passthrough; S/D trench contact between LISD and active"
+
+# =====================================================================
+# CATEGORY 2: Multi-patterning color decomposition (SADP for M2/M3)
+# Per Vashishtha et al. ISQED 2017: ASAP7 uses SADP for M2/M3, LELE not
+# applicable to M1 (EUV assumed). M1 has no color split.
+# Color layer names in the AGF are *typically* <layer><a|b|c> in
+# Mentor SVRF idiom but exact name varies per deck.
+# =====================================================================
+
+- name: M2a                           # [VERIFY] exact name
+  associates_with: [M2]
+  carries: [net_id]
+  derivation_doc: "SADP color a; M2 polygons assigned to mask A by checker"
+  multi_patterning: { layer: M2, color: a }
+
+- name: M2b                           # [VERIFY] exact name
+  associates_with: [M2]
+  carries: [net_id]
+  derivation_doc: "SADP color b"
+  multi_patterning: { layer: M2, color: b }
+
+- name: M3a                           # [VERIFY]
+  associates_with: [M3]
+  carries: [net_id]
+  derivation_doc: "SADP color a"
+  multi_patterning: { layer: M3, color: a }
+
+- name: M3b                           # [VERIFY]
+  associates_with: [M3]
+  carries: [net_id]
+  derivation_doc: "SADP color b"
+  multi_patterning: { layer: M3, color: b }
+
+# Note: For ECO buffer resize, M1 routing positions don't change and M2+
+# is out of scope per architecture.md §1. Color preservation is therefore
+# load-bearing only on read; the writeback path doesn't touch these.
+
+# =====================================================================
+# CATEGORY 3: Device-defining derived layers (FEOL extraction)
+# These layers exist ONLY in the AGF. They are the SVRF deck output that
+# identifies transistor channel regions and S/D regions.
+# Standard FinFET extraction idiom (Clark 2016 §3 + SVRF norms):
+# =====================================================================
+
+- name: gate                          # the actual MOSFET channel
+  associates_with: [GATE, ACTIVE]     # gate intersection only exists where both present
+  carries: [device_id]                # NO net_id — gate is a device terminal, not a net region
+  derivation_doc: "GATE AND ACTIVE AND_NOT GATE_CUT"
+  semantic_role: device_channel
+  pin_role_hint: G
+
+- name: pmos_gate                     # [VERIFY] some decks split by Vt/type, others don't
+  associates_with: [GATE, ACTIVE, NWELL]
+  carries: [device_id]
+  derivation_doc: "gate AND NWELL"
+  semantic_role: device_channel
+  device_type_hint: pmos
+  pin_role_hint: G
+
+- name: nmos_gate                     # [VERIFY]
+  associates_with: [GATE, ACTIVE]
+  carries: [device_id]
+  derivation_doc: "gate AND_NOT NWELL"
+  semantic_role: device_channel
+  device_type_hint: nmos
+  pin_role_hint: G
+
+# Vt-flavored gate variants — Clark 2016 lists 4 Vt flavors (RVT/LVT/SLVT/SRAM)
+# Each will appear as a separate AGF layer in extraction:
+- name: ngate_lvt                     # matches your empirical KLayout finding
+  associates_with: [GATE, ACTIVE, LVT]
+  carries: [device_id]
+  derivation_doc: "nmos_gate AND LVT"
+  device_type_hint: nmos_lvt
+  pin_role_hint: G
+
+- name: ngate_slvt
+  associates_with: [GATE, ACTIVE, SLVT]
+  carries: [device_id]
+  derivation_doc: "nmos_gate AND SLVT"
+  device_type_hint: nmos_slvt
+  pin_role_hint: G
+
+- name: ngate_rvt                     # [VERIFY] RVT marker layer name
+  associates_with: [GATE, ACTIVE]
+  carries: [device_id]
+  derivation_doc: "nmos_gate AND_NOT (LVT OR SLVT)"
+  device_type_hint: nmos_rvt
+  pin_role_hint: G
+
+- name: pgate_lvt
+  associates_with: [GATE, ACTIVE, NWELL, LVT]
+  carries: [device_id]
+  derivation_doc: "pmos_gate AND LVT"
+  device_type_hint: pmos_lvt
+  pin_role_hint: G
+
+- name: pgate_slvt
+  associates_with: [GATE, ACTIVE, NWELL, SLVT]
+  carries: [device_id]
+  derivation_doc: "pmos_gate AND SLVT"
+  device_type_hint: pmos_slvt
+  pin_role_hint: G
+
+- name: pgate_rvt
+  associates_with: [GATE, ACTIVE, NWELL]
+  carries: [device_id]
+  derivation_doc: "pmos_gate AND_NOT (LVT OR SLVT)"
+  device_type_hint: pmos_rvt
+  pin_role_hint: G
+
+# S/D regions — diffusion outside the gate channel
+- name: nsd                           # matches your empirical finding
+  associates_with: [ACTIVE]
+  carries: [device_id, net_id]        # belongs to device pin AND has a net
+  derivation_doc: "ACTIVE AND_NOT gate AND_NOT NWELL"
+  semantic_role: device_diffusion
+  device_type_hint: nmos
+  pin_role_hint: SD                    # source or drain — disambiguated by device_id + position
+
+- name: psd
+  associates_with: [ACTIVE, NWELL]
+  carries: [device_id, net_id]
+  derivation_doc: "ACTIVE AND_NOT gate AND NWELL"
+  semantic_role: device_diffusion
+  device_type_hint: pmos
+  pin_role_hint: SD
+
+# Fin block — the actual fins after fin-cut application
+- name: fin_block                     # [VERIFY] exact name
+  associates_with: [FIN, ACTIVE]
+  carries: [none]                     # fins under active are "the device"; net comes via S/D
+  derivation_doc: "FIN AND ACTIVE (geometry: fins extend into active)"
+  semantic_role: structural
+
+# =====================================================================
+# CATEGORY 4: Slab / out-of-cell layers (intentionally excluded from CSP)
+# These layers may appear in the AGF with bbox extending beyond cell
+# boundary. Per architecture.md §3.D, they are informational only.
+# =====================================================================
+
+- name: nwell_net                     # [VERIFY] exact name; sometimes "BULK" or "WELL_NET"
+  associates_with: [NWELL]
+  carries: [net_id]                    # but EXCLUDED from grid annotation
+  derivation_doc: "NWELL territory; bulk net for PMOS body"
+  semantic_role: bulk
+  exclude_from_grid: true              # parser drops these before grid stamping
+
+- name: psub_net
+  associates_with: [PSUB]
+  carries: [net_id]
+  derivation_doc: "PSUB territory; bulk net for NMOS body"
+  semantic_role: bulk
+  exclude_from_grid: true
+
+# =====================================================================
+# CATEGORY 5: Markers and informational layers (no annotation use)
+# =====================================================================
+
+- name: pselect_region
+  associates_with: [PSELECT]
+  carries: [none]
+  derivation_doc: "PSELECT marker — used in derivation of pmos_gate, not consumed directly"
+  exclude_from_grid: true
+
+- name: nselect_region
+  associates_with: [NSELECT]
+  carries: [none]
+  derivation_doc: "NSELECT marker — used in derivation of nmos_gate"
+  exclude_from_grid: true
+
+- name: cell_boundary
+  associates_with: [BOUNDARY]
+  carries: [none]
+  derivation_doc: "passthrough from BOUNDARY"
+  exclude_from_grid: true
