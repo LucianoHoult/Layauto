@@ -169,9 +169,9 @@ def generate_detail_plot(layout_data: dict, output_path: str, title: str = ''):
 if __name__ == '__main__':
     fixture_dir = os.path.join(os.path.dirname(__file__), '..', 'dummy', 'fixtures')
     
-    with open(os.path.join(fixture_dir, 'buffer_original.json')) as f:
+    with open(os.path.join(fixture_dir, 'buffer_original.json'), encoding='utf-8') as f:
         orig = json.load(f)
-    with open(os.path.join(fixture_dir, 'buffer_target.json')) as f:
+    with open(os.path.join(fixture_dir, 'buffer_target.json'), encoding='utf-8') as f:
         target = json.load(f)
     
     output_dir = os.path.join(os.path.dirname(__file__), '..', 'dummy', 'fixtures')

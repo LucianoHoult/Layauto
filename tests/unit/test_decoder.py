@@ -31,7 +31,7 @@ def _resize_via_decoder(target_nmos_nfin: int, target_pmos_nfin: int):
     r_p = solver.resize_device('MP0', target_pmos_nfin)
     assert r_n.success and r_p.success
 
-    with open(os.path.join(FIXTURE_DIR, 'buffer_original.json')) as f:
+    with open(os.path.join(FIXTURE_DIR, 'buffer_original.json'), encoding='utf-8') as f:
         orig_data = json.load(f)
     decoder = WritebackDecoder(grid, config)
     return decoder.apply(
@@ -94,11 +94,11 @@ def test_decoder_extends_li_to_cover_vias():
 
 def test_decoder_does_not_mutate_input():
     import json
-    with open(os.path.join(FIXTURE_DIR, 'buffer_original.json')) as f:
+    with open(os.path.join(FIXTURE_DIR, 'buffer_original.json'), encoding='utf-8') as f:
         orig_data = json.load(f)
     orig_snapshot = json.dumps(orig_data, sort_keys=True)
     _resize_via_decoder(4, 6)
-    with open(os.path.join(FIXTURE_DIR, 'buffer_original.json')) as f:
+    with open(os.path.join(FIXTURE_DIR, 'buffer_original.json'), encoding='utf-8') as f:
         orig_data_after = json.load(f)
     assert json.dumps(orig_data_after, sort_keys=True) == orig_snapshot
 

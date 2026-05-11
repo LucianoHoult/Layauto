@@ -55,7 +55,7 @@ class CSPDebugger:
     def generate_report(self):
         """Write summary report of all snapshots."""
         report_path = os.path.join(self.output_dir, 'csp_debug_report.txt')
-        with open(report_path, 'w') as f:
+        with open(report_path, 'w', encoding='utf-8') as f:
             f.write("CSP Debug Report\n")
             f.write("=" * 50 + "\n\n")
             for snap in self.snapshots:

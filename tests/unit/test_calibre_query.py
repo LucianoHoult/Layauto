@@ -194,7 +194,7 @@ def test_yaml_roundtrip_identity(ixref_temp_path, tmp_path):
     parsed = parse_ixref(ixref_temp_path)
     out = tmp_path / "ix.yaml"
     write_ixref_yaml(parsed, str(out))
-    with open(out) as f:
+    with open(out, encoding='utf-8') as f:
         reloaded = yaml.safe_load(f)
     assert reloaded == parsed
 
@@ -215,7 +215,7 @@ def test_run_dummy_copies_fixture(ixref_temp_path, tmp_path):
     run_dummy_ixref(svdb_dir=None, ixref_path=str(dst),
                     dummy_source=ixref_temp_path)
     assert dst.exists()
-    assert dst.read_text() == open(ixref_temp_path).read()
+    assert dst.read_text() == open(ixref_temp_path, encoding='utf-8').read()
 
 
 def test_run_dummy_no_op_when_src_eq_dst(ixref_temp_path):
@@ -402,7 +402,7 @@ def test_generator_matches_committed_fixture(ixref_temp_path, tmp_path):
     out = tmp_path / "iXref.temp"
     generate_calibre_ixref(layout, str(out))
 
-    assert out.read_text() == open(ixref_temp_path).read()
+    assert out.read_text() == open(ixref_temp_path, encoding='utf-8').read()
 
 
 def test_pipeline_legacy_site_config_without_calibre_block(tmp_path,
@@ -456,9 +456,9 @@ def test_yaml_matches_committed_reference(ixref_temp_path, fixture_dir,
     write_ixref_yaml(parsed, str(out))
 
     reference = os.path.join(fixture_dir, 'ixref.yaml')
-    with open(reference) as f:
+    with open(reference, encoding='utf-8') as f:
         ref_dict = yaml.safe_load(f)
-    with open(out) as f:
+    with open(out, encoding='utf-8') as f:
         written_dict = yaml.safe_load(f)
     assert written_dict == ref_dict
 
@@ -709,7 +709,7 @@ def test_write_net_xref_yaml_roundtrip(nxref_temp_path, net_names_path,
     joined = join_net_xref(nxref, nn)
     out = tmp_path / "net_xref.yaml"
     write_net_xref_yaml(joined, str(out))
-    with open(out) as f:
+    with open(out, encoding='utf-8') as f:
         reloaded = yaml.safe_load(f)
     assert reloaded == joined
 
@@ -722,9 +722,9 @@ def test_net_xref_yaml_matches_committed_reference(
     out = tmp_path / "net_xref.yaml"
     write_net_xref_yaml(joined, str(out))
     reference = os.path.join(fixture_dir, 'net_xref.yaml')
-    with open(reference) as f:
+    with open(reference, encoding='utf-8') as f:
         ref_dict = yaml.safe_load(f)
-    with open(out) as f:
+    with open(out, encoding='utf-8') as f:
         written_dict = yaml.safe_load(f)
     assert written_dict == ref_dict
 
@@ -738,7 +738,7 @@ def test_run_dummy_nxref_copies_fixture(nxref_temp_path, tmp_path):
     run_dummy_nxref(svdb_dir=None, nxref_path=str(dst),
                     dummy_source=nxref_temp_path)
     assert dst.exists()
-    assert dst.read_text() == open(nxref_temp_path).read()
+    assert dst.read_text() == open(nxref_temp_path, encoding='utf-8').read()
 
 
 def test_run_dummy_net_names_copies_fixture(net_names_path, tmp_path):
@@ -746,7 +746,7 @@ def test_run_dummy_net_names_copies_fixture(net_names_path, tmp_path):
     run_dummy_net_names(svdb_dir=None, net_names_path=str(dst),
                         dummy_source=net_names_path)
     assert dst.exists()
-    assert dst.read_text() == open(net_names_path).read()
+    assert dst.read_text() == open(net_names_path, encoding='utf-8').read()
 
 
 def test_run_dummy_nxref_missing_source_raises(tmp_path):
@@ -911,7 +911,7 @@ def test_run_calibre_net_names_subprocess_invocation(
 
     fake_stdout = (
         "Some leading interactive banner...\n"
-        + open(net_names_path).read()
+        + open(net_names_path, encoding='utf-8').read()
         + "\nQuery server exiting.\n"
     )
 
@@ -966,7 +966,7 @@ def test_extract_net_xref_calibre_mode_end_to_end(
     nxref_out = tmp_path / "out.nxf"
     nn_out    = tmp_path / "out.txt"
 
-    fake_stdout_net_names = open(net_names_path).read()
+    fake_stdout_net_names = open(net_names_path, encoding='utf-8').read()
 
     def fake_run(cmd, **kwargs):
         stdin = kwargs.get('input', '')
@@ -1005,7 +1005,7 @@ def test_nxref_generator_matches_committed_fixture(
     layout = generate_inverter_layout(nmos_nfin=5, pmos_nfin=7)
     out = tmp_path / "nXref.temp"
     generate_calibre_nxref(layout, str(out))
-    assert out.read_text() == open(nxref_temp_path).read()
+    assert out.read_text() == open(nxref_temp_path, encoding='utf-8').read()
 
 
 def test_net_names_generator_matches_committed_fixture(
@@ -1017,7 +1017,7 @@ def test_net_names_generator_matches_committed_fixture(
     out = tmp_path / "net_names.txt"
     generate_calibre_net_names(layout, str(out),
                                 timestamp='May 07 03:00:00 2026')
-    assert out.read_text() == open(net_names_path).read()
+    assert out.read_text() == open(net_names_path, encoding='utf-8').read()
 
 
 # =====================================================================
@@ -1220,8 +1220,8 @@ def test_parse_device_info_truncated_vertex_raises(tmp_path):
 def test_parse_device_info_non_int_vertex_raises(tmp_path):
     path = _write_device_info(tmp_path)
     # Corrupt one vertex line.
-    text = open(path).read().replace('560 880', 'foo 880', 1)
-    open(path, 'w').write(text)
+    text = open(path, encoding='utf-8').read().replace('560 880', 'foo 880', 1)
+    open(path, 'w', encoding='utf-8').write(text)
     with pytest.raises(ValueError, match="vertex tokens"):
         parse_device_info(path)
 
@@ -1291,9 +1291,9 @@ def test_device_info_yaml_matches_committed_reference(
     out = tmp_path / 'device_info.yaml'
     write_device_info_yaml(payload, str(out))
     reference = os.path.join(fixture_dir, 'device_info.yaml')
-    with open(reference) as f:
+    with open(reference, encoding='utf-8') as f:
         ref_dict = yaml.safe_load(f)
-    with open(out) as f:
+    with open(out, encoding='utf-8') as f:
         written_dict = yaml.safe_load(f)
     assert written_dict == ref_dict
 
@@ -1309,7 +1309,7 @@ def test_write_device_info_yaml_drops_metadata_and_vertices(
         {'devices': [{'layout_inst': 'M0', **parsed}]},
         str(out),
     )
-    with open(out) as f:
+    with open(out, encoding='utf-8') as f:
         loaded = yaml.safe_load(f)
     dev = loaded['devices'][0]
     assert 'metadata_lines' not in dev
@@ -1328,7 +1328,7 @@ def test_run_dummy_device_info_copies_fixture(device_info_M0_path,
                           out_path=str(dst),
                           dummy_source=device_info_M0_path)
     assert dst.exists()
-    assert dst.read_text() == open(device_info_M0_path).read()
+    assert dst.read_text() == open(device_info_M0_path, encoding='utf-8').read()
 
 
 def test_run_dummy_device_info_missing_source_raises(tmp_path):
@@ -1346,7 +1346,7 @@ def test_run_calibre_device_info_subprocess_invocation(
     captured = {}
     fake_stdout = (
         "Some banner...\n"
-        + open(device_info_M0_path).read()
+        + open(device_info_M0_path, encoding='utf-8').read()
         + "\nQuery server exiting.\n"
     )
 
@@ -1431,8 +1431,8 @@ def test_extract_device_info_calibre_mode_end_to_end(
     svdb.mkdir()
     out_dir = tmp_path / 'out'
     payloads = {
-        'M0': open(device_info_M0_path).read(),
-        'M1': open(device_info_M1_path).read(),
+        'M0': open(device_info_M0_path, encoding='utf-8').read(),
+        'M1': open(device_info_M1_path, encoding='utf-8').read(),
     }
 
     def fake_run(cmd, **kwargs):
@@ -1498,7 +1498,7 @@ def test_device_info_generator_matches_committed_M0(
     out = tmp_path / 'device_info_M0.txt'
     generate_calibre_device_info(layout, 'M0', str(out),
                                   timestamp='May 07 03:00:00 2026')
-    assert out.read_text() == open(device_info_M0_path).read()
+    assert out.read_text() == open(device_info_M0_path, encoding='utf-8').read()
 
 
 def test_device_info_generator_matches_committed_M1(
@@ -1510,7 +1510,7 @@ def test_device_info_generator_matches_committed_M1(
     out = tmp_path / 'device_info_M1.txt'
     generate_calibre_device_info(layout, 'M1', str(out),
                                   timestamp='May 07 03:00:00 2026')
-    assert out.read_text() == open(device_info_M1_path).read()
+    assert out.read_text() == open(device_info_M1_path, encoding='utf-8').read()
 
 
 def test_device_info_generator_invalid_inst_raises(tmp_path):
@@ -1678,9 +1678,9 @@ def test_write_net_shapes_yaml_matches_committed_reference(
     out = tmp_path / 'net_shapes.yaml'
     write_net_shapes_yaml(parsed, str(out))
     reference = os.path.join(fixture_dir, 'net_shapes.yaml')
-    with open(reference) as f:
+    with open(reference, encoding='utf-8') as f:
         ref_dict = yaml.safe_load(f)
-    with open(out) as f:
+    with open(out, encoding='utf-8') as f:
         written_dict = yaml.safe_load(f)
     assert written_dict == ref_dict
 
@@ -1694,7 +1694,7 @@ def test_write_net_shapes_yaml_drops_vertices(net_shapes_OUT_path,
                    'schematic_name': 'OUT', **parsed}]},
         str(out),
     )
-    with open(out) as f:
+    with open(out, encoding='utf-8') as f:
         loaded = yaml.safe_load(f)
     shape = loaded['nets'][0]['layers'][0]['shapes'][0]
     assert set(shape.keys()) == {'bbox_um'}
@@ -1711,7 +1711,7 @@ def test_run_dummy_net_shapes_copies_fixture(net_shapes_OUT_path,
                          out_path=str(dst),
                          dummy_source=net_shapes_OUT_path)
     assert dst.exists()
-    assert dst.read_text() == open(net_shapes_OUT_path).read()
+    assert dst.read_text() == open(net_shapes_OUT_path, encoding='utf-8').read()
 
 
 def test_run_dummy_net_shapes_missing_source_raises(tmp_path):
@@ -1729,7 +1729,7 @@ def test_run_calibre_net_shapes_subprocess_invocation(
     captured = {}
     fake_stdout = (
         "Some banner...\n"
-        + open(net_shapes_OUT_path).read()
+        + open(net_shapes_OUT_path, encoding='utf-8').read()
         + "\nQuery server exiting.\n"
     )
 
@@ -1844,8 +1844,8 @@ def test_extract_net_shapes_calibre_mode_end_to_end(
     svdb.mkdir()
     out_dir = tmp_path / 'out'
     payloads = {
-        'OUT': open(net_shapes_OUT_path).read(),
-        'VDD': open(net_shapes_VDD_path).read(),
+        'OUT': open(net_shapes_OUT_path, encoding='utf-8').read(),
+        'VDD': open(net_shapes_VDD_path, encoding='utf-8').read(),
     }
 
     def fake_run(cmd, **kwargs):
@@ -1916,7 +1916,7 @@ def test_net_shapes_generator_matches_committed_OUT(
     layout = generate_inverter_layout(nmos_nfin=5, pmos_nfin=7)
     out = tmp_path / 'net_shapes_OUT.txt'
     generate_calibre_net_shapes(layout, 'OUT', str(out))
-    assert out.read_text() == open(net_shapes_OUT_path).read()
+    assert out.read_text() == open(net_shapes_OUT_path, encoding='utf-8').read()
 
 
 def test_net_shapes_generator_matches_committed_VDD(
@@ -1927,7 +1927,7 @@ def test_net_shapes_generator_matches_committed_VDD(
     layout = generate_inverter_layout(nmos_nfin=5, pmos_nfin=7)
     out = tmp_path / 'net_shapes_VDD.txt'
     generate_calibre_net_shapes(layout, 'VDD', str(out))
-    assert out.read_text() == open(net_shapes_VDD_path).read()
+    assert out.read_text() == open(net_shapes_VDD_path, encoding='utf-8').read()
 
 
 def test_net_shapes_generator_unknown_net_raises(tmp_path):

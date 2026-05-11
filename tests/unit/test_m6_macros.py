@@ -188,7 +188,7 @@ def test_decoder_pipeline_byte_golden_path_still_works():
     assert any(op.layer == 'NWELL' for op in edit_ops)
 
     import json
-    with open(os.path.join(FIXTURE_DIR, 'buffer_original.json')) as f:
+    with open(os.path.join(FIXTURE_DIR, 'buffer_original.json'), encoding='utf-8') as f:
         orig_data = json.load(f)
 
     decoder = WritebackDecoder(grid, config)

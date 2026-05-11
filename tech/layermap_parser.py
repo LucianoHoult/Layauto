@@ -33,7 +33,7 @@ def parse_layermap(filepath: str) -> dict:
     layer_map = {}
     purposes = {}
 
-    with open(filepath) as f:
+    with open(filepath, encoding='utf-8') as f:
         for line in f:
             line = line.strip()
 

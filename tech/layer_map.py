@@ -26,7 +26,7 @@ _DEFAULT_YAML = os.path.join(
 
 
 def _load_layers(yaml_path: str = _DEFAULT_YAML) -> list:
-    with open(yaml_path) as f:
+    with open(yaml_path, encoding='utf-8') as f:
         data = yaml.safe_load(f) or {}
     return data.get('layers', [])
 
