@@ -96,7 +96,11 @@ def _print_report() -> Tuple[List[str], List[str]]:
         if ok and ver:
             status = 'OK'
         elif ok and not ver:
-            status = 'skip'  # optional, not installed, no action
+            # Optional dep that's not installed. Status reads 'skip'
+            # so report-only mode stays quiet, but we still track it
+            # so --with-optional can pick it up.
+            status = 'skip'
+            missing_opt.append(pip_name)
         else:
             status = 'MISSING' if not ver else 'OLD'
             (missing_req if required else missing_opt).append(pip_name)
