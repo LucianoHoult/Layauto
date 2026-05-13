@@ -89,6 +89,6 @@ def generate_skill_script(edit_ops: List[EditOp],
 def write_skill_script(edit_ops: List[EditOp], filepath: str, **kwargs):
     """Write SKILL script to file."""
     script = generate_skill_script(edit_ops, **kwargs)
-    with open(filepath, 'w') as f:
+    with open(filepath, 'w', encoding='utf-8') as f:
         f.write(script)
     print(f"  SKILL script written: {filepath} ({len(edit_ops)} ops)")

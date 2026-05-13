@@ -71,7 +71,7 @@ print("Overlay loaded. Compare visually.")
  </text>
 </klayout-macro>"""
     
-    with open(output_path, 'w') as f:
+    with open(output_path, 'w', encoding='utf-8') as f:
         f.write(macro)
     print(f"  KLayout macro written: {output_path}")
     print(f"  Open in KLayout: klayout -rm {output_path}")

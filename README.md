@@ -86,8 +86,35 @@ Physical coords (nm)   ←→   Track-Segment layer   ←→   CSP grid layer
 ## Dependencies
 
 - Python 3.10+
-- numpy, matplotlib (for visualization)
-- No external layout packages required (GDS writer uses stdlib `struct`)
+- numpy, matplotlib, pyyaml (required)
+- gdstk (optional — needed for GDS-reading paths; the bundled writer
+  in `dummy/gds_writer.py` uses stdlib `struct` only)
+- pytest, klayout (optional — for the test suite / local DRC)
+
+### One-click install
+
+A cross-platform checker and installer ships under `scripts/`:
+
+```bash
+# Linux / macOS
+./scripts/install.sh           # check + install required deps
+./scripts/install.sh --check   # report only, no install
+./scripts/install.sh --all     # install required + optional
+
+# Windows (cmd / PowerShell)
+scripts\install.bat
+scripts\install.bat --check
+scripts\install.bat --all
+
+# Or directly (any platform):
+python scripts/check_deps.py --install
+```
+
+`scripts/check_deps.py` reports the installed vs. required versions
+for every package and pip-installs anything missing. The Windows
+wrapper sets `PYTHONUTF8=1` so subsequent script runs read YAML / JSON
+fixtures as UTF-8 regardless of the system code page (avoids the
+zh-CN `UnicodeDecodeError: 'gbk' codec can't decode` failure mode).
 
 ## Production Integration Notes
 

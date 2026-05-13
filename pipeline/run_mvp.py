@@ -473,9 +473,9 @@ def run_full_pipeline(site_config_path: str = None,
     # ---- Stage 6: Generate output ----
     print("\n[Stage 6] Generating output files...")
 
-    with open(layout_json_path) as f:
+    with open(layout_json_path, encoding='utf-8') as f:
         orig_data = json.load(f)
-    with open(target_json_path) as f:
+    with open(target_json_path, encoding='utf-8') as f:
         target_data = json.load(f)
 
     # Determine new nfin values from CDL diff
@@ -513,7 +513,7 @@ def run_full_pipeline(site_config_path: str = None,
     write_gds(resized_data, resized_gds_path, layer_map=config.LAYER_MAP)
 
     # Write JSON
-    with open(os.path.join(output_dir, 'buffer_resized.json'), 'w') as f:
+    with open(os.path.join(output_dir, 'buffer_resized.json'), 'w', encoding='utf-8') as f:
         json.dump(resized_data, f, indent=2)
     print(f"  Layout JSON written: {os.path.join(output_dir, 'buffer_resized.json')}")
 
@@ -531,7 +531,7 @@ def run_full_pipeline(site_config_path: str = None,
     # feed straight into the BLOCKAGE projection budget.
     coverage = model.annotation_coverage()
     coverage_path = os.path.join(output_dir, 'annotation_coverage.txt')
-    with open(coverage_path, 'w') as f:
+    with open(coverage_path, 'w', encoding='utf-8') as f:
         f.write("LVS ANNOTATION COVERAGE REPORT\n")
         f.write("=" * 50 + "\n\n")
         f.write(f"{'Layer':<10} {'Total':>6} {'Annotated':>10} {'Unannotated':>12}\n")
@@ -548,7 +548,7 @@ def run_full_pipeline(site_config_path: str = None,
 
     # Write resize report
     report_path = os.path.join(output_dir, 'resize_report.txt')
-    with open(report_path, 'w') as f:
+    with open(report_path, 'w', encoding='utf-8') as f:
         f.write("BUFFER FIN RESIZE REPORT\n")
         f.write("=" * 50 + "\n\n")
         f.write(f"Original: NMOS={orig_nmos_nfin}fin, PMOS={orig_pmos_nfin}fin\n")

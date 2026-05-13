@@ -47,9 +47,9 @@ def parse_calibre_device_query(filepath: str) -> List[Device]:
       ...
     ]
     """
-    with open(filepath) as f:
+    with open(filepath, encoding='utf-8') as f:
         data = json.load(f)
-    
+
     devices = []
     for entry in data:
         dev = Device(
@@ -74,7 +74,7 @@ def parse_calibre_net_query(filepath: str) -> Dict[str, dict]:
     Returns dict of net_name -> {type, pins, shapes}
     where shapes = [{layer, x1, y1, x2, y2, desc}, ...]
     """
-    with open(filepath) as f:
+    with open(filepath, encoding='utf-8') as f:
         return json.load(f)
 
 
@@ -84,7 +84,7 @@ def parse_bbox_by_layer(filepath: str) -> Dict[str, List[dict]]:
 
     Returns dict of layer_name -> [{x1, y1, x2, y2, net, desc}, ...]
     """
-    with open(filepath) as f:
+    with open(filepath, encoding='utf-8') as f:
         return json.load(f)
 
 
@@ -519,7 +519,7 @@ def build_layout_model(device_query_path: str,
     cell_width = 0
     cell_height = 0
     if layout_json_path:
-        with open(layout_json_path) as f:
+        with open(layout_json_path, encoding='utf-8') as f:
             lj = json.load(f)
             cell_width = lj.get('cell_bbox', {}).get('x2', 0)
             cell_height = lj.get('cell_bbox', {}).get('y2', 0)

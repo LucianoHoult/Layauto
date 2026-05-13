@@ -112,7 +112,7 @@ def parse_ixref(filepath: str) -> dict:
     if not os.path.exists(filepath):
         raise FileNotFoundError(f"iXref file not found: {filepath!r}")
 
-    with open(filepath) as f:
+    with open(filepath, encoding='utf-8') as f:
         lines = [ln.rstrip('\n') for ln in f]
 
     # Walk header until "End of header." sentinel.
@@ -214,7 +214,7 @@ def write_ixref_yaml(parsed: dict, out_path: str) -> None:
     out_dir = os.path.dirname(os.path.abspath(out_path))
     if out_dir:
         os.makedirs(out_dir, exist_ok=True)
-    with open(out_path, 'w') as f:
+    with open(out_path, 'w', encoding='utf-8') as f:
         yaml.safe_dump(parsed, f, sort_keys=False, default_flow_style=False)
 
 
@@ -417,7 +417,7 @@ def parse_nxref(filepath: str) -> dict:
     if not os.path.exists(filepath):
         raise FileNotFoundError(f"nXref file not found: {filepath!r}")
 
-    with open(filepath) as f:
+    with open(filepath, encoding='utf-8') as f:
         lines = [ln.rstrip('\n') for ln in f]
 
     header_lines = []
@@ -533,7 +533,7 @@ def parse_net_names(filepath: str) -> dict:
     if not os.path.exists(filepath):
         raise FileNotFoundError(f"NET NAMES file not found: {filepath!r}")
 
-    with open(filepath) as f:
+    with open(filepath, encoding='utf-8') as f:
         lines = [ln.rstrip('\n') for ln in f]
 
     # Locate the "Nets:" anchor line.
@@ -642,7 +642,7 @@ def write_net_xref_yaml(joined: dict, out_path: str) -> None:
     out_dir = os.path.dirname(os.path.abspath(out_path))
     if out_dir:
         os.makedirs(out_dir, exist_ok=True)
-    with open(out_path, 'w') as f:
+    with open(out_path, 'w', encoding='utf-8') as f:
         yaml.safe_dump(joined, f, sort_keys=False, default_flow_style=False)
 
 
@@ -809,7 +809,7 @@ def run_calibre_net_names(svdb_dir: str,
     out_dir = os.path.dirname(os.path.abspath(net_names_path))
     if out_dir:
         os.makedirs(out_dir, exist_ok=True)
-    with open(net_names_path, 'w') as f:
+    with open(net_names_path, 'w', encoding='utf-8') as f:
         f.write(block)
 
 
@@ -1028,7 +1028,7 @@ def parse_device_info(filepath: str) -> dict:
             f"DEVICE INFO file not found: {filepath!r}"
         )
 
-    with open(filepath) as f:
+    with open(filepath, encoding='utf-8') as f:
         lines = [ln.rstrip('\n') for ln in f]
 
     # Header: ``Device_Info <precision>``.
@@ -1236,7 +1236,7 @@ def write_device_info_yaml(parsed: dict, out_path: str) -> None:
         })
 
     payload = {'devices': devices_out}
-    with open(out_path, 'w') as f:
+    with open(out_path, 'w', encoding='utf-8') as f:
         yaml.safe_dump(payload, f, sort_keys=False,
                        default_flow_style=False)
 
@@ -1345,7 +1345,7 @@ def run_calibre_device_info(svdb_dir: str,
     out_dir = os.path.dirname(os.path.abspath(out_path))
     if out_dir:
         os.makedirs(out_dir, exist_ok=True)
-    with open(out_path, 'w') as f:
+    with open(out_path, 'w', encoding='utf-8') as f:
         f.write(block)
 
 
@@ -1532,7 +1532,7 @@ def parse_net_shapes(filepath: str) -> dict:
             f"NET SHAPES file not found: {filepath!r}"
         )
 
-    with open(filepath) as f:
+    with open(filepath, encoding='utf-8') as f:
         lines = [ln.rstrip('\n') for ln in f]
 
     ns_idx = None
@@ -1712,7 +1712,7 @@ def write_net_shapes_yaml(parsed: dict, out_path: str) -> None:
         })
 
     payload = {'nets': nets_out}
-    with open(out_path, 'w') as f:
+    with open(out_path, 'w', encoding='utf-8') as f:
         yaml.safe_dump(payload, f, sort_keys=False,
                        default_flow_style=False)
 
@@ -1810,7 +1810,7 @@ def run_calibre_net_shapes(svdb_dir: str,
     out_dir = os.path.dirname(os.path.abspath(out_path))
     if out_dir:
         os.makedirs(out_dir, exist_ok=True)
-    with open(out_path, 'w') as f:
+    with open(out_path, 'w', encoding='utf-8') as f:
         f.write(block)
 
 

@@ -1,0 +1,20 @@
+# Buffer Fin Resize MVP - Python runtime dependencies.
+# Pinned to lower bounds only; let pip pick the latest compatible.
+# Generated alongside scripts/check_deps.py (single source of truth lives
+# in pyproject.toml; this file is for `pip install -r` convenience).
+
+# Required
+numpy>=1.23
+matplotlib>=3.6
+pyyaml>=6.0
+
+# Optional (GDS reader / writer used by io_adapters.gds_io and
+# dummy.gen_buffer_layout's bbox extraction).
+gdstk>=0.9
+
+# Optional (KLayout Python module — only required if running DRC checks
+# locally; pip wheels exist for win_amd64 / linux_x86_64 / macos).
+# klayout>=0.28
+
+# Optional (test runner)
+pytest>=7.0

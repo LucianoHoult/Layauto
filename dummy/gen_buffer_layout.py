@@ -367,7 +367,7 @@ def write_gds(layout_data: dict, filename: str):
 
 def write_layout_json(layout_data: dict, filename: str):
     """Save full layout data as JSON (for debugging and downstream use)."""
-    with open(filename, 'w') as f:
+    with open(filename, 'w', encoding='utf-8') as f:
         json.dump(layout_data, f, indent=2)
     print(f"  Layout JSON written: {filename}")
 
@@ -470,7 +470,7 @@ def generate_cdl(layout_data: dict, filename: str, config=None):
     nfin_p = layout_data['params']['pmos_nfin']
     cell_name = f'INV_N{nfin_n}_P{nfin_p}'
 
-    with open(filename, 'w') as f:
+    with open(filename, 'w', encoding='utf-8') as f:
         f.write(f"* CDL netlist for {cell_name}\n")
         f.write(f".SUBCKT {cell_name} VDD VSS IN OUT\n")
         f.write(f"MN0 OUT IN VSS VSS nmos_finfet nfin={nfin_n} l={config.POLY_WIDTH}n\n")
@@ -495,7 +495,7 @@ def generate_calibre_ixref(layout_data: dict, filename: str):
     pin_count = 4   # VDD, VSS, IN, OUT
 
     devices = layout_data['devices']
-    with open(filename, 'w') as f:
+    with open(filename, 'w', encoding='utf-8') as f:
         f.write('# SVDB: Instance Cross Reference (ixf) (File format 1)\n')
         f.write(f'# SVDB: Layout Primary {cell_name}\n')
         f.write(f'# SVDB: Source Primary {cell_name}\n')
@@ -533,7 +533,7 @@ def generate_calibre_nxref(layout_data: dict, filename: str):
     cell_name = f'INV_N{nfin_n}_P{nfin_p}'
     pin_count = 4
 
-    with open(filename, 'w') as f:
+    with open(filename, 'w', encoding='utf-8') as f:
         f.write('# SVDB: Net Cross Reference (nxf) (File format 1)\n')
         f.write(f'# SVDB: Layout Primary {cell_name}\n')
         f.write(f'# SVDB: Source Primary {cell_name}\n')
@@ -561,7 +561,7 @@ def generate_calibre_net_names(layout_data: dict, filename: str,
     IN=1, OUT=2, VSS=3, VDD=4.
     """
     count = len(DUMMY_NET_ORDER)
-    with open(filename, 'w') as f:
+    with open(filename, 'w', encoding='utf-8') as f:
         f.write('Net_Names 20000\n')
         f.write('Nets:\n')
         f.write(f'0 0 {count} {timestamp}\n')
@@ -656,7 +656,7 @@ def generate_calibre_device_info(layout_data: dict,
                   + len(property_values)
                   + 1)                    # seed_layer_name
 
-    with open(filename, 'w') as f:
+    with open(filename, 'w', encoding='utf-8') as f:
         f.write(f'Device_Info {DEVICE_INFO_PRECISION}\n')
         f.write('Info:\n')
         f.write(f'0 0 {n_metadata} {timestamp}\n')
@@ -735,7 +735,7 @@ def generate_calibre_net_shapes(layout_data: dict,
 
     first_layer = layer_blocks[0][0]
 
-    with open(filename, 'w') as f:
+    with open(filename, 'w', encoding='utf-8') as f:
         f.write(f'Net_Shapes {DEVICE_INFO_PRECISION}\n')
         f.write('Info:\n')
         f.write(f'0 0 {n_metadata} {timestamp}\n')
@@ -790,12 +790,12 @@ def generate_all_fixtures(output_dir: str,
 
     # Calibre query simulations (dummy LVS output)
     cal_dev = generate_calibre_device_query(orig, config)
-    with open(os.path.join(output_dir, 'calibre_device_query.json'), 'w') as f:
+    with open(os.path.join(output_dir, 'calibre_device_query.json'), 'w', encoding='utf-8') as f:
         json.dump(cal_dev, f, indent=2)
     print(f"  Calibre device query JSON written")
 
     cal_net = generate_calibre_net_query(orig)
-    with open(os.path.join(output_dir, 'calibre_net_query.json'), 'w') as f:
+    with open(os.path.join(output_dir, 'calibre_net_query.json'), 'w', encoding='utf-8') as f:
         json.dump(cal_net, f, indent=2)
     print(f"  Calibre net query JSON written")
 
@@ -830,7 +830,7 @@ def generate_all_fixtures(output_dir: str,
 
     # bbox_by_layer: GDS round-trip (truth source is GDS, not Python dict)
     bbox_data = gds_to_bbox_by_layer(orig_gds_path, layer_map=config.LAYER_MAP)
-    with open(os.path.join(output_dir, 'bbox_by_layer.json'), 'w') as f:
+    with open(os.path.join(output_dir, 'bbox_by_layer.json'), 'w', encoding='utf-8') as f:
         json.dump(bbox_data, f, indent=2)
     print(f"  Bbox-by-layer JSON written (from GDS read-back)")
 

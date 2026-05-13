@@ -45,13 +45,13 @@ class TechConfig:
 
     def __init__(self, drc_yaml: str, layer_yaml: str = None,
                  layermap_override: str = None):
-        with open(drc_yaml) as f:
+        with open(drc_yaml, encoding='utf-8') as f:
             self._drc = yaml.safe_load(f)
 
         if layer_yaml is None:
             tech_dir = os.path.dirname(os.path.abspath(__file__))
             layer_yaml = os.path.join(tech_dir, 'layer_map.yaml')
-        with open(layer_yaml) as f:
+        with open(layer_yaml, encoding='utf-8') as f:
             self._layer_data = yaml.safe_load(f)
 
         # Build layer index by name. Apply optional .layermap override
@@ -310,7 +310,7 @@ def load_site_config(site_yaml: str) -> dict:
     ``calibre`` / ``virtuoso`` (deferred).
     """
     site_dir = os.path.dirname(os.path.abspath(site_yaml))
-    with open(site_yaml) as f:
+    with open(site_yaml, encoding='utf-8') as f:
         cfg = yaml.safe_load(f) or {}
 
     def resolve(p):

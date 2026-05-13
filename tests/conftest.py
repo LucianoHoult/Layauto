@@ -18,28 +18,28 @@ def fixture_dir():
 @pytest.fixture
 def original_layout_json():
     path = os.path.join(FIXTURE_DIR, 'buffer_original.json')
-    with open(path) as f:
+    with open(path, encoding='utf-8') as f:
         return json.load(f)
 
 
 @pytest.fixture
 def target_layout_json():
     path = os.path.join(FIXTURE_DIR, 'buffer_target.json')
-    with open(path) as f:
+    with open(path, encoding='utf-8') as f:
         return json.load(f)
 
 
 @pytest.fixture
 def calibre_device_json():
     path = os.path.join(FIXTURE_DIR, 'calibre_device_query.json')
-    with open(path) as f:
+    with open(path, encoding='utf-8') as f:
         return json.load(f)
 
 
 @pytest.fixture
 def calibre_net_json():
     path = os.path.join(FIXTURE_DIR, 'calibre_net_query.json')
-    with open(path) as f:
+    with open(path, encoding='utf-8') as f:
         return json.load(f)
 
 
