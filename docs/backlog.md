@@ -92,6 +92,29 @@ All four run from `io_adapters/calibre_query.py`'s Stage 1.5 with `mode={dummy,c
 
 ## Cross-cutting deferrals
 
+### Correctness issues found in audit (2026-05-13)
+
+Standing list of input-side issues identified in `correctness_audit.md`. The user reviewed the audit and chose **document only, no code change** — the entries below are open work, not shipped fixes. Severity / evidence / recommended fix for each is in the audit doc; this section is the tracking surface so they don't get lost.
+
+- **A1 — "buffer" naming ≠ inverter circuit.** The fixture `MN0` + `MP0` is a single CMOS inverter but the project labels it "buffer" everywhere (file names, `BUFFER_LIB`, `README.md`, `architecture.md` §1, changelog M0). Cell name `INV_N{n}_P{p}` and `generate_inverter_layout()` are already correct. Recommended fix: rename "buffer" → "inverter"/"INV" globally; keep the circuit as one inverter (the backlog already lists "2-stage buffer" as separate future work).
+- **A2 — boundary dummy-poly straddles OD; floating; not in CDL.** Parasitic edge transistors at x∈[0,10] and [98,108]; would mismatch a real LVS run.
+- **B1 — odd shape widths + `int()` truncation produce 0.5 nm off-centre shapes** (FIN/LI/VIA0). A clear "tell" that coords come from a quick generator, not a real tool. Fix candidates: 0.5 nm DBU, even widths, or `round()` plus grid-snap.
+- **C1 — `LI.P.1` (27) < `LI.W.1` (17) + `LI.S.1` (17)**, so adjacent LI tracks at min width are illegal; the cell uses three adjacent LI tracks → two real `LI.S.1` violations between gate-contact LI and the drain LIs.
+- **C2 — VIA0 has 0 nm LI X-enclosure on all 4 vias.** `V0.E.LI.x = 1` violated everywhere because `VIA0_WIDTH = LI_WIDTH = 17`.
+- **C3 — LI doesn't fully cover VIA0 in Y on 3 of 4 vias** (3–4 nm overhang). Root cause: the via-coverage extension code (`gen_buffer_layout.py:244-262`) uses `m1_y ± VIA0_ENC_BY_LI_Y` but omits `VIA0_HEIGHT/2`.
+- **C4 — VIA0 under-enclosed by M1 in X** on the 2 signal vias (1–2 nm vs 5 nm needed) — M1 stub width 20 nm vs VIA0 17 nm.
+- **D1 / D2 — `calibre_device_query.json` and `device_info_*.txt` disagree by 0.5 nm** on the same device bbox; and the `DEVICE INFO` "seed shape" is a synthetic `POLY_W × (fin_span + pitch)` rectangle, not the real `POLY ∩ OD` device-recognition geometry (overhangs OD by 2.5 nm/side).
+- **D3 — NET SHAPES bboxes are raw GDS, not the "effective conducting region"** the architecture doc claims. Fix: trim cuts/extensions, *or* soften the doc wording (the 1.6 caveat already plans this).
+- **D4 — `device_info` hard-codes `poly_width = 20` / `fin_pitch = 25`** instead of reading config; latent desync if the rule deck changes.
+- **D5 — LVS / Calibre HDB *formats* unverified against a real `calibre` binary** (already noted by `--lvs-mode calibre` being "untested"). The `(y, x)` vertex order, count-line ambiguity, and SVDB ixf/nxf headers were modelled on a user-provided example.
+- **E1 — committed `buffer_original.{gds,json}` and `calibre_net_query.json` are stale relative to `gen_buffer_layout.py`.** Re-running the generator immediately reorders the JSONs (shape-ordering drift, not coord drift) and rewrites the GDS by 2 bytes (gdstk-vs-manual-writer encoding). Fix: regenerate + re-commit (with gdstk available), and add a CI check that `python3 dummy/gen_buffer_layout.py && git diff --exit-code dummy/fixtures/` is clean.
+- **E2 — `gen_buffer_layout.py` requires `gdstk` to fully regenerate** (the `bbox_by_layer.json` round-trip path). `README.md` still calls gdstk "optional"; either make the manual writer round-trippable, drop the GDS round-trip, or update the README claim.
+
+Out-of-scope follow-ups identified by the audit but not pursued this round:
+
+- **Output-path audit** — the resize solver/decoder/derivator and `output/buffer_resized.gds`. C1–C4 will likely recur or worsen after a resize; worth a parallel audit.
+- **Add CSP-side enclosure rules** — `V0.E.LI` and `V0.E.M1` are currently "checked by KLayout DRC" only and so let C2–C4 hide. Promoting them into the CSP front-line would catch the same regression at design time.
+
 ### Derivator subscription model
 
 Today the C1 derivator (`core/drc_derivator.py`) is **pull-based** — the pipeline calls `derive_c1(...)` after the L3 macro commits, and the derivator does a full recompute. The architectural model (§ A4) calls for **push-based subscription**: `engine.commit_with_full_delta`'s cell delta hands the affected-neighborhood radius directly to the derivator for incremental recompute.
