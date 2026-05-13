@@ -13,16 +13,26 @@ from core.diff import compute_shape_diff
 
 
 def plot_diff_overlay(orig_data: dict, modified_data: dict,
-                      output_path: str, title: str = 'Layout Diff'):
-    """Generate diff overlay visualization."""
+                      output_path: str, title: str = 'Layout Diff',
+                      view_window=None):
+    """Generate diff overlay visualization.
+
+    When ``view_window`` is provided it controls the axes window; otherwise
+    the legacy ``(-25, cell_w+25) × (-25, cell_h+25)`` fallback is used so
+    existing callers stay byte-identical.
+    """
     fig, ax = plt.subplots(1, 1, figsize=(10, 12))
-    
-    cell_w = orig_data['params']['cell_width']
-    cell_h = max(orig_data['params']['cell_height'],
-                 modified_data['params']['cell_height'])
-    
-    ax.set_xlim(-25, cell_w + 25)
-    ax.set_ylim(-25, cell_h + 25)
+
+    if view_window is None:
+        cell_w = orig_data['params']['cell_width']
+        cell_h = max(orig_data['params']['cell_height'],
+                     modified_data['params']['cell_height'])
+        x0, y0, x1, y1 = -25, -25, cell_w + 25, cell_h + 25
+    else:
+        x0, y0, x1, y1 = view_window
+
+    ax.set_xlim(x0, x1)
+    ax.set_ylim(y0, y1)
     ax.set_aspect('equal')
     ax.set_title(f'{title}\n(Gray=unchanged, Red=removed, Green=added)',
                  fontsize=11, fontweight='bold')
