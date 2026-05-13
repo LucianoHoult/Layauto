@@ -14,7 +14,8 @@ dependencies = [
 gds = ["gdstk"]
 drc = ["klayout"]
 test = ["pytest"]
-all = ["gdstk", "klayout", "pytest"]
+viz = ["plotly"]
+all = ["gdstk", "klayout", "pytest", "plotly"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

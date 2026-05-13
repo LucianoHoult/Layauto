@@ -25,8 +25,18 @@ python3 dummy/gen_buffer_layout.py
 # Run complete pipeline (parse → CSP → resize → GDS → verify)
 python3 pipeline/run_mvp.py
 
+# Step through every stage, with newly-written intermediate files listed
+# after each one (Stage 6 is split into 6a-6e for finer pause points).
+python3 pipeline/run_mvp.py --debug              # press Enter to advance
+python3 pipeline/run_mvp.py --debug --debug-no-pause   # list only, no pause
+LAYAUTO_DEBUG=1 python3 pipeline/run_mvp.py      # env-var equivalent of --debug
+
 # Output files appear in output/
 ```
+
+Pausing is silently skipped when stdin is not a TTY (so CI / pytest /
+piped runs never hang). At the prompt: ``Enter`` advances, ``q`` aborts,
+``c`` continues without further pauses.
 
 ## Output Files
 
@@ -38,6 +48,16 @@ After running `pipeline/run_mvp.py`:
 - `output/resize_comparison.png` — 3-way visual comparison
 - `output/resize_diff.png` — Diff overlay showing changes
 - `output/resize_report.txt` — Text report of edit operations
+- `output/lvs_device_info.png` — LVS device_info shapes side-by-side with the original GDS
+- `output/lvs_net_shapes.png` — LVS net_shapes shapes side-by-side with the original GDS
+- `output/debug_view.html` — Interactive Plotly viewer (needs the `viz` extra:
+  `pip install -e .[viz]`); buttons flip between original / resized / target /
+  device_info / net_shapes, the legend toggles layers, axes are pinned so
+  shapes register across views
+
+All layout PNGs share one coordinate window (computed from the union of
+every dataset they show) and one per-layer color palette, so flipping
+between them in an image viewer shows the geometric differences directly.
 
 ## Project Structure
 
@@ -90,6 +110,8 @@ Physical coords (nm)   ←→   Track-Segment layer   ←→   CSP grid layer
 - gdstk (optional — needed for GDS-reading paths; the bundled writer
   in `dummy/gds_writer.py` uses stdlib `struct` only)
 - pytest, klayout (optional — for the test suite / local DRC)
+- plotly (optional — `pip install -e .[viz]`; needed only for the
+  interactive `output/debug_view.html` viewer)
 
 ### One-click install
 
