@@ -82,6 +82,28 @@ All four run from `io_adapters/calibre_query.py`'s Stage 1.5 with `mode={dummy,c
   * a trimming pass in `io_adapters/calibre_query.py` (or a downstream consumer) that subtracts cut shapes / extension margins from the raw seed bbox before reporting `bbox_um`.
   * tests exercising both the mapped layer name and the trimmed bbox against synthetic inputs that include cuts.
 
+**Sub-slice 1.7 (planned): retire `calibre_device_query.json` / `calibre_net_query.json`, feed `build_layout_model` from the 1.5 YAMLs.** Today Stage 2 reads three JSON inputs — `calibre_device_query.json`, `calibre_net_query.json`, `bbox_by_layer.json`. The first two are *legacy convenience formats* written by `dummy/gen_buffer_layout.py:generate_calibre_{device,net}_query` (Python-dict serialisation, not actual Calibre output formats); the third is already production-clean (`gds_to_bbox_by_layer` → GDS round-trip via gdstk, the M3 §A "geometry truth" path). The four 1.5 YAMLs (`ixref` / `net_xref` / `device_info` / `net_shapes`) carry the same information the legacy two JSONs do, sourced from actual Calibre HDB queries, but split along the three-sources-of-truth axes. 1.7 closes the loop.
+
+  * **Keep.** `bbox_by_layer.json` as the geometric source — GDS round-trip already works on production GDS, and it's the only path that sees *unannotated* shapes (filler / ESD / dummy gates) that `project_unannotated_blockages` needs as BLOCKAGE seeds. LVS-only sourcing would render those invisible.
+  * **Retire.** `calibre_device_query.json` and `calibre_net_query.json` from `inputs:`. Their fields fan out as follows:
+    - `device.instance` / `device_type` ← `ixref.devices[].source_inst` joined with parsed CDL device records.
+    - `device.parameters.{nfin,l,w}` ← parsed CDL (Stage 1 output) — these have never been a Calibre query field anyway; they were just bundled into the dummy JSON for convenience.
+    - `device.pins.{G,D,S,B}` ← reconstructed from `(CDL terminal-order DGSB) ⊕ (net_xref.schematic_name → lvs_name) ⊕ (ixref.sd_swapped flips D↔S only)`. Use `net_xref.lvs_index` as the stable key for unnamed nets — Calibre re-numbering renames `net9` between runs.
+    - `device.bbox` ← envelope of `device_info.devices[].layers[gate-layer].shapes[*].bbox_um` (×1000 → nm). Gate-layer name (`ngate_lvt` / `pgate_lvt` / …) translates back to a GDS layer via the 1.6 mapping table.
+    - `device.fin_y_positions` ← derived two ways and cross-checked: (a) **geometric** — pick FIN rectangles from `bbox_by_layer['FIN']` whose center lies inside the device bbox.x range, sort by center_y, dedupe; (b) **arithmetic** — `[gate_bbox.y1 + pitch/2 + k*pitch for k in range(nfin)]`. Geometric wins; arithmetic disagreeing → log a warning (NMOS/PMOS gap that isn't a fin-pitch multiple).
+    - `net.type` ← heuristic (`VSS`/`VDD` → power, else signal); promotable to `.GLOBAL` / `.POWER` parsing in the CDL parser if needed.
+    - `net.pins` ← walk parsed CDL devices; for every `(inst, terminal)` whose schematic-side net equals this net, emit `(layout_inst, pin)` via the iXref translation (apply S/D swap).
+    - `net.shapes` ← `net_shapes.nets[k].layers[*].shapes[*].bbox_um` (×1000 → nm), grouped by GDS-layer (1.6 mapping). Direct replacement.
+  * **Files to land.**
+    - **New** `io_adapters/lvs_loader.py` with `LvsBundle` dataclass (`ixref / net_xref / device_info / net_shapes` parsed dicts) and helpers `load_lvs_bundle(paths)`, `lvs_layer_to_gds_layer(name)` (delegates to 1.6 table once available, in-line minimal table until then), `reconstruct_device_pins(cdl_dev, ixref_entry, net_xref)`, `derive_fin_y_positions_{geometric,arithmetic}(device_info, bbox_by_layer, nfin, config)`, `_um_to_nm(bbox)` with ±1 nm round-trip assertion.
+    - **New** `io_adapters/parser.py::apply_lvs_overlay_v2(pool, bundle, cdl_data)` — stamps `net_id` (from `net_shapes` keyed by `lvs_index`) / `device_id` (from `device_info` gate shapes + the existing `_device_for_shape` geometric tiebreaker for OUT-style multi-device routing nets) / `pin_role` (from reconstructed pins) onto `ShapeRecord`s. Keep the M3 conservative-defaults rule: no traversal, no silent merges, sub-nm drift handled by the M3 tolerance check (see "LVS bbox tolerance" below).
+    - **New** `io_adapters/parser.py::build_layout_model_v2(bbox_path, cdl_data, lvs_bundle, config)` — replaces the two `parse_calibre_*` calls. Same return type `(LayoutModel, MultiLayerGrid)`; alive alongside the legacy entry behind a site_config flag during transition.
+    - **Pipeline-side** `pipeline/run_mvp.py` — pass Stage 1.5's already-parsed `parsed_ixref / parsed_net_xref / parsed_device_info / parsed_net_shapes` straight into `build_layout_model_v2` (no second YAML round-trip).
+    - **Tests.** Unit-tests for each helper against the existing dummy fixtures — `reconstruct_device_pins(MN0)` must produce `{G:IN, D:OUT, S:VSS, B:VSS}` byte-equal to today's `calibre_device_query.json`. Integration test: byte-golden equivalence of the v2 pipeline output against `output/buffer_resized.gds`.
+  * **Site-config impact.** `inputs.device_query` / `inputs.net_query` retired; `inputs.{ixref,net_xref,device_info,net_shapes}_yaml` (already present) become required for the v2 path. Add `format.parser_path: legacy | v2` flag for the transition window.
+  * **Coordinate with sub-slice 1.6.** `apply_lvs_overlay_v2`'s layer-name translation depends on 1.6's `lvs_layer_map.yaml`. Landing 1.7 ahead of 1.6 means an in-line minimal map (`{ngate_lvt, pgate_lvt, ngate_*, pgate_*} → POLY`, `{nsd, psd} → OD`, identity otherwise) that 1.6 deletes — acceptable, just keep the call site singular.
+  * **Out of scope.** Multi-Vt fixtures, SDT / LIG, multi-finger devices — 1.7 lands the seam against the current single-cell fixture; richer LVS-layer set lands as fixtures grow (and forces 1.6 to materialise).
+
 **Acceptance.** Real PDK environment: buffer resize → SKILL load → DRC clean → LVS match. Inject a violating edit → DRC fail localizes to the responsible L2 op.
 
 **Risks.** PDK redaction may block end-to-end validation. Keep an injection harness that mocks DRC violations.
@@ -182,13 +204,15 @@ These need real-CDL test fixtures before being adapted. Not blocking M6c/M6d but
 
 ### Calibre query format adapters
 
-`io_adapters/parser.py::parse_calibre_*` assumes the dummy generator's exact JSON shape. Known production drift:
-- Coordinates may be microns, not nm.
-- Pin names may be case-sensitive.
-- Net names may include hierarchy separators.
-- `fin_y_positions` may not be explicit (derive from OD + fin pitch).
+> Largely **superseded by M7 sub-slice 1.7** (above): the legacy `parse_calibre_*` JSON path is being retired in favour of the four 1.5 YAMLs, which handle the unit / pin / fin-derivation drifts at the loader boundary. The remarks below stay as the catalogue of *what* drifts production hits, so 1.7's helpers know what to cover.
 
-Worth adding a `format:` block to `site_config.yaml` for common drifts (`{units: nm|um, fin_y_field: fin_y_positions | derive}`). Code-side adapters needed for schemas that diverge harder.
+`io_adapters/parser.py::parse_calibre_*` assumes the dummy generator's exact JSON shape. Known production drift:
+- Coordinates may be microns, not nm. (1.7: `_um_to_nm` at loader boundary.)
+- Pin names may be case-sensitive. (1.7: pin roles come from CDL terminal order, not LVS — case is fixed by the CDL parser.)
+- Net names may include hierarchy separators. (1.7: `net_xref.lvs_index` is the stable key; names are display-only.)
+- `fin_y_positions` may not be explicit. (1.7: derived geometric + arithmetic cross-check.)
+
+If 1.7 slips and the legacy path stays in production temporarily, a `format:` block in `site_config.yaml` (`{units: nm|um, fin_y_field: fin_y_positions | derive}`) is the minimum-disruption escape hatch.
 
 ### SKILL helper implementations
 
