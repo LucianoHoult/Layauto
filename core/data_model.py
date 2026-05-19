@@ -96,20 +96,25 @@ BLOCKAGE = CellState(OccupantType.BLOCKAGE)
 class ShapeRecord:
     """A single rectangular shape from the GDS, with optional LVS overlay.
 
-    ``layer`` + ``bbox_nm`` are the geometric truth. The other fields are
-    annotation written by LVS or by downstream macros / derivators:
+    ``layer`` + ``bbox_nm`` are the geometric truth.
 
-    - ``net_id`` / ``device_id`` / ``pin_role``: LVS overlay. ``net_id is
-      None`` means LVS provided no annotation for this shape (filler,
-      ESD, hand-edits, dummy gates, …). Per the conservative-defaults
-      rule (§D), unannotated shapes are not silently merged or deleted.
+    Annotation fields:
+
+    - ``net_id`` / ``device_id`` / ``pin_role``: best-effort summary
+      derived from per-cell consensus by ``apply_calibre_layer_overlay``
+      (slice 1.6). For simple shapes (LI bars, VIA0) the per-cell answer
+      is uniform and the summary is set. For cut metal or shared OD,
+      cells disagree and the summary stays ``None`` — the grid is the
+      authoritative source. Consumers that need per-cell precision read
+      ``TrackSegment`` / ``CellOccupancy`` directly; consumers that need
+      a coarse "this whole shape belongs to device X" can keep reading
+      these fields and tolerate ``None`` (skip the shape if ambiguous).
     - ``provenance``: backlink string identifying which L3 macro / L2 op /
       derivator emitted or last touched this shape. Used by M7
       DRC/LVS-feedback closure to localise responsibility for a violation.
     - ``is_derived``: True for C1 markings synthesised by the M5 derivator
       (NWELL / VT / PP / NP / BOUNDARY / DNW). The decoder rejects direct
-      edits to derived shapes once M5 lands. The flag is added in M3 so
-      the seam exists when the derivator does.
+      edits to derived shapes once M5 lands.
     - ``suspect_tags``: cross-check labels like ``SUSPECT_CONNECTED_TO_VSS``
       assigned by the parser when an unannotated shape geometrically
       overlaps multiple LVS-tagged neighbours. Populated lazily when an
@@ -207,6 +212,9 @@ class CellOccupancy:
     owner_device_id: Optional[str] = None
     shared_with: List[str] = field(default_factory=list)
     shape_record: Optional['ShapeRecord'] = None
+    # Slice 1.6: SADP colour ('a' / 'b') for cut B-tier cells. Mirrors
+    # TrackSegment.color so metal-cut editors can read either carrier.
+    color: Optional[str] = None
 
     def __post_init__(self):
         # Layer must be B-tier — A-tier (FIN/POLY/LI/M1) lives on
@@ -303,6 +311,13 @@ class TrackSegment:
     end_anchor: int               # End position as orthogonal track index
     net_id: str = ''              # Net this segment belongs to
     width_code: int = 0           # Width index
+    # Slice 1.6: per-cell annotations stamped by apply_calibre_layer_overlay.
+    # ``device_id`` is set for A-tier cells that fall inside a device-pin
+    # derived shape (POLY active-gate cells get the gate's device; routing
+    # LI/M1 cells stay None). ``color`` is the SADP colour ('a' / 'b') for
+    # cut metal segments — consumed by metal-cut shape editing.
+    device_id: Optional[str] = None
+    color: Optional[str] = None
 
     # Endpoint refinement (physical offsets, not part of CSP search)
     start_type: EndType = EndType.OPEN_END

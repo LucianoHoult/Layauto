@@ -2,24 +2,39 @@
 # Layer definition table.
 #
 # Schema (each entry under `layers:`):
-#   name         - layer name string (referenced by drc rules,
-#                  the parser, the solver, the derivator)
-#   gds          - [layer_number, datatype] OR null. Layers without a
-#                  GDS pair are tier-only markers — they exist in the
-#                  tier dispatch table but no fixture geometry uses
-#                  them yet.
-#   tier         - A | B | C1 | C2  (architecture roadmap §B):
-#                    A  = 1D track  (CSP TrackSegment)
-#                    B  = 2D cell   (CSP CellOccupancy)
-#                    C1 = derived   (drc_derivator output)
-#                    C2 = annotation (direct edit, never CSP)
-#   orientation  - H | V | null   (null = point/area, no track axis)
-#   role         - fin | poly | interconnect | via | cut | diffusion |
-#                  well | boundary | marker | annotation
-#   connects     - [lower_layer, upper_layer]  (for vias only)
-#   derived      - true   (synthesized by drc_derivator; never edited
-#                  directly by L3 macros)
-#   color        - [r, g, b, alpha] for visualization (optional)
+#   name           - layer name string (referenced by drc rules,
+#                    the parser, the solver, the derivator)
+#   gds            - [layer_number, datatype] OR null. Layers without a
+#                    GDS pair are tier-only markers — they exist in the
+#                    tier dispatch table but no fixture geometry uses
+#                    them yet.
+#   tier           - A | B | C1 | C2  (architecture roadmap §B):
+#                      A  = 1D track  (CSP TrackSegment)
+#                      B  = 2D cell   (CSP CellOccupancy)
+#                      C1 = derived   (drc_derivator output)
+#                      C2 = annotation (direct edit, never CSP)
+#   orientation    - H | V | null   (null = point/area, no track axis)
+#   role           - fin | poly | interconnect | via | cut | diffusion |
+#                    well | boundary | marker | annotation
+#   connects       - [lower_layer, upper_layer]  (for vias only)
+#   derived        - true   (synthesized by drc_derivator; never edited
+#                    directly by L3 macros)
+#   color          - [r, g, b, alpha] for visualization (optional)
+#   derived_layers - list of {name, carries, [color]} naming every LVS-
+#                    side derived layer that carries annotations BACK to
+#                    this GDS layer. Consumed by slice 1.6's
+#                    apply_calibre_layer_overlay (see io_adapters/
+#                    calibre_layer_map.py). Each entry:
+#                       name    - derived layer name (matches the
+#                                 `layer:` field in device_info.yaml /
+#                                 net_shapes.yaml)
+#                       carries - subset of {net_id, device_id}; tells
+#                                 the overlay which fields to stamp.
+#                       color   - optional 'a' | 'b' | 'c' for SADP
+#                                 colour-split metals; propagated onto
+#                                 TrackSegment.color for metal-cut edits.
+#                    See tech/calibre_layer_map.yaml for the derivation
+#                    docs + Vt-flavour alternates registry.
 #
 # Style modeled after the LEF tech-section + KLayout .lyp record-per-
 # layer conventions so a foundry .layermap or display.drf can later
@@ -34,6 +49,7 @@ layers:
     orientation: H
     role:        fin
     color:       [0.2, 0.8, 0.2, 0.5]
+    derived_layers: []   # structural; no LVS-side annotations land here
 
   - name: POLY
     gds:         [2, 0]
@@ -41,6 +57,17 @@ layers:
     orientation: V
     role:        poly
     color:       [0.8, 0.2, 0.2, 0.6]
+    derived_layers:
+      # Vt-flavoured gate alternates — deck emits exactly ONE per device.
+      # Listing all is fine; runtime stamps whichever has shapes.
+      - { name: ngate_lvt,  carries: [device_id] }
+      - { name: ngate_slvt, carries: [device_id] }
+      - { name: ngate_rvt,  carries: [device_id] }
+      - { name: pgate_lvt,  carries: [device_id] }
+      - { name: pgate_slvt, carries: [device_id] }
+      - { name: pgate_rvt,  carries: [device_id] }
+      # Whole gate strip's net (MVP convention: GDS name = LVS name).
+      - { name: POLY,       carries: [net_id] }
 
   - name: LI
     gds:         [3, 0]
@@ -48,6 +75,10 @@ layers:
     orientation: V
     role:        interconnect
     color:       [0.2, 0.2, 0.9, 0.5]
+    derived_layers:
+      - { name: LIG,  carries: [net_id] }
+      - { name: LISD, carries: [net_id] }
+      - { name: LI,   carries: [net_id] }   # MVP-name passthrough
 
   - name: M1
     gds:         [5, 0]
@@ -55,6 +86,10 @@ layers:
     orientation: H
     role:        interconnect
     color:       [0.8, 0.4, 0.0, 0.5]
+    derived_layers:
+      - { name: M1a, carries: [net_id], color: a }
+      - { name: M1b, carries: [net_id], color: b }
+      - { name: M1,  carries: [net_id] }    # MVP-name passthrough (no cuts)
 
   # ----- B-tier (2D cell, CSP-modelled) -----------------------
   - name: VIA0
@@ -64,6 +99,9 @@ layers:
     role:        via
     connects:    [LI, M1]
     color:       [0.9, 0.9, 0.0, 0.8]
+    derived_layers:
+      - { name: V0,   carries: [net_id] }
+      - { name: VIA0, carries: [net_id] }   # MVP-name passthrough
 
   - name: OD
     gds:         [6, 0]
@@ -71,6 +109,13 @@ layers:
     orientation: null
     role:        diffusion
     color:       [0.2, 0.6, 0.2, 0.2]
+    derived_layers:
+      # OD itself is NOT a device-id source per user observation; the
+      # nsd / psd S/D derived layers are. Diffusion-shared OD cells
+      # receive multiple matches → recorded as owner_device_id +
+      # shared_with[], not as a conflict.
+      - { name: nsd, carries: [device_id, net_id] }
+      - { name: psd, carries: [device_id, net_id] }
 
   # B-tier cut layers (no fixture geometry yet — tier markers)
   - { name: CPO,     gds: null, tier: B, orientation: null, role: cut }
@@ -85,6 +130,7 @@ layers:
     role:        well
     derived:     true
     color:       [0.6, 0.6, 0.6, 0.1]
+    derived_layers: []   # bulk net; not annotated via per-cell overlay
 
   - name: BOUNDARY
     gds:         [10, 0]
@@ -93,6 +139,7 @@ layers:
     role:        boundary
     derived:     true
     color:       [0.5, 0.5, 0.5, 0.3]
+    derived_layers: []
 
   # C1 markers without fixture geometry (tier markers only)
   - { name: VT,  gds: null, tier: C1, orientation: null, role: marker, derived: true }

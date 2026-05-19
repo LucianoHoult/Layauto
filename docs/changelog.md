@@ -4,7 +4,38 @@
 
 **Format.** One block per shipped milestone or sub-milestone. Each block carries: date / branch / what shipped / files touched / acceptance evidence / notes.
 
-**Test-count series** (cumulative): M0 33 → M1 38 → M2 50 → M3 65 → M4a 81+4 → M4b 119 → M4c 134 → M4d 155 → M4e 174 → M5 187 → M6a 201 → M6b 214 (+ config-consolidation: no test delta) → iXref 243 → nXref+NET-NAMES 284 → DEVICE-INFO 316 → NET-SHAPES 344.
+**Test-count series** (cumulative): M0 33 → M1 38 → M2 50 → M3 65 → M4a 81+4 → M4b 119 → M4c 134 → M4d 155 → M4e 174 → M5 187 → M6a 201 → M6b 214 (+ config-consolidation: no test delta) → iXref 243 → nXref+NET-NAMES 284 → DEVICE-INFO 316 → NET-SHAPES 344 → CALIBRE-LAYER-MAP 362.
+
+---
+
+## 2026-05-07 — Slice 1.6: GDS↔LVS layer mapping + per-cell overlay (supplemental)
+
+**Branch:** `claude/refine-test-fixtures-nIkdZ`
+
+First consumer of the Stage 1.5 middle files. Adds a per-cell annotation pass (`apply_calibre_layer_overlay`) that walks every A-tier `TrackSegment` and B-tier `CellOccupancy`, looks up the GDS layer's `derived_layers` list in `tech/layer_map.yaml`, finds matching shapes in `device_info.yaml` / `net_shapes.yaml`, and stamps per-cell `device_id` / `color` (B-tier diffusion-sharing via `shared_with`). After the per-cell pass, per-`ShapeRecord` summaries (`net_id`, `device_id`) are derived from cell consensus so legacy macro consumers (`core/solver.py::resize_device`, `core/atomic_ops.py`, …) keep working without a larger refactor.
+
+**Scope = supplemental, not replacement.** The legacy `apply_lvs_overlay` keyed on `(layer, bbox_nm)` exact match against `calibre_net_query.json` stays in place. The new pass runs **after** the legacy one and only fills in additional fields the legacy can't reach. Cutover (delete `apply_lvs_overlay` + `parse_calibre_net_query` + the dummy JSON) is **slice 1.6b**, gated on the parity test added here.
+
+Rationale: per the final design review, the resize macro and atomic_ops still read `ShapeRecord.{net_id, device_id}` directly (`core/solver.py:527,578`; `core/atomic_ops.py:359,397`). A full replace would force a parallel refactor across the solver and atomic_ops; doing it incrementally lets 1.6 land with byte-golden goldens preserved.
+
+- **New `tech/layer_map.yaml::layers[*].derived_layers`** — per-GDS-layer list of `{name, carries, [color], [exclude_from_grid]}` naming every LVS-side derived layer that carries annotations back. POLY lists Vt-flavour gate alternates (`ngate_lvt`, `pgate_lvt`, …) plus the POLY passthrough; OD lists `nsd` + `psd`; M1 lists SADP cut colours (`M1a`, `M1b`) plus MVP-passthrough; LI / VIA0 / FIN handled symmetrically. Schema documented in the file header.
+- **Refined `tech/calibre_layer_map.yaml`** — dropped the bogus whole-metal passthrough rows from CATEGORY 1 (`M1` / `M2` / `M3` / `V0` / `V1` / `V2` / `M4`): production has only SADP-cut single-colour derived names. Replaced with MVP-only passthrough rows for `LI` / `VIA0` / `M1` / `POLY` (used by our simplified buffer fixture) with `MVP-only` comments. Vt-variant gate alternates in CATEGORY 3 and `multi_patterning` colour metadata in CATEGORY 2 unchanged.
+- **New `io_adapters/calibre_layer_map.py`** with:
+  - `load_layer_map_with_derived(layer_yaml, calibre_layer_map_yaml)` — joins both files, builds reverse `derived_to_gds` index, reports `missing_registry_entries`.
+  - `apply_calibre_layer_overlay(model, grid, device_info_yaml, net_shapes_yaml, layer_map_table)` — center-point containment on A-tier, ≥50% area overlap on B-tier; conflict policy: B-tier `device_id` collisions record as `shared_with`, A-tier `device_id` and any-tier `net_id` collisions raise `LayerOverlayConflictError`. Returns coverage stats `{stamped, shared, cells_visited, derived_shape_count}`.
+  - `_summarise_back_to_shape_record(model, grid)` — per-shape consensus → ShapeRecord summary; leaves `None` when cells disagree (cut metal, shared OD).
+- **`core/data_model.py`** — `TrackSegment` gains `device_id: Optional[str] = None`, `color: Optional[str] = None`; `CellOccupancy` gains `color: Optional[str] = None`; `ShapeRecord` doc-comment updated to note `net_id` / `device_id` are now best-effort summaries derived from the grid.
+- **`tech/layer_map.py`** — exposes `DERIVED_LAYERS` dict and `derived_layers_of(layer)` helper.
+- **`tech/site_config.yaml`** — adds `tech.calibre_layer_map: calibre_layer_map.yaml`.
+- **`tech/config_loader.py`** — resolves the new path.
+- **`io_adapters/parser.py::build_layout_model`** — new kwargs (`device_info_yaml_path`, `net_shapes_yaml_path`, `layer_yaml_path`, `calibre_layer_map_yaml_path`); calls `apply_calibre_layer_overlay` when LVS YAMLs are present. Stores coverage on `model.calibre_layer_overlay_coverage`.
+- **`pipeline/run_mvp.py`** — Stage 2 banner prints the overlay coverage line (`stamped / shared / visited / derived shapes loaded`).
+
+**Files touched.** `tech/layer_map.yaml`, `tech/calibre_layer_map.yaml`, `tech/layer_map.py`, `tech/site_config.yaml`, `tech/config_loader.py`, `core/data_model.py`, `io_adapters/parser.py`, `pipeline/run_mvp.py`, `docs/architecture.md`, `docs/changelog.md`. New: `io_adapters/calibre_layer_map.py`, `tests/unit/test_calibre_layer_map.py`.
+
+**Acceptance.** Pytest 362/362 (344 pre + 18 new in `test_calibre_layer_map.py`). Existing four golden artifacts (`buffer_resized.{json,cdl}`, `resize_report.txt`, `annotation_coverage.txt`) md5-identical to the NET SHAPES baseline. On the live buffer fixture the new overlay reports `stamped=0  shared=0  visited=50  (derived shapes loaded: 15)` — every cell is already covered by the legacy path so the supplemental pass has no work; the synthetic unit tests exercise A-tier device_id stamping, B-tier diffusion sharing, color propagation, conflict detection, and ShapeRecord summary derivation.
+
+**Notes.** A-tier device_id stamping uses segment-center containment (per-cell granularity inside one segment is deferred to a follow-up). Real-Calibre coverage-gap risks (lenient containment, BLOCKAGE projection for un-LVS-covered cells, schematic-net localisation) are mitigated by the existing `project_unannotated_blockages` path; slice 1.6b will switch that predicate to grid-level when the legacy overlay is deleted. Stage 1.6 sub-slice for layer-name mapping + cut/extension trimming refinement remains the next deferred item per the prior backlog entry.
 
 ---
 

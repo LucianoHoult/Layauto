@@ -18,6 +18,10 @@ tech:
   # (layer_number, datatype) entries override the `gds:` field
   # of matching `layer_map.yaml` rows (other fields are kept).
   layermap_override: null
+  # Slice 1.6: GDS↔LVS-derived-layer reference registry.
+  # `derivation_doc`, `multi_patterning` colour, semantic-role hints.
+  # Programmatic consumers: io_adapters/calibre_layer_map.py.
+  calibre_layer_map: calibre_layer_map.yaml
 
 # ---- Run inputs ----------------------------------------------
 inputs:

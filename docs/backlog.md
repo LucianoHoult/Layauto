@@ -135,15 +135,29 @@ A path-aware union-find (or a fully recomputed component on each split) is neede
 
 The M3 `(layer, bbox_nm)` overlay key works because the dummy generator's GDS shapes and the dummy LVS shapes share an exact bbox-tuple representation. Production LVS geometry can drift sub-nm. M7 will need a tolerance / containment match in `apply_lvs_overlay`.
 
-### iXref + net_xref + device_info + net_shapes consumption
+### Slice 1.6b: cutover from legacy `apply_lvs_overlay`
 
-The four middle files produced by Stage 1.5 — `output/ixref.yaml` (devices), `output/net_xref.yaml` (nets + lvs_index), `output/device_info.yaml` (per-device LVS-derived-shape bboxes), and `output/net_shapes.yaml` (per-net LVS-derived metal/via bboxes) — are currently write-only. Future consumers — once we land them — should:
+Slice 1.6 (2026-05-07) added the per-cell `apply_calibre_layer_overlay` pass alongside the legacy `apply_lvs_overlay` for safety. To complete the replacement:
+- Delete `apply_lvs_overlay`, `_device_pin_lookup`, `_device_for_shape`, `_device_bbox_overlaps_shape`, `_device_bbox_contains_point` from `io_adapters/parser.py`.
+- Delete `parse_calibre_device_query` + `parse_calibre_net_query` and the matching `dummy/fixtures/calibre_{device,net}_query.json` + generators.
+- Switch the parser's TrackSegment construction loop to source net membership from `net_shapes.yaml` instead of `calibre_net_query.json`.
+- Switch `core/solver.py::project_unannotated_blockages` and `core/data_model.py::LayoutModel.annotation_coverage` to grid-cell-level predicates (today they read `ShapeRecord.is_annotated`).
+- Parity gate: the existing `test_apply_overlay_on_live_buffer_fixture_no_conflicts` covers the no-conflict case; before deletion add a parity script that diffs per-cell `(net_id, device_id)` between the two paths on the buffer fixture and asserts zero divergences.
+
+### iXref / net_xref / device_info / net_shapes / layer-map consumption (next)
+
+The Stage 1.5 + 1.6 plumbing is now in place. Remaining consumption gaps:
 - Cross-check the iXref's source-side instance ids against the parsed CDL `Device.inst_name` set; flag mismatches.
-- Use the `sd_swapped` flag when projecting LVS shapes through `apply_lvs_overlay` to flip source/drain pin roles for any device the layout-side LVS run flipped.
+- Use the `sd_swapped` flag when stamping derived-layer matches to flip source/drain pin roles for any device the layout-side LVS run flipped.
 - Use `net_xref.yaml`'s `schematic_name → lvs_index` map to localise DRC/LVS errors back to the schematic net the engineer recognises (Calibre reports errors against `lvs_index`).
-- Use `device_info.yaml`'s per-device derived-shape bboxes to map per-device DRC violations back to the responsible L2 op — the M5 derivator already produces NWELL / BOUNDARY shapes from device metadata, so a DRC error on `pgate_lvt` localises immediately to the device whose seed shape contains the violation point.
-- Use `net_shapes.yaml`'s per-net routing-layer bboxes for DRC error → net-name traceback: a spacing violation on M1 between two shapes lands directly on the two `lvs_name`s that own the shapes; the join with `net_xref.yaml` then yields the `schematic_name`s the engineer recognises.
-- Feed all mismatches into the L3 macro provenance for blast-radius computation in the LVS feedback closure (M7 main).
+- Use `net_shapes.yaml`'s per-net routing-layer bboxes for DRC error → net-name traceback: a spacing violation on M1 between two shapes lands on two `lvs_name`s; the join with `net_xref.yaml` then yields the `schematic_name`s.
+- Feed all mismatches into the L3 macro provenance for blast-radius computation (M7 main).
+
+### Slice 1.6 follow-ons
+
+- **Per-cell A-tier granularity**: today's overlay stamps `device_id` at the `TrackSegment` level (one annotation per segment). The plan's per-cell walkthrough (POLY active cells stamped, extension cells not) needs the TrackSegment to expose a per-cell breakdown, OR a side-band `per_cell_device_id: dict[anchor, str]` field. Defer until a multi-cell or buffer-insertion macro actually reads the gate-strip-position breakdown.
+- **R-tree shape index for the overlay**: today each cell scans every derived shape linearly (~7.5 k ops on the buffer; fine, but O(cells × shapes) for larger cells). Build an R-tree per derived layer at load time and switch to `O(log N)` queries.
+- **Layer-name mapping + cut/extension trimming** (the original 1.6 deferral): the `derived_layers` map captures the *connection*, but real Calibre output may use trimmed bboxes that don't fully cover the GDS region. The current center-point containment is robust to up to one pitch; tighter mapping (per-direction trim values, alias renames) is the next refinement.
 
 ### Calibre HDB command-string drift
 

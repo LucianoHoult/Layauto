@@ -68,6 +68,16 @@ C2_TIER_LAYERS = tuple(L for L, t in LAYER_TIER.items() if t == 'C2')
 # Cut layers — derived from ``role: cut`` in the YAML.
 CUT_LAYERS = tuple(l['name'] for l in _LAYERS if l.get('role') == 'cut')
 
+# Slice 1.6: per-GDS-layer ``derived_layers`` list. Consumed by
+# ``io_adapters/calibre_layer_map.py::apply_calibre_layer_overlay`` to
+# resolve "given this GDS layer, which Calibre-derived layers carry
+# annotations back to it?". Entries that omit ``derived_layers`` (legacy
+# YAMLs) surface as an empty list.
+DERIVED_LAYERS = {
+    l['name']: list(l.get('derived_layers') or [])
+    for l in _LAYERS
+}
+
 
 def tier_of(layer: str) -> str:
     """Return the tier marker for ``layer``.
@@ -91,3 +101,17 @@ def layers_in_tier(tier: str) -> Tuple[str, ...]:
 def is_cut_layer(layer: str) -> bool:
     """True iff ``layer`` is a cut layer (CPO / M0_CUT / FIN_CUT)."""
     return layer in CUT_LAYERS
+
+
+def derived_layers_of(layer: str) -> list:
+    """Return the ``derived_layers`` list for ``layer`` (slice 1.6).
+
+    Each entry is a dict ``{name, carries, [color]}`` naming an LVS-side
+    derived layer that carries annotations back onto cells of ``layer``.
+    Empty for structural layers (FIN) or layers with no LVS overlay
+    today (NWELL, BOUNDARY, cut markers).
+
+    Raises ``KeyError`` for an unmapped layer — same loud-fail policy as
+    ``tier_of``.
+    """
+    return list(DERIVED_LAYERS[layer])

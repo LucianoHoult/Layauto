@@ -263,6 +263,16 @@ def run_full_pipeline(site_config_path: str = None,
 
     # ---- Stage 2: Parse layout ----
     print("\n[Stage 2] Parsing layout data...")
+    # Slice 1.6: pass the LVS middle files + per-layer derived_layers
+    # map so the new apply_calibre_layer_overlay pass runs alongside
+    # the legacy apply_lvs_overlay. Site config can override the
+    # calibre_layer_map.yaml location via tech.calibre_layer_map.
+    # ixref_yaml_path is forwarded so device_info.yaml's LVS-side
+    # layout_inst (M0/M1) gets translated to schematic Device.inst_name
+    # (MN0/MP0) before stamping.
+    tech_block = site.get('tech', {}) or {}
+    layer_yaml_path = tech_block.get('layer_map')
+    calibre_layer_map_yaml_path = tech_block.get('calibre_layer_map')
     with dbg.stage("2", "parse layout"):
         model, grid = build_layout_model(
             device_query_path=device_query_path,
@@ -270,8 +280,21 @@ def run_full_pipeline(site_config_path: str = None,
             bbox_path=bbox_path,
             layout_json_path=layout_json_path,
             config=config,
+            device_info_yaml_path=device_info_yaml_path,
+            net_shapes_yaml_path=net_shapes_yaml_path,
+            layer_yaml_path=layer_yaml_path,
+            calibre_layer_map_yaml_path=calibre_layer_map_yaml_path,
+            ixref_yaml_path=ixref_yaml_path,
         )
         print(f"  {model.summary()}")
+        overlay = getattr(model, 'calibre_layer_overlay_coverage', None)
+        if overlay is not None:
+            print(f"  Calibre-layer overlay: "
+                  f"stamped={overlay['stamped']} "
+                  f"shared={overlay['shared']} "
+                  f"visited={overlay['cells_visited']} "
+                  f"(derived shapes loaded: "
+                  f"{overlay['derived_shape_count']})")
 
     # ---- Stage 3-4: CSP setup + load ----
     print("\n[Stage 3-4] Setting up CSP engine and loading layout...")

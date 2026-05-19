@@ -324,6 +324,7 @@ def load_site_config(site_yaml: str) -> dict:
     tech['drc_rules'] = resolve(tech.get('drc_rules'))
     tech['layer_map'] = resolve(tech.get('layer_map'))
     tech['layermap_override'] = resolve(tech.get('layermap_override'))
+    tech['calibre_layer_map'] = resolve(tech.get('calibre_layer_map'))
 
     inputs = cfg.setdefault('inputs', {})
     for key, val in list(inputs.items()):

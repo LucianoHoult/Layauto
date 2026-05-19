@@ -389,7 +389,11 @@ def build_layout_model(device_query_path: str,
                        net_query_path: str,
                        bbox_path: str,
                        layout_json_path: str = None,
-                       config=None) -> Tuple[LayoutModel, MultiLayerGrid]:
+                       config=None,
+                       device_info_yaml_path: str = None,
+                       net_shapes_yaml_path: str = None,
+                       layer_yaml_path: str = None,
+                       calibre_layer_map_yaml_path: str = None) -> Tuple[LayoutModel, MultiLayerGrid]:
     """
     Build complete LayoutModel and grid system from parsed data.
 
@@ -545,6 +549,29 @@ def build_layout_model(device_query_path: str,
     # ``core/solver.py::_reshape_li_sd_bars`` have a per-cell device
     # ownership map to read from. Idempotent over re-invocation.
     project_b_tier_shapes(model, grid, devices)
+
+    # --- Slice 1.6: per-cell overlay from Calibre LVS middle files ---
+    # Runs alongside the legacy apply_lvs_overlay path (which already
+    # stamped ShapeRecord.net_id from calibre_net_query.json). The new
+    # pass stamps additional per-cell device_id / color from
+    # device_info.yaml and re-confirms net_id from net_shapes.yaml.
+    # Skips silently if no YAMLs are provided (legacy site_configs).
+    if device_info_yaml_path or net_shapes_yaml_path:
+        from io_adapters.calibre_layer_map import (
+            load_layer_map_with_derived, apply_calibre_layer_overlay,
+        )
+        if layer_yaml_path is None:
+            layer_yaml_path = os.path.join(
+                os.path.dirname(__file__), '..', 'tech', 'layer_map.yaml')
+        layer_map_table = load_layer_map_with_derived(
+            layer_yaml_path, calibre_layer_map_yaml_path)
+        coverage = apply_calibre_layer_overlay(
+            model, grid,
+            device_info_yaml_path,
+            net_shapes_yaml_path,
+            layer_map_table,
+        )
+        model.calibre_layer_overlay_coverage = coverage
 
     return model, grid
 

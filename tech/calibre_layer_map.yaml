@@ -1,51 +1,31 @@
-# tech/agf_layer_map.yaml
+# tech/calibre_layer_map.yaml
 #
 # Constructed from public ASAP7 documentation + standard FinFET extraction
 # conventions. Authoritative sources marked. Entries flagged [VERIFY] need
 # production reconciliation against the actual Calibre deck.
+#
+# Slice 1.6 status: this file is the **derived-layer reference registry**
+# consumed by ``io_adapters/calibre_layer_map.py`` for derivation_doc /
+# multi_patterning colour metadata / semantic hints. The canonical
+# forward map (GDS → derived layers) lives per-GDS-layer in
+# ``tech/layer_map.yaml::layers[*].derived_layers``.
 
 # =====================================================================
-# CATEGORY 1: GDS-canonical (AGF layer geometry equals GDS geometry)
-# These are the routing/structural layers Calibre passes through unmodified.
+# CATEGORY 1: GDS-canonical passthroughs
+# Local-interconnect / contact layers that Calibre passes through
+# unmodified.
+#
+# NOTE: routing metals (M1..M9) and routing vias (V0..V8) are NOT
+# listed here. In production every routing metal is SADP-cut into
+# single-colour segments and reported by Calibre under per-colour
+# derived names (M1a, M1b, M2a, ...) — see CATEGORY 2. The legacy
+# whole-metal passthrough rows were factually wrong for production
+# and have been removed.
+#
+# The MVP-only single-colour passthroughs (LI / VIA0 / M1 / POLY) for
+# our simplified buffer fixture are listed at the bottom of CATEGORY 1
+# with a comment marking them MVP-only.
 # =====================================================================
-
-- name: M1
-  associates_with: [M1]               # GDS pair 19/0
-  carries: [net_id]
-  derivation_doc: "passthrough from GDS M1"
-
-- name: M2
-  associates_with: [M2]               # GDS pair 20/0
-  carries: [net_id]
-  derivation_doc: "passthrough from GDS M2"
-
-- name: M3
-  associates_with: [M3]               # GDS pair 30/0
-  carries: [net_id]
-  derivation_doc: "passthrough from GDS M3"
-
-- name: V0
-  associates_with: [V0]               # GDS pair 18/0
-  carries: [net_id]
-  derivation_doc: "passthrough from GDS V0"
-
-- name: V1
-  associates_with: [V1]               # GDS pair 21/0
-  carries: [net_id]
-  derivation_doc: "passthrough from GDS V1"
-
-- name: V2
-  associates_with: [V2]               # GDS pair 25/0
-  carries: [net_id]
-  derivation_doc: "passthrough from GDS V2"
-
-# Higher metals follow the same pattern: V3-V8, M4-M9 (verified in lyp)
-# Layauto MVP only cares through M1, but include them for completeness:
-- name: M4
-  associates_with: [M4]
-  carries: [net_id]
-  derivation_doc: "passthrough"
-# ... M5-M9, V3-V8 omitted for brevity, all follow the same passthrough pattern
 
 - name: LIG
   associates_with: [LIG]              # GDS pair 16/0
@@ -61,6 +41,33 @@
   associates_with: [SDT]              # GDS pair 88/0
   carries: [net_id]
   derivation_doc: "passthrough; S/D trench contact between LISD and active"
+
+# ---- MVP-only single-layer passthroughs ----
+# Our buffer fixture uses GDS-style names "LI" / "VIA0" / "M1" / "POLY"
+# with no cuts / no colour split. These entries are listed so the
+# tech/layer_map.yaml MVP-passthrough rows resolve cleanly through the
+# load_layer_map_with_derived sanity check. Production decks won't
+# emit these layer names.
+
+- name: LI
+  associates_with: [LI]
+  carries: [net_id]
+  derivation_doc: "MVP-only single-LI passthrough (no LIG/LISD split)"
+
+- name: VIA0
+  associates_with: [VIA0]
+  carries: [net_id]
+  derivation_doc: "MVP-only single-VIA0 passthrough (= V0)"
+
+- name: M1
+  associates_with: [M1]
+  carries: [net_id]
+  derivation_doc: "MVP-only single-M1 passthrough (no SADP colour split)"
+
+- name: POLY
+  associates_with: [POLY]
+  carries: [net_id]
+  derivation_doc: "MVP-only POLY passthrough; whole gate strip carries the gate net"
 
 # =====================================================================
 # CATEGORY 2: Multi-patterning color decomposition (SADP for M2/M3)
