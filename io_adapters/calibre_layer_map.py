@@ -164,7 +164,26 @@ def _area_overlap_ratio(cell: _BBox, shape: _BBox) -> float:
 # =====================================================================
 
 def _shapes_by_layer_from_device_info(
-        device_info_yaml_path: Optional[str]) -> Dict[str, List[dict]]:
+        device_info_yaml_path: Optional[str],
+        layout_to_source: Optional[Dict[str, str]] = None
+        ) -> Dict[str, List[dict]]:
+    """Build the derived-layer shape index from a ``device_info.yaml``.
+
+    ``device_info.yaml::devices[*].layout_inst`` carries the LVS-side
+    instance name (e.g. ``M0`` / ``M1``). The rest of LayoutModel —
+    ``Device.inst_name`` from the CDL parser, ``CellOccupancy.owner_
+    device_id`` written by ``project_b_tier_shapes`` from
+    ``ShapeRecord.device_id`` set by the legacy ``apply_lvs_overlay``,
+    and the ``sr.device_id == device.inst_name`` filter in
+    ``core/solver.py::resize_device`` — all use the schematic
+    ``Device.inst_name`` (e.g. ``MN0`` / ``MP0``).
+
+    If ``layout_to_source`` is provided (typically loaded from
+    ``ixref.yaml``'s ``devices[*]`` rows as
+    ``{layout_inst: source_inst}``), the LVS-side name is translated
+    to the schematic side before stamping. Untranslated names pass
+    through unchanged (legacy fixtures where the two coincide).
+    """
     if (not device_info_yaml_path
             or not os.path.exists(device_info_yaml_path)):
         return {}
@@ -173,14 +192,34 @@ def _shapes_by_layer_from_device_info(
     out: Dict[str, List[dict]] = {}
     for dev in data.get('devices', []):
         layout_inst = dev.get('layout_inst')
+        device_id = (layout_to_source or {}).get(layout_inst, layout_inst)
         for layer in dev.get('layers', []):
             for sh in layer.get('shapes', []):
                 out.setdefault(layer['name'], []).append({
                     'bbox_nm':   _bbox_um_to_nm(sh['bbox_um']),
-                    'device_id': layout_inst,
+                    'device_id': device_id,
                     'net_id':    None,
                 })
     return out
+
+
+def _load_layout_to_source_from_ixref(
+        ixref_yaml_path: Optional[str]) -> Dict[str, str]:
+    """Build ``{layout_inst: source_inst}`` from a parsed ``ixref.yaml``.
+
+    Returns an empty dict if the file is absent or has no devices.
+    """
+    if not ixref_yaml_path or not os.path.exists(ixref_yaml_path):
+        return {}
+    with open(ixref_yaml_path) as f:
+        data = yaml.safe_load(f) or {}
+    mapping: Dict[str, str] = {}
+    for dev in data.get('devices', []):
+        li = dev.get('layout_inst')
+        si = dev.get('source_inst')
+        if li and si:
+            mapping[li] = si
+    return mapping
 
 
 def _shapes_by_layer_from_net_shapes(
@@ -364,8 +403,17 @@ def apply_calibre_layer_overlay(
         net_shapes_yaml_path: Optional[str],
         layer_map_table: dict,
         *,
-        area_overlap_threshold: float = 0.5) -> dict:
+        area_overlap_threshold: float = 0.5,
+        ixref_yaml_path: Optional[str] = None,
+        layout_to_source: Optional[Dict[str, str]] = None) -> dict:
     """Stamp per-cell annotations onto the grid from LVS middle files.
+
+    ``ixref_yaml_path`` / ``layout_to_source``: provide one or the
+    other to translate ``device_info.yaml``'s LVS-side ``layout_inst``
+    (e.g. ``M0``) to the schematic ``Device.inst_name`` (e.g. ``MN0``)
+    before stamping. Without this translation, the solver's
+    ``sr.device_id == device.inst_name`` filter would silently skip
+    every shape in production (where layout and source names differ).
 
     Returns a coverage-stats dict:
 
@@ -374,8 +422,13 @@ def apply_calibre_layer_overlay(
          'cells_visited': int,
          'derived_shape_count': int}
     """
+    if layout_to_source is None:
+        layout_to_source = _load_layout_to_source_from_ixref(
+            ixref_yaml_path)
+
     shape_idx = _merge_shape_indexes(
-        _shapes_by_layer_from_device_info(device_info_yaml_path),
+        _shapes_by_layer_from_device_info(device_info_yaml_path,
+                                            layout_to_source),
         _shapes_by_layer_from_net_shapes(net_shapes_yaml_path),
     )
 

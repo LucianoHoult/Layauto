@@ -393,7 +393,8 @@ def build_layout_model(device_query_path: str,
                        device_info_yaml_path: str = None,
                        net_shapes_yaml_path: str = None,
                        layer_yaml_path: str = None,
-                       calibre_layer_map_yaml_path: str = None) -> Tuple[LayoutModel, MultiLayerGrid]:
+                       calibre_layer_map_yaml_path: str = None,
+                       ixref_yaml_path: str = None) -> Tuple[LayoutModel, MultiLayerGrid]:
     """
     Build complete LayoutModel and grid system from parsed data.
 
@@ -570,6 +571,7 @@ def build_layout_model(device_query_path: str,
             device_info_yaml_path,
             net_shapes_yaml_path,
             layer_map_table,
+            ixref_yaml_path=ixref_yaml_path,
         )
         model.calibre_layer_overlay_coverage = coverage
 

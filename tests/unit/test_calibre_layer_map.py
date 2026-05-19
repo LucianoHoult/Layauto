@@ -25,6 +25,8 @@ from io_adapters.calibre_layer_map import (
     _bbox_um_to_nm,
     _center_in_bbox,
     _area_overlap_ratio,
+    _load_layout_to_source_from_ixref,
+    _shapes_by_layer_from_device_info,
 )
 
 
@@ -593,6 +595,87 @@ def test_shape_record_summary_multi_device_leaves_none(tmp_path):
 # =====================================================================
 # Smoke: live buffer fixture through the real overlay
 # =====================================================================
+
+def test_layout_to_source_from_ixref(tmp_path):
+    ix = tmp_path / 'ixref.yaml'
+    ix.write_text(yaml.safe_dump({
+        'cell': {'layout_name': 'X', 'source_name': 'X',
+                  'layout_pin_count': 4, 'source_pin_count': 4},
+        'devices': [
+            {'layout_inst': 'M0', 'source_inst': 'MN0', 'sd_swapped': False},
+            {'layout_inst': 'M1', 'source_inst': 'MP0', 'sd_swapped': True},
+        ],
+    }))
+    mapping = _load_layout_to_source_from_ixref(str(ix))
+    assert mapping == {'M0': 'MN0', 'M1': 'MP0'}
+
+
+def test_layout_to_source_missing_ixref_returns_empty(tmp_path):
+    assert _load_layout_to_source_from_ixref(None) == {}
+    assert _load_layout_to_source_from_ixref(str(tmp_path / 'nope.yaml')) == {}
+
+
+def test_device_info_index_translates_layout_inst(tmp_path):
+    """Codex P1 regression: device_info.yaml uses LVS names (M0/M1) but
+    the rest of LayoutModel uses schematic names (MN0/MP0). With the
+    iXref-derived translation table, the stamped device_id must be the
+    schematic name."""
+    device_info = _write_device_info_yaml(tmp_path, [
+        {'layout_inst': 'M0', 'device_type_number': 0,
+         'layers': [{'name': 'nsd',
+                     'shapes': [{'bbox_um': {'x1': 0.0, 'y1': 0.0,
+                                              'x2': 0.01, 'y2': 0.01}}]}]},
+        {'layout_inst': 'M1', 'device_type_number': 1,
+         'layers': [{'name': 'psd',
+                     'shapes': [{'bbox_um': {'x1': 0.0, 'y1': 0.02,
+                                              'x2': 0.01, 'y2': 0.03}}]}]},
+    ])
+    idx = _shapes_by_layer_from_device_info(
+        device_info, layout_to_source={'M0': 'MN0', 'M1': 'MP0'})
+    assert idx['nsd'][0]['device_id'] == 'MN0'
+    assert idx['psd'][0]['device_id'] == 'MP0'
+
+
+def test_apply_overlay_translates_layout_inst_via_ixref(tmp_path):
+    """End-to-end: overlay run with ixref_yaml_path stamps schematic
+    names onto B-tier cells. Without translation the cell would carry
+    'M0' and break the solver's sr.device_id == device.inst_name filter."""
+    grid = _make_od_grid()
+    sr = _FakeShapeRecord('OD', (44, 28, 64, 53))
+    cell = _FakeCell('OD', track_a=0, track_b=0, shape_record=sr)
+    grid.b_tier_cells['OD'][(0, 0)] = cell
+    model = _FakeModel(nets={}, shape_pool=[sr])
+    layer_map_table = {
+        'gds_to_derived': {
+            'OD': [{'name': 'nsd', 'carries': ['device_id'],
+                    'color': None, 'exclude_from_grid': False}],
+        },
+    }
+    device_info = _write_device_info_yaml(tmp_path, [
+        {'layout_inst': 'M0', 'device_type_number': 0,
+         'layers': [{'name': 'nsd',
+                     'shapes': [{'bbox_um': {'x1': 0.030, 'y1': 0.020,
+                                              'x2': 0.080, 'y2': 0.060}}]}]},
+    ])
+    ixref = tmp_path / 'ixref.yaml'
+    ixref.write_text(yaml.safe_dump({
+        'cell': {'layout_name': 'X', 'source_name': 'X',
+                  'layout_pin_count': 4, 'source_pin_count': 4},
+        'devices': [
+            {'layout_inst': 'M0', 'source_inst': 'MN0', 'sd_swapped': False},
+        ],
+    }))
+    apply_calibre_layer_overlay(
+        model, grid,
+        device_info_yaml_path=device_info,
+        net_shapes_yaml_path=None,
+        layer_map_table=layer_map_table,
+        ixref_yaml_path=str(ixref),
+    )
+    # The cell — and the ShapeRecord summary — must carry 'MN0', not 'M0'.
+    assert cell.owner_device_id == 'MN0'
+    assert sr.device_id == 'MN0'
+
 
 def test_apply_overlay_on_live_buffer_fixture_no_conflicts(fixture_dir):
     """Run the real overlay against the live buffer fixture + the
