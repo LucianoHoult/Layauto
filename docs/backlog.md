@@ -112,6 +112,69 @@ All four run from `io_adapters/calibre_query.py`'s Stage 1.5 with `mode={dummy,c
 
 ---
 
+## M8 — FIN as static backdrop (de-edit FIN, derive fin attribution from OD)
+
+**Goal.** Bring the FIN layer in line with FinFET reality: fins are **continuous horizontal stripes across the entire cell at fixed pitch**, never drawn or edited by designers. The only thing a resize touches is the **OD** layer; which fins are electrically active is then a geometric consequence of `FIN ∩ OD`, computed on demand. Removes the per-device fin add/remove edit path from L1/L2/L3 entirely.
+
+**Motivation — three violations of the foundry-PCell mental model the current code embeds.**
+
+  1. **Dummy generator draws FIN per device, not as cell-wide stripes.** `dummy/gen_buffer_layout.py:163-168` loops over `nmos_fin_y` / `pmos_fin_y` and emits `nfin_n + nfin_p` separate FIN rectangles; the resulting `bbox_by_layer.json` has 12 FIN shapes covering only the device-local Y intervals and **no FIN geometry across the NMOS↔PMOS gap** (y=143..236). Production GDS has continuous stripes at every fin track across the full cell (often across cell boundaries).
+  2. **`device_resize` treats FIN as an editable layer.** `core/solver.py:_emit_fin_removes` → `core/atomic_ops.py:remove_fin_strip` actually deletes FIN `ShapeRecord`s from `model.shape_pool`; `core/diff.py` emits `EditOp('remove_shape', layer='FIN', ...)`; `core/decoder.py:_apply_fin_removes` drops the matching FIN rectangle from the output JSON/GDS. A foundry `nfin: 5→4` ECO modifies only OD; FIN geometry is invariant. The current path therefore produces a GDS whose FIN layer doesn't look like what Virtuoso shows for the same PCell.
+  3. **Fin → device attribution is Y-only, breaks for multi-device-along-X.** `Device.fin_track_indices` is built in `io_adapters/parser.py:454-458` from `dev._raw_fin_y` (the `fin_y_positions` JSON field) — a flat list of Y values with no X gating. Two same-type devices placed at separate X ranges that share fin tracks would both "own" all the fin tracks. `Device.bbox_nm` carries the X range (and `device_info.yaml`'s gate bbox does too), but the fin path doesn't consult it. `_device_for_shape` in `io_adapters/parser.py:156` already does the right geometric containment for OD and routing shapes — the fix is to put fin attribution through the same primitive.
+
+**Files to land.**
+
+  * **`tech/layer_map.yaml`** — mark FIN with `derived: true`. Tier stays A (the 1D fin-track grid is the right abstraction; only the *edit* status changes). The M6 decoder seam (`core/decoder.py:_reject_derived_edits`) will then refuse any macro-emitted `EditOp(layer='FIN')`, surfacing future violations loud.
+  * **`dummy/gen_buffer_layout.py:163-168`** — rewrite the FIN emission loop to draw stripes at every fin track across the full cell height, not per device:
+    ```python
+    # Sketch: enumerate the full fin-track grid; stamp one stripe per track.
+    fin_offset, n_tracks = _cell_fin_grid(cell_height, FIN_PITCH, FIN_OFFSET)
+    for k in range(n_tracks):
+        fy = fin_offset + k * FIN_PITCH
+        add_shape('FIN', 0, fy - hw, cell_width, fy + hw, desc=f'fin_track_{k}')
+    ```
+    The NMOS↔PMOS gap region now also carries FIN stripes; OD remains unchanged (still two blocks covering the device-local fin set).
+  * **`core/data_model.py`** — make `Device.fin_track_indices` a derived `@property` that consults the current shape pool + grid + the device's own `bbox_nm`. The stored attribute becomes a lazy view:
+    ```python
+    @property
+    def fin_track_indices(self) -> List[int]:
+        # Geometric: FIN tracks whose stripe center (x_center, y_center)
+        # falls inside this device's gate footprint.
+        return _fin_tracks_inside_device_bbox(self, shape_pool, fin_grid)
+    ```
+    The helper uses the same `_device_for_shape`-style center-containment primitive so X disambiguation is free.
+  * **Retire** `_raw_fin_y` and `fin_y_positions` from the parser path. (1.7 already pulls the JSON-side field out of `inputs:`; this milestone removes the model-side cache too.)
+  * **Delete** `core/solver.py:_emit_fin_removes` (`solver.py:479`), `core/atomic_ops.py:remove_fin_strip` (`atomic_ops.py:406`) and `core/atomic_ops.py:add_fin_strip` (`atomic_ops.py:375`), `core/decoder.py:_apply_fin_removes` (`decoder.py:165`), the `'FIN'` branches in `core/diff.py:EditOp.__repr__`. The `device_resize` macro's step list shrinks to `(OD modify) + (LI reshape) + (POLY modify-if-endpoint-moved) + (C1 derive)`.
+  * **Update derivator (optional, recommended).** Add `core/drc_derivator.py:_derive_fin_attribution` that walks the static FIN stripes and stamps each `ShapeRecord` with `device_id` derived from `FIN-stripe ∩ OD-shape ∩ Device.bbox_nm`. Lets downstream consumers (DRC localisation in M7, multi-cell parasitic extraction later) ask "whose fin is this?" without re-running geometry.
+  * **`io_adapters/parser.py:build_layout_model`** — drop the `dev._raw_fin_y` assignment branch; pass `shape_pool` to grid construction so `create_mvp_grid` can infer `fin_offset` from the static FIN stripe set rather than from a per-device list.
+  * **Tests.**
+    - Rebuild byte-golden fixtures (`tests/integration/test_dummy_roundtrip.py` will fail until regenerated — expected; commit the new fixtures with a change-note).
+    - `tests/unit/test_atomic_ops.py` — drop the fin-strip atomics' tests (the functions are gone).
+    - `tests/unit/test_solver.py` — change resize-result EditOp count assertions (no more `remove_shape FIN` records).
+    - **New** `tests/unit/test_fin_attribution.py` — multi-device-along-X synthetic fixture: place two NMOS at `bbox.x=[0,50]` and `[60,110]` on the same fin tracks; assert each device's `fin_track_indices` returns exactly the tracks geometrically contained in its own bbox.x — fail loud if the implementation regresses to Y-only attribution.
+  * **Output / reporting.**
+    - `output/resize_report.txt` no longer prints `REMOVE FIN ...` lines; update the report template + golden text.
+    - `output/buffer_resized.gds` FIN layer matches the input GDS FIN layer byte-for-byte (modulo precision); validates the "FIN is invariant under resize" claim.
+
+**Acceptance.**
+
+  * `nfin: 5→4` resize emits zero FIN EditOps; output GDS has identical FIN stripes to input.
+  * Output GDS opens in KLayout / Virtuoso with FIN stripes spanning the full cell (across the NMOS↔PMOS gap), visually indistinguishable from a re-run of the foundry PCell.
+  * Synthetic two-NMOS-along-X fixture: each device's `fin_track_indices` returns its own X-bounded fin subset; total cell-level fin track count is the union of both, with overlap counted once.
+  * `tech/layer_map.yaml`'s `is_derived` marker actively rejects a macro that tries to `EditOp(layer='FIN', ...)` (regression test).
+
+**Risks.**
+
+  * Byte-golden fixture churn. Mitigated by regenerating + committing new fixtures in the same PR; the new fixtures match production GDS more closely, so this is a one-time pay-down.
+  * The "geometric attribution" primitive must be performant on multi-cell layouts. The current shape pool walk is O(devices × fin shapes); when device counts grow, switch the helper to an interval-tree on `device_bbox.x`. M8 ships the O(n×m) version; a follow-up under "Performance & scalability" optimises.
+  * `Device.fin_track_indices` becoming property-derived means callers that cached the list now see live values. Audit `core/solver.py:apply_resize_to_model` (which currently slices `fin_track_indices[:new_nfin]`) — that line goes away with the static-backdrop model anyway (FIN doesn't change), but the surrounding state-update pattern needs a re-read.
+
+**Sequencing note.** Land **after** M7 sub-slice 1.7 (which retires `calibre_device_query.json` / `calibre_net_query.json` and forces `fin_y_positions` through a geometric derivation already). 1.7 decouples the LVS-input path from the per-device-fin model; M8 then deletes the per-device-fin model itself. Doing them in the reverse order requires touching the JSON loader twice.
+
+**Dependencies.** M3 (shape_pool primary), M4d (atomic_ops surface), M5 (derivator pattern), M6 (decoder rejection of derived edits), M7 sub-slice 1.7 (LVS-driven device construction).
+
+---
+
 ## Cross-cutting deferrals
 
 ### Derivator subscription model
