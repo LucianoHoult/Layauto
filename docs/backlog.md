@@ -215,6 +215,27 @@ The four middle files produced by Stage 1.5 — `output/ixref.yaml` (devices), `
 
 M5 ships single-cell semantics for NWELL / BOUNDARY (`y2 = topmost-fin + margin`). Multi-cell layouts where wells span outside a single cell will need a richer rule. Add when fixtures grow.
 
+### Universal `LayerGrid` offset derivation
+
+`core/grid.py::create_mvp_grid` and `io_adapters/parser.py:422-450` currently set each layer's offset by ad-hoc rules: FIN takes `nmos_fin_y[0]` literally (so track 0 == first NMOS fin); M1 takes `first_track_y % pitch` (residue class); POLY and LI are hardcoded to `0` because dummy track 0 happens to land at coord 0. The four cases collapse to one universal formula:
+
+```python
+offset = min(centers) % pitch        # centers = shape centers on this axis
+assert all((c - offset) % pitch == 0 for c in centers), \
+    f"{layer}: off-grid centers (offset={offset}, pitch={pitch})"
+```
+
+* **Why this form (not "offset = first center"):** the residue class is the global truth — two cells that share the same fin row must agree on the residue mod pitch, but they will *not* agree on "where the first occupied fin sits" once the cells are placed at different Y offsets in a global layout. The mod form is the one that survives multi-cell stitching; the residue is the invariant DRC / equivalence checks across cells will key off.
+* **What "centers" means per layer:** for H-tracks (FIN, M1) use shape `(y1+y2)//2`; for V-tracks (POLY, LI) use `(x1+x2)//2`. Both pull from `model.shape_pool` (already populated by the time `create_mvp_grid` runs).
+* **Validation, not silent inference.** The `assert` line is load-bearing — off-grid centers silently absorbed by `round()` in `physical_to_track` are how an upstream parser/LVS bug becomes a downstream byte-golden mystery. Surface loud at grid construction; the M3 conservative-defaults rule (§D) covers this case too.
+* **Empty-sample policy.** No centers on a layer → raise, do not fall back to a magic number. Today's `nmos_fin_y[0] if nmos_fin_y else 40` and `m1_offset = M1_PITCH // 2` defaults are dummy artefacts; production should require at least one sample (the cell-row template guarantees it).
+* **Files to land.**
+  * `core/grid.py::create_mvp_grid` — refactor signature from `(config, nmos_fin_y, pmos_fin_y, m1_tracks_y)` to `(config, shape_pool)`. Internally compute offsets per A-tier layer via the formula.
+  * `io_adapters/parser.py:422-450` — collapse the four `nmos_fin_y / pmos_fin_y / m1_tracks_y / _raw_fin_y` plumbing into `grid = create_mvp_grid(config, shape_pool)`. Removes the dict-with-only-`min`-used `m1_tracks_y` artefact.
+  * `tests/unit/test_grid.py` — add cases: off-grid drift (must raise), single-sample (must succeed), negative coords (Python mod handles), multi-cell-equivalent (two simulated cell-local center sets must produce equal offsets).
+* **Sequencing.** Implementable *today* — `shape_pool` is already populated before the offset-extraction step runs (`parser.py:418-419`). Lands cleanly **before** M7-1.7 (1.7 then doesn't need to keep the per-device `_raw_fin_y` plumbing alive) and **before** M8 (M8's "NMOS/PMOS fin bucket" deletion is a no-op once offsets stop caring about device type). Doing this first removes the FIN-as-edited-layer assumption from one more call site.
+* **Out of scope.** Per-layer offset *overrides* in `site_config.yaml` for cells whose first shape isn't representative (e.g., dummy-padded rows). Add a `tech.grid_offset_overrides: {layer: nm}` knob if a fixture ever needs it; today none does.
+
 ### Derived-marker layers without geometry yet
 
 `tech/layer_map.yaml` declares `VT`, `PP`, `NP`, `DNW` as `tier: C1` + `derived: true`, but no fixture emits them. The derivator's `_derive_*` shape mirrors `_derive_nwell` — adding any of these is one new helper plus a config entry under `tech/drc_rules.yaml::extension`. Activates when a fixture needs them.
