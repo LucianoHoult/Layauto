@@ -135,14 +135,19 @@ A path-aware union-find (or a fully recomputed component on each split) is neede
 
 The M3 `(layer, bbox_nm)` overlay key works because the dummy generator's GDS shapes and the dummy LVS shapes share an exact bbox-tuple representation. Production LVS geometry can drift sub-nm. M7 will need a tolerance / containment match in `apply_lvs_overlay`.
 
-### Slice 1.6b: cutover from legacy `apply_lvs_overlay`
+### Slice 1.6b: net-source cutover — DONE (2026-05-19), with residual cleanup
 
-Slice 1.6 (2026-05-07) added the per-cell `apply_calibre_layer_overlay` pass alongside the legacy `apply_lvs_overlay` for safety. To complete the replacement:
-- Delete `apply_lvs_overlay`, `_device_pin_lookup`, `_device_for_shape`, `_device_bbox_overlaps_shape`, `_device_bbox_contains_point` from `io_adapters/parser.py`.
-- Delete `parse_calibre_device_query` + `parse_calibre_net_query` and the matching `dummy/fixtures/calibre_{device,net}_query.json` + generators.
-- Switch the parser's TrackSegment construction loop to source net membership from `net_shapes.yaml` instead of `calibre_net_query.json`.
-- Switch `core/solver.py::project_unannotated_blockages` and `core/data_model.py::LayoutModel.annotation_coverage` to grid-cell-level predicates (today they read `ShapeRecord.is_annotated`).
-- Parity gate: the existing `test_apply_overlay_on_live_buffer_fixture_no_conflicts` covers the no-conflict case; before deletion add a parity script that diffs per-cell `(net_id, device_id)` between the two paths on the buffer fixture and asserts zero divergences.
+**Landed:** the production pipeline now sources net data from `net_shapes.yaml` via `io_adapters/parser.py::net_data_from_net_shapes` (preferred over the legacy `calibre_net_query.json`, which remains a unit-test fallback). All four golden artifacts stayed byte-identical (`net_data_from_net_shapes` verified shape- and pin-equivalent to `calibre_net_query.json`; the LI-resize `desc` label is reconstructed in `core/solver.py` so `resize_report.txt` is unchanged). `NET_SHAPES_LAYERS` gained `POLY` so the gate net is complete. The integration round-trip test runs on the `net_shapes` source.
+
+**Deliberately kept** (revised from the original plan): `apply_lvs_overlay` is **not** deleted — it's the generic `(layer, bbox)` net-annotation stamper, and it works against `net_shapes`-derived data because `net_shapes` carries exact bboxes (the original "no exact bbox available" premise doesn't hold for our middle files). `_device_for_shape` + the `_device_bbox_*` helpers stay too — they do **device-bbox ownership** (which device a shape belongs to), a device-geometry concern load-bearing for the solver's LI S/D resize (`seg.shape_record.device_id`), independent of LVS net annotation.
+
+**Residual cleanup (separable, no production impact):**
+- Migrate the ~14 unit-test `build_layout_model(net_query_path=…calibre_net_query.json)` call sites to `net_shapes_yaml_path=…net_shapes.yaml`, then physically delete `parse_calibre_net_query`, `generate_calibre_net_query`, and `dummy/fixtures/calibre_net_query.json`. Each test's assertions must be re-checked (a few assert on net membership / descs), so it's mechanical-but-not-blind.
+- Optionally switch `core/solver.py::project_unannotated_blockages` + `core/data_model.py::LayoutModel.annotation_coverage` to grid-cell-level predicates (today they read `ShapeRecord.is_annotated`, which the overlay's consensus summary still populates — so they work as-is).
+
+### Slice 1.6c: GDS-sourced device geometry
+
+`build_layout_model` still reads device geometry (fin positions, gate_x, bbox) from `calibre_device_query.json`. The GDS (`bbox_by_layer.json`) is the true ground truth and should be parsed once. Blocker found in 1.6b: GDS FIN-shape centers differ from the device-query positions by 1 nm (a 7 nm fin centered at 40 → int bbox `(36,43)` → center 39), so a drop-in switch shifts the grid by 1 nm and changes `buffer_resized` geometry. Fix the dummy FIN generator to emit clean integer-aligned centers first (so GDS center == device-query position), then source fin positions from `bbox_by_layer` FIN shapes grouped per device via `device_info.yaml` gate-region containment; gate_x from the active POLY shape; nfin from CDL. Then `calibre_device_query.json` + `parse_calibre_device_query` can be deleted.
 
 ### iXref / net_xref / device_info / net_shapes / layer-map consumption (next)
 

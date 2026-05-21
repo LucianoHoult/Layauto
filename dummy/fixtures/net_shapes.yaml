@@ -3,6 +3,13 @@ nets:
   lvs_name: IN
   schematic_name: IN
   layers:
+  - name: POLY
+    shapes:
+    - bbox_um:
+        x1: 0.044
+        y1: 0.015
+        x2: 0.064
+        y2: 0.415
   - name: LI
     shapes:
     - bbox_um:

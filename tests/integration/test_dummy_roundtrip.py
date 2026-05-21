@@ -39,13 +39,16 @@ def test_full_roundtrip():
     config = load_tech_config()
     nmos_nfin, pmos_nfin, nmos_nfin_target, pmos_nfin_target = _get_nfin_values()
 
-    # Stage 2: Parse
+    # Stage 2: Parse. Slice 1.6b: source net data from net_shapes.yaml
+    # (the production cutover path) rather than the legacy dummy
+    # calibre_net_query.json.
     model, grid = build_layout_model(
         device_query_path=os.path.join(FIXTURE_DIR, 'calibre_device_query.json'),
-        net_query_path=os.path.join(FIXTURE_DIR, 'calibre_net_query.json'),
+        net_query_path=None,
         bbox_path=os.path.join(FIXTURE_DIR, 'bbox_by_layer.json'),
         layout_json_path=os.path.join(FIXTURE_DIR, 'buffer_original.json'),
         config=config,
+        net_shapes_yaml_path=os.path.join(FIXTURE_DIR, 'net_shapes.yaml'),
     )
     assert model.cell_name == f'INV_N{nmos_nfin}_P{pmos_nfin}'
 

@@ -677,6 +677,38 @@ def test_apply_overlay_translates_layout_inst_via_ixref(tmp_path):
     assert sr.device_id == 'MN0'
 
 
+def test_net_data_from_net_shapes_matches_legacy_query(fixture_dir):
+    """Slice 1.6b: the net_shapes-sourced net_data must carry the same
+    shapes (layer + nm bbox) and reconstructed pins as the legacy
+    calibre_net_query.json, so the production net-source cutover is
+    byte-golden-safe."""
+    import json
+    from io_adapters.parser import (
+        parse_calibre_device_query, net_data_from_net_shapes,
+    )
+    devices = parse_calibre_device_query(
+        os.path.join(fixture_dir, 'calibre_device_query.json'))
+    new = net_data_from_net_shapes(
+        os.path.join(fixture_dir, 'net_shapes.yaml'), devices)
+    legacy = json.load(
+        open(os.path.join(fixture_dir, 'calibre_net_query.json')))
+
+    assert set(new) == set(legacy)
+    for net_name in legacy:
+        # Same shape geometry (layer + integer-nm bbox), order-insensitive.
+        def key(s):
+            return (s['layer'], s['x1'], s['y1'], s['x2'], s['y2'])
+        new_shapes = {key(s) for s in new[net_name]['shapes']}
+        legacy_shapes = {key(s) for s in legacy[net_name]['shapes']}
+        assert new_shapes == legacy_shapes, (
+            f"{net_name}: net_shapes geometry != legacy net_query")
+        # Same pins (reconstructed from device pin maps).
+        assert (sorted(tuple(p) for p in new[net_name]['pins'])
+                == sorted(tuple(p) for p in legacy[net_name]['pins']))
+        # Same net type heuristic.
+        assert new[net_name]['type'] == legacy[net_name]['type']
+
+
 def test_apply_overlay_on_live_buffer_fixture_no_conflicts(fixture_dir):
     """Run the real overlay against the live buffer fixture + the
     committed device_info.yaml / net_shapes.yaml. Must not raise."""

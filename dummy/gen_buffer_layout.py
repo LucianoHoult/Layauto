@@ -676,10 +676,12 @@ def generate_calibre_device_info(layout_data: dict,
 
 # Layers reported by the dummy ``NET SHAPES`` query, in the order
 # Calibre would emit them. GDS layer names are reused per the user's
-# 1.5 spec: "LVS-derived-shape layer names can be kept the same with
-# gds … only contain the actual/effective region". Layer-name mapping
-# / cut+extension trimming will be addressed in 1.6.
-NET_SHAPES_LAYERS = ['LI', 'VIA0', 'M1']
+# 1.5 spec. Slice 1.6b adds POLY: the whole gate strip carries its
+# connected net id (per the user's note "the whole gate strip if not
+# cutted is marked with its connected net id"), so the gate net (IN)
+# needs its POLY shape in net_shapes for the build_layout_model net
+# source-cutover (net_shapes.yaml replaces calibre_net_query.json).
+NET_SHAPES_LAYERS = ['POLY', 'LI', 'VIA0', 'M1']
 
 
 def generate_calibre_net_shapes(layout_data: dict,

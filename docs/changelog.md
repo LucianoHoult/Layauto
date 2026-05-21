@@ -4,7 +4,30 @@
 
 **Format.** One block per shipped milestone or sub-milestone. Each block carries: date / branch / what shipped / files touched / acceptance evidence / notes.
 
-**Test-count series** (cumulative): M0 33 → M1 38 → M2 50 → M3 65 → M4a 81+4 → M4b 119 → M4c 134 → M4d 155 → M4e 174 → M5 187 → M6a 201 → M6b 214 (+ config-consolidation: no test delta) → iXref 243 → nXref+NET-NAMES 284 → DEVICE-INFO 316 → NET-SHAPES 344 → CALIBRE-LAYER-MAP 362.
+**Test-count series** (cumulative): M0 33 → M1 38 → M2 50 → M3 65 → M4a 81+4 → M4b 119 → M4c 134 → M4d 155 → M4e 174 → M5 187 → M6a 201 → M6b 214 (+ config-consolidation: no test delta) → iXref 243 → nXref+NET-NAMES 284 → DEVICE-INFO 316 → NET-SHAPES 344 → CALIBRE-LAYER-MAP 362 → net-source-cutover 389 (1 skipped, matplotlib-gated).
+
+---
+
+## 2026-05-19 — Slice 1.6b: production net-source cutover (net_shapes.yaml)
+
+**Branch:** `claude/refine-test-fixtures-nIkdZ`
+
+The production pipeline now sources per-net routing/gate shapes from `net_shapes.yaml` (the real-Calibre-derived middle file) instead of the legacy dummy `calibre_net_query.json`. **All four golden artifacts stay byte-identical** — the cutover is geometry-clean.
+
+What changed:
+- **New `io_adapters/parser.py::net_data_from_net_shapes(net_shapes_yaml, devices)`** — builds the `net_data` dict (the shape `apply_lvs_overlay` + the segment builder consume) from `net_shapes.yaml`: shapes µm→nm (round-trips to exact integers for GDS-aligned routing/gate shapes), `pins` reconstructed by inverting `Device.pins` (`{role: net}` → `net → [(inst, role)]`), `type` heuristic (power for VDD/VSS). `desc` is empty — real Calibre NET SHAPES emits no debug labels.
+- **`build_layout_model`** — net source selection: `net_shapes_yaml_path` (production) is preferred; `net_query_path` (legacy dummy) is the fallback for unit tests that pass it directly. `net_query_path` / `bbox_path` are now keyword-optional; a clear `ValueError` fires if no net source is given.
+- **`dummy/gen_buffer_layout.py`** — `NET_SHAPES_LAYERS` gains `POLY`, so the gate net (IN) carries its whole-strip POLY shape in `net_shapes` (per the user's note "the whole gate strip if not cutted is marked with its connected net id"). Regenerated `net_shapes_*.txt` + `net_shapes.yaml`.
+- **`core/solver.py::_reshape_li_sd_bars`** — the LI-resize EditOp `desc` now reconstructs the `li_<dtype>_<source|drain>` label from `device.dev_type` + the pin role when the segment carries no `desc` (net_shapes has none). This keeps `resize_report.txt` byte-identical to the pre-cutover run.
+- **`tests/integration/test_dummy_roundtrip.py`** — migrated to the `net_shapes.yaml` source (exercises the production cutover path end-to-end).
+
+**Kept (not deleted):** `apply_lvs_overlay` remains the net-annotation stamper — its `(layer, bbox)` exact-match works against `net_shapes`-derived data because `net_shapes` provides exact bboxes (contrary to the original "no exact bbox" premise for the cutover, our middle files *do* carry exact geometry). `parse_calibre_net_query` + `calibre_net_query.json` are retained as the unit-test fallback fixture; physically deleting them requires migrating ~14 unit-test call sites and is a separable cleanup (see backlog).
+
+**Device geometry** (fin positions, gate_x, bbox) still comes from `calibre_device_query.json`. Verified that GDS FIN centers (`bbox_by_layer.json`) differ from the device-query positions by 1 nm (a 7 nm fin centered at 40 → int bbox `(36,43)` → center 39), so GDS-sourcing device geometry is *not* a drop-in — it needs the dummy FIN generator's center-rounding fixed first. Captured as the next slice in backlog.
+
+**Acceptance.** Pytest 389/389 (+1 skipped matplotlib-gated) — 366 pre + adapter-parity test + others. Byte-golden `buffer_resized.{json,cdl}` / `resize_report.txt` / `annotation_coverage.txt` md5-identical to the CALIBRE-LAYER-MAP baseline. `net_data_from_net_shapes` verified shape-for-shape + pin-for-pin against `calibre_net_query.json` (`test_net_data_from_net_shapes_matches_legacy_query`).
+
+---
 
 ---
 

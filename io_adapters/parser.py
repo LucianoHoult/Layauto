@@ -70,12 +70,73 @@ def parse_calibre_device_query(filepath: str) -> List[Device]:
 def parse_calibre_net_query(filepath: str) -> Dict[str, dict]:
     """
     Parse Calibre net query JSON into raw net data.
-    
+
     Returns dict of net_name -> {type, pins, shapes}
     where shapes = [{layer, x1, y1, x2, y2, desc}, ...]
+
+    Legacy dummy source. Slice 1.6b: the production pipeline now sources
+    net data from ``net_shapes.yaml`` via :func:`net_data_from_net_shapes`;
+    this parser is retained as a fallback for unit tests that pass a
+    ``net_query_path`` directly and as the tested JSON parser.
     """
     with open(filepath, encoding='utf-8') as f:
         return json.load(f)
+
+
+def net_data_from_net_shapes(net_shapes_yaml_path: str,
+                             devices: List[Device]) -> Dict[str, dict]:
+    """Build the ``net_data`` dict (legacy calibre_net_query shape) from a
+    parsed ``net_shapes.yaml`` + device pin maps.
+
+    Slice 1.6b cutover: ``net_shapes.yaml`` is the real-Calibre-derived
+    middle file (per-net routing/gate shapes in µm). It carries layer +
+    bbox but **not** net ``type``, ``pins``, or per-shape ``desc`` (real
+    Calibre NET SHAPES emits none of those). We reconstruct:
+
+      * ``shapes`` — from net_shapes layers, µm → nm (round-trips to
+        exact integers for the GDS-aligned routing/gate shapes).
+        ``desc`` is left empty (the descriptive labels were a dummy-
+        generator artifact; they don't exist in real Calibre output).
+      * ``pins`` — inverted from ``Device.pins`` (``{role: net}`` →
+        ``net -> [(inst, role), ...]``), iterating devices in order so
+        the pin list matches the legacy ordering (S before B, etc.).
+      * ``type`` — ``power`` for VDD / VSS, else ``signal`` (heuristic;
+        net_type is display-only, not consumed by the resize).
+
+    Returns the same shape ``apply_lvs_overlay`` + the segment builder
+    consume, so the downstream pipeline is unchanged.
+    """
+    import yaml
+    with open(net_shapes_yaml_path, encoding='utf-8') as f:
+        data = yaml.safe_load(f) or {}
+
+    pins_by_net: Dict[str, list] = {}
+    for dev in devices:
+        for role, net_name in dev.pins.items():
+            pins_by_net.setdefault(net_name, []).append(
+                (dev.inst_name, role))
+
+    net_data: Dict[str, dict] = {}
+    for net in data.get('nets', []):
+        net_name = net.get('schematic_name') or net.get('lvs_name')
+        shapes = []
+        for layer in net.get('layers', []):
+            for sh in layer.get('shapes', []):
+                b = sh['bbox_um']
+                shapes.append({
+                    'layer': layer['name'],
+                    'x1': int(round(b['x1'] * 1000)),
+                    'y1': int(round(b['y1'] * 1000)),
+                    'x2': int(round(b['x2'] * 1000)),
+                    'y2': int(round(b['y2'] * 1000)),
+                    'desc': '',
+                })
+        net_data[net_name] = {
+            'type': 'power' if net_name in ('VDD', 'VSS') else 'signal',
+            'pins': pins_by_net.get(net_name, []),
+            'shapes': shapes,
+        }
+    return net_data
 
 
 def parse_bbox_by_layer(filepath: str) -> Dict[str, List[dict]]:
@@ -386,8 +447,8 @@ def project_b_tier_shapes(model: LayoutModel,
 
 
 def build_layout_model(device_query_path: str,
-                       net_query_path: str,
-                       bbox_path: str,
+                       net_query_path: str = None,
+                       bbox_path: str = None,
                        layout_json_path: str = None,
                        config=None,
                        device_info_yaml_path: str = None,
@@ -416,7 +477,20 @@ def build_layout_model(device_query_path: str,
 
     # --- Parse raw data ---
     devices = parse_calibre_device_query(device_query_path)
-    net_data = parse_calibre_net_query(net_query_path)
+    # Slice 1.6b net-source cutover: the production pipeline passes
+    # ``net_shapes_yaml_path`` (the real-Calibre-derived middle file),
+    # which becomes the authoritative net source. ``net_query_path``
+    # (the legacy dummy calibre_net_query.json) is retained as a
+    # fallback for unit tests that pass it directly.
+    if net_shapes_yaml_path and os.path.exists(net_shapes_yaml_path):
+        net_data = net_data_from_net_shapes(net_shapes_yaml_path, devices)
+    elif net_query_path:
+        net_data = parse_calibre_net_query(net_query_path)
+    else:
+        raise ValueError(
+            "build_layout_model needs a net source: pass "
+            "net_shapes_yaml_path (production) or net_query_path (legacy)"
+        )
     bbox_data = parse_bbox_by_layer(bbox_path)
 
     # --- M3: build geometric shape_pool first (GDS truth) ---

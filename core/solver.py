@@ -646,12 +646,31 @@ class LayoutSolver:
                 # generator first produced the shape.
                 new_bbox = (old_x1, old_y1, old_x2, int(new_y_max))
 
+                # Slice 1.6b: net_shapes.yaml (the production net source)
+                # carries no debug ``desc`` — real Calibre NET SHAPES
+                # emits none. Reconstruct the dummy generator's stable
+                # ``li_<dtype>_<source|drain>`` label from the device +
+                # pin role so the resize report stays meaningful (and
+                # byte-identical to the pre-cutover legacy-net-query run).
+                base_desc = seg.desc
+                if not base_desc:
+                    roles = [r for r, n in device.pins.items()
+                             if n == net_name]
+                    if 'S' in roles:
+                        sd_word = 'source'
+                    elif 'D' in roles:
+                        sd_word = 'drain'
+                    else:
+                        sd_word = 'sd'
+                    base_desc = (f'{seg.layer.lower()}_'
+                                 f'{device.dev_type}_{sd_word}')
+
                 edit_ops.append(EditOp(
                     'modify_shape', 'LI',
                     old_bbox=old_bbox,
                     new_bbox=new_bbox,
                     net_id=net_name,
-                    desc=f'{seg.desc}_resize',
+                    desc=f'{base_desc}_resize',
                 ))
 
                 new_segments.setdefault(net_name, []).append(TrackSegment(
@@ -662,7 +681,7 @@ class LayoutSolver:
                     net_id=seg.net_id,
                     start_offset_nm=seg.start_offset_nm,
                     end_offset_nm=new_end_offset,
-                    desc=seg.desc + '_resized',
+                    desc=base_desc + '_resized',
                     bbox_nm=new_bbox,
                 ))
 
