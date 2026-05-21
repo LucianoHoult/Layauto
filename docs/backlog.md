@@ -102,6 +102,7 @@ All four run from `io_adapters/calibre_query.py`'s Stage 1.5 with `mode={dummy,c
     - **Tests.** Unit-tests for each helper against the existing dummy fixtures — `reconstruct_device_pins(MN0)` must produce `{G:IN, D:OUT, S:VSS, B:VSS}` byte-equal to today's `calibre_device_query.json`. Integration test: byte-golden equivalence of the v2 pipeline output against `output/buffer_resized.gds`.
   * **Site-config impact.** `inputs.device_query` / `inputs.net_query` retired; `inputs.{ixref,net_xref,device_info,net_shapes}_yaml` (already present) become required for the v2 path. Add `format.parser_path: legacy | v2` flag for the transition window.
   * **Coordinate with sub-slice 1.6.** `apply_lvs_overlay_v2`'s layer-name translation depends on 1.6's `lvs_layer_map.yaml`. Landing 1.7 ahead of 1.6 means an in-line minimal map (`{ngate_lvt, pgate_lvt, ngate_*, pgate_*} → POLY`, `{nsd, psd} → OD`, identity otherwise) that 1.6 deletes — acceptable, just keep the call site singular.
+  * **Depends on M9 for segment construction.** Today `Net.segments` / `Net.vias` are built by iterating `net_data['shapes']` (the net-query JSON), so 1.7 cannot simply delete `calibre_net_query.json` without first inverting segment/via construction to read the annotated `shape_pool` instead. That inversion is M9's job. Land M9 first (or fold the segment-inversion part of M9 into 1.7); `build_layout_model_v2` then groups A-tier segments by `ShapeRecord.net_id` rather than from `net_data`.
   * **Out of scope.** Multi-Vt fixtures, SDT / LIG, multi-finger devices — 1.7 lands the seam against the current single-cell fixture; richer LVS-layer set lands as fixtures grow (and forces 1.6 to materialise).
 
 **Acceptance.** Real PDK environment: buffer resize → SKILL load → DRC clean → LVS match. Inject a violating edit → DRC fail localizes to the responsible L2 op.
@@ -172,6 +173,68 @@ All four run from `io_adapters/calibre_query.py`'s Stage 1.5 with `mode={dummy,c
 **Sequencing note.** Land **after** M7 sub-slice 1.7 (which retires `calibre_device_query.json` / `calibre_net_query.json` and forces `fin_y_positions` through a geometric derivation already). 1.7 decouples the LVS-input path from the per-device-fin model; M8 then deletes the per-device-fin model itself. Doing them in the reverse order requires touching the JSON loader twice.
 
 **Dependencies.** M3 (shape_pool primary), M4d (atomic_ops surface), M5 (derivator pattern), M6 (decoder rejection of derived edits), M7 sub-slice 1.7 (LVS-driven device construction).
+
+---
+
+## M9 — Stage 2 normalization: shape_pool single-source, Device/Net as pure semantic IR
+
+**Goal.** Finish the M3 inversion and de-duplicate the Stage 2 object graph. Today `build_layout_model` produces, for a single physical via, up to **six** representations (one `ShapeRecord`, one `ViaInstance`, one `CellOccupancy`, plus three CSP engine cells); and `Device` / `Net` carry denormalized copies of geometry that the annotated `shape_pool` already holds. M9 collapses Stage 2 to one geometric source (`shape_pool` + LVS overlay) and one semantic source (`Device` / `Net` as pure CDL IR), bound by `net_id` / `device_id` / `pin_role` foreign keys.
+
+**Motivation — the representation matrix.** After Stage 2 today (`✓` = a working representation exists):
+
+| Layer | tier | shape_pool | TrackSegment | ViaInstance | CellOccupancy | CSP engine cells |
+|-------|------|:---:|:---:|:---:|:---:|:---|
+| FIN | A | ✓ | ✗ | ✗ | ✗ | — |
+| POLY | A | ✓ | ✗ | ✗ | ✗ | — |
+| LI | A | ✓ | ✓ | ✗ | ✗ | WIRE |
+| M1 | A | ✓ | ✓ | ✗ | ✗ | WIRE |
+| OD | B | ✓ | ✗ | ✗ | ✓ | DEVICE_DIFF |
+| **VIA0** | B | ✓ | ✗ | **✓** | **✓** | **VIA + LI-WIRE + M1-WIRE** |
+
+VIA0 is the only layer with four working representations — the visible symptom. The root cause is **stacked migrations that never retired their predecessors**:
+- M2: net-primary parser; vias modelled as WIRE cells on LI/M1; A-tier only.
+- M3: added `shape_pool` as geometric truth + LVS overlay — but inverted **only the geometry pass**; segment/via construction still iterates `net_data['shapes']` (`io_adapters/parser.py:468`) and merely back-references `shape_pool` via `pool_by_key`.
+- M4/M4e: added B-tier `CellOccupancy` (OD/VIA0) + a second engine-load path (`load_b_tier_cells_into_engine`), without removing the M2 via-as-WIRE path.
+
+**Two distinct redundancy classes (only the second is in scope).**
+- *Defensible (keep):* `ShapeRecord` (physical-nm geometry) ↔ `TrackSegment` (track-index working repr) — different abstraction levels bound by `shape_record`; and A-tier-1D ↔ B-tier-2D — physically motivated.
+- *Genuine (remove):* (1) `ViaInstance` ↔ `CellOccupancy(VIA0)` — both are the via's working form, and `ViaInstance`'s only real consumer (`core/solver.py:_reshape_li_sd_bars:609-616` via-coverage query) is fully answerable from `b_tier_cells['VIA0']` since VIA0's axes are `(LI, M1)`. (2) via-as-LI/M1-WIRE (`load_existing_layout:284-313`) ↔ the LI/M1 segment's own cell stamping — the existing `if cell.is_assigned and ... continue` guard proves the overlap. (3) The net-loop reading `net_data` vs `project_b_tier_shapes` reading `shape_pool` — two passes over two possibly-drifting sources for the same VIA0 geometry, with no reconciliation.
+
+**Device / Net are NOT redundant — they are the semantic-truth IR.** What an annotated `shape_pool` cannot recover: device parameters absent from geometry (`l` / `w` / `nf`), the circuit topology (which devices sit on a net; nets with no shapes), and the resize macro's operand identity (`resize_device('MN0', ...)` needs a `Device('MN0')` to point at). So M9 **keeps** `Device` / `Net` but **slims them to pure semantic fields**, demoting the denormalized geometry to derived views:
+
+| Field | Class | After M9 |
+|-------|-------|----------|
+| `Device.{inst_name, dev_type, nfin, nf, pins}` | semantic (CDL) | stored |
+| `Device.bbox_nm` | LVS anchor (device_info gate bbox) | stored (breaks the stamping cycle — see below) |
+| `Device.gate_track_idx` | geometric | `@property` over shape_pool |
+| `Device.fin_track_indices` | geometric | `@property` over shape_pool (also M8) |
+| `Net.{name, net_type, pins}` | semantic (CDL) | stored |
+| `Net.segments` | geometric working repr | view over annotated A-tier `shape_pool` |
+| `Net.vias` | geometric working repr | view over `b_tier_cells['VIA0']` (or thin shim type) |
+
+**Acyclicity.** `Device.bbox_nm` stays a stored field sourced from `device_info.yaml`'s gate bbox (an LVS *input*), not derived from the GDS pool. Dependency order is acyclic: `device_info.yaml → Device.bbox_nm → (geometric containment) → stamp device_id on shape_pool → derive fin/gate/segments/vias as views`.
+
+**Files to land.**
+- `io_adapters/parser.py` — replace the net-primary segment/via loop (`:468-516`) with a **single tier-dispatch pass over `shape_pool`**: for each `ShapeRecord`, switch on `tier_of(sr.layer)` → A-tier LI/M1 become `TrackSegment` grouped into `nets[sr.net_id]`; B-tier OD/VIA0/cuts become `CellOccupancy`; FIN/POLY stay pool-only; C1/C2 untouched. Deterministic order via a stable `sorted(shape_pool, key=(layer, bbox))`. Merge `project_b_tier_shapes` into this pass.
+- `core/data_model.py` — demote `Device.{gate_track_idx, fin_track_indices}` and `Net.{segments, vias}` to derived properties / views; keep the semantic fields stored. Decide `ViaInstance`: delete in favour of direct `b_tier_cells['VIA0']` queries, **or** keep as a thin read-only view type for solver API compatibility (recommended first step — smaller blast radius).
+- `core/solver.py` — `load_existing_layout` drops the via-as-LI/M1-WIRE block (segment stamping covers it); `_reshape_li_sd_bars` queries `b_tier_cells['VIA0']` instead of `net.vias`; `apply_resize_to_model` stops mutating `Net.segments` directly (it mutates `shape_pool`; the view reflects it).
+- `core/macros/pick_macro.py` / `resize_device` — unaffected (operate on `Device` semantic identity).
+- Tests — `tests/unit/test_parser_tier_dispatch.py` extends to assert one-pass dispatch; `test_solver.py` via-coverage assertions re-pointed at `b_tier_cells`; a new test asserts no object-count regression (one via → one ShapeRecord + one CellOccupancy, zero ViaInstance if deleted).
+
+**Acceptance.**
+- One physical via yields exactly one geometric record (`ShapeRecord`) + one working record (`CellOccupancy(VIA0)`); `ViaInstance` is either gone or a zero-storage view.
+- `Device` / `Net` carry no stored geometry beyond `Device.bbox_nm`; `Net.segments` / `vias` and `Device.fin_track_indices` / `gate_track_idx` return live views over `shape_pool` / `b_tier_cells`.
+- Segment/via construction reads `shape_pool` (grouped by `net_id`), not `net_data` — which unblocks 1.7's retirement of `calibre_net_query.json`.
+- Byte-golden pipeline output unchanged (the determinism sort preserves emission order).
+
+**Risks.**
+- Byte-golden emission order: iterating `shape_pool` vs `net_data` changes traversal order; the stable sort is load-bearing — pin it and snapshot-test it.
+- Solver currently mutates `Net.segments` during resize; converting to a view means the mutation must move to `shape_pool`. Audit every `net.segments[...] =` / `.append` site (`core/solver.py:apply_resize_to_model:742-754`) before flipping.
+- View recompute cost: lazy views recompute per access. Trivial at one-cell scale; memoize-with-invalidation later (mirrors the "Derivator subscription model" deferral). Don't pre-optimize.
+
+**Sequencing.** Land **before** M7 sub-slice 1.7 (1.7's `calibre_net_query.json` retirement depends on segment construction reading `shape_pool`). Composes cleanly with M8 (both make `Device` geometry derived) — do M9's `Device`/`Net` slimming and M8's `fin_track_indices` property in the same pass if scheduled together.
+
+**Dependencies.** M3 (shape_pool + LVS overlay), M4e (b_tier_cells engine-load), M6 (decoder is L1-only, so removing working-repr duplication doesn't disturb writeback).
 
 ---
 
