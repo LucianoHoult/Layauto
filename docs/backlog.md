@@ -214,25 +214,47 @@ VIA0 is the only layer with four working representations — the visible symptom
 
 **Acyclicity.** `Device.bbox_nm` stays a stored field sourced from `device_info.yaml`'s gate bbox (an LVS *input*), not derived from the GDS pool. Dependency order is acyclic: `device_info.yaml → Device.bbox_nm → (geometric containment) → stamp device_id on shape_pool → derive fin/gate/segments/vias as views`.
 
+**State ownership: `grid` is a coordinate system, `model` is the state container.** A second asymmetry M9 must fix (same root cause as the via): A-tier working repr (`TrackSegment`) lives on `model.nets[].segments`, but B-tier working repr (`CellOccupancy`) lives on **`grid.b_tier_cells`**. So `MultiLayerGrid` currently carries *two* responsibilities — coordinate-system definition (pitch / offset / axes / physical↔track transforms) **and** layout state (`b_tier_cells`). The normalization target is a clean split:
+- `grid` = pure coordinate system; holds `b_tier_axes` (axis *definitions* are coordinate-system data) but **not** occupancy. Independently testable / swappable.
+- `model` = the single layout-state container (geometry `shape_pool` + semantic `Device`/`Net` + derived working views, A-tier *and* B-tier symmetric).
+
+Resolution, staged:
+- **Stage A (relocate):** move `b_tier_cells` storage off `grid` onto `model` (or a `model`-held occupancy store). `grid` keeps only `b_tier_axes`. A-tier and B-tier working state now co-locate on `model`.
+- **Stage B (derive):** make `b_tier_cells` a derived view over (`shape_pool` B-tier records + grid axes + device bboxes), symmetric with `Net.segments`. `owner_device_id` / `shared_with` are already computed by `_device_for_shape`; the only blocker is that `atomic_ops.extend_od` / `mark_shared_diffusion` mutate cells incrementally — under M9's philosophy those mutations move to `shape_pool` and the view re-derives. Ship A first (smaller blast radius), B when the incremental-mutation audit is done.
+
+**`project_b_tier_shapes` is three phases, not one merge.** `io_adapters/parser.py:305-385` reads `model.shape_pool` and writes `grid.b_tier_cells` — that cross-object write is exactly the ownership violation above. Decompose, don't inline-collapse:
+
+| Phase | Today (`parser.py`) | Lands in |
+|-------|--------------------|----------|
+| 1. register axes | `:330-342` walk `_B_TIER_AXIS_DEFAULTS` → `grid.register_b_tier_axes` | **grid setup** (coordinate-system data; runs before content traversal; stays on `grid`) |
+| 2. project cells | `:344-363` per B-tier `ShapeRecord` → `bbox_to_b_tier_cells` → `set_b_tier_cell`, owner via `_device_for_shape` | **B-tier branch of the single tier-dispatch pass** (writes `model`-side store) |
+| 3. diffusion sharing | `:365-384` walk OD shapes, sibling-bbox overlap → `add_sharer` | **post-pass** (depends on phase 2 fully stamped — must stay a separate sweep, not fused into phase 2) |
+
+After the split the cross-object read/write disappears: phase 1 is grid-only, phases 2–3 are model-only.
+
 **Files to land.**
-- `io_adapters/parser.py` — replace the net-primary segment/via loop (`:468-516`) with a **single tier-dispatch pass over `shape_pool`**: for each `ShapeRecord`, switch on `tier_of(sr.layer)` → A-tier LI/M1 become `TrackSegment` grouped into `nets[sr.net_id]`; B-tier OD/VIA0/cuts become `CellOccupancy`; FIN/POLY stay pool-only; C1/C2 untouched. Deterministic order via a stable `sorted(shape_pool, key=(layer, bbox))`. Merge `project_b_tier_shapes` into this pass.
-- `core/data_model.py` — demote `Device.{gate_track_idx, fin_track_indices}` and `Net.{segments, vias}` to derived properties / views; keep the semantic fields stored. Decide `ViaInstance`: delete in favour of direct `b_tier_cells['VIA0']` queries, **or** keep as a thin read-only view type for solver API compatibility (recommended first step — smaller blast radius).
-- `core/solver.py` — `load_existing_layout` drops the via-as-LI/M1-WIRE block (segment stamping covers it); `_reshape_li_sd_bars` queries `b_tier_cells['VIA0']` instead of `net.vias`; `apply_resize_to_model` stops mutating `Net.segments` directly (it mutates `shape_pool`; the view reflects it).
+- `io_adapters/parser.py` — replace the net-primary segment/via loop (`:468-516`) with a **single tier-dispatch pass over `shape_pool`**: for each `ShapeRecord`, switch on `tier_of(sr.layer)` → A-tier LI/M1 become `TrackSegment` grouped into `nets[sr.net_id]`; B-tier OD/VIA0/cuts become `CellOccupancy`; FIN/POLY stay pool-only; C1/C2 untouched. Deterministic order via a stable `sorted(shape_pool, key=(layer, bbox))`. Fold `project_b_tier_shapes` phase 2 into this pass's B-tier branch; keep phase 1 (axis registration) in grid setup and phase 3 (diffusion sharing) as an explicit post-pass.
+- `core/grid.py` — remove `b_tier_cells` field + its accessors (`set_b_tier_cell` / `get_b_tier_cell` / `b_tier_cells_of`); keep `b_tier_axes` + `register_b_tier_axes` + `bbox_to_b_tier_cells` (pure coordinate math). `MultiLayerGrid` becomes state-free w.r.t. layout content.
+- `core/data_model.py` — (a) `LayoutModel` gains the B-tier occupancy store (the home `b_tier_cells` moves to in Stage A; or the derivation entry point in Stage B); update `summary()` to report B-tier cell counts from the new home; confirm `Net.__repr__` / `Device.__repr__` still resolve once `segments` / `vias` / `fin_track_indices` are properties (they call `len(...)` — fine, just now computed). (b) demote `Device.{gate_track_idx, fin_track_indices}` and `Net.{segments, vias}` to derived properties / views; keep semantic fields stored. (c) decide `ViaInstance`: delete in favour of direct VIA0-occupancy queries, **or** keep as a thin read-only view type for solver API compatibility (recommended first step — smaller blast radius).
+- `core/solver.py` — `load_existing_layout` drops the via-as-LI/M1-WIRE block (segment stamping covers it) and reads the B-tier store from `model` not `grid`; `load_b_tier_cells_into_engine` re-points to the `model`-side store; `_reshape_li_sd_bars` queries VIA0 occupancy instead of `net.vias`; `apply_resize_to_model` stops mutating `Net.segments` directly (mutates `shape_pool`; the view reflects it).
+- `core/atomic_ops.py` — `extend_od` / `mark_shared_diffusion` / `add_cut_cell` / `remove_cut_cell` re-point B-tier writes from `grid.b_tier_cells` to the `model`-side store (Stage A); under Stage B they mutate `shape_pool` and let the view re-derive.
 - `core/macros/pick_macro.py` / `resize_device` — unaffected (operate on `Device` semantic identity).
-- Tests — `tests/unit/test_parser_tier_dispatch.py` extends to assert one-pass dispatch; `test_solver.py` via-coverage assertions re-pointed at `b_tier_cells`; a new test asserts no object-count regression (one via → one ShapeRecord + one CellOccupancy, zero ViaInstance if deleted).
+- Tests — `tests/unit/test_parser_tier_dispatch.py` extends to assert one-pass dispatch + the three-phase B-tier ordering; `tests/unit/test_b_tier_grid.py` / `test_b_tier_atomics.py` re-point at the `model`-side store; `test_solver.py` via-coverage assertions re-pointed at VIA0 occupancy; a new test asserts no object-count regression (one via → one ShapeRecord + one CellOccupancy, zero ViaInstance if deleted) and that `grid` holds no occupancy after construction.
 
 **Acceptance.**
 - One physical via yields exactly one geometric record (`ShapeRecord`) + one working record (`CellOccupancy(VIA0)`); `ViaInstance` is either gone or a zero-storage view.
-- `Device` / `Net` carry no stored geometry beyond `Device.bbox_nm`; `Net.segments` / `vias` and `Device.fin_track_indices` / `gate_track_idx` return live views over `shape_pool` / `b_tier_cells`.
+- `Device` / `Net` carry no stored geometry beyond `Device.bbox_nm`; `Net.segments` / `vias` and `Device.fin_track_indices` / `gate_track_idx` return live views over `shape_pool` / B-tier occupancy.
+- `MultiLayerGrid` holds zero layout state after construction (only axes + transforms); a test constructs a grid and asserts no occupancy is reachable from it.
 - Segment/via construction reads `shape_pool` (grouped by `net_id`), not `net_data` — which unblocks 1.7's retirement of `calibre_net_query.json`.
 - Byte-golden pipeline output unchanged (the determinism sort preserves emission order).
 
 **Risks.**
 - Byte-golden emission order: iterating `shape_pool` vs `net_data` changes traversal order; the stable sort is load-bearing — pin it and snapshot-test it.
 - Solver currently mutates `Net.segments` during resize; converting to a view means the mutation must move to `shape_pool`. Audit every `net.segments[...] =` / `.append` site (`core/solver.py:apply_resize_to_model:742-754`) before flipping.
+- Relocating `b_tier_cells` touches every B-tier read/write site (`core/solver.py`, `core/atomic_ops.py`, `tests/unit/test_b_tier_*`). Do Stage A (relocate, mechanical) as its own commit before Stage B (derive, semantic) to keep the diff reviewable.
 - View recompute cost: lazy views recompute per access. Trivial at one-cell scale; memoize-with-invalidation later (mirrors the "Derivator subscription model" deferral). Don't pre-optimize.
 
-**Sequencing.** Land **before** M7 sub-slice 1.7 (1.7's `calibre_net_query.json` retirement depends on segment construction reading `shape_pool`). Composes cleanly with M8 (both make `Device` geometry derived) — do M9's `Device`/`Net` slimming and M8's `fin_track_indices` property in the same pass if scheduled together.
+**Sequencing.** Land **before** M7 sub-slice 1.7 (1.7's `calibre_net_query.json` retirement depends on segment construction reading `shape_pool`). Composes cleanly with M8 (both make `Device` geometry derived) — do M9's `Device`/`Net` slimming and M8's `fin_track_indices` property in the same pass if scheduled together. Internally: Stage A (relocate `b_tier_cells` to `model`, mechanical) → tier-dispatch unification + `project_b_tier_shapes` decomposition → `Device`/`Net` slimming → Stage B (derive B-tier view) as an optional follow-up.
 
 **Dependencies.** M3 (shape_pool + LVS overlay), M4e (b_tier_cells engine-load), M6 (decoder is L1-only, so removing working-repr duplication doesn't disturb writeback).
 
