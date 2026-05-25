@@ -238,6 +238,73 @@ VIA0 is the only layer with four working representations — the visible symptom
 
 ---
 
+## M10 — GDS↔LVS layer-map consumption (per-cell annotation overlay)
+
+**Goal.** Consume the Stage 1.5 middle files (`device_info.yaml`, `net_shapes.yaml`, joined with `ixref.yaml` / `net_xref.yaml`) to stamp per-cell `device_id` / `net_id` / `color` onto the grid via a GDS↔LVS-derived-layer mapping. This is the concrete design behind the "iXref + … consumption" cross-cutting deferral below; it turns the write-only middle files into the authoritative annotation source.
+
+**Prototype reference.** A working, byte-golden-tested implementation of this design exists on the unmerged branch `claude/refine-test-fixtures-nIkdZ` (PR #30, slices "1.6a/1.6b"): `io_adapters/calibre_layer_map.py` (`load_layer_map_with_derived` + `apply_calibre_layer_overlay`), the `tech/layer_map.yaml::derived_layers` schema, `tech/calibre_layer_map.yaml` registry, and `tests/unit/test_calibre_layer_map.py`. **Re-land it on top of M9's normalized parser** (don't merge PR #30 as-is — its 1.6b net-source adapter feeds the old net-primary loop that M9 deletes). The schema + overlay logic + tests below are directly reusable; only the call site moves.
+
+**Sequencing.** Land **after** M9 (so the overlay walks M9's `shape_pool`-derived `TrackSegment`/`CellOccupancy` views, not the pre-M9 net-primary segments) and **after** M9's `device_id`-via-containment stamping is in place (M10 refines it with derived-layer evidence; design them together to avoid two stamping mechanisms). Composes with 1.7 (both consume `net_shapes.yaml`).
+
+### Mapping schema
+
+Canonical forward index: per-GDS-layer `derived_layers` list in `tech/layer_map.yaml`. Each entry `{name, carries, [color]}` names an LVS-side derived layer that carries annotations *back* to this GDS layer:
+
+```yaml
+- name: POLY
+  derived_layers:
+    # Vt-flavour gate alternates — deck emits exactly ONE per device;
+    # runtime stamps whichever has shapes.
+    - { name: ngate_lvt,  carries: [device_id] }
+    - { name: pgate_lvt,  carries: [device_id] }
+    # …slvt / rvt variants…
+    - { name: POLY,       carries: [net_id] }   # whole gate strip's net
+- name: M1
+  derived_layers:
+    - { name: M1a, carries: [net_id], color: a }  # SADP cut colours
+    - { name: M1b, carries: [net_id], color: b }
+    - { name: M1,  carries: [net_id] }            # MVP single-colour passthrough
+- name: OD
+  derived_layers:
+    # OD itself is NOT a device-id source; the nsd/psd S/D layers are.
+    - { name: nsd, carries: [device_id, net_id] }
+    - { name: psd, carries: [device_id, net_id] }
+```
+
+Reference registry: `tech/calibre_layer_map.yaml` holds derivation docs (`derivation_doc`), SADP `multi_patterning` colour metadata (load-bearing for metal-cut editing), and semantic hints. The loader cross-checks every `derived_layers[*].name` resolves in the registry.
+
+### Annotation home (the load-bearing decision)
+
+Per-cell on the grid carriers is **authoritative**; `ShapeRecord.{net_id, device_id}` are **best-effort summaries** derived from per-cell consensus. Rationale: a single GDS shape can be cut into multiple net regions (M1) or shared between devices (OD), so whole-shape annotation is wrong for those; the grid handles cuts (per-cell net) and diffusion sharing (`CellOccupancy.shared_with`) naturally. The summary stays `None` when cells disagree — the resize macro's `sr.device_id == device.inst_name` filter then skips the ambiguous shape, which is correct (it only targets whole-device shapes). Keep the `ShapeRecord` fields because the solver + atomic_ops read them (`core/solver.py:resize_device` / `_reshape_li_sd_bars`; `core/atomic_ops.py`).
+
+### Overlay pass
+
+Two sub-passes:
+1. **Per-cell stamping (authoritative).** For each `TrackSegment` (A-tier) and `CellOccupancy` (B-tier), look up the GDS layer's `derived_layers`, find matching shapes in `device_info.yaml` / `net_shapes.yaml`, stamp the `carries` fields + `color`.
+2. **ShapeRecord summary (best-effort).** Per shape, set `net_id` / `device_id` from cell consensus; leave `None` on disagreement.
+
+**Containment rule.** A-tier: cell-center inside derived-shape bbox. B-tier: ≥50% area overlap. Both tolerate the sub-nm "effective region" trim from slice 1.5 (real Calibre shapes can be slightly smaller than GDS).
+
+**Conflict policy.** B-tier `device_id` collisions → recorded as diffusion sharing (`owner_device_id` + `shared_with`), not a conflict. A-tier `device_id` collisions / any-tier `net_id` collisions → raise `LayerOverlayConflictError` (real short circuit / overlapping active). Co-occurrence of `device_id` (from `ngate_lvt`) + `net_id` (from POLY passthrough) on the same active-gate cell is **allowed** — it's the gate's normal state.
+
+**LVS→schematic device-name translation (load-bearing).** `device_info.yaml`'s `layout_inst` is the LVS name (`M0`/`M1`); the rest of the model uses the schematic `Device.inst_name` (`MN0`/`MP0`). Translate via `ixref.yaml`'s `layout_inst → source_inst` map **before** stamping `device_id`, or the solver's `sr.device_id == device.inst_name` filter silently skips every shape in production. (This was a P1 review catch on the prototype.)
+
+### Dummy/real coverage-gap handling
+
+Real Calibre annotation is precise but **incomplete** (filler / ESD / cut-shadow cells get no LVS shape), unlike the 100%-covered dummy. Cells with no annotation are correct: `project_unannotated_blockages` projects GDS-covered-but-unannotated cells as CSP `BLOCKAGE`. Add a per-layer coverage report distinguishing `gds_cells / lvs_annotated / blockage_projected` so engineers can audit a real run. A buffer-fixture parity check (per-cell `(net_id, device_id)` diff between the legacy overlay and the new pass) gates the re-land — the prototype proved zero divergence.
+
+### Sub-slice M10.1 — layer-name mapping + cut/extension trimming
+
+The prototype uses GDS layer names directly and the raw GDS bbox. Production needs: a layer-name mapping table (GDS ↔ LVS-derived names, e.g. `LI` → `LIG`/`LISD`, `VIA0` → `V0`) and a trimming pass that subtracts cut shapes / extension margins so the derived bbox is the *effective conducting/active* region. Deferred from slice 1.5; design alongside M8 (cut-layer geometry) and the SADP colour metadata already in `tech/calibre_layer_map.yaml`.
+
+**Files (re-land target, post-M9).** `io_adapters/calibre_layer_map.py` (new); `tech/layer_map.yaml` (`derived_layers` blocks); `tech/calibre_layer_map.yaml` (registry, drop bogus whole-metal passthroughs — production has only SADP cut colours); `core/data_model.py` (`TrackSegment.{device_id,color}`, `CellOccupancy.color`); `io_adapters/parser.py` (call the overlay inside/after M9's single-pass dispatch); `core/solver.py::project_unannotated_blockages` + `core/data_model.py::LayoutModel.annotation_coverage` (grid-level predicates); `tests/unit/test_calibre_layer_map.py`.
+
+**Acceptance.** Re-landed overlay stamps per-cell device_id/net_id/color from the middle files (LVS→schematic translated); diffusion sharing + cut + conflict cases covered by unit tests; buffer-fixture per-cell parity vs the prototype; byte-golden pipeline output preserved (or documented if the coverage report changes shape).
+
+**Dependencies.** M9 (normalized parser), Stage 1.5 middle files (`ixref` / `net_xref` / `device_info` / `net_shapes`, all merged), M5 (derivator pattern for derived-layer semantics).
+
+---
+
 ## Cross-cutting deferrals
 
 ### Derivator subscription model
@@ -261,6 +328,8 @@ A path-aware union-find (or a fully recomputed component on each split) is neede
 The M3 `(layer, bbox_nm)` overlay key works because the dummy generator's GDS shapes and the dummy LVS shapes share an exact bbox-tuple representation. Production LVS geometry can drift sub-nm. M7 will need a tolerance / containment match in `apply_lvs_overlay`.
 
 ### iXref + net_xref + device_info + net_shapes consumption
+
+> **Concrete design:** see **M10 — GDS↔LVS layer-map consumption** above for the per-cell annotation overlay that realises this (mapping schema, annotation-home decision, conflict policy, LVS→schematic translation, coverage-gap handling). A working prototype lives on PR #30's branch. This section keeps the higher-level "what each middle file unlocks" checklist.
 
 The four middle files produced by Stage 1.5 — `output/ixref.yaml` (devices), `output/net_xref.yaml` (nets + lvs_index), `output/device_info.yaml` (per-device LVS-derived-shape bboxes), and `output/net_shapes.yaml` (per-net LVS-derived metal/via bboxes) — are currently write-only. Future consumers — once we land them — should:
 - Cross-check the iXref's source-side instance ids against the parsed CDL `Device.inst_name` set; flag mismatches.
