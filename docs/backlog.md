@@ -395,6 +395,40 @@ assert all((c - offset) % pitch == 0 for c in centers), \
 * **Sequencing.** Implementable *today* — `shape_pool` is already populated before the offset-extraction step runs (`parser.py:418-419`). Lands cleanly **before** M7-1.7 (1.7 then doesn't need to keep the per-device `_raw_fin_y` plumbing alive) and **before** M8 (M8's "NMOS/PMOS fin bucket" deletion is a no-op once offsets stop caring about device type). Doing this first removes the FIN-as-edited-layer assumption from one more call site.
 * **Out of scope.** Per-layer offset *overrides* in `site_config.yaml` for cells whose first shape isn't representative (e.g., dummy-padded rows). Add a `tech.grid_offset_overrides: {layer: nm}` knob if a fixture ever needs it; today none does.
 
+### Config-driven orthogonal pairing & orientation
+
+`core/grid.py::create_mvp_grid` (`:438-469`) hardcodes two things that are properly *foundry* data: each layer's `orientation` (`'H'`/`'V'`) and its **orthogonal partner** — the `ortho_layer=` kwarg that populates `MultiLayerGrid.ortho_pairs` (`grid.py:125`, set by `add_layer` at `:139-143`). Every A-tier layer's along-track anchor keys off this partner (`get_ortho_layer` → `physical_to_segment_coords` / `segment_to_physical`), so it is load-bearing, yet it lives as four literal kwargs:
+
+```
+FIN  → ortho POLY    POLY → ortho FIN
+LI   → ortho M1      M1   → ortho LI
+```
+
+The B-tier analogue is `io_adapters/parser.py::_B_TIER_AXIS_DEFAULTS` (`:278-284`) — a module constant mapping each B-tier layer to its `(axis_a, axis_b)` A-tier pair (`OD → (POLY, FIN)`, `VIA0 → (LI, M1)`, cuts → …), consumed by `project_b_tier_shapes` → `register_b_tier_axes` (`:331-342`). Same smell, second copy.
+
+**The config already half-exists; the loader just drops it.** `tech/layer_map.yaml` *already* carries `orientation: H|V|null` on every layer (`:34/41/48/55/…`) and VIA0's axis pair is *already* there as `connects: [LI, M1]` (`:65`; schema doc `:19`). But `tech/layer_map.py` parses only `gds` / `tier` / `role` / `color` into module constants — `orientation` and `connects` are read by nobody, so `create_mvp_grid` and `_B_TIER_AXIS_DEFAULTS` re-hardcode them. The only genuinely-missing config is (a) the A-tier ortho partner and (b) the non-via B-tier axis pair (OD, cuts), neither of which has a YAML field yet.
+
+**Target.** `layer_map.yaml` becomes the single source for grid topology; `create_mvp_grid` and the parser read it.
+* Add `ortho: <layer>` to the four A-tier layers (`LI: ortho: M1`, …); reuse `orientation` as-is.
+* Add `axes: [<a>, <b>]` to B-tier non-via layers (`OD: axes: [POLY, FIN]`; cuts when they grow geometry). For vias, reuse the existing `connects` (`[lower, upper]` *is* the axis pair) — don't duplicate it as `axes`.
+* `tech/layer_map.py` exposes `LAYER_ORIENTATION`, `ORTHO_PAIRS`, and `B_TIER_AXES` (the last folding `connects` for vias + `axes` for the rest), plus `orientation_of` / `ortho_of` / `axes_of` accessors mirroring `tier_of`.
+
+**Validation (surface loud, per the M3 conservative-defaults discipline).**
+* Ortho symmetry: `ortho_of(ortho_of(L)) == L` for every A-tier layer — a one-sided `LI→M1` with `M1→LI` missing is a typo, not a config.
+* Perpendicularity: a layer and its ortho partner must carry opposite `orientation` (one `H`, one `V`); assert at load.
+* B-tier axes must resolve to registered A-tier layers — `register_b_tier_axes` already raises on an unregistered axis (`grid.py:301-306`); keep that as the second gate.
+
+**Files to land.**
+* `tech/layer_map.yaml` — `ortho:` on the 4 A-tier layers; `axes:` on OD (+ cuts later).
+* `tech/layer_map.py` — parse + expose the three new constants/accessors with the validation asserts.
+* `core/grid.py::create_mvp_grid` — drop the literal `orientation=` / `ortho_layer=` kwargs; loop over the A-tier layers reading `LAYER_ORIENTATION` / `ORTHO_PAIRS`. (Pitch/width still come from `config`; offset from the sibling "Universal `LayerGrid` offset derivation" item.)
+* `io_adapters/parser.py` — delete `_B_TIER_AXIS_DEFAULTS`; `project_b_tier_shapes` phase-1 reads `B_TIER_AXES`.
+* `tests/unit/test_grid.py` / `test_layer_map.py` — assert the loaded pairing byte-matches today's hardcoded values; a fixture with an asymmetric `ortho` (or an H↔H pairing) must raise.
+
+**Sequencing.** Composes with **Universal `LayerGrid` offset derivation** above — same call site (`create_mvp_grid`), same test file; landing them together turns the factory into a pure assembler (pitch/width ← `drc_rules`, orientation/ortho/axes ← `layer_map`, offset ← `shape_pool`). Independent of M9, but tidy to land first: M9's `project_b_tier_shapes` phase-1 (axis registration, which M9 keeps on `grid`) then reads the config constant instead of the parser constant it is about to delete anyway. Implementable today.
+
+**Out of scope.** Per-experiment ortho/axis *overrides* in `site_config.yaml` — `layer_map.yaml` is the foundry-level source of record; add a knob only if a fixture ever needs a non-standard pairing (none does). Non-Manhattan / multi-orientation layers stay out — the H⊥V assumption is load-bearing in the via-position and segment-projection math.
+
 ### Derived-marker layers without geometry yet
 
 `tech/layer_map.yaml` declares `VT`, `PP`, `NP`, `DNW` as `tier: C1` + `derived: true`, but no fixture emits them. The derivator's `_derive_*` shape mirrors `_derive_nwell` — adding any of these is one new helper plus a config entry under `tech/drc_rules.yaml::extension`. Activates when a fixture needs them.
