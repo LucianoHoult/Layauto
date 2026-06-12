@@ -16,7 +16,7 @@ The recommended starter PR. Unblocks M6d (the routing-dependent macros).
 - `core/router/__init__.py`
 - `core/router/astar.py` (or `maze.py`) — path search proper.
 - `core/router/cost.py` — cost function (layer-change penalty, preferred direction, blockage proximity).
-- `core/router/obstacles.py` — obstacle queries against `engine.cells` / `engine.layer_dims` / `engine.connected_cells(net_id)`.
+- `core/router/obstacles.py` — obstacle queries against `engine.cells` / `engine.layer_dims` / `engine.connected_cells(net_id)`. (If **M11** lands first, these queries target the unified occupancy store + connectivity index instead — see M11.)
 - `tests/unit/test_router*.py` — synthetic clear-path / obstacle-detour / no-path fixtures.
 
 **Behaviour.** Read-only over the engine. Consumes current cell state (assignments + domains + blockages + cuts) as obstacles, produces a *plan* — a sequence of cell positions on legal layers. The plan is handed to a macro that calls `propose_assign` per cell inside a transaction. Router itself never calls `propose_assign`.
@@ -259,7 +259,7 @@ After the split the cross-object read/write disappears: phase 1 is grid-only, ph
 - Relocating `b_tier_cells` touches every B-tier read/write site (`core/solver.py`, `core/atomic_ops.py`, `tests/unit/test_b_tier_*`). Do Stage A (relocate, mechanical) as its own commit before Stage B (derive, semantic) to keep the diff reviewable.
 - View recompute cost: lazy views recompute per access. Trivial at one-cell scale; memoize-with-invalidation later (mirrors the "Derivator subscription model" deferral). Don't pre-optimize.
 
-**Sequencing.** Land **before** M7 sub-slice 1.7 (1.7's `calibre_net_query.json` retirement depends on segment construction reading `shape_pool`). Composes cleanly with M8 (both make `Device` geometry derived) — do M9's `Device`/`Net` slimming and M8's `fin_track_indices` property in the same pass if scheduled together. Internally: **(0) close the `engine → shape_pool` writeback loop** (precondition for any view-ification — without it the views reflect stale LI/M1 geometry) → Stage A (relocate `b_tier_cells` to `model`, mechanical) → tier-dispatch unification + `project_b_tier_shapes` decomposition → `Device`/`Net` slimming → Stage B (derive B-tier view) as an optional follow-up.
+**Sequencing.** Land **before** M7 sub-slice 1.7 (1.7's `calibre_net_query.json` retirement depends on segment construction reading `shape_pool`). Composes cleanly with M8 (both make `Device` geometry derived) — do M9's `Device`/`Net` slimming and M8's `fin_track_indices` property in the same pass if scheduled together. Internally: **(0) close the `engine → shape_pool` writeback loop** (precondition for any view-ification — without it the views reflect stale LI/M1 geometry) → Stage A (relocate `b_tier_cells` to `model`, mechanical) → tier-dispatch unification + `project_b_tier_shapes` decomposition → `Device`/`Net` slimming → Stage B (derive B-tier view) as an optional follow-up. **M11** (below) extends this normalization across the CSP boundary — keep the writeback-loop implementation minimal: M11-U1 retires it by construction.
 
 **Dependencies.** M3 (shape_pool + LVS overlay), M4e (b_tier_cells engine-load), M6 (decoder is L1-only, so removing working-repr duplication doesn't disturb writeback).
 
@@ -332,6 +332,70 @@ The prototype uses GDS layer names directly and the raw GDS bbox. Production nee
 
 ---
 
+## M11 — unified cell-state substrate (M9 across the CSP boundary; connectivity-based DRC identity)
+
+> Filed 2026-06 from the domain-initialization review of `initialize_domains` / `_initial_domain_for_layer` / `forbidden_states`. Absorbs that review's findings (below) — no separate per-finding entries.
+
+**Goal.** One occupancy store, four layered concerns. M9 collapses the *model-side* representations of "what occupies cell `(layer, a, b)`" but stops at the engine boundary: `engine.cells` stays a third materialization of the same fact, populated by copy at load time and reconciled by M9's writeback loop. M11 finishes the inversion: the CSP engine stops owning an occupancy copy and becomes a domain/trail overlay plus DRC checker *over* the unified store — and net/device identity leaves per-cell state entirely: DRC "same-net" becomes "same connected component", computed from geometry.
+
+**Motivation — grid and CSP already share one substrate.**
+
+| Representation | Home | Payload | Serves |
+|---|---|---|---|
+| `TrackSegment` | `Net.segments` (model) | layer, track, span, `net_id` | A-tier occupancy |
+| `CellOccupancy` | `grid.b_tier_cells` | layer, a, b, `occ_type`, `net_id`, `owner_device_id`, `shared_with` | B-tier occupancy |
+| `GridCell` + `CellState` | `engine.cells` | `occ_type`, `net_id` (+ domain, fixed) | CSP / DRC |
+
+Findings against current code:
+
+1. **`CellState.net_id` is a load-time copy.** Only `load_existing_layout` / `load_b_tier_cells_into_engine` write it (`core/solver.py:273,310,345`). The engine's net knowledge is a cache of Stage 2's — a copy that can only drift.
+2. **Two "same-net" judgements coexist.** Spacing rules compare the scalar label (`core/drc_constraints.py:87-93,132-138`); the M4b union-find is documented as the net-equivalence truth and the diffusion-sharing "safety valve" — but `forbidden_states` never consults `net_of`.
+3. **The union-find query surface has zero production consumers.** `net_of` / `connected_to` / `connected_cells` (`core/csp_engine.py:823-875`) are exercised by unit tests only; the write side (`union`, `mark_cut`) is live. Infrastructure waiting for its consumer (M6c).
+4. **Per-net domain fan-out manufactures dead states.** `_initial_domain_for_layer` (`core/csp_engine.py:287-313`) enumerates `occ_type × net` for every non-WIRE occupant, but `mark_cut` only ever writes a net-less `CellState(CUT)` (`:690-718`) — every `(CUT, net)` element is unreachable. Domain size is 1+N (A-tier) / 2+N (B-tier) in net count, and nothing exploits it: the engine never branches over domains (no search exists — macros propose, the engine checks; `width_code` / `is_line_end` are likewise never branched on).
+5. **`occ_type` restates the layer.** Under one-occupant-kind-per-layer, the B-tier trigger sets (`(DEVICE_DIFF,)` for OD, `(VIA,)` for VIA0 — `core/drc_constraints.py:200-214`) re-encode what the layer name already says.
+6. **`net_id=None` is asymmetrically optimistic.** A `None` trigger forbids all named nets nearby, but a named trigger never forbids `None` neighbours (`forbidden_states` enumerates `all_net_ids` only) — "unknown" behaves as compatible-with-everything, the unsafe direction for unannotated geometry.
+7. **Cross-layer connectivity is faked by labels.** `union` requires same-layer Manhattan-1 adjacency (`core/csp_engine.py:734-741`), so via equivalence (LI-net == M1-net) is expressible only through the M2 via-as-WIRE double-stamp — exactly the redundancy M9 deletes. Once via-as-WIRE is gone, nothing connects layers.
+
+**The model (one store, four layers).**
+
+1. **Coordinate system** — stateless math: pitch / offset / orientation / axes; physical↔track; bbox→cells. (= M9's slimmed `MultiLayerGrid`.)
+2. **Occupancy store** — the single `(layer, a, b) → {shape ref, occupant kind, identity ref}` map, A-tier and B-tier symmetric. (= M9's model-side store, now *also* the engine's working state.)
+3. **Identity & connectivity** — two halves. *Semantic identity registry* (net names, device instances): model/LVS-side; serves edit localisation and CDL-diff semantics — the resize path already works purely on it (`core/solver.py:527,578`). *Topological connectivity index*: components over store geometry — same-layer adjacency ∪ **via edges** (fixing finding 7), CUT cells as barriers; label-free; serves DRC same-conductor tests. The index is the M4b union-find relocated and made authoritative — one instance, engine-side copy deleted.
+4. **DRC/CSP checker** — domains + trail keyed by the same cell ids, overlaid on (2); spacing's same-conductor exemption queries (3). Cell state shrinks to `{EMPTY, OCCUPIED, BARRIER}` (+ width as a decision axis only where a layer has >1 legal width — none today). No `net_id`, no `device_id`, no occupant-kind taxonomy in CSP state.
+
+**Why connectivity, not labels, is the DRC identity.** The same-net spacing exemption exists because *the same conductor* may abut or merge harmlessly — a topological fact, exactly what the index answers. (Same-conductor notch/width interactions stay purely geometric; they never needed identity.) What the label model additionally grants is the *same-net-but-disconnected* relaxation; connectivity-only treats those conservatively (spacing enforced) — the safe direction for an edit/resize tool, and it fixes finding 6 for free: two disconnected unannotated shapes are distinct components, so spacing applies, instead of `None == None` → exempt. If the relaxation is ever needed it returns as a *component → net-property* lookup — labels as properties of components, never of cells. Device identity never enters DRC at all: cross-device rules are geometric; localisation stays model-side.
+
+**Staged plan.**
+
+* **U0 = M9**, unchanged (writeback loop, Stage A/B, tier-dispatch, `Device`/`Net` slimming). Keep the writeback implementation minimal — U1 retires it by construction.
+* **U1 — engine on the store.** `engine.cells` stops holding occupancy; `GridCell` reduces to domain + trail hooks keyed by store cell ids; `load_existing_layout` / `load_b_tier_cells_into_engine` collapse into "attach domains over store cells"; macro commits mutate the store directly; delete the M9 writeback scaffolding.
+* **U2 — connectivity identity.** Build the index (adjacency ∪ via edges, CUT barriers) over the store; rewrite spacing's same-net test from label comparison to component comparison; delete `CellState.net_id`; relocate `_uf_*` out of the engine as the index (no-compression + trail discipline unchanged). **Gate:** DRC accept/reject decisions on the buffer fixture byte-identical — the fixture has no same-net-disconnected pair within any stencil radius (verify by test, not assumption).
+* **U3 — cell-state shrink.** Domain elements reduce to `{EMPTY, OCCUPIED, BARRIER}`; occupant kind lives on the store record (decoder/output still consume it); per-net fan-out deleted (kills the dead `(CUT, net)` states; domain size O(1) in net count). Spacing evaluates "occupied by a different component" at propose time, parameterised by the index — sound because nothing searches over domains (finding 4).
+* **U4 (deferred).** Attribution axis: BLOCKAGE returns as *pinned/foreign* occupancy rather than a domain value; unannotated-but-recoverable geometry gets M3 §D suspect-tagging + connectivity-based identity recovery; optional same-net-disconnected relaxation as the component→net lookup.
+
+**Backlog entries this revises.**
+- **M9** — extended, not contradicted; its writeback loop is demoted to transitional scaffolding (deleted in U1).
+- **"Engine union-find: path-aware split"** (cross-cutting) — requirement transfers to the unified index unchanged.
+- **M6c** — `obstacles.py` targets the store + index if M11 lands first; otherwise one re-point in U1.
+- **M10** — per-cell stamping writes identity *references* into the store; the annotation-home decision carries over unchanged.
+
+**Acceptance.**
+- One physical occupant ⇒ exactly one store record, observed identically through model views and the engine; an L2 edit is visible to both with no writeback step.
+- `CellState` carries no `net_id`; `_uf_*` gone from the engine; the U2 spacing path is the index's first production consumer.
+- Per-cell domain size ≤ 3 and independent of net count; buffer-fixture propagation decisions unchanged (U2/U3 gates); byte-golden pipeline output preserved.
+
+**Risks.**
+- Propagation shifts from value-pruning over net-enumerated domains to index-parameterised checks at propose time — mechanically invasive in `_propagate`; mitigated by finding 4 (no consumer branches over domains).
+- The conservative flip on same-net-disconnected spacing could reject edits the label model accepts — none in the fixture; pin with a regression test; U4's relaxation is the escape hatch.
+- Connectivity lookups land on the propagation hot path (label compare was O(1)); the no-compression find degrades on deep trees — watch `propagate_stats`, revisit compression + undo discipline if it surfaces (existing perf note).
+- Transactionality: store mutations + index unions + domain changes must share one checkpoint/restore bracket; the trail already brackets cells + unions, but the store write path is new surface.
+
+**Sequencing.** After M9. Before or interleaved with M10 (coordinate the stamping target). M6c may land first against the engine surface at the cost of one re-point. U1 → U2 → U3 are separately commitable; U2 is the semantic pivot and carries the gate.
+
+**Dependencies.** M9 (store + views), M4b (union-find + trail), M4e (per-layer engine bounds), M6a/b (macro transaction discipline).
+
+---
+
 ## Cross-cutting deferrals
 
 ### Derivator subscription model
@@ -344,7 +408,7 @@ The infrastructure is in place (`CommitDelta` lands in M4b; M6a flipped `device_
 
 The current `_uf_undo_one` undoes the *most recent* union — it does not selectively split a component. As a result, M6b's `split_diffusion` does not actively un-merge the engine union-find; it relies on the §B "no CUT between adjacent cells" rule (preventing future unions across the cut) plus the natural checkpoint/restore lifecycle.
 
-A path-aware union-find (or a fully recomputed component on each split) is needed before multi-step diffusion split-then-share-elsewhere becomes a real workload. M6d / M7 will surface the requirement in earnest.
+A path-aware union-find (or a fully recomputed component on each split) is needed before multi-step diffusion split-then-share-elsewhere becomes a real workload. M6d / M7 will surface the requirement in earnest. Under **M11** the union-find relocates to the unified connectivity index over the occupancy store (engine-side copy deleted); the path-aware-split requirement transfers to that index unchanged.
 
 ### Geometric-overlap suspect tagging (M3 §D rule 3)
 
