@@ -115,6 +115,12 @@ All four run from `io_adapters/calibre_query.py`'s Stage 1.5 with `mode={dummy,c
 
 ## M8 — FIN as static backdrop (de-edit FIN, derive fin attribution from OD)
 
+> **See also** [`stage5_resize_redesign.md`](stage5_resize_redesign.md): a Stage-5
+> redesign that front-loads this milestone as the foundation of a "fixed
+> cell frame + static fin + OD-driven" resize model, motivated by a measured
+> 40%-shape divergence between the current resize output and the from-scratch
+> target.
+
 **Goal.** Bring the FIN layer in line with FinFET reality: fins are **continuous horizontal stripes across the entire cell at fixed pitch**, never drawn or edited by designers. The only thing a resize touches is the **OD** layer; which fins are electrically active is then a geometric consequence of `FIN ∩ OD`, computed on demand. Removes the per-device fin add/remove edit path from L1/L2/L3 entirely.
 
 **Motivation — three violations of the foundry-PCell mental model the current code embeds.**
