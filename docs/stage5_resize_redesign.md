@@ -21,7 +21,9 @@ change / cell-height changes not in scope" — `architecture.md` §1) nor the
 from-scratch `dummy/fixtures/buffer_target`. Measured on the live
 fixture (NMOS 5→4, PMOS 7→6), **12 of 30 shapes (40%) diverge** from the
 target, across FIN/OD/POLY/LI/VIA0/M1/NWELL/BOUNDARY. The pipeline only
-*prints* the mismatch count (`pipeline/run_mvp.py:635`) and never fails.
+*prints* a mismatch count (`pipeline/run_mvp.py:635`) and never fails — and
+that printed count is over a **narrower layer set** than this measurement
+(see §2).
 
 The root cause is not a bug in a single helper — it is that **Stage 5 has
 no coherent "layout placement model."** The fix is to establish the
@@ -42,6 +44,16 @@ correct model and rebuild the L3→L2→L1 chain around it.
 
 All three differ. Per-layer mismatch (resized vs target), 12 shapes:
 `FIN 1, OD 1, POLY 3, LI 3, VIA0 1, M1 1, NWELL 1, BOUNDARY 1`.
+
+> **This 12-of-30 is an all-layer manual measurement** (every layer in the
+> JSON, NWELL/BOUNDARY included) — it is **not** the pipeline's printed
+> `mismatches`. That printed count compares a narrower set: the `compare_gds`
+> path covers `FIN/OD/POLY/LI/VIA0/M1` (`pipeline/run_mvp.py:613`) and the
+> JSON fallback only `FIN/OD/LI/VIA0/M1` (`:624`) — both **omit
+> NWELL/BOUNDARY** (the fallback also omits POLY). So the exact frame-drift
+> Model A must eliminate (NWELL/BOUNDARY/cell-height) is **invisible to
+> today's pipeline metric**; step 6 must widen the gate, not just flip
+> print→fail.
 
 Config values grounding the geometry (from `tech/drc_rules.yaml`):
 `FIN_PITCH=25, OD_EXTENSION_BEYOND_FIN=10, POLY_EXTENSION_BEYOND_OD=15,
@@ -181,7 +193,7 @@ height edit — so Model B's "area saving" is illusory. Model A wins on
 | 3. OD via CSP | route OD coverage changes through `propose_release/assign` so DRC gates them and the engine stays authoritative; derive LI/POLY endpoints from OD + via reach; drop magic numbers | L2/L3 |
 | 4. fixed frame | stop editing cell_height / NWELL / BOUNDARY / POLY / M1 on shrink; derivator becomes a no-op for the in-scope shrink (fires only on grow / legitimate frame change) | L3/decoder/derivator |
 | 5. grow support | allow `new_nfin > nfin`; OD extends toward the gap, CSP checks spacing/enclosure; surface infeasible cleanly | L3 |
-| 6. validation gate | upgrade the target comparison from a print to a **hard gate (PERFECT MATCH)** | pipeline tail |
+| 6. validation gate | **widen** the target comparison to the full Model-A invariant set (`FIN/OD/POLY/LI/VIA0/M1` **+ NWELL/BOUNDARY + cell frame**), *then* turn it from a print into a **hard gate**. Today's metric omits NWELL/BOUNDARY (and POLY in the JSON fallback), so flipping print→fail alone could report PERFECT MATCH while the frame is still wrong | pipeline tail |
 
 ---
 
@@ -212,4 +224,6 @@ height edit — so Model B's "area saving" is illusory. Model A wins on
   a grow case is rejected when it would violate OD spacing / VIA0
   enclosure, with a clean infeasible result.
 - After regenerating the Model-A fixtures, the pipeline reports
-  **PERFECT MATCH** and the comparison is a hard gate.
+  **PERFECT MATCH** and the comparison is a hard gate **covering the full
+  Model-A invariant set** (`FIN/OD/POLY/LI/VIA0/M1` + NWELL/BOUNDARY + cell
+  frame), not just the layers the comparison checks today.
