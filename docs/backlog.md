@@ -397,6 +397,52 @@ Findings against current code:
 
 ---
 
+## M12 — Stage 5 macro semantics cleanup (model/grid/CSP-first edits)
+
+**Goal.** Re-anchor Stage 5 edits on the Stage 2–4 substrate instead of letting the L3 macro hand-compute geometry and side-effect several stores independently. The pipeline already builds `LayoutModel + MultiLayerGrid + ConstraintEngine` before resize; a macro should query those structures, choose a candidate edit in grid/cell terms, ask CSP whether the candidate is legal, and only then commit the accepted change back to the model/occupancy store. Physical bboxes and L1 `EditOp`s should be derived from the committed model/grid state, not be the primary source of truth scattered across macro helpers.
+
+**Why this matters.** The current MVP works because the fixture is tiny and the target is shrink-only (`MN0: 5→4`, `MP0: 7→6`), but the code path violates the project invariant "edit only within the legal grid space, then write back one geometric truth":
+
+1. **Macro geometry bypasses the model.** `resize_device` computes OD / LI / POLY bboxes directly in helper-local arithmetic, then emits L1 records. That duplicates information the grid already knows (track axes, offsets, legal cells, via coverage) and makes coordinate derivation live in several places instead of one model/grid writeback path.
+2. **Pre-commit side effects are not fully transactional.** Inside one `engine.checkpoint()` bracket, `_emit_fin_removes` drops FIN `ShapeRecord`s from `model.shape_pool`, `_emit_od_modify` calls `extend_od` which mutates `grid.b_tier_cells` and the OD `ShapeRecord`, and only then `_reshape_li_sd_bars` may fail and `engine.restore(cp)`. The engine rolls back; the model/grid side effects do not.
+3. **B-tier CSP can drift from B-tier occupancy.** `extend_od` reprojects OD cells in `grid.b_tier_cells` but does not release/assign the corresponding OD cells in the engine that `load_b_tier_cells_into_engine` seeded. Shrinks leave stale OD assignments in CSP; future grows would create model/grid cells unseen by CSP.
+4. **Successful macros do not make the in-memory model authoritative for the next macro.** Stage 5 stores each `ResizeResult` and Stage 6 later concatenates edit ops, but the next macro in the same run still sees stale `Device.nfin`, `Net.segments`, and LI/POLY `ShapeRecord` geometry unless an ad-hoc updater is called. `apply_resize_to_model` exists but is not the pipeline's commit path.
+5. **Edit-location choice is hardcoded, not a planning seam.** The current policy is top-down shrink (`removed_fin_tracks = old[-Δ:]`). That is acceptable for the MVP target, but the location of an edit is an algorithmic choice: given `Device.inst_name` + target `nfin`, the planner must decide which active rows/cells to change subject to pin access, via coverage, and DRC. Future search/RL/LLM policies should choose candidates here, never mutate geometry directly.
+6. **Unsupported target deltas are too easy to skip.** `pick_macros` filters `None` today. For production, any target CDL delta that Stage 5 cannot cover must fail explicitly before partial modification.
+
+**FinFET/PCell grounding.** In a real FinFET cell row, FIN stripes are a static grating/backdrop and the ECO changes the active diffusion region (OD) that selects how many fins are electrically active. POLY/gate geometry is likewise better treated as gate/background geometry plus annotation/derived views, not a global partial-bbox side channel. So the long-term `nfin` resize should be "reshape active OD over static FIN, repair dependent LI/via/C1 state". M8 handles the static FIN/POLY backdrop; this milestone makes Stage 5's execution semantics compatible with that model.
+
+**Target Stage 5 contract.**
+
+1. **Plan in model/grid terms.** Convert a CDL delta (`ResizeIntent(device_id, target_nfin)`) into one or more `ResizeCandidate`s: active rows/cells to remove/add, affected OD cells, LI segment cells, via-coverage constraints, and expected semantic updates. The MVP policy remains deterministic top-down shrink; it is just isolated behind the candidate interface.
+2. **Check via CSP before model writes.** Candidate application first stages `propose_release` / `propose_assign` (or M11 store-domain equivalents) for every affected CSP-modelled cell: LI/M1 today, OD/VIA0 as B-tier, and later cuts/routing. No persistent `shape_pool` or occupancy mutation is allowed before feasibility succeeds, unless a shared undo log covers it.
+3. **Commit to the single layout state.** After CSP success, update the model/occupancy store immediately. Subsequent macros in the same Stage 5 loop must observe the committed result. Under M9 this means applying the committed edit stream to `shape_pool` and moving B-tier state onto `model`; under M11 it means mutating the unified occupancy store directly and deleting transitional writeback scaffolding.
+4. **Derive L1/output from committed state.** `EditOp`s become a post-commit event/serialization product for Stage 6 and reports. They must carry enough identity to avoid ambiguous matching (full old bbox or shape/store id where available; device/net provenance). They should not be the only place where committed geometry exists.
+5. **Fail loudly on unsupported plans.** Macro planning must either cover every target-relevant delta or raise a typed unsupported-delta error before any macro runs.
+
+**Files to land.**
+
+- `core/macros/pick_macro.py` — replace silent filtering with a validated macro plan (`calls + unsupported` or `UnsupportedDeltaError`). Preserve current `param == 'nfin' → resize_device` routing but fail explicitly on target deltas without macro coverage.
+- `core/solver.py` — split `resize_device` into `plan_resize_candidates`, `stage_resize_candidate`, and `commit_resize_candidate` (names illustrative). Keep shrink-only/top-down as the first policy, but express it as candidate selection rather than inline bbox mutation. Ensure each successful macro updates `Device.nfin` / semantic state and committed geometry before the next macro runs.
+- `core/atomic_ops.py` — make OD and other B-tier edits CSP-aware: old cells release, new cells assign, diffusion-sharing/union metadata trails with the same checkpoint. Refactor `extend_od` into planner/applier pieces or add an engine-aware variant; no `grid.b_tier_cells`-only mutation during Stage 5.
+- `core/decoder.py` / shared writeback helper — factor match-and-update logic so committed Stage 5 edits can update both `shape_pool` and output layout data consistently (same helper M9 needs). Prefer full-bbox or identity-based matches; keep POLY partial-bbox only as a documented legacy path until M8 removes it.
+- `core/data_model.py` — add any light-weight candidate/intent dataclasses if they do not fit naturally in `core/solver.py`; avoid making RL/LLM/search a dependency of the MVP candidate interface.
+- Tests — failure-injection transaction tests (LI conflict after FIN/OD staging must leave model/grid/engine unchanged); OD shrink/grow state-parity tests (`grid/model` occupancy and engine/store agree); sequential macro tests where the second resize observes the first's committed model; unsupported-delta planning tests; a multi-POLY regression if partial-bbox legacy support remains.
+
+**Acceptance.**
+
+- A failed Stage 5 macro leaves `LayoutModel.shape_pool`, B-tier occupancy, engine/store state, and semantic `Device`/`Net` fields unchanged from the pre-macro snapshot.
+- A successful Stage 5 macro is visible to the next macro without waiting for Stage 6 decoder output.
+- OD cell changes are represented identically in the model/occupancy store and CSP layer after commit.
+- The MVP `5/7 → 4/6` shrink remains byte-golden or has a documented intentional output change from M8's static FIN correction.
+- Macro planning raises on unsupported target deltas before any partial edit.
+
+**Sequencing.** Do the contract cleanup before expanding M6d routing-dependent macros: add/remove/reroute/buffer insertion multiply the same transaction hazards. It can be staged around M9/M11: (a) short-term M9-compatible path = candidate-first plus edit-stream writeback to `shape_pool`; (b) M11 path = candidate-first plus direct mutation of the unified store. M8 should land before or with the FIN/POLY portions so `nfin` resize becomes active-OD reshape over static FIN.
+
+**Dependencies.** M2/M4 transaction primitives, M4e B-tier engine load, M8 static FIN/POLY direction, M9 shape_pool/writeback normalization, M11 unified store if available. Pairs with M13: Stage 5 commits the authoritative state, Stage 6 exports and validates it without mutating it.
+
+---
+
 ## M13 — Stage 6 artifact/export boundary (post-commit files, scripts, reports, validation)
 
 **Goal.** Stage 6 begins only after Stage 5 has committed the layout model / occupancy store and any post-commit derived layers. It must not repair or mutate internal layout state. Its job is to serialize the committed state into production-facing artifacts — GDS, JSON, CDL, SKILL/edit scripts, reports, visualizations, and validation results — and to provide the engineer/tool interaction surface around those artifacts.
