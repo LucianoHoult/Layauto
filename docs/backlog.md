@@ -397,49 +397,58 @@ Findings against current code:
 
 ---
 
-## M12 — Stage 5 macro semantics cleanup (model/grid/CSP-first edits)
+## M13 — Stage 6 artifact/export boundary (post-commit files, scripts, reports, validation)
 
-**Goal.** Re-anchor Stage 5 edits on the Stage 2–4 substrate instead of letting the L3 macro hand-compute geometry and side-effect several stores independently. The pipeline already builds `LayoutModel + MultiLayerGrid + ConstraintEngine` before resize; a macro should query those structures, choose a candidate edit in grid/cell terms, ask CSP whether the candidate is legal, and only then commit the accepted change back to the model/occupancy store. Physical bboxes and L1 `EditOp`s should be derived from the committed model/grid state, not be the primary source of truth scattered across macro helpers.
+**Goal.** Stage 6 begins only after Stage 5 has committed the layout model / occupancy store and any post-commit derived layers. It must not repair or mutate internal layout state. Its job is to serialize the committed state into production-facing artifacts — GDS, JSON, CDL, SKILL/edit scripts, reports, visualizations, and validation results — and to provide the engineer/tool interaction surface around those artifacts.
 
-**Why this matters.** The current MVP works because the fixture is tiny and the target is shrink-only (`MN0: 5→4`, `MP0: 7→6`), but the code path violates the project invariant "edit only within the legal grid space, then write back one geometric truth":
+**Why this matters.** Today Stage 6 is still a late writeback stage, not just an export stage:
 
-1. **Macro geometry bypasses the model.** `resize_device` computes OD / LI / POLY bboxes directly in helper-local arithmetic, then emits L1 records. That duplicates information the grid already knows (track axes, offsets, legal cells, via coverage) and makes coordinate derivation live in several places instead of one model/grid writeback path.
-2. **Pre-commit side effects are not fully transactional.** Inside one `engine.checkpoint()` bracket, `_emit_fin_removes` drops FIN `ShapeRecord`s from `model.shape_pool`, `_emit_od_modify` calls `extend_od` which mutates `grid.b_tier_cells` and the OD `ShapeRecord`, and only then `_reshape_li_sd_bars` may fail and `engine.restore(cp)`. The engine rolls back; the model/grid side effects do not.
-3. **B-tier CSP can drift from B-tier occupancy.** `extend_od` reprojects OD cells in `grid.b_tier_cells` but does not release/assign the corresponding OD cells in the engine that `load_b_tier_cells_into_engine` seeded. Shrinks leave stale OD assignments in CSP; future grows would create model/grid cells unseen by CSP.
-4. **Successful macros do not make the in-memory model authoritative for the next macro.** Stage 5 stores each `ResizeResult` and Stage 6 later concatenates edit ops, but the next macro in the same run still sees stale `Device.nfin`, `Net.segments`, and LI/POLY `ShapeRecord` geometry unless an ad-hoc updater is called. `apply_resize_to_model` exists but is not the pipeline's commit path.
-5. **Edit-location choice is hardcoded, not a planning seam.** The current policy is top-down shrink (`removed_fin_tracks = old[-Δ:]`). That is acceptable for the MVP target, but the location of an edit is an algorithmic choice: given `Device.inst_name` + target `nfin`, the planner must decide which active rows/cells to change subject to pin access, via coverage, and DRC. Future search/RL/LLM policies should choose candidates here, never mutate geometry directly.
-6. **Unsupported target deltas are too easy to skip.** `pick_macros` filters `None` today. For production, any target CDL delta that Stage 5 cannot cover must fail explicitly before partial modification.
+1. **Stage 6 constructs the output layout by replaying edits over `orig_data`.** `pipeline/run_mvp.py` reopens the original JSON, collects `edit_ops_n` / `edit_ops_p`, runs C1 derivation, then calls `WritebackDecoder.apply(...)` to build `resized_data`. That makes Stage 6 the place where some geometry becomes real, which conflicts with M12's contract that successful Stage 5 macros commit to the canonical model before the next macro runs.
+2. **C1 derivation mutates model geometry during export.** `DRCDerivator._emit_y2_shift_ops` stamps `ShapeRecord.is_derived` / `provenance` and updates `sr.bbox_nm`. Derived-layer refresh is a post-commit model update (or future commit-delta subscription), not a file-export side effect.
+3. **`WritebackDecoder` conflates commit writeback, derived-shape guarding, output-dict mutation, and metadata updates.** Its layer helpers are the match/update logic M9/M12 need, but Stage 6 should not be the canonical state updater. Split shared writeback from artifact serialization.
+4. **Metadata export is hardcoded around the MVP inverter.** Stage 6 re-derives `new_nmos_nfin` / `new_pmos_nfin` from `nfin_targets` and updates output params/devices there. Production export should read committed `Device` / `Net` semantic state, not Stage 1 diff globals or `MN0` / `MP0` naming assumptions.
+5. **SKILL is the production-facing artifact but remains a placeholder.** `writer_skill_script.py` emits bbox-based helper calls whose helpers only print. A real Stage 6 must generate actionable scripts with layer-purpose mapping, units, shape-location dry-run, ambiguity checks, and provenance comments.
+6. **Validation is stdout-oriented and target-golden-centric.** GDS readback and target comparison currently print pass/fail summaries. Production runs usually have no unique golden layout; validation must be expressed as structured artifact contracts.
 
-**FinFET/PCell grounding.** In a real FinFET cell row, FIN stripes are a static grating/backdrop and the ECO changes the active diffusion region (OD) that selects how many fins are electrically active. POLY/gate geometry is likewise better treated as gate/background geometry plus annotation/derived views, not a global partial-bbox side channel. So the long-term `nfin` resize should be "reshape active OD over static FIN, repair dependent LI/via/C1 state". M8 handles the static FIN/POLY backdrop; this milestone makes Stage 5's execution semantics compatible with that model.
+**Stage 6 contract.**
 
-**Target Stage 5 contract.**
+- **Inputs:** committed model / unified-store snapshot; committed change log with provenance; optional regression golden target; site/tool configuration; validation policy.
+- **No internal mutation:** Stage 6 exporters and validators must not mutate `LayoutModel`, `MultiLayerGrid`, CSP engine, or the unified store. Running Stage 6 twice over the same snapshot must be idempotent.
+- **Outputs:** layout artifacts (`.gds`, `.json`, `.cdl`), edit/interaction artifacts (`.il` / SKILL or future Skillbridge script), human reports, machine-readable report JSON, visualizations, and validation result JSON.
+- **Boundary with M12:** L1 `EditOp`s are post-commit event/provenance records. Stage 6 may consume them to produce SKILL/report/diff visualizations, but they are not the only source of committed geometry.
 
-1. **Plan in model/grid terms.** Convert a CDL delta (`ResizeIntent(device_id, target_nfin)`) into one or more `ResizeCandidate`s: active rows/cells to remove/add, affected OD cells, LI segment cells, via-coverage constraints, and expected semantic updates. The MVP policy remains deterministic top-down shrink; it is just isolated behind the candidate interface.
-2. **Check via CSP before model writes.** Candidate application first stages `propose_release` / `propose_assign` (or M11 store-domain equivalents) for every affected CSP-modelled cell: LI/M1 today, OD/VIA0 as B-tier, and later cuts/routing. No persistent `shape_pool` or occupancy mutation is allowed before feasibility succeeds, unless a shared undo log covers it.
-3. **Commit to the single layout state.** After CSP success, update the model/occupancy store immediately. Subsequent macros in the same Stage 5 loop must observe the committed result. Under M9 this means applying the committed edit stream to `shape_pool` and moving B-tier state onto `model`; under M11 it means mutating the unified occupancy store directly and deleting transitional writeback scaffolding.
-4. **Derive L1/output from committed state.** `EditOp`s become a post-commit event/serialization product for Stage 6 and reports. They must carry enough identity to avoid ambiguous matching (full old bbox or shape/store id where available; device/net provenance). They should not be the only place where committed geometry exists.
-5. **Fail loudly on unsupported plans.** Macro planning must either cover every target-relevant delta or raise a typed unsupported-delta error before any macro runs.
+**Validation model: contract-based, not always golden-target-based.**
+
+A hand-built target GDS/JSON is useful for the MVP fixture and regression tests, but it is not a production oracle. Real ECO runs often have many legal layouts and no pre-existing "correct output". Stage 6 validation therefore has four tiers:
+
+1. **Golden regression (fixture-only when available).** If a target GDS/JSON exists, exact comparison may be fatal in CI to preserve byte-golden behaviour. Outside regression mode, target comparison is optional/warning because a different DRC/LVS-clean edit may be valid.
+2. **Self-consistency (always required).** Exported GDS must round-trip to the committed/exported geometry; JSON/CDL/SKILL/report counts must agree with the committed model and change log; layer-map and unit conversions must be explicit and checked.
+3. **Signoff/tool validation (production fatal).** DRC must be clean; LVS must match the target CDL; SKILL dry-run must locate exactly the intended shapes before editing; any Calibre/Virtuoso command drift must surface as a failed validation result, not a silent stdout note.
+4. **Audit/human validation (diagnostic but required artifact).** Reports and visualizations should explain what changed, why, which macro/candidate produced it, which edits are derived, which checks ran, and which checks were skipped or degraded to warnings.
 
 **Files to land.**
 
-- `core/macros/pick_macro.py` — replace silent filtering with a validated macro plan (`calls + unsupported` or `UnsupportedDeltaError`). Preserve current `param == 'nfin' → resize_device` routing but fail explicitly on target deltas without macro coverage.
-- `core/solver.py` — split `resize_device` into `plan_resize_candidates`, `stage_resize_candidate`, and `commit_resize_candidate` (names illustrative). Keep shrink-only/top-down as the first policy, but express it as candidate selection rather than inline bbox mutation. Ensure each successful macro updates `Device.nfin` / semantic state and committed geometry before the next macro runs.
-- `core/atomic_ops.py` — make OD and other B-tier edits CSP-aware: old cells release, new cells assign, diffusion-sharing/union metadata trails with the same checkpoint. Refactor `extend_od` into planner/applier pieces or add an engine-aware variant; no `grid.b_tier_cells`-only mutation during Stage 5.
-- `core/decoder.py` / shared writeback helper — factor match-and-update logic so committed Stage 5 edits can update both `shape_pool` and output layout data consistently (same helper M9 needs). Prefer full-bbox or identity-based matches; keep POLY partial-bbox only as a documented legacy path until M8 removes it.
-- `core/data_model.py` — add any light-weight candidate/intent dataclasses if they do not fit naturally in `core/solver.py`; avoid making RL/LLM/search a dependency of the MVP candidate interface.
-- Tests — failure-injection transaction tests (LI conflict after FIN/OD staging must leave model/grid/engine unchanged); OD shrink/grow state-parity tests (`grid/model` occupancy and engine/store agree); sequential macro tests where the second resize observes the first's committed model; unsupported-delta planning tests; a multi-POLY regression if partial-bbox legacy support remains.
+- `pipeline/run_mvp.py` — replace the monolithic Stage 6 block with an exporter/validator orchestration layer. Consume the committed model snapshot and change log instead of replaying edits over `orig_data` as the canonical output path.
+- `core/drc_derivator.py` — move C1 refresh to Stage 5 post-commit / Stage 5.5 derived-state refresh. Stage 6 should serialize already-derived C1 state.
+- `core/decoder.py` — split shared writeback helpers from artifact serializers. Keep `WritebackDecoder.apply` only as a legacy adapter during transition; it should not be the long-term state-commit mechanism.
+- `io_adapters/gds_io.py` / JSON exporter — export directly from committed model or a pure immutable layout snapshot. Preserve GDS readback, but return structured `ValidationResult` records.
+- `io_adapters/writer_cdl.py` — graduate from MVP inverter hardcoding to committed semantic-model export (device list, pins, params, subckt metadata). Keep the old writer as a fixture adapter if needed.
+- `io_adapters/skill_emitter.py` (new, replacing/retiring `writer_skill_script.py`) — emit production-oriented SKILL with layer-purpose mapping, units, bbox tolerance / shape id matching where available, dry-run assertions, and provenance comments for every operation.
+- Reporting / visualization modules — generate human text + machine-readable JSON reports from committed state, change log, and validation results; feed visualization from committed deltas and mismatch data rather than raw pre-commit edit streams.
+- Tests — Stage 6 idempotency/no-mutation tests; exporter round-trip tests; validation severity policy tests; no-golden production-mode validation tests; golden fixture comparison tests; SKILL dry-run ambiguity tests; report-count consistency tests.
 
 **Acceptance.**
 
-- A failed Stage 5 macro leaves `LayoutModel.shape_pool`, B-tier occupancy, engine/store state, and semantic `Device`/`Net` fields unchanged from the pre-macro snapshot.
-- A successful Stage 5 macro is visible to the next macro without waiting for Stage 6 decoder output.
-- OD cell changes are represented identically in the model/occupancy store and CSP layer after commit.
-- The MVP `5/7 → 4/6` shrink remains byte-golden or has a documented intentional output change from M8's static FIN correction.
-- Macro planning raises on unsupported target deltas before any partial edit.
+- Stage 6 can run twice on the same committed snapshot and produce identical artifacts without changing any internal model/store object.
+- Removing the hand-built target GDS does not make validation meaningless: self-consistency + DRC/LVS + SKILL dry-run + change-envelope checks still produce pass/fail results.
+- With a fixture golden target present, exact GDS/JSON comparison remains available as a regression gate.
+- Reports include every committed change, including derived C1 changes and validation outcomes; they do not count only macro-emitted Stage 5 edit ops.
+- SKILL output is either a real executable/dry-runnable artifact or clearly omitted with a validation warning; placeholder printf-only helpers are not treated as production success.
+- Validation results are machine-readable and can make the pipeline fail according to policy; stdout-only mismatch messages are insufficient.
 
-**Sequencing.** Do the contract cleanup before expanding M6d routing-dependent macros: add/remove/reroute/buffer insertion multiply the same transaction hazards. It can be staged around M9/M11: (a) short-term M9-compatible path = candidate-first plus edit-stream writeback to `shape_pool`; (b) M11 path = candidate-first plus direct mutation of the unified store. M8 should land before or with the FIN/POLY portions so `nfin` resize becomes active-OD reshape over static FIN.
+**Sequencing.** Land after or alongside M12's Stage 5 commit cleanup. The minimal bridge is: Stage 5 still emits an edit/change log, but Stage 6 treats it as provenance/export input while serializers read the committed model snapshot. Full cleanup becomes easier after M9/M11 because the exporter can walk one occupancy/geometric store instead of replaying EditOps over legacy JSON.
 
-**Dependencies.** M2/M4 transaction primitives, M4e B-tier engine load, M8 static FIN/POLY direction, M9 shape_pool/writeback normalization, M11 unified store if available. Independent of Stage 6 redesign except for the shared writeback helper boundary.
+**Dependencies.** M12 commit semantics; M9 shared writeback / shape_pool normalization; M11 unified store when available; M7 real SKILL + Calibre DRC/LVS integration for production signoff. Independent of the long-term choice of search/RL/LLM policy in Stage 5.
 
 ---
 
