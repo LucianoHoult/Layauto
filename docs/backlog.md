@@ -378,6 +378,7 @@ Findings against current code:
 - **"Engine union-find: path-aware split"** (cross-cutting) — requirement transfers to the unified index unchanged.
 - **M6c** — `obstacles.py` targets the store + index if M11 lands first; otherwise one re-point in U1.
 - **M10** — per-cell stamping writes identity *references* into the store; the annotation-home decision carries over unchanged.
+- **M12** — Stage 5 macros target the same store; candidate planning and transaction semantics become the edit-side consumer of the unified substrate.
 
 **Acceptance.**
 - One physical occupant ⇒ exactly one store record, observed identically through model views and the engine; an L2 edit is visible to both with no writeback step.
