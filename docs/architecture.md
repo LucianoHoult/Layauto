@@ -4,15 +4,36 @@
 
 ## 1. Project overview
 
-Layauto is an **incremental layout-automation framework** for FinFET cells. Today's MVP performs one narrow task end-to-end:
+Layauto 是一个面向 FinFET 标准单元的**增量式版图自动修改框架**。它的目标不是从零重新 placement / routing，而是在已有 GDS / 版图几何、CDL 语义信息、LVS annotation 与工艺约束的共同基础上，对目标 netlist 中的局部变化进行受约束、可追踪的增量修改。
 
-> Given an existing inverter buffer GDS (NMOS / PMOS with `nfin = 5 / 7`) and a CDL netlist that asks for `nfin = 4 / 6`, produce a new GDS with the requested fin counts, preserving DRC correctness, while reusing every shape that doesn't need to change.
+当前最小验证场景来自一个单级 inverter fixture：输入版图中 NMOS / PMOS 的 `nfin = 5 / 7`，目标 CDL 要求 `nfin = 4 / 6`。这个场景用于验证端到端链路，但不定义最终架构的全部能力边界；当前实现中的历史妥协也不应被视为目标设计。backlog 中记录的 M8 / M9 / M11 / M12 / M13 等工作，正是为了把该 MVP 从“能跑通的 shrink-only fixture path”收敛为一致的增量版图修改架构。
 
-That narrow task exercises the full pipeline (CDL parse → CSP load → resize solve → writeback → GDS emit) and a subset of the cross-cutting machinery (CSP-based DRC propagation, transactional rollback, derived-shape synthesis). Everything bigger — multi-cell, device add/remove, full routing — sits behind clean seams the design has reserved (see [`backlog.md`](backlog.md)).
+目标架构的核心闭环是：
 
-**What's in scope.** Single-cell, per-cell modifications. Cell boundary fixed. M1 routing positions don't change. DRC subset: LI/M1 spacing, VIA0 enclosure.
+> target intent → semantic / geometric diff → model/grid-level planning → CSP / rule feasibility check → commit to a single authoritative layout state → recompute derived markings / derived views → export and validate artifacts.
 
-**What's not in scope (today).** Multi-cell routing, cell-height changes, M2 and above metal layers, buffer insertion/deletion, multi-patterning constraints, full from-scratch placement/routing.
+其中，`shape_pool + LVS overlay` 提供几何事实源，`Device` / `Net` 提供语义 IR，grid / occupancy / CSP 负责合法状态空间与约束检查。宏不应绕过模型直接手工拼接最终 bbox；它应先在 model/grid/CSP 表示中规划候选修改，经过约束检查后提交到统一布局状态。提交完成后，C1 derived markings（如 NWELL / BOUNDARY，以及后续 VT / PP / NP / DNW 等）和模型 derived views（如 fin attribution、`Device.fin_track_indices`、`Net.segments` / `vias`）都应从该 committed state 重新确定。GDS / CDL / JSON / report 则应由 exporter 从 committed state 导出，而不是由 Stage 6 作为权威状态更新者临时修补。
+
+当前优先支持单 cell 内的 `nfin` 参数变化。长期正确的 FinFET resize 模型应采用固定 standard-cell frame 与 static FIN backdrop：cell boundary、rail / M1 关键位置、整体 FIN grating 不应因为 `nfin` shrink 而整体移动；`nfin` 变化应主要体现为 OD active coverage 的变化，并由 committed state 进一步驱动 LI / VIA / C1 等相关修复或派生。当前代码中直接删除 FIN、部分模型侧副作用不完全事务化、output 与 `shape_pool` 可能漂移等问题，均属于 backlog 中已识别并需要修正的工程债。
+
+**目标范围。**
+
+- 单个标准单元内的增量修改，优先支持 `nfin` resize。
+- 固定 cell frame 的 standard-cell ECO 模型：cell boundary、rail、M1 关键位置、static FIN backdrop 原则上保持稳定。
+- 以 `shape_pool + LVS overlay` 作为几何事实源，以 `Device` / `Net` 作为语义事实源。
+- 在 model/grid/CSP 层规划和检查修改，再提交到统一布局状态。
+- 从 committed state 重算 derived markings / derived views。
+- 从 committed state 导出 GDS / CDL / JSON / report，并进行结构化验证。
+- 对 unsupported target delta 显式失败，避免静默跳过造成部分修改。
+
+**暂不覆盖或后续扩展范围。**
+
+- 跨 cell / multi-cell routing 与全局优化。
+- device add / device remove、buffer insertion / deletion、net reroute 等 routing-dependent macros。
+- M2 及以上完整金属层处理。
+- multi-patterning / color / cut-mask 等完整制造约束。
+- 完整 foundry DRC / LVS signoff 闭环。
+- 从零 placement / routing 或由 netlist 合成完整新版图。
 
 ## 2. Pipeline flow
 
