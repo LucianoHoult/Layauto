@@ -155,7 +155,9 @@ Stage 3 初始化“判断候选是否合法”所需的约束上下文。它读
 - 接入 Stage 2 的 occupancy store 与 connectivity index。
 - 标记固定几何、blockage、cut barrier、via edge、diffusion sharing 等约束语义。
 
-v2 中，constraint engine 不应长期维护一份与 layout store 互相漂移的 occupancy copy，也不应把 coordinate system 的构建职责从 Stage 2 重新拿走。短期实现可以有检查用 cache，但必须有明确 owner、失效规则与测试；长期目标是 engine 在统一 store 和 coordinate system 上叠加 domain / trail / rule-checking 逻辑。
+v2 的目标合同是：constraint engine 不拥有 layout state，也不维护一份可与 layout store 漂移的 occupancy copy；它只在 Stage 2 的 coordinate system、occupancy 与 connectivity 之上叠加 rule predicates、domain、trail、propagation context 和 candidate feasibility API。
+
+允许为了性能建立检查用 cache / index，但这些 cache 必须可由 Stage 2 state 重建，有明确 invalidation 规则，不作为 authoritative occupancy / connectivity，也不能被 planner、transaction 或 exporter 当作 layout truth。
 
 ### 2.5 Stage 4：修改意图与候选规划
 
@@ -192,12 +194,34 @@ Stage 5 的合同：
 
 - 失败的 candidate 不得留下 partial edit。
 - 成功的 candidate 必须对下一个 candidate 可见，不需要等 Stage 6 decoder 回放。
+- Commit 的目标是 authoritative layout state，而不是 output JSON、legacy edit stream 或 exporter-side patch。
 - Derived markings 是 post-commit state refresh，不是 export side effect。
-- L1 EditOp / ShapeEditRecord 是 post-commit event 和审计记录，不是唯一几何事实源。
+- v2 不把 legacy L1 EditOp / ShapeEditRecord 作为核心状态模型；Stage 5 产生的是 ChangeSet / CommitEvent，Stage 6 如需 SKILL 或 diff visualization，可从 ChangeSet 派生 artifact-specific ExportEdit。任何 edit event 都不是 authoritative geometry。
+
+Stage 5 commit 后的 authoritative layout state 至少包括：
+
+- semantic state：committed `Device` / `Net` / pins / params。
+- geometry store：committed drawn shapes、shape ids、layer / bbox / purpose、derived / non-derived 标记与 annotation summary。
+- occupancy state：A-tier / B-tier occupancy、blockage、via、cut、OD / diffusion sharing。
+- connectivity state：connected components、via edges、cut barriers、component-to-net summary。
+- derived layout geometry：C1 derived markings，例如 NWELL / BOUNDARY / VT / PP / NP / DNW。
+- derived non-geometry views：segments、vias、fin attribution、gate tracks、annotation coverage 等可重算视图。
+- commit metadata：ChangeSet、CommitEvent、provenance、validation expectations。
+
+Immutable snapshot 是上述 committed state 的只读冻结视图，供 Stage 6 export / validation 使用。实现上它可以是 deep copy、copy-on-write view、persistent data structure 或 immutable wrapper；architecture 只要求 Stage 6 视角下它稳定、只读、可重跑。
 
 ### 2.7 Stage 6：artifact export 与 validation
 
-Stage 6 只读取 committed snapshot、commit log、site/tool config 和 validation policy。
+Stage 6 只读取 committed snapshot、ChangeSet / CommitEvent、site/tool config、export policy、validation policy，以及可选的 fixture golden target。它不读取 mutable transaction object，也不把 Stage 1 raw evidence 或 target diff globals 当作输出事实源。
+
+Stage 6 输入包括：
+
+- immutable committed snapshot。
+- ChangeSet / CommitEvent。
+- site/tool config。
+- export policy。
+- validation policy。
+- optional golden target。
 
 输出包括：
 
@@ -291,7 +315,7 @@ Grid 不应长期拥有 occupancy。否则 A-tier、B-tier、engine cells、shap
 - blockage / cut / via / diffusion sharing state。
 - commit-visible current state。
 
-短期实现可以分层存储，但 architecture 要求只有一个 authoritative state owner；其它对象是 view、cache 或 transaction overlay。
+实现可以分层存储，但 architecture 要求只有一个 authoritative state owner；其它对象是 view、cache 或 transaction overlay。
 
 ### 3.6 Connectivity index
 
@@ -634,9 +658,9 @@ Transaction scope 必须覆盖：
 
 ### 9.2 Commit to authoritative state
 
-Commit 的目标是 authoritative layout state，不是 output JSON，也不是 EditOp stream。成功 commit 后，后续 planner、constraint engine、derived refresh 和 exporter 都应读取同一个 committed state。
+Commit 的目标是 authoritative layout state，不是 output JSON，也不是 legacy EditOp stream。成功 commit 后，后续 planner、constraint engine、derived refresh 和 exporter 都应读取同一个 committed state。
 
-短期实现如果仍通过 EditOp 更新部分状态，必须有明确的同步机制和 parity tests；长期目标是直接 mutation / commit 到统一 store。
+Authoritative layout state 是一组有明确所有权关系的 committed state graph，至少包括 semantic state、geometry store、occupancy state、connectivity state、derived layout geometry、derived non-geometry views 和 commit metadata。实现可以把这些对象拆分到不同模块，但 commit 必须保证它们在同一 transaction 边界内一致更新或一致回滚。
 
 ### 9.3 Rollback consistency
 
@@ -651,13 +675,15 @@ Commit 的目标是 authoritative layout state，不是 output JSON，也不是 
 
 ### 9.4 Derived markings refresh
 
-C1 derived markings 应在 commit 后根据 affected neighborhood 刷新。初期可以全量 recompute；目标是 subscription model：commit delta 直接驱动局部 recompute。
+Derived markings 的区分来自 layer tier 对物理实体的抽象。C1 derived markings 是会进入 exported layout 的几何层，例如 NWELL、BOUNDARY、VT、PP、NP、DNW；它们属于 layout state 的一部分，但其几何来源是 committed A/B-tier state、device metadata 与 tech rules，而不是 macro 手写 shape。
 
-Derived marking 的来源应是 committed state + tech rules，而不是 macro 手写 shape。
+C1 derived markings 应在 commit 后根据 affected neighborhood 刷新。实现可以选择全量 recompute 或 subscription-driven incremental recompute；architecture 要求 derived refresh 发生在 Stage 5 commit 之后、Stage 6 export 之前，并作为 committed snapshot 的一部分被导出。
 
 ### 9.5 Derived views refresh
 
-Segments、vias、fin attribution、gate tracks、annotation coverage 等 derived views 必须从 committed state 重算或失效。它们可以 cache，但不能被当作独立 truth。
+Derived views 与 C1 derived markings 不同：它们通常不是单独的 exported physical layer，而是对 committed state 的查询视图或 materialized cache。Segments、vias、fin attribution、gate tracks、annotation coverage 等 derived views 必须从 committed state 重算或失效。
+
+Derived views 可以为了 planner、constraint、report 或 debug 被缓存，但不能被当作独立 truth；任何 cache 都必须能从 authoritative layout state 重建。
 
 ### 9.6 Commit log / change set / provenance
 
@@ -673,17 +699,27 @@ Commit log 应记录：
 
 这使报告、debug、DRC/LVS feedback 和回归定位可以从 artifact 追溯到具体 intent。
 
-### 9.7 EditOp 的 post-commit 定位
+### 9.7 ChangeSet / CommitEvent / ExportEdit 的定位
 
-EditOp / ShapeEditRecord 是 post-commit event、export hint 和审计记录。它们可以用于 SKILL、report、diff visualization，但不能成为唯一 committed geometry。
+v2 不把 legacy L1 EditOp / ShapeEditRecord 作为核心状态模型。Stage 5 commit 产生 ChangeSet / CommitEvent，用于描述 semantic、geometry、occupancy、connectivity 与 derived refresh delta，并记录 provenance。
 
-Derived-shape edit rejection 仍然重要：macro 不应直接覆写 C1 derived shape，除非通过 derived refresh 或明确的 derived-rule provenance。
+Stage 6 如需生成 SKILL、diff visualization 或 human report，可以从 ChangeSet 派生 artifact-specific ExportEdit。ExportEdit 是 artifact 指令，不是 committed geometry；legacy EditOp 只应作为 MVP adapter 兼容层存在，不应进入 v2 核心 architecture。
+
+Derived-shape edit rejection 仍然重要：planner / macro 不应直接覆写 C1 derived shape，除非通过 derived refresh 或明确的 derived-rule provenance。
 
 ## 10. Export、生产工具交互与验证
 
 ### 10.1 Stage 6 no-mutation boundary
 
-Stage 6 输入是 immutable committed snapshot 和 commit log。它不允许修改内部状态。这个边界使导出可重跑、可比较、可审计。
+Stage 6 输入是 immutable committed snapshot、ChangeSet / CommitEvent、site/tool config、export policy 和 validation policy。它不允许修改内部状态。这个边界使导出可重跑、可比较、可审计。
+
+Stage 6 禁止：
+
+- 修改 layout_store / occupancy / connectivity / semantic IR。
+- 运行 derived refresh。
+- replay legacy edit stream 来生成 canonical geometry。
+- 根据 target diff globals 修改输出 params。
+- 把 validation mismatch 静默降级为 stdout。
 
 ### 10.2 GDS / JSON / CDL export
 
@@ -694,6 +730,17 @@ Exporter 应从 snapshot 生成：
 - CDL：从 semantic IR 输出 device / net / params，不从 Stage 1 diff globals 硬编码。
 
 输出顺序和单位转换应可测试，避免 byte-golden drift 无法解释。
+
+Stage 6 artifact 从 snapshot / ChangeSet 的读取边界如下：
+
+| Artifact | 从 snapshot 读取 | 从 ChangeSet / CommitEvent 读取 | 禁止事项 |
+|----------|------------------|----------------------------------|----------|
+| GDS | geometry store、derived markings、layer map、units | 可选 shape order / provenance reference | 不 replay legacy edit stream 修补 geometry |
+| JSON snapshot | semantic、geometry、occupancy、connectivity、annotation summary | commit id、parent id、change summary | 不重新计算权威状态 |
+| CDL | semantic IR snapshot | semantic delta provenance | 不从 Stage 1 diff globals 硬编码 |
+| SKILL | shape ids、bbox、layer-purpose、snapshot geometry | ExportEdit、provenance | 不用不确定 bbox 静默删除；必须 dry-run / assert |
+| Human report | snapshot summary | intent、candidate、constraint、commit、validation | 不只统计 macro edit ops |
+| Validation result | snapshot、artifacts、policy | commit id、validation expectations | 不只打印 stdout |
 
 ### 10.3 SKILL / Virtuoso interaction
 
@@ -721,9 +768,11 @@ SKILL / Virtuoso script 是生产交互 artifact。它应包含：
 Validation 分层：
 
 1. **Golden regression。** 用于 fixture / CI，检查输出是否与预期 golden 一致。
-2. **Self-consistency。** artifact 与 snapshot / commit log / semantic IR 一致。
+2. **Self-consistency。** artifact 与 snapshot / ChangeSet / semantic IR 一致。
 3. **Signoff validation。** DRC/LVS/SKILL dry-run 等生产检查。
 4. **Audit validation。** human report 和 visualization 可解释修改。
+
+Self-consistency 至少应检查：GDS round-trip geometry 与 snapshot geometry 一致；CDL export 与 semantic IR snapshot 一致；JSON export 与 snapshot content 一致；SKILL dry-run 能定位 snapshot 指定 shape；report 中 change counts 与 ChangeSet 一致；derived markings 已经包含在 snapshot 中，而不是 Stage 6 临时生成。
 
 没有 golden target 的生产 ECO 仍然可以通过 self-consistency + signoff + audit 给出 pass/fail。
 
