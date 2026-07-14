@@ -703,7 +703,7 @@ Commit log 应记录：
 
 v2 不把 legacy L1 EditOp / ShapeEditRecord 作为核心状态模型。Stage 5 commit 产生 ChangeSet / CommitEvent，用于描述 semantic、geometry、occupancy、connectivity 与 derived refresh delta，并记录 provenance。
 
-Stage 6 如需生成 SKILL、diff visualization 或 human report，可以从 ChangeSet 派生 artifact-specific ExportEdit。ExportEdit 是 artifact 指令，不是 committed geometry；legacy EditOp 只应作为 MVP adapter 兼容层存在，不应进入 v2 核心 architecture。
+Stage 6 如需生成 SKILL、diff visualization 或 human report，可以从 ChangeSet 派生 artifact-specific ExportEdit。ExportEdit 是 artifact 指令，不是 committed geometry；legacy EditOp 不进入 v2 architecture。
 
 Derived-shape edit rejection 仍然重要：planner / macro 不应直接覆写 C1 derived shape，除非通过 derived refresh 或明确的 derived-rule provenance。
 
