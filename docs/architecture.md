@@ -88,8 +88,8 @@ v2 采用连续的 Stage 1–6，不再使用 MVP 中的 “Stage 1.5”。Calib
 | Stage | 名称 | 目标职责 | 不应承担的职责 |
 |-------|------|----------|----------------|
 | Stage 1 | 输入证据获取 | 读取 CDL、GDS/bbox、Calibre/LVS query bundle、site config，形成原始 evidence | 不构建工作状态，不做几何修改 |
-| Stage 2 | 事实归一化与状态构建 | 构建语义 IR、几何 store、annotation overlay、occupancy / derived views 初始状态 | 不做 ECO 修改，不复制多个权威几何源 |
-| Stage 3 | 约束上下文初始化 | 初始化 grid 坐标系统、constraint engine、rule context、connectivity context | 不规划修改，不提交状态 |
+| Stage 2 | 事实归一化与状态构建 | 构建语义 IR、几何 store、坐标系统、annotation overlay、occupancy / connectivity / derived views 初始状态 | 不做 ECO 修改，不复制多个权威几何源 |
+| Stage 3 | 约束上下文初始化 | 基于 Stage 2 的坐标系统、occupancy 与 connectivity 初始化 constraint engine、rule context、domain / trail | 不重新拥有 layout state，不规划修改，不提交状态 |
 | Stage 4 | 修改意图与候选规划 | 把 target diff / intent 转换为 candidate plans | 不绕过 state / grid 手工拼最终 bbox，不提前 side-effect |
 | Stage 5 | 可行性检查、事务提交与派生刷新 | 对 candidate 做约束检查，在 transaction 内提交到权威状态，并刷新 derived state / commit log | 不导出文件，不把 output 当状态源 |
 | Stage 6 | 导出、生产工具交互与验证 | 从 committed snapshot 导出 artifacts，运行 self-consistency / signoff / report | 不 mutate LayoutStore、occupancy、connectivity 或 semantic IR |
@@ -129,33 +129,33 @@ Stage 2 产生的五类主要事实对象如下：
 | Semantic IR | CDL source/target、target diff、`ixref` / `net_xref` identity join | `domain.circuit`、`domain.intent` | planner、transaction、CDL exporter、report / validation | 不保存可从 geometry + annotation 推导的长期几何副本 |
 | Geometry store | GDS round-trip / `bbox_by_layer` | `state.layout_store` | annotation overlay、occupancy projection、planner、transaction、exporter | 不直接解释 schematic identity，不丢弃 unannotated geometry |
 | Annotation overlay | Calibre query bundle：`ixref`、`net_xref`、`device_info`、`net_shapes` | `annotation.layer_overlay`，结果写入 layout store / occupancy references | planner、constraints、DRC/LVS localization、coverage report | 不替代 GDS 几何事实，不直接执行 ECO 修改 |
-| Occupancy state | geometry store + layer tier + grid coordinate + annotation summary | `state.occupancy` | constraint engine、planner、transaction、connectivity、derived views | 不由 grid 或 constraint engine 长期拥有，不成为第二套几何事实 |
+| Occupancy state | geometry store + layer tier + Stage 2 coordinate system + annotation summary | `state.occupancy` | constraint engine、planner、transaction、connectivity、derived views | 不由 coordinate system、grid adapter 或 constraint engine 长期拥有，不成为第二套几何事实 |
 | Connectivity state | occupancy + via edges + cut barriers + diffusion sharing / split policy | `state.connectivity` | constraint engine、router、transaction、validation / report | 不等同于 `net_id` label，不承担 semantic netlist ownership |
 
-这些对象的产生顺序是有依赖关系的：CDL evidence 先形成 semantic IR；GDS evidence 先形成 geometry store；Calibre evidence 通过 layer mapping 和 tolerance policy 形成 annotation overlay；geometry store 再结合 grid 坐标和 layer tier 投影为 occupancy；occupancy 再结合 via / cut / diffusion sharing 语义形成 connectivity。Derived views（segments、vias、gate tracks、fin attribution、annotation coverage 等）只从这些权威对象重算或缓存，不作为新的事实源。
+这些对象的产生顺序是有依赖关系的：CDL evidence 先形成 semantic IR；GDS evidence 先形成 geometry store；tech layer map / rule deck 先形成 Stage 2 coordinate system（layer grid、track coordinate、B-tier axes）；Calibre evidence 通过 layer mapping 和 tolerance policy 形成 annotation overlay；geometry store 再结合 coordinate system 和 layer tier 投影为 occupancy；occupancy 再结合 via / cut / diffusion sharing 语义形成 connectivity。Derived views（segments、vias、gate tracks、fin attribution、annotation coverage 等）只从这些权威对象重算或缓存，不作为新的事实源。
 
 Stage 2 的关键原则：
 
 - GDS/bbox 是几何事实源；LVS shapes 是 annotation 与 identity evidence，不是完整几何替代品。
 - `Device` / `Net` 是语义 IR，不应长期保存可从 layout store 推导的几何副本。
 - Annotation overlay 是 evidence-to-identity 的解释过程；其结果可以写入 state references，但 overlay 过程本身不拥有 layout state。
-- Grid 是坐标系统，不能成为 layout occupancy 的长期 owner。
+- Grid / coordinate system 在 Stage 2 建立，用于 geometry-to-cell projection；它是坐标系统，不能成为 layout occupancy 的长期 owner。
 - Constraint engine 可以建立检查用 cache / trail，但不能成为 occupancy 的另一份权威副本。
 - Unannotated shapes 必须保留，并按保守策略作为 blockage / suspect geometry 进入后续判断。
 
 ### 2.4 Stage 3：约束上下文初始化
 
-Stage 3 初始化“判断候选是否合法”所需的上下文。它读取 Stage 2 的 layout state，但不修改它。
+Stage 3 初始化“判断候选是否合法”所需的约束上下文。它读取 Stage 2 已经建立的 coordinate system、layout state、occupancy 与 connectivity，但不重新构建或拥有这些状态。
 
 主要内容：
 
-- 建立 layer grid、track coordinate、B-tier axes 等坐标系统。
+- 读取 Stage 2 已建立的 layer grid、track coordinate、B-tier axes 等坐标系统。
 - 加载 DRC rule records 与 rule predicates。
 - 建立 constraint engine 的 domain / trail / propagation context。
-- 接入 occupancy store 与 connectivity index。
+- 接入 Stage 2 的 occupancy store 与 connectivity index。
 - 标记固定几何、blockage、cut barrier、via edge、diffusion sharing 等约束语义。
 
-v2 中，constraint engine 不应长期维护一份与 layout store 互相漂移的 occupancy copy。短期实现可以有 cache，但必须有明确 owner、失效规则与测试；长期目标是 engine 在统一 store 上叠加 domain / trail / rule-checking 逻辑。
+v2 中，constraint engine 不应长期维护一份与 layout store 互相漂移的 occupancy copy，也不应把 coordinate system 的构建职责从 Stage 2 重新拿走。短期实现可以有检查用 cache，但必须有明确 owner、失效规则与测试；长期目标是 engine 在统一 store 和 coordinate system 上叠加 domain / trail / rule-checking 逻辑。
 
 ### 2.5 Stage 4：修改意图与候选规划
 
@@ -275,6 +275,8 @@ Grid 的职责是坐标转换和合法离散空间定义：
 - layer orientation、pitch、offset。
 - B-tier axes definition。
 - routing preferred direction。
+
+因为 occupancy projection 依赖这些坐标定义，coordinate system 必须在 Stage 2 的事实归一化期间建立；Stage 3 只读取它来初始化约束上下文。
 
 Grid 不应长期拥有 occupancy。否则 A-tier、B-tier、engine cells、shape_pool 会形成多个状态副本，导致 commit 后漂移。
 
