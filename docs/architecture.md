@@ -120,22 +120,27 @@ Stage 1 不应做的事：
 
 ### 2.3 Stage 2：事实归一化与 layout state 构建
 
-Stage 2 把 Stage 1 evidence 转换为 v2 的初始权威状态。
+Stage 2 的核心不是创建某个固定 package tree，而是把 Stage 1 的 evidence 归一化为几类**来源清楚、生命周期不同、后续消费者明确**的事实对象。下面出现的 `domain.*` / `state.*` / `annotation.*` 名称是建议实现落点，用于表达职责边界；真正的架构要求是数据所有权和依赖方向，而不是这些目录名本身。
 
-主要产物：
+Stage 2 产生的五类主要事实对象如下：
 
-- `domain.circuit` 中的 semantic IR：`Device`、`Net`、pins、parameters、target intent。
-- `state.layout_store` 中的几何事实：每个 GDS shape 的 layer、bbox、purpose、source evidence、stable id。
-- `annotation.layer_overlay` 的 per-cell / per-shape annotation：`device_id`、`net_id`、pin role、color、coverage 信息。
-- `state.occupancy` 的 A/B-tier occupancy 初始状态。
-- `state.connectivity` 的初始连通性索引。
-- derived views：segments、vias、gate tracks、fin attribution 等只作为视图或可重算 cache。
+| 归一化产物 | 主要来源 | 建议实现落点 | 后续消费者 | 不应承担的职责 |
+|------------|----------|--------------|------------|----------------|
+| Semantic IR | CDL source/target、target diff、`ixref` / `net_xref` identity join | `domain.circuit`、`domain.intent` | planner、transaction、CDL exporter、report / validation | 不保存可从 geometry + annotation 推导的长期几何副本 |
+| Geometry store | GDS round-trip / `bbox_by_layer` | `state.layout_store` | annotation overlay、occupancy projection、planner、transaction、exporter | 不直接解释 schematic identity，不丢弃 unannotated geometry |
+| Annotation overlay | Calibre query bundle：`ixref`、`net_xref`、`device_info`、`net_shapes` | `annotation.layer_overlay`，结果写入 layout store / occupancy references | planner、constraints、DRC/LVS localization、coverage report | 不替代 GDS 几何事实，不直接执行 ECO 修改 |
+| Occupancy state | geometry store + layer tier + grid coordinate + annotation summary | `state.occupancy` | constraint engine、planner、transaction、connectivity、derived views | 不由 grid 或 constraint engine 长期拥有，不成为第二套几何事实 |
+| Connectivity state | occupancy + via edges + cut barriers + diffusion sharing / split policy | `state.connectivity` | constraint engine、router、transaction、validation / report | 不等同于 `net_id` label，不承担 semantic netlist ownership |
+
+这些对象的产生顺序是有依赖关系的：CDL evidence 先形成 semantic IR；GDS evidence 先形成 geometry store；Calibre evidence 通过 layer mapping 和 tolerance policy 形成 annotation overlay；geometry store 再结合 grid 坐标和 layer tier 投影为 occupancy；occupancy 再结合 via / cut / diffusion sharing 语义形成 connectivity。Derived views（segments、vias、gate tracks、fin attribution、annotation coverage 等）只从这些权威对象重算或缓存，不作为新的事实源。
 
 Stage 2 的关键原则：
 
 - GDS/bbox 是几何事实源；LVS shapes 是 annotation 与 identity evidence，不是完整几何替代品。
 - `Device` / `Net` 是语义 IR，不应长期保存可从 layout store 推导的几何副本。
+- Annotation overlay 是 evidence-to-identity 的解释过程；其结果可以写入 state references，但 overlay 过程本身不拥有 layout state。
 - Grid 是坐标系统，不能成为 layout occupancy 的长期 owner。
+- Constraint engine 可以建立检查用 cache / trail，但不能成为 occupancy 的另一份权威副本。
 - Unannotated shapes 必须保留，并按保守策略作为 blockage / suspect geometry 进入后续判断。
 
 ### 2.4 Stage 3：约束上下文初始化
@@ -737,9 +742,9 @@ Visualization 应从 committed delta 和 validation mismatch 生成，而不是�
 
 ## 11. v2 模块组织
 
-### 11.1 目标 package layout
+### 11.1 建议 package layout
 
-v2 模块应按职责边界组织，而不是沿用 MVP 的 `core/solver.py` 聚合式结构。
+下面的 package layout 是一种建议实现形态，用于把前文的职责边界落到代码组织上。它不是唯一可行目录结构；目录名可以调整，但依赖方向和状态所有权不能反转。尤其需要保持：semantic domain 不依赖 IO / solver，state 拥有权威 layout 状态，annotation 只负责 evidence-to-identity overlay，constraints 消费状态但不拥有长期状态，export 只读 snapshot。
 
 ```text
 layauto_v2/
