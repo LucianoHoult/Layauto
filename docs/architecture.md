@@ -201,7 +201,7 @@ Stage 5 的合同：
 Stage 5 commit 后的 authoritative layout state 至少包括：
 
 - semantic state：committed `Device` / `Net` / pins / params。
-- geometry store：committed drawn shapes、shape ids、layer / bbox / purpose、derived / non-derived 标记与 annotation summary。
+- geometry store：committed drawn shapes、shape ids、layer / bbox / purpose、edit policy / derivation policy、annotation summary 与 provenance。
 - occupancy state：A-tier / B-tier occupancy、blockage、via、cut、OD / diffusion sharing。
 - connectivity state：connected components、via edges、cut barriers、component-to-net summary。
 - derived layout geometry：C1 derived markings，例如 NWELL / BOUNDARY / VT / PP / NP / DNW。
@@ -486,6 +486,8 @@ artifact views 从 immutable snapshot、ChangeSet / CommitEvent、export policy 
 
 NWELL、BOUNDARY、VT、PP、NP、DNW 等 C1 derived markings 不是普通 read view。它们是由 committed A/B-tier state、device metadata 和 tech rules 派生出来的 layout geometry。刷新时机是 Stage 5 commit 之后、Stage 6 export 之前；刷新后进入 committed snapshot。Stage 6 只序列化它们，不再临时修改它们。
 
+这里的 C1 derived layout geometry 指 post-commit refresh 后进入 snapshot 的 derived markings；FIN static backdrop 虽然也禁止普通 macro 直接编辑，但不是 C1 derivator 输出。实现层如果短期复用 `derived` 标记作为 direct-edit rejection seam，必须把它理解为 edit guard 的过渡承载方式，而不是把 FIN 归入 C1。
+
 ### 3.8 Snapshot、commit log 与 provenance
 
 每次成功 commit 应产生：
@@ -519,59 +521,180 @@ Immutable snapshot 是 committed state 的只读冻结视图，至少覆盖：
 
 ## 4. Layer tier 与物理实体抽象
 
-### 4.1 Tier A：1D track / backdrop / routing layers
+第 4 节定义 layer tier、物理实体、编辑策略与 connectivity 语义之间的关系。v2 中，**tier 只描述几何离散化方式**，不直接等同于“是否可编辑”或“是否由 derivator 生成”。一个 layer 的完整架构属性至少包括：
 
-Tier A 表示可投影到一维 track 的层，例如 FIN、POLY、LI、M1。它们共享 track abstraction，但 editability 不相同：
+- **tier**：如何投影到 coordinate / occupancy abstraction，例如 A-tier 1D track、B-tier 2D cell、C1 post-commit derived geometry、C2 auxiliary / marker geometry。
+- **role**：物理或工艺角色，例如 fin、gate、interconnect、via、cut、diffusion、well、boundary、text、marker。
+- **edit policy**：是否允许 planner / transaction 直接编辑，例如 static backdrop、entity-constrained edit、routing-editable、derived-refresh-only、auxiliary-policy-controlled。
+- **connectivity policy**：是否形成 conductor、via edge、cut barrier、diffusion sharing / split、blockage 或 annotation carrier。
+- **derivation policy**：是否由 committed A/B-tier state 和 tech rules 刷新，或是否只是静态 PCell / foundry backdrop，不随 resize 直接改变。
 
-- FIN 是 static backdrop，不是 resize 中的 editable layer。
-- POLY / gate 通常是 device topology 的关键实体，不能简单按 bbox 手工改动。
-- LI / M1 是 routing / local interconnect，可作为候选修改的一部分，但必须经过 occupancy 和 DRC 检查。
+因此，v2 不应把 “Tier A” 理解为“都用 TrackSegment 独立存储并可由 macro 直接改”，也不应把 “derived” 只理解为 C1 derivator 输出。FIN 是 A-tier coordinate layer，但在 resize 语义下是 static backdrop；NWELL / BOUNDARY / VT / PP / NP / DNW 是 C1 derived markings；二者都不可被普通 macro 直接 patch，但原因和刷新方式不同。
 
-因此 Tier A 的共同点是坐标抽象，不代表都可被 macro 任意 edit。
+### 4.1 Tier A：1D coordinate / backdrop / routing layers
+
+Tier A 表示主要可投影到一维 track coordinate 的层，例如 FIN、POLY、LI、M1。Tier A 的共同点是 coordinate abstraction，而不是相同的可编辑性或相同的工作表示。
+
+v2 中 Tier A 至少分三类：
+
+- **Static backdrop layer：FIN。**
+  - FIN 由 foundry / PCell / cell architecture 给出固定 pitch 的连续 backdrop。
+  - `nfin` resize 不删除、不新增 FIN geometry。
+  - Active fin attribution 由 `FIN occupancy ∩ OD active occupancy ∩ device attribution / gate footprint` 推导。
+  - 为了防止 legacy macro 再发出 FIN edit，FIN 应具备明确的 `no_direct_edit` / `static_backdrop` 标记；迁移期可以复用 `derived` rejection seam，但架构上应区分“静态 backdrop”与“C1 derived marking”。
+- **Entity-constrained gate layer：POLY / gate。**
+  - POLY 是 device topology、gate recognition、pin access、cut / contact 语义的一部分。
+  - 不能把 POLY 当作普通 rectangle 通过局部 bbox arithmetic 任意修改。
+  - Gate 相关变更必须通过 physical entity model、device recognition、cut / contact policy、connectivity 和 DRC constraints 处理。
+  - 对 v2 初始 `nfin` resize，POLY 通常保持不变；若端点或 pin access 受影响，也必须作为候选计划的一部分经过 Stage 5 检查和提交。
+- **Routing / local interconnect layer：LI / M1。**
+  - LI / M1 可以作为候选 routing 修改的一部分。
+  - 修改入口是 planner / router 生成 candidate path 或 candidate shape change，再由 Stage 5 transaction 检查并提交。
+  - LI / M1 drawn geometry 仍归 layout store；其离散占用归 occupancy store；连续 segment、span、net view 只是 read view / export view，不是独立状态 owner。
+
+Tier A projection 的目标是服务 occupancy、connectivity 与 constraints。当前 MVP 中 `TrackSegment`、CSP cell assignment、output JSON 等不能继续作为 LI / M1 的独立几何事实源；它们在 v2 中只能是 occupancy query、transaction overlay、constraint cache 或 artifact view。
 
 ### 4.2 Tier B：2D occupancy layers
 
-Tier B 表示需要二维 cell occupancy 的层，例如 OD、VIA0、CPO、M0_CUT、FIN_CUT。
+Tier B 表示需要二维 cell occupancy 的层，例如 OD、VIA0、CPO、M0_CUT、FIN_CUT。Tier B 是 v2 物理实体抽象的关键层，因为它直接承载 active region、via edge、cut barrier 和 diffusion sharing / split 等语义。
 
-- OD 表示 active diffusion coverage，并承载 device ownership / sharing 关系。
-- VIA0 表示跨层 connectivity edge。
-- CUT layers 表示 barrier / split 语义。
+- **OD / diffusion。**
+  - OD 表示 active diffusion coverage，是 `nfin` resize 的核心作用对象。
+  - 对 `nfin` resize，目标是调整 device active OD coverage，使被 OD 覆盖并归属该 device 的 active fin 数量变化，而不是删除 FIN。
+  - OD occupancy 必须携带或可定位 device attribution、pin role、sharing / split、blockage / suspect 标记。
+  - 多 device 共享 diffusion 时，sharing 不应只保存在 `Device.shared_with[]` 之类 metadata 中，而应体现在 occupancy、connectivity component 与 semantic attribution 的一致关系中。
+- **VIA layer：VIA0。**
+  - VIA0 drawn shape 进入 layout store。
+  - VIA0 occupied cell 进入 occupancy store。
+  - VIA0 的电学作用由 connectivity state 中的跨层 via edge 表达。
+  - 不应同时用 `ViaInstance`、B-tier cell、LI wire cell、M1 wire cell、CSP assignment 等多个可漂移工作表示来表达同一个 physical via。
+  - 如保留 `ViaInstance` 类型，只能作为只读查询 / API 兼容 shim / export view，不能拥有独立状态。
+- **CUT layers：CPO、M0_CUT、FIN_CUT。**
+  - CUT 是 connectivity barrier，而不是普通 blockage。
+  - CUT 会改变 component relation，并影响 rule checking、routing feasibility、device recognition 与 diffusion split / sharing 判断。
+  - CUT occupancy 必须纳入 transaction checkpoint / restore / commit，并触发 connectivity invalidation 或增量更新。
 
-Tier B 应投影到 occupancy store，并被 constraint / connectivity 共同消费。
+Tier B 的 projection 应写入唯一 occupancy store。Grid 只提供 B-tier axes 和 bbox-to-cell projection，不拥有 `b_tier_cells` 这类 layout content。Constraint engine 可以缓存检查结果，但不能成为 Tier B occupancy 的第二份权威副本。
 
-### 4.3 Tier C1：derived markings
+### 4.3 Tier C1：post-commit derived layout geometry
 
-Tier C1 包括 NWELL、BOUNDARY、VT、PP、NP、DNW 等 derived markings。它们不应由 macro 直接手工 patch，而应从 committed A/B-tier state、device metadata 和 tech rules 派生。
+Tier C1 包括 NWELL、BOUNDARY、VT、PP、NP、DNW 等由 committed layout state 和 tech rules 派生的 layout geometry。它们不是 planner / macro 的直接编辑目标。
 
-C1 refresh 发生在 Stage 5 commit 之后、Stage 6 export 之前。导出阶段只序列化已经刷新的 C1 state。
+C1 的合同是：
 
-### 4.4 Tier C2：editable annotations
+- 输入来自 committed A/B-tier state、semantic device metadata、tech rules 和 derivation policy。
+- 刷新时机在 Stage 5 成功 commit 之后、Stage 6 export 之前。
+- 刷新结果进入 committed snapshot，成为 Stage 6 可序列化的 layout geometry。
+- Stage 6 只读取并导出 C1 state，不临时修补 C1。
+- 普通 candidate / macro 不得直接 patch C1 shape；如果确实需要影响 C1，应先修改其上游 A/B-tier 或 semantic state，再通过 derived refresh 得到结果。
 
-Tier C2 包括 DIODE、ESD、TEXT marker 等。它们可能不进入 CSP，但仍属于 layout store 中的几何/annotation 对象。C2 edit 如果存在，也必须有 provenance 和 validation policy，不能绕过 commit log。
+需要注意，C1 的 “derived” 与 FIN 的 “static backdrop / no-direct-edit” 不是同一概念。二者都可以触发 direct-edit rejection，但一个是 post-commit refresh geometry，另一个是 cell architecture / PCell backdrop。
+
+### 4.4 Tier C2：auxiliary / marker / policy-controlled geometry
+
+Tier C2 包括 TEXT、marker、DIODE、ESD 或其它不进入主 CSP / routing occupancy 的辅助几何。C2 不应简单理解为 LVS annotation overlay；它们仍可能是 GDS 中真实存在的 drawn geometry 或生产工具需要保留的 marker / device marker / waiver carrier。
+
+C2 的合同是：
+
+- C2 shape 必须进入 layout store，保留 source evidence、layer / purpose、bbox / polygon、provenance 与 annotation summary。
+- 默认情况下，C2 不参与主 routing / diffusion / via occupancy，也不作为 planner 修改的直接目标。
+- 如果某类 C2 对象允许编辑，必须有显式 edit policy、validation policy 和 provenance，并通过 Stage 5 transaction / commit log，而不能由 exporter 或脚本绕过权威状态。
+- 如果某类 C2 对象影响 DRC/LVS、ESD、diode recognition 或 tool waiver，其语义应通过 policy / validation hook 暴露，而不是混入 LVS annotation overlay 的 identity stamping 逻辑。
+
+因此，C2 更准确的定位是 “auxiliary / marker / policy-controlled geometry”，而不是普通 “editable annotation”。
 
 ### 4.5 Static FIN / gate backdrop
 
-FinFET 标准单元中的 FIN 应被建模为固定 pitch 的连续 backdrop。`nfin` 变化不应删除 FIN geometry；哪些 fins electrically active，应由 `FIN ∩ OD ∩ device region` 这类几何关系决定。
+FinFET 标准单元中的 FIN 应建模为固定 pitch、跨 cell frame 的连续 backdrop。`nfin` 的变化表示 active device coverage 变化，而不是 physical FIN track 的消失。
 
-Gate / POLY 同样不是普通 rectangle patch 对象。其位置、pitch、cut、device recognition 与 routing pin 语义相关；任何 gate 相关修改都应通过 physical entity model 和 constraints，而不是局部 bbox arithmetic。
+正确的 active fin attribution 是：
+
+```text
+static FIN occupancy
+  ∩ OD active occupancy
+  ∩ device attribution / gate footprint
+  → active fin attribution
+```
+
+这意味着：
+
+- `Device.fin_track_indices` 不应作为长期存储字段驱动 resize。
+- FIN stripe 不应按每个 device 局部生成或删除。
+- 同一 fin track 可以跨多个 device x-range 存在，具体归属由 device bbox / gate footprint / OD overlap 判断。
+- 多 device 沿 X 方向复用同一批 FIN track 时，active fin attribution 必须同时考虑 X 与 Y，不能只按 fin Y 坐标归属。
+
+Gate / POLY backdrop 也不应被简化为普通 rectangle patch。POLY 与 gate pitch、device recognition、CPO / cut、pin access、source/drain attribution 和 routing topology 相关。v2 初始 `nfin` resize 可以把大部分 gate geometry 视为稳定背景，但如果某个 intent 需要移动、截断或重建 gate，必须由专门 planner 生成 physical-entity-aware candidate，并由 Stage 5 统一检查和提交。
 
 ### 4.6 OD active region、diffusion sharing 与 device attribution
 
-OD 是 resize 的核心作用对象。对于 `nfin` resize，目标不是“FIN 数量减少”，而是 device active OD coverage 减少或调整，使得被 OD 覆盖并归属该 device 的 fin 数量发生变化。
+OD 是 `nfin` resize 的主要编辑对象。对一个 device 从 `nfin = old` 改到 `nfin = new`，planner 应提出 OD active coverage 的候选变化，并声明受影响的：
 
-OD 还承担 diffusion sharing 语义：多个 device 可以共享同一 OD region 的 S/D 部分。v2 中 sharing 不应只是 `shared_with[]` 的孤立 metadata，而应体现在 occupancy / connectivity / semantic attribution 的一致关系中。
+- OD occupancy cells。
+- device attribution。
+- S/D pin role attribution。
+- diffusion sharing / split relation。
+- nearby LI / VIA / M1 access region。
+- 需要刷新的 derived markings 与 read views。
+
+OD change 不能只更新 drawn bbox，也不能只更新 semantic `Device.nfin`。成功 commit 后，semantic state、layout store、occupancy、connectivity state、derived refresh expectation 和 provenance 必须一致。
+
+Diffusion sharing / split 应作为 occupancy + connectivity + semantic attribution 的共同关系：
+
+- occupancy 表示哪些 OD cells 被 active diffusion 占据。
+- connectivity state 表示哪些 OD cells 属于同一 diffusion component，是否被 cut / split 断开。
+- annotation / semantic attribution 表示 component 或 cell 与哪些 device、pin role、net identity 相关。
+- report / validation 可以从上述结构派生 `shared_with` 之类展示字段，但它们不是权威事实源。
 
 ### 4.7 VIA / CUT / routing connectivity
 
-VIA 是跨层连通边，不应同时被建模为 via object、B-tier cell、LI wire、M1 wire 等多个互相重叠的工作表示。CUT 是连通性 barrier；它影响 connectivity index，也影响 rule checking 和 routing feasibility。
+VIA、CUT 与 routing layers 的核心语义应由 connectivity state 统一解释。
 
-Routing layers 的修改应通过 candidate path、occupancy check、connectivity update 与 DRC rules，而不是直接修改输出 JSON 中的 shape bbox。
+- VIA 是跨层 connectivity edge。
+  - VIA0 connects policy 来自 layer map / tech bundle，例如 `connects: [LI, M1]`。
+  - Connectivity state 根据 VIA0 occupancy 和上下层 conductor occupancy 建立 via edge。
+  - Rule checking 使用 via geometry、enclosure、spacing 和 component relation，而不是依赖 via-as-wire double stamp。
+- CUT 是 connectivity barrier。
+  - CPO / M0_CUT / FIN_CUT 会切断或限制相应 layer / entity 的连通。
+  - CUT 变化必须触发 connectivity component 更新，并进入 transaction checkpoint / restore / commit。
+- Routing layers 的修改必须从 candidate path / candidate shape change 开始。
+  - Router / planner 只产生 plan。
+  - Constraint engine 判断 occupancy、spacing、enclosure、blockage、same-conductor exception、via legality 等。
+  - Transaction commit 成功后才更新 layout store、occupancy 与 connectivity。
+  - Exporter 不能通过修改 output JSON 的 shape bbox 来补齐 routing state。
+
+对于 unknown / unannotated geometry，不能把 `net_id=None` 当作“与所有 net 兼容”。未解释几何应按 blockage、suspect conductor 或 conservative conflict 进入 routing / DRC 判断，直到 annotation overlay 或人工 policy 明确其语义。
 
 ### 4.8 Layer map 与 tech bundle
 
-Layer map 描述 layer 的 GDS pair、tier、role、orientation、connectivity、derived status、Calibre derived-layer mapping 等。Tech bundle 描述 pitch、width、spacing、enclosure、extension 等 rule records。
+Layer map 和 tech bundle 是 v2 的工艺参数化边界，但不承载 cell-specific intent 或 target delta。
 
-Layer map 和 rule deck 是目标架构的参数化边界；它们不应承载 cell-specific intent、device instance name、target nfin 等输入事实。
+Layer map 应描述：
+
+- layer name、GDS layer/datatype、purpose / optional color。
+- tier：A / B / C1 / C2。
+- role：fin、poly、interconnect、via、cut、diffusion、well、boundary、text、marker 等。
+- orientation / preferred direction。
+- connectivity policy，例如 via `connects`、cut barrier target、conductor role。
+- edit policy，例如 `static_backdrop`、`routing_editable`、`entity_constrained`、`derived_refresh_only`、`auxiliary_policy_controlled`。
+- derivation / refresh policy，例如 C1 derived markings 的 derivator rule，或 FIN static backdrop 的 no-direct-edit guard。
+- Calibre / LVS derived-layer mapping 与 tolerance policy 所需的 layer alias / purpose mapping。
+
+Tech bundle 应描述：
+
+- pitch、width、spacing、enclosure、extension、minimum area 等 rule records。
+- coordinate system 参数，例如 track pitch / offset、B-tier axes。
+- rule predicate 的参数化输入。
+- signoff / tool integration 所需的 rule-deck / layer-map path。
+
+Layer map / rule deck 不应包含：
+
+- cell-specific intent。
+- device instance name。
+- target `nfin`。
+- 某次 ECO 的 candidate choice。
+- fixture-only convenience field。
+
+如果实现层继续使用 `derived: true` 作为 direct-edit rejection seam，应在 schema 注释中说明它是 “non-direct-edit guard” 的过渡承载方式；长期应拆成更明确的 `edit_policy` / `derivation_policy`，避免把 FIN static backdrop 与 C1 derived refresh 混为一类。
 
 ## 5. LVS / Calibre annotation boundary
 
