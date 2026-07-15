@@ -129,18 +129,18 @@ Stage 2 产生的五类主要事实对象如下：
 | Semantic IR | CDL source/target、target diff、`ixref` / `net_xref` identity join | `domain.circuit`、`domain.intent` | planner、transaction、CDL exporter、report / validation | 不保存可从 geometry + annotation 推导的长期几何副本 |
 | Geometry store | GDS round-trip / `bbox_by_layer` | `state.layout_store` | annotation overlay、occupancy projection、planner、transaction、exporter | 不直接解释 schematic identity，不丢弃 unannotated geometry |
 | Annotation overlay | Calibre query bundle：`ixref`、`net_xref`、`device_info`、`net_shapes` | `annotation.layer_overlay`，结果写入 layout store / occupancy references | planner、constraints、DRC/LVS localization、coverage report | 不替代 GDS 几何事实，不直接执行 ECO 修改 |
-| Occupancy state | geometry store + layer tier + Stage 2 coordinate system + annotation summary | `state.occupancy` | constraint engine、planner、transaction、connectivity、derived views | 不由 coordinate system、grid adapter 或 constraint engine 长期拥有，不成为第二套几何事实 |
-| Connectivity state | occupancy + via edges + cut barriers + diffusion sharing / split policy | `state.connectivity` | constraint engine、router、transaction、validation / report | 不等同于 `net_id` label，不承担 semantic netlist ownership |
+| Occupancy store | geometry store + layer tier + Stage 2 coordinate system | `state.occupancy` | constraint engine、planner、transaction、connectivity、read / export views | canonical discrete geometry abstraction；不是 raw geometry source，但作为候选修改、CSP 检查和 commit 的主要工作基底 |
+| Connectivity state | occupancy + via edges + cut barriers + diffusion sharing / split policy + annotation refs | `state.connectivity` | constraint engine、router、transaction、validation / report | occupancy 上的 topology interpretation；不等同于 `net_id` label，不承担 semantic netlist ownership |
 
-这些对象的产生顺序是有依赖关系的：CDL evidence 先形成 semantic IR；GDS evidence 先形成 geometry store；tech layer map / rule deck 先形成 Stage 2 coordinate system（layer grid、track coordinate、B-tier axes）；Calibre evidence 通过 layer mapping 和 tolerance policy 形成 annotation overlay；geometry store 再结合 coordinate system 和 layer tier 投影为 occupancy；occupancy 再结合 via / cut / diffusion sharing 语义形成 connectivity。Derived views（segments、vias、gate tracks、fin attribution、annotation coverage 等）只从这些权威对象重算或缓存，不作为新的事实源。
+这些对象的产生顺序是有依赖关系的：CDL evidence 先形成 semantic IR；GDS evidence 先形成 geometry store；tech layer map / rule deck 先形成 Stage 2 coordinate system（layer grid、track coordinate、B-tier axes）；geometry store 再结合 coordinate system 和 layer tier 投影为 occupancy；Calibre evidence 通过 layer mapping 和 tolerance policy 形成 annotation overlay，并把 identity references stamp 到 occupancy / store records；occupancy 再结合 via / cut / diffusion sharing 语义形成 connectivity state。Read / export views（routing spans、gate tracks、fin attribution、annotation coverage、artifact edit view 等）只从这些权威对象重算或缓存，不作为新的事实源。
 
 Stage 2 的关键原则：
 
 - GDS/bbox 是几何事实源；LVS shapes 是 annotation 与 identity evidence，不是完整几何替代品。
 - `Device` / `Net` 是语义 IR，不应长期保存可从 layout store 推导的几何副本。
-- Annotation overlay 是 evidence-to-identity 的解释过程；其结果可以写入 state references，但 overlay 过程本身不拥有 layout state。
+- Annotation overlay 是 evidence-to-identity 的解释过程；其结果可以写入 occupancy / store references，但 overlay 过程本身不拥有 layout state。
 - Grid / coordinate system 在 Stage 2 建立，用于 geometry-to-cell projection；它是坐标系统，不能成为 layout occupancy 的长期 owner。
-- Constraint engine 可以建立检查用 cache / trail，但不能成为 occupancy 的另一份权威副本。
+- Constraint engine 可以建立检查用 cache / trail，但不能成为 occupancy 或 connectivity 的另一份权威副本。
 - Unannotated shapes 必须保留，并按保守策略作为 blockage / suspect geometry 进入后续判断。
 
 ### 2.4 Stage 3：约束上下文初始化
@@ -256,6 +256,28 @@ MVP 的 Stage 1.5、Stage 6 writeback、legacy JSON parser、decoder-as-state-up
 
 ## 3. 事实源、状态所有权与派生视图
 
+第 3 节定义 v2 中哪些对象是事实源，哪些对象拥有可变状态，哪些对象只是可重算查询或导出视图。这里的 “state” 不只表示内存对象所有权，也表示 v2 修改流程中的工作事实层级。
+
+v2 区分四类对象：
+
+1. **Raw / normalized facts。** 来自 GDS、CDL、LVS query 和 tech config 的事实，例如 drawn geometry、semantic IR、layer map、coordinate system。
+2. **Canonical working abstraction。** 由 drawn geometry 投影得到的 occupancy store。它不是原始几何事实源，但它是 candidate planning、CSP checking、transaction commit 和 connectivity update 的主要操作对象。
+3. **Interpretation layers。** 作用在 occupancy 上的 annotation overlay 与 connectivity state。前者解决 identity association，后者解决 topological association。
+4. **Read / export views。** 从 committed state 派生的查询、缓存、报告和 artifact view。
+
+因此，v2 的目标不是把所有事实压缩成一个对象，而是让每一层的来源、可变性、transaction 责任和重算路径清楚。当前 MVP 中同一物理对象同时存在于 `shape_pool`、`TrackSegment`、`ViaInstance`、`CellOccupancy`、CSP engine cells、output JSON 等多个工作表示的问题，在 v2 中必须收敛为单一权威状态与若干只读视图。
+
+v2 的基本原则是：
+
+- GDS / bbox evidence 是 drawn geometry 的事实源。
+- CDL / target intent 是电路语义的事实源。
+- LVS / Calibre query 是 geometry ↔ schematic identity 的 annotation evidence。
+- Layout store / occupancy store 是 committed layout state 的唯一 owner。
+- Occupancy store 是后续候选规划、约束检查与事务提交使用的离散几何工作基底。
+- Connectivity state 是 occupancy 上的拓扑解释层，是 same-conductor / split / sharing 判断的权威结构。
+- Grid / coordinate system、constraint engine、exporter、reporter 只能读取或派生视图，不能成为第二套 layout truth。
+- Read / export views 必须可从 authoritative state 重算；它们不能反向成为事实源。
+
 ### 3.1 几何事实源
 
 几何事实来自 GDS round-trip 或等价的 bbox-by-layer evidence。v2 中每个 drawn shape 应进入 layout store，携带：
@@ -269,16 +291,37 @@ MVP 的 Stage 1.5、Stage 6 writeback、legacy JSON parser、decoder-as-state-up
 
 几何事实源必须覆盖 unannotated shapes。LVS-only sourcing 会丢失 filler、dummy、ESD、marker、手工几何等生产版图中常见对象，因此不能作为唯一几何源。
 
+layout store 中的 geometry record 是 drawn geometry 的权威入口。对于同一个 physical occupant，不应再创建另一套可独立变更的长期工作表示。例如：
+
+- `TrackSegment` 不能成为 LI / M1 geometry 的独立事实源。
+- `ViaInstance` 不能成为 VIA0 geometry 或跨层连通的独立事实源。
+- CSP engine cell assignment 不能成为 occupancy 的独立事实源。
+- output JSON / SKILL edit 不能成为 commit 后几何的事实源。
+
+迁移期可以直接复用当前 MVP 中职责已经匹配的代码，但不应通过过渡包装固化错误状态模型。任何保留的数据结构都必须重新归位为只读查询、性能缓存、报告/导出视图或待删除的过渡实现，并且有明确 owner、invalidation 规则和重算路径。
+
 ### 3.2 语义事实源
 
 语义事实来自 CDL 与 target intent，包括：
 
 - cell / subckt identity。
-- `Device`：instance name、device type、parameters、pins。
-- `Net`：net name、net type、pin membership。
+- `Device`：instance name、device type、parameters、pins、layout/schematic identity join。
+- `Net`：net name、net type、pin membership、layout/schematic net join。
 - target delta / intent：resize、add/remove、reroute、cut/share/split 等。
 
-`Device` / `Net` 不应保存可从 geometry + annotation 推导出的长期几何副本。允许保存必要 anchor，例如来自 `device_info` 的 device bbox / gate seed bbox，用于打破 annotation stamping 的循环依赖。
+`Device` / `Net` 是 semantic IR，不应长期保存可从 layout store + annotation + occupancy 推导出的几何副本。允许保存必要 anchor，例如来自 `device_info` 的 device bbox / gate seed bbox，用于打破 annotation stamping 的循环依赖；但这些 anchor 是 annotation seed，不是 geometry owner。
+
+以下内容在 v2 中不属于 `Device` / `Net` 的权威语义状态：
+
+- `Device.fin_track_indices`。
+- `Device.gate_track_idx`。
+- `Net.segments`。
+- `Net.vias`。
+- routing bbox 列表。
+- via bbox 列表。
+- 可由 `FIN ∩ OD ∩ device attribution` 重算的 active-fin attribution。
+
+如果迁移期继续暴露这些字段，它们只能是从 authoritative layout state 重算的查询结果或短期缓存。任何 planner 或 transaction 都不应只依赖这些缓存来决定物理修改。
 
 ### 3.3 LVS annotation overlay
 
@@ -291,6 +334,18 @@ LVS / Calibre query 的角色是 annotation，不是完整几何事实。它负�
 
 annotation 可以不完整，也可能有 sub-nm drift、layer-name difference、effective-region trimming difference。因此 overlay 需要 tolerance、layer mapping、coverage report 和 conflict policy。
 
+v2 的 annotation home 应以 per-cell / per-occupancy carrier 为主，而不是仅 shape-level summary。原因是一个 GDS rectangle 可能：
+
+- 被 cut 分成多个连通区域。
+- 跨越多个 device 的 diffusion sharing 区域。
+- 一部分有 LVS annotation，一部分没有。
+- 在不同 cells 上携带不同 net / device / pin role。
+- 因 effective-region trimming 与 drawn bbox 不完全一致。
+
+因此 overlay 的目标是把 `device_id`、`net_id`、`pin_role`、color、coverage/conflict marker 等 identity references stamp 到 occupancy cell / store cell 上。Shape-level `net_id` / `device_id` 只能作为 consensus summary：当 shape 覆盖的 cells 对 annotation 一致时可以汇总；一旦不一致，应保持 unknown / ambiguous，并把细节留在 per-cell annotation 与 coverage report 中。
+
+Annotation overlay 只负责 identity association；via / cut / diffusion sharing 带来的 topological association 由 connectivity state 负责。二者都落在 occupancy cell / component 上，并共同形成 localization 与 DRC/LVS 判断所需的完整解释。
+
 ### 3.4 Grid 作为坐标系统
 
 Grid 的职责是坐标转换和合法离散空间定义：
@@ -299,48 +354,137 @@ Grid 的职责是坐标转换和合法离散空间定义：
 - layer orientation、pitch、offset。
 - B-tier axes definition。
 - routing preferred direction。
+- bbox / polygon 到 occupancy cell 的 projection 规则。
 
 因为 occupancy projection 依赖这些坐标定义，coordinate system 必须在 Stage 2 的事实归一化期间建立；Stage 3 只读取它来初始化约束上下文。
 
-Grid 不应长期拥有 occupancy。否则 A-tier、B-tier、engine cells、shape_pool 会形成多个状态副本，导致 commit 后漂移。
+Grid 不应长期拥有 occupancy。否则 A-tier、B-tier、engine cells、shape_pool 会形成多个状态副本，导致 commit 后漂移。目标形态是：Grid / coordinate system 提供纯坐标服务；occupancy store 使用这些坐标服务建立和维护 cell occupancy；constraint engine、planner、router、read view builder 都读取同一份 occupancy store。
 
-### 3.5 Layout store / occupancy 作为状态容器
+### 3.5 Layout store / occupancy 作为离散几何工作基底
+
+Layout store 保存 drawn geometry，是 GDS / bbox evidence 归一化后的几何事实承载者。Occupancy store 则是 drawn geometry 经 coordinate system 投影后的离散几何抽象。
+
+二者关系是：
+
+- layout store 记录 shape / bbox / polygon / layer / purpose / source evidence。
+- coordinate system 定义 track、cell、pitch、offset、orientation、B-tier axes。
+- occupancy store 记录 `(layer, cell)` 上是否被某个 shape / physical occupant 占据，以及该占据的 kind、shape reference、annotation references 和 blockage / barrier / via / OD 等语义标记。
+
+Occupancy 不是原始事实源，因为它可由 layout store + coordinate system 重建；但它也不是普通 cache，因为 v2 的 candidate planning、CSP-frontline rule checking、transaction commit、connectivity update 都以 occupancy 为主要工作对象。一次 transaction 中被 staged、检查、提交或 rollback 的，首先是 occupancy 及其关联的 semantic / connectivity / derived changes。
 
 目标状态容器应统一管理：
 
-- geometry records。
+- drawn geometry records。
 - A-tier / B-tier occupancy。
 - shape-to-cell projection。
-- device / net annotation references。
-- blockage / cut / via / diffusion sharing state。
+- cell-level device / net / pin annotation references。
+- blockage / unknown / suspect geometry。
+- cut / via / diffusion sharing state。
 - commit-visible current state。
 
-实现可以分层存储，但 architecture 要求只有一个 authoritative state owner；其它对象是 view、cache 或 transaction overlay。
+实现可以分层存储，例如 geometry table、occupancy table、annotation table、connectivity table，但 architecture 要求只有一个 authoritative state owner。其它对象必须是 read view、cache、transaction overlay 或 export artifact。
 
-### 3.6 Connectivity index
+一个 physical occupant 在 working state 中只能有一个权威 occupancy 表达。例如 VIA0 的目标表示不应同时是 `ViaInstance`、B-tier occupancy、LI WIRE cells、M1 WIRE cells 和 CSP assignment。正确做法是：VIA0 drawn geometry 进入 layout store；其 occupied cells 进入 occupancy store；其跨层导通作用由 connectivity state 的 via edge 表达；任何 `ViaInstance` 只是查询或导出视图。
 
-DRC 中的 “same conductor” 判断应基于几何连通性，而不是单纯比较 cell 上的 `net_id` label。Connectivity index 应覆盖：
+同理，OD active region、LI/M1 routing segment、CUT barrier、blockage 都应由同一 store substrate 表达，再由不同 read view 暴露给 planner、constraint、report 和 exporter。
+
+### 3.6 Connectivity state 作为拓扑解释层
+
+Connectivity state 基于 occupancy 构建，用于解释哪些 occupied cells 属于同一个 topological conductor / component。它不是 CDL net label 的副本，也不是普通 derived view；它是 DRC same-conductor reasoning、routing feasibility、via connectivity、cut barrier、diffusion sharing / split 判断的权威拓扑结构。
+
+Connectivity state 应覆盖：
 
 - same-layer adjacency。
 - via edges。
 - cut barriers。
 - diffusion sharing / split。
 - blockage 与 unknown geometry 的保守处理。
+- component-to-annotation summary。
 
-Net label 是语义属性，可用于报告、localization、LVS feedback；是否同一导体则应由 connectivity index 判断。
+Annotation overlay 和 connectivity state 都作用在 occupancy 上，但解决的问题不同：
 
-### 3.7 Derived views
+- annotation overlay 解决 identity association：某个 occupancy cell 与哪个 schematic/layout device、net、pin role 相关。
+- connectivity state 解决 topological association：多个 occupancy cells 是否物理连通，是否被 via 连接，是否被 cut 切断，是否因 diffusion sharing 形成共同 active region。
 
-Derived views 包括：
+二者共同形成更完整的 id association：
 
-- `Net.segments`。
-- `Net.vias`。
-- `Device.fin_track_indices`。
-- `Device.gate_track_idx`。
-- per-layer occupancy projections。
-- annotation coverage summaries。
+```text
+occupancy cell
+  + annotation identity references
+  + connectivity component
+  + component-to-net/device summary
+  → localization / DRC / LVS / report 使用的完整解释
+```
 
-这些视图可 lazy compute 或 cache，但必须可从 authoritative state 重算；不能成为独立事实源。
+Net label 是 semantic / annotation 属性，可用于报告、localization、LVS feedback 和 target intent 对齐；是否属于同一导体则应由 connectivity component 判断。
+
+目标合同是：
+
+- DRC spacing / same-conductor exemption 查询 connectivity component，而不是比较 scalar `net_id`。
+- `CellState` / CSP domain 不携带长期 `net_id` / `device_id` ownership。
+- `net_id=None` 不表示“与所有 named nets 兼容”；unknown / unannotated geometry 默认按 blockage、suspect conductor 或 conservative conflict 处理。
+- VIA 是跨层 connectivity edge，不需要用 LI/M1 上额外的 via-as-wire double stamp 伪造连通。
+- CUT 是 connectivity barrier，会改变 component relation，也会影响 rule checking 和 routing feasibility。
+- diffusion sharing / split 是 topology 与 semantic attribution 的共同问题，不能只作为 `Device.shared_with[]` 一类孤立 metadata。
+
+Connectivity state 必须纳入 transaction checkpoint / restore / commit。任何 occupancy change、via add/remove、cut add/remove、OD split/share 都必须同步更新或 invalidate connectivity state。
+
+### 3.7 Read views、localization queries 与 artifact views
+
+v2 仍然需要从 committed state 派生的读取面，但它们的必要性来自查询便利、性能、导出、报告和 debug，而不是状态所有权。它们不应成为 architecture 主干，也不应反向成为 planner、transaction 或 exporter 的事实源。
+
+更准确地说，v2 有三类读取面。
+
+**第一类：occupancy queries。**
+
+这些是对 occupancy store 的不同读取方式，例如：
+
+- 某 layer 上的连续 occupied cells。
+- 某 net / component 对应的 routing span。
+- 某 via layer 上的 occupied via cells。
+- 某 device 附近的 OD / LI / M1 cells。
+- 某 component 的 bounding envelope。
+
+当前 MVP 中的 `Net.segments`、`Net.vias`、routing cells 等概念应在 v2 中降级为 occupancy query 或导出/报告读取面，而不是独立 state。
+
+**第二类：identity localization queries。**
+
+这些查询用于把 semantic IR 与 geometry / occupancy 定位起来，例如：
+
+- 某 `Device` 对应哪些 OD cells。
+- 某 `Device` 覆盖哪些 active FIN tracks。
+- 某 `Device` 的 gate anchor / gate track 在哪里。
+- 某 pin role 对应哪些 LI / M1 access cells。
+- 某 schematic net 对应哪些 connectivity components。
+
+当前 MVP 中的 `Device.fin_track_indices`、`Device.gate_track_idx` 不应作为 v2 `Device` 的 canonical fields。它们应由 semantic identity、annotation anchor、FIN/POLY/OD occupancy、connectivity component 和 tech coordinate system 动态求得；如需缓存，也必须可重算并有 invalidation 规则。
+
+对于 `nfin` resize，active fin count 不应来自 stored `fin_track_indices`，而应来自：
+
+```text
+static FIN occupancy
+  ∩ OD active occupancy
+  ∩ device attribution / gate footprint
+  → active fin attribution
+```
+
+**第三类：artifact / report views。**
+
+这些视图服务 Stage 6 输出与人工审计，例如：
+
+- GDS / JSON serialization view。
+- CDL export view。
+- SKILL edit sequence。
+- human report section。
+- diff visualization。
+- validation result summary。
+- L1 `EditOp` 风格的变更展示。
+
+artifact views 从 immutable snapshot、ChangeSet / CommitEvent、export policy 和 validation policy 派生。它们不能反向修改 layout store、occupancy、connectivity 或 semantic IR，也不能通过 replay edit stream 才把 geometry 变成真实状态。
+
+**Post-commit derived layout geometry 单独处理。**
+
+NWELL、BOUNDARY、VT、PP、NP、DNW 等 C1 derived markings 不是普通 read view。它们是由 committed A/B-tier state、device metadata 和 tech rules 派生出来的 layout geometry。刷新时机是 Stage 5 commit 之后、Stage 6 export 之前；刷新后进入 committed snapshot。Stage 6 只序列化它们，不再临时修改它们。
 
 ### 3.8 Snapshot、commit log 与 provenance
 
@@ -349,10 +493,29 @@ Derived views 包括：
 - committed layout snapshot。
 - semantic delta。
 - geometry / occupancy delta。
+- connectivity delta。
 - derived refresh delta。
-- provenance：target intent → planner → candidate → constraint result → transaction commit → exported artifact。
+- constraint result。
+- provenance：target intent → planner → candidate → constraint result → transaction commit → derived refresh → exported artifact。
 
-这使 DRC/LVS 反馈、人工审计、agentic debugging、回归测试和报告生成都能追溯到具体修改原因。
+成功 commit 后，authoritative layout state 必须立即反映修改，并且后续 candidate 必须读取这个已提交状态。不能等 Stage 6 decoder 或 output JSON replay 才让修改“变成真实”。
+
+失败 candidate 必须 restore 到 checkpoint，且不得留下 partial edit。无论失败发生在 occupancy feasibility、connectivity update、derived refresh 还是 semantic update 期间，都不能让 layout store、occupancy、connectivity、semantic IR、derived state 之间出现漂移。
+
+ChangeSet / CommitEvent 是 provenance、debug、report、SKILL、diff visualization 和 validation 的输入，但不是唯一几何事实。几何事实已经在 committed layout snapshot 中存在；Stage 6 只能读取 snapshot 与 commit log 来导出 artifact。
+
+Immutable snapshot 是 committed state 的只读冻结视图，至少覆盖：
+
+- semantic state。
+- drawn geometry。
+- derived geometry。
+- occupancy。
+- annotation references。
+- connectivity components。
+- blockage / unknown / suspect markers。
+- commit metadata。
+
+实现上可以是 deep copy、copy-on-write view、persistent data structure 或 immutable wrapper；architecture 只要求 Stage 6 视角下它稳定、只读、可重跑。
 
 ## 4. Layer tier 与物理实体抽象
 
@@ -456,7 +619,7 @@ Fixture 应尽量模拟真实 Calibre query，而不是发明与生产不一致�
 
 ### 5.6 Per-cell annotation overlay
 
-目标 annotation home 是 per-cell / per-occupancy carrier，而不是仅 shape-level summary。原因是一个 GDS rectangle 可能被 cut 分成多个连通区域，也可能在 OD 上跨 device sharing 区域；whole-shape `net_id` / `device_id` 只能作为 summary。
+目标 annotation home 是 per-cell / per-occupancy carrier，而不是仅 shape-level summary。原因是一个 GDS rectangle 可能被 cut 分成多个连通区域，也可能在 OD 上跨 device sharing 区域；whole-shape `net_id` / `device_id` 只能作为 summary。Annotation overlay 解决 identity association；via / cut / diffusion sharing 带来的 topology association 由 connectivity state 解决。
 
 Overlay 流程：
 
@@ -477,7 +640,7 @@ LVS annotation 不完整是常态。v2 对 unannotated geometry 的默认策略�
 
 ### 5.8 Legacy JSON 的非目标定位
 
-`calibre_device_query.json` 和 `calibre_net_query.json` 属于 MVP convenience format，不是 v2 主路径。v2 可以保留 legacy adapter 作为过渡测试工具，但 architecture、fixture 和 agentic plan 不应依赖它们构建正确状态。
+`calibre_device_query.json` 和 `calibre_net_query.json` 属于 MVP convenience format，不是 v2 主路径。v2 可以保留读取这些文件的短期测试入口，但 architecture、fixture 和 agentic plan 不应依赖它们构建正确状态；相关代码应按职责重构到 Stage 1 evidence acquisition 或直接删除。
 
 ## 6. 基于物理事实的修改语义
 
@@ -613,6 +776,8 @@ DRC 判断应基于 occupancy 和 shape geometry：
 - OD spacing / sharing。
 - blockage conflict。
 
+CSP-frontline rules 读取的是 occupancy 这个离散几何工作基底，以及 connectivity state 提供的 component relation。Rule predicates 不应直接消费当前 MVP 的 `Net.segments` 或 `Device.fin_track_indices` 作为事实源；如需 segment / fin attribution，应通过 occupancy query 或 identity localization query 获得。
+
 当前某些 rule 可能暂时只在 signoff DRC 中检查，但 v2 architecture 应把关键局部约束逐步提升到 CSP-frontline。
 
 ### 8.4 Connectivity-aware same-conductor reasoning
@@ -654,11 +819,11 @@ Transaction scope 必须覆盖：
 - derived cache invalidation。
 - commit log append。
 
-只要其中任一部分失败，整个 candidate 必须 restore 到 checkpoint。
+Transaction 的核心 staged object 是 occupancy changes。Geometry changes、semantic changes、connectivity changes、derived refresh / invalidation 和 commit log append 都围绕 occupancy change 保持一致。只要其中任一部分失败，整个 candidate 必须 restore 到 checkpoint。
 
 ### 9.2 Commit to authoritative state
 
-Commit 的目标是 authoritative layout state，不是 output JSON，也不是 legacy EditOp stream。成功 commit 后，后续 planner、constraint engine、derived refresh 和 exporter 都应读取同一个 committed state。
+Commit 的目标是 authoritative layout state，不是 output JSON，也不是当前 MVP 的 EditOp stream。成功 commit 后，后续 planner、constraint engine、derived refresh 和 exporter 都应读取同一个 committed state。
 
 Authoritative layout state 是一组有明确所有权关系的 committed state graph，至少包括 semantic state、geometry store、occupancy state、connectivity state、derived layout geometry、derived non-geometry views 和 commit metadata。实现可以把这些对象拆分到不同模块，但 commit 必须保证它们在同一 transaction 边界内一致更新或一致回滚。
 
@@ -681,9 +846,9 @@ C1 derived markings 应在 commit 后根据 affected neighborhood 刷新。实�
 
 ### 9.5 Derived views refresh
 
-Derived views 与 C1 derived markings 不同：它们通常不是单独的 exported physical layer，而是对 committed state 的查询视图或 materialized cache。Segments、vias、fin attribution、gate tracks、annotation coverage 等 derived views 必须从 committed state 重算或失效。
+Read views 与 C1 derived markings 不同：它们通常不是单独的 exported physical layer，而是对 committed state 的查询视图或 materialized cache。Routing spans、vias、fin attribution、gate tracks、annotation coverage 等读取面必须从 committed state 重算或失效。
 
-Derived views 可以为了 planner、constraint、report 或 debug 被缓存，但不能被当作独立 truth；任何 cache 都必须能从 authoritative layout state 重建。
+Read views 可以为了 planner、constraint、report 或 debug 被缓存，但不能被当作独立 truth；任何 cache 都必须能从 authoritative layout state 重建。
 
 ### 9.6 Commit log / change set / provenance
 
@@ -703,7 +868,7 @@ Commit log 应记录：
 
 v2 不把 legacy L1 EditOp / ShapeEditRecord 作为核心状态模型。Stage 5 commit 产生 ChangeSet / CommitEvent，用于描述 semantic、geometry、occupancy、connectivity 与 derived refresh delta，并记录 provenance。
 
-Stage 6 如需生成 SKILL、diff visualization 或 human report，可以从 ChangeSet 派生 artifact-specific ExportEdit。ExportEdit 是 artifact 指令，不是 committed geometry；legacy EditOp 不进入 v2 architecture。
+Stage 6 如需生成 SKILL、diff visualization 或 human report，可以从 ChangeSet 派生 artifact-specific ExportEdit。ExportEdit 是 artifact 指令，不是 committed geometry；当前 MVP 的 EditOp 形态不进入 v2 architecture。
 
 Derived-shape edit rejection 仍然重要：planner / macro 不应直接覆写 C1 derived shape，除非通过 derived refresh 或明确的 derived-rule provenance。
 
@@ -717,7 +882,7 @@ Stage 6 禁止：
 
 - 修改 layout_store / occupancy / connectivity / semantic IR。
 - 运行 derived refresh。
-- replay legacy edit stream 来生成 canonical geometry。
+- replay current-MVP edit stream 来生成 canonical geometry。
 - 根据 target diff globals 修改输出 params。
 - 把 validation mismatch 静默降级为 stdout。
 
@@ -735,7 +900,7 @@ Stage 6 artifact 从 snapshot / ChangeSet 的读取边界如下：
 
 | Artifact | 从 snapshot 读取 | 从 ChangeSet / CommitEvent 读取 | 禁止事项 |
 |----------|------------------|----------------------------------|----------|
-| GDS | geometry store、derived markings、layer map、units | 可选 shape order / provenance reference | 不 replay legacy edit stream 修补 geometry |
+| GDS | geometry store、derived markings、layer map、units | 可选 shape order / provenance reference | 不 replay current-MVP edit stream 修补 geometry |
 | JSON snapshot | semantic、geometry、occupancy、connectivity、annotation summary | commit id、parent id、change summary | 不重新计算权威状态 |
 | CDL | semantic IR snapshot | semantic delta provenance | 不从 Stage 1 diff globals 硬编码 |
 | SKILL | shape ids、bbox、layer-purpose、snapshot geometry | ExportEdit、provenance | 不用不确定 bbox 静默删除；必须 dry-run / assert |
@@ -940,4 +1105,4 @@ layauto_v2/
 
 ### 12.6 Fixture 策略：基于真实 query 事实构建 synthetic cases
 
-Synthetic fixture 应模拟生产事实流：GDS geometry + Calibre-like query bundle + CDL。它可以简化电路规模，但不应引入与生产事实模型相反的 convenience assumption，例如 per-device FIN、legacy net JSON truth、未验证的 effective-region claim。
+Synthetic fixture 应模拟生产事实流：GDS geometry + Calibre-like query bundle + CDL。它可以简化电路规模，但不应引入与生产事实模型相反的 convenience assumption，例如 per-device FIN、current-MVP net JSON truth、未验证的 effective-region claim。
