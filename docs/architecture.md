@@ -696,74 +696,234 @@ Layer map / rule deck 不应包含：
 
 如果实现层继续使用 `derived: true` 作为 direct-edit rejection seam，应在 schema 注释中说明它是 “non-direct-edit guard” 的过渡承载方式；长期应拆成更明确的 `edit_policy` / `derivation_policy`，避免把 FIN static backdrop 与 C1 derived refresh 混为一类。
 
+需要注意，Layer map / tech bundle 只定义 layer 的工艺语义、映射规则和 policy；它不保存某次 Calibre query 的 annotation 结果。Calibre derived-layer evidence 通过第 5 节定义的 annotation overlay stamp 到 occupancy / layout store references 上。也就是说，`derived_layers`、`connects`、cut target、color、tolerance、trim policy 等属于 tech / mapping 配置；`device_id`、`net_id`、`pin_role`、coverage / conflict marker 等属于 per-run annotation result。
+
 ## 5. LVS / Calibre annotation boundary
+
+第 5 节定义 v2 如何把 Calibre / LVS query 结果作为 annotation evidence 接入 Stage 1–2。核心原则是：**GDS / bbox-by-layer 提供 drawn geometry，CDL 提供 schematic semantic intent，Calibre / LVS query 提供 geometry ↔ schematic identity 的证据。** LVS shape 不是 GDS geometry 的替代物，legacy JSON 也不是 v2 的事实主路径。
+
+Annotation boundary 需要同时解决四个问题：
+
+1. 哪些输入是原始证据，哪些是必须丢弃的 legacy convenience path。
+2. 如何把 LVS 侧 instance / net identity 归一到 schematic identity。
+3. 如何通过 GDS↔LVS layer mapping 把 derived-layer evidence stamp 到 occupancy。
+4. 如何报告 coverage gap、conflict、ambiguity，并把 unknown geometry 保守地交给后续约束系统。
 
 ### 5.1 v2 输入事实组成
 
 v2 fixture 与生产输入应由以下事实组成：
 
-- CDL source / target。
-- GDS 或 bbox-by-layer 几何。
-- Calibre query bundle。
-- Tech / site config。
+- **CDL source / target。** 提供 source circuit、target circuit、device / net semantic IR 和 target intent。
+- **GDS 或 bbox-by-layer 几何。** 提供完整 drawn geometry，包括未被 LVS annotation 覆盖的 shape。
+- **Calibre query bundle。** 至少包括 `ixref`、`net_xref`、`device_info`、`net_shapes` 四类 evidence。
+- **Tech / site config。** 包括 layer map、Calibre layer map、rule deck、unit / DBU、tool path、query mode、tolerance policy 等。
 
-Fixture 应尽量模拟真实 Calibre query，而不是发明与生产不一致的 convenience JSON。
+Stage 1 负责读取或生成上述 evidence，并保存 raw output 与 normalized middle files。Stage 2 才负责把它们归一化为 semantic IR、layout store、occupancy、annotation overlay 与 connectivity state。
+
+Fixture 应尽量模拟真实 Calibre query bundle。允许使用 dummy / synthetic middle files，但它们必须使用与生产路径一致的 schema 与 identity 语义；不应再发明只服务当前 parser 的 convenience JSON 作为 v2 主输入。
 
 ### 5.2 GDS geometry：bbox_by_layer
 
-`bbox_by_layer` 是 GDS 几何事实的结构化表示。它必须保留所有 drawn geometry，包括没有 LVS annotation 的 shape。
+`bbox_by_layer` 是 GDS drawn geometry 的结构化表示。它必须保留所有 drawn geometry，包括没有 LVS annotation 的 shape，例如 filler、dummy、marker、ESD、waiver carrier、unannotated routing fragment 或 cell-level wrapper。
 
-生产路径中，`bbox_by_layer` 可以由 GDS round-trip 生成；测试路径中，也应以同样 schema 生成，使 parser、overlay 和 store construction 共享同一入口。
+生产路径中，`bbox_by_layer` 可以由 GDS round-trip 或等价 GDS reader 生成。测试路径中，也应使用同一 schema，使 parser、layout store construction、annotation overlay 和 exporter regression 共享同一入口。
+
+`bbox_by_layer` 的合同是：
+
+- 记录 layer / purpose / optional color、bbox / polygon、source evidence backlink 和单位信息。
+- 不附带 schematic identity 的臆测。
+- 不因为 LVS query 没有覆盖某个 shape 就丢弃该 shape。
+- 不从 `device_info` / `net_shapes` 反向补造 drawn geometry。
+
+GDS geometry 进入 layout store 后，后续 annotation 只能把 `device_id`、`net_id`、`pin_role`、color、coverage marker、conflict marker 等 identity reference stamp 到 layout store / occupancy carrier 上；不能把 LVS shape 当作新的 geometry truth。
 
 ### 5.3 LVS identity：ixref / net_xref
 
-`ixref` 负责 layout device identity 与 schematic device identity 的 join。任何来自 `device_info` 的 layout instance name 都应先通过 `ixref` 翻译到 schematic instance，再进入 `Device` / annotation。
+`ixref` 负责 layout instance identity 与 schematic instance identity 的 join。Calibre query 中的 layout instance name 可能是 `M0` / `M1` 这类 LVS 侧命名，而 semantic IR 与 target intent 通常使用 schematic instance name，例如 `MN0` / `MP0`。因此，任何来自 `device_info` 的 layout instance name 都必须先通过 `ixref` 翻译到 schematic instance，再进入 `Device`、occupancy annotation 或 report。
 
-`net_xref` 负责 layout net / LVS index 与 schematic net 的 join。内部 net 可能被 Calibre renumber；因此 stable key 应优先使用 LVS index，并在报告中映射回 schematic name。
+`net_xref` 负责 layout net / LVS index 与 schematic net 的 join。内部 net 可能被 Calibre renumber 或重命名，因此内部 stable key 应优先保留 LVS index 或 normalized layout-net identity，并在 semantic/report/export 边界映射回 schematic net name。
+
+Identity join 的目标合同是：
+
+- `Device.inst_name` 等 semantic IR 字段使用 schematic identity。
+- occupancy annotation 可以同时保留 layout/LVS identity 与 schematic identity，但必须标明来源。
+- report 面向工程师时应显示 schematic name，同时保留 LVS index / layout name 作为 debug backlink。
+- 如果 `ixref` / `net_xref` 缺失、冲突或无法解释，Stage 2 应产生结构化 annotation error / coverage warning，而不是静默 fallback 到字符串相等或 legacy fixture naming assumption。
+- S/D swap、pin role swap、body tie 等 LVS identity 细节应保留为 annotation/provenance，不应在 Stage 2 被丢弃。
 
 ### 5.4 LVS geometry annotation：device_info / net_shapes
 
-`device_info` 提供 per-device derived-layer seed shape，用于 device attribution、gate/device bbox anchor、DRC error localization。
+`device_info` 和 `net_shapes` 提供的是 annotation geometry evidence，而不是 drawn geometry source。
 
-`net_shapes` 提供 per-net routing-layer shape evidence，用于 per-cell net annotation、DRC/LVS feedback localization 和 coverage check。
+`device_info` 的主要用途是：
 
-这些 shape 是 annotation evidence，需要 layer mapping、tolerance 和 effective-region trimming；它们不替代 GDS geometry。
+- 提供 per-device derived-layer seed shape。
+- 提供 gate / device bbox anchor，作为 device attribution 与 gate footprint localization 的输入。
+- 帮助把 DRC/LVS error localize 到 device、pin role 或 candidate provenance。
+- 作为打破 annotation stamping 循环依赖的 seed；例如 `Device.bbox_nm` 可以保存来自 `device_info` 的 anchor，但它不是 layout geometry owner。
+
+`net_shapes` 的主要用途是：
+
+- 提供 per-net routing / conducting derived-layer shape evidence。
+- 把 LI / M1 / VIA / local interconnect occupancy cells 与 layout/LVS net identity 关联。
+- 支持 DRC/LVS feedback localization、coverage report 和 report traceability。
+
+这些 shapes 需要经过 layer mapping、unit normalization、tolerance、containment / overlap policy 和 optional effective-region trimming 才能 stamp 到 occupancy。它们不替代 GDS geometry，也不能直接生成 `Net.segments`、`Net.vias`、`Device.fin_track_indices` 等工作状态。
+
+对于 `nfin` resize，`device_info` 可以帮助定位 device gate / bbox anchor；但 active fin attribution 仍应由：
+
+```text
+static FIN occupancy
+  ∩ OD active occupancy
+  ∩ device attribution / gate footprint
+  → active fin attribution
+```
+
+推导，而不是由 `device_info` 或 legacy JSON 中的 per-device fin list 直接决定。
 
 ### 5.5 GDS↔LVS layer mapping
 
-生产 Calibre query 的 layer name 可能不是 GDS layer name。例如 gate recognition layer、S/D derived layer、SADP color layer、effective conducting region layer 都可能有独立名称。
+生产 Calibre query 的 layer name 往往不是 GDS layer name。例如 gate recognition layer、S/D derived layer、SADP color layer、effective conducting region layer、cut-shadow-trimmed region 都可能有独立名称。
 
-因此 v2 需要 GDS↔LVS layer mapping：
+因此 v2 需要显式的 GDS↔LVS layer mapping。Layer map / Calibre layer map 应描述：
 
-- GDS layer → 可接受的 derived layers。
-- derived layer carries 哪些 annotation：`device_id`、`net_id`、color 等。
-- conflict policy：哪些 collision 是 diffusion sharing，哪些是 short / ambiguity。
-- trimming / tolerance policy：如何处理 cut shadow、extension、sub-nm drift。
+- 某个 GDS layer 可接受哪些 LVS / Calibre derived layers 作为 annotation source。
+- 每个 derived layer carries 哪些 annotation，例如 `device_id`、`net_id`、`pin_role`、color、well / implant flavour 等。
+- via layer 的 `connects` 关系，例如 `VIA0` connects `[LI, M1]`。
+- cut layer 的 target / barrier policy。
+- SADP / multi-patterning color metadata。
+- unit / DBU / layer-purpose translation。
+- containment、overlap、sub-nm drift tolerance。
+- cut shadow、extension、effective-region trimming policy。
+- conflict policy：哪些 overlap 表示 diffusion sharing，哪些表示 short、ambiguous annotation 或 unsupported production case。
+
+推荐 schema 方向是：在 GDS layer 侧声明可接受的 `derived_layers`，每个 entry 至少包含 `name` 与 `carries`，必要时包含 `color`、`purpose`、`tolerance` 或 `trim_policy`。Calibre layer registry 可单独记录 derived layer 的来源、含义、multi-patterning metadata 和 production query 名称。
+
+示意：
+
+```yaml
+- name: POLY
+  derived_layers:
+    - { name: ngate_lvt, carries: [device_id] }
+    - { name: pgate_lvt, carries: [device_id] }
+    - { name: POLY, carries: [net_id] }
+
+- name: OD
+  derived_layers:
+    - { name: nsd, carries: [device_id, net_id, pin_role] }
+    - { name: psd, carries: [device_id, net_id, pin_role] }
+
+- name: M1
+  derived_layers:
+    - { name: M1a, carries: [net_id], color: a }
+    - { name: M1b, carries: [net_id], color: b }
+```
+
+Layer mapping 只是解释 annotation evidence 的配置；它不拥有 annotation 结果，也不承载 cell-specific intent、device instance name、target `nfin` 或某次 ECO 的 candidate choice。
 
 ### 5.6 Per-cell annotation overlay
 
-目标 annotation home 是 per-cell / per-occupancy carrier，而不是仅 shape-level summary。原因是一个 GDS rectangle 可能被 cut 分成多个连通区域，也可能在 OD 上跨 device sharing 区域；whole-shape `net_id` / `device_id` 只能作为 summary。Annotation overlay 解决 identity association；via / cut / diffusion sharing 带来的 topology association 由 connectivity state 解决。
+目标 annotation home 是 **per-cell / per-occupancy carrier**，不是仅 shape-level summary。原因是一个 GDS rectangle 可能：
 
-Overlay 流程：
+- 被 cut 分成多个连通区域。
+- 跨越多个 device 的 diffusion sharing 区域。
+- 一部分有 LVS annotation，一部分没有。
+- 在不同 cells 上携带不同 net / device / pin role。
+- 因 effective-region trimming 与 drawn bbox 不完全一致。
 
-1. 使用 layer mapping 找到 GDS cell 与 LVS derived shape 的对应关系。
-2. 按 cell center / overlap / tolerance 规则 stamp annotation。
-3. 对每个 shape 汇总 annotation；若 cell annotation 不一致，则 summary 保持 unknown 或 ambiguous。
-4. 生成 coverage report 和 conflict report。
+因此，v2 annotation overlay 的 authoritative result 应写到 occupancy cell / store cell / connectivity-local carrier 上。`ShapeRecord.net_id`、`ShapeRecord.device_id`、`ShapeRecord.pin_role` 等 shape-level 字段如果保留，只能是 per-cell annotation 的 consensus summary：
 
-### 5.7 Unannotated geometry 与 conservative policy
+- 如果 shape 覆盖的 cells 对某个 annotation field 完全一致，可以汇总到 shape summary。
+- 如果 cells 不一致，应保持 unknown / ambiguous，并把细节留在 per-cell annotation 与 coverage report 中。
+- Planner、constraint、transaction 不应只依赖 shape-level summary 判断物理修改是否合法。
 
-LVS annotation 不完整是常态。v2 对 unannotated geometry 的默认策略：
+Overlay 流程应至少包括：
 
-- 保留几何。
-- 作为 blockage 或 unknown occupancy 进入约束上下文。
+1. 读取 GDS geometry，构建 layout store 与 occupancy projection。
+2. 读取 `ixref` / `net_xref`，建立 layout/LVS identity 到 schematic identity 的 join table。
+3. 使用 GDS↔LVS layer mapping 找到每个 GDS layer 对应的 derived-layer evidence。
+4. 对 A-tier occupancy 使用 cell-center / interval-overlap / tolerance 规则 stamp annotation。
+5. 对 B-tier occupancy 使用 cell-area overlap / containment / tolerance 规则 stamp annotation。
+6. 对 device identity 先执行 LVS layout instance → schematic instance 翻译，再 stamp `device_id`。
+7. 对 net identity 保留 LVS index / layout name，并映射到 schematic net name。
+8. 处理 conflict / sharing / ambiguity，并生成结构化 coverage report 与 conflict report。
+9. 从 per-cell annotation 生成 shape-level consensus summary，无法 consensus 时保持 unknown / ambiguous。
+
+Annotation overlay 只解决 identity association；via / cut / diffusion sharing 带来的 topology association 由 connectivity state 解决。二者共同作用于 occupancy，但职责不同：
+
+```text
+occupancy cell
+  + annotation identity references
+  + connectivity component
+  + component-to-net/device summary
+  → localization / DRC / LVS / report 使用的完整解释
+```
+
+### 5.7 Conflict、sharing 与 ambiguity policy
+
+Annotation conflict 不能简单按“后写覆盖前写”处理。v2 应区分至少以下情况：
+
+- **正常 co-occurrence。** 例如 gate cell 同时带有 `device_id` 与 gate-net `net_id`，这是正常 gate attribution。
+- **Diffusion sharing。** OD / S/D derived layer 上多个 device attribution 可能表示共享 diffusion，应进入 occupancy sharing / connectivity component / pin-role attribution，而不是直接报错。
+- **Same-conductor merge。** 多个 annotated cells 可能经 connectivity state 属于同一 conductor；是否允许同网相邻、same-conductor spacing exemption，应由 connectivity component 与 net annotation summary 判断。
+- **Net collision / short。** 同一 conductor component 或同一 occupancy region 出现不可解释的多个 schematic net，应报 conflict。
+- **Device collision。** 非 sharing policy 覆盖的 device overlap，应报 ambiguous / unsupported。
+- **Layer-map ambiguity。** 一个 derived layer 无法映射到唯一 GDS target，或多个 mapping 同时命中且无 precedence，应报配置错误。
+- **Tolerance ambiguity。** LVS shape 与多个 GDS occupant 在 tolerance 内均可匹配但无法消歧，应报 ambiguous annotation，而不是随机选择。
+
+Conflict policy 的输出应结构化，包括 affected layer / cells / shape ids / schematic ids / LVS ids / source evidence backlink / severity / recommended action。Stage 4–5 可基于 severity 决定 fail-fast、保守 blockage、人工 review 或允许继续。
+
+### 5.8 Unannotated geometry 与 conservative policy
+
+LVS annotation 不完整是常态。v2 对 unannotated geometry 的默认策略是保守处理：
+
+- 保留 drawn geometry。
+- 投影到 occupancy。
+- 按 layer role 与 policy 标记为 blockage、unknown conductor、suspect geometry、marker 或 auxiliary geometry。
 - 不自动 traverse、merge、delete。
+- 不把 `net_id=None` 当作“与所有 named nets 兼容”。
 - 与 annotated geometry 冲突时保守失败或标记 suspect。
-- 在报告中暴露 coverage gap。
+- 在 coverage report 中暴露 coverage gap。
 
-### 5.8 Legacy JSON 的非目标定位
+Coverage report 应至少能回答：
 
-`calibre_device_query.json` 和 `calibre_net_query.json` 属于 MVP convenience format，不是 v2 主路径。v2 可以保留读取这些文件的短期测试入口，但 architecture、fixture 和 agentic plan 不应依赖它们构建正确状态；相关代码应按职责重构到 Stage 1 evidence acquisition 或直接删除。
+- 每个 layer 有多少 GDS cells / shapes。
+- 其中多少被 LVS annotation 覆盖。
+- 多少成为 blockage / unknown / suspect。
+- 哪些 annotation evidence 没有匹配到 GDS occupant。
+- 哪些 GDS occupant 没有 annotation evidence。
+- 哪些 conflict 被降级、跳过或需要人工确认。
+
+对于 production flow，coverage gap 不是自动错误；但任何继续执行的 policy 都必须显式、可审计，并进入 report / validation result。
+
+### 5.9 Stage 边界与消费方式
+
+Calibre query bundle 属于 Stage 1 evidence acquisition。Stage 1 可以运行 Calibre query、读取 raw output、生成 normalized YAML / object，并做基本一致性检查。
+
+Stage 2 消费这些 evidence，完成：
+
+- semantic IR identity join。
+- layout store construction。
+- occupancy projection。
+- annotation overlay。
+- coverage / conflict report。
+- connectivity state 初始化所需的 identity reference。
+
+Stage 3 以后不应重新读取 raw query output 来构建另一套状态。Planner、constraint、transaction、exporter 应读取 Stage 2 后的 authoritative state、annotation references、connectivity state 和 derived views，而不是直接依赖 Calibre query globals。
+
+### 5.10 Legacy JSON 的非目标定位
+
+`calibre_device_query.json` 和 `calibre_net_query.json` 属于 MVP convenience format，不是 v2 主路径。它们的问题不是“格式是 JSON”，而是它们把 production 中应由 GDS、CDL、Calibre query bundle、layer mapping 和 overlay 共同决定的事实提前揉成 parser-friendly 工作状态。
+
+v2 不需要为这条 legacy JSON path 设计 compatibility adapter。符合 v2 架构要求的 parser、GDS IO、Calibre query parser、tech config loader、测试 harness 等代码可以按职责复用；把 legacy JSON 当作工作状态来源的路径应重构或删除，而不是在 v2 中继续适配。
+
+目标合同是：
+
+- architecture、fixture 和 agentic plan 不依赖 legacy JSON 字段构建正确状态。
+- `Device.fin_track_indices`、`Net.segments`、`Net.vias` 等长期工作状态不再由 legacy JSON 派生。
+- 新测试 fixture 使用真实或拟真的 `ixref`、`net_xref`、`device_info`、`net_shapes` middle files。
+- Stage 1 / Stage 2 的主路径只接受 v2 evidence bundle 与 normalized objects；任何 legacy-only convenience field 都不能进入目标 architecture。
+- 删除 legacy path 时不需要保证与 legacy MVP 行为兼容；只需保留并迁移其中符合 v2 架构要求、且职责边界清晰的可复用实现。
 
 ## 6. 基于物理事实的修改语义
 
