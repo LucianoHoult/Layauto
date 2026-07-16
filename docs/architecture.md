@@ -90,7 +90,7 @@ v2 采用连续的 Stage 1–6，不再使用 MVP 中的 “Stage 1.5”。Calib
 | Stage 1 | 输入证据获取 | 读取 CDL、GDS/bbox、Calibre/LVS query bundle、site config，形成原始 evidence | 不构建工作状态，不做几何修改 |
 | Stage 2 | 事实归一化与状态构建 | 构建语义 IR、几何 store、坐标系统、annotation overlay、occupancy / connectivity / derived views 初始状态 | 不做 ECO 修改，不复制多个权威几何源 |
 | Stage 3 | 约束上下文初始化 | 基于 Stage 2 的坐标系统、occupancy 与 connectivity 初始化 constraint engine、rule context、domain / trail | 不重新拥有 layout state，不规划修改，不提交状态 |
-| Stage 4 | 修改意图与候选规划 | 把 target diff / intent 转换为 candidate plans | 不绕过 state / grid 手工拼最终 bbox，不提前 side-effect |
+| Stage 4 | 修改意图与候选规划 | 把 Stage 2 归一化后的 typed target intent 转换为 candidate plans | 不直接消费 raw diff / raw command，不绕过 state / grid 手工拼最终 bbox，不提前 side-effect |
 | Stage 5 | 可行性检查、事务提交与派生刷新 | 对 candidate 做约束检查，在 transaction 内提交到权威状态，并刷新 derived state / commit log | 不导出文件，不把 output 当状态源 |
 | Stage 6 | 导出、生产工具交互与验证 | 从 committed snapshot 导出 artifacts，运行 self-consistency / signoff / report | 不 mutate LayoutStore、occupancy、connectivity 或 semantic IR |
 
@@ -101,13 +101,14 @@ Stage 1 的输出是原始 evidence bundle，而不是 layout model。
 输入包括：
 
 - 原始 CDL 与目标 CDL。
+- 可选 ECO command、用户指定 intent 或未来 signoff feedback raw input。
 - 原始 GDS 或从 GDS round-trip 得到的 `bbox_by_layer`。
 - Calibre / LVS query bundle：`ixref`、`net_xref`、`device_info`、`net_shapes`。
 - 技术配置：site config、layer map、Calibre layer map、DRC rules。
 
 Stage 1 应做的事：
 
-- 解析 CDL，提取 source circuit、target circuit 与 target intent。
+- 解析 CDL，提取 source circuit、target circuit 与 raw target diff / intent evidence。
 - 运行或读取 Calibre query，保存可审计的 raw query output 与 normalized YAML/对象。
 - 从 GDS 读取几何 bbox，保留未 annotation 的几何。
 - 校验 evidence 的基本一致性，例如 cell name、单位、layer name、device identity join 是否可解释。
@@ -120,7 +121,7 @@ Stage 1 不应做的事：
 
 ### 2.3 Stage 2：事实归一化与 layout state 构建
 
-Stage 2 的核心不是创建某个固定 package tree，而是把 Stage 1 的 evidence 归一化为几类**来源清楚、生命周期不同、后续消费者明确**的事实对象。下面出现的 `domain.*` / `state.*` / `annotation.*` 名称是建议实现落点，用于表达职责边界；真正的架构要求是数据所有权和依赖方向，而不是这些目录名本身。
+Stage 2 的核心不是创建某个固定 package tree，而是把 Stage 1 的 evidence 归一化为几类**来源清楚、生命周期不同、后续消费者明确**的事实对象；raw CDL diff、raw ECO command 或 raw signoff feedback 也在这里归一化为 semantic IR 中的 typed target intent。下面出现的 `domain.*` / `state.*` / `annotation.*` 名称是建议实现落点，用于表达职责边界；真正的架构要求是数据所有权和依赖方向，而不是这些目录名本身。
 
 Stage 2 产生的五类主要事实对象如下：
 
@@ -161,7 +162,7 @@ v2 的目标合同是：constraint engine 不拥有 layout state，也不维护�
 
 ### 2.5 Stage 4：修改意图与候选规划
 
-Stage 4 将 target intent 转换为 candidate plans。
+Stage 4 将 Stage 2 归一化后的 typed target intent 转换为 candidate plans；它不直接消费 raw CDL diff、raw command 或 raw signoff log。
 
 以 `nfin` resize 为例，planner 应解释：
 
@@ -169,9 +170,9 @@ Stage 4 将 target intent 转换为 candidate plans。
 - semantic delta 是什么，例如 `MN0.nfin: 5 → 4`。
 - 该 delta 对物理实体的正确作用是什么，例如 OD active coverage 改变，而不是 FIN 删除。
 - 可能受影响的 LI / VIA / M1 / C1 derived markings 是哪些。
-- 是否需要 router、rip-up、局部重连或候选排序。
+- 是否需要 LI / VIA / M1 / cut / derived marking 局部 repair 或候选排序。
 
-Stage 4 的候选是“待检查计划”，不是已提交修改。它可以包含 grid cells、shape ids、semantic ids、routing path、old/new coverage、预期 derived refresh region、provenance seed 等，但不能把候选直接写成 committed geometry。
+Stage 4 的候选是“待检查计划”，不是已提交修改。它可以包含 grid cells、shape ids、semantic ids、repair requirement、old/new coverage、预期 derived refresh region、provenance seed 等，但不能把候选直接写成 committed geometry。
 
 Unsupported intent 应在 Stage 4 显式失败。失败结果应说明：哪个 intent 无法被当前 planner 覆盖、是否有部分候选被拒绝、系统是否已经保持无副作用状态。
 
@@ -1032,52 +1033,168 @@ Routing / via 修复不应依赖“同名 net label 就等价”的 shortcut。D
 
 ## 7. 修改意图与候选规划
 
+第 7 节定义 Stage 4 的职责：把 target intent 转换为可检查、可排序、可回滚的 candidate plan。第 6 节已经定义了 `nfin` resize 的物理语义；第 7 节不重新解释这些语义，而是规定 planner 如何在这些语义边界内生成候选。
+
+Stage 4 的核心边界是：
+
+- 输入是 Stage 2/3 已归一化的 semantic IR、layout state、occupancy、connectivity、annotation references、constraint context 和 target intent。
+- 输出是 planning result：candidate plans、unsupported intent failures、planning warnings、required checks、affected regions 和 provenance seeds。
+- Candidate 是待检查计划，不是 committed geometry。
+- Macro 是特定 intent 的 planner implementation，不是 transaction commit owner。
+- Stage 4 不修改 authoritative state，不导出 artifact，不把 legacy edit stream 当作修改事实源。
+- 所有 persistent mutation 只能发生在 Stage 5 transaction commit 中。
+
 ### 7.1 Target intent / diff model
 
-Target intent 是 Stage 4 的输入。它可以来自 CDL diff，也可以来自未来的 ECO command、DRC/LVS feedback 或用户指定 intent。
+Target intent 的 raw source 在 Stage 1 获取，例如 source/target CDL、ECO command、用户指定 intent 或未来 signoff feedback；它在 Stage 2 被归一化为 semantic IR 的一部分。第 7 节不定义 raw input file format，而定义 Stage 4 planner-facing intent contract。Stage 4 不直接消费 raw CDL diff、raw command 或 raw signoff log。
 
-Intent 应包含：
+每个 target delta 至少应包含：
 
-- 操作类型：resize、add/remove、reroute、cut/share/split 等。
-- operand identity：device、net、pin、region。
-- semantic delta：参数变化、topology 变化、connectivity 变化。
-- constraints / preferences：保持 rail、固定 boundary、avoid region、policy 等。
+- `delta_id`：稳定标识，用于 report、failure、provenance 和 validation。
+- `source`：例如 CDL diff、ECO command、DRC feedback、user command。
+- `op_type`：resize、device add/remove、net reroute、cut/share/split、pin access repair、derived refresh request 等。
+- `operand_ref`：目标 device、net、pin、region、component 或 shape reference。
+- `semantic_before` / `semantic_after`：参数变化、topology 变化或 connectivity intent。
+- `scope`：single device、single net、single cell、bounded region 等。
+- `hard_constraints`：必须满足的约束，例如固定 rail、固定 boundary、不可移动 shape、avoid region。
+- `preferences`：可排序偏好，例如 gap-side shrink、少改动、低 via count、保持 pin access。
+- `required_capability`：该 delta 需要哪个 planner / macro capability 覆盖。
+- `provenance`：从哪些 evidence、annotation 或 diff 规则产生。
+
+Stage 4 必须先对全部 target delta 做 capability coverage check。默认策略是 atomic planning：只要存在 unsupported delta，整个 planning result 失败，不进入 Stage 5；不能像 legacy MVP 那样在 dispatch 表中把无 macro 覆盖的 diff 静默过滤。未来如果需要 partial apply，必须由显式 policy 打开，并在 report / validation result 中标记 skipped delta 和风险等级。
 
 ### 7.2 Planner / macro interface
 
-Planner 的输出是 candidate plan，不是 edit stream。Candidate 应尽量以 domain/state 层对象表达：
+Planner 的输出是 `PlanningResult`，而不是 edit stream。一个 planning result 应包含：
 
-- shape ids / cell ids。
-- old/new occupancy。
-- semantic updates。
-- connectivity effects。
-- affected derived regions。
-- required rule checks。
-- provenance seed。
+- candidate plan 列表，通常按 delta 或 dependency group 组织。
+- unsupported delta 列表。
+- planning warnings，例如 evidence 不完整、annotation coverage 降级、候选空间被 policy 缩小。
+- required checks，例如 DRC、connectivity、blockage、same-component、pin access、derived refresh。
+- affected regions，例如需要重算 occupancy、connectivity、derived marking 或 annotation coverage 的区域。
+- expected validation assertions，例如 “FIN layer invariant”、“Device.nfin committed to target”、“affected net remains connected”。
+- provenance seeds，用于 Stage 5 commit log 和 Stage 6 report。
 
-Macro 是特定 intent 的 planner 实现。它可以调用 routing/search 子系统，但不能绕过 state/constraint/transaction 边界直接输出最终 GDS bbox。
+Stage 4 推荐使用以下层次表达规划过程：
 
-### 7.3 Resize planning
+```text
+TargetIntent / TargetDelta
+  → PlanningTask
+  → MacroPlanner
+  → CandidatePlan
+  → RepairRequirement / SubCandidate
+  → StagedChangeSpec
+  → Stage 5 transaction
+```
 
-Resize planner 应先支持单 cell `nfin` resize：
+这些层次的职责是：
 
-- 从 semantic IR 找到目标 device。
-- 从 layout store / annotation 找到 device active region。
-- 基于 static FIN backdrop 和 OD coverage 生成候选 OD 修改。
-- 识别受影响的 LI / VIA / M1 / derived markings。
-- 生成一个或多个可排序 candidate。
+- `TargetIntent` / `TargetDelta`：描述目标语义变化，例如某个 device 参数、net topology 或 repair request。
+- `PlanningTask`：planner 对一个或多个 delta 做 grouping、ordering 和 dependency 分析后的规划任务。
+- `MacroPlanner`：某类 task 的候选生成器，例如 resize planner。
+- `CandidatePlan`：一个待检查的候选方案，引用 semantic object、shape、occupancy cell、connectivity component、affected region 和 required checks。
+- `RepairRequirement` / `SubCandidate`：候选内部的局部修复需求，或已经具体化的修复子候选。
+- `StagedChangeSpec`：Stage 5 transaction 可消费的 staged mutation 描述；它仍不是 committed state。
+- Stage 5 transaction：唯一可以把 staged changes 提交为 authoritative state 的阶段。
 
-Shrink-only 可以作为早期 policy，但应被表达为 candidate selection policy，而不是硬编码在 bbox arithmetic 中。
+这个结构只借鉴 legacy MVP 自顶向下拆解的思路，不继承 legacy L1–L4 edit-op pipeline。v2 中 `EditOp`、SKILL edit 和 report diff 是 post-commit artifact-specific representation，不能作为 Stage 4 的主输出。
 
-### 7.4 Routing-dependent planning
+Candidate plan 应尽量以 domain / state 层对象表达，而不是以 artifact bbox 表达：
 
-Device add/remove、net reroute、buffer insert 等 intent 需要 routing subsystem。Router 本身应只读当前 state / occupancy / constraints，返回 path plan；具体 occupancy assign/release 仍由 macro 在 transaction 内 stage。
+- semantic object references：`device_id`、`net_id`、`pin_id`、intent delta id。
+- geometry references：`shape_id`、layer、purpose、old/new coverage region。
+- occupancy references：A-tier / B-tier cell ids、old/new occupancy、release/assign intent。
+- connectivity effects：可能新增或删除的 component edge、via edge、cut barrier、diffusion sharing relation。
+- repair requirements：受 resize 影响的 LI / VIA / M1 / cut / derived marking 修复需求。
+- derived refresh region：C1 markings、annotation coverage、read/export views 的刷新范围。
+- required rule checks：候选需要 Stage 8/9 验证的 rule predicates。
+- candidate policy metadata：ranking score、tie-breaker、chosen anchor、rejected alternatives。
+- provenance seed：产生该候选所用的 evidence、policy 和 planner version。
 
-早期 routing 范围可以限制为 single-source、single-target、single-cell、bounded search；no-path 必须是显式结果。
+Candidate plan 不是 committed state，也不是 L1 `EditOp`。`EditOp`、SKILL edit、diff visualization 或 report item 可以在 Stage 5 commit 后由 `ChangeSet` / `CommitEvent` 派生，但不能作为 Stage 4 的唯一修改事实。
+
+Planner 是 Stage 4 的协调层；macro 是某一类 intent 的 planner implementation。两者都不能绕过 state / constraint / transaction 边界直接输出最终 GDS bbox。
+
+推荐接口边界如下：
+
+1. Planner 接收 typed target intent、planning context、policy 和 capability registry。
+2. Planner 对所有 delta 做 coverage check，形成 supported / unsupported 列表。
+3. 对 supported delta，Planner 调用对应 macro 生成一个或多个 candidate plan。
+4. Macro 可以读取 semantic IR、layout store、occupancy、connectivity、annotation references 和 constraint context 的只读 planning view。
+5. Macro 不直接调用 persistent mutation API，不导出 artifact，不提交 transaction。
+6. Planner 返回完整 `PlanningResult`，交由 Stage 5 做 feasibility staging、constraint check 和 commit。
+
+为了支持后续 agentic coding，macro 的失败也应结构化表达：例如 evidence 缺失、operand 不存在、候选空间为空、policy 禁止、capability 未实现。失败必须发生在任何事务 side effect 之前。
+
+### 7.3 v2 MVP 的 resize planning 特例
+
+第 7.3 是第 7.2 通用 planner contract 在 v2 MVP `nfin` resize 上的特例化。Resize planner 不重新定义物理语义；它必须遵守第 6.2–6.5 定义的 static FIN、OD-driven resize、fixed frame、gap-side placement 和局部 repair 边界。
+
+对于一个 `Device.nfin: old → new` delta，推荐映射为：
+
+- `TargetDelta`：device parameter resize，operand 是目标 `device_id`，semantic delta 是 `nfin old → new`。
+- `PlanningTask`：single-device resize task，记录 policy、scope、dependency 和 required capability。
+- `MacroPlanner`：resize planner，根据 semantic IR、layout state、occupancy、connectivity 和 annotation references 生成候选。
+- `CandidatePlan`：一个或多个 old/new OD coverage candidate，附带 affected occupancy、connectivity effects、repair requirements、required checks、candidate ranking metadata 和 provenance。
+- `RepairRequirement` / `SubCandidate`：LI / VIA0 / M1 / cut / derived marking 的局部修复需求，或已经具体化的 repair sub-candidate。
+- `StagedChangeSpec`：Stage 5 可消费的 semantic update、geometry / occupancy delta、connectivity refresh request 和 derived refresh request。
+
+Resize candidate 不应包含 `add FIN` / `remove FIN` 操作。FIN attribution、gate tracks、segments、vias、annotation coverage 等应作为 committed state 的 derived views 重算；planner 不应把这些派生视图作为长期可变字段直接改写。
+
+Shrink-only 可以作为早期 policy，但必须表达为 candidate selection policy，而不是散落在 bbox arithmetic 中。后续如果支持 grow 或更多候选选择策略，也应通过同一 planning seam 接入。
+
+### 7.4 Resize repair planning
+
+`nfin` resize 可能连带要求局部 repair。第 6.5 已经定义这些 repair 的语义边界；第 7.4 只规定 planner 如何表达它们。
+
+Resize repair planning 应覆盖：
+
+- S/D LI bars 的长度、端点或覆盖关系是否需要调整。
+- VIA0 / local via 是否仍满足 enclosure 和 connectivity。
+- M1 stubs 或局部 access 是否仍连接到目标 component。
+- cut / barrier 是否影响 component 切分。
+- derived markings 是否需要刷新。
+- annotation summary、provenance、validation expectation 是否需要更新。
+
+Planner 可以对 repair 做两种表达：
+
+1. **Required repair requirement**：说明某类 repair 必须由 Stage 5 staging / transaction 解决，否则 candidate 不可行。
+2. **Concrete repair candidate**：planner 已经给出具体 old/new occupancy 或 geometry coverage，由 Stage 5 检查后提交。
+
+无论哪种表达，repair 都不能在 Stage 4 直接写入 layout store、occupancy、connectivity 或 output artifact。Repair 的可行性由 constraint engine 判断，成功后由 Stage 5 commit 到 authoritative state。
+
+通用 routing subsystem，例如 device add/remove、arbitrary net reroute、buffer insert、rip-up and reroute、multi-net search，不属于 v2 初始 resize MVP 的第 7 节主线。它们应作为长期目标另行定义；当前第 7 节只要求 resize 相关的局部 repair 能被 candidate 显式表达并交给后续阶段检查。
 
 ### 7.5 Unsupported intent handling
 
-当 target diff 包含当前 planner 不支持的操作时，应在 Stage 4 生成 typed failure，而不是静默跳过。失败必须发生在任何事务 side effect 之前，并进入 report / validation result。
+Unsupported intent 必须显式失败，不得静默跳过。
+
+Stage 4 应在生成任何可执行候选之前完成全量 coverage check。失败结果应包含：
+
+- unsupported delta id。
+- op type。
+- operand reference。
+- required capability。
+- unsupported reason。
+- 是否有候选被生成但未执行。
+- 建议的后续 capability，例如需要 device add macro、需要 general router、需要 signoff feedback adapter。
+- 状态副作用保证：Stage 2/3/5 state 未被修改。
+
+默认情况下，任何 unsupported delta 都使整个 planning result 失败，并阻止 Stage 5 commit。未来如果允许 partial apply，必须由 explicit policy 打开；Stage 6 report / validation result 必须清楚记录哪些 delta 被应用、哪些被跳过、为什么跳过，以及由此产生的工程风险。
+
+### 7.6 Stage 4 与后续阶段的接口
+
+Stage 4 输出的 `PlanningResult` 是 Stage 5 feasibility / transaction 的输入，也是 Stage 6 report / validation 的 provenance 来源。
+
+接口关系如下：
+
+- Constraint system 消费 candidate 的 required checks、occupancy delta、connectivity effects 和 blockage context。
+- Transaction system 把 candidate 映射为 staged changes；检查成功后 commit 到 authoritative layout state。
+- Commit 后产生 `ChangeSet` / `CommitEvent`，而不是把 Stage 4 candidate 本身当作 committed geometry。
+- Export / validation 从 immutable snapshot、ChangeSet、CommitEvent 和 planning provenance 生成 artifacts、report 和 validation result。
+- Candidate、ChangeSet、ExportEdit 三者必须分层：candidate 是计划，ChangeSet 是已提交事实，ExportEdit 是 artifact-specific 派生产物。
+
+这个边界保证：规划可以产生多个候选和失败解释；约束系统可以拒绝候选且无副作用；成功提交会更新权威状态；导出阶段只读取 committed snapshot，不再补写 architecture state。
 
 ## 8. 约束系统与可行性检查
 
