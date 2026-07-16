@@ -44,7 +44,7 @@ v2 的目标不是把当前 MVP 局部修补到“能继续跑”，而是重新
 **v2 优先支持范围：**
 
 - 单个标准单元内的增量 ECO，优先覆盖 `nfin` resize。
-- 固定 standard-cell frame：cell boundary、rail、关键 M1/LI topology 与 FIN backdrop 原则上保持稳定。
+- 固定 standard-cell frame：cell boundary、VSS/VDD rails、FIN backdrop、rail-side gate endpoints、NWELL / BOUNDARY 与 M1 rail topology 原则上保持稳定；LI / VIA / local routing 只在受影响局部、经 constraint 检查后修复。
 - 以 GDS 几何 + Calibre query bundle + CDL 语义构建 layout state。
 - 在 planner / constraint / transaction 边界内完成候选修改、可行性判断和提交。
 - 从 committed snapshot 导出 GDS / CDL / JSON / SKILL / report，并执行结构化验证。
@@ -927,49 +927,108 @@ v2 不需要为这条 legacy JSON path 设计 compatibility adapter。符合 v2 
 
 ## 6. 基于物理事实的修改语义
 
-### 6.1 修改对象：物理实体、语义 intent 与候选状态
+第 6 节定义“一个 target intent 在物理版图中到底意味着什么”。它不是 planner API 的完整说明，也不是 transaction 实现细节；它给后续第 7–9 节提供语义基线：planner 只能规划这些语义允许的候选，constraint engine 只检查候选是否可行，transaction 只提交已经通过检查的状态变化。
 
-版图修改不应从“目标参数变化”直接跳到“手写 bbox patch”。正确过程是：
+### 6.1 修改对象：semantic intent、物理实体与 candidate delta
 
-1. 解释 target intent 的电路语义。
-2. 找到受影响的物理实体。
-3. 在 grid / occupancy / connectivity 表示中生成候选状态。
-4. 由 constraint engine 判断候选是否合法。
-5. 事务提交后由 layout store 和 derived state 统一反映结果。
+版图修改不能从“目标参数变化”直接跳到“手写 bbox patch”。正确过程是：
 
-### 6.2 nfin resize：OD active coverage 变化
+1. 解释 target intent 的电路语义，例如 `MN0.nfin: 5 → 4`。
+2. 找到受影响的物理实体，例如 device active region、S/D access、gate anchor、routing stubs、vias、derived markings。
+3. 在 layout store / occupancy / connectivity 的坐标和 cell 表示中构造 candidate delta。
+4. 由 constraint engine 在 transaction checkpoint 内判断 candidate 是否可行。
+5. 可行后一次性 commit 到 authoritative state，并刷新 derived state、derived views、connectivity 与 commit log。
 
-在 FinFET standard-cell 中，`nfin` 变化的核心含义是 device active fin count 改变。由于 FIN 是 static backdrop，active fin count 应由 OD coverage 与 device region 决定。
+这里的 candidate delta 是“待检查的状态变化描述”，不是事实本身。它可以引用 shape id、cell id、device id、net/component id、old/new coverage、受影响区域和 provenance seed；但在 feasibility 成功之前，不得永久修改 layout store、occupancy store、connectivity state、semantic IR 或 exporter artifact。
 
-因此 `nfin: 5 → 4` 的目标行为不是删除一条 FIN，而是调整 device OD active coverage，使该 device 覆盖的 active fin 数减少到 4，并保持 cell frame、rail、FIN grating 的稳定。
+这个边界是 v2 相比 legacy MVP 的关键修正：宏不能先改 `shape_pool`、`grid.b_tier_cells` 或 output JSON，再依赖后续步骤补救；宏只能先提出候选，事务提交成功后才把候选写入唯一权威状态。
 
-### 6.3 Static FIN / gate backdrop 下的 resize
+### 6.2 `nfin` resize 的物理含义：OD active coverage 变化
 
-Resize planner 应明确处理：
+在 FinFET standard-cell 中，FIN 是静态 grating / backdrop；`nfin` 表示 device active region 覆盖了多少条 FIN track，而不是版图中实际存在多少条 FIN shape。因此，`nfin` resize 的物理含义是：
 
-- 哪些 FIN track 仍存在。
-- 哪些 FIN track 被 OD 覆盖并归属 device。
-- OD shrink / grow 是否影响 diffusion sharing。
-- Gate / POLY 是否需要调整，或只作为 attribution anchor 保持不动。
-- LI / VIA / M1 是否需要局部修复以保持 pin connectivity 与 enclosure。
+- FIN stripe 集合保持不变。
+- device 的 OD active coverage 发生 shrink / grow。
+- active fin count 由 `FIN stripe ∩ OD coverage ∩ device region` 的几何关系派生。
+- device 的 semantic `nfin` 参数在 commit 后更新，用于 CDL/export/report；它不直接拥有 FIN 几何。
+- FIN attribution、gate track、routing spans、vias 等都是从 committed state 派生的 read views，而不是 resize macro 私有维护的长期几何副本。
 
-任何 resize candidate 都不应包含 `remove FIN` 这类操作。
+因此，`nfin: 5 → 4` 的目标行为不是删除一条 FIN，而是把该 device 的 OD active coverage 调整到只覆盖 4 条 active FIN track。输出 GDS 中 FIN 层应与输入 FIN backdrop 保持一致；如果 FIN layer 被标记为 derived / static / non-editable，任何 resize candidate 中出现 `add FIN` / `remove FIN` 都应被拒绝。
 
-### 6.4 Routing / via / derived markings 的局部修复
+### 6.3 固定 cell frame 下的 resize placement model
 
-OD 改变可能影响：
+v2 对 standard-cell 内 `nfin` resize 采用固定 frame 模型：
 
-- source/drain LI bars。
-- VIA enclosure。
-- M1 stub。
-- local net connectivity。
-- NWELL / BOUNDARY / VT / PP / NP 等 derived markings。
+- cell boundary 不因一次局部 drive-strength ECO 改变。
+- VSS / VDD rails、M1 rail locations、rail-side gate endpoints、FIN backdrop、NWELL / BOUNDARY 等 frame-level geometry 原则上保持稳定。
+- `nfin` shrink / grow 通过调整 device OD active coverage 完成。
+- shrink / grow 的默认方向是 device 面向 N/P gap 的一侧，而不是任意删除顶部或底部 FIN。
+- anchor direction 应从几何关系推导，例如 device 与 rail / gap 的相对位置；不应仅依赖 `nmos` / `pmos` 字符串硬编码。
+- POLY / gate 在 MVP `nfin` shrink 中通常作为 attribution anchor 保持不动；只有当候选明确证明 gate endpoint、pin access 或 design rule 需要调整时，才规划局部 gate / access 修复。
 
-这些修复应从 committed candidate 的 state delta 出发，由 planner、constraint engine 和 derived refresh 共同处理，而不是在 exporter 中临时补 bbox。
+在当前 inverter fixture 的典型 `MN0: 5 → 4` / `MP0: 7 → 6` shrink 中，语义上应分别减少靠近 N/P gap 的 active OD coverage：NMOS 去掉 gap-side 的上侧 active fin，PMOS 去掉 gap-side 的下侧 active fin。FIN 本身不变；cell height、rails、M1 rail、NWELL / BOUNDARY 不应被 shrink-to-fit 地重新解释。
 
-### 6.5 MVP resize path 的 legacy 偏差
+这个 placement model 只定义初始 v2 的 deterministic policy。将来可以由 search / RL / LLM 或更复杂 router 选择不同合法候选，但这些候选仍必须满足同一事实模型：先规划 OD / access / routing 的 state delta，再经 constraint 检查后提交。
 
-当前 MVP 中的 shrink-only path 包含若干与目标语义不一致的做法，例如 FIN edit、部分 side effect 不完全事务化、Stage 6 replay 成为事实落点、legacy fixture 几何不完全符合 PCell 心智模型等。这些问题作为 v2 开发 highlight 处理，不在 architecture 中逐项展开。
+### 6.4 Static FIN / gate backdrop 下的 resize candidate 内容
+
+Resize planner 至少应显式处理以下问题：
+
+- 哪些 FIN track 在 cell 中存在，且作为 static backdrop 保持不变。
+- 哪些 FIN track 被旧 OD 覆盖，哪些会被新 OD 覆盖。
+- 新旧 OD coverage 对 `Device.nfin`、device attribution、diffusion sharing、split diffusion 的影响。
+- 被 OD shrink / grow 影响的 S/D LI bars、via coverage、M1 stubs 与 local net connectivity。
+- 受影响区域内是否存在 unannotated blockage、cut barrier、derived marking 或 signoff-only risk。
+- commit 后需要刷新的 derived layout geometry，例如 NWELL / BOUNDARY / VT / PP / NP / C1 markings。
+- commit 后需要刷新的 read views，例如 fin attribution、gate tracks、segments、vias、annotation coverage、component-to-net summary。
+
+任何 resize candidate 都不应包含 `add FIN` / `remove FIN` 这类操作。若某个 target delta 只能通过编辑 FIN 才能实现，v2 应将其判定为 unsupported 或需要更高层 cell regeneration，而不是在局部 ECO 中修改 FIN grating。
+
+### 6.5 Routing、via、cut 与 derived markings 的局部修复
+
+OD active coverage 改变可能连带影响多类局部对象：
+
+- S/D LI bars 的长度、端点或覆盖关系。
+- VIA0 / local via 的 enclosure、连接关系与可保留性。
+- M1 stubs 或更高 routing 的局部连接。
+- cut / barrier 对 connectivity component 的切分。
+- derived markings，例如 C1、NWELL、BOUNDARY、VT、PP、NP 等。
+- DRC / LVS localization 所需的 annotation summary 与 provenance。
+
+这些修复应遵循同一个边界：
+
+1. planner 从 candidate 的 old/new state delta 中计算受影响区域。
+2. constraint engine 基于 occupancy、connectivity、blockage 与 rule predicates 判断局部修复是否可行。
+3. transaction commit 成功后，把修复结果写入 authoritative state。
+4. derived refresh 从 committed delta 更新 derived geometry 和 derived views。
+5. Stage 6 只从 committed snapshot 导出 artifacts，不临时补 bbox，也不把 L1 EditOp replay 当作事实落点。
+
+Routing / via 修复不应依赖“同名 net label 就等价”的 shortcut。DRC 的 same-conductor 判断应最终基于 connectivity component；semantic net label 只作为 annotation / export / localization 信息。对于尚未完成统一 connectivity substrate 的过渡实现，可以有兼容 adapter，但 architecture 目标不应把 per-cell `net_id` label 当作几何连通性的事实源。
+
+### 6.6 Unsupported intent 与失败语义
+
+目标 CDL diff 中的每个 relevant intent 都必须被 planner 明确处理：
+
+- 已支持的 intent 生成一个或多个 candidate。
+- 不支持的 intent 返回 typed unsupported result。
+- 多个 intent 中只要存在无法覆盖且会影响输出正确性的项，pipeline 应在任何 partial commit 之前失败，或进入明确的人工 review / degraded mode。
+- 不允许静默过滤未知参数、未知 device 操作、device add/remove、net reroute、VT/L/W 变化等目标差异。
+
+这条规则防止 legacy MVP 中“只处理 `nfin`，其它 diff 被过滤后继续输出”的行为进入 v2 主路径。v2 可以分阶段只支持 `nfin` resize，但 unsupported 的内容必须成为结构化失败结果，而不是被当作无事发生。
+
+### 6.7 Legacy MVP resize path 的偏差与可复用边界
+
+当前 MVP 的 resize path 只能作为 legacy/reference，不作为第 6 节语义的正确基线。与目标语义相关的主要偏差包括：
+
+- FIN 被当作可编辑层，resize 会产生 FIN add/remove 或删除 FIN `ShapeRecord`。
+- OD 修改、FIN 删除、LI reshape 等 side effects 可能在 constraint feasibility 完成前写入不同状态对象。
+- B-tier occupancy、CSP engine cells、`shape_pool` 和 output JSON 之间存在多份可能漂移的几何表示。
+- 成功 macro 不一定让下一次 macro 立即看到 committed geometry / semantic state。
+- Stage 6 replay / decoder patch 曾承担事实落点角色，而 v2 要求 Stage 5 commit 后 state 已经权威。
+- 当前 shrink 位置选择是硬编码策略，不是显式 candidate planning seam。
+- legacy fixture 里存在 shrink-to-fit、FIN 局部绘制、enclosure / spacing 等 correctness gaps，不能反推为目标架构允许的物理模型。
+
+可以复用的部分仅限于符合 v2 边界的实现片段，例如解析、单位转换、部分 GDS IO、部分 Calibre query 读取、测试 harness、部分 rule predicate 或 geometry helper。涉及 FIN edit、pre-commit state mutation、legacy JSON 主路径、Stage 6 canonical writeback、silent unsupported filtering 的逻辑应作为重构对象，而不是兼容目标。
 
 ## 7. 修改意图与候选规划
 
