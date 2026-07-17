@@ -1198,17 +1198,21 @@ Stage 4 输出的 `PlanningResult` 是 Stage 5 feasibility / transaction 的输�
 
 ## 8. 约束系统与可行性检查
 
+第 8 节定义 Stage 3 / Stage 5 中“候选是否合法”的判断模型。这里的重点不是沿用 legacy MVP 的 `ConstraintEngine.cells + CellState(net_id)` 实现，而是把 backlog 已经指出的问题吸收到 v2 目标架构中：occupancy 是离散几何工作基底，connectivity 是 same-conductor 判断依据，constraint engine 只叠加 domain / trail / rule predicates，不再拥有另一份可漂移的版图状态。
+
 ### 8.1 Constraint engine
 
-Constraint engine 的职责是判断 candidate 是否可行，并为 transaction 提供 checkpoint / restore / commit 所需的 trail 支撑。它不应成为另一个长期 occupancy owner。
+Constraint engine 的职责是判断 candidate 是否可行，并为 transaction 提供 checkpoint / restore / commit 所需的 trail 支撑。它不应成为另一个长期 occupancy owner，也不应把 semantic `net_id` / `device_id` 复制成 DRC 判断的权威身份。
 
 它读取：
 
-- layout store / occupancy。
+- Stage 2 建立的 coordinate system。
+- authoritative occupancy store。
 - connectivity index。
-- rule records。
+- rule records / rule predicates。
 - candidate staged changes。
 - blockage / fixed / cut / via context。
+- annotation / identity references 的只读摘要，仅用于定位、报告或 policy 判断。
 
 输出：
 
@@ -1216,54 +1220,128 @@ Constraint engine 的职责是判断 candidate 是否可行，并为 transaction
 - violation list。
 - affected cells / neighborhoods。
 - propagated domain changes。
-- connectivity changes。
+- connectivity delta / refresh request。
+- transaction trail entries。
 
-### 8.2 Rule records 与 predicates
+v2 目标合同是：constraint engine 可以维护 domain、trail、propagation queue、局部 rule cache 和 checkpoint metadata，但不能维护一份独立的 layout occupancy truth。legacy MVP 中 `engine.cells` 保存 `CellState(occ_type, net_id)`、再由 `load_existing_layout` / `load_b_tier_cells_into_engine` 从 model 拷贝状态的做法，只能作为迁移期实现；v2 应收敛为“engine over store”：engine 以 store cell id 为 key 叠加 domain / trail，候选提交直接作用于 authoritative occupancy / connectivity，并由同一 transaction 保护。
 
-Rule deck 应使用结构化 rule records 表达 min width、spacing、pitch、enclosure、extension、exact size、coloring 等规则。Constraint engine 消费其中可在 candidate 阶段判断的 subset。
+因此，constraint engine 的 cell state 应尽量缩小为候选检查需要的状态轴，例如 empty / occupied / barrier / fixed / candidate marker，以及必要的 rule-local width / line-end metadata。Occupant kind、shape reference、semantic net/device identity 属于 occupancy store 或 annotation / semantic IR，不应长期复制到 engine state。
 
-Rule predicate 应尽量以 occupancy / geometry / connectivity context 表达，而不是依赖输出 GDS 后的外部 DRC 才发现基础错误。
+### 8.2 Legacy CSP 中应吸收的 modeling / propagation 机制
 
-### 8.3 Occupancy-aware DRC
+Legacy MVP 的 CSP 实现虽然在状态所有权和 `net_id` 建模上不符合 v2 目标，但其中有几类机制是 v2 可以且应该吸收的。吸收方式不是复制当前对象结构，而是保留其算法合同并换到 v2 的 store / connectivity / transaction 边界上。
 
-DRC 判断应基于 occupancy 和 shape geometry：
+应吸收的部分：
 
-- same-layer spacing。
-- adjacent-track spacing。
-- via enclosure。
-- cut barrier。
-- OD spacing / sharing。
-- blockage conflict。
+- **规则模板化。** 现有 DRC rule 使用 stencil / trigger / forbidden 的模式：某个确定 cell 状态触发规则，然后在邻域 stencil 内剪掉非法状态。v2 可以保留这种 rule predicate 组织方式，但 forbidden 的判定应从 `CellState(net_id)` 集合剪枝，改为查询 occupancy / connectivity / geometry context。
+- **只从 determined state 传播。** legacy `_propagate` 只在 cell domain 已经收敛到单值时触发邻域传播，避免把“可能成为某 net / 某状态”的 cell 提前当作事实传播。这一点应保留：v2 propagation 只应从 staged assignment、fixed occupancy、barrier 或已确定的 derived condition 出发。
+- **队列式局部传播。** legacy 使用 queue 从 changed cell 做局部 cascade，并在邻居 domain 收敛后继续传播。v2 应继续采用局部增量传播，而不是每个 candidate 都全图重跑；传播范围由 rule stencil、affected region 和 connectivity delta 共同限定。
+- **trail-based transaction。** legacy trail 同时记录 prior domain 和 prior assignment，使 checkpoint / restore 能精确回滚失败 proposal；union-find trail 也能随 checkpoint 回滚。v2 应把这个思想推广到 occupancy change、connectivity edge/component change、derived cache invalidation 和 rule-domain/cache change 的统一 transaction trail。
+- **proposal API。** `propose_assign` / `propose_release` 的语义是“候选修改可能失败，调用方必须在 checkpoint 内提交或回滚”。v2 应保留这个 API 语义，但 proposal 的目标应是 authoritative occupancy / layout_store 的 staged change，而不是 engine 内部 occupancy copy。
+- **deterministic commit delta。** legacy commit 根据 checkpoint 后的 trail 汇总 cell delta，并按 `(layer, track, ortho)` 稳定排序。v2 的 ChangeSet / CommitEvent 也应具备稳定排序、可审计 old/new state、以及可从 transaction trail 汇总的性质。
+- **fixed blockage / cut barrier 语义。** legacy `mark_blockage` / `mark_cut` 把不可编辑障碍与 cut 固定为 singleton 状态，并在已有 annotated assignment 上拒绝覆盖。这种保守冲突策略应保留：unannotated geometry、blockage、cut、fixed frame 不能被候选静默覆盖。
+- **可逆 connectivity trail。** legacy union-find 为 rollback 放弃 path compression，并用 union trail 记录 merge。v2 的 connectivity index 应支持同等事务语义；具体实现可以继续用 no-compression reversible union-find，也可以使用其它可回滚 dynamic connectivity 结构，但必须保证与 occupancy staging 同 checkpoint / restore。
+- **传播统计。** legacy `propagate_stats` 记录按 seed layer 聚合的 calls / visited cells / time。v2 应保留类似 observability，用于发现 rule 或 layer 的传播热点，并把它纳入 validation / performance report。
 
-CSP-frontline rules 读取的是 occupancy 这个离散几何工作基底，以及 connectivity state 提供的 component relation。Rule predicates 不应直接消费当前 MVP 的 `Net.segments` 或 `Device.fin_track_indices` 作为事实源；如需 segment / fin attribution，应通过 occupancy query 或 identity localization query 获得。
+不应吸收的部分：
 
-当前某些 rule 可能暂时只在 signoff DRC 中检查，但 v2 architecture 应把关键局部约束逐步提升到 CSP-frontline。
+- 不吸收 per-cell `CellState.net_id` 作为 same-conductor 判据。
+- 不吸收 `occ_type × net_id` 的 domain 展开。
+- 不吸收 engine 自己长期持有 occupancy copy 的所有权模型。
+- 不吸收 VIA0 通过 LI/M1 wire double-stamp 伪造跨层连通的做法。
+- 不吸收 `net_id=None` 彼此兼容的乐观 spacing 语义。
 
-### 8.4 Connectivity-aware same-conductor reasoning
+因此，v2 的 constraint engine 可以继承 legacy CSP 的“模板化局部规则 + determined-only propagation + reversible trail + proposal/commit delta”算法骨架；但状态身份、连通性身份和持久 occupancy ownership 必须按第 3、5、9 节的 v2 state model 重建。
 
-Same-net spacing exemption 不应简单比较 cell 上的 scalar `net_id`。更稳健的判断是：两个对象是否属于同一连通 component。
+### 8.3 Rule records 与 predicates
+
+Rule deck 应使用结构化 rule records 表达 min width、spacing、pitch、enclosure、extension、exact size、coloring、cut / barrier、via relation 等规则。Constraint engine 消费其中可在 candidate 阶段判断的 subset。
+
+Rule predicate 的输入应是明确的上下文对象，而不是散落读取 artifact 或 legacy working representation：
+
+- coordinate context：layer、track axis、pitch、width、orientation、B-tier axes。
+- occupancy context：某 cell / neighborhood 是否被占用、被何类物理对象占用、是否 fixed / blockage / barrier。
+- geometry context：shape bbox、cell coverage、enclosure / overlap / extension。
+- connectivity context：两个 occupant 是否属于同一 connected component，cut 是否切断 component，via 是否提供跨层 edge。
+- annotation / semantic context：仅用于报告、localization、intent policy 或 rule 例外的显式输入，不作为 same-conductor 的默认判据。
+
+Rule predicate 应尽量在 candidate 阶段发现基础局部错误，而不是依赖输出 GDS 后的外部 DRC 才发现。例如局部 spacing、via enclosure、cut barrier、OD sharing / spacing、blockage conflict 应优先进入 CSP-frontline；复杂 coloring、全芯片密度、foundry deck 中无法简化的派生层规则可以保留为 signoff-only。
+
+### 8.4 Occupancy-aware DRC
+
+DRC 判断应基于 occupancy 和 shape geometry，而不是直接基于 legacy `Net.segments`、`Device.fin_track_indices` 或 output JSON。`Net.segments`、vias、fin attribution、gate tracks 等在 v2 中都是 derived views；它们可以帮助定位和展示，但不能成为 rule predicate 的事实源。
+
+CSP-frontline 至少应覆盖这些局部规则族：
+
+- same-layer spacing / adjacent-track spacing。
+- min width / exact width / line-end 与 extension 检查。
+- via enclosure、via-to-wire overlap、via stack relation。
+- cut barrier 对连通性的影响。
+- OD spacing、diffusion sharing、split diffusion 的局部合法性。
+- blockage / fixed geometry conflict。
+- derived layer refresh region 的基本一致性检查，例如 C1 / VT / well / boundary 的受影响范围。
+
+Occupancy-aware DRC 的正确状态依赖第 3、5、9 节定义的单一状态所有权：candidate 在 Stage 5 transaction 中 staged 到 occupancy / layout store 后检查，成功后提交到同一个 authoritative state。不能出现“engine 接受了候选，但 shape_pool / layout_store 仍是旧 LI/M1 几何，导出靠 decoder patch”的状态漂移。
+
+### 8.5 Connectivity-aware same-conductor reasoning
+
+Same-net spacing exemption 不应简单比较 cell 上的 scalar `net_id`。更稳健、也更符合 DRC 语义的判断是：两个对象是否属于同一物理连通 component。
 
 这样可以避免：
 
 - same net label 但物理 disconnected 的对象被错误放宽。
 - unknown / unannotated geometry 被乐观处理。
 - via-as-wire 多重表示被用于伪造跨层连通。
+- cut / barrier 已经切断几何，但 label 仍让 rule 误以为连通。
 
-Net label 可作为 component 属性用于报告和 LVS localization，但 rule 判断应以 connectivity 为准。
+Connectivity index 应由 occupancy geometry 建立，至少包含：
 
-### 8.5 CSP-frontline rules 与 signoff-only rules
+- same-layer 相邻或重叠 conductor cell 的 edge。
+- VIA / contact 形成的跨层 edge。
+- CUT / barrier 对 edge 的删除或禁止。
+- OD / diffusion sharing 与 split policy 对 component 的影响。
+
+Net label 可作为 component 的属性用于报告、LVS localization、semantic consistency check 或未来的 policy 例外；但 rule 判断默认应以 connectivity 为准。对于 same-net-but-disconnected 的对象，v2 应采取保守策略：按不同 conductor 检查 spacing。若未来确有工艺或产品需要放宽，应显式引入“component → semantic net property”的 policy，而不是回到 per-cell `net_id` 比较。
+
+这个修订与 backlog 中的 M11 方向一致：legacy union-find 不应只是测试覆盖的附属设施，而应成为 spacing / connectivity rule 的生产消费者；跨层连通必须通过 via edge 表达，而不是依赖 VIA0 被同时伪装成 LI/M1 wire。
+
+### 8.6 Domain model 与 propagation 边界
+
+Legacy MVP 的 domain 按 `occ_type × net_id` 展开，会制造大量不可达或无意义状态，例如 CUT 带 net 的组合，并使 domain 大小随 net 数增长。v2 不应继承这种 domain 设计。
+
+v2 的 domain model 应遵守：
+
+- domain 只表达候选检查真正会分支或传播的状态轴。
+- semantic `net_id` / `device_id` 不进入 per-cell domain；它们属于 semantic / annotation / component summary。
+- occupant kind 优先从 layer / occupancy record 得到；只有同层确实存在多种合法 occupant kind 时才进入 domain。
+- CUT / barrier 是拓扑屏障或 occupancy record 属性，不是带 net fan-out 的可选状态。
+- unknown / unannotated geometry 不应被乐观视为 compatible-with-everything；应投影为 blockage、suspect occupancy 或 disconnected component，并触发保守检查。
+
+Propagation 的职责是对 staged candidate 做局部剪枝和冲突发现，不是进行全局搜索。只要当前架构仍以 macro / planner 提出候选、engine 检查候选为主，rule predicate 可以在 propose / stage 时结合 occupancy 与 connectivity 即时判断；不需要预先把所有 net-labeled 状态枚举进每个 cell domain。
+
+### 8.7 CSP-frontline rules 与 signoff-only rules
 
 v2 应区分：
 
-- **CSP-frontline rules。** 修改候选必须立即满足，例如局部 spacing、via enclosure、blockage conflict、cut connectivity。
-- **Signoff-only rules。** 需要完整 foundry DRC/LVS 或复杂 coloring 才能判断的规则。
-- **Deferred rules。** 目标架构已留接口，但当前实现暂不覆盖。
+- **CSP-frontline rules。** 修改候选必须立即满足，例如局部 spacing、via enclosure、blockage conflict、cut connectivity、OD sharing / split、fixed frame boundary、FIN static backdrop 不可编辑等。
+- **Signoff-only rules。** 需要完整 foundry DRC/LVS 或复杂 coloring / density / full derived-layer deck 才能判断的规则。
+- **Deferred rules。** 目标架构已留接口，但当前实现暂不覆盖，需要在 validation report 中说明风险。
 
-Validation report 必须说明哪些规则在 CSP-frontline 检查，哪些交给 signoff，哪些被降级或跳过。
+Validation report 必须说明哪些规则在 CSP-frontline 检查，哪些交给 signoff，哪些被降级或跳过。对于被降级或跳过的规则，report 应记录原因：缺少 PDK deck、缺少 Calibre runtime、fixture 不覆盖、当前 planner scope 不支持，或该规则本身属于生产 signoff-only。
 
-### 8.6 Rule gaps 与 correctness highlights
+### 8.8 Rule gaps 与 correctness highlights
 
-v2 开发应特别避免继承 fixture 中已知 correctness gaps，例如 VIA0 enclosure、LI spacing、raw net_shapes effective-region 语义、device_info hardcoding、format unverified 等。它们应进入 plan / tests / validation，而不是作为 architecture 正常行为。
+v2 开发应特别避免继承 backlog 已经指出的 correctness gaps。第 8 节相关的重点包括：
+
+- FIN 是 static backdrop；任何 `add FIN` / `remove FIN` candidate 都应被 rule / edit policy 拒绝。
+- VIA0 不应同时作为独立 via、B-tier occupancy、LI/M1 wire 多重表示；via enclosure 与跨层 connectivity 应从统一 occupancy + via edge 判断。
+- LI / M1 的 committed 几何必须写回 authoritative state；不能只在 engine 或 EditOp stream 中存在。
+- Raw `net_shapes` / `device_info` 是 annotation evidence，必须经过 layer mapping、effective-region tolerance 和 identity translation；不能直接当作完整几何事实或 rule truth。
+- Per-cell `net_id=None` / unknown annotation 不能带来乐观 spacing 例外；应按 blockage / suspect / disconnected component 的保守语义处理。
+- `Device.fin_track_indices`、`Net.segments`、`Net.vias` 等 derived views 不能被 rule predicate 当作长期事实源。
+- 当前 fixture 中未覆盖的 VIA0 enclosure、LI spacing、cut / effective-region trimming、format verification 等问题，应进入 tests / validation plan，而不是被 architecture 默认视为已满足。
+
+这些 highlights 不是独立需求池，而是第 3 节事实源、第 5 节 state model、第 6 节物理语义、第 7 节 planning、第 9 节 transaction 和第 11 节 export / validation 的共同约束。后续实现如果暂时保留 legacy `ConstraintEngine.cells` 或 net-labeled domain，必须明确标注为迁移期 adapter，并提供退场路径。
 
 ## 9. 事务提交、派生状态与变更记录
 
