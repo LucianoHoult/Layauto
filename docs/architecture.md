@@ -1345,24 +1345,56 @@ v2 开发应特别避免继承 backlog 已经指出的 correctness gaps。第 8 
 
 ## 9. 事务提交、派生状态与变更记录
 
+第 9 节定义 Stage 5 如何把已经规划并通过约束检查的 candidate 变成 committed layout state。它要解决的核心问题是：所有持久状态必须在同一事务边界内一起成功或一起回滚；成功后，后续 planner、constraint engine、derived refresh 和 exporter 都读取同一个 committed snapshot。
+
+这个边界是 v2 对 v1 MVP 问题的直接修正。v2 不把 output JSON、L1 `EditOp` stream、临时 macro side effect 或导出阶段的补写结果当作 layout state。v2 architecture 只描述正确的目标状态模型；legacy MVP 中不符合这个模型的状态流应被重构或删除，而不是通过 adapter 继续保留。
+
 ### 9.1 Transaction scope
 
-Transaction scope 必须覆盖：
+Stage 5 transaction 必须覆盖一次 candidate 可能影响的全部持久状态：
 
 - layout store geometry changes。
 - occupancy changes。
 - connectivity changes。
 - semantic state changes。
-- derived cache invalidation。
-- commit log append。
+- derived marking dirty scope 或 final derived delta。
+- derived read-view / cache invalidation。
+- commit log / ChangeSet / CommitEvent append。
 
-Transaction 的核心 staged object 是 occupancy changes。Geometry changes、semantic changes、connectivity changes、derived refresh / invalidation 和 commit log append 都围绕 occupancy change 保持一致。只要其中任一部分失败，整个 candidate 必须 restore 到 checkpoint。
+Transaction 的核心 staged object 是 occupancy changes，但 transaction owner 不是 constraint engine 本身。Constraint engine 可以提供 domain、trail、checkpoint、restore、propagation 和 rule result；真正的 commit 目标是 authoritative layout state。Geometry changes、semantic changes、connectivity changes、derived invalidation / finalization 和 commit log append 都必须围绕同一 candidate、同一 checkpoint 和同一 commit event 保持一致。
+
+标准顺序是：
+
+1. 接收 Stage 4 的 candidate / staged mutation spec。
+2. 打开 transaction checkpoint。
+3. 在 transaction overlay 或 engine-over-store domain 中 stage occupancy / connectivity / semantic change。
+4. 运行 constraint propagation、rule predicates 和 required repair checks。
+5. 若任一检查失败，restore 到 checkpoint，并返回 typed failure。
+6. 若全部检查成功，提交 base state：geometry、occupancy、connectivity、semantic state 和 read-view invalidation metadata。
+7. 对需要进入 exported layout 的 derived markings 执行 final derivation。
+8. 比较 old/new derived markings，生成 derived delta。
+9. 将 base delta、derived delta、provenance 和 validation expectations 作为同一个对外可见的 CommitEvent 发布。
+10. 发布 immutable committed snapshot，供下一轮 Stage 5 或 Stage 6 读取。
+
+Planner / macro 不能直接修改 committed layout store、`shape_pool`、B-tier occupancy、semantic device/net state 或 output artifact。它们只能产生 candidate / staged mutation spec。任何需要持久修改的内容，都必须通过 Stage 5 transaction 提交到 authoritative state。
 
 ### 9.2 Commit to authoritative state
 
-Commit 的目标是 authoritative layout state，不是 output JSON，也不是当前 MVP 的 EditOp stream。成功 commit 后，后续 planner、constraint engine、derived refresh 和 exporter 都应读取同一个 committed state。
+Commit 的目标是 authoritative layout state，不是 output JSON，也不是 legacy L1 `EditOp` stream。成功 commit 后，后续 planner、constraint engine、derived refresh 和 exporter 都应读取同一个 committed state。
 
-Authoritative layout state 是一组有明确所有权关系的 committed state graph，至少包括 semantic state、geometry store、occupancy state、connectivity state、derived layout geometry、derived non-geometry views 和 commit metadata。实现可以把这些对象拆分到不同模块，但 commit 必须保证它们在同一 transaction 边界内一致更新或一致回滚。
+Authoritative layout state 是一组有明确所有权关系的 committed state graph，至少包括 semantic state、geometry store、occupancy state、connectivity state、derived layout geometry、derived non-geometry views 或其 invalidation metadata，以及 commit metadata。实现可以把这些对象拆分到不同模块，但 commit 必须保证它们在同一 transaction 边界内一致更新或一致回滚。
+
+一次成功 commit 必须满足：
+
+- geometry store 与 occupancy state 对同一物理对象给出一致 old/new。
+- B-tier occupancy、A-tier occupancy、connectivity state 和 rule-domain state 同步更新。
+- semantic `Device` / `Net` state 已反映本次 intent 的结果，例如 `nfin`、pin ownership、shared diffusion metadata 等。
+- C1 derived markings 已由 final derivation 刷新到与 base state 一致。
+- derived read views 已刷新或明确失效，不能被后续阶段静默读取为 truth。
+- 下一次 macro / planner 在同一 pipeline run 中读取到本次 commit 后的状态，不需要等待 Stage 6 decoder replay。
+- ChangeSet / CommitEvent 已记录足够 old/new identity，使后续 ExportEdit、report、validation 和 debug 不需要把 L1 edit stream 当作几何事实源。
+
+v2 可以复用 legacy MVP 中职责边界清楚、且不违背上述状态所有权的局部实现，例如稳定排序、纯 bbox 转换函数、可回滚 trail 的算法思想、纯导出 helper。凡是依赖 output replay、pre-commit side effect、独立漂移状态或 `EditOp` 作为唯一几何事实的实现，都不属于 v2 commit architecture。
 
 ### 9.3 Rollback consistency
 
@@ -1370,44 +1402,91 @@ Authoritative layout state 是一组有明确所有权关系的 committed state 
 
 - geometry 没有 partial bbox change。
 - occupancy 没有 partial assign/release。
-- connectivity 没有残留 union / cut state。
-- semantic IR 没有 partial parameter update。
-- derived views/cache 没有 stale exposure。
-- commit log 不记录成功事件。
+- connectivity 没有残留 union、via edge、cut barrier 或 diffusion-share / split state。
+- semantic IR 没有 partial parameter、device、pin 或 net update。
+- derived markings 没有 partial bbox refresh 或 provenance stamp。
+- derived read views / caches 没有 stale exposure。
+- commit log 不记录 successful commit event。
+- output artifact、ExportEdit、SKILL、report、validation result 不以失败 candidate 的 partial state 为输入。
 
-### 9.4 Derived markings refresh
+Rollback 的判断基准是 pre-candidate snapshot，而不是某一个内部对象的 checkpoint。只恢复 constraint engine cells 不足以构成 rollback；layout store、occupancy store、semantic state、connectivity index 和 derived state 都必须恢复或未曾被持久修改。
+
+失败 candidate 可以产生 diagnostic event，例如 `PlanningFailure`、`ConstraintFailure` 或 `TransactionRollbackEvent`，用于 debug 和报告；但它们不是 CommitEvent，不能被 Stage 6 当成 committed delta 导出。
+
+### 9.4 Derived markings finalization
 
 Derived markings 的区分来自 layer tier 对物理实体的抽象。C1 derived markings 是会进入 exported layout 的几何层，例如 NWELL、BOUNDARY、VT、PP、NP、DNW；它们属于 layout state 的一部分，但其几何来源是 committed A/B-tier state、device metadata 与 tech rules，而不是 macro 手写 shape。
 
-C1 derived markings 应在 commit 后根据 affected neighborhood 刷新。实现可以选择全量 recompute 或 subscription-driven incremental recompute；architecture 要求 derived refresh 发生在 Stage 5 commit 之后、Stage 6 export 之前，并作为 committed snapshot 的一部分被导出。
+如果某类 C1 derived marking 不参与 planning、occupancy feasibility、connectivity 或 routing，它不需要在 candidate staging 的每一步都实时维护。v2 的默认模型是 final derivation：
+
+1. Stage 5 先提交已经通过约束检查的 base state，包括 geometry、occupancy、connectivity 和 semantic state。
+2. 在发布对外可见的 committed snapshot 前，derivator 从 base state、tech rules 和 affected scope 重新计算 C1 derived markings。
+3. Derivator 产出的 derived geometry 与上一版 derived geometry 比较，形成 derived delta。
+4. Base delta 与 derived delta 一起进入 ChangeSet / CommitEvent。
+5. 只有 base state 与 derived markings 一致时，snapshot 才能发布给 Stage 6。
+
+Final derivation 可以是全量 recompute，也可以是 affected-scope incremental recompute；这是实现策略，不改变 architecture contract。关键要求是 deterministic、可重算、可比较、可审计。
+
+Derived finalization 失败时，不允许发布可导出的 committed snapshot。实现可以回滚到 pre-candidate snapshot，或返回 typed commit/finalization failure；但不能暴露“base geometry 已变、C1 仍旧或半刷新”的 clean state。
+
+Stage 6 不能临时运行 C1 derivator 来补几何。Stage 6 只能序列化 committed snapshot 中已经 final 的 derived markings。
+
+Planner / macro 不应直接覆写 C1 derived shape。对 C1 derived shape 的任何变化，都应来自 derivator 的 final result，并通过 derived delta 记录 provenance。
 
 ### 9.5 Derived views refresh
 
-Read views 与 C1 derived markings 不同：它们通常不是单独的 exported physical layer，而是对 committed state 的查询视图或 materialized cache。Routing spans、vias、fin attribution、gate tracks、annotation coverage 等读取面必须从 committed state 重算或失效。
+Read views 与 C1 derived markings 不同：它们通常不是单独的 exported physical layer，而是对 committed state 的查询视图或 materialized cache。Routing spans、vias、fin attribution、gate tracks、annotation coverage、device-owned active fins、net connectivity components 等读取面必须从 committed state 重算或失效。
 
 Read views 可以为了 planner、constraint、report 或 debug 被缓存，但不能被当作独立 truth；任何 cache 都必须能从 authoritative layout state 重建。
 
-### 9.6 Commit log / change set / provenance
+每个 commit 必须给出 view invalidation 所需的最小信息或保守信息：
+
+- affected layers。
+- affected bboxes / regions。
+- affected occupancy cells。
+- affected devices / nets。
+- affected connectivity components。
+- affected derived marking families。
+
+当下游请求已失效 view 时，实现只能重算、读取已刷新 cache，或返回 typed stale-view failure；不能静默读取 stale cache。`Device.fin_track_indices`、`Net.segments`、`Net.vias`、routing cells 等字段只能是 read view / cache / export view，不能被 planner、transaction 或 exporter 当作长期事实源。
+
+### 9.6 Commit log / ChangeSet / provenance
 
 Commit log 应记录：
 
 - target intent。
-- planner / candidate。
-- constraint result。
-- committed geometry / occupancy / semantic delta。
+- planner / macro / candidate identity。
+- candidate selection policy，例如 deterministic gap-side shrink、search result 或 human-selected plan。
+- constraint result，包括 accepted checks、failed checks、warnings、degraded checks。
+- committed geometry / occupancy / connectivity / semantic delta。
 - derived delta。
+- invalidated / refreshed read views。
 - validation expectations。
 - responsible code path / agent / macro。
+- parent snapshot id、new snapshot id、commit id、timestamp 或 run id。
 
-这使报告、debug、DRC/LVS feedback 和回归定位可以从 artifact 追溯到具体 intent。
+ChangeSet 应具备稳定排序和可审计 old/new state。排序规则应与 layer、shape/store id、cell id、device id、net id 等稳定 identity 绑定，避免 report、golden regression 和 debug 因非确定性顺序漂移。
+
+Commit log 中的 `validation expectations` 不是 validation result。它描述本次 commit 期望 Stage 6 / signoff 检查什么，例如 DRC clean、LVS match target CDL、SKILL dry-run locate exact shapes、fixture golden optional/required。实际 validation result 由 Stage 6 或生产工具交互写入独立 artifact，并通过 commit id 关联回来。
+
+这使报告、debug、DRC/LVS feedback 和回归定位可以从 artifact 追溯到具体 intent：target intent → planner / candidate → constraint result → transaction commit → derived finalization → exported artifact → validation result。
 
 ### 9.7 ChangeSet / CommitEvent / ExportEdit 的定位
 
-v2 不把 legacy L1 EditOp / ShapeEditRecord 作为核心状态模型。Stage 5 commit 产生 ChangeSet / CommitEvent，用于描述 semantic、geometry、occupancy、connectivity 与 derived refresh delta，并记录 provenance。
+v2 不把 legacy L1 `EditOp` / `ShapeEditRecord` 作为核心状态模型。Stage 5 commit 产生 ChangeSet / CommitEvent，用于描述 semantic、geometry、occupancy、connectivity 与 derived delta，并记录 provenance。
 
-Stage 6 如需生成 SKILL、diff visualization 或 human report，可以从 ChangeSet 派生 artifact-specific ExportEdit。ExportEdit 是 artifact 指令，不是 committed geometry；当前 MVP 的 EditOp 形态不进入 v2 architecture。
+三者边界如下：
 
-Derived-shape edit rejection 仍然重要：planner / macro 不应直接覆写 C1 derived shape，除非通过 derived refresh 或明确的 derived-rule provenance。
+- **Candidate / StagedChangeSpec**：Stage 4 / macro 产物，是计划，不是 committed state。
+- **ChangeSet**：Stage 5 成功 commit 后的事实 delta，记录 old/new state、identity、affected region、derived delta 和 invalidation metadata。
+- **CommitEvent**：一次原子发布事件，绑定 parent snapshot、new snapshot、ChangeSet、provenance 和 validation expectations。
+- **ExportEdit**：Stage 6 从 immutable snapshot + ChangeSet / CommitEvent 派生的 artifact-specific 指令，例如 SKILL command、diff visualization item 或 human report row。
+
+ExportEdit 是 artifact 指令，不是 committed geometry。Stage 6 如需生成 SKILL、diff visualization 或 human report，可以从 ChangeSet 派生 ExportEdit；但下一轮 planner、constraint engine、derived refresh 和 exporter 的几何输入仍然是 committed snapshot，而不是 ExportEdit 或 legacy edit stream。
+
+Legacy `EditOp` 不进入 v2 core architecture。若某些导出格式仍需要 edit-like 表达，应从 committed snapshot 和 ChangeSet 重新生成 artifact-specific ExportEdit，而不是保留 `EditOp` 作为状态或 commit 通道。
+
+Derived-shape edit rejection 仍然重要：planner / macro 不应直接覆写 C1 derived shape。对 derived shape 的 artifact edit 也必须能追溯到 CommitEvent 中的 derived delta，而不是来自普通 macro edit。
 
 ## 10. Export、生产工具交互与验证
 
