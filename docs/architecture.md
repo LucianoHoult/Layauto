@@ -109,7 +109,7 @@ Stage 1 的输出是原始 evidence bundle，而不是 layout model。
 Stage 1 应做的事：
 
 - 解析 CDL，提取 source circuit、target circuit 与 raw target diff / intent evidence。
-- 运行或读取 Calibre query，保存可审计的 raw query output 与 normalized YAML/对象。
+- 运行真实 Calibre query 或读取 dummy fixture raw captures，保存可审计的 raw query output 与 normalized YAML/对象；dummy fixture 必须走同一 parser / schema，不得绕回 legacy `calibre_device_query.json` / `calibre_net_query.json` 主路径。
 - 从 GDS 读取几何 bbox，保留未 annotation 的几何。
 - 校验 evidence 的基本一致性，例如 cell name、单位、layer name、device identity join 是否可解释。
 
@@ -721,7 +721,7 @@ v2 fixture 与生产输入应由以下事实组成：
 
 Stage 1 负责读取或生成上述 evidence，并保存 raw output 与 normalized middle files。Stage 2 才负责把它们归一化为 semantic IR、layout store、occupancy、annotation overlay 与 connectivity state。
 
-Fixture 应尽量模拟真实 Calibre query bundle。允许使用 dummy / synthetic middle files，但它们必须使用与生产路径一致的 schema 与 identity 语义；不应再发明只服务当前 parser 的 convenience JSON 作为 v2 主输入。
+Fixture 应尽量模拟真实 Calibre query bundle。允许使用 dummy / synthetic middle files，但它们必须使用与生产路径一致的 schema 与 identity 语义；不应再发明只服务当前 parser 的 convenience JSON 作为 v2 主输入。Dummy / synthetic query fixture 模拟的是 Stage 1 Calibre query evidence，不是 legacy MVP parser input；它必须保存 raw captures 与 normalized YAML，并由同一 parser 生成或校验。
 
 ### 5.2 GDS geometry：bbox_by_layer
 
@@ -920,7 +920,7 @@ v2 不需要为这条 legacy JSON path 设计 compatibility adapter。符合 v2 
 
 目标合同是：
 
-- architecture、fixture 和 agentic plan 不依赖 legacy JSON 字段构建正确状态。
+- architecture、fixture 和 pipeline plan 不依赖 legacy JSON 字段构建正确状态。
 - `Device.fin_track_indices`、`Net.segments`、`Net.vias` 等长期工作状态不再由 legacy JSON 派生。
 - 新测试 fixture 使用真实或拟真的 `ixref`、`net_xref`、`device_info`、`net_shapes` middle files。
 - Stage 1 / Stage 2 的主路径只接受 v2 evidence bundle 与 normalized objects；任何 legacy-only convenience field 都不能进入目标 architecture。
@@ -2039,41 +2039,174 @@ v2 应为模块边界建立轻量 architecture tests，避免实现过程中重�
 
 ## 12. 配置、tech bundle 与环境边界
 
+本节定义哪些内容属于一次 run 的配置，哪些内容属于 tech bundle，哪些内容必须来自输入 evidence 或生产工具结果。原则是：config 只能选择路径、工具模式、策略和环境适配；不能制造 layout / schematic / LVS 事实，也不能绕过第 2、3、5、8、9、10 节定义的状态边界。
+
+Legacy MVP 中符合 v2 架构要求的实现可以按职责复用，例如 CDL parser、Calibre query parser、tech config loader、部分 GDS IO、fixture generation / test harness；不符合 v2 架构边界的路径应重构或删除，不需要为 legacy 行为设计 adaptation / migration path。
+
 ### 12.1 `site_config.yaml`
 
-`site_config.yaml` 描述一次 run 的环境和输入输出路径：CDL、GDS、Calibre query mode / svdb、tech files、output dir、validation policy 等。它不应承载 device instance、target nfin、cell-specific geometry 等事实。它可以选择输入路径、tool mode、export policy、validation policy 和显式 migration / fixture mode；但不能通过配置绕过 v2 状态边界，例如让 legacy parser、legacy decoder 或 Stage 6 writeback 成为主路径。
+`site_config.yaml` 是一次 run 的 manifest。它描述输入/输出路径、tech bundle 入口、Stage 1 evidence acquisition 策略、tool adapter 参数、export policy 与 validation policy。它不承载 device instance、device pins、net membership、target nfin、shape bbox、Calibre query 内容等设计事实。
+
+建议 schema 分层：
+
+- `tech:` 指向 tech bundle 文件，例如 `drc_rules.yaml`、`layer_map.yaml`、`calibre_layer_map.yaml`、foundry `.layermap` / purpose-map override、单位精度与 bbox tolerance policy。
+- `inputs:` 指向 evidence 文件。v2 主路径以 `original_cdl` / `modified_cdl`、GDS 或 GDS round-trip 得到的 `bbox_by_layer`、以及 Stage 1 产生或读入的 `ixref_yaml` / `net_xref_yaml` / `device_info_yaml` / `net_shapes_yaml` 为核心输入。
+- `outputs:` 指向 artifact 输出目录与命名策略；不得把输出路径反向作为 Stage 5 commit 事实源。
+- `calibre:` 描述 Stage 1 Calibre / LVS query 获取策略，例如 `mode: calibre | dummy_fixture`、SVDB path、raw query output path、normalized YAML output path、timeout、command dialect、binary path。`dummy_fixture` 只表示“用预置 raw query captures / normalized YAML 模拟生产 query evidence”，不是 legacy parser mode。
+- `virtuoso:` / 其他 tool blocks 只描述工具调用环境，例如 lib/cell/view、dry-run、layer-purpose map、shape matching tolerance、undo policy。
+- `validation:` 描述 fatal / warning / deferred / skipped policy，包括 golden regression、self-consistency、signoff DRC/LVS、SKILL dry-run、fixture limitation 等类别。
+- `format:` 可声明使用 v2 evidence schema 的版本。它不能声明 legacy parser / legacy decoder 为主路径，也不能允许 Stage 6 writeback 成为 canonical state mutation。
+
+路径可以是绝对路径，也可以相对于 `site_config.yaml` 所在目录解析。loader 必须做 schema validation：缺失 required input、未知字段、路径不存在、mode 与输入集合冲突、legacy convenience input 误用于 v2 主路径，都应在 Stage 0 / Stage 1 前失败或产生结构化 validation issue。
+
+`site_config.yaml` 可以包含用于打开工具对象的名字，例如 Virtuoso `lib/cell/view` 或 GDS `top_cell_override`。这些名字只用于定位工具环境中的对象，不能覆盖从 CDL/GDS/LVS evidence 得到的 semantic identity。若工具入口名与 evidence 中的 cell / subckt identity 不一致，应记录为 validation issue，并由 policy 决定是否 fatal。
 
 ### 12.2 `drc_rules.yaml`
 
-`drc_rules.yaml` 描述 rule records。Rule 应结构化，包含 id、type、layers、value、severity、condition、notes 等字段。
+`drc_rules.yaml` 描述可机器消费的 rule records，而不是散落在代码里的常量。所有尺寸单位默认使用 nm；字段名应稳定，例如：
 
-### 12.3 `layer_map.yaml` / `calibre_layer_map.yaml`
+- `id`：稳定 rule id，如 `LI.S.1`、`V0.E.LI`。
+- `type`：规则类型，如 `min_pitch`、`min_width`、`min_spacing`、`min_enclosure`、`min_extension`、`exact_size`。
+- `layers`：相关 layer 名称，必须能在 `layer_map.yaml` 中解析。
+- `value_nm`：标量或 axis-keyed 值，例如 `{x: 1, y: 5}`。
+- `severity`：`critical | recommended | advisory`。
+- `condition`：可选上下文条件，例如 fin role、width class、colour class、derived-layer condition。
+- `consumer` 或 `phase`：规则由哪个阶段消费，例如 `frontline_csp`、`post_commit_derived_check`、`signoff_only`。
+- `notes`：解释、来源或 fixture caveat。
 
-`layer_map.yaml` 描述 GDS layer 的 tier、role、orientation、connectivity、derived status。`calibre_layer_map.yaml` 或等价 schema 描述 LVS derived layer 与 GDS layer 的映射、carries 字段、color / multi-patterning metadata。
+Rule loader 必须校验 rule id 唯一、layer 可解析、单位明确、axis 名称合法、rule type 与 layer 数量匹配。不能把 rule deck 中没有覆盖的 signoff violation 当作“已验证正确”。
 
-### 12.4 配置边界：哪些信息不进入 config
+v2 MVP 可以只把部分 rule 放入 CSP-frontline，但 coverage gap 必须显式进入 validation / fixture limitation report。当前 backlog 中指出的 LI spacing、VIA0 enclosure、rounding、effective-region 等问题，应转化为 rule coverage / validation coverage 的显式缺口；不能靠 target golden 或 legacy fixture 行为掩盖。
 
-以下信息来自输入 evidence，不应写入 config：
+### 12.3 `layer_map.yaml`
+
+`layer_map.yaml` 是 GDS layer、layout tier、坐标拓扑与编辑属性的技术事实源。最低应描述：
+
+- `name`、`gds` / datatype、`purpose` 或 foundry purpose 映射。
+- `tier`：A / B / C1 / C2。
+- `role`：fin、poly、interconnect、via、cut、diffusion、well、boundary、marker、annotation 等。
+- `orientation`：A-tier track layer 的 H / V。
+- `ortho`：A-tier layer 的正交 partner，例如 `LI <-> M1`、`FIN <-> POLY`。
+- `connects`：via layer 连接的上下层，例如 `VIA0: [LI, M1]`。
+- `axes`：非 via B-tier layer 的离散化轴，例如 `OD: [POLY, FIN]`；via 可直接复用 `connects` 作为轴定义。
+- `derived` / `editable_policy`：由派生器、foundry backdrop 或工具环境提供、不能由 L3 macro 直接编辑的 layer。FIN 在 v2 中是 static backdrop，应标记为 derived / non-editable，同时仍保留 A-tier track abstraction。
+- `color` / display metadata：只服务 visualization / reports，不应影响几何或 DRC 语义。
+- `derived_layers`：该 GDS layer 可接受哪些 LVS / Calibre derived layers 作为 annotation evidence source；每个 entry 至少包含 `name` 与 `carries`，必要时包含 `color`、`purpose`、`tolerance` 或 `trim_policy`。
+
+Grid topology 不应在 parser / grid factory 中硬编码。`orientation`、`ortho`、B-tier `axes` / via `connects` 应由 layer map loader 提供，并做以下校验：
+
+- `ortho` 对称：`ortho(ortho(L)) == L`。
+- 正交 layer orientation 必须一横一竖。
+- B-tier axes 必须解析到 A-tier layer。
+- via `connects` 必须解析到两个可连接 layer。
+- derived / non-editable layer 上的 direct edit 应在 Stage 5 / export boundary 前被拒绝。
+- `derived_layers[*].name` 必须能在 `calibre_layer_map.yaml` registry 中解析。
+
+Annotation 权威位置应与第 5 节一致：per-cell occupancy / routing cell 上的 annotation 是权威；`ShapeRecord.net_id` / `ShapeRecord.device_id` 只是 per-cell consensus 后的 summary。一个 GDS shape 被 cut 或 diffusion sharing 分裂成多个 identity region 时，summary 可以为 `None`，不能强行写入单一 net/device。
+
+### 12.4 `calibre_layer_map.yaml`
+
+`calibre_layer_map.yaml` 是 Calibre / LVS derived-layer registry。它描述 production query output 中的 layer name 如何映射回 v2 canonical GDS/domain layer，以及这些 derived layers 能携带哪些 annotation。
+
+建议 schema 至少包含：
+
+- `schema_version`。
+- `layers:` 或等价顶层 registry。
+- 每个 entry 的 `name`：Calibre / LVS derived layer 名。
+- `associates_with`：该 derived layer 对应的 canonical GDS/domain layer 或组合，例如 gate recognition、S/D diffusion、routing passthrough、via passthrough、bulk region、marker region。
+- `carries`：可携带的 annotation 字段，例如 `device_id`、`net_id`、`pin_role`、`color`、`none`。
+- `semantic_role`：device_channel、device_diffusion、routing_conductor、via、bulk、marker、structural 等。
+- `device_type_hint` / `pin_role_hint`：用于 device attribution、S/D disambiguation、report。
+- `multi_patterning`：mask/color metadata。
+- `exclude_from_grid`：只用于 annotation/report、不参与 grid stamping 的 derived layers。
+- `derivation_doc`：来源、SVRF 派生语义、或待 foundry deck 验证的说明。
+- `dialect` / `aliases`：处理 production Calibre layer name、AGF/ASAP7 名称、项目 canonical layer name 不一致的问题。
+- `trim_policy` / `effective_region_policy`：若该 layer 声称是 effective conducting / active region，应说明 cut / extension trimming 规则；没有实现 trimming 时只能标为 raw bbox / untrimmed evidence。
+
+`calibre_layer_map.yaml` 不拥有 annotation 结果，也不承载 device instance name、target intent、candidate choice 或某次 run 的 query 内容。它只是解释 Stage 1 query evidence 的 tech registry。
+
+当前 fixture 中 `device_info.yaml` 使用 `ngate_lvt` / `pgate_lvt`，`net_shapes.yaml` 使用 `LI` / `VIA0` / `M1`。这些名称都必须能通过 `layer_map.yaml` + `calibre_layer_map.yaml` 解析到 v2 canonical layer 与 `carries` 语义。若 production registry 使用 `GATE` / `ACTIVE` / `V0` / `LIG` / `LISD` 等名称，而项目 canonical layer 使用 `POLY` / `OD` / `VIA0` / `LI`，必须通过 alias / dialect 显式处理，不能靠字符串相等。
+
+### 12.5 配置边界：哪些信息不进入 config
+
+以下信息来自输入 evidence 或运行结果，不应作为语义事实写入 config：
 
 - Device instance name。
-- Device type 与 pins。
-- Net membership。
-- `nfin` target delta。
-- Cell name。
-- Shape bbox。
-- Calibre query result。
+- Device type、parameters 与 pins。
+- Net membership、net type、pin-to-net 拓扑。
+- `nfin` target delta 或其他 ECO intent 内容。
+- Design cell / subckt identity。工具入口名可以出现在 tool block 中，但不能覆盖 evidence identity。
+- Shape bbox、track index、fin attribution、via list、segment list。
+- Calibre query result 内容。
+- LVS-derived device/net identity、`lvs_index`、S/D swap 结果。
+- DRC/LVS pass/fail 结果。
+- 任何为了让 fixture 通过而覆盖事实源的 “expected geometry” 开关。
 
-### 12.5 生产工具环境适配
+可以进入 config 的，是“如何读取/运行/验证”的策略，例如路径、tool mode、timeout、layer dialect、unit precision、bbox tolerance、validation severity policy、fixture evidence source、export artifact naming、是否启用 optional golden comparison。即使这些策略会影响 pipeline 行为，它们也不能替代 Stage 1/2 的 evidence normalization 或 Stage 5 的 committed state。
 
-生产环境差异应通过 tool boundary / config 边界处理：
+### 12.6 Calibre / LVS query evidence 获取与结构化输入
 
-- Calibre binary path、SVDB path、timeout、query mode（post-MVP signoff closure）。
-- Virtuoso lib/cell/view、SKILL dry-run mode（post-MVP editor integration）。
-- Foundry layer map / purpose map。
-- Unit precision 与 bbox tolerance。
+Calibre / LVS query bundle 属于 Stage 1 evidence acquisition。v2 不再把它称为 “Stage 1.5”，但可以复用 legacy 中职责清晰的 query runner / parser / YAML writer 实现。
 
-工具缺失、license 不可用、timeout、rule deck 缺失、format drift 或命令失败必须进入 Stage 6 structured validation result，并由 validation policy 决定 fatal / deferred / degraded / skipped，而不是仅打印 stdout/stderr。v2 MVP 没有生产工具环境时，应明确记录这些检查 deferred，而不是实现假闭环。
+Stage 1 应支持两类 evidence 获取方式：
 
-### 12.6 Fixture 策略：基于真实 query 事实构建 synthetic cases
+- `calibre`：从真实 LVS SVDB 运行 query，获取 raw `iXref.temp`、`nXref.temp`、`NET NAMES`、per-device `DEVICE INFO <layout_inst>`、per-net `NET SHAPES <lvs_name>`。
+- `dummy_fixture`：从 fixture 目录读取预置 raw query captures，走同一 parser 与 normalized YAML/object schema。它用于没有 Calibre 环境的测试，不是 legacy layout parser mode。
 
-Synthetic fixture 应模拟生产事实流：GDS geometry + Calibre-like query bundle + CDL。它可以简化电路规模，但不应引入与生产事实模型相反的 convenience assumption，例如 per-device FIN、current-MVP net JSON truth、未验证的 effective-region claim。
+Stage 1 输出应同时保留：
+
+- raw query captures：便于审计、复现 parser bug、对照 Calibre format drift。
+- normalized objects / YAML：
+  - `ixref.yaml`：layout instance ↔ schematic instance，包含 S/D swap。
+  - `net_xref.yaml`：schematic net ↔ LVS net name ↔ stable `lvs_index`。
+  - `device_info.yaml`：per-layout-instance derived-layer bbox evidence，单位为 µm 或显式声明单位。
+  - `net_shapes.yaml`：per-net derived routing/conducting bbox evidence，保留 `lvs_index`、`lvs_name`、`schematic_name`。
+- query provenance：mode、source path / svdb、command dialect、timeout、tool version / unknown、parser version、raw-output path。
+
+Stage 1 只做格式解析、单位规范化、基本一致性检查与 evidence 保存。它不应直接构造 `Net.segments`、`Net.vias`、`Device.fin_track_indices`、occupancy、connectivity 或 editable geometry state。Stage 2 才消费这些 normalized evidence 并通过 layer mapping / overlay policy stamp annotation。
+
+若 query output 缺失、格式漂移、terminator 缺失、layout instance 无法 join 到 schematic instance、net name 无法 join 到 `lvs_index`、derived layer 无法映射，必须形成结构化 evidence error / validation issue。不能静默 fallback 到 fixture 命名相等或 legacy JSON。
+
+### 12.7 生产工具环境适配
+
+生产环境差异通过 tool adapter boundary 处理，不渗入 domain / state / planning / constraint 语义层。典型配置包括：
+
+- Calibre：binary path、SVDB path、DRC/LVS rule deck path、query mode、command dialect / template、timeout、working directory、environment variables、license handling、raw-output 保存路径。
+- Virtuoso：lib/cell/view、technology library、layer-purpose map、SKILL dry-run / apply mode、shape matching tolerance、transaction / undo policy。
+- GDS / OA / JSON：unit precision、DBU、top cell selection、layer-purpose override、bbox tolerance、rounding / snap policy。
+- Signoff：DRC / LVS severity policy、允许 deferred 的检查、是否要求 real-tool closure、是否允许 dummy fixture evidence。
+
+所有工具调用都应返回结构化结果，而不是只打印 stdout/stderr。结果至少包含：tool name、mode、command 或 redacted command、inputs、outputs、exit status、timeout/license/format-drift 分类、stdout/stderr 摘要、解析后的 machine-readable findings、以及 validation severity。
+
+工具缺失、license 不可用、timeout、rule deck 缺失、format drift、命令失败、query 结果缺字段，都必须进入 structured validation result；是否 fatal 由 validation policy 决定。v2 MVP 没有生产工具环境时，应明确记录相关检查为 `deferred` 或 `skipped`，不能用 dummy output 伪装成 signoff clean。
+
+Calibre query command-string drift 属于 tool adapter dialect 问题。若不同部署需要不同命令拼写或 preamble，应通过 adapter config / template 扩展，并由测试覆盖；不应把具体命令硬编码到 domain 或 state 构建逻辑中。
+
+### 12.8 Fixture 策略：基于真实 query 事实构建 synthetic cases
+
+Fixture 的目标是稳定复现 production evidence flow，而不是复刻 legacy MVP 的 convenience model。Synthetic fixture 应至少包含三类输入事实：GDS geometry、CDL、Calibre-like query bundle（`ixref` / `net_xref` / `device_info` / `net_shapes`）。它可以简化电路规模，但不得引入与 production fact model 相反的假设。
+
+明确禁止把以下 legacy convenience assumption 当作 v2 正确事实：
+
+- per-device FIN。v2 中 FIN 是 static backdrop，active fins 来自 `FIN ∩ OD ∩ device attribution`。
+- `calibre_device_query.json` / `calibre_net_query.json` 作为主路径 truth。它们不是 v2 evidence bundle。
+- 未经 layer mapping / trimming 验证的 effective-region claim。若 dummy `net_shapes` 只是 raw GDS bbox，应在 fixture limitation 中明示。
+- target GDS/JSON 作为唯一正确性 oracle。fixture golden 只能做 regression；生产 ECO 可以有多个合法解。
+- 已知 DRC violation 或 stale fixture 被 byte-golden 掩盖。spacing、enclosure、rounding、stale generation 等问题应进入 fixture limitation 或独立 correctness test。
+
+建议 fixture 分层：
+
+- `regression fixture`：小规模、byte-golden、用于防止无意输出漂移。
+- `synthetic edge case`：专门覆盖 conflict、sharing、cut、unannotated blockage、S/D swap、renumbered net、bbox tolerance、off-grid drift 等边界。
+- `tool-captured fixture`：来自真实 Calibre / Virtuoso 输出的脱敏样例，用于验证 command parser、layer dialect、unit conversion、effective-region trimming。
+
+Fixture 应同时保存 raw query captures 与 normalized YAML，并有检查证明二者同源：
+
+- raw `iXref.temp` → `ixref.yaml`。
+- raw `nXref.temp` + `NET NAMES` → `net_xref.yaml`。
+- raw `device_info_<layout_inst>.txt` → `device_info.yaml`。
+- raw `net_shapes_<lvs_name>.txt` → `net_shapes.yaml`。
+- GDS round-trip → `bbox_by_layer`。
+- CDL source/target → semantic IR / target intent。
+
+Fixture 生成流程应可重复。若 generator 是权威，应有检查确保重新生成后 fixture 目录干净；若 generator 依赖可选包或特定 writer，应把该依赖记录为 test requirement，而不是让 stale fixture 长期漂移。每个 fixture 应附带 machine-readable limitation report，说明哪些 production checks 是真实覆盖、哪些是 dummy/deferred。
