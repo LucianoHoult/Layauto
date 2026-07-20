@@ -241,7 +241,7 @@ Stage 6 的验证模型分为四类：
 3. **Signoff/tool validation。** 接入 Calibre DRC / LVS、Virtuoso dry-run、shape locate 等生产检查。
 4. **Audit/human validation。** 报告说明改了什么、为什么改、谁产生、哪些检查通过、哪些检查降级或跳过。
 
-Stage 6 不应 mutate `LayoutStore`、occupancy、connectivity、semantic IR 或 transaction state。重复运行 Stage 6 应产生相同 artifact 或可解释的时间戳/路径差异。
+Stage 6 不应 mutate `LayoutStore`、occupancy、connectivity、semantic IR 或 transaction state。重复运行 Stage 6 应产生相同 artifact 或可解释的时间戳/路径差异。Stage 6 发现 snapshot 缺少可导出或可验证的 final state 时，应返回 typed export / validation failure；不能临时运行 derivator、decoder 或 parser 逻辑来补齐状态。
 
 ### 2.8 Legacy MVP 与 v2 阶段边界的关系
 
@@ -1004,7 +1004,7 @@ OD active coverage 改变可能连带影响多类局部对象：
 4. derived refresh 从 committed delta 更新 derived geometry 和 derived views。
 5. Stage 6 只从 committed snapshot 导出 artifacts，不临时补 bbox，也不把 L1 EditOp replay 当作事实落点。
 
-Routing / via 修复不应依赖“同名 net label 就等价”的 shortcut。DRC 的 same-conductor 判断应最终基于 connectivity component；semantic net label 只作为 annotation / export / localization 信息。对于尚未完成统一 connectivity substrate 的过渡实现，可以有兼容 adapter，但 architecture 目标不应把 per-cell `net_id` label 当作几何连通性的事实源。
+Routing / via 修复不应依赖“同名 net label 就等价”的 shortcut。DRC 的 same-conductor 判断应最终基于 connectivity component；semantic net label 只作为 annotation / export / localization 信息。尚未完成统一 connectivity substrate 时，应优先落地目标 substrate 或缩小支持范围并显式失败；不为 per-cell `net_id` label 设计兼容层。
 
 ### 6.6 Unsupported intent 与失败语义
 
@@ -1177,7 +1177,7 @@ Stage 4 应在生成任何可执行候选之前完成全量 coverage check。失
 - required capability。
 - unsupported reason。
 - 是否有候选被生成但未执行。
-- 建议的后续 capability，例如需要 device add macro、需要 general router、需要 signoff feedback adapter。
+- 建议的后续 capability，例如需要 device add macro、需要 general router、需要 signoff feedback ingestion。
 - 状态副作用保证：Stage 2/3/5 state 未被修改。
 
 默认情况下，任何 unsupported delta 都使整个 planning result 失败，并阻止 Stage 5 commit。未来如果允许 partial apply，必须由 explicit policy 打开；Stage 6 report / validation result 必须清楚记录哪些 delta 被应用、哪些被跳过、为什么跳过，以及由此产生的工程风险。
@@ -1341,7 +1341,7 @@ v2 开发应特别避免继承 backlog 已经指出的 correctness gaps。第 8 
 - `Device.fin_track_indices`、`Net.segments`、`Net.vias` 等 derived views 不能被 rule predicate 当作长期事实源。
 - 当前 fixture 中未覆盖的 VIA0 enclosure、LI spacing、cut / effective-region trimming、format verification 等问题，应进入 tests / validation plan，而不是被 architecture 默认视为已满足。
 
-这些 highlights 不是独立需求池，而是第 3 节事实源、第 5 节 state model、第 6 节物理语义、第 7 节 planning、第 9 节 transaction 和第 11 节 export / validation 的共同约束。后续实现如果暂时保留 legacy `ConstraintEngine.cells` 或 net-labeled domain，必须明确标注为迁移期 adapter，并提供退场路径。
+这些 highlights 不是独立需求池，而是第 3 节事实源、第 5 节 state model、第 6 节物理语义、第 7 节 planning、第 9 节 transaction 和第 11 节 export / validation 的共同约束。后续实现不应把 legacy `ConstraintEngine.cells` 或 net-labeled domain 包装成目标架构的一部分；相关路径应按统一 occupancy / connectivity substrate 重构，未覆盖能力应显式失败。
 
 ## 9. 事务提交、派生状态与变更记录
 
@@ -1429,7 +1429,7 @@ Final derivation 可以是全量 recompute，也可以是 affected-scope increme
 
 Derived finalization 失败时，不允许发布可导出的 committed snapshot。实现可以回滚到 pre-candidate snapshot，或返回 typed commit/finalization failure；但不能暴露“base geometry 已变、C1 仍旧或半刷新”的 clean state。
 
-Stage 6 不能临时运行 C1 derivator 来补几何。Stage 6 只能序列化 committed snapshot 中已经 final 的 derived markings。
+Stage 6 不能临时运行 C1 derivator 来补几何。Stage 6 只能序列化 committed snapshot 中已经 final 的 derived markings。如果 Stage 6 发现 C1 derived markings 缺失、stale 或与 base state 不一致，应返回 validation failure；不得为了导出成功而在 Stage 6 补跑 derivator。
 
 Planner / macro 不应直接覆写 C1 derived shape。对 C1 derived shape 的任何变化，都应来自 derivator 的 final result，并通过 derived delta 记录 provenance。
 
@@ -1490,87 +1490,147 @@ Derived-shape edit rejection 仍然重要：planner / macro 不应直接覆写 C
 
 ## 10. Export、生产工具交互与验证
 
+第 10 节定义 Stage 6 的职责边界。Stage 6 的目标是把已经提交并冻结的 layout snapshot 转换为 artifact，并对 artifact 与 snapshot、semantic intent、生产工具结果之间的一致性给出结构化判断。它不是修改阶段，也不是 legacy writeback 阶段。
+
+Stage 6 的输入只能来自：
+
+- immutable committed snapshot。
+- ChangeSet / CommitEvent / provenance。
+- export policy。
+- validation policy。
+- site/tool config。
+- 可选 golden target 或 fixture expectation。
+
+Stage 6 不能重新解释 raw target diff，不能读取 mutable transaction overlay，不能把 output artifact 当作 state source，也不能把生产工具输出直接 patch 回 layout state。Legacy MVP 中符合 v2 边界的 GDS IO、CDL writer、Calibre query parser、可视化 helper 或测试 harness 可以按职责复用；不符合 v2 边界的 edit-stream writeback、output-side patch、placeholder SKILL、stdout-only validation 等路径应重构或删除，不设计兼容 adapter。
+
 ### 10.1 Stage 6 no-mutation boundary
 
-Stage 6 输入是 immutable committed snapshot、ChangeSet / CommitEvent、site/tool config、export policy 和 validation policy。它不允许修改内部状态。这个边界使导出可重跑、可比较、可审计。
+Stage 6 是只读边界。它不允许修改 layout_store、occupancy、connectivity、semantic IR、derived markings 或 read-view cache 的 authoritative 内容。这个边界保证 artifact generation 可重跑、可比较、可审计。
 
 Stage 6 禁止：
 
 - 修改 layout_store / occupancy / connectivity / semantic IR。
-- 运行 derived refresh。
-- replay current-MVP edit stream 来生成 canonical geometry。
-- 根据 target diff globals 修改输出 params。
+- 在 export 过程中运行或补跑 C1 derived refresh。
+- replay legacy MVP edit stream 来生成 canonical geometry。
+- 根据 Stage 1 target diff globals 临时修改 output params。
+- 根据 output JSON / GDS / SKILL 反向修补 committed state。
 - 把 validation mismatch 静默降级为 stdout。
+- 把 skipped / degraded / environment-limited check 当作 pass。
+
+如果 Stage 6 发现 snapshot 缺少导出所需的 final derived markings、annotation summary、shape identity、layer-purpose mapping 或 validation expectation，应产生 typed export / validation failure，而不是临时修补。
+
+Legacy MVP 中 `DRCDerivator → WritebackDecoder.apply() → resized_data → GDS/JSON/CDL` 的路径属于要删除的错误边界，不是 v2 的过渡兼容目标。v2 中 C1 derived markings 已在 Stage 5 commit 后 final，Stage 6 只序列化 snapshot 中已有的 geometry。
 
 ### 10.2 GDS / JSON / CDL export
 
-Exporter 应从 snapshot 生成：
+Exporter 应从 immutable snapshot 生成 artifact：
 
-- GDS：layer-purpose mapping、units、shape order、derived markings。
-- JSON：machine-readable layout snapshot 或 debug representation。
-- CDL：从 semantic IR 输出 device / net / params，不从 Stage 1 diff globals 硬编码。
+- **GDS。** 从 snapshot 的 geometry store、derived layout geometry、layer-purpose mapping、unit / DBU policy、shape ordering policy 输出。GDS export 不 replay ChangeSet 来“得到”最终几何；ChangeSet 只可用于 provenance、shape order hint、debug tag 或 diff reference。
+- **JSON snapshot。** 输出 machine-readable snapshot / debug representation，包含 semantic、geometry、occupancy、connectivity、annotation summary、derived summary、commit id、parent id 和 change summary。JSON 是 artifact，不是下一轮 pipeline 的事实源。
+- **CDL。** 从 semantic IR snapshot 输出 cell、device、net、pin、params；不得从 Stage 1 raw diff 或 hard-coded instance list 推导最终 params。
+- **Optional debug / fixture JSON。** 可以为了回归测试保留简化格式，但必须标注为 artifact/debug view，不能成为 v2 parser 主输入。
 
-输出顺序和单位转换应可测试，避免 byte-golden drift 无法解释。
+输出顺序、单位转换、layer-purpose mapping、shape id / bbox serialization 必须可测试。Byte-golden drift 不是天然错误，但必须能解释：是 shape order policy 改变、unit round-trip 改变、derived marking finalization 改变，还是实际几何语义改变。
 
-Stage 6 artifact 从 snapshot / ChangeSet 的读取边界如下：
+Stage 6 artifact 的读取边界如下：
 
 | Artifact | 从 snapshot 读取 | 从 ChangeSet / CommitEvent 读取 | 禁止事项 |
 |----------|------------------|----------------------------------|----------|
-| GDS | geometry store、derived markings、layer map、units | 可选 shape order / provenance reference | 不 replay current-MVP edit stream 修补 geometry |
-| JSON snapshot | semantic、geometry、occupancy、connectivity、annotation summary | commit id、parent id、change summary | 不重新计算权威状态 |
-| CDL | semantic IR snapshot | semantic delta provenance | 不从 Stage 1 diff globals 硬编码 |
-| SKILL | shape ids、bbox、layer-purpose、snapshot geometry | ExportEdit、provenance | 不用不确定 bbox 静默删除；必须 dry-run / assert |
-| Human report | snapshot summary | intent、candidate、constraint、commit、validation | 不只统计 macro edit ops |
-| Validation result | snapshot、artifacts、policy | commit id、validation expectations | 不只打印 stdout |
+| GDS | geometry store、derived markings、layer-purpose mapping、units、shape order policy | provenance reference、optional deterministic order hint | 不 replay legacy edit stream 修补 geometry |
+| JSON snapshot | semantic、geometry、occupancy、connectivity、annotation summary、derived summary | commit id、parent id、change summary | 不重新计算 authoritative state |
+| CDL | semantic IR snapshot | semantic delta provenance | 不从 Stage 1 diff globals 硬编码 params |
+| SKILL / Virtuoso script（post-MVP） | shape ids、bbox、layer-purpose、snapshot geometry、identity anchors | ExportEdit、provenance、assertion policy | v2 MVP 不依赖它完成 layout 修改；不把 SKILL 当作 state commit |
+| Human report | snapshot summary、validation result summary | intent、candidate、constraint、commit、provenance | 不只统计 macro edit ops |
+| Validation result | snapshot、artifacts、policy、tool outputs（MVP 可只覆盖 self-consistency / fixture checks） | commit id、validation expectations | 不只打印 stdout；不吞掉 skipped/degraded checks |
+| Visualization | committed delta、snapshot geometry、validation mismatch | provenance、candidate / rule context | 不从 pre-commit edit stream 拼图 |
 
 ### 10.3 SKILL / Virtuoso interaction
 
-SKILL / Virtuoso script 是生产交互 artifact。它应包含：
+v2 MVP 的主输出路径是 Python-based exporter：从 committed snapshot 直接导出 GDS / JSON / CDL，并通过 self-consistency / fixture validation 检查这些 artifact。只要这条路径能产生可被下游工具读取、可回归、可审计的 layout artifact，SKILL / Virtuoso 交互就不是 v2 MVP 完成版图修改的必要步骤。
 
-- layer-purpose mapping。
-- shape locate / bbox tolerance / identity matching。
-- dry-run assertion。
-- 每个 edit 的 provenance comment。
-- ambiguity / missing-shape failure。
+SKILL / Virtuoso 的定位应降级为 **post-MVP production integration / mirror-to-editor artifact**：当生产流程要求把 Layauto 已经 commit 的修改真实反映到 Virtuoso layout editor 中，或需要在 Virtuoso database 中保留可审计的人工复现脚本时，再从 snapshot + ChangeSet / ExportEdit 生成 SKILL。它的目的不是替代 Python exporter，也不是成为权威 commit 机制，而是把同一份已提交状态投射到 Virtuoso 环境。
 
-占位式 printf helper 不能作为生产成功。
+因此 v2 MVP 对 SKILL 的要求是保留清晰边界，而不是实现完整生产脚本：
+
+- Python exporter 生成的 GDS / JSON / CDL 是 MVP 的 primary artifact。
+- SKILL emitter 可以暂不实现；validation policy 应把 SKILL dry-run 标记为 post-MVP / skipped，而不是 fatal。
+- 如果后续实现 SKILL emitter，它必须只读 snapshot + ChangeSet / ExportEdit，并包含 lib/cell/view、layer-purpose mapping、bbox tolerance、shape locate assertion、provenance comment、ambiguity / missing-shape failure、tool stdout/stderr / return code 等结构化记录。
+- 占位式 `printf` helper 不能作为生产成功；也不需要为了保留 legacy `EditOp` list 而设计适配层。实现时应先形成符合 v2 的 ChangeSet / ExportEdit，再由 SKILL emitter 处理。
+
+SKILL dry-run 通过并不等价于 layout state commit 成功。commit 已在 Stage 5 完成；SKILL dry-run / apply 的结果属于 Stage 6 validation result 或 production integration result。
 
 ### 10.4 Calibre DRC / LVS closure
 
-生产 validation 应接入 Calibre DRC / LVS：
+Calibre DRC / LVS closure 是后续生产闭环能力，不是 v2 MVP 的必需完成项。v2 MVP 可以先只定义接入边界，并把真实 Calibre run、生产环境脚本、结果解析、violation localization、failure policy 等实现 defer 到 post-MVP。原因是这些工作依赖 PDK / rule deck / license / SVDB / tool command / report format，工程细节多，且不应阻塞核心 state / planner / transaction / exporter 架构收敛。
 
-- DRC clean 是生产 fatal gate。
-- LVS must match target CDL。
-- DRC/LVS violation 应定位到 schematic net / device / candidate / commit provenance。
-- Tool command failure、format drift、missing binary、timeout 都应成为结构化 validation result。
+仍需区分两类 Calibre 消费：
+
+1. **Stage 1 evidence acquisition。** `ixref`、`net_xref`、`device_info`、`net_shapes` 等 query bundle 用于构建 annotation overlay 和 layout state；这类 evidence 边界仍属于 v2 state construction 的输入约束。
+2. **Stage 6 signoff validation（post-MVP）。** DRC / LVS run 用于验证 exported artifact 与 target CDL、rule deck、tool environment 的一致性；v2 MVP 可将其记录为 skipped / deferred check。
+
+post-MVP 的 Calibre closure 应满足：
+
+- DRC clean 是生产 fatal gate；但 v2 MVP 中如果没有生产 Calibre 环境，应由 validation policy 标记为 skipped / deferred，而不是假装 pass。
+- LVS must match target CDL / semantic IR snapshot；内部 net renumber、S/D swap、layout instance rename 必须通过 Stage 2 annotation identity 解释，而不是在 Stage 6 临时猜测。
+- DRC/LVS violation 应定位到 schematic net / device / connected component / candidate / commit provenance；无法定位时要给出 typed localization gap。
+- Tool command failure、format drift、missing binary、timeout、license failure、SVDB missing、rule deck missing、layer map mismatch 都应成为结构化 validation result。
+- Calibre output 不得直接 patch layout state；它只能产生 validation result、diagnostic artifact，或作为下一轮修复 intent 的 evidence 输入。
+
+第 10 节只定义边界。生产级 parser / runner / localization helper 可在后续 `validation/` 与 `importers/` 中实现；当前 v2 MVP 不需要实现完整 Calibre DRC / LVS closure。
 
 ### 10.5 Validation model
 
 Validation 分层：
 
-1. **Golden regression。** 用于 fixture / CI，检查输出是否与预期 golden 一致。
-2. **Self-consistency。** artifact 与 snapshot / ChangeSet / semantic IR 一致。
-3. **Signoff validation。** DRC/LVS/SKILL dry-run 等生产检查。
-4. **Audit validation。** human report 和 visualization 可解释修改。
+1. **Golden regression。** 用于 fixture / CI。检查输出是否与预期 golden 一致。适合 synthetic fixture，不应被当作生产 ECO 的唯一正确性标准。
+2. **Self-consistency。** 检查 artifact 与 snapshot / ChangeSet / semantic IR / layer map / units / derived markings 一致。
+3. **Signoff validation。** 运行 DRC / LVS / SKILL dry-run / optional Virtuoso shape locate 等生产检查；v2 MVP 可将这些生产检查标记为 post-MVP / skipped。
+4. **Audit validation。** 检查 human report、visualization、provenance 和 degraded-check disclosure 是否足以解释修改。
 
-Self-consistency 至少应检查：GDS round-trip geometry 与 snapshot geometry 一致；CDL export 与 semantic IR snapshot 一致；JSON export 与 snapshot content 一致；SKILL dry-run 能定位 snapshot 指定 shape；report 中 change counts 与 ChangeSet 一致；derived markings 已经包含在 snapshot 中，而不是 Stage 6 临时生成。
+Self-consistency 至少应检查：
 
-没有 golden target 的生产 ECO 仍然可以通过 self-consistency + signoff + audit 给出 pass/fail。
+- GDS round-trip geometry 与 snapshot geometry 一致。
+- JSON export 与 snapshot content 一致。
+- CDL export 与 semantic IR snapshot 一致。
+- 如果启用 SKILL dry-run，它能定位 snapshot 指定 shape，且 ambiguity / missing shape 被结构化报告；v2 MVP 未启用时应记录为 skipped / post-MVP。
+- Report 中 change counts、affected regions、target intent、candidate id、constraint result 与 ChangeSet 一致。
+- C1 derived markings 已经包含在 snapshot 中，而不是 Stage 6 临时生成。
+- FIN static backdrop、OD active coverage、routing/via/cut repair、connectivity component 等与 commit validation expectations 一致。
+- Annotation coverage、unannotated blockage、suspect geometry、coverage gap 与 validation policy 一致。
+
+Validation result 应是 machine-readable artifact，至少包含：
+
+- `commit_id` / `snapshot_id`。
+- artifact paths 与 content hash。
+- check name、check type、severity、status。
+- pass / fail / skipped / degraded / warning 的明确区分。
+- skipped / degraded 原因，例如 missing tool、missing license、fixture scope、rule unsupported、policy disabled。
+- tool command、return code、stdout/stderr path、runtime、timeout、environment summary。
+- localized object references，例如 device id、net id、component id、shape id、candidate id、rule id、bbox。
+- failure policy outcome，例如 fatal、non-fatal warning、requires human review。
+
+没有 golden target 的生产 ECO 仍然可以通过 self-consistency + signoff + audit 给出 pass/fail。v2 MVP 可以先以 self-consistency + fixture checks 作为完成标准，并在 validation result 中明确 SKILL / Calibre signoff 为 deferred。相反，有 golden target 的 fixture 如果 signoff 或 self-consistency 失败，也不能只因为 golden match 而 pass。
 
 ### 10.6 Reports、visualization 与 debug artifacts
 
+Report 是审计 artifact，不是 state source。它应从 snapshot、ChangeSet / CommitEvent、PlanningResult、constraint result、validation result 和 policy disclosure 生成。
+
 Report 应覆盖：
 
-- 输入 evidence 摘要。
-- target intent。
-- candidate 选择。
-- constraint result。
-- committed changes。
-- derived changes。
-- validation results。
-- skipped / warning / degraded checks。
+- 输入 evidence 摘要：CDL、GDS/bbox、Calibre query bundle、site config、tool mode。
+- target intent：所有 delta、supported / unsupported 判断、atomic / partial policy。
+- candidate 选择：候选内容、受影响区域、repair requirement、provenance seed。
+- constraint result：规则、传播、失败原因、rollback 或 commit outcome。
+- committed changes：base changes、semantic changes、occupancy / connectivity changes。
+- derived changes：C1 markings、read-view invalidation / refresh summary。
+- annotation coverage：coverage gap、unannotated blockage、suspect geometry。
+- validation results：self-consistency、golden、signoff、audit checks；v2 MVP 中的 post-MVP / skipped checks 必须清楚列出。
+- skipped / warning / degraded checks：原因、风险、是否 fatal。
+- artifact manifest：路径、hash、生成时间、tool command summary。
 
-Visualization 应从 committed delta 和 validation mismatch 生成，而不是从 pre-commit edit stream 拼图。
+Report 不应只统计 macro edit ops。对于不符合 v2 的 legacy `EditOp` 报告路径，应重构为基于 ChangeSet / CommitEvent 的报告生成；不保留以 edit-op count 为主体的适配输出。
+
+Visualization 应从 committed delta、snapshot geometry、annotation overlay、connectivity component 和 validation mismatch 生成。它可以展示 before / after / target / LVS-derived overlay / DRC marker，但不得从 pre-commit edit stream 拼最终图。若 visualization 依赖可选库或 GUI 环境，缺失时应进入 validation/report 的 degraded-check 记录，而不是影响核心 artifact correctness。
 
 ## 11. v2 模块组织
 
@@ -1663,11 +1723,11 @@ layauto_v2/
 
 ### 11.10 `export/`
 
-`export/` 负责 GDS、CDL、JSON、SKILL、reports 等 artifact 生成。它只读 snapshot，不修改 state。
+`export/` 负责 GDS、CDL、JSON、SKILL、reports、visualization 等 artifact 生成。它只读 immutable snapshot、ChangeSet / CommitEvent 和 export policy，不修改 state，不运行 derived refresh，不消费 raw target diff 作为输出事实源。
 
 ### 11.11 `validation/`
 
-`validation/` 负责 self-consistency、golden regression、signoff integration、structured result。Validation result 应能驱动 pipeline failure policy。
+`validation/` 负责 self-consistency、golden regression、structured validation result 和 failure policy；post-MVP 再接入 signoff integration、SKILL dry-run 与 Virtuoso shape locate。Validation result 应是 machine-readable artifact，并能驱动 pipeline pass/fail、deferred/degraded-check disclosure 与 human review。
 
 ### 11.12 `pipeline.py`
 
@@ -1710,14 +1770,14 @@ layauto_v2/
 
 ### 12.5 生产工具环境适配
 
-生产环境差异应通过 adapter / config 边界处理：
+生产环境差异应通过 tool boundary / config 边界处理：
 
-- Calibre binary path、SVDB path、timeout、query mode。
-- Virtuoso lib/cell/view、SKILL dry-run mode。
+- Calibre binary path、SVDB path、timeout、query mode（post-MVP signoff closure）。
+- Virtuoso lib/cell/view、SKILL dry-run mode（post-MVP editor integration）。
 - Foundry layer map / purpose map。
 - Unit precision 与 bbox tolerance。
 
-工具失败必须结构化上报，而不是仅打印 stdout/stderr。
+工具缺失、license 不可用、timeout、rule deck 缺失、format drift 或命令失败必须进入 Stage 6 structured validation result，并由 validation policy 决定 fatal / deferred / degraded / skipped，而不是仅打印 stdout/stderr。v2 MVP 没有生产工具环境时，应明确记录这些检查 deferred，而不是实现假闭环。
 
 ### 12.6 Fixture 策略：基于真实 query 事实构建 synthetic cases
 
