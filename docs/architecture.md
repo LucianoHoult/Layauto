@@ -1634,9 +1634,22 @@ Visualization 应从 committed delta、snapshot geometry、annotation overlay、
 
 ## 11. v2 模块组织
 
-### 11.1 建议 package layout
+第 11 节把前文的事实源、状态所有权、planning、constraint、transaction、export / validation 边界落到建议代码组织上。这里的目录结构不是唯一正确答案；真正不可违反的是依赖方向、状态所有权和阶段边界。
 
-下面的 package layout 是一种建议实现形态，用于把前文的职责边界落到代码组织上。它不是唯一可行目录结构；目录名可以调整，但依赖方向和状态所有权不能反转。尤其需要保持：semantic domain 不依赖 IO / solver，state 拥有权威 layout 状态，annotation 只负责 evidence-to-identity overlay，constraints 消费状态但不拥有长期状态，export 只读 snapshot。
+v2 模块组织必须服务于以下目标：
+
+- Semantic domain 不依赖 importer、constraint engine、pipeline 或 exporter。
+- Coordinate system 是坐标数学，不拥有 occupancy。
+- Authoritative layout state 只由 `state/` 和 `transactions/` 管理。
+- Annotation 只把 evidence 解释成 identity / coverage / conflict 信息，不直接执行 ECO。
+- Planning 只生成 candidate / staged mutation spec，不直接写 committed state。
+- Constraints 只检查 staged candidate，不持有 canonical occupancy / connectivity。
+- Transactions 是 candidate 变成 committed snapshot 的唯一门。
+- Derive 只从 committed state 产生 exported derived markings 或 read-only views。
+- Export / validation 只读 immutable snapshot 与 ChangeSet / CommitEvent，不补写内部状态。
+- Legacy MVP 可复用代码必须被隔离、改造和测试；不能把 legacy 状态流包装成 v2 主路径。
+
+### 11.1 建议 package layout
 
 ```text
 layauto_v2/
@@ -1644,109 +1657,391 @@ layauto_v2/
 │   ├── geometry.py
 │   ├── circuit.py
 │   ├── intent.py
-│   └── identifiers.py
+│   ├── identifiers.py
+│   └── policy.py
 ├── state/
+│   ├── coordinate.py
 │   ├── layout_store.py
 │   ├── occupancy.py
 │   ├── connectivity.py
+│   ├── mutation.py
 │   └── snapshot.py
 ├── annotation/
 │   ├── calibre_bundle.py
+│   ├── layer_map.py
 │   ├── layer_overlay.py
 │   └── coverage.py
 ├── planning/
 │   ├── candidate.py
 │   ├── resize.py
 │   ├── routing.py
+│   ├── repair.py
 │   └── unsupported.py
 ├── constraints/
 │   ├── engine.py
 │   ├── rules.py
-│   └── drc_context.py
+│   ├── drc_context.py
+│   └── result.py
 ├── transactions/
 │   ├── transaction.py
+│   ├── change_set.py
 │   ├── commit_log.py
-│   └── change_set.py
+│   └── provenance.py
 ├── derive/
 │   ├── markings.py
 │   ├── views.py
-│   └── subscriptions.py
+│   └── invalidation.py
 ├── importers/
 │   ├── gds.py
 │   ├── cdl.py
-│   └── calibre.py
+│   ├── calibre.py
+│   └── config.py
 ├── export/
 │   ├── gds.py
 │   ├── cdl.py
 │   ├── json.py
 │   ├── skill.py
-│   └── reports.py
+│   ├── reports.py
+│   └── visualization.py
 ├── validation/
 │   ├── self_consistency.py
 │   ├── signoff.py
 │   ├── golden.py
+│   ├── policy.py
 │   └── result.py
+├── legacy/
+│   ├── adapters.py
+│   └── fixtures.py
 └── pipeline.py
 ```
 
+`legacy/` 是可选迁移隔离区，不是长期目标模块。任何放入 `legacy/` 的代码都必须有明确退出条件，且 v2 主 pipeline 不应依赖 legacy convenience JSON、legacy `EditOp` stream、decoder writeback 或 grid-owned occupancy 作为架构事实源。
+
 ### 11.2 `domain/`
 
-`domain/` 定义稳定、IO-independent 的领域对象：geometry primitives、circuit IR、target intent、stable identifiers。它不依赖 Calibre、GDS writer、constraint engine 或 pipeline。
+**职责。**
+`domain/` 定义稳定、IO-independent 的领域对象，包括 geometry primitive、circuit IR、target intent、stable identifier、policy enum。它表达“对象是什么”和“intent 是什么”，不表达“对象从哪个文件来”或“如何提交修改”。
+
+**可以依赖。**
+
+- Python 标准库和纯 dataclass / typing。
+- 不含 IO side effect 的基础几何工具。
+
+**禁止。**
+
+- 不依赖 GDS writer、Calibre runner、constraint engine、pipeline、exporter。
+- 不保存可从 layout store / occupancy / annotation 推导的长期几何副本。
+- 不把 legacy fixture 中的 instance name、net name 或 cell-specific geometry 写死为领域模型。
+
+**关键对象示例。**
+
+- `DeviceIR`、`NetIR`、`CircuitIR`。
+- `ResizeIntent`、`RoutingIntent`、`UnsupportedIntent`。
+- `ShapeId`、`CellId`、`ComponentId`、`CommitId`。
+- `EditPolicy`、`ValidationSeverity` 等稳定枚举。
 
 ### 11.3 `state/`
 
-`state/` 拥有 authoritative layout state：layout store、occupancy、connectivity index、snapshot。它定义哪些对象是 truth，哪些是 view/cache。
+**职责。**
+`state/` 拥有 v2 的 authoritative layout state 与坐标系统定义。它应清楚区分：
+
+- `coordinate.py`：layer grid、track axis、B-tier axis、physical↔track 转换、bbox→cell projection 等坐标数学。
+- `layout_store.py`：drawn geometry、derived geometry、shape id、bbox、layer / purpose、provenance、annotation summary。
+- `occupancy.py`：A-tier / B-tier discrete occupancy、blockage、via、cut、OD sharing / split 等可检查工作基底。
+- `connectivity.py`：connected component、same-layer edge、via edge、cut barrier、component-to-net summary。
+- `mutation.py`：可被 transaction staged / applied / rolled back 的 state mutation primitive。
+- `snapshot.py`：immutable committed snapshot。
+
+**可以依赖。**
+
+- `domain/` 的 identifier、geometry primitive、semantic id。
+- Tech bundle 中的 layer / coordinate / rule metadata，但不直接读取文件。
+
+**禁止。**
+
+- `coordinate.py` 不能持有 occupancy；grid 只做坐标数学。
+- `layout_store`、`occupancy`、`connectivity` 之间不能形成多个互相漂移的权威副本。
+- `Device.fin_track_indices`、`Net.segments`、`Net.vias`、gate tracks 等不能作为 state truth 长期存储；它们属于 `derive/views.py` 或 state-backed view。
+- 不依赖 parser、Calibre query runner、decoder、exporter 或 pipeline。
+- 不把 constraint engine cells 当作 occupancy truth。
+
+**legacy 迁移注意。**
+Legacy MVP 中 `MultiLayerGrid.b_tier_cells`、`Net.segments`、`Net.vias`、`Device.fin_track_indices`、`ConstraintEngine.cells` 都不能原样成为 v2 authoritative state。可复用的是坐标转换、bbox→cell projection、稳定排序、局部 connectivity 算法等纯逻辑；状态所有权必须迁移到 `state/`。
 
 ### 11.4 `annotation/`
 
-`annotation/` 负责消费 Calibre bundle，执行 GDS↔LVS layer overlay，生成 coverage / conflict / suspect reports。它不直接执行 ECO 修改。
+**职责。**
+`annotation/` 消费 Stage 1 的 Calibre / LVS evidence bundle，执行 GDS↔LVS layer mapping、identity translation、per-cell overlay、coverage / conflict / suspect geometry 报告。它把 evidence 解释为 layout store / occupancy 上的 annotation reference，但不拥有 layout state。
+
+**可以依赖。**
+
+- `domain/` 的 identifier。
+- `state/coordinate.py` 的 projection / tolerance policy。
+- `state/layout_store.py` 与 `state/occupancy.py` 的受控 annotation stamping API。
+- `importers/calibre.py` 产出的 normalized evidence object。
+
+**禁止。**
+
+- 不把 `device_info` / `net_shapes` 当作完整几何事实替代 GDS。
+- 不直接执行 resize、routing repair、cut insertion 或任何 ECO 修改。
+- 不在 Stage 6 临时解释 LVS identity 来修补 exporter 输出。
+- 不把 legacy `calibre_device_query.json` / `calibre_net_query.json` 作为 v2 主输入模型。
+
+**关键输出。**
+
+- Per-cell `device_ref` / `net_ref` / color / coverage metadata。
+- Shape-level annotation summary；当 cell 不一致时 summary 应保持 unknown / ambiguous。
+- Coverage report：annotated、unannotated blockage、suspect、conflict。
+- Identity translation：layout instance → schematic instance，LVS net → schematic net / stable LVS index。
 
 ### 11.5 `planning/`
 
-`planning/` 负责从 intent 和 current state 生成 candidate。Resize、routing-dependent macros、unsupported intent failure 都在这里表达。
+**职责。**
+`planning/` 从 typed intent 与 current snapshot / state view 生成 candidate。Resize、routing-dependent macro、repair、unsupported intent failure 都在这里表达。
+
+**可以依赖。**
+
+- `domain/` intent / circuit IR。
+- `state/` snapshot、coordinate、occupancy / connectivity query。
+- `derive/views.py` 提供的只读 view，例如 segments、via coverage、fin attribution。
+- `constraints/` 的 query interface 类型，但不直接驱动 commit。
+
+**禁止。**
+
+- 不直接修改 committed layout store、occupancy、connectivity 或 semantic IR。
+- 不调用 exporter / decoder 来得到最终几何。
+- 不把 raw CDL diff、raw ECO command 或 raw signoff log 作为长期输入；这些必须先在 Stage 2 归一化为 typed intent。
+- 不静默跳过 unsupported delta；必须返回 typed unsupported result 或 raise typed error。
+
+**关键对象示例。**
+
+- `CandidatePlan`。
+- `ResizeCandidate`。
+- `RoutingCandidate`。
+- `RepairRequirement`。
+- `UnsupportedDeltaError`。
+- `PlanningResult`。
 
 ### 11.6 `constraints/`
 
-`constraints/` 负责 rule records、rule predicates、constraint engine 和 DRC context。它判断 candidate 是否可行，不拥有长期 layout state。
+**职责。**
+`constraints/` 负责 rule records、rule predicates、DRC context、domain / trail / propagation overlay 和 feasibility result。它判断 staged candidate 是否可行。
+
+**可以依赖。**
+
+- `domain/` id / policy。
+- `state/coordinate.py`、`state/occupancy.py`、`state/connectivity.py` 的只读 query 或 transaction overlay query。
+- `transactions/transaction.py` 提供的 staged view / checkpoint protocol。
+- Tech rule records。
+
+**禁止。**
+
+- 不拥有长期 layout state。
+- 不维护另一份可与 `state/occupancy.py` 漂移的 occupancy copy。
+- 不把 per-cell scalar `net_id` domain 作为 same-conductor truth。
+- 不把 CUT / VIA / DEVICE_DIFF 等 layer-implied occupant 强行展开成 `occ_type × net_id` 的大型 domain。
+- 不把 unknown / unannotated geometry 当作 compatible-with-everything。
+
+**same-conductor 规则。**
+Spacing / enclosure / cut / via / OD sharing 等 rule predicate 默认通过 `state/connectivity.py` 判断 connected component；semantic net label 只作为 reporting、LVS localization 或显式 policy exception 的输入。
 
 ### 11.7 `transactions/`
 
-`transactions/` 负责 checkpoint、restore、commit、change set 和 commit log。它是 candidate 变成 committed state 的唯一门。
+**职责。**
+`transactions/` 是 candidate 变成 committed state 的唯一门。它负责 checkpoint、staged mutation、constraint check orchestration、commit、rollback、ChangeSet、CommitEvent、provenance 与 snapshot publication。
+
+**可以依赖。**
+
+- `domain/` id / intent / semantic delta。
+- `state/` mutation API、snapshot API。
+- `constraints/` feasibility API。
+- `derive/markings.py` 的 post-commit finalization API。
+- `derive/invalidation.py` 的 view invalidation API。
+
+**禁止。**
+
+- 不允许 planner / macro 绕过 transaction 直接写 committed state。
+- 不允许 constraint engine 的 checkpoint 代表完整 transaction rollback。
+- 不允许 Stage 6 exporter 作为 canonical updater。
+- 不把 legacy L1 `EditOp` 作为 commit channel 或 authoritative geometry。
+- 失败 rollback 后不得留下 geometry、occupancy、connectivity、semantic、derived 或 cache partial state。
+
+**关键输出。**
+
+- `ChangeSet`：semantic、geometry、occupancy、connectivity、derived delta 与 invalidation metadata。
+- `CommitEvent`：parent snapshot、new snapshot、candidate id、constraint result、provenance、validation expectations。
+- Immutable snapshot：供下一轮 Stage 5 或 Stage 6 只读消费。
 
 ### 11.8 `derive/`
 
-`derive/` 负责 C1 markings、derived views、subscription / affected-neighborhood recompute。它只从 committed state 派生。
+**职责。**
+`derive/` 负责两类派生结果：
+
+1. `markings.py`：进入 exported layout 的 C1 derived geometry，例如 NWELL、BOUNDARY、VT、PP、NP、DNW 等。
+2. `views.py`：不作为独立物理层输出的 read-only views，例如 routing spans、vias、fin attribution、gate tracks、annotation coverage、component summaries。
+3. `invalidation.py`：根据 ChangeSet 管理 affected region、cache invalidation 与 lazy recompute。
+
+**可以依赖。**
+
+- Committed state / transaction post-commit state。
+- Tech rules / layer policies。
+- Annotation summary 与 connectivity query。
+
+**禁止。**
+
+- 不在 Stage 4 planning 中持久写 state。
+- 不在 Stage 6 export 中临时补跑来修复缺失 state。
+- 不让 derived view 变成 planner / constraints / exporter 的长期 truth。
+- 不允许 macro 直接覆写 C1 derived shape。
+
+**FIN / POLY 语义。**
+FIN static backdrop、OD active coverage、gate / fin attribution 等应通过 committed geometry + occupancy + annotation 派生。`nfin` resize 不应被表达为 FIN edit；FIN edit policy 应在 planner / constraint / transaction 边界被拒绝。
 
 ### 11.9 `importers/`
 
-`importers/` 负责 GDS、CDL、Calibre query 的文件 / 工具格式适配。格式漂移应局限在这里和 `annotation/` 的边界内。
+**职责。**
+`importers/` 负责文件与工具格式适配：GDS / bbox readback、CDL parse、Calibre query output parse、config load。它输出 raw evidence 或 normalized evidence object，不构建 authoritative layout state。
+
+**可以依赖。**
+
+- `domain/` 的基础数据类型。
+- 纯格式 schema / tech config schema。
+- 外部工具 runner 的薄封装。
+
+**禁止。**
+
+- 不执行 ECO 修改。
+- 不生成 `Net.segments`、`ViaInstance`、`Device.fin_track_indices` 等工作状态。
+- 不把 legacy `calibre_device_query.json` / `calibre_net_query.json` 作为 v2 主路径。
+- 不在 importer 中做 annotation overlay；overlay 属于 `annotation/`。
+- 不在 importer 中建立 constraint engine 或 transaction。
+
+**legacy 迁移注意。**
+Legacy parser 中可复用 CDL tokenization、bbox parsing、Calibre query YAML parsing、unit conversion 和 schema validation；但 legacy “读 net JSON → 建 segments / vias” 的路径应删除或隔离为 fixture adapter。
 
 ### 11.10 `export/`
 
-`export/` 负责 GDS、CDL、JSON、SKILL、reports、visualization 等 artifact 生成。它只读 immutable snapshot、ChangeSet / CommitEvent 和 export policy，不修改 state，不运行 derived refresh，不消费 raw target diff 作为输出事实源。
+**职责。**
+`export/` 从 immutable snapshot、ChangeSet / CommitEvent、export policy 和 site/tool config 生成 artifacts：GDS、CDL、JSON snapshot、SKILL / Virtuoso script、human report、machine-readable report、visualization。
+
+**可以依赖。**
+
+- `domain/` id / semantic IR。
+- Immutable `state/snapshot.py`。
+- `transactions/change_set.py` 与 provenance。
+- Validation policy 的 artifact manifest schema。
+- Layer-purpose mapping、unit / DBU policy。
+
+**禁止。**
+
+- 不修改 layout store、occupancy、connectivity、semantic IR、derived markings 或 read-view cache。
+- 不 replay legacy `EditOp` stream 来生成 canonical geometry。
+- 不根据 raw target diff globals 临时改 output params。
+- 不运行 C1 derivator 来补齐 snapshot。
+- 不把 SKILL apply / dry-run 当作 Stage 5 commit。
+- 不把 report 或 visualization 当作 state source。
+
+**ExportEdit 定位。**
+如果 SKILL、report 或 visualization 需要 edit-like 指令，应从 snapshot + ChangeSet / CommitEvent 派生 artifact-specific `ExportEdit`。`ExportEdit` 是导出指令，不是 committed geometry，也不是下一轮 pipeline 的输入事实源。
 
 ### 11.11 `validation/`
 
-`validation/` 负责 self-consistency、golden regression、structured validation result 和 failure policy；post-MVP 再接入 signoff integration、SKILL dry-run 与 Virtuoso shape locate。Validation result 应是 machine-readable artifact，并能驱动 pipeline pass/fail、deferred/degraded-check disclosure 与 human review。
+**职责。**
+`validation/` 负责 self-consistency、golden regression、signoff integration、SKILL dry-run / Virtuoso shape locate、validation policy、structured validation result 和 failure policy。v2 MVP 可以只实现 self-consistency 与 fixture golden；生产 signoff 可作为 skipped / deferred check 明确记录。
+
+**可以依赖。**
+
+- Immutable snapshot。
+- Artifact manifest。
+- ChangeSet / CommitEvent。
+- Export policy / validation policy。
+- External tool result parser。
+
+**禁止。**
+
+- 不 patch layout state。
+- 不把 Calibre / Virtuoso output 直接写回 committed snapshot。
+- 不把 missing tool、missing license、timeout、skipped check 当作 pass。
+- 不只打印 stdout；必须产生 machine-readable validation result。
+- 不用 golden target 取代 self-consistency / signoff / audit validation。
+
+**关键输出。**
+
+- `ValidationResult`。
+- Check status：pass / fail / skipped / degraded / warning。
+- Severity 与 failure policy outcome。
+- Artifact path / hash。
+- Localized object reference：device、net、component、shape、bbox、candidate、commit、rule。
+- Skipped / degraded reason。
 
 ### 11.12 `pipeline.py`
 
-`pipeline.py` 负责串联 Stage 1–6，并将每个阶段的输入输出显式化。它不应承载宏逻辑、规则逻辑或导出细节。
+**职责。**
+`pipeline.py` 负责串联 Stage 1–6，并把每个阶段的输入输出显式化。它是 orchestration layer，不是业务逻辑模块。
 
-### 11.13 legacy MVP 代码复用原则
+**可以依赖。**
 
-复用现有代码时遵循：
+- Importers、annotation、state builder、planning、constraints、transactions、derive、export、validation 的 public API。
+- Run-level config / policy。
 
-- 可复用 parser / config / IO 的局部逻辑，但要换到 v2 职责边界下。
-- 不复用会保留错误状态所有权的结构，例如 grid 持有 occupancy、decoder 作为 canonical updater。
-- 不把 legacy fixture JSON 作为 v2 主事实入口。
-- 所有复用代码需要有 parity / regression tests 证明行为符合 v2 contract。
+**禁止。**
+
+- 不承载 resize / routing macro 细节。
+- 不承载 DRC rule predicate。
+- 不承载 exporter 细节。
+- 不在 pipeline 中直接 patch geometry 或 output JSON。
+- 不吞掉 unsupported intent、constraint failure、transaction rollback、export failure 或 validation failure。
+
+**Stage boundary 要求。**
+`pipeline.py` 应显式记录每个 stage 的输入、输出和 failure result。Stage 5 成功后才能发布 snapshot；Stage 6 只能读取 snapshot。任何 stage 降级、跳过或使用 legacy adapter，都必须进入 run report / validation result。
+
+### 11.13 `legacy/` 与 MVP 代码复用原则
+
+`legacy/` 是迁移隔离区，不是 v2 架构目标。只有满足以下条件的现有代码才可复用：
+
+- 复用的是纯函数、格式 parser、unit conversion、排序、bbox transform、测试 fixture generator 或外部工具薄封装。
+- 复用后放入 v2 职责边界内，并有 parity / regression tests。
+- 复用不会保留错误状态所有权，例如 grid 持有 occupancy、constraint engine 持有 canonical cells、decoder 作为 canonical updater、Stage 6 replay edit stream。
+- 复用不会把 legacy fixture JSON 作为 v2 主事实入口。
+- 复用不会让 legacy `EditOp` 成为 v2 commit channel。
+- 复用不会为了兼容 legacy MVP 而引入长期 adapter 层。
+
+应明确拒绝的 legacy 结构包括：
+
+- FIN add/remove 作为 `nfin` resize 的物理修改语义。
+- `calibre_device_query.json` / `calibre_net_query.json` 作为主 parser 输入。
+- `Net.segments` / `Net.vias` / `Device.fin_track_indices` 作为 stored geometry truth。
+- `MultiLayerGrid.b_tier_cells` 作为 occupancy owner。
+- VIA0 同时表现为 via object、B-tier occupancy、LI/M1 wire stamp。
+- `ConstraintEngine.cells` 作为 authoritative occupancy。
+- Per-cell `net_id` domain 作为 same-conductor rule truth。
+- `WritebackDecoder.apply()` 作为最终几何生成的 canonical path。
+- Placeholder SKILL / stdout-only validation 被算作 production success。
+
+### 11.14 模块依赖方向与边界测试
+
+v2 应为模块边界建立轻量 architecture tests，避免实现过程中重新长出 legacy 状态流。
+
+建议检查：
+
+- `domain/` 不 import `importers/`、`constraints/`、`transactions/`、`export/`、`validation/`、`pipeline.py`。
+- `state/coordinate.py` 不持有 occupancy storage。
+- `constraints/` 不定义 canonical layout store / occupancy store。
+- `export/` 和 `validation/` 不 import mutable transaction applier，不调用 derived finalization，不写 `state/` mutable API。
+- `importers/` 不构建 segments / vias / fin attribution 等 state views。
+- `planning/` 不调用 exporter / decoder，不修改 committed state。
+- `pipeline.py` 不包含 macro-specific geometry arithmetic。
+- v2 主路径不 import `legacy/`，除非配置显式启用 fixture / migration mode，并在 validation result 中记录。
+- 禁止新增依赖 legacy `EditOp` 作为 Stage 5 commit 输出；任何 edit-like artifact 必须位于 `export/` 的 `ExportEdit` 层。
+- 禁止新增对 legacy fixture JSON 的 v2 主路径依赖。
+
+这些测试不替代功能测试，但能持续保护第 3、5、8、9、10 节定义的状态边界。
 
 ## 12. 配置、tech bundle 与环境边界
 
 ### 12.1 `site_config.yaml`
 
-`site_config.yaml` 描述一次 run 的环境和输入输出路径：CDL、GDS、Calibre query mode / svdb、tech files、output dir、validation policy 等。它不应承载 device instance、target nfin、cell-specific geometry 等事实。
+`site_config.yaml` 描述一次 run 的环境和输入输出路径：CDL、GDS、Calibre query mode / svdb、tech files、output dir、validation policy 等。它不应承载 device instance、target nfin、cell-specific geometry 等事实。它可以选择输入路径、tool mode、export policy、validation policy 和显式 migration / fixture mode；但不能通过配置绕过 v2 状态边界，例如让 legacy parser、legacy decoder 或 Stage 6 writeback 成为主路径。
 
 ### 12.2 `drc_rules.yaml`
 
