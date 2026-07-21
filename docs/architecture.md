@@ -2202,17 +2202,6 @@ Fixture 的目标是稳定复现 production evidence flow，而不是复刻 lega
 - target GDS/JSON 作为唯一正确性 oracle。fixture golden 只能做 regression；生产 ECO 可以有多个合法解。
 - 已知 DRC violation 或 stale fixture 被 byte-golden 掩盖。spacing、enclosure、rounding、stale generation 等问题应进入 fixture limitation 或独立 correctness test。
 
-backlog / correctness audit 中已经暴露的问题应转化为 v2 fixture、tech bundle 或 validation obligation，而不是被 legacy fixture 行为吸收：
-
-| backlog highlight | v2 architecture obligation |
-|-------------------|----------------------------|
-| per-device FIN、FIN edit、Y-only fin attribution | FIN 是 static backdrop；`nfin` resize 只改变 OD active coverage；active-fin attribution 必须来自 `FIN ∩ OD ∩ device attribution`，并同时考虑 X/Y 几何范围。 |
-| LI spacing、VIA enclosure、odd-width / rounding gap | 进入 `drc_rules.yaml` frontline coverage、signoff-only coverage gap 或 fixture limitation；不能被 golden match 掩盖。 |
-| raw `net_shapes` / 未实现 effective-region trimming | 进入 `calibre_layer_map.yaml` 的 `trim_policy` / `effective_region_policy` 与 coverage / limitation report；未实现 trimming 时只能声明 raw bbox evidence。 |
-| legacy JSON 与 `device_info` bbox drift | Stage 1/2 必须有 unit normalization、bbox tolerance、ambiguous annotation policy 和 evidence error。 |
-| stale fixture / generator drift | fixture generation 必须可重复，并有 regenerated-clean check 或 machine-readable limitation report。 |
-| placeholder SKILL / stdout-only validation | Stage 6 必须产生 structured validation result；placeholder、dummy、skipped 或 stdout-only check 不能作为 production pass。 |
-
 建议 fixture 分层：
 
 - `regression fixture`：小规模、byte-golden、用于防止无意输出漂移。
@@ -2229,3 +2218,50 @@ Fixture 应同时保存 raw query captures 与 normalized YAML，并有检查证
 - CDL source/target → semantic IR / target intent。
 
 Fixture 生成流程应可重复。若 generator 是权威，应有检查确保重新生成后 fixture 目录干净；若 generator 依赖可选包或特定 writer，应把该依赖记录为 test requirement，而不是让 stale fixture 长期漂移。每个 fixture 应附带 machine-readable limitation report，说明哪些 production checks 是真实覆盖、哪些是 dummy/deferred。
+
+## 13. Backlog / audit highlights 的架构覆盖
+
+本节集中说明 backlog 与 correctness audit 在 v2 architecture 中的使用方式。它们不是 legacy 行为的兼容清单，也不是独立于前 12 节的新需求池；它们的作用是把已经验证过的 v1 / fixture / input-side 问题映射到 v2 的事实源、状态所有权、tech bundle、fixture 与 validation 合同中。
+
+纳入本节的 highlight 必须满足两个条件：
+
+1. **工程事实可验证。** 需要能从现有代码、fixture、规则文件或 audit 记录中确认问题不是凭空假设。
+2. **architecture 尚需承载。** 如果前文已经给出目标合同，本节只引用其 architecture home，避免在局部章节重复扩写；如果前文只零散提到，本节给出应落入哪个合同面。
+
+### 13.1 已被 v2 主体吸收的 backlog highlights
+
+| highlight | 工程事实确认 | v2 architecture home |
+|-----------|--------------|----------------------|
+| FIN 被 legacy resize 当作可编辑层，且 dummy FIN 是 per-device stripe | generator 逐 device 生成 FIN stripe；backlog M8 指出 resize 删除 FIN `ShapeRecord` 与 FIN edit path | 第 4.1 / 4.5 / 6.2：FIN 是 static backdrop；`nfin` resize 只改变 OD active coverage；FIN direct edit 应被拒绝。 |
+| Fin attribution 只按 Y，无法区分同一 fin track 上不同 X 范围的 device | legacy parser 从 `fin_y_positions` 写 `Device.fin_track_indices`；backlog M8 要求 X/Y 几何归属 | 第 3.7 / 4.5 / 6.4：active fins 来自 `FIN ∩ OD ∩ device attribution`，并由 device bbox / gate footprint / OD overlap 推导。 |
+| legacy JSON 把 GDS、CDL、Calibre query 与工作状态揉成 parser-friendly 输入 | current config 仍有 `calibre_device_query.json` / `calibre_net_query.json`；backlog M7 sub-slice 1.7 要退休它们 | 第 2.2 / 5.10 / 12.1：v2 主路径只接受 GDS/bbox、CDL、`ixref` / `net_xref` / `device_info` / `net_shapes` evidence bundle。 |
+| 同一 physical via / routing occupant 有多份 working representation | backlog M9 指出 `ShapeRecord`、`ViaInstance`、`CellOccupancy`、CSP cells 等重复表达 | 第 3.5 / 4.2 / 11.3：layout store + occupancy store 是唯一 authoritative state；`ViaInstance` / segments / vias 只能是 read view 或 export view。 |
+| same-net DRC 依赖 scalar `net_id`、unknown `None` 过于乐观 | backlog M11 指出 `CellState.net_id`、domain fan-out、`net_id=None` optimistic spacing | 第 3.6 / 8.1–8.6：same-conductor reasoning 走 connectivity component；constraint engine 不拥有 net-labeled occupancy truth。 |
+| Stage 6 / decoder / edit stream 曾承担最终几何落点 | backlog M13 指出 Stage 6 replay edits、derivator/export mutation、stdout validation 等边界问题 | 第 2.6 / 9 / 10：Stage 5 commit authoritative state；Stage 6 只读 snapshot，输出 structured validation result。 |
+
+### 13.2 Audit-derived highlights 的 architecture obligation
+
+correctness audit 是 input-side / fixture / format 审计；其中有些问题已经被第 3–12 节吸收，有些不是 core state model 问题，但必须体现在 fixture、tech bundle 或 validation policy 中。v2 不应把这些问题当作 legacy fixture 的正常行为，也不应为它们设计兼容路径。
+
+| audit highlight | 工程事实确认 | architecture obligation |
+|-----------------|--------------|-------------------------|
+| 当前 fixture 名称大量使用 “buffer”，但电路是单级 inverter | generator 中只有 `MN0` / `MP0` 两个 transistor，pins 构成 inverter；CDL cell 名是 `INV_N*_P*` | 命名问题不改变 core architecture；fixture/report/artifact 命名应遵循 semantic IR，不用文件名或 legacy label 覆盖 CDL / LVS identity。 |
+| boundary dummy POLY 与 OD 相交但不在 CDL 中 | generator 在 x=0 / 108 放 dummy POLY，OD 横跨 cell width；dummy gate `net=''` | Stage 2 annotation / coverage / conflict policy 必须保留并保守处理 unannotated geometry；fixture limitation 应声明 dummy-device / LVS-recognition gap。 |
+| odd width + `int()` truncation 导致 FIN / LI / VIA0 0.5 nm off-centre | generator `add_shape()` 对坐标直接 `int()`；FIN/LI/VIA0 宽度为奇数 | Stage 1/2 unit normalization、snap / rounding policy、bbox tolerance 与 off-grid validation 必须显式；fixture golden 不能掩盖 rounding artifact。 |
+| LI pitch / width / spacing 自洽性不足，fixture 存在 LI spacing 风险 | `LI.P.1=27`，`LI.W.1=17`，`LI.S.1=17`；adjacent LI tracks 只相隔 27 nm | `drc_rules.yaml` rule coverage 与 Stage 5 frontline/signoff validation 必须声明；未覆盖规则进入 validation coverage gap，不能由 target golden 替代。 |
+| VIA0 LI/M1 enclosure 问题与 via-reach extension 公式不完整 | `V0.E.LI` / `V0.E.M1` 在 rule deck 中存在；generator 只按 enclosure 常量延伸 LI，未加 via half-size；M1 signal stub 宽度固定 20 nm | Via enclosure / extension 应进入 rule predicate 或 signoff-only fatal gate；fixture limitation 必须标出当前 dummy geometry 不代表 DRC-clean production cell。 |
+| `device_info` 与 legacy JSON bbox rounding / seed geometry 不一致 | legacy JSON 用 integer half pitch；`device_info` 用 float half pitch，且 seed bbox 是 synthetic gate rectangle | `device_info` 只能作为 annotation seed；Stage 2 overlay 需要 unit normalization、tolerance、layer mapping、ambiguity policy，不能把它当 drawn geometry truth。 |
+| `net_shapes` 是 raw GDS bbox，不是 trimmed effective conducting region | generator 直接遍历 `layout_data['shapes']` 输出 `NET_SHAPES_LAYERS` | `calibre_layer_map.yaml` / `layer_map.yaml` 必须区分 raw bbox evidence 与 effective-region evidence；未实现 trimming 时只能在 coverage / limitation report 中声明 raw bbox。 |
+| Calibre HDB / LVS query format 未经真实 Calibre binary 验证 | audit 与 backlog 均记录 HDB command / output dialect 未验证 | Stage 1 tool adapter 必须保存 raw captures、normalized YAML、parser provenance；format drift / missing terminator / dialect mismatch 进入 structured evidence error。 |
+| fixture regeneration 依赖 gdstk 且 committed fixture 有 drift | generator 的 GDS readback 调用 `gds_to_bbox_by_layer()`；GDS reading path 要求 `gdstk`；audit 记录 regenerated diff | Fixture strategy 必须要求可重复生成、regenerated-clean check 或 machine-readable limitation report；依赖缺失不能静默通过。 |
+| placeholder SKILL / stdout-only validation | current SKILL helper 只 `printf`，不执行 shape locate / resize；backlog M13 要求 structured validation | 第 10.3 / 10.5：placeholder、dummy、skipped、stdout-only check 不能作为 production pass；production closure 启用时必须 fatal。 |
+
+### 13.3 避免重复的落点规则
+
+后续如果 backlog 或 audit 新增问题，应按以下规则落位，而不是继续堆到 fixture 策略或任意章节：
+
+- 涉及事实源、annotation、legacy JSON、LVS query schema 的，落到第 2 / 5 / 12 节。
+- 涉及 geometry / occupancy / connectivity / `Device` / `Net` ownership 的，落到第 3 / 4 / 8 / 9 / 11 节。
+- 涉及 `nfin`、FIN、OD、POLY、routing repair 物理语义的，落到第 4 / 6 / 7 节。
+- 涉及 DRC / LVS / SKILL / report / golden / fixture limitation 的，落到第 10 / 12 节。
+- 只有跨多个章节、且容易被重复或误解的 highlight，才汇总到本节；本节只做覆盖矩阵，不替代前文的 architecture 合同。
