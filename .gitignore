@@ -2,3 +2,5 @@ __pycache__/
 *.pyc
 *.pyo
 output/
+
+legacy_mvp/output/

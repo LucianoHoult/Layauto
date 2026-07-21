@@ -1,6 +1,8 @@
 # Layauto architecture
 
 > **文档定位。** 本文描述 Layauto v2 的目标架构：它以 backlog 中已经识别的关键问题为约束，重新定义事实源、状态所有权、修改语义、约束检查、事务提交、导出与验证边界。当前 MVP 只作为 legacy/reference implementation 与可复用代码来源；它证明过端到端链路，但不作为目标架构的正确实现基线。具体开发顺序、任务拆分与 agentic coding 执行计划应另行维护。
+>
+> **仓库定位。** `docs/architecture.md` 是当前 docs 下唯一 active v2 planning source。原 backlog 与 correctness audit 的要求已吸收到本文第 13 节及相关主体章节；旧版 MVP flow 已删除；历史 changelog 已归档到 `docs/archive/changelog.md`。现有 MVP 实现已整体移入 `legacy_mvp/`，只作参考与选择性代码复用来源；新的 v2 实现应落入 `layauto_v2/`。
 
 ## 1. 项目定位与目标边界
 
@@ -254,7 +256,7 @@ MVP 的 Stage 1.5、Stage 6 writeback、legacy JSON parser、decoder-as-state-up
 - Stage 5 提交权威状态。
 - Stage 6 只导出和验证。
 
-可复用代码应按职责重新归位，而不是保留 MVP 的 stage 编号和状态流。
+可复用代码应按职责重新归位，而不是保留 MVP 的 stage 编号和状态流。仓库中 legacy MVP 已整体隔离到 `legacy_mvp/`；从仓库根目录不再维护 legacy import / test 兼容性，如需考古运行旧流程，应进入 `legacy_mvp/` 目录内部执行。
 
 ## 3. 事实源、状态所有权与派生视图
 
@@ -2045,7 +2047,7 @@ v2 应为模块边界建立轻量 architecture tests，避免实现过程中重�
 - 禁止新增依赖 legacy `EditOp` 作为 Stage 5 commit 输出；任何 edit-like artifact 必须位于 `export/` 的 `ExportEdit` 层。
 - 禁止新增对 legacy fixture JSON 的 v2 主路径依赖。
 
-这些测试不替代功能测试，但能持续保护第 3、5、8、9、10 节定义的状态边界。
+这些测试不替代功能测试，但能持续保护第 3、5、8、9、10 节定义的状态边界。当前 `layauto_v2/` 只是按本节边界建立的 v2 skeleton，不包含 legacy MVP 逻辑；`legacy_mvp/` 中的旧实现不应被 v2 主路径 import，除非未来显式设计 fixture / migration mode 并在 validation result 中记录。
 
 ## 12. 配置、tech bundle 与环境边界
 
@@ -2266,5 +2268,6 @@ correctness audit 是 input-side / fixture / format 审计；其中有些问题�
 - 涉及事实源、annotation、legacy JSON、LVS query schema 的，落到第 2 / 5 / 12 节。
 - 涉及 geometry / occupancy / connectivity / `Device` / `Net` ownership 的，落到第 3 / 4 / 8 / 9 / 11 节。
 - 涉及 `nfin`、FIN、OD、POLY、routing repair 物理语义的，落到第 4 / 6 / 7 节。
+- 新增问题不再新建独立 backlog / audit / legacy-flow 文档；应直接落入对应 architecture section。历史 shipped record 只在 `docs/archive/changelog.md` 保留。
 - 涉及 DRC / LVS / SKILL / report / golden / fixture limitation 的，落到第 10 / 12 节。
 - 只有跨多个章节、且容易被重复或误解的 highlight，才汇总到本节；本节只做覆盖矩阵，不替代前文的 architecture 合同。
