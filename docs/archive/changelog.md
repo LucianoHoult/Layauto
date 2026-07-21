@@ -1,6 +1,8 @@
 # Layauto changelog
 
-> Time-ordered record of every shipped change. Newest entry first. For the architectural model these milestones evolve, see [`architecture.md`](architecture.md). For what is *not* yet shipped, see [`backlog.md`](backlog.md).
+> **Archived status.** This is a historical MVP/v1 shipped-change log kept for archaeology only. It is not an active v2 planning source; current architecture and absorbed backlog/audit highlights live in `docs/architecture.md`. Historical entries may mention deleted docs such as the old backlog or correctness audit by their former paths.
+
+> Time-ordered record of every shipped change. Newest entry first. For the architectural model these milestones evolve, see [`architecture.md`](../architecture.md). For what is *not* yet shipped, see the archived architecture absorption notes in [`architecture.md`](../architecture.md).
 
 **Format.** One block per shipped milestone or sub-milestone. Each block carries: date / branch / what shipped / files touched / acceptance evidence / notes.
 
