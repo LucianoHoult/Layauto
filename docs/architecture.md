@@ -733,6 +733,7 @@ Fixture 应尽量模拟真实 Calibre query bundle。允许使用 dummy / synthe
 `bbox_by_layer` 的合同是：
 
 - 记录 layer / purpose / optional color、bbox / polygon、source evidence backlink 和单位信息。
+- 记录或引用 unit / DBU / rounding / snap policy；off-grid、半 DBU 漂移或由生成器取整造成的非对称 bbox 必须进入 evidence issue 或 validation issue，不能被 byte-golden 静默吸收。
 - 不附带 schematic identity 的臆测。
 - 不因为 LVS query 没有覆盖某个 shape 就丢弃该 shape。
 - 不从 `device_info` / `net_shapes` 反向补造 drawn geometry。
@@ -750,6 +751,7 @@ Identity join 的目标合同是：
 - `Device.inst_name` 等 semantic IR 字段使用 schematic identity。
 - occupancy annotation 可以同时保留 layout/LVS identity 与 schematic identity，但必须标明来源。
 - report 面向工程师时应显示 schematic name，同时保留 LVS index / layout name 作为 debug backlink。
+- artifact 文件名、fixture 目录名、tool entry name 或 legacy label 不能覆盖 CDL / LVS evidence 中的 cell、subckt、device、net identity；命名不一致应进入 validation / report，而不是反向改写 semantic IR。
 - 如果 `ixref` / `net_xref` 缺失、冲突或无法解释，Stage 2 应产生结构化 annotation error / coverage warning，而不是静默 fallback 到字符串相等或 legacy fixture naming assumption。
 - S/D swap、pin role swap、body tie 等 LVS identity 细节应保留为 annotation/provenance，不应在 Stage 2 被丢弃。
 
@@ -882,6 +884,7 @@ LVS annotation 不完整是常态。v2 对 unannotated geometry 的默认策略�
 - 保留 drawn geometry。
 - 投影到 occupancy。
 - 按 layer role 与 policy 标记为 blockage、unknown conductor、suspect geometry、marker 或 auxiliary geometry。
+- 对 boundary dummy gate、dummy device、filler、ESD、marker、waiver carrier 或 LVS deck 暂未识别的寄生 device，必须通过 coverage / conflict / fixture limitation 暴露其语义缺口；不能因为 CDL 未列出就静默丢弃或自动归并。
 - 不自动 traverse、merge、delete。
 - 不把 `net_id=None` 当作“与所有 named nets 兼容”。
 - 与 annotated geometry 冲突时保守失败或标记 suspect。
