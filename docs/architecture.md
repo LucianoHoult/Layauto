@@ -59,6 +59,18 @@ v2 的目标不是把当前 MVP 局部修补到“能继续跑”，而是重新
 - M2 及以上完整金属栈、多重图形化、cut-mask、coloring 的完整 signoff 语义。
 - 完整 foundry DRC / LVS signoff 自动闭环；v2 先定义可接入边界。
 
+#### 1.4.1 首个 v2 MVP 实现切片
+
+以上“优先支持范围”描述目标架构可以承载的近期能力；首个 coding MVP 进一步收窄，避免把 routing repair、通用搜索和 legacy 状态流一并带入最小闭环。当前实现切片遵守：
+
+- 单个 cell、单个已有 MOS、单个 typed `nfin` shrink intent；第二个 delta、grow、device add/remove、topology / rename / routing intent 都必须在 Stage 5 前结构化失败。
+- 唯一允许的 drawn-geometry 修改是目标 device 的 OD active coverage shrink。FIN 是 static backdrop；其余 drawn geometry 与顶层 pins 在该切片内冻结。
+- 若候选需要 LI / VIA0 / M1 / cut repair 才能成立，当前 MVP 返回 no-candidate / unsupported failure，不在本切片内静默修复 routing。
+- 候选按 gap-side OD edge 的确定性 template / policy 生成；当前 MVP 不引入通用 MILP、global router 或 legacy CSP search。
+- 失败必须保持 pre-intent state；成功后至少验证 target `Device.nfin`、`FIN ∩ OD ∩ device attribution`、FIN/frozen-layer hash、top-level pins 与 committed-snapshot-only export。
+
+具体 legacy 源码选择受 [`v2-mvp-legacy-reuse.md`](v2-mvp-legacy-reuse.md) 的 default-deny、symbol-level 白名单约束；目标架构允许某类 helper 并不等于当前 MVP 已批准复用任意 legacy 实现。
+
 ### 1.5 架构核心闭环
 
 目标闭环是：
@@ -1149,6 +1161,8 @@ Resize candidate 不应包含 `add FIN` / `remove FIN` 操作。FIN attribution�
 
 Shrink-only 可以作为早期 policy，但必须表达为 candidate selection policy，而不是散落在 bbox arithmetic 中。后续如果支持 grow 或更多候选选择策略，也应通过同一 planning seam 接入。
 
+第 1.4.1 节定义的首个 MVP profile 更严格：只允许一个 device 的 OD-only shrink，所有非 OD drawn geometry 与顶层 pin 冻结。因此当前切片若产生 LI / VIA0 / M1 / cut `RepairRequirement`，它只能导致 candidate 被拒绝并返回结构化失败；第 7.4 节保留的是后续 resize-repair capability seam，不是首个 MVP 必须实现的 routing scope。
+
 ### 7.4 Resize repair planning
 
 `nfin` resize 可能连带要求局部 repair。第 6.5 已经定义这些 repair 的语义边界；第 7.4 只规定 planner 如何表达它们。
@@ -1727,7 +1741,7 @@ layauto_v2/
 └── pipeline.py
 ```
 
-`legacy/` 是可选隔离区，不是长期目标模块，也不是 v2 主路径的适配层。任何放入 `legacy/` 的代码都必须有明确退出条件，且 v2 主 pipeline 不应依赖 legacy convenience JSON、legacy `EditOp` stream、decoder writeback、grid-owned occupancy、engine-owned occupancy 或 placeholder SKILL 作为架构事实源。第 11.1 的 package layout 只是职责边界示意；无论最终目录名如何，上述 legacy 状态流都不能进入 v2 architecture。
+`legacy/` 是可选隔离区，不是长期目标模块，也不是 v2 主路径的适配层。首个 v2 MVP 不实例化这个目录；根目录 `legacy_mvp/` 仅供考古与按白名单取材，`layauto_v2/` 主路径不得 import 或通过运行时路径调用它。任何放入 `legacy/` 的代码都必须有明确退出条件，且 v2 主 pipeline 不应依赖 legacy convenience JSON、legacy `EditOp` stream、decoder writeback、grid-owned occupancy、engine-owned occupancy 或 placeholder SKILL 作为架构事实源。第 11.1 的 package layout 只是职责边界示意；无论最终目录名如何，上述 legacy 状态流都不能进入 v2 architecture。
 
 ### 11.2 `domain/`
 
@@ -2008,6 +2022,8 @@ Legacy parser 中可复用 CDL tokenization、bbox parsing、Calibre query YAML 
 `pipeline.py` 应显式记录每个 stage 的输入、输出和 failure result。Stage 5 成功后才能发布 snapshot；Stage 6 只能读取 snapshot。任何 stage 降级、跳过或使用 legacy adapter，都必须进入 run report / validation result。
 
 ### 11.13 `legacy/` 与 MVP 代码复用原则
+
+当前首个 v2 MVP 的具体来源选择以 [`v2-mvp-legacy-reuse.md`](v2-mvp-legacy-reuse.md) 为 binding implementation policy：它是 default-deny、精确到 path / symbol 的白名单。本轮审查没有批准 `legacy_mvp/core/**` 中的任何 production symbol；未来例外必须先单独审查并更新白名单。v2 代码只能把获批逻辑移植到对应 v2 模块，不能 runtime import `legacy_mvp`。
 
 `legacy/` 是迁移隔离区，不是 v2 架构目标。只有满足以下条件的现有代码才可复用：
 
