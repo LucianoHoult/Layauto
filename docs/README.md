@@ -9,6 +9,7 @@ architecture or archived.
 | File | Owns |
 |------|------|
 | [`architecture.md`](architecture.md) | Active v2 architecture source: project scope, Stage 1-6 boundaries, fact sources, layout-state ownership, annotation, physical edit semantics, planning, constraints, transactions, export/validation, module organization, configuration boundaries, and absorbed backlog/audit highlights. |
+| [`v2-mvp-legacy-reuse.md`](v2-mvp-legacy-reuse.md) | Coding-agent implementation policy: first-MVP profile and default-deny, path/symbol-level `REUSE` / `ADAPT` / `REWRITE` legacy whitelist. |
 
 ## Archived docs
 
@@ -19,6 +20,7 @@ architecture or archived.
 ## Where to start
 
 - Read [`architecture.md`](architecture.md) end-to-end for the current v2 plan.
+- Before taking code from `legacy_mvp/`, read [`v2-mvp-legacy-reuse.md`](v2-mvp-legacy-reuse.md); unlisted paths and symbols are rejected by default.
 - New v2 implementation should live under `layauto_v2/`.
 - The previous MVP implementation is archived under `legacy_mvp/` and should not
   be used as the active architecture baseline.
