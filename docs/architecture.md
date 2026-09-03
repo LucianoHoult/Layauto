@@ -2,7 +2,7 @@
 
 > **文档定位。** 本文描述 Layauto v2 的目标架构：它以 backlog 中已经识别的关键问题为约束，重新定义事实源、状态所有权、修改语义、约束检查、事务提交、导出与验证边界。现有实现下文统一称为 **legacy MVP**，只作为 legacy/reference implementation 与可复用代码来源；它跑通过端到端链路，但不作为目标架构的正确实现基线。本文中的 **v2 MVP** 则指目标架构的首个实现范围。具体开发顺序、任务拆分与 agentic coding 执行计划应另行维护。
 >
-> **仓库定位。** `docs/architecture.md` 是当前 docs 下唯一 active v2 architecture source of truth。原 backlog 与 correctness audit 的要求已吸收到本文第 13 节及相关主体章节；旧版 MVP flow 已删除；历史 changelog 已归档到 `docs/archive/changelog.md`。legacy MVP 实现已整体移入 `legacy_mvp/`，只作参考与选择性代码复用来源；新的 v2 实现应落入 `layauto_v2/`。
+> **仓库定位。** `docs/architecture.md` 是当前 docs 下唯一 active v2 architecture source of truth。原 backlog 与 correctness audit 的要求已吸收到本文第 13 节及相关主体章节；旧版 MVP flow 已从 active docs 与 v2 主路径移除；历史 changelog 已归档到 `docs/archive/changelog.md`。legacy MVP 实现已整体移入 `legacy_mvp/`，只作参考与选择性代码复用来源；新的 v2 实现应落入 `layauto_v2/`。
 
 ## 1. 项目定位与目标边界
 
@@ -29,7 +29,7 @@ v2 的目标不是把 legacy MVP 局部修补到“能继续跑”，而是重�
 
 - **事实源清晰。** 几何、语义、annotation、派生视图各有明确来源，不互相伪装。
 - **状态所有权单一。** 版图几何和 occupancy 不应在 parser、grid、engine、decoder、output JSON 中形成多个互相漂移的权威副本。
-- **修改语义基于 physical / extraction profile。** 例如在 v2 首个 `explicit_static_fin_plus_active_window` profile 中，`nfin` resize 不是删除 raw FIN，而是改变 tech-declared active window / OD coverage，并触发相关 routing / via / marking 修复；其它 FinFET representation 不得套用该操作。
+- **修改语义基于 physical / extraction profile。** 例如在首版候选 `explicit_static_fin_plus_active_window` profile 中，`nfin` resize 不是删除 raw FIN，而是改变 tech-declared active window / OD coverage，并触发相关 routing / via / marking 修复；其它 FinFET representation 不得套用该操作。
 - **规划先于提交。** macro / planner 产生 candidate；constraint engine 判断可行性；transaction commit 成功后才更新权威状态。
 - **导出不是修补。** Stage 6 只从 committed snapshot 导出 GDS / CDL / JSON / SKILL / report / validation result，不再作为 canonical writeback 阶段。
 - **面向 agentic coding。** 模块边界、接口合同、失败条件和 backlog highlights 应足够明确，使后续开发任务可以被拆分、验证和审计。
@@ -63,6 +63,8 @@ legacy MVP 以单级 inverter fixture 跑通了从 CDL diff 到输出 GDS / CDL 
 - 完整 foundry DRC / LVS signoff 自动闭环；v2 先定义可接入边界。
 
 上述优先范围是 **capability contract**，不是对所有 FinFET PDK、CDL 方言或 stream-format 的普遍陈述。每次 run 必须在 Stage 1/2 冻结 `GeometryCapability`、`CdlDialectProfile`、`FinCountSemanticsProfile`、device/body extraction policy 与 rule-coverage profile；缺少其中任一 required operator 或无法证明输入落在声明子集时必须 typed-fail，不能靠 fixture 形状、参数名或工具默认值猜测。
+
+**待选的首版输入范围。** 本文不宣称已选定或验证真实 PDK。`explicit_static_fin_plus_active_window` 是首版候选 profile；首版是否仅接受 one-to-one layout↔schematic mapping、single-finger、no-device-reduction，应在真实 tech/model/query evidence 上确认并由项目验收范围决定。下文 static-fin 示例仅在该 profile 被明确选择且通过 capability admission 时适用；未声明支持的输入仍 typed-unsupported，不因保留扩展点而自动获准。
 
 ### 1.5 架构核心闭环
 
@@ -107,7 +109,7 @@ Pipeline 入口必须先调用 `PublicationRepository.create_attempt(...)` 创�
 
 ### 2.2 Stage 1：输入证据获取
 
-Stage 1 的输出是 raw captures、schema-canonical evidence records、已校验的 tech models 与 run config，而不是 layout model。这里的 canonicalization 只做格式/schema 解析、**精确**单位解码及 provenance 保留；identity join、空间投影、annotation overlay 和 current/target state construction 属于 Stage 2。Source evidence 的坐标/尺寸必须从原始 numeric encoding直接 exact-decode为 integer tick、`Decimal` 或 rational：包括从 GDSII REAL8 bytes恢复其精确有理值，而不是先经过 Python `float`；随后与 tech-declared DBU/unit expectation核对。Original bytes/lexeme、value、unit、precision与 source-DBU backlink必须保留；binary `float` 不得进入 canonical geometry、rule predicate 或 content hash。Stage 2 必须选择能精确表示 source drawn geometry 的 canonical integer DBU；snap/rounding 只用于新 candidate 合法化或 approximate annotation matching，不能改写 source geometry。Stage 6 canonical → artifact unit / DBU serialization 是独立的纯输出变换。
+Stage 1 的输出是 raw captures、schema-canonical evidence records、已校验的 tech models 与 run config，而不是 layout model。这里的 canonicalization 只做格式/schema 解析、**精确**单位解码及 provenance 保留；identity join、空间投影、annotation overlay 和 current/target state construction 属于 Stage 2。Source evidence 的坐标/尺寸必须从原始 numeric encoding直接 exact-decode为 integer tick、`Decimal` 或 rational，包括从 GDSII REAL8 bytes恢复其精确有理值，而不是先经过 Python `float`。随后按第 12.5 节 versioned `UnitScaleContract` 与 tech-declared nominal DBU/unit 核对：有限精度 unit encoding 与 nominal scale 的已声明等价不等于 source-coordinate snap。Original bytes/lexeme、exact decoded value、nominal scale、precision、equivalence contract 与 source-DBU backlink必须保留；binary `float` 不得进入 canonical geometry、rule predicate 或 content hash。Stage 2 必须在已验证的 scale binding 下选择能精确表示 source integer ticks / drawn geometry 的 canonical integer DBU，不能取整改写 source geometry；snap/rounding 只用于新 candidate 合法化，annotation matching 使用独立 tolerance。Stage 6 canonical → artifact unit / DBU serialization 是独立的纯输出变换。
 
 输入包括：
 
@@ -211,7 +213,7 @@ Repository必须在同一 CAS/transaction内校验 **phase + revision + executio
 | Current phase | Operation | Next phase | Guard |
 |---------------|-----------|------------|-------|
 | absent | `create_attempt` | `unsealed` | caller-supplied stable `proposed_run_id`、starting-head CAS；revision = 0 |
-| `unsealed` | `seal_context` / new-lineage `initialize` | `sealed_open` | context refs完整；冻结 `execution_mode = whole_intent | explicit_partial` |
+| `unsealed` | `seal_context` / new-lineage `initialize` | `sealed_open` | context refs完整；冻结 `execution_mode = whole_intent \| explicit_partial` |
 | `unsealed` | `finalize_precontext_failure` | `terminal` | 无 CommitEnvelope/post-change artifact；最小 failure RunRecord |
 | `sealed_open` | `append_partial` | `sealed_open` | 仅 `explicit_partial`；chain连续且 state CAS成功 |
 | `sealed_open` | `publish_whole_and_close_stage5` | `stage5_closed` | 仅 `whole_intent`；state、envelope、RunRecord与 closure一次可见 |
@@ -223,15 +225,15 @@ Repository必须在同一 CAS/transaction内校验 **phase + revision + executio
 
 `create_attempt(expected_state_head=...)` 对请求的 starting head做 CAS并创建 revision 0；它尚无 prior attempt revision。Pipeline/caller在首次调用前生成并跨重试保留 `proposed_run_id`，create request digest包含它，因此“repository已创建但响应丢失”的重试仍命中同一 attempt。其余 attempt mutation都比较 `expected_attempt_revision`；会创建/推进 state的 `initialize/publish/append` 还比较 `expected_state_head`。`no_change` closure必须 CAS其作出结论时观察的 state head，避免发布已过时的 no-change；其它 run-only close/finalize绑定 immutable `final_snapshot_id`并记录 `head_status_at_finalization = current | superseded`，即使另一 run随后推进全局 head也必须能 terminalize。该字段只是 finalization瞬间的 observation；要求 latest-at-consumption的 consumer必须把 terminal bundle的 lineage/snapshot与 live head原子重验，不能信任历史枚举。是否允许 superseded结果为 `accept` 由 frozen deployment policy决定。Repository-scoped idempotency table以 `(operation_kind, proposed_or_final_run_id, idempotency_key)` 原子记录 canonical request digest和 result refs；proposed/expected lineage与heads进入 request digest/preconditions。同 key同 digest返回原结果，即使 head已推进；同 key异 digest返回 typed conflict；该记录与 root/run-pointer switch同事务提交。Repository不 import `transactions/`，transactions只构建 neutral DTO/canonical bytes。
 
-“同事务可见”与“断电后持久”是两项物理 backend contract：要么使用提供 durable commit语义、能原子更新 state head与 attempt revision/pointer的单一 ACID transaction/WAL，要么先 durable写入 content-addressed immutable siblings，再对包含两者的 **单一 composite repository-root record** 做一次条件 CAS。Local-FS durable profile必须 fsync sibling files及其 parent metadata、原子 replace root并 fsync root parent；object-store durable profile必须声明 immutable-write durability/read-after-write consistency与 single-root linearizable conditional CAS。Object store上的两个独立 conditional writes不构成该原子性；local filesystem也不能靠依次替换两个 head file模拟。不满足 durability条件的实现只能标 process-local/best-effort。Crash-injection contract test必须覆盖 sibling写入、root switch与响应丢失三个边界。
+“同事务可见”与“断电后持久”是两项物理 backend contract：要么使用提供 durable commit语义、能原子更新 state head与 attempt revision/pointer的单一 ACID transaction/WAL，要么先 durable写入 content-addressed immutable siblings，再对包含两者的 **单一 composite repository-root record** 做一次条件 CAS。Local-FS durable profile必须 fsync sibling files及其 parent metadata、原子 replace root并 fsync root parent；object-store durable profile必须声明 immutable-write durability/read-after-write consistency与 single-root linearizable conditional CAS。Object store上的两个独立 conditional writes不构成该原子性；local filesystem也不能靠依次替换两个 head file模拟。不满足 durability条件的实现只能标 process-local/best-effort。Crash-durable profile 的 crash-injection contract test必须覆盖 sibling写入、root switch与响应丢失三个边界。Process-local MVP 可以按第 9.2 节实现进程内原子 publication、rollback 与幂等重试，不承诺跨进程/断电恢复；durable backend 与 crash-recovery 验收不因此变成 MVP 必做项。
 
 流程：
 
 1. 接收带 `state_lineage_id`、`base_snapshot_id`、old-state preconditions、idempotency key 与 `apply_atomicity` 的 fully-ground selected plan group，并打开 transaction-private overlay / checkpoint。
 2. 将 Stage 4 已具体化的 proposed base mutations应用到 transaction-private overlay，由 exact effective geometry与 tech operators重建/更新 tentative physical connectivity；planner的 annotation refresh/invalidation request交给 `annotation/` 生成 tentative `AnnotationState`与 relation assurance。Annotation只关联 identity/relation，不得增删 physical edge；未具体化的 required repair不可执行，planner也不得直接给出任意 authoritative annotation value delta。
 3. Constraint engine 根据 tech / layer / action policy 独立补全 mandatory checks，并从 staged delta 重算、扩张 affected scope；candidate 自报的 checks / region 只能增加检查，不能缩小检查范围。
-4. 在 overlay 中运行 DRC / connectivity / blockage / intent-invariant / rule feasibility check；任何 stale precondition 或检查失败都丢弃 overlay，并生成结构化失败结果。
-5. 检查通过后，在同一 overlay按 versioned dependency DAG finalise annotation attribution/validity与逐层 policy-controlled geometry。任一 actual delta都必须把下游 annotation、exact device/body extraction、effective conductor、physical connectivity、relation assurance、intent invariants与 rule predicates标 dirty并按拓扑序重算；annotation delta本身只触发 identity/relation-dependent checks，不改变 physical topology。只有声明“不参与上述任一消费者”并有 dependency proof的 marking才可 late-finalize。Closure无法证明时全量重算或 typed-unsupported；存在 dependency cycle时只有绑定终止/唯一性证明的 bounded fixed-point contract才可迭代，否则 capability fail。直至无 dirty node且全部 mandatory checks通过才可发布，任一失败整体回滚。
+4. 在 overlay 中仅对输入依赖已就绪且未标 dirty 的 DRC / connectivity / blockage / intent-invariant / rule predicates 做 early check；stale precondition 或有效检查失败则丢弃 overlay，并生成结构化失败结果。依赖尚未刷新的派生几何/annotation 的检查保持 pending，不得用旧值判 infeasible，也不得视为 pass。
+5. 在同一 overlay按 versioned dependency DAG finalise annotation attribution/validity与逐层 policy-controlled geometry，然后检查其消费者。任一 actual delta都必须把下游 annotation、exact device/body extraction、effective conductor、physical connectivity、relation assurance、intent invariants与 rule predicates标 dirty并按拓扑序重算；annotation delta本身只触发 identity/relation-dependent checks，不改变 physical topology。只有声明“不参与上述任一消费者”并有 dependency proof的 marking才可 late-finalize。Closure无法证明时全量重算或 typed-unsupported；存在 dependency cycle时只有绑定终止/唯一性证明的 bounded fixed-point contract才可迭代，否则 capability fail。直至无 dirty/pending node且全部 mandatory checks通过才可发布，任一有效检查失败整体回滚。
 6. Whole-intent先用 deterministic ids冻结 PreparedPublication + RunRecord，再调用 `publish_whole_and_close_stage5(...)`；partial调用 `append_partial(...)`，全部 groups结束后才 `close_stage5(...)`。Repository在 publish-time重验 state/run heads与 preconditions，令 state version=parent+1并只切换 roots；冲突要求 replan。RunRecord freeze失败时 whole-intent不发布 state，partial earlier envelopes不伪装回滚且正常 Stage6被阻止。
 
 Stage 5 的合同：
@@ -283,11 +285,13 @@ Stage 6 输入包括：
 
 Validation/reporting完成后，pipeline调用 `PublicationRepository.finalize_pipeline(...)` 原子发布 PipelineResult与 terminal run/release pointer。Production consumer必须从 `PipelineResult.lifecycle_status=terminal` 且 `deployment_disposition=accept` 的 terminal root解析 manifest+validation；不得仅凭 ArtifactManifest消费未验证产物。若 consumer policy要求结果仍是 lineage latest，还必须把 terminal bundle的 lineage/final snapshot与 live repository head原子重验，`head_status_at_finalization` 不能替代消费时检查。Orphan/staging object由 recovery/GC清理。
 
-对被捕获 failure，pipeline构建 terminal PipelineResult并经 repository terminalize；Stage 1/2 context seal前的失败走 `finalize_precontext_failure(...)`。Crash/OOM/power loss由 repository-owned RunAttempt journal恢复：每个 partial envelope绑定 run id、chain index、previous envelope和 context digest。Recovery只从该 attempt的 durable run-head/last envelope继续，且仅当它仍等于 lineage head、所有 bound content可解析且 digest一致；head分叉/输入漂移则 interrupted/requires-review，除非显式 full reconcile/rebase policy。存储不可用时只能 best effort。
+对被捕获 failure，pipeline构建 terminal PipelineResult并经 repository terminalize；Stage 1/2 context seal前的失败走 `finalize_precontext_failure(...)`。Crash-durable profile 的 crash/OOM/power loss由 repository-owned RunAttempt journal恢复：每个 partial envelope绑定 run id、chain index、previous envelope和 context digest。Recovery只从该 attempt的 durable run-head/last envelope继续，且仅当它仍等于 lineage head、所有 bound content可解析且 digest一致；head分叉/输入漂移则 interrupted/requires-review，除非显式 full reconcile/rebase policy。Process-local profile 不声称具备此恢复能力；存储不可用时只能 best effort。
 
-Target delta 在 baseline/current snapshot 已完全满足时使用 `no_change` success variant：不生成 ECO CommitEnvelope，`RunRecord.ordered_commit_ids=[]`、`final_snapshot_id` 指向当前稳定 snapshot，Stage 6 仍可正常导出/验证；不得伪造 empty commit。`ValidationResult` 因此强制 `run_id + final_snapshot_id`，commit/ordered-chain 可为空。
+Target delta 在 baseline/current snapshot 已完全满足，且本 attempt 尚未发布任何 ECO CommitEnvelope 时使用 run-wide `no_change` success variant：不生成 ECO CommitEnvelope，`RunRecord.ordered_commit_ids=[]`、`final_snapshot_id` 指向当前稳定 snapshot，Stage 6 仍可正常导出/验证；不得伪造 empty commit。若 explicit partial run 已发布 earlier envelopes，后续 replan 得到无剩余 delta 只表示该迭代无新 candidate，必须作为 changed partial success 关闭并保留完整 ordered chain，不能改成空链 `no_change`。`ValidationResult` 因此强制 `run_id + final_snapshot_id`，commit/ordered-chain 仅在 run-wide no-change 时可为空。
 
-Failure path 按 publication state 区分两类；除下段 `run_record_freeze` 唯一例外外，两类都必须冻结 RunRecord。**No-publication failure** 表示本 run 尚无 CommitEnvelope（默认 whole-intent failure 属此类）：failure RunRecord 只强制包含 run id、已完成的 neutral stage audit records 与 typed StageFailure，last-stable-snapshot / planning / constraint audit refs 按到达阶段可选；只能生成 diagnostic report，不得生成“修改后”geometry artifact。**Partial-policy terminal failure** 表示 explicit candidate / dependency-group policy 下已有 earlier CommitEnvelopes：已发布 commits 不伪装回滚，failure RunRecord 必须列出 applied / failed / skipped deltas、ordered commit ids 与 final stable snapshot；在 RunRecord 成功冻结后，是否允许导出由 policy 决定，任何输出必须标为 non-production / requires-review。Failure reporting 对 ChangeSet / ArtifactManifest / ValidationResult 使用 optional refs，绝不能把 failed delta 伪装成 committed artifact。
+Stage 1–5 的 failure path 按 publication state 区分两类；除下段 `run_record_freeze` 唯一例外外，两类都必须冻结 RunRecord。**No-publication failure** 表示本 run 尚无 CommitEnvelope（默认 whole-intent failure 属此类）：failure RunRecord 只强制包含 run id、已完成的 neutral stage audit records 与 typed StageFailure，last-stable-snapshot / planning / constraint audit refs 按到达阶段可选；只能生成 diagnostic report，不得生成“修改后”geometry artifact。**Partial-policy terminal failure** 表示 explicit candidate / dependency-group policy 下已有 earlier CommitEnvelopes：已发布 commits 不伪装回滚，failure RunRecord 必须列出 applied / failed / skipped deltas、ordered commit ids 与 final stable snapshot；在 RunRecord 成功冻结后，是否允许导出由 policy 决定，任何输出必须标为 non-production / requires-review。Failure reporting 对 ChangeSet / ArtifactManifest / ValidationResult 使用 optional refs，绝不能把 failed delta 伪装成 committed artifact。
+
+Stage 5 已关闭、且 policy 允许进入 Stage 6 后发生的 export / validation / reporting failure 使用既有 frozen RunRecord，加上 linked StageFailure 和已完成的 artifact/check refs；既有记录可以是 success/no-change，也可以是 policy-enabled diagnostic export 的 partial-failure variant。不得重写 RunRecord、回滚已发布 state，也不因 no-change 没有 commit 就误用上述 pre-export failure 路径。Pipeline 按 frozen policy 汇总并 terminalize；required export/check/reporting failure 阻止 production acceptance，failure reporting 的 optional refs 见第 11.11 节。
 
 `run_record_freeze` 是上述两类中唯一允许缺少 RunRecord 的 record-construction failure：repository以 `Stage5Closure(run_record_freeze_failure)` 原子记录 typed StageFailure、已完成的 neutral audit refs与 optional ordered CommitEnvelope ids，并直接或在 optional diagnostic report后发布 `deployment_disposition=reject` 的 terminal PipelineResult。该 variant 不进入正常 Stage 6 export 或 `ValidationResult`；diagnostic reporting 直接消费这些 refs，不能虚构 success / failure RunRecord。
 
@@ -442,6 +446,8 @@ Occupancy 不是原始事实源：base cell projection 可由 layout store + coo
 
 实现可以分层存储，例如 current-semantic table、geometry table、occupancy table、annotation table、connectivity table，但 architecture 要求它们是同一 `AuthoritativeState` 的受控 components，由一个 transaction gate 原子发布。其它对象必须是 read view、cache、transaction overlay 或 export artifact。
 
+可测试的 projection invariant 是：每个纳入 occupancy capability 的 editable drawn record 都有可由 exact geometry 重建的 projection；每个 physical coverage delta 都绑定同一 transaction 内的 exact-geometry delta。纯 annotation reference / blockage-policy 更新单列为 non-drawn state delta，不能借 occupancy assign/release 隐式创造或删除 drawn geometry。
+
 一个 physical occupant 在 working state 中只能有一个权威 occupancy 表达。例如 VIA0 的目标表示不应同时是 `ViaInstance`、B-tier occupancy、LI WIRE cells、M1 WIRE cells 和 CSP assignment。正确做法是：VIA0 drawn geometry 进入 layout store；其 occupied cells 进入 occupancy store；其跨层导通作用由 connectivity state 的 via edge 表达；任何 `ViaInstance` 只是查询或导出视图。
 
 同理，OD active region、LI/M1 routing、raw CUT与其 effective result、blockage都由同一 substrate/reference chain表达，再由不同 view暴露。
@@ -487,6 +493,8 @@ Net label 是 semantic / annotation 属性，可用于报告、localization、LV
 - diffusion sharing / split 是 topology 与 physical attribution 的共同问题，不能写入 current semantic `Device.shared_with[]` 作为孤立 truth；如需展示，只能从 occupancy / connectivity / annotation 派生 view。
 
 Connectivity state 必须纳入 transaction checkpoint / restore / commit。任何 occupancy change、via add/remove、cut add/remove、OD split/share 都必须在 overlay 中增量更新；如果先标 invalid，则必须在 publication 前重建受影响 components。只有 non-authoritative index / cache 可以跨 commit 保持 invalid。`ComponentId` 在一个 snapshot 内稳定；跨 topology mutation 时，ChangeSet 必须记录 old→new component lineage（unchanged / merge / split / removed / created-without-predecessor），调用方只能经 lineage 追踪，不能把旧 id 静默沿用到新 snapshot。
+
+Physical component 只表示 snapshot 声明的 geometry scope / hierarchy 内的物理导通。Scope 外 pin、global rail 或互连提供的 net association 必须来自显式、证据绑定的 hierarchy/pin/global-connect relation policy，不能仅凭同名 net 在本地图中增加 physical edge；这不扩展 v2 MVP 的跨 cell routing 范围。
 
 ### 3.7 Read views、localization queries 与 artifact views
 
@@ -623,8 +631,8 @@ Tier A projection 的目标是服务 occupancy、connectivity 与 constraints。
 Tier B 表示需要二维 cell/fragment occupancy 的层，例如 OD、VIA0、CPO、M0_CUT、FIN_CUT。它承载 broad-phase active/via/cut/diffusion indexing；exact via edge、cut effect、device terminal 与 conductor connectivity 仍由 tech operator 在 effective geometry 上建立。
 
 - **OD / diffusion。**
-  - OD/active 在首个 profile 中是 `nfin` resize 的核心作用对象；其它 profile 可以使用不同 effective-active representation。
-  - 对首个 profile 的 `nfin` resize，目标是调整 device active window/OD coverage，使 extractor 识别的 per-finger active fin 数符合目标，而不是删除 raw FIN。
+  - OD/active 在 static-fin 候选 profile 中是 `nfin` resize 的核心作用对象；其它 profile 可以使用不同 effective-active representation。
+  - 对该 static-fin profile 的 `nfin` resize，目标是调整 device active window/OD coverage，使 extractor 识别的 per-finger active fin 数符合目标，而不是删除 raw FIN。
   - OD occupancy 必须携带或可定位 device attribution、pin role、sharing / split、blockage / suspect 标记。
   - 多 device 共享 diffusion 时，sharing 不应只保存在 `Device.shared_with[]` 之类 metadata 中，而应体现在 occupancy、connectivity component 与 semantic attribution 的一致关系中。
 - **VIA layer：VIA0。**
@@ -672,7 +680,7 @@ C2 的合同是：
 
 ### 4.5 Profile-scoped FIN / gate representation
 
-FinFET PDK 对 fin 的版图表达并不统一。v2 首个 profile `explicit_static_fin_plus_active_window` 把 raw FIN 建模为固定 pitch backdrop，并把 fin-count 变化实现为 effective active window 改变；若 PDK 以 active width、fin block/cut、PCell parameter或其它 representation 表达 fin 数，必须选择另一 profile/operator，不能套用下面公式。
+FinFET PDK 对 fin 的版图表达并不统一。首版候选 profile `explicit_static_fin_plus_active_window` 把 raw FIN 建模为固定 pitch backdrop，并把 fin-count 变化实现为 effective active window 改变；只有明确选择且验证该 profile 后才适用。若 PDK 以 active width、fin block/cut、PCell parameter或其它 representation 表达 fin 数，必须选择另一 profile/operator，不能套用下面公式。
 
 正确的 active fin attribution 是：
 
@@ -803,7 +811,7 @@ Fixture 应尽量模拟真实 Calibre query bundle。允许使用 dummy / synthe
 `bbox_by_layer` 的合同是：
 
 - 记录 element-tagged stream layer key、canonical purpose、optional `drawn_mask_color`、exact bbox与 source record/properties；非矩形 polygon必须进入可保真的 normalized geometry schema，而不是塞入 bbox-only contract。
-- 记录或引用 source unit / DBU 与 exact scale。Source drawn geometry 不做 snap：Stage 2 必须选择能精确表示它的 canonical integer DBU，或 typed-fail；snap 只用于把新 candidate 合法化到 tech grid，annotation tolerance 只用于匹配 evidence。Stage 6 写目标 DBU 前必须检查 representability/坐标范围；任何 policy-allowed quantization 都要记录 delta，不能用 `int()` 截断或 byte-golden 静默吸收。
+- 记录或引用 source unit / DBU、exact decoded scale 与第 12.5 节 nominal scale binding。Source integer ticks / drawn geometry 不做 snap：Stage 2 必须在已验证的 scale binding 下选择能精确表示它的 canonical integer DBU，或 typed-fail；snap 只用于把新 candidate 合法化到 tech grid，annotation tolerance 只用于匹配 evidence。Stage 6 写目标 DBU 前必须检查 representability/坐标范围；unit-encoding equivalence 与 geometry quantization 分开记录，任何 policy-allowed coordinate quantization 都要记录 delta，不能用 `int()` 截断或 byte-golden 静默吸收。
 - 不附带 schematic identity 的臆测。
 - 不因为 LVS query 没有覆盖某个 shape 就丢弃该 shape。
 - 不从 `device_info` / `net_shapes` 反向补造 drawn geometry。
@@ -855,7 +863,7 @@ profile-defined effective FIN
   → per-finger fin count
 ```
 
-推导，并按 `FinCountSemanticsProfile` 处理 canonical `fins_per_finger / finger_count / multiplicity`与其 model/dialect token映射，同时由独立 `DeviceExtractionContract` 处理 multiple gate stripes及 layout↔schematic device reduction/cardinality；不在 MVP one-to-one/single-finger capability 内则 typed-unsupported，而不是由 `device_info` 或 per-device fin list 直接决定。
+推导，并按 `FinCountSemanticsProfile` 处理 canonical `fins_per_finger / finger_count / multiplicity`与其 model/dialect token映射，同时由独立 `DeviceExtractionContract` 处理 multiple gate stripes及 layout↔schematic device reduction/cardinality；超出 selected capability 明确声明的 mapping/finger-count/device-reduction 子集则 typed-unsupported，而不是由 `device_info` 或 per-device fin list 直接决定。
 
 ### 5.5 GDS↔LVS layer mapping
 
@@ -979,7 +987,7 @@ Stage 2 消费这些 evidence，完成：
 - occupancy projection。
 - annotation overlay。
 - coverage / conflict report。
-- connectivity state 初始化所需的 identity reference。
+- connectivity localization / component-to-identity summary 所需的 annotation references；physical topology 只由 exact effective geometry 与 tech operators 初始化，不由 identity label 建边。
 
 Stage 3 以后不应重新读取 raw query output 来构建另一套状态。Planner、constraint、transaction、exporter 应读取 Stage 2 后的 authoritative state、annotation references、connectivity state 和 derived views，而不是直接依赖 Calibre query globals。
 
@@ -1009,7 +1017,7 @@ v2 不需要为这条 legacy JSON path 设计 compatibility adapter。符合 v2 
 2. 找到受影响的物理实体，例如 device active region、S/D access、gate anchor、routing stubs、vias、derived markings。
 3. 在 layout store / occupancy / connectivity 的坐标和 cell 表示中构造 candidate delta。
 4. 在 transaction checkpoint 内把 proposed delta materialize 为 tentative base / annotation / connectivity state；该 overlay 对外不可见。
-5. 由 constraint engine 检查 tentative state；可行后在同一 overlay finalise annotation / derived state，再按 apply_atomicity 发布 CommitEnvelope。
+5. 在同一 overlay 按依赖顺序 finalise annotation / derived state，并由 constraint engine 检查输入已就绪的 tentative state；只有完整 mandatory closure 通过后，才按 apply_atomicity 发布 CommitEnvelope。
 
 这里的 candidate delta 是“待检查的状态变化描述”，不是事实本身。它可以引用 shape id、cell id、device id、net/component id、old/new coverage、受影响区域和 provenance seed；但在 feasibility 成功之前，不得永久修改 `AuthoritativeState` 的任何 component 或 exporter artifact。
 
@@ -1017,9 +1025,9 @@ v2 不需要为这条 legacy JSON path 设计 compatibility adapter。符合 v2 
 
 ### 6.2 `nfin` resize 的物理含义：由 profile 决定
 
-`nfin` 不是脱离 PDK/device model 即可解释的通用几何字段。Canonical model-parameter axes是 `fins_per_finger`、`finger_count`、`multiplicity`（及 profile声明的其它真实参数轴）；`NFIN/NF/M` 等 token的实际含义由 model/dialect profile决定。Gate-stripe grouping与 device-reduction policy/cardinality属于 `DeviceExtractionContract` 的 layout↔schematic mapping metadata，不假定存在对应 CDL token。Stage 2 只有在该 contract能把 target device一对一映射到受支持 layout device、把 intent解析到明确 canonical parameter axis，并能从 effective geometry复算 `fins_per_finger` 时，才允许首个 resize capability。
+`nfin` 不是脱离 PDK/device model 即可解释的通用几何字段。Canonical model-parameter axes是 `fins_per_finger`、`finger_count`、`multiplicity`（及 profile声明的其它真实参数轴）；`NFIN/NF/M` 等 token的实际含义由 model/dialect profile决定。Gate-stripe grouping与 device-reduction policy/cardinality属于 `DeviceExtractionContract` 的 layout↔schematic mapping metadata，不假定存在对应 CDL token。Stage 2 只有在该 contract能把 target device无歧义映射到受支持的 layout device/group、把 intent解析到明确 canonical parameter axis，并能从 effective geometry复算 `fins_per_finger` 时，才允许相应 resize capability。若首版选择 one-to-one / single-finger / no-device-reduction 子集，则超出该子集的映射在 admission 时 typed-unsupported；是否采用该限制见第 1.4 节。
 
-首个 `explicit_static_fin_plus_active_window` profile 的物理操作是：raw FIN 保持不变，planner 修改 profile-declared OD/active window；fin-count extractor先按 effective FIN、effective active与 recognized gate/channel识别 qualified crossings，再按 canonical DeviceId、gate-stripe grouping与 device-reduction policy计算 `fins_per_finger`。邻接 S/D/body attribution只用于 extraction/invariant校验，不作为与 channel相交的计数项。其它 PDK 可能通过 active width、fin block/cut、PCell parameter 或不同 device-recognition recipe 表达 fin 数，必须提供另一 resize operator，否则 typed-unsupported。
+当选择 `explicit_static_fin_plus_active_window` profile 时，物理操作是：raw FIN 保持不变，planner 修改 profile-declared OD/active window；fin-count extractor先按 effective FIN、effective active与 recognized gate/channel识别 qualified crossings，再按 canonical DeviceId、gate-stripe grouping与 device-reduction policy计算 `fins_per_finger`。邻接 S/D/body attribution只用于 extraction/invariant校验，不作为与 channel相交的计数项。其它 PDK 可能通过 active width、fin block/cut、PCell parameter 或不同 device-recognition recipe 表达 fin 数，必须提供另一 resize operator，否则 typed-unsupported。
 
 Commit 后的 current semantic `nfin` 表示 Layauto已提交 intent；snapshot只有在 publication前 selected trusted extractor覆盖的 invariants复核成功时才标 `extractor_verified`，否则为 `committed_unverified`。该 assurance不等于 extracted-layout↔schematic match；Stage 6 LVS结果进入独立 ValidationResult，不回改 snapshot，下一轮可把它作为 evidence。FIN attribution等仍是 derived views。
 
@@ -1029,7 +1037,7 @@ v2 对 standard-cell 内 `nfin` resize 采用固定 frame 模型：
 
 - cell boundary 不因一次局部 drive-strength ECO 改变。
 - VSS / VDD rails、M1 rail locations、rail-side gate endpoints、profile-declared FIN/gate invariants、frame-static well/boundary geometry及 `boundary_halo_signature` 保持稳定。
-- 首个 profile 的 `nfin` shrink / grow 通过调整 device active/OD coverage 完成；其它 profile 不共享该假设。
+- Static-fin profile 的 `nfin` shrink / grow 通过调整 device active/OD coverage 完成；其它 profile 不共享该假设，grow 仍须独立 capability admission。
 - gap-side shrink 只是特定 cell/profile 可声明的 deterministic candidate-order heuristic，不是普遍物理方向。
 - anchor direction 应从几何关系推导，例如 device 与 rail / gap 的相对位置；不应仅依赖 `nmos` / `pmos` 字符串硬编码。
 - POLY / gate 在 MVP `nfin` shrink 中通常作为 attribution anchor 保持不动；只有当候选明确证明 gate endpoint、pin access 或 design rule 需要调整时，才规划局部 gate / access 修复。
@@ -1052,7 +1060,7 @@ Resize planner 至少应显式处理以下问题：
 - publication 前需要按 layer lifecycle preserve / compare / finalise 的 policy-controlled geometry。
 - publication 前需要刷新或 invalidate 的 read views，例如 fin attribution、gate tracks、segments、vias、annotation coverage、net-to-component summary。
 
-首个 static-fin profile 的 resize candidate 不应包含 raw `add FIN` / `remove FIN` 或 fin/gate-targeting cut edit。其它 representation 只有在独立 capability 给出 operator、完整 extraction invariant 与 mandatory checks 时才可编辑相关 geometry；否则应判定 unsupported 或要求更高层 cell regeneration。
+Static-fin 候选 profile 的 resize candidate 不应包含 raw `add FIN` / `remove FIN` 或 fin/gate-targeting cut edit。其它 representation 只有在独立 capability 给出 operator、完整 extraction invariant 与 mandatory checks 时才可编辑相关 geometry；否则应判定 unsupported 或要求更高层 cell regeneration。
 
 ### 6.5 Routing、via、cut 与 derived markings 的局部修复
 
@@ -1132,7 +1140,7 @@ Target intent 的 raw source 在 Stage 1 获取，例如 source/target CDL、ECO
 
 Stage 4 必须先对全部 target delta 做 **all-delta capability admission**：只要存在 unsupported delta，整个 planning result 默认失败，不进入 Stage 5；不能像 legacy MVP 那样在 dispatch 表中把无 macro 覆盖的 diff 静默过滤。执行原子性由独立的 `apply_atomicity = whole_intent | dependency_group | candidate` 决定，默认 `whole_intent`。未来如果需要 partial apply，必须由显式 policy 打开，并在 report / validation result 中标记 skipped / already-applied delta、风险与 non-production / requires-review outcome。
 
-若 semantic/extraction-aware diff 证明全部 target delta 已在 current snapshot 满足，Stage 4 返回 `NoChangePlanningResult`，不生成 candidate或 ProposedMutationSpec；pipeline按第 2.7节 no-change success处理。
+若 semantic/extraction-aware diff 证明全部 target delta 已在 current snapshot 满足，Stage 4 返回本迭代的 `NoChangePlanningResult`，不生成 candidate或 ProposedMutationSpec。Pipeline 只有在本 attempt 尚未发布 envelope 时才按第 2.7 节 run-wide no-change success 处理；已有 partial chain 时则保留该链、复核 target closure 并关闭 changed partial success。
 
 ### 7.2 Planner / macro interface
 
@@ -1213,7 +1221,7 @@ Planner 是 Stage 4 的协调层；macro 是某一类 intent 的 planner impleme
 - `RepairRequirement` / `SubCandidate`：LI / VIA0 / M1 / cut / derived marking 的局部修复需求，或已经具体化的 repair sub-candidate。
 - `ProposedMutationSpec`：Stage 5 可消费的 fully-ground current-semantic update、geometry/occupancy delta、connectivity expectation、annotation request与 lifecycle dirty-scope hint；planner不能直接指定 authoritative annotation value 或 derived shape。
 
-Resize candidate 不应包含 `add FIN` / `remove FIN` 操作。FIN attribution、gate tracks、segments、vias、annotation coverage 等应作为 committed state 的 derived views 重算；planner 不应把这些派生视图作为长期可变字段直接改写。
+在 static-fin profile 内，resize candidate 不应包含 `add FIN` / `remove FIN` 操作。FIN attribution、gate tracks、segments、vias、annotation coverage 等应作为 committed state 的 derived views 重算；planner 不应把这些派生视图作为长期可变字段直接改写。
 
 Shrink-only 是 v2 MVP 的最低 capability，同时必须表达为 capability / candidate-selection policy，而不是散落在 bbox arithmetic 中。Grow 或更多候选策略通过同一 planning seam 接入并显式声明；未声明时返回 typed unsupported。
 
@@ -1450,10 +1458,10 @@ OD/VIA/CUT/diffusion变化都服从同一事务边界；必须在同一 overlay 
 1. 接收 fully-ground selected plan group / `ProposedMutationSpec`，校验 `state_lineage_id`、`base_snapshot_id`、old-state preconditions、idempotency key 与 `apply_atomicity`。
 2. 从 parent snapshot 打开 transaction-private overlay / checkpoint。
 3. 在 overlay 中 materialize proposed geometry、occupancy与 current-semantic changes；由 exact effective geometry和 tech operators重建/更新 physical connectivity，annotation algorithm根据 refresh/invalidation request生成 tentative `AnnotationState`与 relation assurance，形成对外不可见的 tentative base state。Annotation不得增删 physical edge/component。
-4. 从 old/new footprint 独立推导 mandatory checks / affected closure：rule halo + whole entity + via/cut/enclosure partners + pre/post components + body/boundary/derived dependencies；无法证明局部闭包时 full-check 或 capability fail。运行 sound propagation 后，对 fully-ground overlay 执行 exact intent invariants、rule predicates 和 concrete repair checks。
-5. 若任一检查失败，丢弃 overlay / restore checkpoint，并返回 typed failure。
-6. 检查通过后，在同一 overlay按显式、versioned dependency DAG finalise annotation attribution/validity与逐层 policy-controlled geometry。任一 actual delta都标记并按拓扑序重算其下游：annotation、exact device/body extraction、effective conductor、physical connectivity、relation assurance、solver/component summaries与 read views。Annotation变化只影响 identity/relation消费者，不改变 physical topology。
-7. 从每次 actual final delta重算 affected closure并重跑依赖的 intent invariants与 mandatory DRC predicates，直至 DAG无 dirty node。只有有 termination/unique-result proof的 bounded fixed-point contract可处理声明 cycle；闭包不可证明时全量重算或 capability fail。仅有 dependency proof确认不参与 extraction/body/connectivity/relation/rule消费者的 marking可 late-finalize。
+4. 从 old/new footprint 独立推导 mandatory checks / affected closure：rule halo + whole entity + via/cut/enclosure partners + pre/post components + body/boundary/derived dependencies；无法证明局部闭包时 full-check 或 capability fail。Sound propagation 与 early exact checks 只消费输入依赖已就绪且未标 dirty 的 state；依赖待刷新的派生几何/annotation 的 intent invariants、rule predicates 和 repair checks 保持 pending。
+5. 若任一有效 early check 失败，丢弃 overlay / restore checkpoint，并返回 typed failure；不得因 dirty/stale dependency 的旧值而提前拒绝 candidate。
+6. 在同一 overlay按显式、versioned dependency DAG finalise annotation attribution/validity与逐层 policy-controlled geometry，再执行其消费者。任一 actual delta都标记并按拓扑序重算其下游：annotation、exact device/body extraction、effective conductor、physical connectivity、relation assurance、solver/component summaries与 read views。Annotation变化只影响 identity/relation消费者，不改变 physical topology。
+7. 从每次 actual final delta重算 affected closure，执行所有 pending mandatory checks 并重跑受影响的 intent invariants与 mandatory DRC predicates，直至 DAG无 dirty/pending node且全部检查通过。只有有 termination/unique-result proof的 bounded fixed-point contract可处理声明 cycle；闭包不可证明时全量重算或 capability fail。仅有 dependency proof确认不参与 extraction/body/connectivity/relation/rule消费者的 marking可 late-finalize。
 8. 比较 old/new base、annotation与所有 final state，生成完整 ChangeSet。
 9. 若 finalization 或 post-check 失败，必须丢弃 overlay / restore parent snapshot，并返回 typed failure。
 10. Default whole-intent用 deterministic ids冻结 neutral PreparedPublication与唯一 RunRecord，再调用 `PublicationRepository.publish_whole_and_close_stage5(...)`；repository重验 state/attempt revisions与 preconditions，并以一次 ACID commit或 composite-root CAS让 immutable siblings、state head与 stage5 closure可见。Explicit partial policy则调用 `append_partial(...)`，发布后由 pipeline返回 Stage 4，以新 snapshot规划 remaining delta；Stage 5不复用或 rebase旧 candidate，全部 groups结束后才冻结 RunRecord并调用 `close_stage5(...)`。Stage 6只能读取 stage5-closed attempt。
@@ -1484,12 +1492,12 @@ v2 可以复用 legacy MVP 中职责边界清楚、且不违背上述状态所�
 
 失败回滚后必须保持一致：
 
-- geometry 没有 partial bbox change。
+- geometry 没有 partial tagged-geometry / hierarchy / property 或 bbox-index change。
 - occupancy 没有 partial assign/release。
 - annotation state 没有 partial attribution、stale-valid marker 或丢失的 invalidation。
 - connectivity 没有残留 union、via edge、cut-effective geometry或 diffusion terminal sharing/split state。
 - current semantic state 没有 partial parameter、device、pin 或 net update。
-- derived markings 没有 partial bbox refresh 或 provenance stamp。
+- derived geometry 没有 partial refresh 或 provenance stamp。
 - derived read views / caches 没有 stale exposure。
 - commit log 不记录 successful commit event。
 - output artifact、ExportEdit、SKILL、report、validation result 不以失败 candidate 的 partial state 为输入。
@@ -1588,7 +1596,7 @@ Stage 6 的输入只能来自：
 - site/tool config。
 - 可选 golden target 或 fixture expectation。
 
-Stage 6 不能重新解释 raw target diff，不能读取 mutable transaction overlay，不能把 output artifact 当作 state source，也不能把生产工具输出直接 patch 回 layout state。No-publication failure（本 run 尚无 CommitEnvelope）只允许从 failure RunRecord + optional last-stable-snapshot ref 生成 diagnostic report，不允许 geometry export；已有 earlier envelopes 的 partial-policy terminal failure 仍按第 2.7 节 policy 处理。`run_record_freeze` exception 则直接从 StageFailure + completed neutral audit refs 生成 diagnostic report，同样不得进入正常 Stage 6。Legacy MVP 中符合 v2 边界的 GDS IO、CDL writer、Calibre query parser、可视化 helper 或测试 harness 可以按职责复用；不符合 v2 边界的 edit-stream writeback、output-side patch、placeholder SKILL、stdout-only validation 等路径应重构或删除，不设计兼容 adapter。
+Stage 6 不能重新解释 raw target diff，不能读取 mutable transaction overlay，不能把 output artifact 当作 state source，也不能把生产工具输出直接 patch 回 layout state。Stage 1–5 的 no-publication failure（本 run 尚无 CommitEnvelope）只允许从 failure RunRecord + optional last-stable-snapshot ref 生成 diagnostic report，不允许 geometry export；已有 earlier envelopes 的 partial-policy terminal failure 仍按第 2.7 节 policy 处理。Stage 5 已关闭后的 Stage 6 failure 保留既有 frozen RunRecord，不能仅凭 commit chain 是否为空选择 failure variant。`run_record_freeze` exception 则直接从 StageFailure + completed neutral audit refs 生成 diagnostic report，同样不得进入正常 Stage 6。Legacy MVP 中符合 v2 边界的 GDS IO、CDL writer、Calibre query parser、可视化 helper 或测试 harness 可以按职责复用；不符合 v2 边界的 edit-stream writeback、output-side patch、placeholder SKILL、stdout-only validation 等路径应重构或删除，不设计兼容 adapter。
 
 ### 10.1 Stage 6 no-mutation boundary
 
@@ -1602,7 +1610,7 @@ Stage 6 禁止：
 - 根据 Stage 1 target diff globals 临时修改 output params。
 - 根据 output JSON / GDS / SKILL 反向修补 committed state。
 - 把 validation mismatch 静默降级为 stdout。
-- 把 skipped / deferred / degraded / environment-limited check 当作 pass。
+- 把 skipped / deferred / error，或 coverage-degraded / environment-limited 检查汇总成 required-scope clean / production pass；已完成子范围的 pass 必须保留覆盖限制。
 
 如果 Stage 6 发现 snapshot 缺少 policy-controlled geometry lifecycle result、authoritative AnnotationState、geometry identity/capability，frozen tech context缺少 stream-layer/unit/dialect mapping，或 commit chain缺少 expectations，应在对应 subphase typed-fail。缺失/stale non-authoritative summary可纯重算，但不得写回 snapshot。
 
@@ -1617,7 +1625,7 @@ Exporter 应从 immutable snapshot、由 snapshot / RunRecord ids 解析出的 f
 - **CDL。** 按 frozen source/output `CdlDialectProfile` 从 current semantic state与保留的 source AST/token provenance输出；必须遵守 identifier case/escape、numeric suffix与expression rewrite语义，保留 subckt pin order、globals、model/terminal mapping、scale/unit/directive、未编辑参数及 opaque required records，并经 `FinCountSemanticsProfile` 把 canonical size axes映射到该 model的 `NFIN/NF/M` 或其它 token。`.include`/library依赖输出为 self-contained portable bundle或 immutable dependency manifest；若 affected expression无法 soundly evaluate/rewrite、source→output profile不兼容或依赖closure不完整则 typed-fail，不得从 raw diff/target或 hard-coded list 拼最终 params。
 - **Optional debug / fixture JSON。** 可以为了回归测试保留简化格式，但必须标注为 artifact/debug view，不能成为 v2 parser 主输入。
 
-输出顺序、canonical→artifact unit / DBU serialization、stream-layer mapping、tagged geometry serialization 必须可测试。输出 DBU 无法精确表示坐标、超出 writer range 或需要未授权 rounding 时 typed-fail；获准 quantization 必须记录 exact delta。Stage 6 的反向 serialization 是纯输出变换，不写回事实。Byte-golden drift 不是天然错误；self-consistency 比较 canonical geometry/hierarchy/metadata semantics，并解释 shape order、unit、fracture或实际几何变化。
+输出顺序、canonical→artifact unit / DBU serialization、stream-layer mapping、tagged geometry serialization 必须可测试。输出 nominal DBU 无法精确表示坐标、超出 writer range 或需要未授权 rounding 时 typed-fail；获准 coordinate quantization 必须记录 exact delta。UnitScaleContract 单独验证 nominal DBU 的有限精度 stream encoding，并保留 raw scale / equivalence provenance；这不能授权 coordinate quantization。Stage 6 的反向 serialization 是纯输出变换，不写回事实。Byte-golden drift 不是天然错误；self-consistency 在同一 verified scale binding 下比较 canonical geometry/hierarchy/metadata semantics，并解释 shape order、unit、fracture或实际几何变化。
 
 Stage 6 artifact 的读取边界如下：
 
@@ -1626,7 +1634,7 @@ Stage 6 artifact 的读取边界如下：
 | GDSII/OASIS | tagged geometry/lifecycle partitions | provenance ref、optional order hint | stream capability/key/DBU mapping | 不以 bbox或 edit stream修补 semantics |
 | JSON snapshot | current semantic/assurance、geometry、occupancy、annotation、connectivity、lifecycle/linkage | ChangeSet summary、commit refs | versioned codec/export policy | 不依赖默认 Python JSON/hash语义 |
 | CDL | current semantic state + source dialect-preservation refs | semantic-delta provenance | CdlDialectProfile、model/parameter mapping | 不丢 globals/pin order/model/directive，不从 diff/target硬编码 params |
-| SKILL / Virtuoso script（post-MVP） | shape ids、bbox、snapshot geometry、identity anchors | ExportEdit、provenance | frozen tech layer-purpose mapping、tool config、assertion policy | v2 MVP 不依赖它完成 layout 修改；不把 SKILL 当作 state commit |
+| SKILL / Virtuoso script（post-MVP） | shape ids、exact geometry/fingerprint、bbox spatial prefilter、hierarchy/instance path、identity anchors | ExportEdit、provenance | frozen tech layer-purpose mapping、tool config、assertion policy | v2 MVP 不依赖它完成 layout 修改；不把 SKILL 当作 state commit |
 | Human / machine report | snapshot summary | ordered ChangeSet / CommitEvent chain | RunRecord、ArtifactManifest、ValidationResult、reporting policy | 不读取 live planner / transaction，不只统计 macro edit ops |
 | Validation result | snapshot | commit id、validation expectations | ArtifactManifest、RunRecord、ToolRunResult / ParseResult、validation policy | 不只打印 stdout；不吞掉 skipped / deferred / degraded checks |
 | Visualization | snapshot geometry / annotation / connectivity | committed delta、provenance | RunRecord、ValidationResult、reporting policy | 不从 pre-commit edit stream 拼图 |
@@ -1641,7 +1649,7 @@ SKILL / Virtuoso 的定位应降级为 **post-MVP production integration / mirro
 
 - Python exporter 生成的 GDS / JSON / CDL 是 MVP 的 primary artifact。
 - SKILL emitter 可以暂不实现；若 v2 MVP contract 声明该 post-MVP check，则 validation policy 应把 SKILL dry-run 标记为 deferred；只有 policy disabled / not-applicable 才是 skipped。
-- 如果后续实现 SKILL emitter，它必须只读 final snapshot + ordered ChangeSet chain / ExportEdit，并包含 lib/cell/view、layer-purpose mapping、Virtuoso shape-match tolerance、shape locate assertion、provenance comment、ambiguity / missing-shape failure、tool stdout/stderr / return code 等结构化记录。
+- 如果后续实现 SKILL emitter，它必须只读 final snapshot + ordered ChangeSet chain / ExportEdit，并包含 lib/cell/view、hierarchy/instance path、exact geometry/fingerprint、layer-purpose mapping、Virtuoso shape-match tolerance、shape locate assertion、provenance comment、ambiguity / missing-shape failure、tool stdout/stderr / return code 等结构化记录。Bbox/tolerance 只枚举候选；最终匹配必须核对 exact geometry、layer-purpose 与 instance context，多解或缺失 typed-fail，不能仅凭相同 bbox 修改 shape。
 - 占位式 `printf` helper 不能作为生产成功；也不需要为了保留 legacy `EditOp` list 而设计适配层。实现时应先形成符合 v2 的 ChangeSet / ExportEdit，再由 SKILL emitter 处理。
 
 这里的 deferred 只表示 v2 core-state MVP 不被真实 Virtuoso 环境阻塞。当且仅当 run policy 启用 Virtuoso/SKILL integration 时，SKILL dry-run、shape locate、ambiguity check 和 tool return code 才是该 integration profile 的结构化 gate；placeholder、dummy、missing tool 或 skipped/deferred check 不能被计为该 profile 的 production pass。其它 production profile 不因未启用 Virtuoso mirror 而自动失败。
@@ -1660,7 +1668,7 @@ Calibre DRC / LVS closure 是后续生产闭环能力，不是 v2 MVP 的必需�
 post-MVP 的 Calibre closure 应满足：
 
 - DRC clean 是生产 fatal gate；但 v2 MVP 中已声明而暂缺生产 Calibre 环境的 post-MVP check 应标记为 deferred，只有 policy disabled / not-applicable 才是 skipped；两者都不能假装 pass。
-- LVS 必须先比较 exported / extracted layout 与 exported current-semantic CDL snapshot；默认 `whole_intent` run 还必须证明 current semantic 等于 immutable target CDL / TargetIntent。Partial / waived run 的 target mismatch 必须显式报告为 non-production / requires-review，不能 clean-pass。内部 net renumber、S/D swap、layout instance rename 必须通过 Stage 2 annotation identity 解释，而不是在 Stage 6 临时猜测。
+- LVS 必须先比较 exported / extracted layout 与 exported current-semantic CDL snapshot；默认 `whole_intent` run 还必须证明 current semantic 等于 immutable target CDL / TargetIntent。Partial / waived run 的 target mismatch 必须显式报告为 non-production / requires-review，不能 clean-pass。内部 net renumber、S/D swap、layout instance rename 必须通过本次 Stage 6 LVS run 产生、且绑定 exported GDS/CDL 的 matched xref / terminal mapping 解析到 frozen canonical DeviceId/NetId，并遵守 model/body context 的 terminal-symmetry contract。Stage 2 annotation 只提供 baseline provenance，不复用其 run-scoped LVS id。该 validation-local join 仅服务结果解析与 localization，不写回 snapshot；无法 join 时返回 typed mapping/localization gap，不凭名字猜测。
 - DRC/LVS violation 应定位到 schematic net / device / connected component / candidate / commit provenance；无法定位时要给出 typed localization gap。
 - Tool command failure、format drift、missing binary、timeout、license failure、SVDB missing、rule deck missing、layer map mismatch 都应成为结构化 validation result。
 - Calibre output 不得直接 patch layout state；它只能产生 validation result、diagnostic artifact，或作为下一轮修复 intent 的 evidence 输入。
@@ -1683,20 +1691,21 @@ Self-consistency 至少应检查：
 - 在声明的 geometry capability 内，用 re-reader 比较 canonical hierarchy/regions/transforms/properties 与 snapshot semantics；bbox-only run 只有逐 record 通过 axis-aligned-rectangle losslessness check 才能声称 semantic round-trip。Production profile 还应使用独立 downstream tool open/syntax gate，避免 writer与同源 reader的 common-mode bug。
 - JSON export 与 snapshot content 一致。
 - CDL 重新按同一 declared dialect parse 后，与 current-semantic state、source pin/global/model/directive preservation及 parameter mapping做 semantic equality；production 最终仍以 LVS 为 gate。
-- 对已生成的 SKILL / ExportEdit，self-consistency 只做静态 reference / bbox / layer-purpose / provenance 一致性检查；真实 Virtuoso dry-run / shape locate 仅归入 signoff/tool validation。已在 v2 contract 声明但 capability 暂缓实现时记为 deferred；run policy disabled / not-applicable 时记为 skipped。
+- 对已生成的 SKILL / ExportEdit，self-consistency 只做静态 reference / exact geometry-fingerprint / hierarchy-instance path / bbox prefilter / layer-purpose / provenance 一致性检查；真实 Virtuoso dry-run / shape locate 仅归入 signoff/tool validation。已在 v2 contract 声明但 capability 暂缓实现时记为 deferred；run policy disabled / not-applicable 时记为 skipped。
 - Frozen reporting input 中的 change counts、affected regions、target intent、candidate id、constraint result 与 ChangeSet 一致。
 - policy-controlled geometry 已经按 lifecycle 包含在 snapshot 中，而不是 Stage 6 临时生成。
 - Selected fin/device profile 的 raw/effective invariants、extracted fin count、routing/via/cut-effective-geometry repair、body/boundary context与 connectivity 等符合 commit expectations。
-- Annotation coverage、unannotated blockage、suspect geometry、coverage gap 与 validation policy 一致。
+- Annotation coverage、unannotated blockage、suspect geometry、coverage gap 与 validation policy 一致，并按既有 provenance/validity 区分 source-bound、candidate-derived/inherited、unverified-after-edit 与 unknown/ambiguous；source coverage 不能推断 post-edit LVS match，后者只由对应 Stage 6 ValidationResult 声明。
 
 只有 required core artifacts 经 manifest commit marker 可见的 success/no-change run 才产生 `ValidationResult`；它绑定 `run_id`、`final_snapshot_id`、`ordered_commit_ids`/chain hash（no-change 可为空）、artifact manifest id、`checks: tuple[CheckResult, ...]` 与 deterministic aggregate outcome。每个 `CheckResult` 分开记录：
 
-- `execution_status = pass | fail | skipped | deferred | degraded`。
+- `execution_status = pass | fail | error | skipped | deferred`。
+- `coverage = complete | degraded | none`；complete 只表示声明的 check/profile scope 完整执行，不表示整个 foundry deck 均已覆盖。
 - `finding_severity = info | warning | error`。
 - `policy_disposition = accept | requires_review | reject`。
 - reason、tool/evidence refs、localized object references、runtime/return code。
 
-Enabled-required profile 的 missing tool/license/timeout 是 `fail + reject`；`deferred` 只表示当前 milestone 已声明但未执行，`skipped` 只表示 disabled/not-applicable，`degraded` 只用于实际运行但 coverage/quality 降级。Partial/no-change/failure path 不得伪造单个 commit id。
+检查完成并发现违例为 `fail`；missing tool/license、timeout 或 parser failure 等无法完成检查的 execution failure 为 `error`，enabled-required profile 必须同时 `reject`。`deferred` 只表示当前 milestone 已声明但未执行，`skipped` 只表示 disabled/not-applicable，二者 coverage 为 none。`degraded` 是独立 coverage/quality 维度，可与 pass/fail/error 同时记录，不能抹掉已发现的违例；局部 pass 不能被汇总成 required-scope clean。Partial/no-change/failure path 不得伪造单个 commit id。
 
 没有 golden target 的生产 ECO 仍然可以通过 self-consistency + signoff + audit-readiness 给出 pass/fail。v2 MVP 可以先以 self-consistency + fixture checks 作为完成标准，并在 validation result 中明确 SKILL / Calibre signoff 为 deferred。相反，有 golden target 的 fixture 如果 signoff 或 self-consistency 失败，也不能只因为 golden match 而 pass。
 
@@ -1712,7 +1721,7 @@ Report 应覆盖：
 - constraint result：规则、传播、失败原因、rollback 或 commit outcome。
 - committed changes：base changes、current-semantic、occupancy、annotation、connectivity changes。
 - derived changes：C1 markings、read-view invalidation / refresh summary。
-- annotation coverage：coverage gap、unannotated blockage、suspect geometry。
+- annotation coverage：coverage gap、unannotated blockage、suspect geometry，以及 source-bound / candidate-derived/inherited / unverified-after-edit / unknown/ambiguous 的 provenance/validity 分组；不得把 source-LVS assurance 当作 post-edit LVS proof。
 - validation results：self-consistency、golden、signoff、audit-readiness checks；v2 MVP 中的 post-MVP / deferred 与 policy-disabled / skipped checks 必须清楚列出。
 - skipped / deferred / degraded checks 与 warning severity：原因、风险、policy outcome。
 - artifact manifest：路径、hash、生成时间、tool command summary。
@@ -1825,7 +1834,7 @@ layauto_v2/
 
 `tech/` 是 layer/rule/extraction registry owner；`normalization/`只构建 ProposedInitialState；`domain/publication.py`拥有 neutral `PreparedPublication`/`Stage5Closure`/`TerminalPipelineBundle` schema与 canonical digest；`repository/` 是 state-lineage head和 run-attempt revision/terminal pointer的唯一 CAS/transaction owner。Transactions只构建 neutral DTO，不被 repository import。`domain/codec.py`拥有 wire/canonical bytes contract。
 
-Python reference profile 必须在 `pyproject.toml` 明确 `requires-python`（v2 以 Python 3.11+ syntax/type system 为最低基线）、runtime 与 optional GDS/YAML/tool dependencies，并在 CI 固定 strict type-checker 与 supported interpreter matrix。Typing/Protocol/TypedDict 只提供静态合同，不替代 runtime schema validation；`@runtime_checkable` 也不能验证方法签名或数据结构。所有 YAML 使用 safe loader、拒绝 duplicate/unknown keys与 custom executable tags、限制 size/depth，并先构造 validated immutable DTO；rule/config 不得 `eval` 任意 expression。
+Python reference profile 必须在 `pyproject.toml` 明确 `requires-python`；当前项目最低基线保持 Python 3.10+，不得仅因示例 syntax/typing 偏好提高版本要求。Runtime 与 optional GDS/YAML/tool dependencies、strict type-checker 与 supported interpreter matrix 应显式声明并在 CI 校验。Typing/Protocol/TypedDict 只提供静态合同，不替代 runtime schema validation；`@runtime_checkable` 也不能验证方法签名或数据结构。所有 YAML 使用 safe loader、拒绝 duplicate/unknown keys与 custom executable tags、限制 size/depth，并先构造 validated immutable DTO；rule/config 不得 `eval` 任意 expression。
 
 v2 fixture / test helper 放在 package 外的 `tests/fixtures/` 或 `tests/support/`，不得作为 runtime dependency。仓库级 `legacy_mvp/` 仍可保留为历史实现，但 `layauto_v2/` 不提供 legacy adapter；需要取用的 parser、unit conversion 或几何纯函数应迁入上述明确 owner，而不是从 legacy package import。
 
@@ -2037,7 +2046,7 @@ Spacing/enclosure/cut/via/OD 等 predicate 读取 exact geometry与 `RuleRecord.
 - 不允许 macro 直接覆写 C1 derived shape。
 
 **FIN / POLY 语义。**
-Selected FinCount/DeviceExtraction profile决定 raw/effective FIN、active、gate/channel与 fin-count语义。首个 static-fin profile拒绝 raw FIN edit；其它 representation没有声明 operator时 typed-unsupported。Gate/channel terminal separation与 fin attribution从 committed exact geometry + annotation/extraction重算。
+Selected FinCount/DeviceExtraction profile决定 raw/effective FIN、active、gate/channel与 fin-count语义。Static-fin 候选 profile拒绝 raw FIN edit；其它 representation没有声明 operator时 typed-unsupported。Gate/channel terminal separation与 fin attribution从 committed exact geometry + annotation/extraction重算。
 
 ### 11.10 `importers/`
 
@@ -2116,10 +2125,11 @@ Selected FinCount/DeviceExtraction profile决定 raw/effective FIN、active、ga
 **关键输出。**
 
 - `ValidationResult(run_id, final_snapshot_id, ordered_commit_ids/chain_hash, manifest_id, checks, aggregate_outcome)`；no-change chain可为空。
-- Per-check `execution_status = pass | fail | skipped | deferred | degraded`。
+- Per-check `execution_status = pass | fail | error | skipped | deferred`。
+- 独立 `coverage = complete | degraded | none`，语义以第 10.5 节为准；degraded 不替代 pass/fail/error verdict。
 - 独立 `finding_severity = info | warning | error` 与 `policy_disposition = accept | requires_review | reject`，不得混成一个 enum。
 - Reason、tool/evidence/artifact refs与 localized object refs。
-- Required profile的 missing tool/license/timeout必须 `fail + reject`。
+- Required profile 的 missing tool/license/timeout/parser failure 必须 `error + reject`；完成检查后发现违例为 `fail`。
 
 ### 11.13 `pipeline.py`
 
@@ -2142,7 +2152,7 @@ Selected FinCount/DeviceExtraction profile决定 raw/effective FIN、active、ga
 - 不吞掉 unsupported intent、constraint failure、transaction rollback、export failure 或 validation failure。
 
 **Stage boundary 要求。**
-`pipeline.py` 应显式记录每个 stage 的输入、输出和 tagged failure result。被捕获的 Stage 1–5 failure冻结 failure RunRecord；`run_record_freeze` 本身失败按专门 variant处理。Crash/OOM/power loss 由 durable RunAttempt journal与启动 recovery补成 interrupted/requires-review record，不能承诺在故障瞬间一定有 PipelineResult。Stage 6 failure不修改前置 RunRecord。`ValidationResult` 只表示 checks，`ReportingResult` 只表示 report/visualization outcome，最终 PipelineResult汇总 refs。Changed success在 Stage 5 publication后才有新 snapshot；no-change success复用当前 snapshot且 commit chain为空。任何降级/跳过都进入相应 record。
+`pipeline.py` 应显式记录每个 stage 的输入、输出和 tagged failure result。被捕获的 Stage 1–5 failure冻结 failure RunRecord；`run_record_freeze` 本身失败按专门 variant处理。Crash-durable profile 的 crash/OOM/power loss 由 durable RunAttempt journal与启动 recovery补成 interrupted/requires-review record，不能承诺在故障瞬间一定有 PipelineResult；process-local MVP 不承诺断电恢复。Stage 6 failure不修改前置 RunRecord。`ValidationResult` 只表示 checks，`ReportingResult` 只表示 report/visualization outcome，最终 PipelineResult汇总 refs。Changed success在 Stage 5 publication后才有新 snapshot；no-change success复用当前 snapshot且 commit chain为空。任何降级/跳过都进入相应 record。
 
 ### 11.14 `legacy_mvp/` 与代码取用原则
 
@@ -2177,7 +2187,7 @@ v2 应为模块边界建立轻量 architecture tests，避免实现过程中重�
 - `tech/` 不 import `state/`、`annotation/`、`constraints/` 或 `pipeline.py`；它只拥有 immutable tech facts / schema。
 - `state/coordinate.py` 不持有 occupancy storage。
 - `state/` 不 import `transactions/`，snapshot / state metadata 只引用 domain ids。
-- 任何 lineage head或 RunAttempt pointer更新只经 `repository/publication.py`；contract tests覆盖 concurrent same-parent publish仅一方成功、same-key/same-digest响应丢失重试、same-key/different-digest conflict、create-if-absent、pre-context failure、composite-root crash injection与 attempt-scoped recovery。
+- 任何 lineage head或 RunAttempt pointer更新只经 `repository/publication.py`；contract tests覆盖 concurrent same-parent publish仅一方成功、same-key/same-digest响应丢失重试、same-key/different-digest conflict、create-if-absent 与 pre-context failure；选择 crash-durable profile 时另须覆盖 composite-root crash injection 与 attempt-scoped recovery。
 - `normalization/` 与 `pipeline.py` 不直接调用 mutable state publication；baseline 必须经 InitializationTransaction。
 - `normalization/` 不 import `transactions/`，`transactions/` 不 import `normalization/`；二者只共享中立 `ProposedInitialState`/PreparedBaseline DTO。
 - `constraints/` 不定义 canonical layout store / occupancy store。
@@ -2224,7 +2234,7 @@ Legacy MVP 中符合 v2 架构要求的实现可以按职责复用，例如 CDL 
 
 ### 12.2 `drc_rules.yaml`
 
-`drc_rules.yaml` 描述可机器消费的 closed rule variants，而不是散落在代码里的常量。Source 值必须有显式 unit 或 bundle-level、带 provenance 的唯一 default；decimal 以字符串/exact numeric token解析，加载后一次转换为 canonical integer DBU，binary float 不进入 rule truth。字段示例：
+`drc_rules.yaml` 描述可机器消费的 closed rule variants，而不是散落在代码里的常量。Source 值必须有显式 unit 或 bundle-level、带 provenance 的唯一 default；decimal 以字符串/exact numeric token解析，按第 12.5 节已验证的 nominal scale binding 精确转换为 canonical DBU，binary float 不进入 rule truth。Rule threshold 不因 stream unit 的编码误差被重新缩放、取整或放宽；不可精确表示时使用 capability-declared exact rational predicate 或 typed-fail。字段示例：
 
 - `id`：稳定 rule id，如 `LI.S.1`、`V0.E.LI`。
 - `type` / `predicate_id`：registry 中封闭的规则类型，如 `min_pitch`、`min_width`、`min_spacing`、`min_enclosure`、`min_extension`、`exact_size`；不得 eval YAML/Python expression。
@@ -2305,7 +2315,9 @@ Annotation 权威位置应与第 3/5 节一致：`state/annotation.py` 中以 `A
 - DRC/LVS pass/fail 结果。
 - 任何为了让 fixture 通过而覆盖事实源的 “expected geometry” 开关。
 
-可以进入 config 的，是“如何读取/运行/验证”的策略，例如路径、tool mode、timeout、dialect、validation profile、artifact naming。单位与 tolerance 按用途分开：source evidence保留 exact unit/DBU；canonical DBU 必须精确容纳 drawn geometry；`geometry_policy.snap/rounding` 只约束新 candidate与获准的 output quantization，不能改写 source geometry；`annotation_match_tolerance` 只匹配 evidence；`virtuoso.shape_match_tolerance` 只定位 tool object。Site config只能选择 tech-compatible profile或收紧边界；显式 unit/DBU conflict typed-fail，不能用 tolerance吞掉。
+可以进入 config 的，是“如何读取/运行/验证”的策略，例如路径、tool mode、timeout、dialect、validation profile、artifact naming。单位与 tolerance 按用途分开：source evidence保留 exact decoded unit/DBU；canonical DBU 必须在 verified scale binding 下精确容纳 drawn geometry；`geometry_policy.snap/rounding` 只约束新 candidate与获准的 output coordinate quantization，不能改写 source integer ticks；`annotation_match_tolerance` 只匹配 evidence；`virtuoso.shape_match_tolerance` 只预筛 tool object。Site config只能选择 tech-compatible profile或收紧边界，不能把真实 unit/DBU conflict 用 spatial tolerance 吞掉。
+
+`UnitScaleContract` 由 versioned tech/format profile 拥有，显式区分 **raw encoded scale** 与 **nominal physical DBU**。GDSII REAL8 等有限精度编码不一定能精确表示十进制的 1 nm；不能要求其 decoded rational 与 exact decimal 无条件逐值相等。合同须固定 nominal scale、允许的 encoding provenance/precision、确定性的 equivalence test 与误差界，只接受该数值编码误差范围内的唯一 scale binding；缺少证明、匹配多个 nominal scale 或真实单位冲突时 typed-fail。该界不能来自 annotation/shape-match tolerance，也不能被 site config 任意放宽。Source XY integer ticks 必须原样保留；raw bytes、exact scale、nominal scale、encoding delta 与 contract version 进入 provenance/content identity，canonical rule/geometry 比较使用同一已验证的 nominal scale。此合同只解释单位数值的序列化，不允许移动 shape、修复 off-grid input 或掩盖几何量化。
 
 ### 12.6 Calibre / LVS query evidence 获取与结构化输入
 
@@ -2327,7 +2339,7 @@ Stage 1 输出应同时保留：
   - `net_shapes.yaml`：per-net derived routing/conducting tagged geometry evidence，采用同一 explicit/header-bound exact unit合同，并保留 quality、`lvs_index`、`lvs_name`、`schematic_name`；bbox-only输入必须标 `approximate_bbox`并走保守 overlay。
 - query provenance：header id、mode、source/query-db refs、command dialect/template id、timeout、tool/parser versions与 raw-output refs。
 
-Stage 1 只做格式解析、exact unit decode、基本格式检查与 evidence 保存，并保留 original lexeme/value/unit/precision/source-DBU backlink。Stage 2 选择能精确容纳 drawn geometry 的 canonical DBU，做 identity join、空间投影与 annotation matching；source geometry不 snap。Stage 1 不直接构造 occupancy/connectivity或 editable state。
+Stage 1 只做格式解析、exact unit decode、基本格式检查与 evidence 保存，并保留 original lexeme/value/unit/precision/source-DBU backlink；unit-scale binding 遵守第 12.5 节合同。Stage 2 在已验证的 scale binding 下选择能精确容纳 drawn geometry 的 canonical DBU，做 identity join、空间投影与 annotation matching；source geometry不 snap。Stage 1 不直接构造 occupancy/connectivity或 editable state。
 
 若 query output 缺失、format/terminator漂移、header hash/top/deck/status 不匹配，Stage 1 必须返回 typed `EvidenceIssue` 与 linked `ParseResult`；required profile 中任何 binding mismatch fatal，只有显式 degraded/non-production profile 可把它保留为 suspect evidence。Layout instance/net/layer join 失败同理结构化处理，关键 device mapping 不完整时不得执行 resize。任何情况都不能伪装为 Stage 6 `ValidationResult` 或 fallback 到命名相等。
 
@@ -2340,9 +2352,9 @@ Stage 1 只做格式解析、exact unit decode、基本格式检查与 evidence 
 - GDSII/OASIS/OA/JSON：format capability、exact unit/DBU adaptation、top/hierarchy policy、element-tagged stream-layer-key/purpose mapping、candidate/output quantization policy；adapter config 不得覆盖 canonical geometry/layer truth。
 - Signoff：DRC / LVS severity policy、允许 deferred 的检查、是否要求 real-tool closure、是否允许 dummy fixture evidence。
 
-所有工具调用都应返回中立 `ToolRunResult`，而不是只打印 stdout/stderr。它只包含 execution facts：tool name、mode、command 或 redacted command、input / raw-output refs、exit status、timeout / license / environment 分类与 stdout/stderr refs。Stage 1 importer 或 Stage 6 validation parser 另行产生以 `tool_run_id` 单向关联的 `ParseResult` / EvidenceRecord / FindingRecord；冻结的 ToolRunResult 不反向引用后产生的 parse result，tooling 也不拥有 parsed findings。Stage 1–5 orchestrator 按 active acquisition policy 把 required / terminal acquisition、execution 或 parse failure 分类为 StageFailure，optional issue 则进入 neutral audit / coverage record；Stage 6 validation policy 把 tool / parse failure 与 findings 映射为 failed `ValidationResult` 及 severity / policy outcome。
+所有工具调用都应返回中立 `ToolRunResult`，而不是只打印 stdout/stderr。它只包含 execution facts：tool name、mode、command 或 redacted command、input / raw-output refs、exit status、timeout / license / environment 分类与 stdout/stderr refs。Stage 1 importer 或 Stage 6 validation parser 另行产生以 `tool_run_id` 单向关联的 `ParseResult` / EvidenceRecord / FindingRecord；冻结的 ToolRunResult 不反向引用后产生的 parse result，tooling 也不拥有 parsed findings。Stage 1–5 orchestrator 按 active acquisition policy 把 required / terminal acquisition、execution 或 parse failure 分类为 StageFailure，optional issue 则进入 neutral audit / coverage record；Stage 6 按第 10.5 节将 tool / parse failure 映射为 per-check `execution_status=error`，完成检查后发现违例映射为 `fail`，再结合 coverage、severity 与 policy disposition 聚合为 `ValidationResult`。
 
-工具缺失、license 不可用、timeout、rule deck 缺失或命令失败进入 ToolRunResult；format drift、terminator / query 字段缺失进入 linked ParseResult。Stage 1 acquisition 的 execution / parse failure 由 acquisition policy 决定是否形成 terminal StageFailure；Stage 6 的 tool / parse failure 与 findings 进入 structured failed ValidationResult。v2 MVP 没有生产工具环境而检查属于声明的 post-MVP capability 时记录为 deferred；policy disabled / not-applicable 才记录为 skipped，不能用 dummy output 伪装成 signoff clean。
+工具缺失、license 不可用、timeout、rule deck 缺失或命令失败进入 ToolRunResult；format drift、terminator / query 字段缺失进入 linked ParseResult。Stage 1 acquisition 的 execution / parse failure 由 acquisition policy 决定是否形成 terminal StageFailure；Stage 6 使用上述 error/fail 分流及独立 coverage 维度，enabled-required profile 的执行错误必须 reject。v2 MVP 没有生产工具环境而检查属于声明的 post-MVP capability 时记录为 deferred；policy disabled / not-applicable 才记录为 skipped，不能用 dummy output 伪装成 signoff clean。
 
 Calibre query command-string drift 属于 tool adapter dialect 问题。Profile 必须声明 tool/version、query DB kind、command/script template、terminator、unit、escaping与 captured-fixture hash；net/instance name 作为 typed parameter传入 adapter，禁止直接拼 shell command。不同部署通过 profile扩展并由 captured tests覆盖，不把具体命令硬编码到 domain/state。
 
@@ -2360,7 +2372,7 @@ Fixture 的目标是稳定复现 production evidence flow，而不是复刻历�
 
 建议 fixture 分层：
 
-- `regression fixture`：小规模、byte-golden、用于防止无意输出漂移。
+- `regression fixture`：小规模，以 canonical geometry/hierarchy/metadata 与 semantic golden 为主；byte-golden 可附加保护序列化稳定性，合法 fracture、path encoding 或 ordering 变化不直接视为几何语义错误。
 - `synthetic edge case`：专门覆盖 conflict、sharing、cut、unannotated blockage、S/D swap、renumbered net、annotation-match tolerance、off-grid drift 等边界。
 - `tool-captured fixture`：来自真实 Calibre / Virtuoso 输出的脱敏样例，用于验证 command parser、layer dialect、unit conversion、effective-region trimming。
 
@@ -2406,7 +2418,7 @@ correctness audit 是 input-side / fixture / format 审计；其中有些问题�
 | odd width + `int()` truncation 导致 FIN / LI / VIA0 0.5 nm off-centre | generator `add_shape()` 对坐标直接 `int()`；FIN/LI/VIA0 宽度为奇数 | Source geometry以 integer DBU/exact scale保留且不 snap；新 candidate量化与 annotation/tool tolerance分开，禁止 `int()` 截断，fixture golden不能掩盖 quantization。 |
 | LI pitch / width / spacing 自洽性不足，fixture 存在 LI spacing 风险 | `LI.P.1=27`，`LI.W.1=17`，`LI.S.1=17`；adjacent LI tracks 只相隔 27 nm | `drc_rules.yaml` 拥有 rule fact；candidate 触及范围内可判定的 spacing 是 Stage 5 mandatory frontline check，完整 deck 另由 Stage 6 signoff，未覆盖项进入 validation coverage gap。 |
 | VIA0 LI/M1 enclosure 问题与 via-reach extension 公式不完整 | `V0.E.LI` / `V0.E.M1` 在 rule deck 中存在；generator 只按 enclosure 常量延伸 LI，未加 via half-size；M1 signal stub 宽度固定 20 nm | Candidate 触及的 via enclosure / extension 必须进入 Stage 5 mandatory predicate；若 tech predicate 不可用则 capability admission 失败。Stage 6 signoff 提供额外闭环，不能替代 pre-commit gate。 |
-| `device_info` 与 legacy JSON bbox rounding / seed geometry 不一致 | legacy JSON 用 integer half pitch；`device_info` 用 float half pitch，且 seed bbox 是 synthetic gate rectangle | `device_info` 只能作为 annotation seed；Stage 1 显式解码 unit / precision，Stage 2 overlay 使用 canonical snap、registry-defined annotation-match tolerance、layer mapping 与 ambiguity policy，不能把它当 drawn geometry truth。 |
+| `device_info` 与 legacy JSON bbox rounding / seed geometry 不一致 | legacy JSON 用 integer half pitch；`device_info` 用 float half pitch，且 seed bbox 是 synthetic gate rectangle | `device_info` 只能作为 annotation seed；Stage 1 显式解码 unit / precision，Stage 2 overlay 使用 exact coordinate conversion、registry-defined annotation-match tolerance、layer mapping 与 ambiguity policy，不能把它当 drawn geometry truth。 |
 | `net_shapes` 是 raw GDS bbox，不是 trimmed effective conducting region | generator 直接遍历 `layout_data['shapes']` 输出 `NET_SHAPES_LAYERS` | `calibre_layer_map.yaml` / `layer_map.yaml` 必须区分 raw bbox evidence 与 effective-region evidence；未实现 trimming 时只能在 coverage / limitation report 中声明 raw bbox。 |
 | Calibre HDB / LVS query format 未经真实 Calibre binary 验证 | audit 与 backlog 均记录 HDB command / output dialect 未验证 | Stage 1 tool adapter 必须保存 raw captures、normalized YAML、parser provenance；format drift / missing terminator / dialect mismatch 进入 structured evidence error。 |
 | fixture regeneration 依赖 gdstk 且 committed fixture 有 drift | generator 的 GDS readback 调用 `gds_to_bbox_by_layer()`；GDS reading path 要求 `gdstk`；audit 记录 regenerated diff | Fixture strategy 必须要求可重复生成、regenerated-clean check 或 machine-readable limitation report；依赖缺失不能静默通过。 |
