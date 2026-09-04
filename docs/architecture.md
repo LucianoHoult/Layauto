@@ -64,7 +64,9 @@ legacy MVP 以单级 inverter fixture 跑通了从 CDL diff 到输出 GDS / CDL 
 
 上述优先范围是 **capability contract**，不是对所有 FinFET PDK、CDL 方言或 stream-format 的普遍陈述。每次 run 必须在 Stage 1/2 冻结 `GeometryCapability`、`CdlDialectProfile`、`FinCountSemanticsProfile`、device/body extraction policy 与 rule-coverage profile；缺少其中任一 required operator 或无法证明输入落在声明子集时必须 typed-fail，不能靠 fixture 形状、参数名或工具默认值猜测。
 
-**待选的首版输入范围。** 本文不宣称已选定或验证真实 PDK。`explicit_static_fin_plus_active_window` 是首版候选 profile；首版是否仅接受 one-to-one layout↔schematic mapping、single-finger、no-device-reduction，应在真实 tech/model/query evidence 上确认并由项目验收范围决定。下文 static-fin 示例仅在该 profile 被明确选择且通过 capability admission 时适用；未声明支持的输入仍 typed-unsupported，不因保留扩展点而自动获准。
+**已确认的首版输入范围（2026-09-04）。** 首版 resize MVP 仅接受 single-finger（canonical `finger_count = 1`）、one-to-one layout↔schematic device mapping、no-device-reduction 的输入子集。多指、一对多/多对一映射，或必须依赖器件归并才能解释的输入，在 capability admission 时返回 typed-unsupported，不生成可执行 ECO candidate。Single-finger 不等于 single-fin：`fins_per_finger` 仍可按 intent 改变；本限制也不等于单个 cell 只能有一个 device 或一次 run 只能有一个 delta。`multiplicity` 与具体 `NFIN/NF/M` token 的解释仍服从 model/dialect profile，不能从单指限制推断其它参数的默认值。
+
+该范围确认不代表真实 PDK 已被选定或验证。`explicit_static_fin_plus_active_window` 仍是首版候选 profile；下文 static-fin 示例仅在真实 tech/model/query evidence 验证该 profile 且通过 capability admission 后适用。不匹配的真实输入应明确报告为超出首版范围，不能通过静默拆分/归并、改写 evidence 或回退 legacy path 使其“适配”。多指/器件归并可作为后续 capability 扩展，不是首版验收要求。
 
 ### 1.5 架构核心闭环
 
@@ -761,7 +763,7 @@ Tech bundle 应描述：
 - pitch、width、spacing、enclosure、extension、minimum area 等 rule records。
 - coordinate system 参数，例如 track pitch / offset、B-tier axes。
 - rule predicate 的参数化输入。
-- `FinCountSemanticsProfile` 与 `DeviceExtractionContract`：fin representation、model/terminal mapping、canonical size axes到具体参数 token的映射、gate-stripe grouping、effective active/channel recipe、layout↔schematic mapping cardinality、body/bulk policy、extractor/version 与 resize operator。`NFIN/NF/M` 只是某些 profile的可能 token，不是全局语义轴。S/D terminal symmetry/swap 必须按 model/tech/body context显式声明，不能假设所有 MOS S/D 可自由互换。首个 MVP 可以限定 one-to-one、single-finger、no-device-reduction；其它输入 typed-unsupported。
+- `FinCountSemanticsProfile` 与 `DeviceExtractionContract`：fin representation、model/terminal mapping、canonical size axes到具体参数 token的映射、gate-stripe grouping、effective active/channel recipe、layout↔schematic mapping cardinality、body/bulk policy、extractor/version 与 resize operator。`NFIN/NF/M` 只是某些 profile的可能 token，不是全局语义轴。S/D terminal symmetry/swap 必须按 model/tech/body context显式声明，不能假设所有 MOS S/D 可自由互换。首版必须声明并校验第 1.4 节的 one-to-one、single-finger、no-device-reduction 子集；超出该子集的输入 typed-unsupported，不能由 run policy 放宽。
 - RuleRecord 的 relation basis 与所需上下文，例如 physical component、extracted/schematic net、voltage class、mask property 或 none。
 - signoff 所需 rule-deck / layer-map 的逻辑 identity、version 与 compatibility metadata；具体 filesystem path / binary path 属于 site/tool config。
 
@@ -1025,7 +1027,7 @@ v2 不需要为这条 legacy JSON path 设计 compatibility adapter。符合 v2 
 
 ### 6.2 `nfin` resize 的物理含义：由 profile 决定
 
-`nfin` 不是脱离 PDK/device model 即可解释的通用几何字段。Canonical model-parameter axes是 `fins_per_finger`、`finger_count`、`multiplicity`（及 profile声明的其它真实参数轴）；`NFIN/NF/M` 等 token的实际含义由 model/dialect profile决定。Gate-stripe grouping与 device-reduction policy/cardinality属于 `DeviceExtractionContract` 的 layout↔schematic mapping metadata，不假定存在对应 CDL token。Stage 2 只有在该 contract能把 target device无歧义映射到受支持的 layout device/group、把 intent解析到明确 canonical parameter axis，并能从 effective geometry复算 `fins_per_finger` 时，才允许相应 resize capability。若首版选择 one-to-one / single-finger / no-device-reduction 子集，则超出该子集的映射在 admission 时 typed-unsupported；是否采用该限制见第 1.4 节。
+`nfin` 不是脱离 PDK/device model 即可解释的通用几何字段。Canonical model-parameter axes是 `fins_per_finger`、`finger_count`、`multiplicity`（及 profile声明的其它真实参数轴）；`NFIN/NF/M` 等 token的实际含义由 model/dialect profile决定。Gate-stripe grouping与 device-reduction policy/cardinality属于 `DeviceExtractionContract` 的 layout↔schematic mapping metadata，不假定存在对应 CDL token。Stage 2 只有在该 contract能把 target device无歧义映射到受支持的 layout device/group、把 intent解析到明确 canonical parameter axis，并能从 effective geometry复算 `fins_per_finger` 时，才允许相应 resize capability。首版按第 1.4 节强制采用 one-to-one / single-finger / no-device-reduction 子集：只接受单个 layout device 与单个 schematic device 的对应，不执行 device-group reduction；超出子集在 admission 时 typed-unsupported。通用 group mapping 接口只保留给后续 capability。
 
 当选择 `explicit_static_fin_plus_active_window` profile 时，物理操作是：raw FIN 保持不变，planner 修改 profile-declared OD/active window；fin-count extractor先按 effective FIN、effective active与 recognized gate/channel识别 qualified crossings，再按 canonical DeviceId、gate-stripe grouping与 device-reduction policy计算 `fins_per_finger`。邻接 S/D/body attribution只用于 extraction/invariant校验，不作为与 channel相交的计数项。其它 PDK 可能通过 active width、fin block/cut、PCell parameter 或不同 device-recognition recipe 表达 fin 数，必须提供另一 resize operator，否则 typed-unsupported。
 
@@ -1211,6 +1213,8 @@ Planner 是 Stage 4 的协调层；macro 是某一类 intent 的 planner impleme
 ### 7.3 v2 MVP 的 resize planning 特例
 
 第 7.3 是第 7.2 通用 planner contract 在 v2 MVP `nfin` resize 上的特例化。Resize planner 不重新定义物理语义；它必须遵守第 6.2–6.5 的 selected FinCount/DeviceExtraction profile、fixed frame/boundary halo与局部 repair 边界。
+
+首版 planner 只接收已通过第 1.4 节输入子集 admission 的 context，并保持 `finger_count = 1`、one-to-one mapping 与 no-device-reduction 不变量；不通过“先拆指/归并，再 resize”扩大输入范围。现有 whole-intent 多 delta 原子性与必要的局部 repair 合同保持不变。
 
 对于一个 `Device.nfin: old → new` delta，推荐映射为：
 
@@ -2361,6 +2365,8 @@ Calibre query command-string drift 属于 tool adapter dialect 问题。Profile 
 ### 12.8 Fixture 策略：基于真实 query 事实构建 synthetic cases
 
 Fixture 的目标是稳定复现 production evidence flow，而不是复刻历史 convenience model。Synthetic fixture 应至少包含三类输入事实：GDS geometry、CDL、Calibre-like query bundle（`ixref` / `net_xref` / `device_info` / `net_shapes`）。它可以简化电路规模，但不得引入与 production fact model 相反的假设；v2 fixture generator / adapter 位于 `tests/fixtures/` 或 `tests/support/`，不得 import `legacy_mvp/`。
+
+首版验收 fixture 须覆盖第 1.4 节子集的成功路径，并提供 multi-finger、非 one-to-one mapping、需要 device reduction 的拒绝样例，验证它们在 admission 阶段 typed-unsupported，且没有 ECO mutation/commit。正例仍可包含多个 device / required deltas，以验证输入子集限制没有误变成“只允许单个 device 或单个 delta”。
 
 明确禁止把以下 legacy convenience assumption 当作 v2 正确事实：
 
