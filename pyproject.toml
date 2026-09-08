@@ -1,3 +1,7 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "layauto"
 version = "0.2.0"
@@ -16,6 +20,10 @@ drc = ["klayout"]
 test = ["pytest"]
 viz = ["plotly"]
 all = ["gdstk", "klayout", "pytest", "plotly"]
+
+[tool.setuptools.packages.find]
+include = ["layauto_v2*"]
+namespaces = false
 
 [tool.pytest.ini_options]
 norecursedirs = ["legacy_mvp"]

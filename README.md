@@ -4,6 +4,23 @@ Layauto v2 is an incremental FinFET layout automation framework. The active
 architecture is documented in [`docs/architecture.md`](docs/architecture.md),
 and new implementation work should live under [`layauto_v2/`](layauto_v2/).
 
+## Development setup
+
+Use Python 3.10+ and a dedicated virtual environment. See
+[`docs/environment/local-setup.md`](docs/environment/local-setup.md) for the configured macOS environment,
+installation, validation, and Git commands. For iPhone access to this Mac and
+browser-based cloud development, see
+[`docs/environment/remote-development.md`](docs/environment/remote-development.md).
+
+## Development workflow
+
+Start with [`AGENTS.md`](AGENTS.md) and the
+[`collaboration rules`](docs/collaboration/rules.md). The
+[`current work entry`](docs/current-work.md) records where to resume;
+[`docs/README.md`](docs/README.md) explains document ownership and reading routes.
+Product architecture, collaboration rules, environment setup, and task results
+have separate owners. Read the architecture sections relevant to the task.
+
 ## Active development
 
 | Path | Purpose |
@@ -16,14 +33,9 @@ and new implementation work should live under [`layauto_v2/`](layauto_v2/).
 The previous MVP implementation has been moved as-is to
 [`legacy_mvp/`](legacy_mvp/). It is retained only as a legacy/reference
 implementation and regression seed. Root-level legacy imports are intentionally
-not maintained; if the old flow needs to be run, execute it from inside the
-archive directory:
-
-```bash
-cd legacy_mvp
-PYTHONPATH=.:.. python3 pipeline/run_mvp.py
-PYTHONPATH=.:.. pytest tests
-```
+not maintained. For archive tests and demonstrations, follow the
+[environment instructions](docs/environment/local-setup.md#测试入口与历史基线)
+to use the configured Python and protect tracked legacy outputs.
 
 Do not treat `legacy_mvp/` as the v2 implementation baseline. Code may be
 reused only after it is moved into the v2 responsibility boundary described in
