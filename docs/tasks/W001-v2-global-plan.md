@@ -9,7 +9,7 @@
 | 授权 | 2026-09-08 用户指定 PM 恢复，交付可 review 的规划及导航；2026-09-09 用户先要求核对 review、判断能否继续，PM 接收；随后明确授权将现有内容 commit，取代 W001 先前的“不 commit”。授权仅含现有已验收文档及集成记录；仍不产品实现、不架构正文拆分 |
 | 范围 / 非目标 | 写 roadmap/current-work/导航及本任务、W002 近期要求；不配置 EDA、不重审全部 legacy、不改变已确认输入范围或产品合同 |
 | 架构 / 规则 | [architecture.md](../architecture.md) §1–13，基线 `6eccdff99a4da64e46921d16a4c339198813bc78`；[协作规则](../collaboration/rules.md) §2–6；只有根 [AGENTS](../../AGENTS.md)，本轮检查未发现适用的更近局部规则 |
-| 当前阶段 / 阻塞 | **已验收（2026-09-09，规划文档）**；无未处理 finding。真实 profile 尚待 W002 调查，产品里程碑未验收；已验收原稿已提交本地 `main@8482b68`，未 push |
+| 当前阶段 / 阻塞 | **已验收（2026-09-09，规划文档）**；无未处理 finding。真实 profile 尚待 W002 调查，产品里程碑未验收；已验收原稿与集成记录已推送 GitHub main（`8482b68`、`156e62d`） |
 | 负责人 | PM：2026-09-08 本次 Codex 会话；只读专项协助 `/root/inventory`、`/root/coverage_audit`；后续独立规划 reviewer 待分配 |
 
 | 验收项 | 条件 → 预期结果 | 正确性依据与核验方式 |
@@ -116,7 +116,7 @@
 
 ### 验收版本、集成与恢复
 
-- **验收状态：已验收；当前已提交本地 main，未 push，见下方集成记录。** 第 5 节及上述 PM 接收检查绑定提交前身份；当时 HEAD 未变、未提交。随后用户明确授权 commit，取代现有已验收文档的提交限制；不改变产品实现/架构拆分边界。原规划、review 与 PM 新增文字的版本保持可区分。
+- **验收状态：已验收；当前已推送 GitHub main，见下方推送记录。** 第 5 节及上述 PM 接收检查绑定提交前身份；当时 HEAD 未变、未提交。随后用户明确授权 commit，取代现有已验收文档的提交限制；不改变产品实现/架构拆分边界。原规划、review 与 PM 新增文字的版本保持可区分。
 - 原 `/tmp/layauto-w001-plan.x6T5rw` 保留不变，不运行会覆盖它的旧快照脚本。PM 接收证据另存本机 `/var/folders/7p/py58pz81089d2h4vn7nrf3h00000gn/T/layauto-w001-accept-t_87w51m`：`before_pm/` 是含独立 review 的七文件，`receipt.json` 记录接收身份；`snapshot/`、`SHA256SUMS`、`full.patch`、`metadata.json`、`checks.json` 是最终含 PM 状态的完整七文件交接。原稿、review 与 PM 状态变化可分别对照。
 - 这些临时目录保留为历史审阅证据；**当前恢复改用下方 Git 提交和 current-work**，不再要求下一执行会话依赖临时目录。跨主机须先取得相同提交；本次未 push。内容变化时核对新身份并重查受影响结论。
 - **下一角色：执行 W002（仅只读调查与文档准备）。** PM 已确认规划前置满足、任务可执行；本轮按用户要求止于 review 接收与能否继续的判断，不预先执行 W002 或 M1 实现。W002 的实际 shared schema/fixture/operator/rule proof 与 M1 实现包仍需产出并独立 review，不能用 W001 验收替代。
@@ -128,6 +128,12 @@
 - 本节、roadmap/current-work 与 W002 的 Git 恢复/授权说明作为后续状态记录提交；仅更新集成身份，不改已审实质规划或 reviewer 结论。 状态记录的文档检查覆盖 131 个本地链接、63 个锚点与 R01–R29，均通过；原稿提交与已验收快照逐文件 SHA-256 一致，reviewer 段、roadmap 实质规划及规范输入保持不变，`git diff --check` 通过。当前恢复版本可用 `git log -1 --format=%H -- docs/current-work.md` 定位；核对该提交包含上述原稿提交后读取 W002。
 - 建议 W002 由另一执行会话负责定向调查和方案文档，本 PM 会话保留全局覆盖、问题上报、独立方案 review 组织和验收。默认串行写入同一 checkout；需要并行或换主机时按既有规则准备 checkout/worktree 与可访问提交。尚未创建或启动另一执行会话，不把建议当作已派发。
 - W002 的要求已随原稿提交保存；新增执行产物仍遵守该任务“不 commit”的范围。完成后先交 PM 核验与必要独立方案 review，不由执行者改写 PM/Reviewer 结论或自行进入 M1 产品实现。
+
+### GitHub 推送与 W002 派发（2026-09-09）
+
+- 用户明确要求 push 以便 GitHub 查看，并告知已向另一执行会话发送 W002 prompt。`git fetch origin` 后核对 `origin/main...main` 为 `0 2`，只有规划原稿与状态记录两个文档提交；随后普通 `git push origin main` 成功，`git ls-remote --heads origin refs/heads/main` 返回 `156e62d150349ac127476074f73524677f6d7760`。没有 force push、产品实现或架构正文改动。
+- 上一节“未 push/尚未派发”保留为提交时的历史记录；当前以本节及 current-work 为准。W002 已由用户派发，但实际执行/交付尚未核验；本轮不修改该任务文件以避开执行者写入，也不将用户派发当作执行完成证据。
+- 当前无需立即启动 W002 review。执行会话提交任务方案、证据和准确版本后，由 PM 先核对材料，再准备针对实际交付的独立方案审查 prompt；不让 reviewer 面对仍在变化的材料先给验收结论。计划审查不是产品能力验收。
 
 后续启动 prompt：
 
