@@ -6,16 +6,16 @@
 | --- | --- |
 | ID / 目标 | W002；给出第一套输入的可核查准入结论、真实资料缺口，以及可直接拆出 M1 实现包的共享合同/失败流方案 |
 | 里程碑 / 依赖 | [roadmap](../roadmap.md) M0；依赖 [W001](W001-v2-global-plan.md) 规划 review 接收（2026-09-09 已满足）。U01–U05 可并行调查，真实资料不足不阻止仓库可做部分 |
-| 授权与当前阶段 | **可执行（2026-09-09 PM 确认），尚未启动**；W001 已验收，规划前置满足。本轮仅接收 review 并判断能否继续；本任务可继续范围仍为只读调查/文档准备，产品实现另在近期包明确，状态不扩大授权 |
+| 授权与当前阶段 | **可执行（2026-09-09 PM 确认），尚未启动**；W001 已验收，规划前置满足。用户随后授权现有规划提交，W002 要求已随 `main@8482b68` 保存；执行范围仍为只读调查/文档准备，新增产物不 commit，产品实现另在近期包明确 |
 | 范围 | 定向调查现有输入、legacy 可取用材料、真实资料/工具可得性；形成准入矩阵、最小样本说明、共享中立合同与 M1/M2 验收方案；本任务阶段仅文档/只读调查 |
 | 非目标 | 不实现 runtime/parser/fixture generator，不安装部署 EDA、不跑完整 legacy audit、不修旧 fixture、不从零选定/假定 PDK，不拆分架构正文、不 commit |
 | 写入归属 | 执行写本文件“方案与证据”段；需要独立附件才在本任务下明确链接；PM 维护阶段/要求/决定/验收；reviewer 独写 reviewer 段。修改路径前重查适用 AGENTS |
 | 架构版本与必读 | `6eccdff99a4da64e46921d16a4c339198813bc78` 的 [architecture.md](../architecture.md) §1.4、§2、§3–5、§6–10 的上下游消费条件、§11.1/11.14/11.15、§12–13；共享接口需读双方 owner 原文，不靠 roadmap 摘要定义语义 |
-| 负责人 / 阻塞 | PM 待分配执行与独立方案 reviewer；真实输入/PDK/query 材料本仓库不足。先定向检索并列外部缺项，不等待空泛产品决策 |
+| 负责人 / 阻塞 | 建议另一执行会话承担本任务，当前 PM 负责接收与组织独立方案 review；尚未派发。真实输入/PDK/query 材料本仓库不足。先定向检索并列外部缺项，不等待空泛产品决策 |
 
 ### 可直接开始的输入与顺序
 
-1. 核对 checkout/HEAD/工作区和 W001 接收版本，读 [协作规则](../collaboration/rules.md)、[本地环境](../environment/local-setup.md)、[W001 盘点](W001-v2-global-plan.md#2-现状与证据盘点)；从已定位路径复核与首个切片直接有关的资料，不重新遍历全部历史。
+1. 核对 checkout/HEAD/工作区已包含 W001 原稿提交 `8482b68f6b2b0958f1ac501b15cd393a66782c4a` 及最新 current-work 集成记录，不从旧 `6eccdff` 单独启动（该版本尚无任务文件）；读 [协作规则](../collaboration/rules.md)、[本地环境](../environment/local-setup.md)、[W001 盘点](W001-v2-global-plan.md#2-现状与证据盘点)；从已定位路径复核与首个切片直接有关的资料，不重新遍历全部历史。
 2. 以仓库 inverter source/target CDL、GDS、dummy raw+YAML 为**场景来源**，列清 provenance、缺 header/closure/真实验证之处；核对已有真实 sample/capture 的可访问位置。没有资料则给最小索取清单（文件/版本/单位/model/query/status/closure），明确持有人/获得方式待谁补充，不伪造输入。
 3. 对一套具名候选 profile 填准入表：真实出处、canonical size axes/model token/terminal、finger/mapping/reduction、geometry/CDL subset、exact units、layer/derived registries、rules/extractor/repair、body/frame/halo、query dialect/acquisition。逐项标“有证据/需补证/不匹配”，区分 synthetic/真实；profile 候选不是默认选择。
 4. 列最小输入→输出示例说明和反例；对 CDL、报告/fixture 尚未定义的关键使用预期，先调查现有样本，再呈具体差异、影响和推荐项。普通技术保真由 agent 核验；只有关键对外预期/合同变化提交用户决定。
@@ -45,4 +45,4 @@
 
 ## PM 验收与交接（PM）
 
-2026-09-09 PM 已接收 W001 的独立规划 review，确认本任务要求与仓库可启动部分具备执行条件，阶段转为可执行。**尚未启动、未验收、未集成**；本轮没有执行资料调查或编写共享方案。继续时先做上述只读定向调查与文档准备；真实准入尚未通过，M1 产品实现仍需明确任务范围和共享合同 review 结果。
+2026-09-09 PM 已接收 W001 的独立规划 review，确认本任务要求与仓库可启动部分具备执行条件，阶段转为可执行。**尚未启动，执行结果未验收**；任务要求已保存于 `main@8482b68`，尚无执行产物。本轮没有执行资料调查或编写共享方案。继续时先做上述只读定向调查与文档准备；真实准入尚未通过，M1 产品实现仍需明确任务范围和共享合同 review 结果。
