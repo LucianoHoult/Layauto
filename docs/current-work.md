@@ -10,17 +10,17 @@
 - [W001 — 首版全局规划](tasks/W001-v2-global-plan.md)：已验收、已提交并推送；不证明 v2 产品能力。
 - **当前任务：[W002 — 首个输入证据与闭环准入准备](tasks/W002-first-input-admission.md)。** E0–E8 为执行交付，R0–R5 为独立 review；PM 最终验收段保存当前结论、身份及下一步，下方旧交接记录只作历史。
 - M0 工程调查/方案出口已验收；真实出口仍缺 W002 E3 的同源设计/model/query/物理证据。下一关口为具体 toy 样本/profile 与独立正确性判据的准备和审查，尚未创建或通过。
-- 当前范围为 PM 收口与后续任务准备；**不 commit/push 新交付、不开始产品实现、不拆分架构正文**。此前 commit/push 授权已用于已验收 W001 规划及集成记录。
+- 用户本轮授权提交并推送现有 W002 交付；已验收三文档已保存并推送为 `f141af9`。后续仍不开始产品实现、不拆分架构正文；新的任务准备与既有交付分开记录。
 
 ## 恢复与版本身份
 
 先读根 [AGENTS](../AGENTS.md)、[README](../README.md)、[协作规则](collaboration/rules.md)，再读 W002 要求、E0–E8、[PM 交接](tasks/W002-first-input-admission.md#pm-验收与交接pm) 与相关架构原文。下一节点为 **PM 准备最小样本与独立判据任务**，之后由执行者准备具体材料、独立 reviewer 核对；本轮没有创建或派发实现任务。
 
-本机基线 `main@2775e5945ff10353a7b35f1f997e6927668f4416` 已于前轮核对推送至 GitHub，包含规划原稿 `8482b68` 与集成记录 `156e62d`。**本次 W002 交付与 PM 恢复记录未提交，GitHub 已发布版本不含本次交付。** 原架构基线 `6eccdff` 不含任务文件，不能据其单独恢复 W002。
+**W002 已发布版本：`main@f141af99525c48819aa97416e8cb81e9091d6c0e`**，包含执行、独立 review 和 PM 验收；提交前三文件逐项与已验收快照一致，推送后已用 `git ls-remote --heads origin refs/heads/main` 核对远端。原 `2775e59` 是 W002 调查/审查基线，`6eccdff` 仅为更早架构基线。本文本次 Git 状态记录另随提交保存，不改变已审方案。
 
-当前完整本机接收包：`/private/tmp/layauto-w002-accepted-xvwblftq`。包含 W002、current-work、roadmap 三文件 `snapshot/`、相对 `2775e59` 的 `full.patch`、`SHA256SUMS`/`checks.json`、独立 review 包完整副本及接收 `receipt.json`。E0–E8 和 R0–R5 原文保持不变；独立 review 后版本与本次验收身份见 W002 PM 段。
+历史完整本机接收包：`/private/tmp/layauto-w002-accepted-xvwblftq`。包含 W002、current-work、roadmap 三文件 `snapshot/`、相对 `2775e59` 的 `full.patch`、`SHA256SUMS`/`checks.json`、独立 review 包完整副本及接收 `receipt.json`。E0–E8 和 R0–R5 原文保持不变；独立 review 后版本与本次验收身份见 W002 PM 段。
 
-后续任务默认同一 checkout 串行写入；执行/reviewer 各自保持写入归属，交接另留新快照。跨主机须先取得完整未提交包及调查附件；临时路径失效或内容漂移时核对缺口，不沿用旧结论。不要执行历史快照生成脚本覆盖原证据。
+后续任务默认同一 checkout 串行写入；执行/reviewer 各自保持写入归属，交接另留新快照。跨主机使用相同 Git 提交获取文档；要复用附件级核验还须转存对应完整调查/review 包。任务中的临时路径不会随 Git 自动上传，路径失效或内容漂移时不沿用附件已核验结论。不要执行历史快照生成脚本覆盖原证据。
 
 ## 下一步与待补条件
 
