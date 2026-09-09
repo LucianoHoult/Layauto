@@ -18,8 +18,11 @@ Start with [`AGENTS.md`](AGENTS.md) and the
 [`collaboration rules`](docs/collaboration/rules.md). The
 [`current work entry`](docs/current-work.md) records where to resume;
 [`docs/README.md`](docs/README.md) explains document ownership and reading routes.
-Product architecture, collaboration rules, environment setup, and task results
-have separate owners. Read the architecture sections relevant to the task.
+The [v2 roadmap](docs/roadmap.md) maps first-release requirements to milestones,
+dependencies, and acceptance; its planning review is tracked in
+[W001](docs/tasks/W001-v2-global-plan.md). Product architecture, collaboration rules,
+environment setup, and task results have separate owners. Read the architecture
+sections relevant to the task.
 
 ## Active development
 

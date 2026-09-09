@@ -1,45 +1,29 @@
 # 当前工作入口
 
-更新：2026-09-08。此文件由 PM 维护当前节点和恢复入口；正式任务的详细状态与证据归对应任务文件。
+更新：2026-09-09。PM 维护当前节点和恢复入口；详细状态、决定、证据与 reviewer 结论归任务文件。
 
 ## 当前节点
 
-最小运行规范第一版已完成独立 review，未发现实质问题，文档交付已验收。2026-09-08 用户随后授权“把需要 commit 的合并入 main”；该授权取代编写和只读 review 阶段的“不提交”限制。
+**W001 首版全局规划已验收，可以继续 W002 的只读资料调查与方案准备。** 2026-09-09 用户要求核对另一会话 review 并判断能否继续；PM 已接收 0 项实质 findings 的独立 review、核对实际版本与要求覆盖。本轮止于接收与恢复点更新，W002 尚未启动。
 
-已审原稿及配套环境配置位于 `main` 提交 `e57f2ddd3122892ad73f473803f2d16d2f632e87`，本页补充验收和恢复记录。尚未建立 `docs/roadmap.md` 或实际任务文件；本轮未启动 v2 产品开发、架构正文拆分或真实 EDA 环境部署。
+- [路线图](roadmap.md)：M0 准入准备 → M1 no_change 保真文件闭环 → M2 首个实际 shrink 闭环 → M3 多器件/多 delta 首版覆盖 → M4 可复现验收；路线与实质验收要求保持已审内容。
+- [W001 — 首版全局规划](tasks/W001-v2-global-plan.md)：已验收（规划文档），详细 review 与 PM 接收事实在任务文件；文档未提交/未集成。
+- **下一任务：[W002 — 首个输入证据与闭环准入准备](tasks/W002-first-input-admission.md)，可执行、尚未启动。** 先从仓库既有材料形成准入矩阵、真实资料缺项、共享合同/失败流及 M1 近期实现包草案；真实资料不足仍可开展独立工程准备，不能称真实准入已通过。
+- 无未处理 finding 或新的产品范围待决项。真实 tech/model/query profile、Stage 1 live acquisition、必要物理 operator/rule 条件仍待 W002 查明；v2 产品里程碑均未验收。Stage 6 signoff 延期不免除输入义务。
+- 保持 **不 commit、不开始产品实现、不拆分架构正文**。规划验收与任务就绪状态不扩大产品/集成授权；M2–M4 尚无已确认日历排期。
 
-## 首次规范 review 与验收记录
+## 恢复与版本身份
 
-- Reviewer：2026-09-08 本次独立 Codex review 会话，按用户指定范围只读检查；随后按用户新授权接收结果并集成。
-- 审阅基线：`main@a25a011d8b4c48bfb4e4ce79d288ce7eefa12e77`，暂存区为空。检查了 tracked diff 与全部 7 个 untracked 文件。
-- 快照身份：11 个文件的工作区、副本及 SHA-256 全部一致，提交前再次核对。原待审清单 SHA-256 为 `2a8305a435ead2a2c961ca71917b52049b90f7353791446887eab5408a6ea1f1`；上述 `e57f2dd` 提交逐文件保留了同一内容，后续恢复使用该 Git 版本，无需依赖本机临时目录。
-- 被审主文件：[协作规则](collaboration/rules.md)、[任务模板](collaboration/task-template.md)、本页及 [文档导航](README.md)。
-- 联动文件：[根 AGENTS](../AGENTS.md)、[项目 README](../README.md)、[本地环境](environment/local-setup.md)、[跨设备说明](environment/remote-development.md)、[旧提案状态及引用](proposals/v2-codex-development-workflow.md)，以及 `.gitignore`、`pyproject.toml`。
-- Review 结论：无实质 findings。职责与 finding 写入归属清楚，普通问题由内部处理；文件未形成平行权威；无编号 review 和未提交快照可恢复；模板覆盖方案、执行、独立 review、修复复核及 PM 验收。新的关键使用预期需要用户判断，技术保真、legacy 取用及真实工具证据仍须独立核验，不能由自造 golden 通过替代。
-- 改动归属：`.gitignore`、`pyproject.toml` 来自更早的环境配置，规范编写时保持原样；README、AGENTS、环境文档及旧提案也已有草稿。已直接对照编写前副本，包含旧 `docs/development.md`、`docs/remote-development.md` 到 `docs/environment/` 的迁移。环境配置经补充检查后作为安装说明的配套依赖一并提交；架构正文与业务代码未变。
-- PM 验收：已核对实际材料、版本、review 结论及下列验证范围，无待处理 finding 或新的协作预期待决项。原稿提交后仅更新本页和旧提案的审阅状态，不改变已审协作规则、模板或产品合同。
+先读根 [AGENTS](../AGENTS.md)、[项目 README](../README.md)、[协作规则](collaboration/rules.md)，再读 [W001 PM 接收](tasks/W001-v2-global-plan.md#6-pm-验收与交接pm)、W002 和相关架构原文。下一角色是 **执行 W002 的调查/文档准备**；完整启动 prompt 在 W001 交接段。
 
-首次 review 无任务编号，按初始化例外在本页保存记录。原恢复点和当时授权可用 `git show e57f2dd:docs/current-work.md` 查阅；正式任务建立后，其详细状态与证据归任务文件。
+基线仍为 `main@6eccdff99a4da64e46921d16a4c339198813bc78`，暂存区为空，工作区保留七个规划/导航文件。原七文件待审快照 `/tmp/layauto-w001-plan.x6T5rw` 保留不变；独立 reviewer 仅新增 W001 第 5 节。PM 接收时核对其它六文件与原快照完全相同，W001 差异仅为 reviewer 段，然后更新阶段、验收记录和导航状态。
 
-## 验证与限制
+最新含 review/PM 接收的完整快照与 SHA-256 清单另存，位置和检查结果见 [W001 验收版本](tasks/W001-v2-global-plan.md#验收版本集成与恢复)。不要用原待审清单要求新增 review/PM 记录后的文件全文仍同 hash，也不要覆盖原被审快照。临时目录只适合本机短期交接；跨主机前按用户授权保存可访问版本/完整补丁，不能假设云端已有未提交内容。
 
-验证绑定上述原稿提交；本页和旧提案的状态更新另做链接及 diff 检查，并经独立 reviewer 复核，无实质问题。文档检查使用本机 `$HOME/.virtualenvs/layauto/bin/python`，未安装依赖或运行产品回归。
+本次完成规划的独立会话恢复→review→PM 接收，不代表产品执行→修复→组合验收周期已演练。W002 调查中的新关键范围/格式/物理解释/验收变化，应带具体样本、依据、影响和推荐项上报用户；普通技术细化与 findings 依项目规范处理。
 
-| 检查 | 方法与结果 | 限制 |
-| --- | --- | --- |
-| 文档及恢复 | 直接读取新增文件，核对相关架构条款、56 个本地链接、1 个锚点、代码块闭合、5 个 shell 块的 `bash -n` 和 `git diff --check`，均通过；本会话已按入口找到无编号 review 及其快照 | 未演练正式任务的执行 → review → 修复 → PM 验收完整周期 |
-| 跨主机说明 | 对照文档中链接的 OpenAI Remote / cloud 官方原文，关键运行位置和交接限制一致 | 未实际配置或验证 Remote 配对、SSH、cloud 环境 |
-| 包配置 | 在临时源码副本中以 Python 3.11.5 / setuptools 65.5.0 调用 `setuptools.config.pyprojecttoml.read_configuration()` 和 `setuptools.build_meta.build_sdist()`；只发现 11 个 `layauto_v2` 包，归档中的 58 个 Python 文件路径与 v2 源码完全对应，无 legacy 包 | 这不是产品正确性或真实工具能力验证 |
-| Wheel 构建 | pip 23.2.1 执行 `python -m pip wheel --no-deps --no-build-isolation --no-cache-dir --wheel-dir <临时输出> .`，因环境缺 `wheel` 而未通过；后端 `get_requires_for_build_wheel({})` 返回 `["wheel"]` | 未安装该动态依赖，未验证 wheel、标准隔离构建或新主机安装，不把本次失败记为通过 |
+## 前一节点的已验收记录
 
-真实 EDA 工具、PDK/profile、商业许可证、产品能力与生产正确性均未由本轮验证。历史 legacy 测试结果继续按环境文档的日期和限制理解。
+最小协作规范已在 2026-09-08 独立 review 后验收并集成，原稿版本为 `e57f2ddd3122892ad73f473803f2d16d2f632e87`。包含完整 review、56 个本地链接/1 个锚点检查、包配置与 wheel 限制的历史入口保存在 `6eccdff99a4da64e46921d16a4c339198813bc78:docs/current-work.md`，可用 `git show 6eccdff:docs/current-work.md` 恢复。
 
-## 恢复与下一步
-
-从 [AGENTS.md](../AGENTS.md) → [协作规则](collaboration/rules.md) → 本页恢复。先核对 checkout、branch、HEAD、工作区及目标提交可访问性；当前验收记录的提交可用 `git log -1 --format=%H -- docs/current-work.md` 定位。跨主机需取得包含原稿及本页验收更新的提交，不沿用旧的临时快照路径。
-
-下一角色为 **PM**，下一工作是正式规划首版路线图和近期任务；尚无任务编号、已确认排期或真实工具/PDK 选择。本轮止于规范与配套环境配置的集成。
-
-后续启动指令：
-
-> 按项目规范，以 PM 角色恢复当前工作，准备首版路线图和近期任务；既有架构内自主细化，新的关键预期或架构变化整理具体依据后交用户决定。
+该前一节点只证明协作规范交付；当前规划的独立 review 与 PM 接收见 W001，二者均不证明任何 v2 产品、真实工具/PDK 或生产正确性。现行规则、模板和环境文档继续保持各自职责；旧工作流提案的未采用部分仍只作参考。

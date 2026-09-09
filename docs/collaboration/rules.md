@@ -12,7 +12,7 @@
 | `docs/architecture.md` | 产品行为、边界和工艺解释合同 |
 | 本文件 | 角色、推进、验收、上报与交接规则 |
 | [task-template.md](task-template.md) | 创建任务时使用的结构，不是实际任务或证据 |
-| `docs/roadmap.md`（正式规划时建立） | 里程碑、依赖和架构义务的计划归属，不保存逐任务详细状态 |
+| [roadmap.md](../roadmap.md) | 里程碑、依赖和架构义务的计划归属，不保存逐任务详细状态 |
 | [current-work.md](../current-work.md) | 当前节点、任务入口和全局下一步，由 PM 维护 |
 | `docs/tasks/Wxxx-目标.md`（有任务时建立） | 一项任务的要求、阶段、决定、执行/review 结果及验收事实 |
 | `docs/environment/` | 环境准备、命令、工具运行位置；不定义 PDK 物理语义 |

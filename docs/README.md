@@ -8,9 +8,9 @@
 | --- | --- |
 | Layauto 应该怎样工作？ | [architecture.md](architecture.md)：当前唯一 active v2 产品架构 |
 | PM、执行、review 怎样协作？ | [collaboration/rules.md](collaboration/rules.md)：角色、读取、推进、验收、上报和交接 |
-| 一项任务记录哪些内容？ | [collaboration/task-template.md](collaboration/task-template.md)：模板；真实记录以后放 `docs/tasks/Wxxx-目标.md` |
+| 一项任务记录哪些内容？ | [collaboration/task-template.md](collaboration/task-template.md)：模板；真实记录位于 `docs/tasks/Wxxx-目标.md`，当前任务由 current-work 定位 |
 | 项目现在从哪里继续？ | [current-work.md](current-work.md)：当前节点与任务入口；详细任务状态归任务文件 |
-| 整体开发顺序怎样安排？ | `docs/roadmap.md`：正式规划时建立，保存里程碑、依赖和义务归属；目前尚未创建 |
+| 整体开发顺序怎样安排？ | [roadmap.md](roadmap.md)：首版里程碑、依赖、架构要求到验收的覆盖；规划已 review 并由 PM 接收，产品能力未验收 |
 | 如何准备与运行环境？ | [environment/local-setup.md](environment/local-setup.md)：Python、安装、测试及历史环境记录 |
 | 如何跨机器工作？ | [environment/remote-development.md](environment/remote-development.md)：运行位置、环境准备与代码交接 |
 | 以前讨论过什么？ | [旧工作流提案](proposals/v2-codex-development-workflow.md)：未采纳部分保留作候选；[历史 changelog](archive/changelog.md)：归档记录 |
@@ -30,4 +30,4 @@
 
 新发现的产品架构问题仍按 §13.3 回到对应正文；任务文件负责落实和证据，不另建平行需求源。新 v2 代码位于 `layauto_v2/`，`legacy_mvp/` 是参考与回归种子。
 
-目前未迁移架构正文，也未批量创建局部 AGENTS、路线图或任务空目录。新增文档时更新本页入口及其引用；概要不能把建议、示例或尚未验证的能力写成已确认事实。
+首版规划 review 与 PM 接收见 [W001](tasks/W001-v2-global-plan.md)，首个准入准备要求见 [W002](tasks/W002-first-input-admission.md)；详细任务状态由任务文件维护。尚未迁移架构正文或批量创建局部 AGENTS。新增文档时更新本页入口及其引用；概要不能把建议、示例或尚未验证的能力写成已确认事实。
