@@ -1,0 +1,5 @@
+W003_QUERY 1 device_regions w003.synthetic.query.1 nm
+COUNT 2
+D D0 Q17 toy_ngate RECT exact 58 20 62 70
+D D1 Q93 toy_pgate RECT exact 58 110 62 180
+END W003_QUERY

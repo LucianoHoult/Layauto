@@ -1,0 +1,5 @@
+W003_QUERY 1 instance_xref w003.synthetic.query.1 nm
+COUNT 2
+I Q17 MN0 NOSWAP
+I Q93 MP0 NOSWAP
+END W003_QUERY

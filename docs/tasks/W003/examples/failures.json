@@ -1,0 +1,857 @@
+{
+  "schema_version": "w003-example/1",
+  "example_only": true,
+  "cases": [
+    {
+      "variant": "pre_context",
+      "example_only": true,
+      "records": [
+        {
+          "schema_version": "w003-example/1",
+          "example_only": true,
+          "kind": "StageFailure",
+          "id": {
+            "type": "StageFailureId",
+            "value": "pre_context-failure"
+          },
+          "run_id": {
+            "type": "RunId",
+            "value": "example-run"
+          },
+          "stage": "1",
+          "category": "evidence",
+          "code": "RAW_TERMINATOR_MISSING",
+          "reason": "expected failure specimen; not injected into product runtime",
+          "completed_refs": [
+            {
+              "type": "ToolRunResultId",
+              "value": "malformed-fixture-read"
+            },
+            {
+              "type": "ParseResultId",
+              "value": "failed-parse"
+            }
+          ],
+          "localized_refs": [
+            {
+              "raw_ref": {
+                "path": "failures/missing_terminator/query/raw/instance_xref.txt",
+                "json_pointer": "",
+                "scope": "fixture_expected_only",
+                "actual_byte_sha256": "2eb4b99046e910c8b7d1ec5d0e1d20dc20cb766b88abfb723d1a87fc1824a9ff"
+              },
+              "location": "missing END W003_QUERY at EOF"
+            }
+          ]
+        },
+        {
+          "schema_version": "w003-example/1",
+          "example_only": true,
+          "kind": "RunRecord",
+          "id": {
+            "type": "RunRecordId",
+            "value": "pre_context-record"
+          },
+          "variant": "pre_context_failure",
+          "run_id": {
+            "type": "RunId",
+            "value": "example-run"
+          },
+          "completed_audit_refs": [
+            {
+              "type": "ToolRunResultId",
+              "value": "malformed-fixture-read"
+            },
+            {
+              "type": "ParseResultId",
+              "value": "failed-parse"
+            }
+          ],
+          "failure_ref": {
+            "type": "StageFailureId",
+            "value": "pre_context-failure"
+          }
+        },
+        {
+          "schema_version": "w003-example/1",
+          "example_only": true,
+          "kind": "ToolRunResult",
+          "id": {
+            "type": "ToolRunResultId",
+            "value": "malformed-fixture-read"
+          },
+          "mode": "dummy_fixture",
+          "tool_name": "fixture-reader",
+          "command": [
+            "read-preexisting-raw-captures"
+          ],
+          "input_refs": [
+            {
+              "path": "failures/missing_terminator/query/header.json",
+              "json_pointer": "",
+              "scope": "fixture_expected_only",
+              "actual_byte_sha256": "29517730fef3b28124e3831394e5bffa0aa11437d544aa8d21b76e9795f130cb"
+            }
+          ],
+          "raw_output_refs": [
+            {
+              "path": "failures/missing_terminator/query/raw/instance_xref.txt",
+              "json_pointer": "",
+              "scope": "fixture_expected_only",
+              "actual_byte_sha256": "2eb4b99046e910c8b7d1ec5d0e1d20dc20cb766b88abfb723d1a87fc1824a9ff"
+            }
+          ],
+          "exit_status": 0,
+          "execution_status": "pass",
+          "stdout_ref": null,
+          "stderr_ref": null
+        },
+        {
+          "schema_version": "w003-example/1",
+          "example_only": true,
+          "kind": "ParseResult",
+          "id": {
+            "type": "ParseResultId",
+            "value": "failed-parse"
+          },
+          "tool_run_ref": {
+            "type": "ToolRunResultId",
+            "value": "malformed-fixture-read"
+          },
+          "parser_version": "w003-query-normalized/1 (contract only)",
+          "dialect_version": "synthetic_query_dialect/1",
+          "raw_refs": [
+            {
+              "path": "failures/missing_terminator/query/raw/instance_xref.txt",
+              "json_pointer": "",
+              "scope": "fixture_expected_only",
+              "actual_byte_sha256": "2eb4b99046e910c8b7d1ec5d0e1d20dc20cb766b88abfb723d1a87fc1824a9ff"
+            }
+          ],
+          "evidence_refs": [],
+          "execution_status": "error"
+        },
+        {
+          "schema_version": "w003-example/1",
+          "example_only": true,
+          "kind": "PipelineResult",
+          "id": {
+            "type": "PipelineResultId",
+            "value": "pre_context-terminal"
+          },
+          "run_id": {
+            "type": "RunId",
+            "value": "example-run"
+          },
+          "lifecycle_status": "terminal",
+          "deployment_disposition": "reject",
+          "durability_profile": "process_local",
+          "failure_ref": {
+            "type": "StageFailureId",
+            "value": "pre_context-failure"
+          },
+          "run_record_ref": {
+            "type": "RunRecordId",
+            "value": "pre_context-record"
+          }
+        }
+      ],
+      "existing_run_record_ref": {
+        "type": "RunRecordId",
+        "value": "pre_context-record"
+      },
+      "normal_geometry_export": false,
+      "core_manifest_present": false,
+      "validation_present": false,
+      "eco_commit_ids": [],
+      "terminal_pointer_published": true,
+      "production_accept": false,
+      "diagnostic_reporting": "optional best effort; no fabricated successful report",
+      "retained_snapshot": null
+    },
+    {
+      "variant": "sealed_no_publication",
+      "example_only": true,
+      "records": [
+        {
+          "schema_version": "w003-example/1",
+          "example_only": true,
+          "kind": "StageFailure",
+          "id": {
+            "type": "StageFailureId",
+            "value": "sealed_no_publication-failure"
+          },
+          "run_id": {
+            "type": "RunId",
+            "value": "example-run"
+          },
+          "stage": "3",
+          "category": "constraint",
+          "code": "MANDATORY_RULE_VIOLATION",
+          "reason": "expected failure specimen; not injected into product runtime",
+          "completed_refs": [],
+          "localized_refs": []
+        },
+        {
+          "schema_version": "w003-example/1",
+          "example_only": true,
+          "kind": "RunRecord",
+          "id": {
+            "type": "RunRecordId",
+            "value": "sealed_no_publication-record"
+          },
+          "variant": "sealed_no_publication_failure",
+          "run_id": {
+            "type": "RunId",
+            "value": "example-run"
+          },
+          "completed_audit_refs": [],
+          "failure_ref": {
+            "type": "StageFailureId",
+            "value": "sealed_no_publication-failure"
+          },
+          "stable_snapshot_ref": {
+            "type": "SnapshotId",
+            "value": "baseline-0"
+          },
+          "context_ref": {
+            "type": "ImmutableContextId",
+            "value": "context"
+          },
+          "ordered_commit_ids": []
+        },
+        {
+          "schema_version": "w003-example/1",
+          "example_only": true,
+          "kind": "Stage5Closure",
+          "id": {
+            "type": "Stage5ClosureId",
+            "value": "sealed-failure-closure"
+          },
+          "variant": "with_run_record",
+          "run_id": {
+            "type": "RunId",
+            "value": "example-run"
+          },
+          "run_record_ref": {
+            "type": "RunRecordId",
+            "value": "sealed_no_publication-record"
+          },
+          "final_snapshot_ref": {
+            "type": "SnapshotId",
+            "value": "baseline-0"
+          },
+          "ordered_commit_ids": []
+        },
+        {
+          "schema_version": "w003-example/1",
+          "example_only": true,
+          "kind": "PipelineResult",
+          "id": {
+            "type": "PipelineResultId",
+            "value": "sealed_no_publication-terminal"
+          },
+          "run_id": {
+            "type": "RunId",
+            "value": "example-run"
+          },
+          "lifecycle_status": "terminal",
+          "deployment_disposition": "reject",
+          "durability_profile": "process_local",
+          "failure_ref": {
+            "type": "StageFailureId",
+            "value": "sealed_no_publication-failure"
+          },
+          "run_record_ref": {
+            "type": "RunRecordId",
+            "value": "sealed_no_publication-record"
+          },
+          "head_status_at_finalization": "current",
+          "final_snapshot_ref": {
+            "type": "SnapshotId",
+            "value": "baseline-0"
+          },
+          "closure_ref": {
+            "type": "Stage5ClosureId",
+            "value": "sealed-failure-closure"
+          }
+        }
+      ],
+      "existing_run_record_ref": {
+        "type": "RunRecordId",
+        "value": "sealed_no_publication-record"
+      },
+      "normal_geometry_export": false,
+      "core_manifest_present": false,
+      "validation_present": false,
+      "eco_commit_ids": [],
+      "terminal_pointer_published": true,
+      "production_accept": false,
+      "diagnostic_reporting": "optional best effort; no fabricated successful report",
+      "retained_snapshot": {
+        "type": "SnapshotId",
+        "value": "baseline-0"
+      }
+    },
+    {
+      "variant": "run_record_freeze",
+      "example_only": true,
+      "records": [
+        {
+          "schema_version": "w003-example/1",
+          "example_only": true,
+          "kind": "StageFailure",
+          "id": {
+            "type": "StageFailureId",
+            "value": "run_record_freeze-failure"
+          },
+          "run_id": {
+            "type": "RunId",
+            "value": "example-run"
+          },
+          "stage": "5",
+          "category": "record_construction",
+          "code": "RUN_RECORD_FREEZE_FAILED",
+          "reason": "expected failure specimen; not injected into product runtime",
+          "completed_refs": [],
+          "localized_refs": []
+        },
+        {
+          "schema_version": "w003-example/1",
+          "example_only": true,
+          "kind": "Stage5Closure",
+          "id": {
+            "type": "Stage5ClosureId",
+            "value": "run_record_freeze-closure"
+          },
+          "variant": "run_record_freeze_failure",
+          "run_id": {
+            "type": "RunId",
+            "value": "example-run"
+          },
+          "failure_ref": {
+            "type": "StageFailureId",
+            "value": "run_record_freeze-failure"
+          },
+          "completed_audit_refs": [
+            {
+              "type": "PlanningAuditRecordId",
+              "value": "planning"
+            }
+          ],
+          "ordered_commit_ids": []
+        },
+        {
+          "schema_version": "w003-example/1",
+          "example_only": true,
+          "kind": "PipelineResult",
+          "id": {
+            "type": "PipelineResultId",
+            "value": "run_record_freeze-terminal"
+          },
+          "run_id": {
+            "type": "RunId",
+            "value": "example-run"
+          },
+          "lifecycle_status": "terminal",
+          "deployment_disposition": "reject",
+          "durability_profile": "process_local",
+          "failure_ref": {
+            "type": "StageFailureId",
+            "value": "run_record_freeze-failure"
+          },
+          "head_status_at_finalization": "current",
+          "final_snapshot_ref": {
+            "type": "SnapshotId",
+            "value": "baseline-0"
+          },
+          "closure_ref": {
+            "type": "Stage5ClosureId",
+            "value": "run_record_freeze-closure"
+          }
+        }
+      ],
+      "existing_run_record_ref": null,
+      "normal_geometry_export": false,
+      "core_manifest_present": false,
+      "validation_present": false,
+      "eco_commit_ids": [],
+      "terminal_pointer_published": true,
+      "production_accept": false,
+      "diagnostic_reporting": "optional best effort; no fabricated successful report",
+      "retained_snapshot": {
+        "type": "SnapshotId",
+        "value": "baseline-0"
+      }
+    },
+    {
+      "variant": "export_failure",
+      "example_only": true,
+      "records": [
+        {
+          "schema_version": "w003-example/1",
+          "example_only": true,
+          "kind": "StageFailure",
+          "id": {
+            "type": "StageFailureId",
+            "value": "export_failure-failure"
+          },
+          "run_id": {
+            "type": "RunId",
+            "value": "example-run"
+          },
+          "stage": "6.export",
+          "category": "export",
+          "code": "OUTPUT_NOT_REPRESENTABLE",
+          "reason": "expected failure specimen; not injected into product runtime",
+          "completed_refs": [],
+          "localized_refs": []
+        },
+        {
+          "schema_version": "w003-example/1",
+          "example_only": true,
+          "kind": "PipelineResult",
+          "id": {
+            "type": "PipelineResultId",
+            "value": "export_failure-terminal"
+          },
+          "run_id": {
+            "type": "RunId",
+            "value": "example-run"
+          },
+          "lifecycle_status": "terminal",
+          "deployment_disposition": "reject",
+          "durability_profile": "process_local",
+          "failure_ref": {
+            "type": "StageFailureId",
+            "value": "export_failure-failure"
+          },
+          "run_record_ref": {
+            "type": "RunRecordId",
+            "value": "run-record"
+          },
+          "head_status_at_finalization": "current",
+          "final_snapshot_ref": {
+            "type": "SnapshotId",
+            "value": "baseline-0"
+          },
+          "closure_ref": {
+            "type": "Stage5ClosureId",
+            "value": "closure"
+          }
+        }
+      ],
+      "existing_run_record_ref": {
+        "type": "RunRecordId",
+        "value": "run-record"
+      },
+      "normal_geometry_export": false,
+      "core_manifest_present": false,
+      "validation_present": false,
+      "eco_commit_ids": [],
+      "terminal_pointer_published": true,
+      "production_accept": false,
+      "diagnostic_reporting": "optional best effort; no fabricated successful report",
+      "retained_snapshot": {
+        "type": "SnapshotId",
+        "value": "baseline-0"
+      }
+    },
+    {
+      "variant": "check_fail",
+      "example_only": true,
+      "records": [
+        {
+          "schema_version": "w003-example/1",
+          "example_only": true,
+          "kind": "StageFailure",
+          "id": {
+            "type": "StageFailureId",
+            "value": "check_fail-failure"
+          },
+          "run_id": {
+            "type": "RunId",
+            "value": "example-run"
+          },
+          "stage": "6.validation",
+          "category": "validation",
+          "code": "SELF_CONSISTENCY_VIOLATION",
+          "reason": "expected failure specimen; not injected into product runtime",
+          "completed_refs": [],
+          "localized_refs": []
+        },
+        {
+          "schema_version": "w003-example/1",
+          "example_only": true,
+          "kind": "ValidationResult",
+          "id": {
+            "type": "ValidationResultId",
+            "value": "check_fail-validation"
+          },
+          "run_id": {
+            "type": "RunId",
+            "value": "example-run"
+          },
+          "final_snapshot_ref": {
+            "type": "SnapshotId",
+            "value": "baseline-0"
+          },
+          "ordered_commit_ids": [],
+          "manifest_ref": {
+            "type": "ArtifactManifestId",
+            "value": "manifest"
+          },
+          "checks": [
+            {
+              "check_id": "geometry_readback",
+              "execution_status": "fail",
+              "coverage": "complete",
+              "finding_severity": "error",
+              "policy_disposition": "reject",
+              "reason": "SELF_CONSISTENCY_VIOLATION",
+              "evidence_refs": [
+                {
+                  "path": "oracle.json",
+                  "json_pointer": "",
+                  "scope": "fixture_expected_only",
+                  "actual_byte_sha256": "6268db9090251f9a7ed7a562e0ad62e919304cef9da3edf09fae747cc5f03191"
+                }
+              ],
+              "localized_refs": [],
+              "runtime_ms": null,
+              "return_code": null
+            }
+          ],
+          "aggregate_disposition": "reject"
+        },
+        {
+          "schema_version": "w003-example/1",
+          "example_only": true,
+          "kind": "PipelineResult",
+          "id": {
+            "type": "PipelineResultId",
+            "value": "check_fail-terminal"
+          },
+          "run_id": {
+            "type": "RunId",
+            "value": "example-run"
+          },
+          "lifecycle_status": "terminal",
+          "deployment_disposition": "reject",
+          "durability_profile": "process_local",
+          "failure_ref": {
+            "type": "StageFailureId",
+            "value": "check_fail-failure"
+          },
+          "run_record_ref": {
+            "type": "RunRecordId",
+            "value": "run-record"
+          },
+          "head_status_at_finalization": "current",
+          "final_snapshot_ref": {
+            "type": "SnapshotId",
+            "value": "baseline-0"
+          },
+          "closure_ref": {
+            "type": "Stage5ClosureId",
+            "value": "closure"
+          },
+          "manifest_ref": {
+            "type": "ArtifactManifestId",
+            "value": "manifest"
+          },
+          "validation_ref": {
+            "type": "ValidationResultId",
+            "value": "check_fail-validation"
+          }
+        }
+      ],
+      "existing_run_record_ref": {
+        "type": "RunRecordId",
+        "value": "run-record"
+      },
+      "normal_geometry_export": true,
+      "core_manifest_present": true,
+      "validation_present": true,
+      "eco_commit_ids": [],
+      "terminal_pointer_published": true,
+      "production_accept": false,
+      "diagnostic_reporting": "optional best effort; no fabricated successful report",
+      "retained_snapshot": {
+        "type": "SnapshotId",
+        "value": "baseline-0"
+      }
+    },
+    {
+      "variant": "check_error",
+      "example_only": true,
+      "records": [
+        {
+          "schema_version": "w003-example/1",
+          "example_only": true,
+          "kind": "StageFailure",
+          "id": {
+            "type": "StageFailureId",
+            "value": "check_error-failure"
+          },
+          "run_id": {
+            "type": "RunId",
+            "value": "example-run"
+          },
+          "stage": "6.validation",
+          "category": "validation",
+          "code": "REQUIRED_READER_ERROR",
+          "reason": "expected failure specimen; not injected into product runtime",
+          "completed_refs": [],
+          "localized_refs": []
+        },
+        {
+          "schema_version": "w003-example/1",
+          "example_only": true,
+          "kind": "ValidationResult",
+          "id": {
+            "type": "ValidationResultId",
+            "value": "check_error-validation"
+          },
+          "run_id": {
+            "type": "RunId",
+            "value": "example-run"
+          },
+          "final_snapshot_ref": {
+            "type": "SnapshotId",
+            "value": "baseline-0"
+          },
+          "ordered_commit_ids": [],
+          "manifest_ref": {
+            "type": "ArtifactManifestId",
+            "value": "manifest"
+          },
+          "checks": [
+            {
+              "check_id": "geometry_readback",
+              "execution_status": "error",
+              "coverage": "none",
+              "finding_severity": "error",
+              "policy_disposition": "reject",
+              "reason": "REQUIRED_READER_ERROR",
+              "evidence_refs": [
+                {
+                  "path": "oracle.json",
+                  "json_pointer": "",
+                  "scope": "fixture_expected_only",
+                  "actual_byte_sha256": "6268db9090251f9a7ed7a562e0ad62e919304cef9da3edf09fae747cc5f03191"
+                }
+              ],
+              "localized_refs": [],
+              "runtime_ms": null,
+              "return_code": null
+            }
+          ],
+          "aggregate_disposition": "reject"
+        },
+        {
+          "schema_version": "w003-example/1",
+          "example_only": true,
+          "kind": "PipelineResult",
+          "id": {
+            "type": "PipelineResultId",
+            "value": "check_error-terminal"
+          },
+          "run_id": {
+            "type": "RunId",
+            "value": "example-run"
+          },
+          "lifecycle_status": "terminal",
+          "deployment_disposition": "reject",
+          "durability_profile": "process_local",
+          "failure_ref": {
+            "type": "StageFailureId",
+            "value": "check_error-failure"
+          },
+          "run_record_ref": {
+            "type": "RunRecordId",
+            "value": "run-record"
+          },
+          "head_status_at_finalization": "current",
+          "final_snapshot_ref": {
+            "type": "SnapshotId",
+            "value": "baseline-0"
+          },
+          "closure_ref": {
+            "type": "Stage5ClosureId",
+            "value": "closure"
+          },
+          "manifest_ref": {
+            "type": "ArtifactManifestId",
+            "value": "manifest"
+          },
+          "validation_ref": {
+            "type": "ValidationResultId",
+            "value": "check_error-validation"
+          }
+        }
+      ],
+      "existing_run_record_ref": {
+        "type": "RunRecordId",
+        "value": "run-record"
+      },
+      "normal_geometry_export": true,
+      "core_manifest_present": true,
+      "validation_present": true,
+      "eco_commit_ids": [],
+      "terminal_pointer_published": true,
+      "production_accept": false,
+      "diagnostic_reporting": "optional best effort; no fabricated successful report",
+      "retained_snapshot": {
+        "type": "SnapshotId",
+        "value": "baseline-0"
+      }
+    },
+    {
+      "variant": "reporting_failure",
+      "example_only": true,
+      "records": [
+        {
+          "schema_version": "w003-example/1",
+          "example_only": true,
+          "kind": "StageFailure",
+          "id": {
+            "type": "StageFailureId",
+            "value": "reporting_failure-failure"
+          },
+          "run_id": {
+            "type": "RunId",
+            "value": "example-run"
+          },
+          "stage": "6.reporting",
+          "category": "reporting",
+          "code": "REQUIRED_REPORT_WRITE_FAILED",
+          "reason": "expected failure specimen; not injected into product runtime",
+          "completed_refs": [],
+          "localized_refs": []
+        },
+        {
+          "schema_version": "w003-example/1",
+          "example_only": true,
+          "kind": "ReportingResult",
+          "id": {
+            "type": "ReportingResultId",
+            "value": "failed-report"
+          },
+          "run_id": {
+            "type": "RunId",
+            "value": "example-run"
+          },
+          "execution_status": "error",
+          "required": true,
+          "report_refs": [],
+          "disposition": "reject",
+          "failure_ref": {
+            "type": "StageFailureId",
+            "value": "reporting_failure-failure"
+          }
+        },
+        {
+          "schema_version": "w003-example/1",
+          "example_only": true,
+          "kind": "PipelineResult",
+          "id": {
+            "type": "PipelineResultId",
+            "value": "reporting_failure-terminal"
+          },
+          "run_id": {
+            "type": "RunId",
+            "value": "example-run"
+          },
+          "lifecycle_status": "terminal",
+          "deployment_disposition": "reject",
+          "durability_profile": "process_local",
+          "failure_ref": {
+            "type": "StageFailureId",
+            "value": "reporting_failure-failure"
+          },
+          "run_record_ref": {
+            "type": "RunRecordId",
+            "value": "run-record"
+          },
+          "head_status_at_finalization": "current",
+          "final_snapshot_ref": {
+            "type": "SnapshotId",
+            "value": "baseline-0"
+          },
+          "closure_ref": {
+            "type": "Stage5ClosureId",
+            "value": "closure"
+          },
+          "manifest_ref": {
+            "type": "ArtifactManifestId",
+            "value": "manifest"
+          },
+          "validation_ref": {
+            "type": "ValidationResultId",
+            "value": "validation"
+          },
+          "reporting_ref": {
+            "type": "ReportingResultId",
+            "value": "failed-report"
+          }
+        }
+      ],
+      "existing_run_record_ref": {
+        "type": "RunRecordId",
+        "value": "run-record"
+      },
+      "normal_geometry_export": true,
+      "core_manifest_present": true,
+      "validation_present": true,
+      "eco_commit_ids": [],
+      "terminal_pointer_published": true,
+      "production_accept": false,
+      "diagnostic_reporting": "optional best effort; no fabricated successful report",
+      "retained_snapshot": {
+        "type": "SnapshotId",
+        "value": "baseline-0"
+      }
+    },
+    {
+      "variant": "terminal_storage_failure",
+      "example_only": true,
+      "records": [
+        {
+          "schema_version": "w003-example/1",
+          "example_only": true,
+          "kind": "StageFailure",
+          "id": {
+            "type": "StageFailureId",
+            "value": "terminal_storage_failure-failure"
+          },
+          "run_id": {
+            "type": "RunId",
+            "value": "example-run"
+          },
+          "stage": "terminal",
+          "category": "infrastructure",
+          "code": "TERMINAL_ROOT_UNAVAILABLE",
+          "reason": "expected failure specimen; not injected into product runtime",
+          "completed_refs": [],
+          "localized_refs": []
+        }
+      ],
+      "existing_run_record_ref": {
+        "type": "RunRecordId",
+        "value": "run-record"
+      },
+      "normal_geometry_export": true,
+      "core_manifest_present": true,
+      "validation_present": true,
+      "eco_commit_ids": [],
+      "terminal_pointer_published": false,
+      "production_accept": false,
+      "diagnostic_reporting": "optional best effort; no fabricated successful report",
+      "retained_snapshot": {
+        "type": "SnapshotId",
+        "value": "baseline-0"
+      }
+    }
+  ]
+}

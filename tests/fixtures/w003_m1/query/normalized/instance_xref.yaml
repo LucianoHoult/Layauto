@@ -1,0 +1,18 @@
+{
+  "schema_version": "w003-query-normalized/1",
+  "header_id": "w003.synthetic.query.1",
+  "capability": "instance_xref",
+  "raw_sha256": "2644c52d4690529e7eb5859ceb7df97ece7425a9c324668453d41fb6e863e9a7",
+  "records": [
+    {
+      "layout_instance": "Q17",
+      "schematic_instance": "MN0",
+      "sd_swap": false
+    },
+    {
+      "layout_instance": "Q93",
+      "schematic_instance": "MP0",
+      "sd_swap": false
+    }
+  ]
+}

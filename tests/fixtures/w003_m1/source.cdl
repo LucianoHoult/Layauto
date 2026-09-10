@@ -1,0 +1,5 @@
+* Hand-authored synthetic input. Units and model axes are in tech.json.
+.SUBCKT INV_M1_SYNTH A Y VSS VDD
+MN0 Y A VSS VSS TOY_N NFIN=5 NF=1 M=1 L=4n W=2n VT=toy
+MP0 Y A VDD VDD TOY_P NFIN=7 NF=1 M=1 L=4n W=2n VT=toy
+.ENDS INV_M1_SYNTH

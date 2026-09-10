@@ -1,0 +1,523 @@
+{
+  "schema_version": "w003-hand-oracle/1",
+  "provenance": "hand-authored exact arithmetic and topology; not extracted from generated GDS",
+  "cell": "INV_M1_SYNTH",
+  "drawn_shape_count": 44,
+  "crossings": [
+    {
+      "device": "MN0",
+      "active": "ON",
+      "channel_bbox": [
+        58,
+        20,
+        62,
+        70
+      ],
+      "fin_ids": [
+        "F01",
+        "F02",
+        "F03",
+        "F04",
+        "F05"
+      ],
+      "count": 5,
+      "finger_count": 1,
+      "multiplicity": 1,
+      "area_per_crossing": 8
+    },
+    {
+      "device": "MP0",
+      "active": "OP",
+      "channel_bbox": [
+        58,
+        110,
+        62,
+        180
+      ],
+      "fin_ids": [
+        "F07",
+        "F08",
+        "F09",
+        "F10",
+        "F11",
+        "F12",
+        "F13"
+      ],
+      "count": 7,
+      "finger_count": 1,
+      "multiplicity": 1,
+      "area_per_crossing": 8
+    }
+  ],
+  "unqualified_fin_ids": [
+    "F06",
+    "F14",
+    "F15",
+    "F16",
+    "F17",
+    "F18"
+  ],
+  "fragments": [
+    {
+      "id": "ON.S",
+      "drawn_shape": "ON",
+      "layer": "OD",
+      "bbox": [
+        20,
+        20,
+        58,
+        70
+      ],
+      "component": "C_VSS",
+      "net": "VSS"
+    },
+    {
+      "id": "ON.D",
+      "drawn_shape": "ON",
+      "layer": "OD",
+      "bbox": [
+        62,
+        20,
+        100,
+        70
+      ],
+      "component": "C_Y",
+      "net": "Y"
+    },
+    {
+      "id": "OP.S",
+      "drawn_shape": "OP",
+      "layer": "OD",
+      "bbox": [
+        20,
+        110,
+        58,
+        180
+      ],
+      "component": "C_VDD",
+      "net": "VDD"
+    },
+    {
+      "id": "OP.D",
+      "drawn_shape": "OP",
+      "layer": "OD",
+      "bbox": [
+        62,
+        110,
+        100,
+        180
+      ],
+      "component": "C_Y",
+      "net": "Y"
+    },
+    {
+      "id": "LB.left",
+      "drawn_shape": "LB",
+      "layer": "LI",
+      "bbox": [
+        130,
+        20,
+        139,
+        24
+      ],
+      "component": "C_A_island_left",
+      "net": "A"
+    },
+    {
+      "id": "LB.right",
+      "drawn_shape": "LB",
+      "layer": "LI",
+      "bbox": [
+        141,
+        20,
+        150,
+        24
+      ],
+      "component": "C_A_island_right",
+      "net": "A"
+    }
+  ],
+  "components": [
+    {
+      "id": "C_VSS",
+      "regions": [
+        "ON.S",
+        "LN",
+        "MN",
+        "BN"
+      ],
+      "net": "VSS"
+    },
+    {
+      "id": "C_VDD",
+      "regions": [
+        "OP.S",
+        "LP",
+        "MP",
+        "BP"
+      ],
+      "net": "VDD"
+    },
+    {
+      "id": "C_Y",
+      "regions": [
+        "ON.D",
+        "OP.D",
+        "LY",
+        "MY"
+      ],
+      "net": "Y"
+    },
+    {
+      "id": "C_A",
+      "regions": [
+        "G",
+        "MA"
+      ],
+      "net": "A"
+    },
+    {
+      "id": "C_A_island_left",
+      "regions": [
+        "LB.left"
+      ],
+      "net": "A"
+    },
+    {
+      "id": "C_A_island_right",
+      "regions": [
+        "LB.right"
+      ],
+      "net": "A"
+    }
+  ],
+  "edges": [
+    {
+      "connector": "CNS",
+      "ends": [
+        "ON.S",
+        "LN"
+      ]
+    },
+    {
+      "connector": "CND",
+      "ends": [
+        "ON.D",
+        "LY"
+      ]
+    },
+    {
+      "connector": "CPS",
+      "ends": [
+        "OP.S",
+        "LP"
+      ]
+    },
+    {
+      "connector": "CPD",
+      "ends": [
+        "OP.D",
+        "LY"
+      ]
+    },
+    {
+      "connector": "VN",
+      "ends": [
+        "LN",
+        "MN"
+      ]
+    },
+    {
+      "connector": "VP",
+      "ends": [
+        "LP",
+        "MP"
+      ]
+    },
+    {
+      "connector": "VY",
+      "ends": [
+        "LY",
+        "MY"
+      ]
+    },
+    {
+      "connector": "GC",
+      "ends": [
+        "G",
+        "MA"
+      ]
+    },
+    {
+      "connector": "TN",
+      "ends": [
+        "BN",
+        "MN"
+      ]
+    },
+    {
+      "connector": "TP",
+      "ends": [
+        "BP",
+        "MP"
+      ]
+    }
+  ],
+  "terminals": [
+    {
+      "device": "MN0",
+      "role": "D",
+      "region": "ON.D",
+      "component": "C_Y",
+      "net": "Y"
+    },
+    {
+      "device": "MN0",
+      "role": "G",
+      "region": "G",
+      "component": "C_A",
+      "net": "A"
+    },
+    {
+      "device": "MN0",
+      "role": "S",
+      "region": "ON.S",
+      "component": "C_VSS",
+      "net": "VSS"
+    },
+    {
+      "device": "MN0",
+      "role": "B",
+      "region": "BN",
+      "component": "C_VSS",
+      "net": "VSS"
+    },
+    {
+      "device": "MP0",
+      "role": "D",
+      "region": "OP.D",
+      "component": "C_Y",
+      "net": "Y"
+    },
+    {
+      "device": "MP0",
+      "role": "G",
+      "region": "G",
+      "component": "C_A",
+      "net": "A"
+    },
+    {
+      "device": "MP0",
+      "role": "S",
+      "region": "OP.S",
+      "component": "C_VDD",
+      "net": "VDD"
+    },
+    {
+      "device": "MP0",
+      "role": "B",
+      "region": "BP",
+      "component": "C_VDD",
+      "net": "VDD"
+    }
+  ],
+  "non_edges": [
+    [
+      "ON.S",
+      "ON.D"
+    ],
+    [
+      "OP.S",
+      "OP.D"
+    ],
+    [
+      "LB.left",
+      "LB.right"
+    ],
+    [
+      "LB.left",
+      "G"
+    ],
+    [
+      "BN",
+      "BP"
+    ],
+    [
+      "BN",
+      "ON.S"
+    ],
+    [
+      "BP",
+      "OP.S"
+    ]
+  ],
+  "occupancy_witness": {
+    "cell_bbox": [
+      128,
+      16,
+      160,
+      32
+    ],
+    "layer": "LI",
+    "fragment_ids": [
+      "LB.left",
+      "LB.right"
+    ],
+    "same_cell_does_not_connect": true
+  },
+  "rules": [
+    {
+      "id": "T01.frame",
+      "applies_to": "all 43 non-frame drawn shapes",
+      "expected": "pass",
+      "minimum_margin_ticks": 0
+    },
+    {
+      "id": "T02.fin_grid",
+      "applies_to": "18 FIN rectangles",
+      "expected": "pass",
+      "width_ticks": 2,
+      "pitch_ticks": 10,
+      "offset_low_y_ticks": 24
+    },
+    {
+      "id": "T03.recognition",
+      "applies_to": [
+        "MN0",
+        "MP0"
+      ],
+      "expected": "pass",
+      "counts": [
+        5,
+        7
+      ],
+      "channel_width_ticks": 4
+    },
+    {
+      "id": "T04.body",
+      "applies_to": [
+        "ON in BN",
+        "OP in BP",
+        "BN disjoint BP",
+        "TN connects BN to MN",
+        "TP connects BP to MP"
+      ],
+      "expected": "pass",
+      "minimum_active_enclosure_ticks": 10
+    },
+    {
+      "id": "T05.contact_enclosure",
+      "applies_to": [
+        "CNS",
+        "CND",
+        "CPS",
+        "CPD",
+        "VN",
+        "VP",
+        "VY",
+        "GC",
+        "TN",
+        "TP"
+      ],
+      "expected": "pass",
+      "minimum_enclosure_ticks": 1
+    },
+    {
+      "id": "T06.li_spacing",
+      "applies_to": "all 10 unordered pairs of 5 effective LI rectangles, geometry_only, no same-net exemption",
+      "expected": "pass",
+      "minimum_distance_ticks": 2,
+      "limiting_pair": [
+        "LB.left",
+        "LB.right"
+      ]
+    },
+    {
+      "id": "T07.m1_spacing",
+      "applies_to": "all 6 unordered pairs of 4 M1 rectangles, geometry_only",
+      "expected": "pass",
+      "minimum_distance_ticks": 5,
+      "limiting_pair": [
+        "MA",
+        "MY"
+      ]
+    },
+    {
+      "id": "T08.terminal_graph",
+      "applies_to": "8 terminals, 10 connector edges, 6 components and listed non-edges",
+      "expected": "pass"
+    },
+    {
+      "id": "T09.lifecycle",
+      "applies_to": "all 44 drawn records; no ECO; preserve/frame equality",
+      "expected": "pass"
+    },
+    {
+      "id": "T10.coverage",
+      "applies_to": "all drawn/effective regions",
+      "expected": "pass",
+      "unannotated_marker": "MARK",
+      "same_label_islands": [
+        "LB.left",
+        "LB.right"
+      ],
+      "coverage": "disclosed_unannotated_nonconductors_and_disconnected_same_label_islands"
+    }
+  ],
+  "semantic": {
+    "cell": "INV_M1_SYNTH",
+    "pins": [
+      "A",
+      "Y",
+      "VSS",
+      "VDD"
+    ],
+    "globals": [],
+    "devices": [
+      {
+        "id": "MN0",
+        "model": "TOY_N",
+        "terminals": {
+          "D": "Y",
+          "G": "A",
+          "S": "VSS",
+          "B": "VSS"
+        },
+        "parameters": {
+          "fins_per_finger": 5,
+          "finger_count": 1,
+          "multiplicity": 1,
+          "L_nm": 4,
+          "W_nm": 2,
+          "VT": "toy"
+        }
+      },
+      {
+        "id": "MP0",
+        "model": "TOY_P",
+        "terminals": {
+          "D": "Y",
+          "G": "A",
+          "S": "VDD",
+          "B": "VDD"
+        },
+        "parameters": {
+          "fins_per_finger": 7,
+          "finger_count": 1,
+          "multiplicity": 1,
+          "L_nm": 4,
+          "W_nm": 2,
+          "VT": "toy"
+        }
+      }
+    ]
+  },
+  "no_change": {
+    "all_delta_ledger": [],
+    "ordered_commit_ids": [],
+    "baseline_version": 0,
+    "baseline_event_kind": "InitializationEvent",
+    "expected_terminal_disposition": "requires_review",
+    "product_run_executed": false
+  }
+}

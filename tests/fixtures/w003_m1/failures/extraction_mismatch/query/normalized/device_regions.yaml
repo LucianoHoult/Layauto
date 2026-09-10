@@ -1,0 +1,36 @@
+{
+  "schema_version": "w003-query-normalized/1",
+  "header_id": "w003.synthetic.query.1",
+  "capability": "device_regions",
+  "raw_sha256": "06d78fa3f11c937f2cd3f24c3b7f45ef6facfdc421bc78e9db4f16acf76555a5",
+  "records": [
+    {
+      "record_id": "D0",
+      "layout_instance": "Q17",
+      "derived_layer": "toy_ngate",
+      "geometry_kind": "rectangle",
+      "quality": "exact",
+      "bbox_lexemes": [
+        "58",
+        "20",
+        "62",
+        "64"
+      ],
+      "unit": "nm"
+    },
+    {
+      "record_id": "D1",
+      "layout_instance": "Q93",
+      "derived_layer": "toy_pgate",
+      "geometry_kind": "rectangle",
+      "quality": "exact",
+      "bbox_lexemes": [
+        "58",
+        "110",
+        "62",
+        "180"
+      ],
+      "unit": "nm"
+    }
+  ]
+}

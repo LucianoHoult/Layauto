@@ -1,0 +1,7 @@
+W003_QUERY 1 net_xref w003.synthetic.query.1 nm
+COUNT 4
+N 007 n_a A
+N 043 n_y Y
+N 091 n_lo VSS
+N 108 n_hi VDD
+END W003_QUERY

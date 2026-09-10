@@ -1,0 +1,15 @@
+{
+  "schema_version": "w003-independent-writer-provenance/1",
+  "writer": "KLayout",
+  "version": "0.30.12",
+  "original_units_hex": "3e4189374bc6a7f03944b82fa09b5a54",
+  "normalized_units_hex": "3e4189374bc6a7f03944b82fa09b5a53",
+  "modified_byte_range": [
+    58,
+    74
+  ],
+  "original_gds_sha256": "60246c5f1ed62cc26267c0682b3e75e510267a6e74e793c4b273655abac6a5b4",
+  "normalized_gds_sha256": "93485a21b0cf628423c437cd28fee5164bf03c345e7505ba9696ae924fbe9ff8",
+  "reason": "KLayout binary64 DBU conversion exceeds declared nearest56 half-ULP; normalize UNITS payload only to existing contract, never XY",
+  "independent_scope": "geometry serialization and readback; unit writer intentionally shared, independently exact-decoded by verifier"
+}

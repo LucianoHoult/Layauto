@@ -1,0 +1,360 @@
+{
+  "schema_version": "w003-example/1",
+  "scope": "review_specimens_only",
+  "common_required": [
+    "schema_version",
+    "example_only",
+    "kind",
+    "id"
+  ],
+  "additional_fields": "forbidden",
+  "variants": {
+    "ToolRunResult": {
+      "required": [
+        "mode",
+        "tool_name",
+        "command",
+        "input_refs",
+        "raw_output_refs",
+        "exit_status",
+        "execution_status",
+        "stdout_ref",
+        "stderr_ref"
+      ],
+      "optional": [
+        "execution_failure"
+      ]
+    },
+    "ParseResult": {
+      "required": [
+        "tool_run_ref",
+        "parser_version",
+        "dialect_version",
+        "raw_refs",
+        "evidence_refs",
+        "execution_status"
+      ],
+      "optional": []
+    },
+    "EvidenceRecord": {
+      "required": [
+        "parse_ref",
+        "header_ref",
+        "raw_refs",
+        "assurance",
+        "exact_value_example",
+        "source_backlink"
+      ],
+      "optional": []
+    },
+    "ImmutableContext": {
+      "required": [
+        "tech_ref",
+        "evidence_ref",
+        "coordinate_ref",
+        "capability_refs",
+        "target_ref",
+        "policy_refs"
+      ],
+      "optional": []
+    },
+    "ProposedInitialState": {
+      "required": [
+        "context_ref",
+        "component_refs",
+        "current_semantic_ref",
+        "target_ref",
+        "lifecycle_audit_ref"
+      ],
+      "optional": []
+    },
+    "PreparedBaseline": {
+      "required": [
+        "publication_kind",
+        "proposed_ref",
+        "snapshot_ref",
+        "context_ref",
+        "attempt_ref",
+        "expected_state_head",
+        "expected_attempt_revision",
+        "lifecycle_audit_ref"
+      ],
+      "optional": []
+    },
+    "Snapshot": {
+      "required": [
+        "state_lineage_id",
+        "state_version",
+        "parent_snapshot_ref",
+        "initialization_ref",
+        "context_ref",
+        "component_refs",
+        "assurance"
+      ],
+      "optional": []
+    },
+    "InitializationEvent": {
+      "required": [
+        "run_id",
+        "snapshot_ref",
+        "state_version"
+      ],
+      "optional": []
+    },
+    "RunAttempt/unsealed": {
+      "required": [
+        "variant",
+        "run_id",
+        "revision",
+        "starting_state_head",
+        "raw_request_descriptor",
+        "raw_request_digest",
+        "idempotency",
+        "durability_profile"
+      ],
+      "optional": []
+    },
+    "RunAttempt/sealed_open": {
+      "required": [
+        "variant",
+        "run_id",
+        "revision",
+        "starting_state_head",
+        "context_ref",
+        "execution_mode",
+        "snapshot_ref",
+        "idempotency",
+        "durability_profile"
+      ],
+      "optional": []
+    },
+    "PlanningAuditRecord": {
+      "required": [
+        "run_id",
+        "snapshot_ref",
+        "outcome",
+        "semantic_comparison",
+        "extraction_oracle_ref",
+        "unsupported_deltas",
+        "candidate_refs"
+      ],
+      "optional": []
+    },
+    "NoChangePlanningResult": {
+      "required": [
+        "run_id",
+        "snapshot_ref",
+        "target_ref",
+        "all_delta_ledger",
+        "planning_audit_ref",
+        "required_constraint_audit_ref"
+      ],
+      "optional": []
+    },
+    "ConstraintAuditRecord": {
+      "required": [
+        "run_id",
+        "snapshot_ref",
+        "scope",
+        "rule_oracle_ref",
+        "outcome"
+      ],
+      "optional": []
+    },
+    "LifecycleAuditRecord": {
+      "required": [
+        "operator_profile_ref",
+        "scope",
+        "outcome",
+        "no_derived_layers",
+        "comparator"
+      ],
+      "optional": []
+    },
+    "RunRecord/no_change": {
+      "required": [
+        "variant",
+        "run_id",
+        "input_summary",
+        "context_ref",
+        "final_snapshot_ref",
+        "ordered_commit_ids",
+        "stage_audit_refs",
+        "planning_audit_ref",
+        "constraint_audit_ref",
+        "provenance"
+      ],
+      "optional": []
+    },
+    "RunRecord/pre_context_failure": {
+      "required": [
+        "variant",
+        "run_id",
+        "completed_audit_refs",
+        "failure_ref"
+      ],
+      "optional": []
+    },
+    "RunRecord/sealed_no_publication_failure": {
+      "required": [
+        "variant",
+        "run_id",
+        "completed_audit_refs",
+        "failure_ref",
+        "stable_snapshot_ref",
+        "context_ref",
+        "ordered_commit_ids"
+      ],
+      "optional": []
+    },
+    "Stage5Closure/with_run_record": {
+      "required": [
+        "variant",
+        "run_id",
+        "run_record_ref",
+        "final_snapshot_ref",
+        "ordered_commit_ids"
+      ],
+      "optional": []
+    },
+    "Stage5Closure/run_record_freeze_failure": {
+      "required": [
+        "variant",
+        "run_id",
+        "failure_ref",
+        "completed_audit_refs",
+        "ordered_commit_ids"
+      ],
+      "optional": []
+    },
+    "StageFailure": {
+      "required": [
+        "run_id",
+        "stage",
+        "category",
+        "code",
+        "reason",
+        "completed_refs",
+        "localized_refs"
+      ],
+      "optional": []
+    },
+    "ArtifactManifest": {
+      "required": [
+        "run_id",
+        "final_snapshot_ref",
+        "ordered_commit_ids",
+        "objects",
+        "marker_meaning",
+        "durability_profile"
+      ],
+      "optional": []
+    },
+    "ValidationResult": {
+      "required": [
+        "run_id",
+        "final_snapshot_ref",
+        "ordered_commit_ids",
+        "manifest_ref",
+        "checks",
+        "aggregate_disposition"
+      ],
+      "optional": []
+    },
+    "ReportingResult": {
+      "required": [
+        "run_id",
+        "execution_status",
+        "required",
+        "report_refs",
+        "disposition"
+      ],
+      "optional": [
+        "failure_ref"
+      ]
+    },
+    "PipelineResult": {
+      "required": [
+        "run_id",
+        "lifecycle_status",
+        "deployment_disposition",
+        "durability_profile"
+      ],
+      "optional": [
+        "head_status_at_finalization",
+        "closure_ref",
+        "run_record_ref",
+        "final_snapshot_ref",
+        "manifest_ref",
+        "validation_ref",
+        "reporting_ref",
+        "failure_ref"
+      ]
+    }
+  },
+  "nested_types": {
+    "TypedId": {
+      "required": [
+        "type",
+        "value"
+      ],
+      "type": "nonempty string; discriminator specific",
+      "value": "nonempty string"
+    },
+    "FixtureRef": {
+      "required": [
+        "path",
+        "json_pointer",
+        "scope",
+        "actual_byte_sha256"
+      ],
+      "scope": "fixture_expected_only",
+      "path_base": "tests/fixtures/w003_m1"
+    },
+    "ExactRational": {
+      "required": [
+        "numerator",
+        "denominator"
+      ],
+      "encoding": "coprime integer strings; denominator positive"
+    },
+    "ArtifactObject": {
+      "required": [
+        "type",
+        "required",
+        "uri",
+        "sample_file",
+        "size_bytes",
+        "actual_byte_sha256"
+      ],
+      "hash": "SHA-256 of actual sample_file bytes; not semantic hash"
+    },
+    "CheckResult": {
+      "required": [
+        "check_id",
+        "execution_status",
+        "coverage",
+        "finding_severity",
+        "policy_disposition",
+        "reason",
+        "evidence_refs",
+        "localized_refs",
+        "runtime_ms",
+        "return_code"
+      ],
+      "statuses": [
+        "pass",
+        "fail",
+        "error",
+        "skipped",
+        "deferred"
+      ],
+      "coverages": [
+        "complete",
+        "degraded",
+        "none"
+      ]
+    }
+  },
+  "canonical_encoding": "UTF-8 sorted-key compact JSON; no float/NaN/Inf; SHA-256; no trailing LF"
+}
