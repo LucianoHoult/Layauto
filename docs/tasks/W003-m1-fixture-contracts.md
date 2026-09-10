@@ -8,7 +8,7 @@
 | --- | --- |
 | ID / 目标 | W003；提供可独立审查的 M1 最小样本、经过的文件/共享记录合同、正确答案与反例，使后续 no_change 文件闭环实现有明确输入和验收依据 |
 | 里程碑 / 依赖 | M0 工程准备→M1；[W002](W002-first-input-admission.md) 已验收，特别落实 E5/E7 与 reviewer R4。真实材料不作为本地 synthetic 样本准备的前置 |
-| 授权依据 / 阶段 | 2026-09-09 用户授权本地 synthetic 样本与合同准备；**待验收：执行及独立 review 已完成，PM 已接收技术结论，全部 fixture 的用户人工正确性/使用预期核验待进行**。实际样本已交付，尚无产品运行结果；未 commit/push，不开始 runtime/EDA/上传 |
+| 授权依据 / 阶段 | 2026-09-09 用户授权本地 synthetic 样本与合同准备；**待验收：执行及独立 review 已完成，PM 已接收技术结论，全部 fixture 的用户人工正确性/使用预期核验待进行**。2026-09-10用户另授权审核分支提交/推送，发布事实见P4；不开始runtime/EDA/生产上传 |
 | 范围 | 执行交付独立样本说明、schema/字段/最小样张、可再生 synthetic 输入、手算/独立 reader 判据及失败实例。允许写本任务执行段、docs/tasks/W003/ 附件、tests/fixtures/ 的专用样本与 tests/support/ 的专用生成/核对辅助；辅助仅服务样本准备，不提前实现产品 parser/extractor |
 | 非目标 | 不重做全局/legacy 审计，不改架构正文，不实现 layauto_v2/ 产品 runtime 或 Stage 1–6 模块，不部署 VM/EDA、不选定生产 PDK、不将 public/dummy 运行当真实准入；不上传生产输入/PDK/许可证 |
 | 架构依据 | [architecture.md](../architecture.md)（与 `6eccdff` 相同）§1.4、§2.1–2.7、§3–5、§7.1、§8.1、§10、§11.14–11.15、§12.5–12.8；格式的上下游 owner 以原文为准 |
@@ -248,8 +248,16 @@ PM 本轮不重复运行已经被独立 review 且未改的 fixture helper 或�
 
 ### P3. 恢复与后续授权
 
-当前入口见 [current-work](../current-work.md)。用户人工确认及必要修正闭合后，PM决定本任务最终验收，再明确M1内最小Stage1 parser/输入绑定实现包；本次不创建或启动实现任务、不上传辅助reader，不commit/push。实际raw解析与本系统调用Calibre获取证据分别验证；可运行包经本地正负例和针对性review后，才在具体授权/平台条件下交用户向内上传。生产只能反馈脱敏格式时，真实准入仍标未核验。
+当前入口见 [current-work](../current-work.md)。用户人工确认及必要修正闭合后，PM决定本任务最终验收，再明确M1内最小Stage1 parser/输入绑定实现包；2026-09-09接收时未创建或启动实现任务、未上传辅助reader、未commit/push。2026-09-10审核分支的新增发布授权见P4，不扩大产品/生产范围。实际raw解析与本系统调用Calibre获取证据分别验证；可运行包经本地正负例和针对性review后，才在具体授权/平台条件下交用户向内上传。生产只能反馈脱敏格式时，真实准入仍标未核验。
 
 本次 PM 恢复包：`/private/tmp/layauto-w003-pm-received-ew822nhg`。包含加入本次阶段/人工清单后的完整93文件snapshot、相对同一base的staged/unstaged/untracked/full patch及清单、最终独立review包完整副本、接收身份记录和文档覆盖/链接/归属/重建检查。`SHA256SUMS`绑定各文件，hash不要求写入本段自身。该包表示“技术交付已接收、用户待验收”，不是已验收包。
 
 历史草案 `/private/tmp/layauto-w003-plan-gyzo3gkn`、执行准备 `/private/tmp/layauto-w003-ready-pzibrdp0`、初次交付 `/private/tmp/layauto-w003-delivery-uzpc4aed` 均只作历史身份，不再作为当前恢复输入。最终独立review包保留原/修复版及命令输出；临时路径只适合本机短期交接，跨主机须另保存完整可访问版本，不重跑旧快照脚本覆盖证据。
+
+### P4. 人工审核分支发布（2026-09-10）
+
+用户要求将需要人工审核的材料推送到新分支，方便另一平台查看。已从 `b1f0301cf76b2e1808cb293cfdb4e1bfededde73` 新建 `codex/w003-manual-review`，提交并推送材料为 `01535055f5d661a2964443dec76fc7f7f305e3e0`；推送后用 `git ls-remote --heads origin refs/heads/codex/w003-manual-review refs/heads/main` 核对，审核分支为该SHA，main仍为原基线。
+
+发布前93文件与P3的PM接收snapshot逐字节一致，暂存区逐文件核对且 `git diff --cached --check` 通过；包含75个fixture、4个辅助与14份文档/图/记录/报告。既有执行/review原文和技术样本不变，未改 `layauto_v2/`、legacy或架构，不因commit/push标已验收。之后仅补本任务/当前入口/人工清单的发布说明，随同一分支保存。
+
+人工核验材料及所有仓库内相对链接随分支可访问；不需要先复制本机临时包或安装环境才能阅读。临时完整执行/review日志包仍只在本机，本文已有技术结论不等于另一主机已复跑检查。下一步继续清单A–D的用户确认；未创建PR、合入main或开始后续实现。

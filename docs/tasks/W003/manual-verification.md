@@ -6,6 +6,7 @@
 
 ## 核验版本与方法
 
+- 跨平台审核分支：`codex/w003-manual-review`，材料提交 `01535055f5d661a2964443dec76fc7f7f305e3e0` 已推送；本页及其图、原始输入、期望输出、负例、合同与报告均随分支保存。直接按下方链接阅读，不需要本机临时目录或先运行辅助脚本。发布不代表用户已确认。
 - 基线：`main@b1f0301cf76b2e1808cb293cfdb4e1bfededde73`。
 - 固定接收包：`/private/tmp/layauto-w003-independent-review-i8gqzwtw`；`full.patch` SHA-256 为 `c03a90b4f49c51a2343d54ad110420801d7b39966f6f5b6ec34c7b5b8fd1178f`。
 - 独立 review 的 2 项 P2 已修复并复核关闭，0 项未关闭实质 findings；这是本地 synthetic 样本/合同技术结论，用户确认、W003 最终验收及产品运行分别记录。
