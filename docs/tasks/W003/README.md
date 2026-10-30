@@ -10,8 +10,8 @@
 
 | 入口 | 用途 |
 | --- | --- |
-| [人工核验清单](manual-verification.md) | 用户答复、修改要求及当前 MR-054 恢复点；持续进度以本清单为准 |
-| [网页 Codex 交接](web-codex-handoff.md) | 2026-10-26 的 mental checkpoint、角色与启动 prompt；不替代清单或产品合同 |
+| [人工核验清单](manual-verification.md) | 用户答复、修改要求及最新恢复点；本轮收尾汇总见MR-076，持续进度以本清单为准 |
+| [网页 Codex 交接](web-codex-handoff.md) | 最新mental checkpoint、历史角色与接续prompt；2026-10-30转修订交接，不替代清单或产品合同 |
 | [文件与记录合同](contracts.md) | M1 producer/consumer、exact encoding、必需字段、非法组合和失败流 |
 | [记录样张](examples/records.json) | Evidence、attempt、baseline、snapshot、RunRecord、Manifest/check/report/terminal 的相互引用 |
 | [失败样张](examples/failures.json) | pre-context、sealed、freeze、export/check/report/terminal 的代表组合 |

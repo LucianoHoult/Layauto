@@ -2,11 +2,15 @@
 
 先确认“这套题和答案是否正确、是否是你希望程序处理的样子”，再开始产品实现。例如 N/P 的目标仍为 5/7，程序应保持几何和电路语义，检查全部 toy 规则；即使数字相同，间距错也必须失败。
 
-本页由 PM 维护人工核验记录，来源为 [W003](../W003-m1-fixture-contracts.md) 已独立 review 的固定交付。坐标、规则、格式和错误类别的来源仍是原 fixture/spec/oracle/contracts；下表仅是方便逐项阅读的展示，不是新的 oracle 或产品合同。A2已展示38个原始图形，六根不计数FIN按用户指示略过；A3已展示端子、边、分量及non_edges并解释用途。用户已选择将两个同名A孤岛拆为专门案例，A4.01由未决转需修改，见MR-020；拆分尚未实施。尺寸/精度来源及关键层规则对应需修改，见 MR-002；tech.json 分类文件要求见 MR-004 / B4。上述要求未关闭，A2.04/A2.05及color来源按实际答复记录理解/范围，尚无主项目获完整确认，其余状态保持**待确认**。讨论进度、人工结论与覆盖范围分别记录；待确认只是尚无明确通过结论，不表示必须立即回复、禁止换主题或已有新增修改要求。
+本页由 PM 维护人工核验记录，来源为 [W003](../W003-m1-fixture-contracts.md) 已独立 review 的固定交付。坐标、规则、格式和错误类别的来源仍是原 fixture/spec/oracle/contracts；下表仅是方便逐项阅读的展示，不是新的 oracle 或产品合同。A2已展示38个原始图形，六根不计数FIN按用户指示略过；A3已展示端子、边、分量及non_edges并解释用途。用户已选择将两个同名A孤岛拆为专门案例，A4.01由未决转需修改，见MR-020；拆分尚未实施。尺寸/精度来源及关键层规则对应需修改，见 MR-002；tech.json 分类文件要求见 MR-004 / B4。上述要求未关闭，A2.04/A2.05及color来源按实际答复记录理解/范围，A组各主项目尚未获整体确认；其余各组以最新状态表为准。讨论进度、人工结论与覆盖范围分别记录；待确认只是尚无明确通过结论，不表示必须立即回复、禁止换主题或已有新增修改要求。
 
 2026-09-24新增body使用预期修正：用户说明body由专门tapcell负责，不要求逻辑单元内显式BTAP；当前TN/TP与相关body规则/连通答案须调整，见MR-046。2026-10-09网格讨论经MR-052作阶段范围纠正：W003只需澄清32×16的测试假设、用途及样张引用，不将它冒充完整坐标模型；MR-051中要求本轮补齐全层坐标模型/生成投影验收的扩展已撤回，交后续Stage 2开发。本文旧实物仍绑定指定SHA，未实施修改或确认新版。
 
 ## 核验版本与方法
+
+- 2026-10-30收尾：本轮新增MR-055–MR-076及当前状态汇总，用户明确确认D4后转交接；详细修订/未决见[MR-076](#mr-076)。本轮保存范围是人工结论与恢复入口，原fixture/合同/记录样张/执行与reviewer证据未改；此前各轮“未commit/push”为当轮历史状态，最终分支提交身份以Git及交接回复为准。
+
+- 2026-10-29 网页子 PM 已从远端审核分支恢复至迁移提交 `765ae5ef4ebf50e6870c5a978795525261d89ff6`，确认本页 MR-054 和 `web-codex-handoff.md` 均存在。启动时 staged/unstaged/untracked 为空；忽略的 editable 安装元数据保持。展示来源三项 SHA-256 及架构 SHA-256 与本页记录一致，fixture/support/架构/产品/legacy 相对原技术实物版本未变。本轮后续答复与收尾见MR-055–MR-076；未重跑旧测试或生成器，未复核未上传的历史临时证据包。
 
 - 2026-10-26 迁移说明：MR-001–MR-054 的原记录与实物版本保持；本次随网页交接文档同步至审核分支。下文各轮“未 commit/push”是当轮历史事实，网页续接范围与版本核对见 [W003 P5](../W003-m1-fixture-contracts.md#p5-网页续接与人工记录同步2026-10-26) 及 [启动 prompt](web-codex-handoff.md)。没有新增人工确认或实施样本修改。
 
@@ -149,11 +153,13 @@ Connector 必须对声明两侧各恰好一个导体有正面积交集，另检�
 | B1 | [source.gds](../../../tests/fixtures/w003_m1/source.gds)<br>[source.cdl](../../../tests/fixtures/w003_m1/source.cdl)<br>[target.cdl](../../../tests/fixtures/w003_m1/target.cdl) | 单cell、flat、仅含BOUNDARY矩形的GDS；完整 CDL top/pins/D G S B/model/NFIN/NF/M/L/W/VT。当前拒绝 hierarchy/property/TEXT/非矩形及 CDL include/表达式等，不静默丢弃或猜值 | 确认：B1.02允许格式差异、比较完整CDL语义的预期（MR-028.1）；其它范围不外推确认。用户指示继续B2，未批准扩大子集、忽略继续或MR-026新增建议 |
 | B2 | [query/raw/instance_xref.txt](../../../tests/fixtures/w003_m1/query/raw/instance_xref.txt)<br>[query/raw/net_xref.txt](../../../tests/fixtures/w003_m1/query/raw/net_xref.txt)<br>[query/raw/device_regions.txt](../../../tests/fixtures/w003_m1/query/raw/device_regions.txt)<br>[query/raw/net_regions.txt](../../../tests/fixtures/w003_m1/query/raw/net_regions.txt) | 当前四capability数量2/4/2/10，链接仍为旧W003_QUERY合成文本。最新要求MR-034.2：以legacy所依据的Calibre query格式替换自定义raw方言，离线/真实输入共用选定方言，不再并行维护W003_QUERY路径；实际文件清单按所选方言组织 | 确认：B2.02器件区域使用方式、B2.03 R00–R07对应及B2.04完整性原则（MR-032.1/MR-033.1/MR-034.1）；需修改：MR-034.2替换raw方言、MR-020孤岛拆分。旧版正文/语法已展示，新版未实现或验收 |
 | B3 | [query/header.json](../../../tests/fixtures/w003_m1/query/header.json)<br>[query/normalized/instance_xref.yaml](../../../tests/fixtures/w003_m1/query/normalized/instance_xref.yaml)<br>[query/normalized/net_xref.yaml](../../../tests/fixtures/w003_m1/query/normalized/net_xref.yaml)<br>[query/normalized/device_regions.yaml](../../../tests/fixtures/w003_m1/query/normalized/device_regions.yaml)<br>[query/normalized/net_regions.yaml](../../../tests/fixtures/w003_m1/query/normalized/net_regions.yaml) | 从唯一选定raw方言重解析并核对normalized；header绑定同源bytes/top/closure/version，synthetic/not_run与未知值如实呈现。MR-030.2改善可读结构、保留raw来源与精确值；MR-034同步多文件manifest及新编号来源，不为保留旧007而扭曲方言 | 确认：B3.02冲突处理（MR-038.1）、B3.03读取校验原则（MR-039.1）；需修改：MR-030.2可读性及MR-034迁移绑定。B3本轮转B4，不等于全部细节/新版验收，B3.01只按已记录范围保留 |
-| B4 | [tech.json](../../../tests/fixtures/w003_m1/tech.json)<br>[site_config.yaml](../../../tests/fixtures/w003_m1/site_config.yaml)<br>[export_policy.json](../../../tests/fixtures/w003_m1/export_policy.json)<br>[validation_policy.json](../../../tests/fixtures/w003_m1/validation_policy.json)<br>[limitations.json](../../../tests/fixtures/w003_m1/limitations.json) | 按MR-052收敛到样本物理语义、参数/来源、适用范围、文件引用及预期结果；B4.03a/b的registry/函数/算法组织留后续；grid仅核对本例假设与表达边界 | 既有明确确认保持；MR-046/MR-004/MR-002及样本层面的MR-051澄清待改，MR-040未决。不要求W003完成通用坐标生成/规则执行器，剩余样本材料仍按A–D覆盖 |
-| B5 | [expected/output.gds](../../../tests/fixtures/w003_m1/expected/output.gds)<br>[expected/output.cdl](../../../tests/fixtures/w003_m1/expected/output.cdl)<br>[expected/layout.json](../../../tests/fixtures/w003_m1/expected/layout.json)<br>[expected/unit-provenance.json](../../../tests/fixtures/w003_m1/expected/unit-provenance.json) | 输出语义保真而不强制 GDS bytes 相等；REAL8 half-ULP 仅解释单位编码，不能移动 XY。expected GDS 原 KLayout UNITS 曾超界，仅 UNITS 被规范化且原始值留档；layout JSON 是最小 component/fragment 展示，后续产品必须生成完整 snapshot，不能照样张删省 | 待确认 |
-| B6 | [README.md](../../../tests/fixtures/w003_m1/README.md)<br>[spec.json](../../../tests/fixtures/w003_m1/spec.json)<br>[oracle.json](../../../tests/fixtures/w003_m1/oracle.json) | 本页 A 的全部 shape/crossing/graph/rule 展示与源表一致；spec 是制作说明、oracle 是手写答案，均不作为 future runtime 绕过真实输入链的最终状态 | 待确认 |
+| B4 | [tech.json](../../../tests/fixtures/w003_m1/tech.json)<br>[site_config.yaml](../../../tests/fixtures/w003_m1/site_config.yaml)<br>[export_policy.json](../../../tests/fixtures/w003_m1/export_policy.json)<br>[validation_policy.json](../../../tests/fixtures/w003_m1/validation_policy.json)<br>[limitations.json](../../../tests/fixtures/w003_m1/limitations.json) | 按MR-052收敛到样本物理语义、参数/来源、适用范围、文件引用及预期结果；B4.03a/b的registry/函数/算法组织留后续；grid仅核对本例假设与表达边界 | MR-054的DBU/网格关系已确认理解（MR-056.1）；B4.04a三项必需产物/缺项预期及JSON用途、B4/B5分工已确认（MR-058.1）；B4.04b路径/防覆盖及MR-059身份/manifest答疑已确认（MR-061）；B4.04c哈希/语义区别已确认（MR-062）；B4.05a必需范围、fail/error及样本/未来运行分工已确认（MR-063）；B4.05b暂缓项与结果维度已确认（MR-064）；B4.06来源/支持范围/未覆盖项已确认（MR-065），既有修订联动要求保持。既有明确确认保持；MR-046/MR-004/MR-002及样本层面的MR-051澄清待改，MR-040未决。不要求W003完成通用坐标生成/规则执行器，剩余样本材料仍按A–D覆盖 |
+| B5 | [expected/output.gds](../../../tests/fixtures/w003_m1/expected/output.gds)<br>[expected/output.cdl](../../../tests/fixtures/w003_m1/expected/output.cdl)<br>[expected/layout.json](../../../tests/fixtures/w003_m1/expected/layout.json)<br>[expected/unit-provenance.json](../../../tests/fixtures/w003_m1/expected/unit-provenance.json) | 输出语义保真而不强制 GDS bytes 相等；REAL8 half-ULP 仅解释单位编码，不能移动 XY。expected GDS 原 KLayout UNITS 曾超界，仅 UNITS 被规范化且原始值留档；layout JSON 是最小 component/fragment 展示，后续产品必须生成完整 snapshot，不能照样张删省 | B5.01 GDS保真已确认（MR-066）；B5.02单位处理已确认（MR-067）；B5.03 CDL全语义已确认（MR-068）；B5.04 JSON内容与最小样张边界已确认（MR-069），既定修订仍须联动 |
+| B6 | [README.md](../../../tests/fixtures/w003_m1/README.md)<br>[spec.json](../../../tests/fixtures/w003_m1/spec.json)<br>[oracle.json](../../../tests/fixtures/w003_m1/oracle.json) | 本页 A 的全部 shape/crossing/graph/rule 展示与源表一致；spec 是制作说明、oracle 是手写答案，均不作为 future runtime 绕过真实输入链的最终状态 | 职责、答案来源与独立核对方式已确认（MR-070）；此前A各项确认/略过/待改范围及既定修订保持 |
 
 ## C. 全部22个输入反例
+
+人工审阅方式更新（2026-10-29，MR-071）：按用户指示改为本组总览；用户粗看暂无新增问题，转D。以下条目按概览反馈登记，不表示逐例亲自细审或产品失败管线已执行；原技术review及修订联动要求保持。
 
 每例以正常fixture为底，严格应用 [cases.json](../../../tests/fixtures/w003_m1/failures/cases.json) 的 `replacement_files` 和 `remove_files`；链接目录可查看全部替换输入。19例已重绑定配套header/raw/cache，只有 raw_byte_drift、header_top_mismatch、normalized_cache_drift 故意保留绑定错误。无需每例重复核对未改形状，但须核对全部替换/删除项及错误原因。
 
@@ -161,28 +167,28 @@ Connector 必须对声明两侧各恰好一个导体有正面积交集，另检�
 
 | ID / case | 人工检查的局部差异 | 期望问题 / phase | 用户状态 |
 | --- | --- | --- | --- |
-| C01 / [unit_mismatch](../../../tests/fixtures/w003_m1/failures/unit_mismatch/) | source GDS unit改成2nm，与声明的1nm源单位不符；配套header已重绑定 | `UnitScaleMismatch` / P | 待确认 |
-| C02 / [missing_terminator](../../../tests/fixtures/w003_m1/failures/missing_terminator/) | instance raw删END；删除旧normalized缓存，失败样张也引用此坏raw | `MissingTerminator` / P | 待确认 |
-| C03 / [wrong_count](../../../tests/fixtures/w003_m1/failures/wrong_count/) | net xref实际4条，COUNT写5；删除旧缓存 | `CountMismatch` / P | 待确认 |
-| C04 / [dialect_drift](../../../tests/fixtures/w003_m1/failures/dialect_drift/) | device region的RECT改BBOX，不得当作精确矩形接收；删除旧缓存 | `UnsupportedGeometryToken` / P | 待确认 |
-| C05 / [unknown_unit](../../../tests/fixtures/w003_m1/failures/unknown_unit/) | net region单位nm改mystery；删除旧缓存 | `UnitBindingMismatch` / P | 待确认 |
-| C06 / [raw_byte_drift](../../../tests/fixtures/w003_m1/failures/raw_byte_drift/) | net raw索引042改043，header/hash不更新（故意错误） | `RawHashMismatch` / P | 待确认 |
-| C07 / [header_top_mismatch](../../../tests/fixtures/w003_m1/failures/header_top_mismatch/) | header source top改WRONG_TOP（故意错误） | `TopBindingMismatch` / P | 待确认 |
-| C08 / [mapping_many_to_one](../../../tests/fixtures/w003_m1/failures/mapping_many_to_one/) | Q17/Q93都映射MN0，违反一对一 | `UnsupportedDeviceCardinality` / P | 待确认 |
-| C09 / [multifinger](../../../tests/fixtures/w003_m1/failures/multifinger/) | MN0 NF=1改NF=2 | `UnsupportedFingerCount` / P | 待确认 |
-| C10 / [device_reduction](../../../tests/fixtures/w003_m1/failures/device_reduction/) | 增加Q18→MN0的第三条映射，需归并解释 | `UnsupportedDeviceReduction` / P | 待确认 |
-| C11 / [cdl_expression](../../../tests/fixtures/w003_m1/failures/cdl_expression/) | NFIN=5改成NFIN={2+3}；数值等价也不支持表达式 | `UnsupportedCdlExpression` / P | 待确认 |
-| C12 / [cdl_include](../../../tests/fixtures/w003_m1/failures/cdl_include/) | 添加.INCLUDE private_model.cdl；本例是合成字符串，没有私有文件 | `UnsupportedDependencyDirective` / P | 待确认 |
-| C13 / [unsupported_target](../../../tests/fixtures/w003_m1/failures/unsupported_target/) | target MN0 L=4n改5n；5/7不变也不是no_change | `UnsupportedTargetAxis` / S | 待确认 |
-| C14 / [count_correct_rule_wrong](../../../tests/fixtures/w003_m1/failures/count_correct_rule_wrong/) | MY左边80改79，M1间距5→4nm；FIN仍5/7 | `MandatoryRuleViolation:T07.m1_spacing` / S | 待确认 |
-| C15 / [via_enclosure](../../../tests/fixtures/w003_m1/failures/via_enclosure/) | VN由[29,50,33,54]移到[33,50,37,54]，超出LN enclosure | `MandatoryRuleViolation:T05.contact_enclosure` / S | 待确认 |
-| C16 / [extraction_mismatch](../../../tests/fixtures/w003_m1/failures/extraction_mismatch/) | ON上边70改64，物理N计数4而CDL仍5；P仍7 | `ExtractionCountMismatch` / S | 待确认 |
-| C17 / [gds_text](../../../tests/fixtures/w003_m1/failures/gds_text/) | 加入当前子集不支持的TEXT记录，不能丢弃 | `UnsupportedGdsElement:TEXT` / P | 待确认 |
-| C18 / [gds_nonrectangle](../../../tests/fixtures/w003_m1/failures/gds_nonrectangle/) | 加入非矩形几何，不能使用bbox冒充保真 | `UnsupportedNonrectangle` / P | 待确认 |
-| C19 / [output_nonrepresentable](../../../tests/fixtures/w003_m1/failures/output_nonrepresentable/) | 输出DBU选择2nm，源中奇数坐标无法精确表达；不round | `OutputCoordinateNotRepresentable` / E | 待确认 |
-| C20 / [output_overflow](../../../tests/fixtures/w003_m1/failures/output_overflow/) | 输出DBU选择1e-9nm，坐标超GDS 32-bit范围；不截断 | `OutputCoordinateOverflow` / E | 待确认 |
-| C21 / [normalized_cache_drift](../../../tests/fixtures/w003_m1/failures/normalized_cache_drift/) | 仅缓存中A改Y，raw不变（故意错误） | `NormalizedCacheMismatch` / P | 待确认 |
-| C22 / [missing_body_operator](../../../tests/fixtures/w003_m1/failures/missing_body_operator/) | 从tech删除body/1必需算子 | `RequiredBodyOperatorUnavailable` / P | 待确认 |
+| C01 / [unit_mismatch](../../../tests/fixtures/w003_m1/failures/unit_mismatch/) | source GDS unit改成2nm，与声明的1nm源单位不符；配套header已重绑定 | `UnitScaleMismatch` / P | 用户概览无新增意见，未逐例细审（MR-071） |
+| C02 / [missing_terminator](../../../tests/fixtures/w003_m1/failures/missing_terminator/) | instance raw删END；删除旧normalized缓存，失败样张也引用此坏raw | `MissingTerminator` / P | 用户概览无新增意见，未逐例细审（MR-071） |
+| C03 / [wrong_count](../../../tests/fixtures/w003_m1/failures/wrong_count/) | net xref实际4条，COUNT写5；删除旧缓存 | `CountMismatch` / P | 用户概览无新增意见，未逐例细审（MR-071） |
+| C04 / [dialect_drift](../../../tests/fixtures/w003_m1/failures/dialect_drift/) | device region的RECT改BBOX，不得当作精确矩形接收；删除旧缓存 | `UnsupportedGeometryToken` / P | 用户概览无新增意见，未逐例细审（MR-071） |
+| C05 / [unknown_unit](../../../tests/fixtures/w003_m1/failures/unknown_unit/) | net region单位nm改mystery；删除旧缓存 | `UnitBindingMismatch` / P | 用户概览无新增意见，未逐例细审（MR-071） |
+| C06 / [raw_byte_drift](../../../tests/fixtures/w003_m1/failures/raw_byte_drift/) | net raw索引042改043，header/hash不更新（故意错误） | `RawHashMismatch` / P | 用户概览无新增意见，未逐例细审（MR-071） |
+| C07 / [header_top_mismatch](../../../tests/fixtures/w003_m1/failures/header_top_mismatch/) | header source top改WRONG_TOP（故意错误） | `TopBindingMismatch` / P | 用户概览无新增意见，未逐例细审（MR-071） |
+| C08 / [mapping_many_to_one](../../../tests/fixtures/w003_m1/failures/mapping_many_to_one/) | Q17/Q93都映射MN0，违反一对一 | `UnsupportedDeviceCardinality` / P | 用户概览无新增意见，未逐例细审（MR-071） |
+| C09 / [multifinger](../../../tests/fixtures/w003_m1/failures/multifinger/) | MN0 NF=1改NF=2 | `UnsupportedFingerCount` / P | 用户概览无新增意见，未逐例细审（MR-071） |
+| C10 / [device_reduction](../../../tests/fixtures/w003_m1/failures/device_reduction/) | 增加Q18→MN0的第三条映射，需归并解释 | `UnsupportedDeviceReduction` / P | 用户概览无新增意见，未逐例细审（MR-071） |
+| C11 / [cdl_expression](../../../tests/fixtures/w003_m1/failures/cdl_expression/) | NFIN=5改成NFIN={2+3}；数值等价也不支持表达式 | `UnsupportedCdlExpression` / P | 用户概览无新增意见，未逐例细审（MR-071） |
+| C12 / [cdl_include](../../../tests/fixtures/w003_m1/failures/cdl_include/) | 添加.INCLUDE private_model.cdl；本例是合成字符串，没有私有文件 | `UnsupportedDependencyDirective` / P | 用户概览无新增意见，未逐例细审（MR-071） |
+| C13 / [unsupported_target](../../../tests/fixtures/w003_m1/failures/unsupported_target/) | target MN0 L=4n改5n；5/7不变也不是no_change | `UnsupportedTargetAxis` / S | 用户概览无新增意见，未逐例细审（MR-071） |
+| C14 / [count_correct_rule_wrong](../../../tests/fixtures/w003_m1/failures/count_correct_rule_wrong/) | MY左边80改79，M1间距5→4nm；FIN仍5/7 | `MandatoryRuleViolation:T07.m1_spacing` / S | 用户概览无新增意见，未逐例细审（MR-071） |
+| C15 / [via_enclosure](../../../tests/fixtures/w003_m1/failures/via_enclosure/) | VN由[29,50,33,54]移到[33,50,37,54]，超出LN enclosure | `MandatoryRuleViolation:T05.contact_enclosure` / S | 用户概览无新增意见，未逐例细审（MR-071） |
+| C16 / [extraction_mismatch](../../../tests/fixtures/w003_m1/failures/extraction_mismatch/) | ON上边70改64，物理N计数4而CDL仍5；P仍7 | `ExtractionCountMismatch` / S | 用户概览无新增意见，未逐例细审（MR-071） |
+| C17 / [gds_text](../../../tests/fixtures/w003_m1/failures/gds_text/) | 加入当前子集不支持的TEXT记录，不能丢弃 | `UnsupportedGdsElement:TEXT` / P | 用户概览无新增意见，未逐例细审（MR-071） |
+| C18 / [gds_nonrectangle](../../../tests/fixtures/w003_m1/failures/gds_nonrectangle/) | 加入非矩形几何，不能使用bbox冒充保真 | `UnsupportedNonrectangle` / P | 用户概览无新增意见，未逐例细审（MR-071） |
+| C19 / [output_nonrepresentable](../../../tests/fixtures/w003_m1/failures/output_nonrepresentable/) | 输出DBU选择2nm，源中奇数坐标无法精确表达；不round | `OutputCoordinateNotRepresentable` / E | 用户概览无新增意见，未逐例细审（MR-071） |
+| C20 / [output_overflow](../../../tests/fixtures/w003_m1/failures/output_overflow/) | 输出DBU选择1e-9nm，坐标超GDS 32-bit范围；不截断 | `OutputCoordinateOverflow` / E | 用户概览无新增意见，未逐例细审（MR-071） |
+| C21 / [normalized_cache_drift](../../../tests/fixtures/w003_m1/failures/normalized_cache_drift/) | 仅缓存中A改Y，raw不变（故意错误） | `NormalizedCacheMismatch` / P | 用户概览无新增意见，未逐例细审（MR-071） |
+| C22 / [missing_body_operator](../../../tests/fixtures/w003_m1/failures/missing_body_operator/) | 从tech删除body/1必需算子 | `RequiredBodyOperatorUnavailable` / P | 用户概览无新增意见，未逐例细审（MR-071） |
 
 覆盖核对：B列出24个正常/说明文件，C包含索引及全部替换输入；去重后恰为75个实存fixture文件，无遗漏或额外文件。C的错误类别拼写沿用cases.json，产品enum尚未由本页发布。
 
@@ -192,68 +198,70 @@ Connector 必须对声明两侧各恰好一个导体有正面积交集，另检�
 
 | ID | 核验对象与使用预期 | 用户状态 |
 | --- | --- | --- |
-| D1 | [schema](examples/schema.json) 与 [contracts](contracts.md)：owner、typed id/ref、必需/可选/禁止字段、exact值编码、哈希对象。仅作为实现前样张；产品CLI/wire发布需下一任务明确，不把阅读认可扩展为生产API冻结 | 待确认 |
-| D2 | 下表20条 [records](examples/records.json)，逐条能沿ref找到前因后果；create-attempt摘要绑定run/head/实际输入选择，未seal不提前声称canonical context；baseline初始化与ECO分开 | 待确认 |
-| D3 | [人读报告](examples/report.expected.md)、[机器报告](examples/report.expected.json) 与B5的GDS/CDL/JSON：能解释输入、5/7、几何/拓扑/规则、没有ECO、bytes与语义差异、未覆盖项与requires_review；不能只列edit数量 | 待确认 |
-| D4 | 下表8类 [failures](examples/failures.json)，逐条核对允许/禁止的记录及artifact。Required fail/error/export/report failure始终reject；只有manifest不能认定生产可消费 | 待确认 |
+| D1 | [schema](examples/schema.json) 与 [contracts](contracts.md)：owner、typed id/ref、必需/可选/禁止字段、exact值编码、哈希对象。仅作为实现前样张；产品CLI/wire发布需下一任务明确，不把阅读认可扩展为生产API冻结 | D1.01及D1.02样张约定已确认（MR-072/MR-073）；不扩展为正式产品接口冻结 |
+| D2 | 下表20条 [records](examples/records.json)，逐条能沿ref找到前因后果；create-attempt摘要绑定run/head/实际输入选择，未seal不提前声称canonical context；baseline初始化与ECO分开 | 按用户委托完成20条总览；D2.18检查身份映射需修订（MR-074-Q1），其余未发现新增问题 |
+| D3 | [人读报告](examples/report.expected.md)、[机器报告](examples/report.expected.json) 与B5的GDS/CDL/JSON：能解释输入、5/7、几何/拓扑/规则、没有ECO、bytes与语义差异、未覆盖项与requires_review；不能只列edit数量 | 已确认报告用途与当前预期（MR-075）；检查身份及既定样本修改仍须联动修订 |
+| D4 | 下表8类 [failures](examples/failures.json)，逐条核对允许/禁止的记录及artifact。Required fail/error/export/report failure始终reject；只有manifest不能认定生产可消费 | 8类总览预期已确认（MR-076）；不代表产品失败流程已运行 |
 
 ### D2 的20条记录
 
 | 序号 | Kind / variant | 样张ID | 用户状态 |
 | --- | --- | --- | --- |
-| D2.01 | ToolRunResult | fixture-read | 待确认 |
-| D2.02 | ParseResult | query-parse | 待确认 |
-| D2.03 | EvidenceRecord | evidence | 待确认 |
-| D2.04 | ImmutableContext | context | 待确认 |
-| D2.05 | LifecycleAuditRecord | lifecycle | 待确认 |
-| D2.06 | ProposedInitialState | proposed | 待确认 |
-| D2.07 | RunAttempt / unsealed | attempt-unsealed | 待确认 |
-| D2.08 | PreparedBaseline | prepared | 待确认 |
-| D2.09 | Snapshot | baseline-0 | 待确认 |
-| D2.10 | InitializationEvent | init | 待确认 |
-| D2.11 | RunAttempt / sealed_open | attempt-sealed | 待确认 |
-| D2.12 | PlanningAuditRecord | planning | 待确认 |
-| D2.13 | ConstraintAuditRecord | mandatory | 待确认 |
-| D2.14 | NoChangePlanningResult | no-change | 待确认 |
-| D2.15 | RunRecord / no_change | run-record | 待确认 |
-| D2.16 | Stage5Closure / with_run_record | closure | 待确认 |
-| D2.17 | ArtifactManifest | manifest | 待确认 |
-| D2.18 | ValidationResult | validation | 待确认 |
-| D2.19 | ReportingResult | reporting | 待确认 |
-| D2.20 | PipelineResult | terminal | 待确认 |
+| D2.01 | ToolRunResult | fixture-read | 委托总览，未发现新增问题（MR-074） |
+| D2.02 | ParseResult | query-parse | 委托总览，未发现新增问题（MR-074） |
+| D2.03 | EvidenceRecord | evidence | 委托总览，未发现新增问题（MR-074） |
+| D2.04 | ImmutableContext | context | 委托总览，未发现新增问题（MR-074） |
+| D2.05 | LifecycleAuditRecord | lifecycle | 委托总览，未发现新增问题（MR-074） |
+| D2.06 | ProposedInitialState | proposed | 委托总览，未发现新增问题（MR-074） |
+| D2.07 | RunAttempt / unsealed | attempt-unsealed | 委托总览，未发现新增问题（MR-074） |
+| D2.08 | PreparedBaseline | prepared | 委托总览，未发现新增问题（MR-074） |
+| D2.09 | Snapshot | baseline-0 | 委托总览，未发现新增问题（MR-074） |
+| D2.10 | InitializationEvent | init | 委托总览，未发现新增问题（MR-074） |
+| D2.11 | RunAttempt / sealed_open | attempt-sealed | 委托总览，未发现新增问题（MR-074） |
+| D2.12 | PlanningAuditRecord | planning | 委托总览，未发现新增问题（MR-074） |
+| D2.13 | ConstraintAuditRecord | mandatory | 委托总览，未发现新增问题（MR-074） |
+| D2.14 | NoChangePlanningResult | no-change | 委托总览，未发现新增问题（MR-074） |
+| D2.15 | RunRecord / no_change | run-record | 委托总览，未发现新增问题（MR-074） |
+| D2.16 | Stage5Closure / with_run_record | closure | 委托总览，未发现新增问题（MR-074） |
+| D2.17 | ArtifactManifest | manifest | 委托总览，未发现新增问题（MR-074） |
+| D2.18 | ValidationResult | validation | 委托总览：需修订检查身份映射（MR-074-Q1） |
+| D2.19 | ReportingResult | reporting | 委托总览，未发现新增问题（MR-074） |
+| D2.20 | PipelineResult | terminal | 委托总览，未发现新增问题（MR-074） |
 
 ### D4 的8类失败组合
 
 | ID / variant | 必须看见的结果 / 不得伪造的结果 | 用户状态 |
 | --- | --- | --- |
-| D4.1 / pre_context | 最小failure RunRecord、StageFailure与已完成audit；缺terminator引用真实坏raw；无canonical context/ECO/正常geometry/ValidationResult | 待确认 |
-| D4.2 / sealed_no_publication | failure RunRecord、StageFailure，稳定baseline按阶段可有；无ECO，只可diagnostic report | 待确认 |
-| D4.3 / run_record_freeze | Stage5Closure记录freeze failure；唯一允许无RunRecord的例外，无正常export/ValidationResult，不编造RunRecord | 待确认 |
-| D4.4 / export_failure | 原frozen no_change RunRecord和snapshot保留，可有orphan/staging；核心产物不全则无成功Manifest/正常validation | 待确认 |
-| D4.5 / check_fail | 原RunRecord+Manifest+ValidationResult+StageFailure，检查确认为fail，required则reject | 待确认 |
-| D4.6 / check_error | 记录检查执行error，不能当fail/pass或以golden匹配掩盖，required则reject | 待确认 |
-| D4.7 / reporting_failure | 保留既有检查结果，加ReportingResult/StageFailure；required报告失败则reject | 待确认 |
-| D4.8 / terminal_storage_failure | best-effort失败诊断；不能声称terminal pointer已发布，不能编造accept或断电恢复证明 | 待确认 |
+| D4.1 / pre_context | 最小failure RunRecord、StageFailure与已完成audit；缺terminator引用真实坏raw；无canonical context/ECO/正常geometry/ValidationResult | 总览预期已确认（MR-076） |
+| D4.2 / sealed_no_publication | failure RunRecord、StageFailure，稳定baseline按阶段可有；无ECO，只可diagnostic report | 总览预期已确认（MR-076） |
+| D4.3 / run_record_freeze | Stage5Closure记录freeze failure；唯一允许无RunRecord的例外，无正常export/ValidationResult，不编造RunRecord | 总览预期已确认（MR-076） |
+| D4.4 / export_failure | 原frozen no_change RunRecord和snapshot保留，可有orphan/staging；核心产物不全则无成功Manifest/正常validation | 总览预期已确认（MR-076） |
+| D4.5 / check_fail | 原RunRecord+Manifest+ValidationResult+StageFailure，检查确认为fail，required则reject | 总览预期已确认（MR-076） |
+| D4.6 / check_error | 记录检查执行error，不能当fail/pass或以golden匹配掩盖，required则reject | 总览预期已确认（MR-076） |
+| D4.7 / reporting_failure | 保留既有检查结果，加ReportingResult/StageFailure；required报告失败则reject | 总览预期已确认（MR-076） |
+| D4.8 / terminal_storage_failure | best-effort失败诊断；不能声称terminal pointer已发布，不能编造accept或断电恢复证明 | 总览预期已确认（MR-076） |
 
 ## 确认记录与下一步
 
 | 批次 | 状态 | 答复/决定与受影响版本 |
 | --- | --- | --- |
 | A 正常例与独立答案 | 部分需修改；A2.04/A2.05确认理解；孤岛拆分待执行、MARK已确认；A5原版委托核对已结束；body场景新增修改 | MR-002来源/规则、MR-020孤岛及MR-046 tapcell/body要求待执行；A2.04/A2.05见MR-010/MR-011，MARK见MR-022.1。MR-025仅保留原版委托核对范围；受body修改影响的几何/端子/连接/规则另行复核，不记新版通过 |
-| B 文件链与格式 | 部分需修改；既有确认保持；MR-052纠正过度展开的runtime设计审查 | 当前B保留文件/样本语义及最小合同；MR-051只保留粗索引假设/示例引用不误导的修正，完整坐标模型和生成验证留后续。MR-046/MR-034/MR-030.2/MR-002/MR-004保持，MR-040未决；其余B/C/D覆盖未完成 |
-| C 全部22负例 | 待确认 | 尚无用户答复；以C01–C22为范围，不按抽样通过 |
-| D 记录与报告 | 待确认；坐标引用的示例范围按MR-052澄清 | D2/D4仍需全部覆盖owner/id/ref/样张一致性及预期失败组合；coordinate_ref不声明完整runtime坐标模型已交付，不为填示例提前实现完整模型/DTO/codec/CAS |
+| B 文件链与格式 | 部分需修改；既有确认保持；MR-052纠正过度展开的runtime设计审查 | B4后段、B5/B6已按MR-056–070确认；前段未决/局部确认按原状态保留。MR-002/004/020/030.2/034/046及经MR-052收窄的MR-051待修订，MR-040未采纳；汇总见MR-076 |
+| C 全部22负例 | 用户总览/粗看暂无新增问题，按指示转D（MR-071） | 本轮概览覆盖22例类别，未逐例亲自细审或运行产品失败流程；不登记为逐例验证通过。既定样本修订及受影响技术复核保持 |
+| D 记录与报告 | D1/D3/D4已确认；D2委托总览完成，保留MR-074-Q1修订；本轮转交接（MR-076） | D2按最新指示总览20条，非用户逐条亲自确认或产品运行验收；MR-074-Q1及既定修订保持，D4已按总览确认8类预期；coordinate_ref不声明完整runtime坐标模型已交付，不为样张提前实现完整模型/DTO/codec/CAS |
 
 全部组确认且相关修正经review后，PM才决定W003最终验收及后续M1 parser/输入绑定任务。这里不创建或授权实现任务；W003辅助reader不作为产品parser上传。平台、Python/离线依赖、可外传信息和内网真实验收回执由PM另行协调，不用本地synthetic结论代替。
 
-### 人工核验恢复点（子 PM，更新于2026-10-10）
+### 人工核验恢复点（子 PM，更新于2026-10-30）
 
-- 会话初始记录编号 `MR-001`，首轮主题 **A1：同一 inverter 的 no_change 含义、固定尺寸及完整参数语义**。版本为 `6d29b511ac415a9ea198d1e5c8978313c5abb6e3`；图与原输入/期望输出均来自该版本。当前恢复点见下方 MR-054。
+- 会话初始记录编号 `MR-001`，首轮主题 **A1：同一 inverter 的 no_change 含义、固定尺寸及完整参数语义**。版本为 `6d29b511ac415a9ea198d1e5c8978313c5abb6e3`；图与原输入/期望输出均来自该版本。当前恢复点见下方最新条目及MR-076。
 - 本轮展示依据：[坐标图](fixture-layout.png)左图、[spec](../../../tests/fixtures/w003_m1/spec.json)的 FRAME/G/FIN 坐标与 Q17→MN0、Q93→MP0 映射、[source CDL](../../../tests/fixtures/w003_m1/source.cdl)、[target CDL](../../../tests/fixtures/w003_m1/target.cdl)、[expected CDL](../../../tests/fixtures/w003_m1/expected/output.cdl)、[toy model](../../../tests/fixtures/w003_m1/tech.json)的 `cdl_dialect.models`。讲解范围为 160×200 nm、nominal 1 nm tick、NFIN=5/7、NF=M=1、W=2n/L=4n/VT=toy、top/pin/端子/model/参数语义保持，以及文字顺序不同仍可 no_change。
 - 子 PM 阅读疑点 `MR-001-Q1`（用户未表态，不作为用户“未决”答复）：上述版本的 [fixture README](../../../tests/fixtures/w003_m1/README.md) 将 L=4n 写为 `channel width`，而 tech 的 N/P 模型均定义为 `channel_length`；坐标共同指向 gate 的 x=58..62，未发现数值矛盾。交总 PM 的具体措辞修改建议：将该句统一为 `toy channel length (the gate's x extent), 4 nm`，并保留 W=2n 为 FIN width 的说明，避免 L/W 解释混淆。预期仅澄清措辞，不改几何、参数或模型语义；影响 A1 的解释来源及 B6 的说明文件。当前只登记待交接建议，子 PM 未修正文档，未重开技术 review。
 - 首轮 MR-001 展示结束时尚无用户明确答复，未勾选任何项目。随后用户提出尺寸/精度来源问题，明确要求关键层尺寸与 DRC 有对应，记录为下方 MR-002 的两项需修改；这不表示用户确认或否定现有数值，也不表示用户选择坐标 GCD 作为算法。
-- **当前恢复点：MR-054 / B4.03d追问，文件DBU与网格精度的关系。** 用户询问为何涉及“刻度”、是否与网格精度有关；已澄清该词指GDS整数坐标的数据库单位，区别于工艺合法位置与算法track/cell网格。当前没有通过答复，先继续处理这一疑问；之后按用户指示再进入B4.04a三项必需导出产物及完整性。MR-052范围纠正有效，不展开grid/CSP/registry实现设计；MR-002单位来源仍需修改，REAL8细节留B5。B4.03c.2未确认、MR-040未决及其它既有修改保持；export其余字段、validation、limitations、B5/B6、C全部22例与D全部明细仍须覆盖。仅本页更新，未改fixture/架构/reviewer或派发实现。
-- 如用户指出问题，先在本页形成带编号、当前值、期望值、理由、受影响项和版本的具体修改要求，交回总 PM；子 PM 不修改 fixture、架构或 reviewer 原文。本轮只有人工清单记录，未开始产品实现，未 commit/push；W003 仍待最终人工验收。
+- **当前恢复点：MR-076，本轮人工核验收尾并交总PM。** 用户确认D4八类总览预期；B4后段/B5/B6、C概览、D1/D3/D4确认及D2委托总览均已按各自范围记录。待修订/未决清单见[MR-076](#mr-076)，由总PM接收、组织样本修订及受影响独立复核；不从MR-054重讲，不把A/B既有未确认项、MR-040方案或B4.03c.2自动批准，不宣布W003最终验收。
+- 2026-10-29 云端恢复后的旁支问题为 MR-055：已核对该 legacy golden 缺文件不构成 W003 或后续 v2 的修复前置；该旁支不改变B–D人工覆盖。MR-054之后的明确理解确认见MR-056.1。
+- 记录与交接方式按MR-060精简，用户已接受；本对话结束/交接时整理关键结论及恢复点，提交推送审核分支。日常维护本地仓库文件；主线现为MR-076：本轮核验收尾，向总PM交接待修订/未决清单。提交推送只限审核分支，不合入main。
+- 如用户指出问题，先在本页形成带编号、当前值、期望值、理由、受影响项和版本的具体修改要求，交回总 PM；子 PM 不修改 fixture、架构或 reviewer 原文。本轮交付为人工记录与必要恢复入口，按MR-060授权保存到审核分支；W003仍待修订、复核及总PM最终验收，未开始产品实现。
 
 ### MR-002：尺寸、精度来源与关键层规则对应（2026-09-14）
 
@@ -1812,6 +1820,8 @@ REAL8只能有限精度存储单位值；合同中的half-ULP用于解释该单�
 
 ### MR-054：文件DBU与网格精度的关系追问（2026-10-10）
 
+后续状态：2026-10-29用户明确确认已理解本题，见MR-056.1；下表保留当轮问题与状态。
+
 | 编号 / 状态 | 用户问题及待厘清范围 | 对应版本 |
 | --- | --- | --- |
 | MR-054.1 / 未决 | “为什么这里会涉及所谓刻度，和网格精度有关系吗”。询问B4.03d的概念与必要性；不作为换算结果通过、选择新输出精度或同意新增配置的答复。 | `codex/w003-manual-review@6d29b511ac415a9ea198d1e5c8978313c5abb6e3`；本题尚未确认。 |
@@ -1825,6 +1835,385 @@ REAL8只能有限精度存储单位值；合同中的half-ULP用于解释该单�
 它们的联系是：实际几何和采用的合法位置必须能在所选文件/内部单位下精确表达；无需把所有pitch、索引格尺寸与DBU设为同一数值。W003 B涉及DBU，是为了说明输入数字对应的物理尺寸并核对导出不移动原几何；本题没有要求设计新网格或选择生产精度。MR-002来源补充保持需修改。
 
 依据：[tech](../../../tests/fixtures/w003_m1/tech.json) unit_scale_contract/fin_count_profile、[architecture](../../architecture.md) §2.2、§3.4、§10.2、§12.5及MR-052。本轮只读复核branch/HEAD及相关定义，仅在本页记录疑问与恢复点；未改fixture/架构/reviewer，未运行测试/生成器、未commit/push。恢复时继续本题答疑或记录明确答复，不自动勾选。
+
+### MR-055：云端恢复与 legacy 历史测试的范围边界（2026-10-29）
+
+用户指定以 W003 人工核验子 PM 角色，从 `codex/w003-manual-review` 含网页交接和 MR-054 的最新迁移提交继续，并问：“失败的测试看起来和legacy有关，我认为不需要在现在阶段或者后续v2开发解决，对吗。”这是范围问题，不作为任何 fixture 项目的通过答复。
+
+**恢复身份：**远端只读查询和 fetch 后，当前本地审核分支 HEAD 为 `765ae5ef4ebf50e6870c5a978795525261d89ff6`；网页交接文件最近提交也是该 SHA。已读项目规范、W003 要求/交接、人工状态表/恢复点及 MR-052–MR-054；核对本页展示来源与架构 hash，原技术实物未变。本轮只在本页增加范围答疑和恢复记录。
+
+**子 PM 核对结论：**此前云环境安装时的“366 通过、1 失败”属于 `legacy_mvp/tests`。唯一失败 `test_pipeline_pick_macro_refactor_preserves_byte_golden` 读取缺失的 `legacy_mvp/output/annotation_coverage.txt`，记录为已知归档基线缺陷即可；不列为当前 W003 人工核验或后续 v2 开发必须先修复的事项，也不要求归档全套测试通过才能推进。此前结果保留为归档测试记录，不代表 v2 测试失败或 v2 已获验证；本轮没有重跑该套测试。
+
+依据：[W003 非目标与定向复用](../W003-m1-fixture-contracts.md)、[handoff](handoff.md)及[架构 §11.14–11.15](../../architecture.md)明确 legacy 是参考/回归种子，v2 runtime 和 production tests 不依赖 archive；[pytest 配置](../../../pyproject.toml)默认排除 `legacy_mvp`。人工核验继续按 MR-052 围绕样本语义、来源、引用和预期结果进行。
+
+**后续相关义务：**定向取用旧 parser、纯函数、格式资料或样本时，只对迁入 v2 的部分重新核验，并建立相关 parity/regression 与独立正确性检查，排除不适合 v2 的旧行为。该义务不要求修完整 legacy 套件，也不使这个缺失 annotation 报告自动成为待办。W003 现有样本修改要求及后续 v2 自身的测试/验收条件均保持。
+
+**恢复与交付：**MR-054 / B4.03d 仍未确认；按用户指示再进入 B4.04a。A/B 的既有修改与未决、C 全22例及 D 全明细继续保留。无 fixture、架构、reviewer 原文或产品实现修改，无 commit/push；本页变更另保存可回填补丁供跨主机接回。
+
+### MR-056：确认MR-054，进入B4.04a三项必需产物（2026-10-29）
+
+后续状态：B4.04a经MR-057答疑后，用户于MR-058.1确认；以下保留当轮展示及状态。
+
+用户原话：“好的，MR-054我已理解确认，继续”。版本为 `codex/w003-manual-review@765ae5ef4ebf50e6870c5a978795525261d89ff6` 加本页累积人工记录；实物仍绑定原技术版本，未改。
+
+| 编号 / 状态 | 答复与覆盖范围 |
+| --- | --- |
+| MR-056.1 / 确认理解 | MR-054的文件DBU与工艺合法位置、算法分格的区别及联系已确认理解，进入B4.04a。未据此选定新的输出DBU、关闭MR-002来源补充、勾选B5或C19/C20。 |
+| MR-056.2 / 待确认 | B4.04a：本例 `output.gds`、`output.cdl`、`layout.json` 均为必需产物；no_change也须完整导出。三者表达同一最终状态的不同方面，缺任一项即导出失败。 |
+
+**本题展示：**[export_policy](../../../tests/fixtures/w003_m1/export_policy.json) 的 `required_artifacts` 列出三项。GDS保存最终图层/几何，CDL保存同一结果的器件/连接/model/参数（本例N/P仍5/7），JSON以机器可读方式表达current semantic、geometry、occupancy、annotation、connectivity及来源/linkage。它们来自同一冻结snapshot，不能以其中一项替代其余必需项。当前[expected/layout.json](../../../tests/fixtures/w003_m1/expected/layout.json)明确为 `expected_sample_not_run`、`is_complete_runtime_snapshot=false` 的最小样张；完整产品导出仍是后续实现义务。
+
+**具体缺项预期：**GDS/CDL已写出但JSON写失败，本次应为export failure / reject；保留已冻结no_change RunRecord及既有snapshot，已写文件可作为staging/orphan或诊断保留；不发布成功ArtifactManifest、不进入正常validation，也不汇总成功。依据：[contracts](contracts.md)的export_failure行、[architecture](../../architecture.md) §10.2/§11.11及[失败组合](examples/failures.json)的export_failure边界。失败组合目前以不可表示为具体错误样张，缺JSON用于说明同一完整性规则，未新增fixture或运行故障注入。人机报告后续另行覆盖，本题只核对三项core产物。
+
+本题尚无用户答复；下一小主题B4.04b核对输出路径与防覆盖。既有修改/未决及剩余A–D覆盖保持。本轮仅更新本页；未运行tests/generator/产品流程、未改fixture/架构/reviewer原文、未commit/push。累积记录另存可回填补丁。
+
+### MR-057：layout.json的必要性及B4/B5讨论边界（2026-10-29）
+
+后续状态：用户于MR-058.1明确确认本题及B4.04a，以下保留当轮问题和分析。
+
+用户问题：“考虑`layout.json`的必要性？以及为什么这里放在B04讨论而不是b05”。本题为用途/范围追问，不记B4.04a已确认，也不自动修改必需产物策略。版本仍为 `765ae5ef4ebf50e6870c5a978795525261d89ff6` 加本页累积人工记录。
+
+**子PM分析：**GDS/CDL承担版图/电路交换；layout JSON补充Layauto内部解释的可核对导出，例如某个精确子区域对应的物理分量/网络、注释有效性和来源引用。当前样张的 `ON.S` fragment关联 `C_VSS/VSS`，并含annotation/linkage；这些信息在GDS/CDL标准内容中没有完整的对应表达，普通“检查通过”报告也不展示全量状态关系。JSON的价值来自这些可核对信息，并非仅因格式可由机器读取。
+
+若目标仅是向版图工具交付几何和网表，单靠该目标不能推出必须再交layout JSON；现有[架构 §10.2](../../architecture.md)与[export policy](../../../tests/fixtures/w003_m1/export_policy.json)将JSON列为产品状态导出和本例必需项，是为内部状态核验、回归和追溯作出的合同选择。子PM建议保留该用途；现有[expected/layout.json](../../../tests/fixtures/w003_m1/expected/layout.json)仍只是最小样张，具体充分性留B5，完整codec/字段实现留后续开发。用户尚未决定取消或改为可选，故本轮不修改架构/策略或将建议记作确认。
+
+**B4/B5分工：**B4审 `export_policy.json` 的使用预期，即哪些产物必需、缺项是否失败、路径/覆盖/单位选择；B5实际打开expected输出，核对图形/电路保真、JSON表达及来源绑定。B4.04a只需说明JSON的用途以判断requiredness，不在此逐字段审阅JSON或提前冻结实现。B5仍须覆盖，不因本次说明而勾选；D报告及记录也保持原覆盖。
+
+恢复于本追问；MR-054理解确认及其余修改/未决保持。本轮仅更新人工清单，未改fixture/架构/reviewer/实现、未运行tests/generator、未commit/push；累积补丁另存供回填。
+
+### MR-058：确认B4.04a，进入B4.04b输出路径与防覆盖（2026-10-29）
+
+后续状态：B4.04b经MR-059答疑后，用户于MR-061确认；以下保留当轮展示及状态。
+
+用户原话：“好的，标为已确认，继续吧”。版本仍为 `codex/w003-manual-review@765ae5ef4ebf50e6870c5a978795525261d89ff6` 加本页累积人工记录，fixture/架构未变。
+
+| 编号 / 状态 | 答复与覆盖范围 |
+| --- | --- |
+| MR-058.1 / 确认 | 确认B4.04a三项必需产物及缺项预期，包含MR-057对layout JSON核验/追溯用途及B4策略/B5具体输出分工的解释。保留JSON为必需产物；B5具体字段/充分性及D记录/报告尚未核验，不外推确认。 |
+| MR-058.2 / 待确认 | B4.04b输出位置、分目录防覆盖及完整导出清单的预期，按下文展示。 |
+
+依据：[export_policy](../../../tests/fixtures/w003_m1/export_policy.json)的 `relative_path_base`、`object_path_template`、`manifest_path_template`、`overwrite`、`publish`，与[site config](../../../tests/fixtures/w003_m1/site_config.yaml)的输出选择一致；[架构 §11.11](../../architecture.md)规定不可变版本化路径及完整集后发布ArtifactManifest。
+
+**本题展示：**相对输出目录 `outputs` 从site_config.yaml所在目录解析，与启动命令的工作目录无关。每组文件在 `outputs/{run_id}/{snapshot_id}/{export_attempt_id}/` 下；三个标识分别区分本次运行、结果状态和这次导出尝试。同一snapshot重导出可使用新的尝试目录保留旧结果。目标最终对象已存在则拒绝覆盖，不就地改旧文件；路径标识只允许策略声明的字符集，不能用 `../` 逃出指定位置。
+
+**具体示意（非真实run）：**若配置位于 `case/site_config.yaml`，本次标识为 `run_01/snapshot_00/export_01`，三项文件及manifest位于 `case/outputs/run_01/snapshot_00/export_01/`。再次导出到新尝试 `export_02/` 可保留第一组；若仍指向已存在的第一组最终路径则拒绝。只有required三项完整且可寻址后才发布manifest；写到一半的staging不能作为完整成功结果。这里的manifest表示导出集完整可寻址，生产接收仍依赖后续验证/终态；本题未讨论实现或执行真实文件写入。
+
+本题待答复；下一小主题B4.04c核对实际文件哈希与语义一致性，之后继续validation/limitations及B5/B6/C/D。MR-054已确认理解，其余已有修改和未决保持。本轮只更新人工清单，未改fixture/架构/reviewer/产品，未运行tests/generator、未commit/push；累积补丁另存供回填。
+
+### MR-059：run/snapshot/export区分的场景及manifest用途/内容（2026-10-29）
+
+后续状态：用户于MR-061明确确认B4.04b，包含本题用途说明；B5/D具体实物/记录仍待核验。
+
+用户问题：“run/snapshot/export区分必要性？举例看其场景；`manifest.json`必要性和内容？”本题保持B4.04b待确认，不外推为B5或D2.17的完整字段验收。版本仍为 `765ae5ef4ebf50e6870c5a978795525261d89ff6` 加本页累积人工记录。
+
+**场景说明（均为概念示意，未运行产品）：**run标识哪次请求/处理，snapshot标识哪版状态，export attempt标识这版状态的哪次文件写出。第一次对S0检查得到no_change可记R1/S0/E1；后来再次检查同一已有状态仍no_change，记R2/S0/E2，运行不同但状态不变；未来真正ECO提交后可为R3/S1/E3，这是后续能力，不是W003已实现。另在R1尚未最终终态化时，E1写出中断后按原冻结输入/策略重新导出，可区分R1/S0/E1b；不表示重新打开已终态run、改冻结策略或覆盖旧最终对象。当前未实现通用恢复/重试器。
+
+应区分的是请求、状态和文件写出身份，防止同状态多次检查或重导出时混用/覆盖；三层目录是[当前策略](../../../tests/fixtures/w003_m1/export_policy.json)选择的表达方式，不推断所有系统必须采用相同层数。本轮未改路径模板或新增用户配置要求。
+
+**manifest的用途与内容：**[ArtifactManifest样张](examples/records.json)将三项核心对象绑定成一组确切导出，记录同一run、final snapshot、ordered commit chain和具体对象引用；每项对象含type、required、URI、sample_file、size_bytes、actual_byte_sha256，另有schema/id、example标记、marker_meaning及durability_profile。仅靠目录有三个同名文件不能判定属于同一组、均已完成或未被替换；[合同](contracts.md)与[架构 §11.11](../../architecture.md)因此要求核心对象完整可寻址后最后发布清单，缺项没有成功manifest。后续validation/terminal outcome仍独立，manifest本身不代表规则通过或生产批准。
+
+样张边界：records中的清单没有 `export_attempt_id` 字段，URI为 `example-object:sha256:…`，不是路径模板的实跑记录；以manifest自身id区分具体清单，不据此扩充schema或宣称路径/发布实现已验证。当前例的GDS/CDL/JSON分别为2942/225/11660 bytes，本轮只读重算三项实际文件的大小和SHA-256，均与清单样张相符；这不是产品export/validation运行，也不替代B5/D的后续逐项核验。
+
+恢复于本题答疑；其余确认/修改/未决保持。本轮仅更新人工清单，未改fixture/架构/reviewer/产品，未运行tests/generator、未commit/push；累积补丁另存供回填。
+
+### MR-060：记录与交接方式澄清（2026-10-29）
+
+用户询问补丁的规范来源、格式、对话保存范围及更高效的项目内做法。依据[协作规则 §6](../../collaboration/rules.md)及[网页交接](web-codex-handoff.md)，要求有意义交付/中断时保存恢复点、跨会话需要时提供可重建版本，不要求每次回复打包；逐轮累计patch和receipt是子PM自行采用的过细做法。
+
+仓库保存的是关键问题、确认/需修改/未决、理由、依据与下一步摘要，未导出完整聊天。已有 `.patch` 为人工清单相对迁移提交的Git累积diff，JSON为自选的版本/hash回执；旧补丁是替代版本，不能按编号依次叠加应用，且仅保存在当前云主机，未提交/推送。
+
+后续按现有规范收敛执行：同主题答疑集中维护，关键确认/修改/未决或恢复信息发生有意义变化时更新清单；暂停、换主机或正式交付时集中检查并按授权保存一份最新可重建patch/提交与必要身份。日常不再每轮生成、展示补丁和回执，不改变全局规范或删改历史记录。本条为工作方式说明，不记作新的产品决定；主线MR-059 / B4.04b仍待确认。
+
+**用户接受与保存范围补充：**用户接受本对话精简记录方式，并约定在本对话目的结束或交接时总结、修改、推送。澄清实际保存分两部分：`docs/tasks/W003/manual-verification.md` 已在本地checkout中持续修改，是被Git跟踪目标文件的工作区增量；仓库外patch/receipt只是附加交接副本，并非Git index暂存区。GitHub尚未更新。本对话结束/交接时将关键确认、需修改、未决及恢复点整理入人工清单和必要交接文档，检查后提交推送 `codex/w003-manual-review`；此授权不含合入main或将样本修正擅自实施，也不要求保存全部聊天原文。
+
+### MR-061：确认B4.04b，进入B4.04c文件哈希与语义一致性（2026-10-29）
+
+后续状态：用户于MR-062明确确认B4.04c；下文保留当轮展示及状态。
+
+用户明确“B4.04b确认，继续吧”，据此确认该小题路径/防覆盖、run/snapshot/export及manifest用途说明；不外推至B5或D的具体文件/字段验收。版本仍为迁移提交 `765ae5e` 加本页累积记录，受审实物未变。
+
+**B4.04c展示（待确认）：**[export policy](../../../tests/fixtures/w003_m1/export_policy.json)规定SHA-256对实际写出的字节计算，与[架构 §10.2](../../architecture.md)的语义比较分开。前者核对拿到的文件是否仍为清单登记的那份；后者读回核对图层/精确几何、电路模型/有序端子/参数及本次声明状态，判断是否正确表达冻结结果。顺序、时间戳或允许的格式差异可改变字节/hash而不改变语义；若边界由75nm移到76nm，计算出匹配该错误文件的hash也不能使几何正确。
+
+当前样本source/expected GDS大小分别2936/2942 bytes，实际SHA-256不同；已审预期是两者表达相同44个矩形，独立来源和readback义务留B5进一步核验。本轮只读检查文件大小/hash，不重跑旧技术review或产品测试。缺项、实际文件hash不匹配与语义不一致分别保留错误事实，不以其中一项通过代替另一项。
+
+本题尚未确认；下一小主题为B4验证策略的检查范围及required fail/error预期。其余修改/未决保持；本轮只更新人工清单，未改fixture/架构/reviewer/实现，未运行tests/generator；按MR-060不逐轮生成补丁，最终交接时集中整理并依授权提交推送审核分支。
+
+### MR-062：确认B4.04c，进入B4.05a验证必需范围（2026-10-29）
+
+后续状态：用户于MR-063确认本题及适用对象/执行阶段说明；下文保留当轮展示和追问。
+
+用户答复“确认，继续”，确认上一题文件实际字节哈希与语义一致性应分别核对；不外推B5实物或D结果字段的完整验收。受审实物及版本未变。
+
+**B4.05a展示（待确认）：**[validation policy](../../../tests/fixtures/w003_m1/validation_policy.json)列出六项required义务；当前只核对其使用预期，不设计验证器或视为产品已运行。
+
+| 必需项 | 本例要证明什么 |
+| --- | --- |
+| self_consistency | GDS/CDL/JSON读回后正确表达同一冻结状态 |
+| fixture_oracle | 与独立答案核对几何、5/7计数、端子/连通等，不能只比较计数 |
+| all_mandatory_toy_rules | 全部适用toy规则通过，no_change也检查；前置阶段执行的mandatory检查保留其审计结果，不由Stage6临时修改状态补过 |
+| audit_readiness | 输入、证据/配置版本、结果及检查能沿引用追溯，限制如实披露 |
+| human_report / machine_report | 人读与机器报告均按要求产生，结果和限制与已有记录一致；报告由reporting负责，失败另记，不改检查结论 |
+
+发现违例为fail，执行检查崩溃/超时等未完成为error；required情况下两者最终均reject，错误原因分别保留。例如5/7正确但间距不足仍fail；间距检查未执行完成不能当作通过。依据[架构 §10.5–10.6](../../architecture.md)、[contracts](contracts.md)及[预期报告](examples/report.expected.md)。正常合成样本即使本地必需项全部通过也仍为requires_review，真实工具deferred及coverage的具体含义留B4.05b。
+
+**适用对象与阶段澄清：**用户追问这些检查是在未来导出后做、仅核对W003样本，还是其它用途。当前 `validation_policy.json` 是W003为未来M1“运行此合成样本”准备的策略样张；现在核验其预期是否合理、样本/答案是否自洽，尚无产品运行。后续M1实现后，用这套真实输入链运行fixture并对实际输出执行所约定检查，形成开发/回归验收证据；不能把现有辅助或旧技术review的通过写成产品通过。
+
+六项required是跨流程义务：toy mandatory rules在导出前的状态/约束流程检查并记录；三项core产物完整后，Stage6检查导出自洽和fixture独立答案；audit-readiness在报告前核对记录/引用，human/machine report由后续reporting生成。不是六项都在写完文件后重跑，也不是现在要求W003额外实现这一套验证器。
+
+正式设计按其选定tech/profile和验证策略运行；self-consistency、追溯、报告等是通用职责，而本例5/7、手写oracle和toy规则仅绑定该fixture。任意真实设计不要求预先有一份手写golden，也不能照搬toy规则作为生产验证。依据W003任务范围、contracts正常链、架构§10.5–10.6及MR-052。本追问未产生新的确认或修改要求，主线停在B4.05a。
+
+其余既有确认/修改/未决保持；本题待答复。仅更新人工记录，未运行tests/generator/产品、未改fixture/架构/reviewer；按MR-060最终交接时集中整理并提交推送审核分支。
+
+### MR-063：确认B4.05a，进入B4.05b暂缓项与结果维度（2026-10-29）
+
+后续状态：用户于MR-064确认B4.05b用途及结果维度；D中Virtuoso字段映射仍留待核对。
+
+用户答复“好的，标为确认，继续”，确认B4.05a六项required预期及W003现在审题目/答案、未来M1实际执行、正式输入另按选定profile运行的分工。实物未变，当前仍未执行产品run。
+
+**B4.05b展示（待确认）：**[validation policy](../../../tests/fixtures/w003_m1/validation_policy.json)将真实Calibre DRC、真实Calibre LVS、Virtuoso读回列为deferred，coverage=none且不计pass。暂缓的是Stage6真实工具验证，Stage1 query证据/绑定及真实准入义务不因此取消。以后某次运行若启用并要求该检查，工具/许可证缺失导致不能完成则是error+reject，不能改写为deferred避过必需条件。
+
+四个维度分开表达：execution_status记录pass/fail/error/skipped/deferred；coverage记录complete/degraded/none及声明范围；finding_severity记录info/warning/error；policy_disposition记录accept/requires_review/reject。完整仅相对于该check/profile声明的范围，toy范围完成不表示全部生产规则覆盖；降级覆盖不能抹去已发现违例。skipped表示禁用/不适用，deferred表示本阶段声明暂缓，二者覆盖均none。
+
+[现有ValidationResult样张](examples/records.json)中真实Calibre DRC示意为deferred/none/warning/requires_review；本地已完成的toy检查可为pass/complete/info/accept，但该单项接受不等于整次生产接收，当前合成profile正常汇总仍requires_review。以上是未来预期样张，未把旧fixture辅助或技术review的结果当作产品执行事实。依据[架构 §10.4–10.5](../../architecture.md)及[预期报告](examples/report.expected.md)。
+
+子PM阅读提示（留D具体字段核对）：policy条目为 `virtuoso_readback`，结果样张check id为 `virtuoso_dry_run`；此处仅解释Virtuoso侧暂缓集成检查，不据此宣称两者语义和引用映射已核验一致，也不擅自改名或增加执行范围。
+
+本题待答复，下一小主题B4.06核对limitations声明的来源、未覆盖项及支持范围；B5实物、C负例、D字段明细仍保留。仅更新人工记录，未改fixture/架构/reviewer/实现、未运行tests/generator；按MR-060结束/交接时集中整理并提交推送审核分支。
+
+### MR-064：确认B4.05b，进入B4.06样本限制（2026-10-29）
+
+后续状态：用户于MR-065确认B4.06披露范围和边界；MR-020/034/046等原修改要求继续保留。
+
+用户答复“确认，继续”，确认上一题真实工具暂缓项、状态/覆盖/严重性/处理判定的区别及Stage1证据要求保留；不外推D具体字段映射或生产通过。实物未变。
+
+**B4.06展示（待确认）：**[limitations](../../../tests/fixtures/w003_m1/limitations.json)声明这套样本的来源、适用范围和未覆盖项；与[W003任务](../W003-m1-fixture-contracts.md)、[fixture说明](../../../tests/fixtures/w003_m1/README.md)一起解释结果能证明到哪里。
+
+| 类别 | 当前样本声明 |
+| --- | --- |
+| 来源/实现事实 | synthetic，非真实工具capture，未执行真实EDA；现有helper核对样本结构/答案，产品importer及pipeline未实现，不声明产品验收 |
+| 拟验收范围 | M1 no_change，single-finger、一对一、无device reduction；flat rectangle BOUNDARY及声明的literal CDL/query子集 |
+| 不支持子集 | ECO/resize、生产model、多指/非一对一/归并、其它GDS元素、CDL表达式/includes、query可选记录和生产命令模板；不能据本例提前声称支持 |
+| 生产未知/未覆盖 | 真实model、单位绑定、query方言/tool版本/PDK未验证，body仅toy，abutment未覆盖，真实DRC/LVS未运行；生产回传及fixtures/wheels等上传权限缺项沿用既有记录，不在本题扩大或索取 |
+| 输入与答案 | 未来运行从GDS/CDL/raw/header/tech等声明输入构建状态；spec、oracle、expected用于样本制作/独立核对，不直接加载为程序已算出的状态或绕过真实输入链 |
+
+本例正常预期仍requires_review。已定修改必须联动：文件中的A同名孤岛说明按MR-020拆到专门案例，body范围按MR-046 tapcell场景调整，query方言/实现状态说明随MR-034修订同步；MR-002单位/尺寸来源仍待补。此处解释旧版边界，不撤销这些要求或把旧版局部技术通过外推为新版通过。
+
+本题待答复；下一小主题B5.01查看expected GDS的图形/层/坐标保真与独立依据。仅维护人工记录，未改fixture/架构/reviewer/产品、未运行tests/generator；按MR-060结束/交接时集中整理并提交推送审核分支。
+
+### MR-065：确认B4.06，进入B5.01期望GDS保真（2026-10-29）
+
+后续状态：用户于MR-066确认B5.01原版几何保真预期；既定样本修订方向保持。
+
+用户答复“确认，继续”，确认上一题合成来源、当前样本适用/不支持范围、未知/未覆盖及输入/答案分工；此前孤岛/body/raw等修改继续保留，不外推整组B4或新版已验收。实物仍绑定迁移提交 `765ae5e` 中的原技术版本。
+
+**B5.01展示（待确认）：**[expected/output.gds](../../../tests/fixtures/w003_m1/expected/output.gds)表示本例no_change之后应保留的完整绘制几何：top为INV_M1_SYNTH，FRAME为[0,0,160,200] nm；15层共44个BOUNDARY矩形、datatype=0。逐层数量为BOUNDARY/BODY_N/BODY_P各1，OD2、POLY1、FIN18、LI4、CUT1、CONTACT4、VIA0 3、GCONTACT/BTAP_N/BTAP_P各1、M1 4、MARKER1。所有层/图形均须保留，不只导出被注释或参与器件计数的部分。
+
+具体坐标：ON=[20,20,100,70]，OP=[20,110,100,180]，MA=[50,90,75,98]，MARK=[145,180,150,185] nm。18根FIN保留，其中N5/P7 qualified，另6根不计入器件但不能删除。当前仍含旧LB/CUTB和TN/TP，MR-020/MR-046修订后需重做受影响计数和展示；本题不撤销其修改方向。
+
+**本轮实物核对：**使用Python3 stdlib struct只读解码source及expected全部GDS records，检查仅含允许的库/结构元数据和flat BOUNDARY、每个XY为五点闭合轴对齐矩形，按layer/datatype/精确整数坐标多重集合对比手写spec。source=expected=spec，44项全部一致；top及UNITS payload也相同，并与provenance中的normalized_units_hex相符。此处检查几何表达，未重跑规则/连通算法、fixture helpers、pytest或产品流程。依据[spec](../../../tests/fixtures/w003_m1/spec.json)、[tech](../../../tests/fixtures/w003_m1/tech.json)、[README](../../../tests/fixtures/w003_m1/README.md)及[架构 §10.2](../../architecture.md)。
+
+Source采用integer/Fraction writer，expected采用独立KLayout几何writer；其单位payload曾按共同合同规范化，不能称单位writer完全独立。B5.02再核对REAL8/provenance，不把本题读回一致外推为单位细节或生产精度已人工确认。
+
+本题待答复，下一小主题B5.02为单位编码及unit-provenance；CDL/JSON、B6/C/D仍待覆盖。仅维护人工记录，未改fixture/架构/reviewer/产品；按MR-060结束/交接时集中整理并提交推送审核分支。
+
+### MR-066：确认B5.01，进入B5.02单位编码与provenance（2026-10-29）
+
+后续状态：经背景/目的/现状答疑后，用户于MR-067明确确认B5.02；MR-002来源要求及未来输入保真边界保持。
+
+用户答复“确认，继续”，确认上一题原版GDS单元/frame/层/完整图形与坐标保真的预期；仍保留MR-020/MR-046等修订要求，不外推新版或生产验证。
+
+**B5.02展示（待确认）：**[unit-provenance](../../../tests/fixtures/w003_m1/expected/unit-provenance.json)记录样本制作时KLayout 0.30.12几何writer输出的UNITS处理，非本轮新改文件。声明nominal DBU仍为1nm；REAL8只有有限位，[tech合同](../../../tests/fixtures/w003_m1/tech.json)要求nearest56/ties-even、误差不超过半个REAL8编码间隔。原expected第二个UNITS值比规范化值高一个mantissa ULP，超出该既定范围；制作时只规范化单位payload，保留原/新bytes、修改范围、原/新hash、原因及独立性范围。
+
+**本轮只读核对：**Python stdlib Fraction精确解码UNITS、hashlib核对当前expected hash，并在内存按provenance `[58,74)` 原payload重建原文件，原hash也匹配。该16字节范围实际只有offset73一字节不同；所有44个XY payload及范围外所有bytes一致。第一UNITS字段相对nominal误差为48/125 ULP，未变；第二字段原误差2352932/1953125 ULP，大于1/2，规范化后399807/1953125 ULP，小于1/2。未运行generator/helper/pytest、未写任何GDS文件。
+
+规范化解释的是声明单位的数值编码，不允许移动shape或取整source XY；75nm在2nm输出DBU下得到37.5ticks仍须拒绝。未来importer须保留原始bytes/精确值并按合同验证，不能以此作为自动改输入或放宽容差的授权。Expected writer独立性限于几何序列化/读回，单位字段按共有合同处理；MR-002单位/尺寸来源补充仍待改，不能由此认定生产默认1nm。
+
+**通俗背景答疑：**用户表示不理解，要求说明背景、目的和现状，未确认本题。W003先准备输入与独立期望答案，未来M1程序应在no_change场景输出同样几何；第二套几何writer用于降低共同错误影响。GDS除整数坐标还保存“每个坐标单位多长”，该单位的有限位近似类似有限小数保存1/3。原KLayout近似未满足本toy选定的严格编码合同，不据此认定其一般GDS无效；历史上只处理人工制作expected的单位字段并保留还原记录，意图单位1nm和全部XY不变，但原/新raw scale的精确有理值确有差异。当前核验的是该历史样本准备过程及边界，不是新修改文件、产品已实现或真实输入可自动修正。
+
+本题待答复；下一小主题B5.03核对expected CDL的top/pins/器件/端子/model/全参数保真。仅维护人工记录，未改fixture/架构/reviewer/产品；按MR-060结束/交接时集中整理并提交推送审核分支。
+
+### MR-067：确认B5.02，进入B5.03期望CDL完整语义（2026-10-29）
+
+后续状态：用户于MR-068确认B5.03具体电路语义保真；旧README措辞及body场景修改仍保持。
+
+用户答复“好的，已确认，继续吧”，确认上一题单位历史处理、制作背景及可追溯记录的说明；不扩大为生产精度来源已确认或产品可自动改真实输入。实物未变。
+
+**B5.03展示（待确认）：**[expected/output.cdl](../../../tests/fixtures/w003_m1/expected/output.cdl)为参考输出，top=INV_M1_SYNTH，ordered pins=A/Y/VSS/VDD，globals和include/lib/preprocess依赖为空；模型均按toy_literal_cdl/1解释。
+
+| 器件 | 模型 | D/G/S/B | NFIN/NF/M | L/W/VT |
+| --- | --- | --- | --- | --- |
+| MN0 | TOY_N | Y/A/VSS/VSS | 5/1/1 | 4n/2n/toy |
+| MP0 | TOY_P | Y/A/VDD/VDD | 7/1/1 | 4n/2n/toy |
+
+本题从B1/MR-028的语义比较原则进入具体期望字段。No_change应保留器件身份、模型、全部连接和参数及top/pin顺序；当前toy无隐式默认参数、sd_symmetry=false，不能自行补值或交换D/S。参数/器件行顺序、空白和整行注释可不同；target刻意换序仍与source/expected同义。本toy把L解释为4nm channel_length、W为2nm fin_width、VT为toy token，不据此推断真实模型。README的旧L=channel width措辞修正MR-001-Q1及MR-046 body物理场景修改均保持。
+
+本轮用Python stdlib只读拆分三份固定CDL样本文本，按当前toy token表核对top/ordered pins、D/G/S/B、模型及全部六参数，与[手写oracle.semantic](../../../tests/fixtures/w003_m1/oracle.json)逐项一致；不是正式parser实现，不声称支持其它语法或运行产品。依据[tech.cdl_dialect](../../../tests/fixtures/w003_m1/tech.json)及[架构 §10.2](../../architecture.md)。
+
+本题待答复，下一小主题B5.04核对layout JSON具体内容和最小样张边界。仅维护人工记录，未改fixture/架构/reviewer/产品，未运行helper/generator/pytest；按MR-060结束/交接时集中整理并提交推送审核分支。
+
+### MR-068：确认B5.03，进入B5.04 layout JSON样张（2026-10-29）
+
+后续状态：用户于MR-069确认B5.04内容与最小样张边界；原版孤岛/body等修订联动保持。
+
+用户答复“好的，确认，继续”，确认上一题expected CDL的top/pin顺序、两器件端子/模型/全参数保真及允许文本差异；不外推生产model含义或关闭原物理场景修改。实物未变。
+
+**B5.04展示（待确认）：**[expected/layout.json](../../../tests/fixtures/w003_m1/expected/layout.json)以机器可读方式并列显示本例结果及关联。cell=INV_M1_SYNTH、canonical_tick_nm=1；current_semantic含两器件5/7及完整CDL语义；geometry列全部44个drawn records；6个occupancy_fragment_witnesses示范区域与网络关联；connectivity含6个分量、10条边和8个端子；annotation标synthetic_source_evidence、normalized记录来源、MARK未注释非导电及同标签分量分开；lifecycle引用tech并声明frame/preserve不变、无derived刷新；baseline_version=0、ordered_commit_ids为空；linkage关联spec/oracle/header。
+
+具体示例：ON.S来自drawn ON，OD区域为[20,20,58,70] nm，关联C_VSS及VSS；这表达了几何区域到物理分量/网络的解释关系。源/漏分区和同标签孤岛不得因只存粗格或网名丢失，但MR-052已将通用坐标/投影/API实现留后续，本题不重启该设计。
+
+样张明确 `classification=expected_sample_not_run`、`source_truth=false`、`is_complete_runtime_snapshot=false`。其本例几何/电路/连接表可供具体核对，6个fragment仅是部分状态见证；后续产品仍需从Stage1/2构造完整state并导出，不能直接加载此文件或只比较已列字段替代完整验收。当前JSON仍含旧LB左右孤岛与TN/TP连接，MR-020/MR-046修订后须联动更新受影响表、引用和hash，不因本题说明而接受旧场景永久保留。
+
+**本轮只读核对：**stdlib JSON读取确认geometry逐项等于spec.shapes，current_semantic等于oracle.semantic，components/edges/terminals分别等于手写oracle对应表；上述计数及样张标记、baseline/空commit链和已展示相对引用均符合当前文件。未运行产品或fixture helpers/tests，不宣称完整runtime occupancy/冻结性质已验证。依据[contracts](contracts.md)最小component/fragment约定及[架构 §10.2](../../architecture.md)。
+
+本题待答复；下一主题B6核对README/spec/oracle如何给出可审查的制作说明和独立答案，之后仍需全部C/D。仅维护人工记录，未改fixture/架构/reviewer/产品；按MR-060结束/交接时集中整理并提交推送审核分支。
+
+### MR-069：确认B5.04，进入B6制作说明与独立答案（2026-10-29）
+
+后续状态：用户于MR-070确认B6职责与独立核对方式；源材料待改项保持。
+
+用户答复“确认，继续”，确认上一题JSON具体内容及非完整runtime snapshot边界，未将样张直接当程序输入或声称完整state已验证。既定修订保持。
+
+**B6展示（待确认）：**[README](../../../tests/fixtures/w003_m1/README.md)解释样本目的/假设、格式/限制及再生成/核对方法；[spec](../../../tests/fixtures/w003_m1/spec.json)是手写制作说明，列44图形坐标及映射/raw证据构造数据；[oracle](../../../tests/fixtures/w003_m1/oracle.json)是先于helpers写出的手算电路/精确几何/拓扑答案，不由生成后GDS反提取。例：N为F01–F05共5个qualified crossing，P为F07–F13共7个，每个交面积8nm²，合计40/56nm²；端子、连接/不连接、规则和no_change预期也列在oracle。
+
+独立性不能仅凭有两个JSON文件成立：generator会读取spec及oracle制作材料，必须另对实存GDS/CDL/query和手写预期进行独立reader/几何/连接/规则核对。原版技术review记录了KLayout读回与reviewer独立整数算法；云端本轮只读取来源声明/材料，不复跑该review、不声称已取得未上传的原始证据包。再生成byte-clean说明可复现，与正确性核对分开；不同工具生成相同错误或复制答案本身均不能独立证明正确。
+
+这些文件服务样本制作/审阅/回归，未来产品仍从实际GDS/CDL/raw/header/tech链构造state，oracle用于比较结果。README不覆盖架构合同；MR-002来源补充、MR-001-Q1 L措辞及MR-020/034/046样本修订需同步相关spec/oracle/README及引用，不能把旧答案直接沿用为新版已验证结论。MR-052范围保持，不在本题展开generator/runtime设计。
+
+本题待答复；下一小主题C01检查source单位冲突及其预期失败，C01–C22和D完整覆盖仍保留。仅维护人工记录，未改fixture/架构/reviewer/产品，未运行helpers/generator/tests；按MR-060结束/交接时集中整理并提交推送审核分支。
+
+### MR-070：确认B6，进入C01输入单位冲突（2026-10-29）
+
+后续状态：用户于MR-071要求C全组总览并转D；C01随概览反馈登记，不另记逐项确认。
+
+用户答复“确认，继续”，确认上一题README/spec/oracle职责、可复现性与独立正确性核对的区别及未来输入链边界；不关闭既定来源/措辞/样本修改。开始逐例覆盖C01–C22，不按抽样。
+
+**C01展示（待确认）：**[cases索引](../../../tests/fixtures/w003_m1/failures/cases.json)中unit_mismatch以正常fixture为底，仅替换source.gds与query/header.json为[本例文件](../../../tests/fixtures/w003_m1/failures/unit_mismatch/)，remove_files为空。GDS把source DBU从nominal 1nm改为2nm；tech及query单位合同仍为原版。整数坐标75在正常版代表75nm，在坏例代表150nm，违反本profile固定source单位绑定，应拒绝，不能默认为1nm或改坐标/tech使其通过。
+
+Header已更新source layout hash来绑定坏文件，因而本例不是故意hash漂移；这不代表单位或各证据物理含义正确。与B5.02 intended 1nm的有限位编码差异分开，也不同于C19选择输出2nm DBU的问题。
+
+**本轮只读核对：**stdlib struct/Fraction读取正常与坏GDS，44个XY payload及所有非UNITS records相同；单位字段分别符合1nm/2nm nominal nearest56范围；各header的layout SHA-256匹配对应文件，两个header仅layout字段不同，geometry_unit_contract仍toy_gds_real8_nm/1。未运行产品/fixture helpers/tests或创建overlay副本。
+
+**未来产品断言：**UnitScaleMismatch / pre_context；terminal reject，0个ECO commit，无正常几何导出或成功Manifest。保留最小failure RunRecord/StageFailure/已完成audit，可有诊断报告；不伪造canonical context，新lineage不发布新baseline。cases标记executed_as_product_run=false，此处是失败预期与输入事实核对，不声称产品失败流程已执行。依据[contracts](contracts.md)的pre_context及[架构 §2.1–2.2](../../architecture.md)。
+
+本题待答复；下一小主题C02为raw缺terminator，须核对全部替换及缓存删除。仅维护人工记录，未改fixture/架构/reviewer/产品；按MR-060结束/交接时集中整理并提交推送审核分支。
+
+### MR-071：C全组概览并转D1.01公共字段与引用（2026-10-29）
+
+后续状态：用户于MR-072明确确认D1.01及其用途答疑；下文保留当轮展示与追问。
+
+用户原话：“总览下C部分，我粗看了下没啥问题，继续D部分”。按最新指示采用C01–C22概览审阅并转D，不继续要求逐例讲解；记录用户粗看暂无新增意见，不伪称逐例亲自细审/技术复核或产品执行通过，不因改变方式新增审批。
+
+**C总览：**单位/格式C01–C05、C17–C18；同源绑定/缓存C06–C07、C21；器件映射/模型输入子集C08–C12；目标/必需能力C13、C22；规则/抽取C14–C16；导出可表示性/范围C19–C20，合计22例无遗漏。失败预期均为reject、0 ECO、无成功正常export manifest；输入早期/状态后未发布/导出阶段分别保留符合阶段的失败记录与稳定状态，不混写。当前都是未来断言，未运行产品失败管线。既有raw方言、body等修订影响相关负例，仍须随新版技术复核。
+
+**D导入：**这一组审未来流程应留下的可追溯记录：D1共同合同、D2全部20条正常记录、D3人机报告、D4全部8类失败组合；当前均为example/expected，不是已运行日志或20个新模块。本题只讲D1.01，不提前确认其余明细或展开DTO/codec/API实现（MR-052）。
+
+**D1.01展示（待确认）：**[schema](examples/schema.json)公共必需字段为schema_version（按哪版格式解释）、example_only（样张标记true）、kind（事实记录类型）、typed id（有类型的记录身份）；各kind再有自己的字段约束。实际[记录样张](examples/records.json)中ToolRunResult的id为ToolRunResultId/fixture-read，ParseResult为ParseResultId/query-parse，其tool_run_ref指向fixture-read；EvidenceRecord又以parse_ref指向query-parse。沿引用可追到执行/原始文件及解析来源，不依赖裸名字猜关联。ToolRun由证据获取/读取方记录执行事实，Parse由解析方记录解析结果，后续按合同消费；字段中的pass仍是样张预期。
+
+**D1含义与必要性答疑：**用户问“我不太理解D1是什么以及必要性”。D1是本人工清单的审阅项：核对过程记录样张的填写约定，包括谁负责记录什么、来源和结果如何对应、数值如何准确表达。A/B主要审样本及输入输出，C审坏输入的处理预期，D审这些过程与结论应留下什么证据；D1先看共同约定，D2看具体正常记录，D3看报告，D4看失败组合。假设某query文件可正常读取但缺结束标记，读取成功、解析失败应分别如实记录，解析记录还须指回实际读取来源，不能以某一步成功冒充全流程成功。共同约定也用于防止不同运行/状态的记录被错误拼在一起。当前必要性是使W003预期可追溯、样张前后一致；具体产品字段/API及编码、存储实现仍由后续任务评审，不将本轮说明扩展为生产接口冻结。本答疑不登记用户确认，D1.01仍待答复。
+
+**D1.01通俗例子：**用户继续问D1.01能否更易理解。以一张“解析结果表”为例，四个公共字段分别是按哪版表格填写（schema_version=w003-example/1）、是否核验样张（example_only=true）、记录哪类事情（kind=ParseResult）、本条记录的带类型编号（id=ParseResultId/query-parse）。kind区分记录种类，id区分该种类中的具体记录。来源关联则由本记录的tool_run_ref指向ToolRunResultId/fixture-read；EvidenceRecordId/evidence再以parse_ref指向ParseResultId/query-parse。因此可从证据追到解析，再追到读取和原始文件。引用保留类型有助于检查是否找错记录种类，仍须核对所指具体来源；不是仅靠类型就证明跨运行绑定正确。读取方记读取事实，解析方记解析事实；可读取但无法解析时分别保留真实结果。本题确认对象是标签清楚、来源可查及职责不混淆，非产品执行完成或正式接口冻结；仍待用户答复。
+
+**运行记录与debug的用途答疑：**用户询问这些是否是后续运行的log，服务Codex开发debug还是开发后的测试。依据[架构 §10.5–10.6、§11.11、§12.7](../../architecture.md)及[共享合同](contracts.md)，首要用途是正式产品流程中的结构化结果与依据：供后续阶段消费、生成报告、核对输入/状态/产物来源，并支持最终结果判定；开发者可用它定位故障，自动化测试可断言真实结果与预期一致。各阶段传递结果对象/引用，按合同保存，不要求靠扫描普通文本日志驱动流程。D还包含Snapshot状态、ArtifactManifest产物清单等，不能将全部记录都视为可关闭的debug输出；也不要求每条记录单独落盘。例：核心导出完成后，必需自洽检查失败，正式检查/最终结果仍须如实表达失败与reject，报告据此说明原因。当前W003仅提供预期样张；D1.01约定其身份与来源关联，不新增日志框架或保存Codex对话。此为同题用途澄清，尚未登记用户确认。
+
+本题待答复；下一小主题D1.02核对必需/可选/禁止字段及exact值/哈希对象，D2/D3/D4继续保留完整范围。仅维护人工记录，未改fixture/架构/reviewer/产品、未运行helpers/tests/generator；按MR-060结束/交接时集中整理并提交推送审核分支。
+
+### MR-072：确认D1.01，进入D1.02字段约束、精确值与哈希对象（2026-10-29）
+
+后续状态：用户于MR-073明确确认D1.02；下文保留当轮展示。
+
+用户答复“我理解了，可以确认，继续吧”。据此确认MR-071中D1.01公共字段、带类型编号/引用及用途说明：首先服务正式产品流程与报告/核查，开发测试和debug也可使用。确认限于已展示内容，不提前确认D1.02或D2–D4，不声明产品已执行或接口冻结。
+
+**D1.02展示（待确认）：**依据[schema](examples/schema.json)、[contracts](contracts.md)及[记录样张](examples/records.json)，核对“信息不缺、不编、数值不被改写、hash对象明确”。
+
+- 字段按具体kind/variant区分必需、可选、禁止。StageFailure必需reason；ToolRunResult可选execution_failure，省略该字段不许可掩盖执行错误；RunRecord/pre_context_failure没有context_ref/final_snapshot_ref，不能填写尚未建立的canonical context或最终snapshot。该限制不否认入口可记录既有starting head。当前样张拒绝字段表外的键；必需字段是否可为null由字段含义决定，如正常读取样张的stdout_ref/stderr_ref存在且为null。
+- 精确值例为EvidenceRecord中的value_ticks=20、nominal_tick_m=1/1000000000米，即20nm。坐标/版本/size/序号用JSON整数，单位比例以约分整数字符串分数表示且分母正；可用Decimal时为带标记十进制字符串，不用float/NaN/Inf或隐式取整。pins、vertices、ordered_commit_ids按其语义保序；集合按typed key规范排序，非字符串键表编码为按canonical key bytes排序的key/value记录。规范编码不替代另行定义的几何语义比较。
+- 哈希分清对象：记录需要摘要时按样张约定规范成UTF-8、键字典序、紧凑JSON、ensure_ascii=false、无末尾换行后取SHA-256；artifact的actual_byte_sha256直接针对实际文件原字节，不能先改写文件再称原文件hash。二者均不代替几何/电路语义检查；样张id仍是可读编号，不据此声称内容寻址实现已交付。附件可登记真实expected文件的byte hash，不能捏造尚未生成的产品文件hash。
+
+本轮只读对照字段表与正常记录中的实际精确值写法；未改schema/fixture/架构/产品，未运行helpers/tests/generator。本题仍为W003样张约定核验，正式codec/持久化实现另行评审。待本题答复后进入D2.01 ToolRunResult，D2全部20条、D3、D4全部8类继续保留；按MR-060结束/交接时集中整理并依授权提交推送审核分支。
+
+### MR-073：确认D1.02，进入D2.01读取/工具执行回执（2026-10-29）
+
+后续状态：用户于MR-074将D2改为全组委托总览；D2.01随全组记录，不另等逐项确认。
+
+用户答复“好的，确认，继续”。据此确认MR-072的字段必需/可选/禁止、精确数值及顺序、记录规范字节摘要与实际文件hash区分；D1共同样张约定完成本轮确认，不外推为产品接口或实现验收。
+
+**D2.01展示（待确认）：**[records](examples/records.json)首条ToolRunResult，typed id=ToolRunResultId/fixture-read，example_only=true；mode=dummy_fixture、tool_name=fixture-reader、command为read-preexisting-raw-captures。它是一张读取/执行步骤回执：入口为site_config.yaml及其hash；raw_output_refs列出instance_xref.txt、net_xref.txt、device_regions.txt、net_regions.txt四份预置原文的路径/hash，供后续解析。预期exit_status=0、execution_status=pass，stdout_ref/stderr_ref为null，无额外execution_failure。上述是样张操作/结果，不表示存在已实现的可调用fixture-reader、执行过shell命令、新生成raw或实跑Calibre。
+
+依据[共享合同](contracts.md)及[架构 §12.7](../../architecture.md)，工具/读取方记录执行事实，经pipeline交原文引用给importer；解析方另写ParseResult并引用本条，ToolRunResult不包含解析结论或后续finding，不反向回填parse结果。例如原文可读取但缺结束标记，读取可完成，随后解析失败；本条pass不能代替解析、证据绑定、5/7提取、规则检查或最终运行成功。
+
+本轮stdlib只读核对入口与四份raw的路径/实际byte hash，共5项均匹配；ParseResult的tool_run_ref精确指向fixture-read，raw_refs与本条四项一致。这是样张引用一致性核对，未运行产品或helpers/tests/generator。MR-034方言及其他既定修订仍待执行，届时须同步相关原文/hash/记录并复核。本题待答复；下一项D2.02 ParseResult。仅维护人工记录，按MR-060结束/交接时集中整理并依授权提交推送审核分支。
+
+### MR-074：D2全组委托总览，转D3人读与机器报告（2026-10-30）
+
+后续状态：用户于MR-075明确确认D3；MR-074-Q1及既定样本修订继续保留，未视为已修复。
+
+用户原话：“对于D2，不要展开，进行一下总览review，没问题就继续。”据此将D2.01–D2.20改为子PM受委托总览，不再要求用户逐条听讲/确认。整体可以继续报告审阅；保留一项检查身份修订，不能登记整组无问题。此处是样张review，非用户亲自逐条确认、产品运行通过或W003最终验收。
+
+**D2总览结论：**20条覆盖获取/解析/证据（01–03）、context/lifecycle/初始状态提案（04–06）、attempt/初始化（07–11）、no_change检查与闭合（12–16）、导出/验证/报告/终态（17–20）。职责和事实来源分开；unsealed revision0无canonical context，初始化形成version0 baseline与InitializationEvent，sealed revision1才带context。no_change仍有全量语义/提取和whole-cell mandatory审计，最终仍引用baseline-0，ECO链为空；Manifest仅说明三核心对象完整可寻址，Validation/Reporting/Pipeline一致为requires_review。JSON数组顺序是样张编排，不能视为严格执行时序；真实流程先建立unsealed attempt。最小component/coordinate引用仍受MR-051/052边界限制，不证明完整runtime状态或冻结/发布实现。
+
+本轮只读核对全部20条字段集合/版本/example标记、20个唯一typed id及内部引用；28个不同文件/JSON位置的路径/hash/指针可解析，入口request digest与描述一致；同run/final snapshot、初始化、空链及3个artifact的大小/hash一致。上述是静态样张检查，未运行产品或helpers/tests/generator。MR-034方言、MR-046 body、MR-020孤岛及其他既定修订保持，届时受影响记录/报告/hash需同步复核。
+
+| 编号 / 状态 | 当前值、期望修订与理由 | 受影响范围 / 版本 |
+| --- | --- | --- |
+| MR-074-Q1 / 需修订（子PM总览发现，承接B4阅读提示） | validation policy及机器报告为virtuoso_readback，人读报告同样称readback；ValidationResult为virtuoso_dry_run。合同/schema未提供明确别名或范围映射，架构也不能证明二者等同。执行者须明确所指延期能力：同一检查则统一身份与描述；范围不同则明确拆分/映射，保持真实未执行、deferred/coverage none/requires_review，不自行扩充本阶段执行要求。 | D2.18、D3、validation_policy.json、records.json、report.expected.md/json及相关合同/失败样张/helper的受影响引用与断言；需检查依赖并更新hash，经review复核。受审实物仍为765ae5e迁移提交，未修改这些文件。 |
+
+两边均未声称真实执行或生产放行，故该项需在最终验收前修订，但不阻塞继续理解D3；子PM不擅自选择新检查含义或将其改名后宣告解决。
+
+**D3展示（待答复）：**[人读报告](examples/report.expected.md)和[机器报告](examples/report.expected.json)共同解释同一运行预期：输入来自哪组GDS/CDL/query/tech/policy；MN0为5→5、MP0为7→7，全参数/端子语义不变；baseline version0、无candidate/repair/resize，空ECO链且五类状态变化为0；原版44图形、18根FIN中5/7合格、8端子/10边/6连通分量及孤岛/MARK披露与既定样本对应；whole-cell mandatory toy检查及声明范围内自洽/oracle/audit预期通过，真实DRC/LVS与Virtuoso能力暂缓，最终requires_review。required违规、执行错误、核心导出/必需报告失败仍reject。报告呈现冻结结果与限制，不能改变状态或替代产物清单/最终结果；机器报告用于程序读取，人读报告说明理由。
+
+D3只读核对7个输入/限制文件hash、manifest/validation引用及5/7、版本0、空链、零变化、requires_review一致；真实产品时间/命令均为null，报告明示example且未执行产品。MR-074-Q1及既定孤岛/body等样本修改须同步报告，不按旧数量验收新版。当前恢复于D3，下一组D4覆盖8类失败组合；仅维护人工清单，按MR-060结束/交接时集中整理并依授权提交推送审核分支。
+
+### MR-075：确认D3，进入D4八类失败组合总览（2026-10-30）
+
+后续状态：用户于MR-076明确确认D4八类总览预期；下文保留当轮展示。
+
+用户答复“好的，确认，继续”。据此确认MR-074展示的D3报告用途、输入/结果解释、no_change与零变化、检查/未覆盖项和requires_review预期；MR-074-Q1检查身份映射与既定样本修改继续保留，不登记修订完成或产品通过。
+
+**D4总览展示（待确认）：**对照[失败样张](examples/failures.json)、[共享合同](contracts.md)及[架构 §2.6–2.7、§10.5–10.6、§11.13](../../architecture.md)，覆盖全部8类，未发现新增实质矛盾。
+
+| 情形 | 本例应留下的结果与边界 |
+| --- | --- |
+| pre_context | 坏raw可读取但解析缺terminator报error；最小failure RunRecord、StageFailure与已完成读取/解析引用，terminal reject；新lineage无context/baseline/ECO/正常导出/ValidationResult |
+| sealed_no_publication | 保留context和baseline-0，failure RunRecord及closure说明规则失败；空ECO链，无正常导出/manifest/validation，terminal reject |
+| run_record_freeze | 运行记录生成/定稿失败，使用专门failure closure与错误诊断；允许缺RunRecord，保留baseline，不进入正常导出/validation，terminal reject |
+| export_failure | 保留已冻结no_change RunRecord、closure和baseline；缺完整核心产物则无成功manifest/正常validation，terminal reject；可有临时/不完整文件，不列作成功导出 |
+| check_fail | 检查完成并发现不一致：fail/complete/error/reject；保留原RunRecord与manifest，记录新ValidationResult并terminal reject |
+| check_error | 检查未能完成：error/none/error/reject；同样保留既有RunRecord/manifest，按错误事实给ValidationResult与terminal reject |
+| reporting_failure | 必需报告写入失败，ReportingResult单独error/reject；保留原检查结果与RunRecord，最终reject，不改写检查结论掩盖报告失败 |
+| terminal_storage_failure | 既有记录/产物可保留，仅尽力保存诊断；没有PipelineResult，terminal_pointer_published=false、production_accept=false，不声称最终结果已发布或process-local具备断电恢复 |
+
+上述均为本no_change样本的失败预期：空ECO链、无生产批准；后四类核心产物可已存在，存在manifest不代表可放行。前七类terminal_pointer_published=true表示预期应能发布拒绝结果，非本轮已发布pointer；第八类不虚构terminal。后续导出/验证/报告失败不回填或改写前置RunRecord。
+
+本轮stdlib只读核对8类共24条局部记录的schema字段/版本/example标记，按各案例局部记录与正常记录集解析typed refs，3个文件/位置的实际hash一致；逐类核对阶段产物有无、baseline保留、空ECO、fail/error与终态缺失边界。未运行产品失败注入、helpers/tests/generator或持久化恢复测试；MR-034坏raw方言/定位/hash及MR-020/046等修订仍须同步受影响样张，MR-074-Q1保持开放。
+
+当前等待D4总览答复；之后汇总未决/待修订清单并准备回交总PM，按MR-060结束/交接时整理必要文档、检查后提交推送审核分支。子PM未改fixture/架构/reviewer/产品，未宣称W003最终验收或授权实现。
+
+<a id="mr-076"></a>
+
+### MR-076：确认D4，汇总本轮结论并交总PM（2026-10-30）
+
+用户答复“好的，确认，继续”。据此确认MR-075中全部8类失败组合的处理预期，结束本轮B后段/C/D话题覆盖，整理交接；不把此答复扩展为既定修订已完成、A/B全部旧未决已批准或W003最终验收。
+
+**本轮覆盖与结论：**MR-054的DBU/网格关系已于MR-056确认；B4.04–B4.06、B5.01–B5.04、B6已按各小题确认。C全部22例按用户要求概览，用户粗看无新增意见；D2全部20记录按用户委托总览，保留一项检查身份修订。D1共同样张约定、D3人机报告和D4八类失败预期已明确确认。原A/B前段局部确认、略过、委托检查及需改/未决按原表保留，不重写为全组通过。
+
+**交总PM的待修订清单（详细语义以所列原MR为准）：**
+
+| 来源 | 要完成的修订 / 受影响范围 |
+| --- | --- |
+| MR-002 | 补全单位/尺寸来源链及关键尺寸与规则对应；明确toy 1nm和尺寸的来源/限制，不当作生产默认；联动tech、spec/oracle、说明与记录引用 |
+| MR-004 | tech按职责形成清楚、被实际引用的来源，避免重复权威；文件数/schema不在本轮冻结 |
+| MR-020 | 主正常例移除LB/CUTB及R08/R09，同名A孤岛迁入专门案例；同步几何/连通/规则/原文/预期与图表 |
+| MR-030.2 / MR-034 | normalized改善可读性；用既有格式资料支持的单一Calibre-like方言替换W003_QUERY，继续标synthetic；同步header/cache、22负例、D记录/失败/报告、helper与hash，不另保留旧方言路径作为产品要求 |
+| MR-046 | 用专门tapcell场景说明body，不要求逻辑cell内显式BTAP；同步几何、端子、连接、相关规则与C22/记录/报告 |
+| MR-051，经MR-052收窄 | 仅澄清32×16人为测试假设、用途和component/coordinate示例引用；不能冒充完整runtime坐标状态。完整坐标/投影/DTO/codec/CAS实现留后续 |
+| MR-074-Q1 | 明确virtuoso_readback与virtuoso_dry_run的实际检查范围，统一身份或给出明确映射；同步policy/记录/人机报告及受影响引用/断言，保持未执行与requires_review |
+| MR-001-Q1 / MR-039（子PM措辞建议） | README将L=4n称channel width，与tech的channel_length不符，建议统一；validation_policy.classification中的pending independent review也宜改为仅描述样张性质，审查进度归任务记录。未把建议写成用户新决定 |
+
+**尚未采纳与不能自动关闭的内容：**MR-040配置精简候选仍未获明确采纳，交总PM准备必要的具体取舍，不阻塞无关已定修订；B4.03c.2仍未单独确认，随上述样本层面澄清处理，不重开完整坐标系统设计。A/B前段转题不等于整组确认；MR-026候选及MR-033-Q1/MR-038-Q1等实现覆盖提示不自动升为W003必须实现的产品能力。MR-055已说明历史legacy缺golden不构成W003/v2修复前置；将来定向迁入代码仍应做对应验证。
+
+**接收后顺序：**总PM核对本清单，区分已定修订、未采纳方案和后续开发义务；在既定要求内准备并安排样本修订，要求执行者列清依赖及同步范围；独立review核对新版受影响的输入/答案/负例/报告/引用及必要技术证据，再向用户展示需重新判断的使用预期。旧版44图形/8端子/10边/6分量等数量不直接作为新版答案。未改变的明确决定不反复确认；必要修订与未决闭合后由总PM决定W003最终验收，再准备具体M1 parser/输入绑定任务。子PM本轮未派发修订或产品实现，未宣称总PM已接收。
+
+**保存、版本与检查范围：**受审实物仍为原技术版本6d29b511ac415a9ea198d1e5c8978313c5abb6e3（材料提交01535055f5d661a2964443dec76fc7f7f305e3e0）；网页续接基线765ae5ef4ebf50e6870c5a978795525261d89ff6。依用户在MR-060中的结束/交接授权，将MR-055–076及必要入口整理提交推送codex/w003-manual-review；最终SHA由Git和交接回复给出，不自指尚未生成的提交。仅改人工清单、网页交接、W003任务PM事实/阶段说明、当前入口与附件导航；不改fixture/support/架构/产品/legacy及原执行/reviewer正文。纯文档做diff/链接/归属/恢复一致性核对，保留前述定向静态样张核对的范围，不重跑旧回归或产品失败注入。历史/private/tmp证据未上传/重验；旧逐轮patch仅为本机备份，不作为跨机续接依赖，也没有保存完整聊天流水。
 
 ## 展示来源身份
 
