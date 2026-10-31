@@ -8,11 +8,11 @@
 | --- | --- |
 | ID / 目标 | W003；提供可独立审查的 M1 最小样本、经过的文件/共享记录合同、正确答案与反例，使后续 no_change 文件闭环实现有明确输入和验收依据 |
 | 里程碑 / 依赖 | M0 工程准备→M1；[W002](W002-first-input-admission.md) 已验收，特别落实 E5/E7 与 reviewer R4。真实材料不作为本地 synthetic 样本准备的前置 |
-| 授权依据 / 阶段 | 2026-09-09 用户授权本地 synthetic 样本与合同准备；**待验收：原版执行及独立 review 已完成，本轮人工核验到MR-076并转修订交接，已定修改尚未实施**。审核分支发布/网页迁移见P4/P5，2026-10-30子PM事实交接见[P6](#p6)；不开始runtime/EDA/生产上传 |
+| 授权依据 / 阶段 | **待验收，修订由[W004](W004-fixture-revision.md)承接。** 2026-10-31用户接受单独W004并要求执行交接；原版技术review及MR-076已接收，样本修订尚未实施。P4–P7保留历史发布/接收/方案准备；P8记录转交，不开始runtime/EDA/生产上传 |
 | 范围 | 执行交付独立样本说明、schema/字段/最小样张、可再生 synthetic 输入、手算/独立 reader 判据及失败实例。允许写本任务执行段、docs/tasks/W003/ 附件、tests/fixtures/ 的专用样本与 tests/support/ 的专用生成/核对辅助；辅助仅服务样本准备，不提前实现产品 parser/extractor |
 | 非目标 | 不重做全局/legacy 审计，不改架构正文，不实现 layauto_v2/ 产品 runtime 或 Stage 1–6 模块，不部署 VM/EDA、不选定生产 PDK、不将 public/dummy 运行当真实准入；不上传生产输入/PDK/许可证 |
 | 架构依据 | [architecture.md](../architecture.md)（与 `6eccdff` 相同）§1.4、§2.1–2.7、§3–5、§7.1、§8.1、§10、§11.14–11.15、§12.5–12.8；格式的上下游 owner 以原文为准 |
-| 负责人 / 未决 | 执行/reviewer 已停止写入并交回最终版本；PM 组织 [人工核验](W003/manual-verification.md)，执行者按需解释/修正，相关改动由 reviewer 复核。生产回传权限、平台与真实验收安排仍由 PM 协调 |
+| 负责人 / 未决 | 原版执行/reviewer已停止写入；总PM已接收[人工核验MR-076](W003/manual-verification.md#mr-076)。后续执行/新版review统一记入W004；本任务保留原版证据与最终闭合记录。生产回传权限、平台与真实验收安排仍由PM协调 |
 
 ### 交互分工与非阻塞依赖
 
@@ -80,6 +80,8 @@ SKILL/Virtuoso、Stage 6 signoff 报告仅保留已批准扩展边界；本包�
 | 后续可执行 | 样本经独立 review 后，M1 有明确输入、oracle、首交失败测试及 build/type/环境要求 | 后续实现另行派发；真实门不被样本审查消除 |
 
 ## 方案与决定（执行准备，PM 接收）
+
+以下是原版执行决定，保留其历史身份。修订轮以[W004](W004-fixture-revision.md)及[人工清单MR-076](W003/manual-verification.md#mr-076)所引用的用户决定为执行入口；尤其MR-034已替代旧raw方言方向，MR-046要求修订本地BTAP假设，不能继续照旧生成后声称修订完成。
 
 2026-09-09 按用户本轮明确指令执行。选择本地 `synthetic_static_fin_no_change_v1`，只支持已声明 flat BOUNDARY/literal CDL/toy query 子集；具体字段、独立答案和反例见 [交付入口](W003/README.md)。这是审查用 fixture 合同，不发布产品 wire API，不改变架构或真实准入门。
 
@@ -292,3 +294,72 @@ PM 本轮不重复运行已经被独立 review 且未改的 fixture helper 或�
 只做文档diff/链接/归属/恢复路径检查，并保留本轮静态文件、精确值和引用核对的明确范围；没有重跑历史完整回归、产品失败管线或生成器。原fixture/support/合同样张、架构、产品、legacy及本任务执行/reviewer正文保持原技术版本。旧Mac临时证据包未上传/重新验证；本轮用Git保存结论与恢复点，不提供完整聊天存档，旧逐轮patch无需叠加应用。网页角色与最新接续模板见[交接页](W003/web-codex-handoff.md)。
 
 提交前5份交接文档相对765ae5e的实际diff经只读子agent独立复核，无必须修正的问题；diff/链接/恢复点、MR编号连续性及原执行/reviewer正文保留检查通过。此结论仅针对本轮文档，不替代样本修订后的技术review或后续推送结果核对。
+
+<a id="p7"></a>
+
+### P7. 总PM接收与修订轮安排（2026-10-31）
+
+后续决定：用户接受单列W004，本节“继续W003”及执行prompt已由[W004](W004-fixture-revision.md)接替。以下保留接收与候选准备历史，不再平行维护执行要求；候选未因此获批准。
+
+用户要求以PM角色继续，明确项目为环境中的Layauto v2。总PM已接收MR-076交接，并对照原MR、架构及实际样本核对修订范围。**下一节点是完成W003样本修订；产品parser仍以W003最终验收为前置。** 原技术review结论保留其原版范围，人工C为概览、D2为委托核对，不升级为用户逐项亲审。
+
+启动位于干净的`work@b1f0301`，核查全部本地分支后切换到`codex/w003-manual-review@b41ba92940516ecadd26c64fc9fcb6829d21cbe1`；该提交包含MR-076、P6及最新网页交接。原fixture/support/合同实物相对原技术版未修订。`git ls-remote --heads origin`因无法连接代理端口8080失败，本轮未确认远端最新HEAD；不把本地可达版本称作远端最新。旧`/workspace/w003-handoff`是历史累积备份，不叠加应用；Mac临时review包未在本轮复验。
+
+#### 修订范围与顺序
+
+本轮继续W003，不另造一个产品任务编号。以下是修订执行范围，原E0–E4/R0–R4仍作为历史证据；后续执行、review各新增修订轮段落，不覆盖原结论。
+
+| 包 / 优先级 | 输入决定与交付 | 依赖及完成条件 |
+| --- | --- | --- |
+| S0 / 先处理语义缺口 | MR-046的tapcell/body最小图、坐标/端子/连接答案、输入来源与失败条件；MR-004/040旧字段到唯一owner及候选配置面；MR-074-Q1检查身份/范围表 | 先给具体样张及影响，再独立核查。tapcell方向已定，新增上下文表达未定；配置精简未采纳。两者不以“等待用户”阻塞无关已定修订 |
+| S1 / 来源与可读分类 | MR-002单位来源链、关键尺寸—规则—出处—适用对象—独立判据表；MR-004实际被消费的tech分类；MR-051/052的32×16测试假设和样张引用澄清；MR-001-Q1/MR-039措辞修正 | 保留现有policy输入边界即可推进分类；文件名/数量由职责与实际依赖决定，不机械拆八份。缺规则不杜撰生产数值；完整网格/CSP/DTO/codec/CAS留后续 |
+| S2 / 场景与文件链 | MR-020主例移除LB/CUTB及R08/R09，孤岛/CUT/同格多片段移专例；按已确认的body具体方案修订；MR-034单一Calibre-like raw及MR-030.2可读normalized | raw格式调查、独立答案准备可立即进行；最终组合依赖body及分类来源。撤下W003_QUERY的active入口，不保留转toy中间层；四capability不固定为四文件，继续标synthetic |
+| S3 / 组合证据与复核 | 对C01–C22逐项列旧目的→新见证→预期阶段/结果→重绑方式；同步header/closure/cache、records/failures/report、图表/helper/hash；处理MR-074-Q1 | 正常及坏raw均绑定实际文件，故意binding错误与语义负例区分；记录/报告所有结果仍为expected。新数量重算，旧44图形/10边/6分量等不是答案。完成受影响独立review后再回PM |
+
+调查可并行，样本集成由一名执行者串行写入`tests/fixtures/w003_m1/`、`tests/support/w003_*`及`docs/tasks/W003/`受影响附件；新增专例位置由执行者说明。PM维护任务要求/阶段、当前入口和人工决定；reviewer维护新增review段。保持架构、`layauto_v2/`、legacy和历史review正文不变；若方案确需修改架构，先将具体差异交PM，不静默通过fixture引入产品合同。
+
+#### 已完成的方案准备：候选与尚需决定之处
+
+以下来自本轮只读调查，是可审查候选，不是用户已经批准的输入合同或已实现样本。
+
+**Body候选：逻辑cell与外部tapcell见证分别展示。** 主source GDS继续flat单cell，移除本地TN/TP；BN/BP在本地物理图中不凭VSS/VDD名称与rail合并。另以synthetic上下文坐标表证明body与外部tap/rail的关系，并绑定source/body/frame/rail身份、profile/version和实际文件。架构§3.6允许有证据的scope外relation policy，但这新增fixture上下文输入；独立review需核对闭包与T04等影响，再将具体表达交用户判断。不能以未运行的baseline LVS声称满足冻结例外。
+
+| 外部候选对象 | N侧bbox / nm | P侧bbox / nm | 待核对条件 |
+| --- | --- | --- | --- |
+| body延伸 | [-20,0,0,90] | [-20,100,0,200] | 与本地BN/BP在x=0的同类型边接触须由明确toy规则支持 |
+| M1 rail延伸 | [-20,48,0,58] | [-20,148,0,158] | 与本地rail的边界接续、body到正确rail的关系须由几何证明 |
+| tap | [-12,50,-8,54] | [-12,150,-8,154] | 类型与body/rail包围条件逐项给出，不从标签建立连接 |
+
+这组坐标只用于方案审查，不写入现行fixture、不代表真实tapcell/PDK。执行准备须给“本地physical components”和“外部context支持的body association”两张答案表，并给缺context、绑定错误、错误body类型、tap包围不足、接错rail等失败见证；C22迁移为缺所选必需证据/支持，不能以无本地BTAP为错误。主例最终计数待组合修订和独立核对，不预先冻结。
+
+**配置分两步处理。** 已授权MR-004先完成实际分类：候选为bundle引用入口、drc_rules、layer_map、calibre_layer_map、physical_profiles、format_profiles。这六项是职责映射示意，不冻结六个文件。比如T05 enclosure/T06–T07 spacing归尺寸规则；T03识别、T08连通、T09保真、T10覆盖分别归其profile/合同，仍保留mandatory要求；derived映射与annotation tolerance只保留一个来源。辅助须读取分类材料，不能另保留隐藏的tech.json权威。
+
+MR-040的进一步精简建议仍待采纳：操作者只改site的输入、tech/profile、工具环境及输出根目录；`site.outputs.directory`作为单一选择，生效ExportPolicy据此派生；core artifact集合由版本化profile给出；required error→reject等固定约束不设用户开关。生效策略仍有可审查样张、来源/版本及完整校验，limitations保留一次性fixture来源，实际coverage等由未来运行采集。**本轮没有删除export/validation/limitations输入文件，也没有批准新默认行为。** 精简不影响分类及其它已定工作；采纳前继续现有边界。
+
+**Virtuoso修订先明确范围。** 实物policy/report使用`virtuoso_readback`，ValidationResult/helper使用`virtuoso_dry_run`，现有合同不证明同义。建议以架构§10.3/10.5的“SKILL/ExportEdit在Virtuoso中的dry-run集成检查”给出明确范围和统一ID；若需要下游工具打开GDS/readback，另列范围，不能只改名后宣称覆盖相同。独立review核对policy→check→报告的完整映射及相关Calibre ID映射，保留deferred、coverage none、requires_review和未执行状态。新检查范围/能力承诺仍回PM处理。
+
+#### 修订轮验收与下一角色
+
+1. 执行者交MR覆盖/文件依赖矩阵、source/spec/oracle、分类来源及raw方言的具体方案；S0的新关键语义经独立review并取得必要用户决定后才集成对应部分。已定且无该依赖的修订可继续，不重新询问孤岛拆分、单一raw、分类或tapcell方向。
+2. 样本完成后，独立review绑定同一完整新版本，核对精确单位、几何/端子/body/连通和全部适用toy规则；独立答案不只来自generator。实际应用所有受影响overlay，检查各自拒绝原因未被意外hash失败遮蔽；原F1/F2保证仍有效。
+3. 组合检查覆盖再生成一致性、source/expected语义readback、raw与normalized同源、closure/typed refs/actual-byte hashes、正常与8类失败样张及人机报告。检查命令、环境、结果、未跑范围和完整snapshot/patch身份一并交回；不把helper成功写作产品Stage1–6已运行。
+4. PM只展示发生变化或仍未决的使用预期：新版主图/body关系、raw→normalized示例、配置取舍及受影响拒绝例；保留A/B旧未确认范围、B4.03c.2样张澄清与MR-040状态，未改变的确认不从A1重来。必要修订、独立review、人工结论闭合后，PM才最终验收W003并创建M1最小parser/输入绑定任务。
+
+本轮PM完成交接接收、修订范围及两项具体候选准备；只读协作角色为`pm_review`（交接/依赖核查）、`body_scope`、`config_scope`，它们不承担未来样本的独立技术review。尚未派发fixture写入、尚无新版运行结果。下一执行入口：
+
+```text
+按Layauto项目规范，执行W003修订准备，从任务P7和人工清单MR-076继续。
+以包含P7的当前工作区/完整交接快照为准，先核对branch、HEAD、差异和身份。
+先交body/tapcell最小样张、旧字段归属及raw格式/依赖矩阵；保留synthetic边界。
+按P7区分已定修订与候选，不采纳MR-040、不静默增加外部body输入合同。
+实际样本串行集成，保留原执行/reviewer历史，完成后交独立review。
+不启动产品parser/runtime、完整坐标设计、EDA或生产上传。
+```
+
+Git保存：本轮PM记录留在审核分支工作区，未提交/推送/合并。恢复时同时带本轮相关文件snapshot/full.patch及SHA-256清单；仅检出b41ba92不会包含P7。本轮仅做文档与方案静态核对，无需重跑未变化的旧fixture或legacy回归；完整历史日志包的缺失不阻塞这次PM任务准备，但不复用附件级“已核验”声明。
+
+本轮三文档的独立只读复核由`pm_review`完成，无必须修正的问题；受审diff SHA-256为`b636f302325e67fb55dc8c59a1f825d00751d3e2ce2d56e45c1fb35fc839c1e4`。PM另核对49个相对链接、diff格式、写入范围及原E/R段逐字节保留。该结论仅是PM文档/任务准备复核，不是body候选或新版fixture技术通过。追加本段后保存最终三文件snapshot、完整patch、清单与检查记录于`/workspace/work/layauto-pm-20261031-m1wo0qrt`；最终hash由该包manifest绑定，不要求本段自含自身hash。
+
+### P8. 修订转交W004（2026-10-31）
+
+用户接受独立修订任务，随后明确要求实际修改前先收敛任务。PM建立[W004 — 样本修订与验证](W004-fixture-revision.md)，以R1–R5承接MR-076；下一session仅收敛范围、依赖、待决及验收，不开始样本修改。W003保持待验收；W004经准备接收、明确启动、实际修订与独立review/人工结论闭合后，PM用同一新版证据接收W004并补本任务闭合结论，不重复两轮技术验收。原E/R与人工记录不变；用户已授权本轮PM文档推送审核分支，最新发布入口见W004。

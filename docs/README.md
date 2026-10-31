@@ -11,6 +11,7 @@
 | 一项任务记录哪些内容？ | [collaboration/task-template.md](collaboration/task-template.md)：模板；真实记录位于 `docs/tasks/Wxxx-目标.md`，当前任务由 current-work 定位 |
 | 项目现在从哪里继续？ | [current-work.md](current-work.md)：当前节点与任务入口；详细任务状态归任务文件 |
 | 如何人工核验 W003 样本？ | [人工核验清单](tasks/W003/manual-verification.md)：PM 维护正常例、全部22负例、格式及报告的逐项用户确认；技术依据仍归原样本/合同与独立review |
+| 如何落实人工要求并修订样本？ | [W004](tasks/W004-fixture-revision.md)：当前先收敛要求、依赖、待决及验收；接收后再明确启动修改。W003保留原版交付和决定来源 |
 | 整体开发顺序怎样安排？ | [roadmap.md](roadmap.md)：首版里程碑、依赖、架构要求到验收的覆盖；规划已 review 并由 PM 接收，产品能力未验收 |
 | 如何准备与运行环境？ | [environment/local-setup.md](environment/local-setup.md)：Python、安装、测试及历史环境记录 |
 | 如何跨机器工作？ | [environment/remote-development.md](environment/remote-development.md)：运行位置、环境准备与代码交接 |
