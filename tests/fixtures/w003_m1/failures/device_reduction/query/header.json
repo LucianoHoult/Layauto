@@ -1,0 +1,93 @@
+{
+  "schema_version": "w003-query-header/1",
+  "header_id": "w003.synthetic.query.1",
+  "query_run_id": "w003.synthetic.query.1",
+  "query_database_id": null,
+  "mode": "dummy_fixture",
+  "classification": "synthetic",
+  "assurance": "synthetic",
+  "lvs_completion_status": "not_run",
+  "lvs_match_status": "not_run",
+  "top_identities": {
+    "layout": "INV_M1_SYNTH",
+    "source": "INV_M1_SYNTH"
+  },
+  "hierarchy_mode": "flat",
+  "layout": {
+    "uri": "source.gds",
+    "sha256": "18c769696c66fa856bd8fa2c950397d4649a6d0392825b63a6185025a5e41149"
+  },
+  "source_netlist": {
+    "uri": "source.cdl",
+    "sha256": "c71f40728a979c918e083b924a3045cf53bece51dd837f9ae2834cf242776fa4",
+    "include_library_preprocess_closure": [],
+    "empty_closure_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "preprocess": "none"
+  },
+  "target": {
+    "uri": "target.cdl",
+    "sha256": "ddfd4713579743f578170efede62ce978a02680b42e5e2a6faeeb99016cff8db"
+  },
+  "closure": {
+    "entries": [
+      {
+        "uri": "source.cdl",
+        "sha256": "c71f40728a979c918e083b924a3045cf53bece51dd837f9ae2834cf242776fa4"
+      },
+      {
+        "uri": "tech.json",
+        "sha256": "1bd3681c6fc3f07677d40c2d45ff593e0f41d36c67999995b19b8e774a69ba47"
+      },
+      {
+        "uri": "export_policy.json",
+        "sha256": "fdce0262d7dd0b9e504686360d491b77fc4a7c5375ebf07c795fe542d20739f6"
+      },
+      {
+        "uri": "validation_policy.json",
+        "sha256": "e880da6a6a4b8309de1b620ee33cb4ef59dbd5ec2735b356abc89085eb271d9e"
+      }
+    ],
+    "sha256": "e3260f19cacf77cfd9e9c6e5e402b4d90955882fe8c6cbec76d5d2323b3cdd34",
+    "canonical_encoding": "UTF-8 JSON, sorted object keys, compact separators, no trailing newline; listed array order"
+  },
+  "tool": {
+    "name": null,
+    "version": null,
+    "executed": false
+  },
+  "query_dialect_version": "synthetic_query_dialect/1",
+  "parser_contract_version": "w003-query-normalized/1",
+  "product_parser_version": null,
+  "query_unit": {
+    "name": "nm",
+    "metres_per_unit": {
+      "numerator": "1",
+      "denominator": "1000000000"
+    }
+  },
+  "geometry_unit_contract": "toy_gds_real8_nm/1",
+  "raw": [
+    {
+      "capability": "instance_xref",
+      "uri": "query/raw/instance_xref.txt",
+      "sha256": "9ee7ce46113c49cf36af070612b787549fead6d4fe10c4c821e6cc50acb6c57e"
+    },
+    {
+      "capability": "net_xref",
+      "uri": "query/raw/net_xref.txt",
+      "sha256": "b8bfb60a0a6ba15fb7265f6ddf737aacf564334117e7a5e00a6ee45b00e353da"
+    },
+    {
+      "capability": "device_regions",
+      "uri": "query/raw/device_regions.txt",
+      "sha256": "86d154d3f3976abc42d60c8fd20bb333d1fb2c4160728ab79e941013f9782e67"
+    },
+    {
+      "capability": "net_regions",
+      "uri": "query/raw/net_regions.txt",
+      "sha256": "a5c5bead18e8324b3db0b1cb49a9688f17ec562411253d2be714833153752136"
+    }
+  ],
+  "limitations_ref": "limitations.json",
+  "query_database_absence_reason": "synthetic raw construction; no query database exists"
+}

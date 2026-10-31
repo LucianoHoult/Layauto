@@ -1,0 +1,107 @@
+{
+  "schema_version": "w003-example/1",
+  "example_only": true,
+  "product_run_executed": false,
+  "kind": "MachineReportExpected",
+  "cell": "INV_M1_SYNTH",
+  "input_mode": "dummy_fixture",
+  "input_refs": [
+    {
+      "path": "source.gds",
+      "json_pointer": "",
+      "scope": "fixture_expected_only",
+      "actual_byte_sha256": "18c769696c66fa856bd8fa2c950397d4649a6d0392825b63a6185025a5e41149"
+    },
+    {
+      "path": "source.cdl",
+      "json_pointer": "",
+      "scope": "fixture_expected_only",
+      "actual_byte_sha256": "c71f40728a979c918e083b924a3045cf53bece51dd837f9ae2834cf242776fa4"
+    },
+    {
+      "path": "target.cdl",
+      "json_pointer": "",
+      "scope": "fixture_expected_only",
+      "actual_byte_sha256": "ddfd4713579743f578170efede62ce978a02680b42e5e2a6faeeb99016cff8db"
+    },
+    {
+      "path": "query/header.json",
+      "json_pointer": "",
+      "scope": "fixture_expected_only",
+      "actual_byte_sha256": "f44c80b13ce129100ed9922669370b3e2f258a622105572c21073019d224fea0"
+    },
+    {
+      "path": "tech.json",
+      "json_pointer": "",
+      "scope": "fixture_expected_only",
+      "actual_byte_sha256": "1bd3681c6fc3f07677d40c2d45ff593e0f41d36c67999995b19b8e774a69ba47"
+    },
+    {
+      "path": "site_config.yaml",
+      "json_pointer": "",
+      "scope": "fixture_expected_only",
+      "actual_byte_sha256": "5667ba43f9469a65189918444f8fb785f782e64db8c06728800c88a10c655b26"
+    }
+  ],
+  "current_target_fin_counts": {
+    "MN0": [
+      5,
+      5
+    ],
+    "MP0": [
+      7,
+      7
+    ]
+  },
+  "all_delta_ledger": [],
+  "unsupported_deltas": [],
+  "candidate_selection": null,
+  "repair_requirements": [],
+  "constraint_scope": "whole_cell",
+  "constraint_outcome": "expected_feasible",
+  "baseline_version": 0,
+  "baseline_event": "InitializationEvent",
+  "ordered_commit_ids": [],
+  "committed_changes": {
+    "geometry": 0,
+    "current_semantic": 0,
+    "occupancy": 0,
+    "annotation": 0,
+    "connectivity": 0
+  },
+  "derived_changes": [],
+  "view_refresh": "baseline construction only; no ECO refresh",
+  "coverage": {
+    "provenance": "synthetic_source_evidence",
+    "unannotated_marker": "MARK",
+    "disconnected_labelled_islands": [
+      "LB.left",
+      "LB.right"
+    ],
+    "post_edit_lvs_match": "not_run",
+    "production_rules": "not_covered"
+  },
+  "validation_ref": {
+    "type": "ValidationResultId",
+    "value": "validation"
+  },
+  "manifest_ref": {
+    "type": "ArtifactManifestId",
+    "value": "manifest"
+  },
+  "deployment_disposition": "requires_review",
+  "reason": "synthetic engineering specimen; real signoff deferred",
+  "deferred": [
+    "real_calibre_drc",
+    "real_calibre_lvs",
+    "virtuoso_readback"
+  ],
+  "actual_product_generation_time": null,
+  "actual_tool_command": null,
+  "limitations_ref": {
+    "path": "limitations.json",
+    "json_pointer": "",
+    "scope": "fixture_expected_only",
+    "actual_byte_sha256": "539b84b71eca61566640b3dacf03de86d6def441899978d6ca635d16cf1147be"
+  }
+}

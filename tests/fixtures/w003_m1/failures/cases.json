@@ -1,0 +1,416 @@
+{
+  "schema_version": "w003-failure-cases/1",
+  "classification": "concrete negative inputs and future runtime expectations; not executed StageFailure outputs",
+  "cases": [
+    {
+      "id": "unit_mismatch",
+      "replacement_files": {
+        "query/header.json": "unit_mismatch/query/header.json",
+        "source.gds": "unit_mismatch/source.gds"
+      },
+      "input_base": "../site_config.yaml",
+      "expected_issue": "UnitScaleMismatch",
+      "phase": "pre_context",
+      "binding_instruction": "copy positive fixture, apply all replacement_files, remove remove_files; header/source/raw/closure/cache bindings already consistent except intended failure",
+      "future_runtime_assertions": {
+        "terminal": "reject",
+        "eco_commit_count": 0,
+        "normal_export_manifest": false
+      },
+      "executed_as_product_run": false,
+      "remove_files": []
+    },
+    {
+      "id": "missing_terminator",
+      "replacement_files": {
+        "query/header.json": "missing_terminator/query/header.json",
+        "query/raw/instance_xref.txt": "missing_terminator/query/raw/instance_xref.txt"
+      },
+      "input_base": "../site_config.yaml",
+      "expected_issue": "MissingTerminator",
+      "phase": "pre_context",
+      "binding_instruction": "copy positive fixture, apply all replacement_files, remove remove_files; header/source/raw/closure/cache bindings already consistent except intended failure",
+      "future_runtime_assertions": {
+        "terminal": "reject",
+        "eco_commit_count": 0,
+        "normal_export_manifest": false
+      },
+      "executed_as_product_run": false,
+      "remove_files": [
+        "query/normalized/instance_xref.yaml"
+      ]
+    },
+    {
+      "id": "wrong_count",
+      "replacement_files": {
+        "query/header.json": "wrong_count/query/header.json",
+        "query/raw/net_xref.txt": "wrong_count/query/raw/net_xref.txt"
+      },
+      "input_base": "../site_config.yaml",
+      "expected_issue": "CountMismatch",
+      "phase": "pre_context",
+      "binding_instruction": "copy positive fixture, apply all replacement_files, remove remove_files; header/source/raw/closure/cache bindings already consistent except intended failure",
+      "future_runtime_assertions": {
+        "terminal": "reject",
+        "eco_commit_count": 0,
+        "normal_export_manifest": false
+      },
+      "executed_as_product_run": false,
+      "remove_files": [
+        "query/normalized/net_xref.yaml"
+      ]
+    },
+    {
+      "id": "dialect_drift",
+      "replacement_files": {
+        "query/header.json": "dialect_drift/query/header.json",
+        "query/raw/device_regions.txt": "dialect_drift/query/raw/device_regions.txt"
+      },
+      "input_base": "../site_config.yaml",
+      "expected_issue": "UnsupportedGeometryToken",
+      "phase": "pre_context",
+      "binding_instruction": "copy positive fixture, apply all replacement_files, remove remove_files; header/source/raw/closure/cache bindings already consistent except intended failure",
+      "future_runtime_assertions": {
+        "terminal": "reject",
+        "eco_commit_count": 0,
+        "normal_export_manifest": false
+      },
+      "executed_as_product_run": false,
+      "remove_files": [
+        "query/normalized/device_regions.yaml"
+      ]
+    },
+    {
+      "id": "unknown_unit",
+      "replacement_files": {
+        "query/header.json": "unknown_unit/query/header.json",
+        "query/raw/net_regions.txt": "unknown_unit/query/raw/net_regions.txt"
+      },
+      "input_base": "../site_config.yaml",
+      "expected_issue": "UnitBindingMismatch",
+      "phase": "pre_context",
+      "binding_instruction": "copy positive fixture, apply all replacement_files, remove remove_files; header/source/raw/closure/cache bindings already consistent except intended failure",
+      "future_runtime_assertions": {
+        "terminal": "reject",
+        "eco_commit_count": 0,
+        "normal_export_manifest": false
+      },
+      "executed_as_product_run": false,
+      "remove_files": [
+        "query/normalized/net_regions.yaml"
+      ]
+    },
+    {
+      "id": "raw_byte_drift",
+      "replacement_files": {
+        "query/raw/net_xref.txt": "raw_byte_drift/query/raw/net_xref.txt"
+      },
+      "input_base": "../site_config.yaml",
+      "expected_issue": "RawHashMismatch",
+      "phase": "pre_context",
+      "binding_instruction": "intentional single binding/cache defect; apply overlay unchanged",
+      "future_runtime_assertions": {
+        "terminal": "reject",
+        "eco_commit_count": 0,
+        "normal_export_manifest": false
+      },
+      "executed_as_product_run": false,
+      "remove_files": []
+    },
+    {
+      "id": "header_top_mismatch",
+      "replacement_files": {
+        "query/header.json": "header_top_mismatch/query/header.json"
+      },
+      "input_base": "../site_config.yaml",
+      "expected_issue": "TopBindingMismatch",
+      "phase": "pre_context",
+      "binding_instruction": "intentional single binding/cache defect; apply overlay unchanged",
+      "future_runtime_assertions": {
+        "terminal": "reject",
+        "eco_commit_count": 0,
+        "normal_export_manifest": false
+      },
+      "executed_as_product_run": false,
+      "remove_files": []
+    },
+    {
+      "id": "mapping_many_to_one",
+      "replacement_files": {
+        "query/header.json": "mapping_many_to_one/query/header.json",
+        "query/normalized/instance_xref.yaml": "mapping_many_to_one/query/normalized/instance_xref.yaml",
+        "query/raw/instance_xref.txt": "mapping_many_to_one/query/raw/instance_xref.txt"
+      },
+      "input_base": "../site_config.yaml",
+      "expected_issue": "UnsupportedDeviceCardinality",
+      "phase": "pre_context",
+      "binding_instruction": "copy positive fixture, apply all replacement_files, remove remove_files; header/source/raw/closure/cache bindings already consistent except intended failure",
+      "future_runtime_assertions": {
+        "terminal": "reject",
+        "eco_commit_count": 0,
+        "normal_export_manifest": false
+      },
+      "executed_as_product_run": false,
+      "remove_files": []
+    },
+    {
+      "id": "multifinger",
+      "replacement_files": {
+        "query/header.json": "multifinger/query/header.json",
+        "source.cdl": "multifinger/source.cdl"
+      },
+      "input_base": "../site_config.yaml",
+      "expected_issue": "UnsupportedFingerCount",
+      "phase": "pre_context",
+      "binding_instruction": "copy positive fixture, apply all replacement_files, remove remove_files; header/source/raw/closure/cache bindings already consistent except intended failure",
+      "future_runtime_assertions": {
+        "terminal": "reject",
+        "eco_commit_count": 0,
+        "normal_export_manifest": false
+      },
+      "executed_as_product_run": false,
+      "remove_files": []
+    },
+    {
+      "id": "device_reduction",
+      "replacement_files": {
+        "query/header.json": "device_reduction/query/header.json",
+        "query/normalized/instance_xref.yaml": "device_reduction/query/normalized/instance_xref.yaml",
+        "query/raw/instance_xref.txt": "device_reduction/query/raw/instance_xref.txt"
+      },
+      "input_base": "../site_config.yaml",
+      "expected_issue": "UnsupportedDeviceReduction",
+      "phase": "pre_context",
+      "binding_instruction": "copy positive fixture, apply all replacement_files, remove remove_files; header/source/raw/closure/cache bindings already consistent except intended failure",
+      "future_runtime_assertions": {
+        "terminal": "reject",
+        "eco_commit_count": 0,
+        "normal_export_manifest": false
+      },
+      "executed_as_product_run": false,
+      "remove_files": []
+    },
+    {
+      "id": "cdl_expression",
+      "replacement_files": {
+        "query/header.json": "cdl_expression/query/header.json",
+        "source.cdl": "cdl_expression/source.cdl"
+      },
+      "input_base": "../site_config.yaml",
+      "expected_issue": "UnsupportedCdlExpression",
+      "phase": "pre_context",
+      "binding_instruction": "copy positive fixture, apply all replacement_files, remove remove_files; header/source/raw/closure/cache bindings already consistent except intended failure",
+      "future_runtime_assertions": {
+        "terminal": "reject",
+        "eco_commit_count": 0,
+        "normal_export_manifest": false
+      },
+      "executed_as_product_run": false,
+      "remove_files": []
+    },
+    {
+      "id": "cdl_include",
+      "replacement_files": {
+        "query/header.json": "cdl_include/query/header.json",
+        "source.cdl": "cdl_include/source.cdl"
+      },
+      "input_base": "../site_config.yaml",
+      "expected_issue": "UnsupportedDependencyDirective",
+      "phase": "pre_context",
+      "binding_instruction": "copy positive fixture, apply all replacement_files, remove remove_files; header/source/raw/closure/cache bindings already consistent except intended failure",
+      "future_runtime_assertions": {
+        "terminal": "reject",
+        "eco_commit_count": 0,
+        "normal_export_manifest": false
+      },
+      "executed_as_product_run": false,
+      "remove_files": []
+    },
+    {
+      "id": "unsupported_target",
+      "replacement_files": {
+        "query/header.json": "unsupported_target/query/header.json",
+        "target.cdl": "unsupported_target/target.cdl"
+      },
+      "input_base": "../site_config.yaml",
+      "expected_issue": "UnsupportedTargetAxis",
+      "phase": "sealed_no_publication",
+      "binding_instruction": "copy positive fixture, apply all replacement_files, remove remove_files; header/source/raw/closure/cache bindings already consistent except intended failure",
+      "future_runtime_assertions": {
+        "terminal": "reject",
+        "eco_commit_count": 0,
+        "normal_export_manifest": false
+      },
+      "executed_as_product_run": false,
+      "remove_files": []
+    },
+    {
+      "id": "count_correct_rule_wrong",
+      "replacement_files": {
+        "geometry_change.json": "count_correct_rule_wrong/geometry_change.json",
+        "query/header.json": "count_correct_rule_wrong/query/header.json",
+        "query/normalized/net_regions.yaml": "count_correct_rule_wrong/query/normalized/net_regions.yaml",
+        "query/raw/net_regions.txt": "count_correct_rule_wrong/query/raw/net_regions.txt",
+        "source.gds": "count_correct_rule_wrong/source.gds"
+      },
+      "input_base": "../site_config.yaml",
+      "expected_issue": "MandatoryRuleViolation:T07.m1_spacing",
+      "phase": "sealed_no_publication",
+      "binding_instruction": "copy positive fixture, apply all replacement_files, remove remove_files; header/source/raw/closure/cache bindings already consistent except intended failure",
+      "future_runtime_assertions": {
+        "terminal": "reject",
+        "eco_commit_count": 0,
+        "normal_export_manifest": false
+      },
+      "executed_as_product_run": false,
+      "remove_files": []
+    },
+    {
+      "id": "via_enclosure",
+      "replacement_files": {
+        "geometry_change.json": "via_enclosure/geometry_change.json",
+        "query/header.json": "via_enclosure/query/header.json",
+        "source.gds": "via_enclosure/source.gds"
+      },
+      "input_base": "../site_config.yaml",
+      "expected_issue": "MandatoryRuleViolation:T05.contact_enclosure",
+      "phase": "sealed_no_publication",
+      "binding_instruction": "copy positive fixture, apply all replacement_files, remove remove_files; header/source/raw/closure/cache bindings already consistent except intended failure",
+      "future_runtime_assertions": {
+        "terminal": "reject",
+        "eco_commit_count": 0,
+        "normal_export_manifest": false
+      },
+      "executed_as_product_run": false,
+      "remove_files": []
+    },
+    {
+      "id": "extraction_mismatch",
+      "replacement_files": {
+        "geometry_change.json": "extraction_mismatch/geometry_change.json",
+        "query/header.json": "extraction_mismatch/query/header.json",
+        "query/normalized/device_regions.yaml": "extraction_mismatch/query/normalized/device_regions.yaml",
+        "query/raw/device_regions.txt": "extraction_mismatch/query/raw/device_regions.txt",
+        "source.gds": "extraction_mismatch/source.gds"
+      },
+      "input_base": "../site_config.yaml",
+      "expected_issue": "ExtractionCountMismatch",
+      "phase": "sealed_no_publication",
+      "binding_instruction": "copy positive fixture, apply all replacement_files, remove remove_files; header/source/raw/closure/cache bindings already consistent except intended failure",
+      "future_runtime_assertions": {
+        "terminal": "reject",
+        "eco_commit_count": 0,
+        "normal_export_manifest": false
+      },
+      "executed_as_product_run": false,
+      "remove_files": []
+    },
+    {
+      "id": "gds_text",
+      "replacement_files": {
+        "query/header.json": "gds_text/query/header.json",
+        "source.gds": "gds_text/source.gds"
+      },
+      "input_base": "../site_config.yaml",
+      "expected_issue": "UnsupportedGdsElement:TEXT",
+      "phase": "pre_context",
+      "binding_instruction": "copy positive fixture, apply all replacement_files, remove remove_files; header/source/raw/closure/cache bindings already consistent except intended failure",
+      "future_runtime_assertions": {
+        "terminal": "reject",
+        "eco_commit_count": 0,
+        "normal_export_manifest": false
+      },
+      "executed_as_product_run": false,
+      "remove_files": []
+    },
+    {
+      "id": "gds_nonrectangle",
+      "replacement_files": {
+        "query/header.json": "gds_nonrectangle/query/header.json",
+        "source.gds": "gds_nonrectangle/source.gds"
+      },
+      "input_base": "../site_config.yaml",
+      "expected_issue": "UnsupportedNonrectangle",
+      "phase": "pre_context",
+      "binding_instruction": "copy positive fixture, apply all replacement_files, remove remove_files; header/source/raw/closure/cache bindings already consistent except intended failure",
+      "future_runtime_assertions": {
+        "terminal": "reject",
+        "eco_commit_count": 0,
+        "normal_export_manifest": false
+      },
+      "executed_as_product_run": false,
+      "remove_files": []
+    },
+    {
+      "id": "output_nonrepresentable",
+      "replacement_files": {
+        "export_policy.json": "output_nonrepresentable/export_policy.json",
+        "query/header.json": "output_nonrepresentable/query/header.json"
+      },
+      "input_base": "../site_config.yaml",
+      "expected_issue": "OutputCoordinateNotRepresentable",
+      "phase": "export",
+      "binding_instruction": "copy positive fixture, apply all replacement_files, remove remove_files; header/source/raw/closure/cache bindings already consistent except intended failure",
+      "future_runtime_assertions": {
+        "terminal": "reject",
+        "eco_commit_count": 0,
+        "normal_export_manifest": false
+      },
+      "executed_as_product_run": false,
+      "remove_files": []
+    },
+    {
+      "id": "output_overflow",
+      "replacement_files": {
+        "export_policy.json": "output_overflow/export_policy.json",
+        "query/header.json": "output_overflow/query/header.json"
+      },
+      "input_base": "../site_config.yaml",
+      "expected_issue": "OutputCoordinateOverflow",
+      "phase": "export",
+      "binding_instruction": "copy positive fixture, apply all replacement_files, remove remove_files; header/source/raw/closure/cache bindings already consistent except intended failure",
+      "future_runtime_assertions": {
+        "terminal": "reject",
+        "eco_commit_count": 0,
+        "normal_export_manifest": false
+      },
+      "executed_as_product_run": false,
+      "remove_files": []
+    },
+    {
+      "id": "normalized_cache_drift",
+      "replacement_files": {
+        "query/normalized/net_xref.yaml": "normalized_cache_drift/query/normalized/net_xref.yaml"
+      },
+      "input_base": "../site_config.yaml",
+      "expected_issue": "NormalizedCacheMismatch",
+      "phase": "pre_context",
+      "binding_instruction": "intentional single binding/cache defect; apply overlay unchanged",
+      "future_runtime_assertions": {
+        "terminal": "reject",
+        "eco_commit_count": 0,
+        "normal_export_manifest": false
+      },
+      "executed_as_product_run": false,
+      "remove_files": []
+    },
+    {
+      "id": "missing_body_operator",
+      "replacement_files": {
+        "query/header.json": "missing_body_operator/query/header.json",
+        "tech.json": "missing_body_operator/tech.json"
+      },
+      "input_base": "../site_config.yaml",
+      "expected_issue": "RequiredBodyOperatorUnavailable",
+      "phase": "pre_context",
+      "binding_instruction": "copy positive fixture, apply all replacement_files, remove remove_files; header/source/raw/closure/cache bindings already consistent except intended failure",
+      "future_runtime_assertions": {
+        "terminal": "reject",
+        "eco_commit_count": 0,
+        "normal_export_manifest": false
+      },
+      "executed_as_product_run": false,
+      "remove_files": []
+    }
+  ]
+}

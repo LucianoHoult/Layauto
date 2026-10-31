@@ -1,0 +1,13 @@
+W003_QUERY 1 net_regions w003.synthetic.query.1 mystery
+COUNT 10
+R R00 007 toy_poly RECT exact 58 10 62 190
+R R01 007 toy_m1 RECT exact 50 90 75 98
+R R02 042 toy_li RECT exact 84 30 90 165
+R R03 042 toy_m1 RECT exact 80 90 110 98
+R R04 091 toy_li RECT exact 28 30 34 55
+R R05 091 toy_m1 RECT exact 0 48 45 58
+R R06 108 toy_li RECT exact 28 130 34 155
+R R07 108 toy_m1 RECT exact 0 148 45 158
+R R08 007 toy_li RECT exact 130 20 139 24
+R R09 007 toy_li RECT exact 141 20 150 24
+END W003_QUERY

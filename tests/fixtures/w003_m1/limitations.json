@@ -1,0 +1,58 @@
+{
+  "schema_version": "w003-limitations/1",
+  "classification": "synthetic",
+  "tool_captured": false,
+  "real_tool_executed": false,
+  "production_checks": {
+    "model": "unknown",
+    "unit_binding": "not verified for production",
+    "query_dialect": "unknown",
+    "tool_version": "unknown",
+    "pdk": "unknown",
+    "body": "toy only",
+    "abutment": "not covered",
+    "real_lvs_match": "not_run",
+    "real_drc": "not_run"
+  },
+  "query_assurance": "synthetic",
+  "parser_status": "fixture-only structural consistency checker; future product importer not implemented",
+  "normal_terminal": "requires_review",
+  "local_only": true,
+  "unknown_permissions": [
+    "raw feedback",
+    "hash feedback",
+    "pass/fail feedback",
+    "platform details",
+    "uploading fixtures or wheels"
+  ],
+  "intentional_geometry_cases": [
+    "two disconnected LI fragments share A label with remote A gate; no physical edge by label",
+    "MARK is unannotated nonconducting C2 and preserved"
+  ],
+  "unsupported": [
+    "any ECO including resize",
+    "production models",
+    "multifinger",
+    "non-one-to-one",
+    "device reduction",
+    "GDS elements other than flat rectangle BOUNDARY",
+    "CDL expressions/includes",
+    "query optional records",
+    "production command templates"
+  ],
+  "truth_inputs": [
+    "source.gds",
+    "source.cdl",
+    "target.cdl",
+    "query/raw/*",
+    "query/header.json",
+    "tech.json"
+  ],
+  "oracle_not_input": [
+    "spec.json",
+    "oracle.json",
+    "expected/*"
+  ],
+  "generation": "source GDS exact Fraction writer; expected GDS independent KLayout writer; hand tables and independent KLayout Boolean/readback checks",
+  "no_product_acceptance_claim": true
+}

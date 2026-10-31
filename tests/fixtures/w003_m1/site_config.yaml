@@ -1,0 +1,34 @@
+{
+  "schema_version": "w003-site/1",
+  "mode": "dummy_fixture",
+  "relative_path_base": "this_file_parent",
+  "inputs": {
+    "gds": "source.gds",
+    "source_cdl": "source.cdl",
+    "target_cdl": "target.cdl",
+    "query_header": "query/header.json"
+  },
+  "tech_ref": "tech.json",
+  "export_policy_ref": "export_policy.json",
+  "validation_policy_ref": "validation_policy.json",
+  "limitation_ref": "limitations.json",
+  "outputs": {
+    "directory": "outputs",
+    "core": [
+      "output.gds",
+      "output.cdl",
+      "layout.json"
+    ],
+    "reports": [
+      "report.md",
+      "report.json"
+    ]
+  },
+  "tool": {
+    "binary": null,
+    "version": null,
+    "query_database": null,
+    "production_platform": null
+  },
+  "note": "paths select inputs only; no geometry, model, pin, target count or physical rule override"
+}

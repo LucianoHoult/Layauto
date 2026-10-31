@@ -1,0 +1,28 @@
+{
+  "schema_version": "w003-query-normalized/1",
+  "header_id": "w003.synthetic.query.1",
+  "capability": "net_xref",
+  "raw_sha256": "b8bfb60a0a6ba15fb7265f6ddf737aacf564334117e7a5e00a6ee45b00e353da",
+  "records": [
+    {
+      "lvs_index": "007",
+      "lvs_name": "n_a",
+      "schematic_name": "Y"
+    },
+    {
+      "lvs_index": "042",
+      "lvs_name": "n_y",
+      "schematic_name": "Y"
+    },
+    {
+      "lvs_index": "091",
+      "lvs_name": "n_lo",
+      "schematic_name": "VSS"
+    },
+    {
+      "lvs_index": "108",
+      "lvs_name": "n_hi",
+      "schematic_name": "VDD"
+    }
+  ]
+}

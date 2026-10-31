@@ -1,0 +1,1108 @@
+{
+  "schema_version": "w003-example/1",
+  "example_only": true,
+  "records": [
+    {
+      "schema_version": "w003-example/1",
+      "example_only": true,
+      "kind": "ToolRunResult",
+      "id": {
+        "type": "ToolRunResultId",
+        "value": "fixture-read"
+      },
+      "mode": "dummy_fixture",
+      "tool_name": "fixture-reader",
+      "command": [
+        "read-preexisting-raw-captures"
+      ],
+      "input_refs": [
+        {
+          "path": "site_config.yaml",
+          "json_pointer": "",
+          "scope": "fixture_expected_only",
+          "actual_byte_sha256": "5667ba43f9469a65189918444f8fb785f782e64db8c06728800c88a10c655b26"
+        }
+      ],
+      "raw_output_refs": [
+        {
+          "path": "query/raw/instance_xref.txt",
+          "json_pointer": "",
+          "scope": "fixture_expected_only",
+          "actual_byte_sha256": "2644c52d4690529e7eb5859ceb7df97ece7425a9c324668453d41fb6e863e9a7"
+        },
+        {
+          "path": "query/raw/net_xref.txt",
+          "json_pointer": "",
+          "scope": "fixture_expected_only",
+          "actual_byte_sha256": "b8bfb60a0a6ba15fb7265f6ddf737aacf564334117e7a5e00a6ee45b00e353da"
+        },
+        {
+          "path": "query/raw/device_regions.txt",
+          "json_pointer": "",
+          "scope": "fixture_expected_only",
+          "actual_byte_sha256": "86d154d3f3976abc42d60c8fd20bb333d1fb2c4160728ab79e941013f9782e67"
+        },
+        {
+          "path": "query/raw/net_regions.txt",
+          "json_pointer": "",
+          "scope": "fixture_expected_only",
+          "actual_byte_sha256": "a5c5bead18e8324b3db0b1cb49a9688f17ec562411253d2be714833153752136"
+        }
+      ],
+      "exit_status": 0,
+      "execution_status": "pass",
+      "stdout_ref": null,
+      "stderr_ref": null
+    },
+    {
+      "schema_version": "w003-example/1",
+      "example_only": true,
+      "kind": "ParseResult",
+      "id": {
+        "type": "ParseResultId",
+        "value": "query-parse"
+      },
+      "tool_run_ref": {
+        "type": "ToolRunResultId",
+        "value": "fixture-read"
+      },
+      "parser_version": "w003-query-normalized/1 (contract only; product parser not implemented)",
+      "dialect_version": "synthetic_query_dialect/1",
+      "raw_refs": [
+        {
+          "path": "query/raw/instance_xref.txt",
+          "json_pointer": "",
+          "scope": "fixture_expected_only",
+          "actual_byte_sha256": "2644c52d4690529e7eb5859ceb7df97ece7425a9c324668453d41fb6e863e9a7"
+        },
+        {
+          "path": "query/raw/net_xref.txt",
+          "json_pointer": "",
+          "scope": "fixture_expected_only",
+          "actual_byte_sha256": "b8bfb60a0a6ba15fb7265f6ddf737aacf564334117e7a5e00a6ee45b00e353da"
+        },
+        {
+          "path": "query/raw/device_regions.txt",
+          "json_pointer": "",
+          "scope": "fixture_expected_only",
+          "actual_byte_sha256": "86d154d3f3976abc42d60c8fd20bb333d1fb2c4160728ab79e941013f9782e67"
+        },
+        {
+          "path": "query/raw/net_regions.txt",
+          "json_pointer": "",
+          "scope": "fixture_expected_only",
+          "actual_byte_sha256": "a5c5bead18e8324b3db0b1cb49a9688f17ec562411253d2be714833153752136"
+        }
+      ],
+      "evidence_refs": [
+        {
+          "type": "EvidenceRecordId",
+          "value": "evidence"
+        }
+      ],
+      "execution_status": "pass"
+    },
+    {
+      "schema_version": "w003-example/1",
+      "example_only": true,
+      "kind": "EvidenceRecord",
+      "id": {
+        "type": "EvidenceRecordId",
+        "value": "evidence"
+      },
+      "parse_ref": {
+        "type": "ParseResultId",
+        "value": "query-parse"
+      },
+      "header_ref": {
+        "path": "query/header.json",
+        "json_pointer": "",
+        "scope": "fixture_expected_only",
+        "actual_byte_sha256": "f44c80b13ce129100ed9922669370b3e2f258a622105572c21073019d224fea0"
+      },
+      "raw_refs": [
+        {
+          "path": "query/raw/instance_xref.txt",
+          "json_pointer": "",
+          "scope": "fixture_expected_only",
+          "actual_byte_sha256": "2644c52d4690529e7eb5859ceb7df97ece7425a9c324668453d41fb6e863e9a7"
+        },
+        {
+          "path": "query/raw/net_xref.txt",
+          "json_pointer": "",
+          "scope": "fixture_expected_only",
+          "actual_byte_sha256": "b8bfb60a0a6ba15fb7265f6ddf737aacf564334117e7a5e00a6ee45b00e353da"
+        },
+        {
+          "path": "query/raw/device_regions.txt",
+          "json_pointer": "",
+          "scope": "fixture_expected_only",
+          "actual_byte_sha256": "86d154d3f3976abc42d60c8fd20bb333d1fb2c4160728ab79e941013f9782e67"
+        },
+        {
+          "path": "query/raw/net_regions.txt",
+          "json_pointer": "",
+          "scope": "fixture_expected_only",
+          "actual_byte_sha256": "a5c5bead18e8324b3db0b1cb49a9688f17ec562411253d2be714833153752136"
+        }
+      ],
+      "assurance": "synthetic",
+      "exact_value_example": {
+        "original_lexeme": "20",
+        "value_ticks": 20,
+        "nominal_tick_m": {
+          "numerator": "1",
+          "denominator": "1000000000"
+        },
+        "numeric_precision": "exact integer lexeme; query unit 1 nm",
+        "unit_contract_ref": {
+          "path": "tech.json",
+          "json_pointer": "/unit_scale_contract",
+          "scope": "fixture_expected_only",
+          "actual_byte_sha256": "1bd3681c6fc3f07677d40c2d45ff593e0f41d36c67999995b19b8e774a69ba47"
+        }
+      },
+      "source_backlink": {
+        "raw_ref": {
+          "path": "query/raw/device_regions.txt",
+          "json_pointer": "",
+          "scope": "fixture_expected_only",
+          "actual_byte_sha256": "86d154d3f3976abc42d60c8fd20bb333d1fb2c4160728ab79e941013f9782e67"
+        },
+        "line_1based": 3,
+        "token_0based": 7,
+        "meaning": "D0 rectangle y_min",
+        "source_dbu_backlink": {
+          "path": "query/header.json",
+          "json_pointer": "/geometry_unit_contract",
+          "scope": "fixture_expected_only",
+          "actual_byte_sha256": "f44c80b13ce129100ed9922669370b3e2f258a622105572c21073019d224fea0"
+        },
+        "original_xy_ticks_preserved": true
+      }
+    },
+    {
+      "schema_version": "w003-example/1",
+      "example_only": true,
+      "kind": "ImmutableContext",
+      "id": {
+        "type": "ImmutableContextId",
+        "value": "context"
+      },
+      "tech_ref": {
+        "path": "tech.json",
+        "json_pointer": "",
+        "scope": "fixture_expected_only",
+        "actual_byte_sha256": "1bd3681c6fc3f07677d40c2d45ff593e0f41d36c67999995b19b8e774a69ba47"
+      },
+      "evidence_ref": {
+        "type": "EvidenceRecordId",
+        "value": "evidence"
+      },
+      "coordinate_ref": {
+        "path": "tech.json",
+        "json_pointer": "/coordinate_projection",
+        "scope": "fixture_expected_only",
+        "actual_byte_sha256": "1bd3681c6fc3f07677d40c2d45ff593e0f41d36c67999995b19b8e774a69ba47"
+      },
+      "capability_refs": [
+        {
+          "path": "tech.json",
+          "json_pointer": "/geometry_capability",
+          "scope": "fixture_expected_only",
+          "actual_byte_sha256": "1bd3681c6fc3f07677d40c2d45ff593e0f41d36c67999995b19b8e774a69ba47"
+        },
+        {
+          "path": "tech.json",
+          "json_pointer": "/cdl_dialect",
+          "scope": "fixture_expected_only",
+          "actual_byte_sha256": "1bd3681c6fc3f07677d40c2d45ff593e0f41d36c67999995b19b8e774a69ba47"
+        },
+        {
+          "path": "tech.json",
+          "json_pointer": "/fin_count_profile",
+          "scope": "fixture_expected_only",
+          "actual_byte_sha256": "1bd3681c6fc3f07677d40c2d45ff593e0f41d36c67999995b19b8e774a69ba47"
+        },
+        {
+          "path": "tech.json",
+          "json_pointer": "/device_extraction_contract",
+          "scope": "fixture_expected_only",
+          "actual_byte_sha256": "1bd3681c6fc3f07677d40c2d45ff593e0f41d36c67999995b19b8e774a69ba47"
+        }
+      ],
+      "target_ref": {
+        "path": "target.cdl",
+        "json_pointer": "",
+        "scope": "fixture_expected_only",
+        "actual_byte_sha256": "ddfd4713579743f578170efede62ce978a02680b42e5e2a6faeeb99016cff8db"
+      },
+      "policy_refs": [
+        {
+          "path": "export_policy.json",
+          "json_pointer": "",
+          "scope": "fixture_expected_only",
+          "actual_byte_sha256": "fdce0262d7dd0b9e504686360d491b77fc4a7c5375ebf07c795fe542d20739f6"
+        },
+        {
+          "path": "validation_policy.json",
+          "json_pointer": "",
+          "scope": "fixture_expected_only",
+          "actual_byte_sha256": "e880da6a6a4b8309de1b620ee33cb4ef59dbd5ec2735b356abc89085eb271d9e"
+        }
+      ]
+    },
+    {
+      "schema_version": "w003-example/1",
+      "example_only": true,
+      "kind": "LifecycleAuditRecord",
+      "id": {
+        "type": "LifecycleAuditRecordId",
+        "value": "lifecycle"
+      },
+      "operator_profile_ref": {
+        "path": "tech.json",
+        "json_pointer": "",
+        "scope": "fixture_expected_only",
+        "actual_byte_sha256": "1bd3681c6fc3f07677d40c2d45ff593e0f41d36c67999995b19b8e774a69ba47"
+      },
+      "scope": "all drawn records",
+      "outcome": "pass",
+      "no_derived_layers": true,
+      "comparator": "exact tagged layer/rectangle multiset; frame identity"
+    },
+    {
+      "schema_version": "w003-example/1",
+      "example_only": true,
+      "kind": "ProposedInitialState",
+      "id": {
+        "type": "ProposedInitialStateId",
+        "value": "proposed"
+      },
+      "context_ref": {
+        "type": "ImmutableContextId",
+        "value": "context"
+      },
+      "component_refs": {
+        "current_semantic": {
+          "path": "expected/layout.json",
+          "json_pointer": "/current_semantic",
+          "scope": "fixture_expected_only",
+          "actual_byte_sha256": "a4be4e341fce600b6371d034d0901cabaf324ec8529cef06601408b67f8e32fc"
+        },
+        "geometry": {
+          "path": "expected/layout.json",
+          "json_pointer": "/geometry",
+          "scope": "fixture_expected_only",
+          "actual_byte_sha256": "a4be4e341fce600b6371d034d0901cabaf324ec8529cef06601408b67f8e32fc"
+        },
+        "occupancy": {
+          "path": "expected/layout.json",
+          "json_pointer": "/occupancy_fragment_witnesses",
+          "scope": "fixture_expected_only",
+          "actual_byte_sha256": "a4be4e341fce600b6371d034d0901cabaf324ec8529cef06601408b67f8e32fc"
+        },
+        "annotation": {
+          "path": "expected/layout.json",
+          "json_pointer": "/annotation",
+          "scope": "fixture_expected_only",
+          "actual_byte_sha256": "a4be4e341fce600b6371d034d0901cabaf324ec8529cef06601408b67f8e32fc"
+        },
+        "connectivity": {
+          "path": "expected/layout.json",
+          "json_pointer": "/connectivity",
+          "scope": "fixture_expected_only",
+          "actual_byte_sha256": "a4be4e341fce600b6371d034d0901cabaf324ec8529cef06601408b67f8e32fc"
+        },
+        "lifecycle": {
+          "path": "expected/layout.json",
+          "json_pointer": "/lifecycle",
+          "scope": "fixture_expected_only",
+          "actual_byte_sha256": "a4be4e341fce600b6371d034d0901cabaf324ec8529cef06601408b67f8e32fc"
+        },
+        "linkage": {
+          "path": "expected/layout.json",
+          "json_pointer": "/linkage",
+          "scope": "fixture_expected_only",
+          "actual_byte_sha256": "a4be4e341fce600b6371d034d0901cabaf324ec8529cef06601408b67f8e32fc"
+        }
+      },
+      "current_semantic_ref": {
+        "path": "source.cdl",
+        "json_pointer": "",
+        "scope": "fixture_expected_only",
+        "actual_byte_sha256": "c71f40728a979c918e083b924a3045cf53bece51dd837f9ae2834cf242776fa4"
+      },
+      "target_ref": {
+        "path": "target.cdl",
+        "json_pointer": "",
+        "scope": "fixture_expected_only",
+        "actual_byte_sha256": "ddfd4713579743f578170efede62ce978a02680b42e5e2a6faeeb99016cff8db"
+      },
+      "lifecycle_audit_ref": {
+        "type": "LifecycleAuditRecordId",
+        "value": "lifecycle"
+      }
+    },
+    {
+      "schema_version": "w003-example/1",
+      "example_only": true,
+      "kind": "RunAttempt",
+      "id": {
+        "type": "RunAttemptId",
+        "value": "attempt-unsealed"
+      },
+      "variant": "unsealed",
+      "run_id": {
+        "type": "RunId",
+        "value": "example-run"
+      },
+      "revision": 0,
+      "starting_state_head": null,
+      "raw_request_descriptor": {
+        "operation_kind": "create_attempt",
+        "proposed_run_id": {
+          "type": "RunId",
+          "value": "example-run"
+        },
+        "expected_state_head": null,
+        "proposed_lineage_id": {
+          "type": "StateLineageId",
+          "value": "example-lineage"
+        },
+        "idempotency_key": "example-create-1",
+        "requested_mode": "dummy_fixture",
+        "raw_input_selections": [
+          {
+            "path": "source.gds",
+            "json_pointer": "",
+            "scope": "fixture_expected_only",
+            "actual_byte_sha256": "18c769696c66fa856bd8fa2c950397d4649a6d0392825b63a6185025a5e41149"
+          },
+          {
+            "path": "source.cdl",
+            "json_pointer": "",
+            "scope": "fixture_expected_only",
+            "actual_byte_sha256": "c71f40728a979c918e083b924a3045cf53bece51dd837f9ae2834cf242776fa4"
+          },
+          {
+            "path": "target.cdl",
+            "json_pointer": "",
+            "scope": "fixture_expected_only",
+            "actual_byte_sha256": "ddfd4713579743f578170efede62ce978a02680b42e5e2a6faeeb99016cff8db"
+          },
+          {
+            "path": "query/header.json",
+            "json_pointer": "",
+            "scope": "fixture_expected_only",
+            "actual_byte_sha256": "f44c80b13ce129100ed9922669370b3e2f258a622105572c21073019d224fea0"
+          }
+        ],
+        "raw_capture_selections": [
+          {
+            "path": "query/raw/instance_xref.txt",
+            "json_pointer": "",
+            "scope": "fixture_expected_only",
+            "actual_byte_sha256": "2644c52d4690529e7eb5859ceb7df97ece7425a9c324668453d41fb6e863e9a7"
+          },
+          {
+            "path": "query/raw/net_xref.txt",
+            "json_pointer": "",
+            "scope": "fixture_expected_only",
+            "actual_byte_sha256": "b8bfb60a0a6ba15fb7265f6ddf737aacf564334117e7a5e00a6ee45b00e353da"
+          },
+          {
+            "path": "query/raw/device_regions.txt",
+            "json_pointer": "",
+            "scope": "fixture_expected_only",
+            "actual_byte_sha256": "86d154d3f3976abc42d60c8fd20bb333d1fb2c4160728ab79e941013f9782e67"
+          },
+          {
+            "path": "query/raw/net_regions.txt",
+            "json_pointer": "",
+            "scope": "fixture_expected_only",
+            "actual_byte_sha256": "a5c5bead18e8324b3db0b1cb49a9688f17ec562411253d2be714833153752136"
+          }
+        ],
+        "config_policy_selections": [
+          {
+            "path": "site_config.yaml",
+            "json_pointer": "",
+            "scope": "fixture_expected_only",
+            "actual_byte_sha256": "5667ba43f9469a65189918444f8fb785f782e64db8c06728800c88a10c655b26"
+          },
+          {
+            "path": "tech.json",
+            "json_pointer": "",
+            "scope": "fixture_expected_only",
+            "actual_byte_sha256": "1bd3681c6fc3f07677d40c2d45ff593e0f41d36c67999995b19b8e774a69ba47"
+          },
+          {
+            "path": "export_policy.json",
+            "json_pointer": "",
+            "scope": "fixture_expected_only",
+            "actual_byte_sha256": "fdce0262d7dd0b9e504686360d491b77fc4a7c5375ebf07c795fe542d20739f6"
+          },
+          {
+            "path": "validation_policy.json",
+            "json_pointer": "",
+            "scope": "fixture_expected_only",
+            "actual_byte_sha256": "e880da6a6a4b8309de1b620ee33cb4ef59dbd5ec2735b356abc89085eb271d9e"
+          },
+          {
+            "path": "limitations.json",
+            "json_pointer": "",
+            "scope": "fixture_expected_only",
+            "actual_byte_sha256": "539b84b71eca61566640b3dacf03de86d6def441899978d6ca635d16cf1147be"
+          }
+        ]
+      },
+      "raw_request_digest": "84e36391569347080e5c4d57dd66fd385b278b23c853d2d0e0da63b4be585fcb",
+      "idempotency": {
+        "operation_kind": "create_attempt",
+        "proposed_run_id": {
+          "type": "RunId",
+          "value": "example-run"
+        },
+        "idempotency_key": "example-create-1",
+        "request_digest_algorithm": "sha256",
+        "request_digest": "84e36391569347080e5c4d57dd66fd385b278b23c853d2d0e0da63b4be585fcb"
+      },
+      "durability_profile": "process_local"
+    },
+    {
+      "schema_version": "w003-example/1",
+      "example_only": true,
+      "kind": "PreparedBaseline",
+      "id": {
+        "type": "PreparedBaselineId",
+        "value": "prepared"
+      },
+      "publication_kind": "baseline",
+      "proposed_ref": {
+        "type": "ProposedInitialStateId",
+        "value": "proposed"
+      },
+      "snapshot_ref": {
+        "type": "SnapshotId",
+        "value": "baseline-0"
+      },
+      "context_ref": {
+        "type": "ImmutableContextId",
+        "value": "context"
+      },
+      "attempt_ref": {
+        "type": "RunAttemptId",
+        "value": "attempt-unsealed"
+      },
+      "expected_state_head": null,
+      "expected_attempt_revision": 0,
+      "lifecycle_audit_ref": {
+        "type": "LifecycleAuditRecordId",
+        "value": "lifecycle"
+      }
+    },
+    {
+      "schema_version": "w003-example/1",
+      "example_only": true,
+      "kind": "Snapshot",
+      "id": {
+        "type": "SnapshotId",
+        "value": "baseline-0"
+      },
+      "state_lineage_id": {
+        "type": "StateLineageId",
+        "value": "example-lineage"
+      },
+      "state_version": 0,
+      "parent_snapshot_ref": null,
+      "initialization_ref": {
+        "type": "InitializationEventId",
+        "value": "init"
+      },
+      "context_ref": {
+        "type": "ImmutableContextId",
+        "value": "context"
+      },
+      "component_refs": {
+        "current_semantic": {
+          "path": "expected/layout.json",
+          "json_pointer": "/current_semantic",
+          "scope": "fixture_expected_only",
+          "actual_byte_sha256": "a4be4e341fce600b6371d034d0901cabaf324ec8529cef06601408b67f8e32fc"
+        },
+        "geometry": {
+          "path": "expected/layout.json",
+          "json_pointer": "/geometry",
+          "scope": "fixture_expected_only",
+          "actual_byte_sha256": "a4be4e341fce600b6371d034d0901cabaf324ec8529cef06601408b67f8e32fc"
+        },
+        "occupancy": {
+          "path": "expected/layout.json",
+          "json_pointer": "/occupancy_fragment_witnesses",
+          "scope": "fixture_expected_only",
+          "actual_byte_sha256": "a4be4e341fce600b6371d034d0901cabaf324ec8529cef06601408b67f8e32fc"
+        },
+        "annotation": {
+          "path": "expected/layout.json",
+          "json_pointer": "/annotation",
+          "scope": "fixture_expected_only",
+          "actual_byte_sha256": "a4be4e341fce600b6371d034d0901cabaf324ec8529cef06601408b67f8e32fc"
+        },
+        "connectivity": {
+          "path": "expected/layout.json",
+          "json_pointer": "/connectivity",
+          "scope": "fixture_expected_only",
+          "actual_byte_sha256": "a4be4e341fce600b6371d034d0901cabaf324ec8529cef06601408b67f8e32fc"
+        },
+        "lifecycle": {
+          "path": "expected/layout.json",
+          "json_pointer": "/lifecycle",
+          "scope": "fixture_expected_only",
+          "actual_byte_sha256": "a4be4e341fce600b6371d034d0901cabaf324ec8529cef06601408b67f8e32fc"
+        },
+        "linkage": {
+          "path": "expected/layout.json",
+          "json_pointer": "/linkage",
+          "scope": "fixture_expected_only",
+          "actual_byte_sha256": "a4be4e341fce600b6371d034d0901cabaf324ec8529cef06601408b67f8e32fc"
+        }
+      },
+      "assurance": "synthetic"
+    },
+    {
+      "schema_version": "w003-example/1",
+      "example_only": true,
+      "kind": "InitializationEvent",
+      "id": {
+        "type": "InitializationEventId",
+        "value": "init"
+      },
+      "run_id": {
+        "type": "RunId",
+        "value": "example-run"
+      },
+      "snapshot_ref": {
+        "type": "SnapshotId",
+        "value": "baseline-0"
+      },
+      "state_version": 0
+    },
+    {
+      "schema_version": "w003-example/1",
+      "example_only": true,
+      "kind": "RunAttempt",
+      "id": {
+        "type": "RunAttemptId",
+        "value": "attempt-sealed"
+      },
+      "variant": "sealed_open",
+      "run_id": {
+        "type": "RunId",
+        "value": "example-run"
+      },
+      "revision": 1,
+      "starting_state_head": null,
+      "context_ref": {
+        "type": "ImmutableContextId",
+        "value": "context"
+      },
+      "execution_mode": "whole_intent",
+      "snapshot_ref": {
+        "type": "SnapshotId",
+        "value": "baseline-0"
+      },
+      "idempotency": {
+        "operation_kind": "initialize",
+        "proposed_run_id": {
+          "type": "RunId",
+          "value": "example-run"
+        },
+        "idempotency_key": "example-init-1",
+        "request_digest_algorithm": "sha256",
+        "request_digest": "c271fed567c82c8a7a8e057c6dca14d99401d830447273ab411b7e0f720418f9"
+      },
+      "durability_profile": "process_local"
+    },
+    {
+      "schema_version": "w003-example/1",
+      "example_only": true,
+      "kind": "PlanningAuditRecord",
+      "id": {
+        "type": "PlanningAuditRecordId",
+        "value": "planning"
+      },
+      "run_id": {
+        "type": "RunId",
+        "value": "example-run"
+      },
+      "snapshot_ref": {
+        "type": "SnapshotId",
+        "value": "baseline-0"
+      },
+      "outcome": "no_change",
+      "semantic_comparison": "all pins/models/terminals/parameters/top equal; target delta list empty",
+      "extraction_oracle_ref": {
+        "path": "oracle.json",
+        "json_pointer": "",
+        "scope": "fixture_expected_only",
+        "actual_byte_sha256": "6268db9090251f9a7ed7a562e0ad62e919304cef9da3edf09fae747cc5f03191"
+      },
+      "unsupported_deltas": [],
+      "candidate_refs": []
+    },
+    {
+      "schema_version": "w003-example/1",
+      "example_only": true,
+      "kind": "ConstraintAuditRecord",
+      "id": {
+        "type": "ConstraintAuditRecordId",
+        "value": "mandatory"
+      },
+      "run_id": {
+        "type": "RunId",
+        "value": "example-run"
+      },
+      "snapshot_ref": {
+        "type": "SnapshotId",
+        "value": "baseline-0"
+      },
+      "scope": "whole_cell",
+      "rule_oracle_ref": {
+        "path": "oracle.json",
+        "json_pointer": "",
+        "scope": "fixture_expected_only",
+        "actual_byte_sha256": "6268db9090251f9a7ed7a562e0ad62e919304cef9da3edf09fae747cc5f03191"
+      },
+      "outcome": "feasible"
+    },
+    {
+      "schema_version": "w003-example/1",
+      "example_only": true,
+      "kind": "NoChangePlanningResult",
+      "id": {
+        "type": "NoChangePlanningResultId",
+        "value": "no-change"
+      },
+      "run_id": {
+        "type": "RunId",
+        "value": "example-run"
+      },
+      "snapshot_ref": {
+        "type": "SnapshotId",
+        "value": "baseline-0"
+      },
+      "target_ref": {
+        "path": "target.cdl",
+        "json_pointer": "",
+        "scope": "fixture_expected_only",
+        "actual_byte_sha256": "ddfd4713579743f578170efede62ce978a02680b42e5e2a6faeeb99016cff8db"
+      },
+      "all_delta_ledger": [],
+      "planning_audit_ref": {
+        "type": "PlanningAuditRecordId",
+        "value": "planning"
+      },
+      "required_constraint_audit_ref": {
+        "type": "ConstraintAuditRecordId",
+        "value": "mandatory"
+      }
+    },
+    {
+      "schema_version": "w003-example/1",
+      "example_only": true,
+      "kind": "RunRecord",
+      "id": {
+        "type": "RunRecordId",
+        "value": "run-record"
+      },
+      "variant": "no_change",
+      "run_id": {
+        "type": "RunId",
+        "value": "example-run"
+      },
+      "input_summary": {
+        "source_gds": {
+          "path": "source.gds",
+          "json_pointer": "",
+          "scope": "fixture_expected_only",
+          "actual_byte_sha256": "18c769696c66fa856bd8fa2c950397d4649a6d0392825b63a6185025a5e41149"
+        },
+        "source_cdl": {
+          "path": "source.cdl",
+          "json_pointer": "",
+          "scope": "fixture_expected_only",
+          "actual_byte_sha256": "c71f40728a979c918e083b924a3045cf53bece51dd837f9ae2834cf242776fa4"
+        },
+        "target_cdl": {
+          "path": "target.cdl",
+          "json_pointer": "",
+          "scope": "fixture_expected_only",
+          "actual_byte_sha256": "ddfd4713579743f578170efede62ce978a02680b42e5e2a6faeeb99016cff8db"
+        },
+        "tech": {
+          "path": "tech.json",
+          "json_pointer": "",
+          "scope": "fixture_expected_only",
+          "actual_byte_sha256": "1bd3681c6fc3f07677d40c2d45ff593e0f41d36c67999995b19b8e774a69ba47"
+        },
+        "coordinate": {
+          "path": "tech.json",
+          "json_pointer": "",
+          "scope": "fixture_expected_only",
+          "actual_byte_sha256": "1bd3681c6fc3f07677d40c2d45ff593e0f41d36c67999995b19b8e774a69ba47"
+        },
+        "query_header": {
+          "path": "query/header.json",
+          "json_pointer": "",
+          "scope": "fixture_expected_only",
+          "actual_byte_sha256": "f44c80b13ce129100ed9922669370b3e2f258a622105572c21073019d224fea0"
+        },
+        "assurance": "synthetic"
+      },
+      "context_ref": {
+        "type": "ImmutableContextId",
+        "value": "context"
+      },
+      "final_snapshot_ref": {
+        "type": "SnapshotId",
+        "value": "baseline-0"
+      },
+      "ordered_commit_ids": [],
+      "stage_audit_refs": [
+        {
+          "type": "ParseResultId",
+          "value": "query-parse"
+        },
+        {
+          "type": "LifecycleAuditRecordId",
+          "value": "lifecycle"
+        },
+        {
+          "type": "PlanningAuditRecordId",
+          "value": "planning"
+        },
+        {
+          "type": "ConstraintAuditRecordId",
+          "value": "mandatory"
+        }
+      ],
+      "planning_audit_ref": {
+        "type": "PlanningAuditRecordId",
+        "value": "planning"
+      },
+      "constraint_audit_ref": {
+        "type": "ConstraintAuditRecordId",
+        "value": "mandatory"
+      },
+      "provenance": "expected specimen; no product run"
+    },
+    {
+      "schema_version": "w003-example/1",
+      "example_only": true,
+      "kind": "Stage5Closure",
+      "id": {
+        "type": "Stage5ClosureId",
+        "value": "closure"
+      },
+      "variant": "with_run_record",
+      "run_id": {
+        "type": "RunId",
+        "value": "example-run"
+      },
+      "run_record_ref": {
+        "type": "RunRecordId",
+        "value": "run-record"
+      },
+      "final_snapshot_ref": {
+        "type": "SnapshotId",
+        "value": "baseline-0"
+      },
+      "ordered_commit_ids": []
+    },
+    {
+      "schema_version": "w003-example/1",
+      "example_only": true,
+      "kind": "ArtifactManifest",
+      "id": {
+        "type": "ArtifactManifestId",
+        "value": "manifest"
+      },
+      "run_id": {
+        "type": "RunId",
+        "value": "example-run"
+      },
+      "final_snapshot_ref": {
+        "type": "SnapshotId",
+        "value": "baseline-0"
+      },
+      "ordered_commit_ids": [],
+      "objects": [
+        {
+          "type": "gds",
+          "required": true,
+          "uri": "example-object:sha256:93485a21b0cf628423c437cd28fee5164bf03c345e7505ba9696ae924fbe9ff8",
+          "sample_file": "expected/output.gds",
+          "size_bytes": 2942,
+          "actual_byte_sha256": "93485a21b0cf628423c437cd28fee5164bf03c345e7505ba9696ae924fbe9ff8"
+        },
+        {
+          "type": "cdl",
+          "required": true,
+          "uri": "example-object:sha256:c0c395c8b5f24f0acb54ba2a65aee64db937392a5895646895d0898661faacce",
+          "sample_file": "expected/output.cdl",
+          "size_bytes": 225,
+          "actual_byte_sha256": "c0c395c8b5f24f0acb54ba2a65aee64db937392a5895646895d0898661faacce"
+        },
+        {
+          "type": "layout_json",
+          "required": true,
+          "uri": "example-object:sha256:a4be4e341fce600b6371d034d0901cabaf324ec8529cef06601408b67f8e32fc",
+          "sample_file": "expected/layout.json",
+          "size_bytes": 11660,
+          "actual_byte_sha256": "a4be4e341fce600b6371d034d0901cabaf324ec8529cef06601408b67f8e32fc"
+        }
+      ],
+      "marker_meaning": "sample export-set complete/addressable only; not a published product manifest",
+      "durability_profile": "process_local"
+    },
+    {
+      "schema_version": "w003-example/1",
+      "example_only": true,
+      "kind": "ValidationResult",
+      "id": {
+        "type": "ValidationResultId",
+        "value": "validation"
+      },
+      "run_id": {
+        "type": "RunId",
+        "value": "example-run"
+      },
+      "final_snapshot_ref": {
+        "type": "SnapshotId",
+        "value": "baseline-0"
+      },
+      "ordered_commit_ids": [],
+      "manifest_ref": {
+        "type": "ArtifactManifestId",
+        "value": "manifest"
+      },
+      "checks": [
+        {
+          "check_id": "geometry_readback",
+          "execution_status": "pass",
+          "coverage": "complete",
+          "finding_severity": "info",
+          "policy_disposition": "accept",
+          "reason": "expected only within declared toy scope; no product run",
+          "evidence_refs": [
+            {
+              "path": "oracle.json",
+              "json_pointer": "",
+              "scope": "fixture_expected_only",
+              "actual_byte_sha256": "6268db9090251f9a7ed7a562e0ad62e919304cef9da3edf09fae747cc5f03191"
+            }
+          ],
+          "localized_refs": [],
+          "runtime_ms": null,
+          "return_code": null
+        },
+        {
+          "check_id": "cdl_semantics",
+          "execution_status": "pass",
+          "coverage": "complete",
+          "finding_severity": "info",
+          "policy_disposition": "accept",
+          "reason": "expected only within declared toy scope; no product run",
+          "evidence_refs": [
+            {
+              "path": "oracle.json",
+              "json_pointer": "",
+              "scope": "fixture_expected_only",
+              "actual_byte_sha256": "6268db9090251f9a7ed7a562e0ad62e919304cef9da3edf09fae747cc5f03191"
+            }
+          ],
+          "localized_refs": [],
+          "runtime_ms": null,
+          "return_code": null
+        },
+        {
+          "check_id": "json_components",
+          "execution_status": "pass",
+          "coverage": "complete",
+          "finding_severity": "info",
+          "policy_disposition": "accept",
+          "reason": "expected only within declared toy scope; no product run",
+          "evidence_refs": [
+            {
+              "path": "oracle.json",
+              "json_pointer": "",
+              "scope": "fixture_expected_only",
+              "actual_byte_sha256": "6268db9090251f9a7ed7a562e0ad62e919304cef9da3edf09fae747cc5f03191"
+            }
+          ],
+          "localized_refs": [],
+          "runtime_ms": null,
+          "return_code": null
+        },
+        {
+          "check_id": "fixture_oracle",
+          "execution_status": "pass",
+          "coverage": "complete",
+          "finding_severity": "info",
+          "policy_disposition": "accept",
+          "reason": "expected only within declared toy scope; no product run",
+          "evidence_refs": [
+            {
+              "path": "oracle.json",
+              "json_pointer": "",
+              "scope": "fixture_expected_only",
+              "actual_byte_sha256": "6268db9090251f9a7ed7a562e0ad62e919304cef9da3edf09fae747cc5f03191"
+            }
+          ],
+          "localized_refs": [],
+          "runtime_ms": null,
+          "return_code": null
+        },
+        {
+          "check_id": "audit_readiness",
+          "execution_status": "pass",
+          "coverage": "complete",
+          "finding_severity": "info",
+          "policy_disposition": "accept",
+          "reason": "expected only within declared toy scope; no product run",
+          "evidence_refs": [
+            {
+              "path": "oracle.json",
+              "json_pointer": "",
+              "scope": "fixture_expected_only",
+              "actual_byte_sha256": "6268db9090251f9a7ed7a562e0ad62e919304cef9da3edf09fae747cc5f03191"
+            }
+          ],
+          "localized_refs": [],
+          "runtime_ms": null,
+          "return_code": null
+        },
+        {
+          "check_id": "calibre_drc",
+          "execution_status": "deferred",
+          "coverage": "none",
+          "finding_severity": "warning",
+          "policy_disposition": "requires_review",
+          "reason": "post-MVP capability; not executed",
+          "evidence_refs": [
+            {
+              "path": "oracle.json",
+              "json_pointer": "",
+              "scope": "fixture_expected_only",
+              "actual_byte_sha256": "6268db9090251f9a7ed7a562e0ad62e919304cef9da3edf09fae747cc5f03191"
+            }
+          ],
+          "localized_refs": [],
+          "runtime_ms": null,
+          "return_code": null
+        },
+        {
+          "check_id": "calibre_lvs",
+          "execution_status": "deferred",
+          "coverage": "none",
+          "finding_severity": "warning",
+          "policy_disposition": "requires_review",
+          "reason": "post-MVP capability; not executed",
+          "evidence_refs": [
+            {
+              "path": "oracle.json",
+              "json_pointer": "",
+              "scope": "fixture_expected_only",
+              "actual_byte_sha256": "6268db9090251f9a7ed7a562e0ad62e919304cef9da3edf09fae747cc5f03191"
+            }
+          ],
+          "localized_refs": [],
+          "runtime_ms": null,
+          "return_code": null
+        },
+        {
+          "check_id": "virtuoso_dry_run",
+          "execution_status": "deferred",
+          "coverage": "none",
+          "finding_severity": "warning",
+          "policy_disposition": "requires_review",
+          "reason": "post-MVP capability; not executed",
+          "evidence_refs": [
+            {
+              "path": "oracle.json",
+              "json_pointer": "",
+              "scope": "fixture_expected_only",
+              "actual_byte_sha256": "6268db9090251f9a7ed7a562e0ad62e919304cef9da3edf09fae747cc5f03191"
+            }
+          ],
+          "localized_refs": [],
+          "runtime_ms": null,
+          "return_code": null
+        }
+      ],
+      "aggregate_disposition": "requires_review"
+    },
+    {
+      "schema_version": "w003-example/1",
+      "example_only": true,
+      "kind": "ReportingResult",
+      "id": {
+        "type": "ReportingResultId",
+        "value": "reporting"
+      },
+      "run_id": {
+        "type": "RunId",
+        "value": "example-run"
+      },
+      "execution_status": "pass",
+      "required": true,
+      "report_refs": [
+        "report.expected.md",
+        "report.expected.json"
+      ],
+      "disposition": "requires_review"
+    },
+    {
+      "schema_version": "w003-example/1",
+      "example_only": true,
+      "kind": "PipelineResult",
+      "id": {
+        "type": "PipelineResultId",
+        "value": "terminal"
+      },
+      "run_id": {
+        "type": "RunId",
+        "value": "example-run"
+      },
+      "lifecycle_status": "terminal",
+      "deployment_disposition": "requires_review",
+      "head_status_at_finalization": "current",
+      "durability_profile": "process_local",
+      "closure_ref": {
+        "type": "Stage5ClosureId",
+        "value": "closure"
+      },
+      "run_record_ref": {
+        "type": "RunRecordId",
+        "value": "run-record"
+      },
+      "final_snapshot_ref": {
+        "type": "SnapshotId",
+        "value": "baseline-0"
+      },
+      "manifest_ref": {
+        "type": "ArtifactManifestId",
+        "value": "manifest"
+      },
+      "validation_ref": {
+        "type": "ValidationResultId",
+        "value": "validation"
+      },
+      "reporting_ref": {
+        "type": "ReportingResultId",
+        "value": "reporting"
+      }
+    }
+  ]
+}

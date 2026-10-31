@@ -1,0 +1,10 @@
+{
+  "shape": "ON",
+  "bbox": [
+    20,
+    20,
+    100,
+    64
+  ],
+  "note": "companion raw/normalized/header updates are materialized in this overlay"
+}

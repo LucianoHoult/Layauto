@@ -1,0 +1,773 @@
+{
+  "schema_version": "w003-toy-tech/1",
+  "profile_id": "synthetic_static_fin_no_change_v1",
+  "classification": "synthetic",
+  "production_technology": null,
+  "geometry_capability": {
+    "id": "flat_boundary_rectangles/1",
+    "stream": "GDSII",
+    "version": 600,
+    "top": "one_reachable_flat_cell",
+    "supported_elements": [
+      "BOUNDARY"
+    ],
+    "polygon": "exact four-corner axis-aligned rectangle plus repeated closing vertex; any rotation/reversal permitted",
+    "unsupported": [
+      "BOX",
+      "PATH",
+      "TEXT",
+      "SREF",
+      "AREF",
+      "STRANS",
+      "MAG",
+      "ANGLE",
+      "PROPATTR",
+      "PROPVALUE",
+      "NODE",
+      "unknown_record",
+      "unknown_stream_key",
+      "nonrectangle",
+      "additional_cell"
+    ],
+    "handling": "typed_fail_before_baseline",
+    "comparator": "multiset(element,layer,datatype,exact_integer_bbox) and top identity; source-record backlinks retained; no byte equality requirement"
+  },
+  "unit_scale_contract": {
+    "id": "toy_gds_real8_nm/1",
+    "nominal_tick_m": {
+      "numerator": "1",
+      "denominator": "1000000000"
+    },
+    "nominal_user_unit_m": {
+      "numerator": "1",
+      "denominator": "1000000"
+    },
+    "canonical_tick_nm": 1,
+    "gds_units_first_nominal": {
+      "numerator": "1",
+      "denominator": "1000"
+    },
+    "encoding": "GDS base16 REAL8 round-nearest ties-to-even 56-bit mantissa",
+    "equivalence": "Both UNITS fields bind independently to the sole nominal candidate with exact normal exponent and absolute error <= REAL8_ULP/2. KLayout-generated expected GDS has UNITS-only nearest56 normalization with explicit provenance; XY never changed.",
+    "geometry_quantization": "forbidden",
+    "source_tick_policy": "preserve integers without snap",
+    "annotation_match_tolerance_nm": 0,
+    "output_xy_range": [
+      -2147483648,
+      2147483647
+    ],
+    "output_nominal_selection": "source nominal tick is fixed at 1 nm; output policy may select any positive rational nominal tick exactly encodable to nearest56 units, but every source-coordinate/output-tick ratio must be an integer in signed 32-bit range; source and output scale bindings are separate"
+  },
+  "cdl_dialect": {
+    "id": "toy_literal_cdl/1",
+    "case_policy": "case_sensitive identifiers, directives and parameter names",
+    "identifier_regex": "[A-Za-z_][A-Za-z0-9_]*",
+    "escaping": "none; whitespace inside identifier unsupported",
+    "pin_order": "source declaration preserved",
+    "globals": "empty only",
+    "numeric_suffixes": {
+      "n": {
+        "numerator": "1",
+        "denominator": "1000000000"
+      }
+    },
+    "literal_grammar": "positive integer for NFIN,NF,M; positive integer followed by n for L,W; VT token toy",
+    "comments": "full-line star only",
+    "continuation": "unsupported",
+    "supported_directives": [
+      ".SUBCKT",
+      ".ENDS"
+    ],
+    "unsupported": [
+      ".INCLUDE",
+      ".LIB",
+      ".GLOBAL",
+      ".PARAM",
+      "expressions",
+      "continuation",
+      "inline_comments",
+      "unknown_parameters",
+      "unknown_directives",
+      "implicit_defaults"
+    ],
+    "dependency_closure": "empty, explicitly hashed; include/lib/preprocess unsupported",
+    "models": {
+      "TOY_N": {
+        "terminal_order": [
+          "D",
+          "G",
+          "S",
+          "B"
+        ],
+        "parameter_axes": {
+          "NFIN": "fins_per_finger",
+          "NF": "finger_count",
+          "M": "multiplicity",
+          "L": "channel_length",
+          "W": "fin_width",
+          "VT": "threshold_token"
+        },
+        "required_parameters": [
+          "NFIN",
+          "NF",
+          "M",
+          "L",
+          "W",
+          "VT"
+        ],
+        "default_parameters": {},
+        "sd_symmetry": false
+      },
+      "TOY_P": {
+        "terminal_order": [
+          "D",
+          "G",
+          "S",
+          "B"
+        ],
+        "parameter_axes": {
+          "NFIN": "fins_per_finger",
+          "NF": "finger_count",
+          "M": "multiplicity",
+          "L": "channel_length",
+          "W": "fin_width",
+          "VT": "threshold_token"
+        },
+        "required_parameters": [
+          "NFIN",
+          "NF",
+          "M",
+          "L",
+          "W",
+          "VT"
+        ],
+        "default_parameters": {},
+        "sd_symmetry": false
+      }
+    },
+    "semantic_comparator": "cell, ordered pins, globals, device identities, models, ordered terminals and every parameter axis equal; line/parameter order, full-line comments and whitespace irrelevant"
+  },
+  "fin_count_profile": {
+    "id": "toy_fin_crossing/1",
+    "fin_representation": "explicit_static_fin_plus_active_window",
+    "effective_fin_operator": "identity",
+    "effective_active_operator": "identity_OD",
+    "recognized_channel_operator": "positive_area_OD_intersect_POLY_with_exactly_one_gate_stripe_per_active",
+    "qualification": "FIN intersects full channel x span and is fully contained in active y interval; partial fin is unsupported, never rounded",
+    "count": "distinct qualified FIN rectangles for each recognized channel, grouped by the one-to-one device identity join",
+    "finger_count_required": 1,
+    "multiplicity_required": 1,
+    "fin_width_nm": 2,
+    "fin_pitch_nm": 10,
+    "fin_lower_edge_offset_nm": 24
+  },
+  "device_extraction_contract": {
+    "id": "toy_device_terminal_body/1",
+    "cardinality": "one_to_one",
+    "device_reduction": "forbidden",
+    "layout_instance_names": "query-only backlinks; never semantic ids",
+    "sd_policy": "left connected component of OD minus channel is S, right is D; ordered terminals, swap unsupported",
+    "body_operator": "each TOY_N active contained in exactly one BODY_N, each TOY_P in exactly one BODY_P; bodies distinct conductor domains; only same-type BTAP connects body to M1; geometric overlap of OD and body does not create edge",
+    "gate_operator": "POLY conductor continuous through channels; never an OD S-to-D conductor edge",
+    "mapping_missing_or_ambiguous": "typed_fail",
+    "body_operator_ref": "body/1"
+  },
+  "layers": [
+    {
+      "name": "BOUNDARY",
+      "stream_key": {
+        "element": "BOUNDARY",
+        "layer": 100,
+        "datatype": 0
+      },
+      "purpose": "drawing",
+      "tier": "C1",
+      "role": "boundary",
+      "lifecycle": "frame_static",
+      "edit_policy": "no_direct_edit",
+      "projection_kind": "none",
+      "derived_layer_refs": []
+    },
+    {
+      "name": "BODY_N",
+      "stream_key": {
+        "element": "BOUNDARY",
+        "layer": 10,
+        "datatype": 0
+      },
+      "purpose": "drawing",
+      "tier": "B",
+      "role": "body",
+      "lifecycle": "frame_static",
+      "edit_policy": "no_direct_edit",
+      "projection_kind": "exact_fragment_rectangles",
+      "derived_layer_refs": []
+    },
+    {
+      "name": "BODY_P",
+      "stream_key": {
+        "element": "BOUNDARY",
+        "layer": 11,
+        "datatype": 0
+      },
+      "purpose": "drawing",
+      "tier": "B",
+      "role": "body",
+      "lifecycle": "frame_static",
+      "edit_policy": "no_direct_edit",
+      "projection_kind": "exact_fragment_rectangles",
+      "derived_layer_refs": []
+    },
+    {
+      "name": "OD",
+      "stream_key": {
+        "element": "BOUNDARY",
+        "layer": 2,
+        "datatype": 0
+      },
+      "purpose": "drawing",
+      "tier": "B",
+      "role": "diffusion",
+      "lifecycle": "preserve_drawn",
+      "edit_policy": "fixed_for_this_no_change_capability",
+      "projection_kind": "exact_fragment_rectangles",
+      "derived_layer_refs": []
+    },
+    {
+      "name": "POLY",
+      "stream_key": {
+        "element": "BOUNDARY",
+        "layer": 3,
+        "datatype": 0
+      },
+      "purpose": "drawing",
+      "tier": "A",
+      "role": "gate",
+      "lifecycle": "frame_static",
+      "edit_policy": "no_direct_edit",
+      "projection_kind": "exact_fragment_rectangles",
+      "derived_layer_refs": [
+        "toy_ngate",
+        "toy_pgate",
+        "toy_poly"
+      ]
+    },
+    {
+      "name": "FIN",
+      "stream_key": {
+        "element": "BOUNDARY",
+        "layer": 1,
+        "datatype": 0
+      },
+      "purpose": "drawing",
+      "tier": "A",
+      "role": "fin",
+      "lifecycle": "frame_static",
+      "edit_policy": "no_direct_edit",
+      "projection_kind": "exact_fragment_rectangles",
+      "derived_layer_refs": []
+    },
+    {
+      "name": "LI",
+      "stream_key": {
+        "element": "BOUNDARY",
+        "layer": 4,
+        "datatype": 0
+      },
+      "purpose": "drawing",
+      "tier": "B",
+      "role": "interconnect",
+      "lifecycle": "preserve_drawn",
+      "edit_policy": "fixed_for_this_no_change_capability",
+      "projection_kind": "exact_fragment_rectangles",
+      "derived_layer_refs": [
+        "toy_li"
+      ]
+    },
+    {
+      "name": "CUT",
+      "stream_key": {
+        "element": "BOUNDARY",
+        "layer": 6,
+        "datatype": 0
+      },
+      "purpose": "drawing",
+      "tier": "B",
+      "role": "cut",
+      "lifecycle": "preserve_drawn",
+      "edit_policy": "fixed_for_this_no_change_capability",
+      "projection_kind": "exact_fragment_rectangles",
+      "derived_layer_refs": [],
+      "cut_target": "LI",
+      "effective_geometry_operator": "rectangle_set_difference/1"
+    },
+    {
+      "name": "CONTACT",
+      "stream_key": {
+        "element": "BOUNDARY",
+        "layer": 7,
+        "datatype": 0
+      },
+      "purpose": "drawing",
+      "tier": "B",
+      "role": "contact",
+      "lifecycle": "preserve_drawn",
+      "edit_policy": "fixed_for_this_no_change_capability",
+      "projection_kind": "exact_fragment_rectangles",
+      "derived_layer_refs": [],
+      "electrical_connects": [
+        "OD",
+        "LI"
+      ],
+      "contact_predicate": "positive_area_overlap_with_exactly_one_effective_region_on_each_side",
+      "enclosure_rule": "T05.contact_enclosure"
+    },
+    {
+      "name": "VIA0",
+      "stream_key": {
+        "element": "BOUNDARY",
+        "layer": 5,
+        "datatype": 0
+      },
+      "purpose": "drawing",
+      "tier": "B",
+      "role": "via",
+      "lifecycle": "preserve_drawn",
+      "edit_policy": "fixed_for_this_no_change_capability",
+      "projection_kind": "exact_fragment_rectangles",
+      "derived_layer_refs": [],
+      "electrical_connects": [
+        "LI",
+        "M1"
+      ],
+      "contact_predicate": "positive_area_overlap_with_exactly_one_effective_region_on_each_side",
+      "enclosure_rule": "T05.contact_enclosure"
+    },
+    {
+      "name": "GCONTACT",
+      "stream_key": {
+        "element": "BOUNDARY",
+        "layer": 8,
+        "datatype": 0
+      },
+      "purpose": "drawing",
+      "tier": "B",
+      "role": "contact",
+      "lifecycle": "preserve_drawn",
+      "edit_policy": "fixed_for_this_no_change_capability",
+      "projection_kind": "exact_fragment_rectangles",
+      "derived_layer_refs": [],
+      "electrical_connects": [
+        "POLY",
+        "M1"
+      ],
+      "contact_predicate": "positive_area_overlap_with_exactly_one_effective_region_on_each_side",
+      "enclosure_rule": "T05.contact_enclosure"
+    },
+    {
+      "name": "BTAP_N",
+      "stream_key": {
+        "element": "BOUNDARY",
+        "layer": 12,
+        "datatype": 0
+      },
+      "purpose": "drawing",
+      "tier": "B",
+      "role": "body_contact",
+      "lifecycle": "preserve_drawn",
+      "edit_policy": "fixed_for_this_no_change_capability",
+      "projection_kind": "exact_fragment_rectangles",
+      "derived_layer_refs": [],
+      "electrical_connects": [
+        "BODY_N",
+        "M1"
+      ],
+      "contact_predicate": "positive_area_overlap_with_exactly_one_effective_region_on_each_side",
+      "enclosure_rule": "T05.contact_enclosure"
+    },
+    {
+      "name": "BTAP_P",
+      "stream_key": {
+        "element": "BOUNDARY",
+        "layer": 13,
+        "datatype": 0
+      },
+      "purpose": "drawing",
+      "tier": "B",
+      "role": "body_contact",
+      "lifecycle": "preserve_drawn",
+      "edit_policy": "fixed_for_this_no_change_capability",
+      "projection_kind": "exact_fragment_rectangles",
+      "derived_layer_refs": [],
+      "electrical_connects": [
+        "BODY_P",
+        "M1"
+      ],
+      "contact_predicate": "positive_area_overlap_with_exactly_one_effective_region_on_each_side",
+      "enclosure_rule": "T05.contact_enclosure"
+    },
+    {
+      "name": "M1",
+      "stream_key": {
+        "element": "BOUNDARY",
+        "layer": 9,
+        "datatype": 0
+      },
+      "purpose": "drawing",
+      "tier": "B",
+      "role": "interconnect",
+      "lifecycle": "preserve_drawn",
+      "edit_policy": "fixed_for_this_no_change_capability",
+      "projection_kind": "exact_fragment_rectangles",
+      "derived_layer_refs": [
+        "toy_m1"
+      ]
+    },
+    {
+      "name": "MARKER",
+      "stream_key": {
+        "element": "BOUNDARY",
+        "layer": 101,
+        "datatype": 0
+      },
+      "purpose": "drawing",
+      "tier": "C2",
+      "role": "marker",
+      "lifecycle": "preserve_drawn",
+      "edit_policy": "fixed_for_this_no_change_capability",
+      "projection_kind": "none",
+      "derived_layer_refs": []
+    }
+  ],
+  "derived_registry": [
+    {
+      "id": "toy_ngate",
+      "target_layer": "POLY",
+      "carries": [
+        "device_id"
+      ],
+      "accepted_geometry_kinds": [
+        "rectangle"
+      ],
+      "quality": "exact",
+      "annotation_match_tolerance_nm": 0,
+      "trim_operator": "recognized_channel_intersection",
+      "conflict_policy": "reject_ambiguous",
+      "source": "synthetic_query_dialect/1"
+    },
+    {
+      "id": "toy_pgate",
+      "target_layer": "POLY",
+      "carries": [
+        "device_id"
+      ],
+      "accepted_geometry_kinds": [
+        "rectangle"
+      ],
+      "quality": "exact",
+      "annotation_match_tolerance_nm": 0,
+      "trim_operator": "recognized_channel_intersection",
+      "conflict_policy": "reject_ambiguous",
+      "source": "synthetic_query_dialect/1"
+    },
+    {
+      "id": "toy_poly",
+      "target_layer": "POLY",
+      "carries": [
+        "net_id"
+      ],
+      "accepted_geometry_kinds": [
+        "rectangle"
+      ],
+      "quality": "exact",
+      "annotation_match_tolerance_nm": 0,
+      "trim_operator": "identity",
+      "conflict_policy": "reject_ambiguous",
+      "source": "synthetic_query_dialect/1"
+    },
+    {
+      "id": "toy_li",
+      "target_layer": "LI",
+      "carries": [
+        "net_id"
+      ],
+      "accepted_geometry_kinds": [
+        "rectangle"
+      ],
+      "quality": "exact",
+      "annotation_match_tolerance_nm": 0,
+      "trim_operator": "cut_effective_intersection",
+      "conflict_policy": "reject_ambiguous",
+      "source": "synthetic_query_dialect/1"
+    },
+    {
+      "id": "toy_m1",
+      "target_layer": "M1",
+      "carries": [
+        "net_id"
+      ],
+      "accepted_geometry_kinds": [
+        "rectangle"
+      ],
+      "quality": "exact",
+      "annotation_match_tolerance_nm": 0,
+      "trim_operator": "identity",
+      "conflict_policy": "reject_ambiguous",
+      "source": "synthetic_query_dialect/1"
+    }
+  ],
+  "operators": {
+    "rectangle_set_difference/1": "exact set subtraction, retain all positive-area rectangles, split disconnected results",
+    "same_layer_contact/1": "positive-area overlap OR positive-length shared edge; corner/point touch never edge",
+    "cross_layer_contact/1": "connector positive-area overlap with exactly one region in each declared conductor layer; no via-as-wire duplication; enclosure independently mandatory",
+    "terminal_split/1": "effective OD minus recognized channel; device S/D relation never union",
+    "body/1": "typed body regions connected only by appropriate explicit BTAP, no implicit substrate edge",
+    "spacing/1": "Euclidean minimum separation of closed exact rectangles; compare squared integer distance with squared threshold; geometry_only has no label exemption",
+    "lifecycle/1": "all preserve_drawn elements retain drawn signatures; frame_static also binds frame signature; no prepublication_derived layer in this profile; operator DAG effective geometry -> fragments -> contacts/body -> terminal graph -> mandatory rules"
+  },
+  "coordinate_projection": {
+    "index_cell_width_nm": 32,
+    "index_cell_height_nm": 16,
+    "origin_nm": [
+      0,
+      0
+    ],
+    "allow_multiple_fragments": true,
+    "exact_predicates_use_geometry_not_cell_adjacency": true
+  },
+  "rules": [
+    {
+      "id": "T01.frame",
+      "scope": "all non-frame drawn records",
+      "predicate": "each bbox contained in sole BOUNDARY",
+      "relation_basis": "geometry_only",
+      "schema_version": "w003-toy-rule/1",
+      "unit": "nm",
+      "parameters": {
+        "margin_nm": 0
+      },
+      "source": {
+        "classification": "hand_authored_synthetic",
+        "version": "1"
+      },
+      "exact_evaluator_ref": "w003-toy-predicate/T01.frame/1",
+      "required_relation_assurance": "none",
+      "missing_context_policy": "reject_indeterminate",
+      "required": true
+    },
+    {
+      "id": "T02.fin_grid",
+      "scope": "all FIN",
+      "predicate": "height=2; x extents identical; y lower edges form complete pitch10 sequence at offset24",
+      "relation_basis": "geometry_only",
+      "schema_version": "w003-toy-rule/1",
+      "unit": "nm",
+      "parameters": {
+        "width_nm": 2,
+        "pitch_nm": 10,
+        "offset_lower_y_nm": 24
+      },
+      "source": {
+        "classification": "hand_authored_synthetic",
+        "version": "1"
+      },
+      "exact_evaluator_ref": "w003-toy-predicate/T02.fin_grid/1",
+      "required_relation_assurance": "none",
+      "missing_context_policy": "reject_indeterminate",
+      "required": true
+    },
+    {
+      "id": "T03.recognition",
+      "scope": "all source/target devices and all recognized channels",
+      "predicate": "one stripe per active, full crossings, counts and L/W match CDL, NF=M=1, one-to-one and no reduction",
+      "relation_basis": "geometry_only",
+      "schema_version": "w003-toy-rule/1",
+      "unit": "nm",
+      "parameters": {
+        "finger_count": 1,
+        "multiplicity": 1,
+        "cardinality": "one_to_one",
+        "reduction": "forbidden"
+      },
+      "source": {
+        "classification": "hand_authored_synthetic",
+        "version": "1"
+      },
+      "exact_evaluator_ref": "w003-toy-predicate/T03.recognition/1",
+      "required_relation_assurance": "none",
+      "missing_context_policy": "reject_indeterminate",
+      "required": true
+    },
+    {
+      "id": "T04.body",
+      "scope": "all active/body/contact regions",
+      "predicate": "matching body encloses active >=10 on each side; no opposite-type body overlap; each device body reaches its semantic body rail through explicit BTAP",
+      "relation_basis": "same_component",
+      "schema_version": "w003-toy-rule/1",
+      "unit": "nm",
+      "parameters": {
+        "active_enclosure_nm": 10
+      },
+      "source": {
+        "classification": "hand_authored_synthetic",
+        "version": "1"
+      },
+      "exact_evaluator_ref": "w003-toy-predicate/T04.body/1",
+      "required_relation_assurance": "exact_geometry_components",
+      "missing_context_policy": "reject_indeterminate",
+      "required": true
+    },
+    {
+      "id": "T05.contact_enclosure",
+      "scope": "all CONTACT,VIA0,GCONTACT,BTAP_N,BTAP_P",
+      "predicate": "exactly one region on each side encloses connector >=1 nm on all sides",
+      "relation_basis": "geometry_only",
+      "schema_version": "w003-toy-rule/1",
+      "unit": "nm",
+      "parameters": {
+        "enclosure_nm": 1
+      },
+      "source": {
+        "classification": "hand_authored_synthetic",
+        "version": "1"
+      },
+      "exact_evaluator_ref": "w003-toy-predicate/T05.contact_enclosure/1",
+      "required_relation_assurance": "none",
+      "missing_context_policy": "reject_indeterminate",
+      "required": true
+    },
+    {
+      "id": "T06.li_spacing",
+      "scope": "all unordered pairs of effective LI rectangles",
+      "predicate": "distance>=2 nm unless actual same-layer contact makes one region",
+      "relation_basis": "geometry_only",
+      "schema_version": "w003-toy-rule/1",
+      "unit": "nm",
+      "parameters": {
+        "min_distance_nm": 2
+      },
+      "source": {
+        "classification": "hand_authored_synthetic",
+        "version": "1"
+      },
+      "exact_evaluator_ref": "w003-toy-predicate/T06.li_spacing/1",
+      "required_relation_assurance": "none",
+      "missing_context_policy": "reject_indeterminate",
+      "required": true
+    },
+    {
+      "id": "T07.m1_spacing",
+      "scope": "all unordered pairs of M1 rectangles",
+      "predicate": "distance>=5 nm unless actual same-layer contact makes one region",
+      "relation_basis": "geometry_only",
+      "schema_version": "w003-toy-rule/1",
+      "unit": "nm",
+      "parameters": {
+        "min_distance_nm": 5
+      },
+      "source": {
+        "classification": "hand_authored_synthetic",
+        "version": "1"
+      },
+      "exact_evaluator_ref": "w003-toy-predicate/T07.m1_spacing/1",
+      "required_relation_assurance": "none",
+      "missing_context_policy": "reject_indeterminate",
+      "required": true
+    },
+    {
+      "id": "T08.terminal_graph",
+      "scope": "all device terminals and conductor components",
+      "predicate": "ordered D/G/S/B components agree with semantic pins; no component has conflicting known labels; all terminals reach named rail/pin; labelled disconnected islands stay separate and disclosed",
+      "relation_basis": "same_component",
+      "schema_version": "w003-toy-rule/1",
+      "unit": "nm",
+      "parameters": {
+        "terminal_order": [
+          "D",
+          "G",
+          "S",
+          "B"
+        ]
+      },
+      "source": {
+        "classification": "hand_authored_synthetic",
+        "version": "1"
+      },
+      "exact_evaluator_ref": "w003-toy-predicate/T08.terminal_graph/1",
+      "required_relation_assurance": "exact_geometry_components",
+      "missing_context_policy": "reject_indeterminate",
+      "required": true
+    },
+    {
+      "id": "T09.lifecycle",
+      "scope": "all drawn records plus source/target semantics",
+      "predicate": "no_change preserves all declared semantics, drawn geometry and frame; empty ECO chain",
+      "relation_basis": "geometry_only",
+      "schema_version": "w003-toy-rule/1",
+      "unit": "nm",
+      "parameters": {
+        "ordered_eco_commit_count": 0
+      },
+      "source": {
+        "classification": "hand_authored_synthetic",
+        "version": "1"
+      },
+      "exact_evaluator_ref": "w003-toy-predicate/T09.lifecycle/1",
+      "required_relation_assurance": "none",
+      "missing_context_policy": "reject_indeterminate",
+      "required": true
+    },
+    {
+      "id": "T10.coverage",
+      "scope": "all drawn and effective regions",
+      "predicate": "retain every shape, disclose absent annotations, marker nonconducting, same-label islands not electrically shorted by label",
+      "relation_basis": "none",
+      "schema_version": "w003-toy-rule/1",
+      "unit": "nm",
+      "parameters": {
+        "unknown_nonconductor_policy": "preserve_disclose",
+        "disconnected_label_policy": "keep_separate_disclose"
+      },
+      "source": {
+        "classification": "hand_authored_synthetic",
+        "version": "1"
+      },
+      "exact_evaluator_ref": "w003-toy-predicate/T10.coverage/1",
+      "required_relation_assurance": "none",
+      "missing_context_policy": "reject_indeterminate",
+      "required": true
+    }
+  ],
+  "mandatory_rule_policy": {
+    "all_listed_rules_required": true,
+    "run_before_no_change_closure": true,
+    "missing_operator_or_context": "indeterminate_then_reject",
+    "predicate_execution_error": "error_then_reject",
+    "scope": "whole_cell",
+    "site_may_disable": false
+  },
+  "capabilities": {
+    "no_change": true,
+    "resize": false,
+    "body_complete_for_toy": true,
+    "production_matched_body_evidence": false,
+    "production_abutment": false
+  },
+  "limits": {
+    "max_records": 1000,
+    "max_bytes_per_text_file": 1000000,
+    "max_json_depth": 32,
+    "safe_json_yaml_subset_only": true,
+    "duplicate_unknown_keys": "reject",
+    "floats_nan_inf_executable_tags": "reject"
+  },
+  "required_operator_refs": [
+    "rectangle_set_difference/1",
+    "same_layer_contact/1",
+    "cross_layer_contact/1",
+    "terminal_split/1",
+    "body/1",
+    "spacing/1",
+    "lifecycle/1"
+  ]
+}

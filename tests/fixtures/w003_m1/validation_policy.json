@@ -1,0 +1,29 @@
+{
+  "schema_version": "w003-validation-policy/1",
+  "classification": "synthetic expected policy sample, pending independent review",
+  "required": [
+    "self_consistency",
+    "fixture_oracle",
+    "audit_readiness",
+    "all_mandatory_toy_rules",
+    "human_report",
+    "machine_report"
+  ],
+  "normal_terminal_disposition": "requires_review",
+  "required_violation_disposition": "reject",
+  "required_execution_error_disposition": "reject",
+  "checks": [
+    "execution_status",
+    "coverage",
+    "severity",
+    "disposition"
+  ],
+  "deferred": [
+    "real_calibre_drc",
+    "real_calibre_lvs",
+    "virtuoso_readback"
+  ],
+  "deferred_coverage": "none",
+  "deferred_is_pass": false,
+  "production_acceptance": false
+}

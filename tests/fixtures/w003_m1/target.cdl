@@ -1,0 +1,5 @@
+* Same desired semantics; whitespace and parameter order deliberately differ.
+.SUBCKT INV_M1_SYNTH A Y VSS VDD
+MN0   Y A VSS VSS TOY_N VT=toy W=2n L=4n M=1 NF=1 NFIN=5
+MP0   Y A VDD VDD TOY_P VT=toy W=2n L=4n M=1 NF=1 NFIN=7
+.ENDS INV_M1_SYNTH

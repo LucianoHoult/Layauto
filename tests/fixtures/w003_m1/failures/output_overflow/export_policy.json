@@ -1,0 +1,36 @@
+{
+  "schema_version": "w003-export-policy/1",
+  "profile_id": "synthetic_static_fin_no_change_v1",
+  "classification": "expected_policy_sample",
+  "required_artifacts": [
+    {
+      "kind": "gds",
+      "name": "output.gds"
+    },
+    {
+      "kind": "cdl",
+      "name": "output.cdl"
+    },
+    {
+      "kind": "json",
+      "name": "layout.json"
+    }
+  ],
+  "optional_artifacts": [],
+  "output_directory": "outputs",
+  "object_path_template": "outputs/{run_id}/{snapshot_id}/{export_attempt_id}/{name}",
+  "manifest_path_template": "outputs/{run_id}/{snapshot_id}/{export_attempt_id}/manifest.json",
+  "path_token_policy": "ASCII [A-Za-z0-9_-]+ opaque identifiers; name from required_artifacts; reject traversal or preexisting final object",
+  "relative_path_base": "site_config.yaml parent",
+  "overwrite": "reject_existing_final_objects",
+  "publish": "complete immutable required core set then manifest; staging is not a manifest",
+  "gds_tick_nm": {
+    "numerator": "1",
+    "denominator": "1000000000"
+  },
+  "rounding": "forbidden",
+  "representability": "each coordinate divided by chosen tick must be integer and in signed 32-bit range",
+  "unit_equivalence_contract": "toy_gds_real8_nm/1",
+  "cdl_dialect": "toy_literal_cdl/1",
+  "hash": "SHA-256 over actual written bytes, distinct from semantic comparison"
+}

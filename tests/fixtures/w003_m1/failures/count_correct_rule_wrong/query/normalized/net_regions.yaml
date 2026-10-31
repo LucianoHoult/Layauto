@@ -1,0 +1,148 @@
+{
+  "schema_version": "w003-query-normalized/1",
+  "header_id": "w003.synthetic.query.1",
+  "capability": "net_regions",
+  "raw_sha256": "851d4dc251fec019929753d9408c88a9dd9af26a2fc7e5b48ab4ce73646bc3f8",
+  "records": [
+    {
+      "record_id": "R00",
+      "lvs_index": "007",
+      "derived_layer": "toy_poly",
+      "geometry_kind": "rectangle",
+      "quality": "exact",
+      "bbox_lexemes": [
+        "58",
+        "10",
+        "62",
+        "190"
+      ],
+      "unit": "nm"
+    },
+    {
+      "record_id": "R01",
+      "lvs_index": "007",
+      "derived_layer": "toy_m1",
+      "geometry_kind": "rectangle",
+      "quality": "exact",
+      "bbox_lexemes": [
+        "50",
+        "90",
+        "75",
+        "98"
+      ],
+      "unit": "nm"
+    },
+    {
+      "record_id": "R02",
+      "lvs_index": "042",
+      "derived_layer": "toy_li",
+      "geometry_kind": "rectangle",
+      "quality": "exact",
+      "bbox_lexemes": [
+        "84",
+        "30",
+        "90",
+        "165"
+      ],
+      "unit": "nm"
+    },
+    {
+      "record_id": "R03",
+      "lvs_index": "042",
+      "derived_layer": "toy_m1",
+      "geometry_kind": "rectangle",
+      "quality": "exact",
+      "bbox_lexemes": [
+        "79",
+        "90",
+        "110",
+        "98"
+      ],
+      "unit": "nm"
+    },
+    {
+      "record_id": "R04",
+      "lvs_index": "091",
+      "derived_layer": "toy_li",
+      "geometry_kind": "rectangle",
+      "quality": "exact",
+      "bbox_lexemes": [
+        "28",
+        "30",
+        "34",
+        "55"
+      ],
+      "unit": "nm"
+    },
+    {
+      "record_id": "R05",
+      "lvs_index": "091",
+      "derived_layer": "toy_m1",
+      "geometry_kind": "rectangle",
+      "quality": "exact",
+      "bbox_lexemes": [
+        "0",
+        "48",
+        "45",
+        "58"
+      ],
+      "unit": "nm"
+    },
+    {
+      "record_id": "R06",
+      "lvs_index": "108",
+      "derived_layer": "toy_li",
+      "geometry_kind": "rectangle",
+      "quality": "exact",
+      "bbox_lexemes": [
+        "28",
+        "130",
+        "34",
+        "155"
+      ],
+      "unit": "nm"
+    },
+    {
+      "record_id": "R07",
+      "lvs_index": "108",
+      "derived_layer": "toy_m1",
+      "geometry_kind": "rectangle",
+      "quality": "exact",
+      "bbox_lexemes": [
+        "0",
+        "148",
+        "45",
+        "158"
+      ],
+      "unit": "nm"
+    },
+    {
+      "record_id": "R08",
+      "lvs_index": "007",
+      "derived_layer": "toy_li",
+      "geometry_kind": "rectangle",
+      "quality": "exact",
+      "bbox_lexemes": [
+        "130",
+        "20",
+        "139",
+        "24"
+      ],
+      "unit": "nm"
+    },
+    {
+      "record_id": "R09",
+      "lvs_index": "007",
+      "derived_layer": "toy_li",
+      "geometry_kind": "rectangle",
+      "quality": "exact",
+      "bbox_lexemes": [
+        "141",
+        "20",
+        "150",
+        "24"
+      ],
+      "unit": "nm"
+    }
+  ]
+}
