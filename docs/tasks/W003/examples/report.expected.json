@@ -10,7 +10,7 @@
       "path": "source.gds",
       "json_pointer": "",
       "scope": "fixture_expected_only",
-      "actual_byte_sha256": "18c769696c66fa856bd8fa2c950397d4649a6d0392825b63a6185025a5e41149"
+      "actual_byte_sha256": "97cf8d88771ff97f2cf189f6ae6a2fdcce585fc14f93c93d0ecf32326b415429"
     },
     {
       "path": "source.cdl",
@@ -28,19 +28,91 @@
       "path": "query/header.json",
       "json_pointer": "",
       "scope": "fixture_expected_only",
-      "actual_byte_sha256": "f44c80b13ce129100ed9922669370b3e2f258a622105572c21073019d224fea0"
+      "actual_byte_sha256": "54bdbd338863397483e2871923dbbb7d517c4b34d94e67a0988f3f0dbd270bea"
     },
     {
       "path": "tech.json",
       "json_pointer": "",
       "scope": "fixture_expected_only",
-      "actual_byte_sha256": "1bd3681c6fc3f07677d40c2d45ff593e0f41d36c67999995b19b8e774a69ba47"
+      "actual_byte_sha256": "edea25c124e275a8e2baa793a8a8f9954854f8cb69c52da50af65dd147d56f61"
     },
     {
       "path": "site_config.yaml",
       "json_pointer": "",
       "scope": "fixture_expected_only",
-      "actual_byte_sha256": "5667ba43f9469a65189918444f8fb785f782e64db8c06728800c88a10c655b26"
+      "actual_byte_sha256": "63c498d5b18bf4e49a9e73efff5b32447f1dd63b9d4966f82caec41105584a40"
+    },
+    {
+      "path": "body/context.json",
+      "json_pointer": "",
+      "scope": "fixture_expected_only",
+      "actual_byte_sha256": "bfeec36baf831f7c4e8ffe9cb7d37470807176afcb39ebb386ae786cf43aa039"
+    },
+    {
+      "path": "export_policy.json",
+      "json_pointer": "",
+      "scope": "fixture_expected_only",
+      "actual_byte_sha256": "0077a28df12a5c6e5ecb30e85e26322cff6455183c9a97982795632cb0e809c7"
+    },
+    {
+      "path": "limitations.json",
+      "json_pointer": "",
+      "scope": "fixture_expected_only",
+      "actual_byte_sha256": "89367994f10953fe9d4694048ad88b8fc4210d2b5a3ed7d0fe49c9cf4899be05"
+    },
+    {
+      "path": "query/dialect.json",
+      "json_pointer": "",
+      "scope": "fixture_expected_only",
+      "actual_byte_sha256": "c07bba5e95ac83d5f9e72b5e5e9b134893bf70b8881fa76dbb5ab3cb28ca1666"
+    },
+    {
+      "path": "query/requests.json",
+      "json_pointer": "",
+      "scope": "fixture_expected_only",
+      "actual_byte_sha256": "57f5f38cb3ec450fd1815ef88c618c03a9703690672348b313fa35fbce97bc62"
+    },
+    {
+      "path": "tech/coordinate.json",
+      "json_pointer": "",
+      "scope": "fixture_expected_only",
+      "actual_byte_sha256": "651b4342abe40a3d7c1b808ba24ca2266381342411ab7aacc0e36a861a38f515"
+    },
+    {
+      "path": "tech/derived.json",
+      "json_pointer": "",
+      "scope": "fixture_expected_only",
+      "actual_byte_sha256": "0806468843e018c9dda461dc7c6c583773f63453392143ce6b6a92259a7ec1d9"
+    },
+    {
+      "path": "tech/drawn.json",
+      "json_pointer": "",
+      "scope": "fixture_expected_only",
+      "actual_byte_sha256": "29b675eefb2e957f2519ffa1a9ec0eed57a6055ccfa3b0bbe85d7d00e8382428"
+    },
+    {
+      "path": "tech/formats.json",
+      "json_pointer": "",
+      "scope": "fixture_expected_only",
+      "actual_byte_sha256": "6ccf919d844b7336af97ab68f7e58c34908802ee79ef7cf3071e937a5396ec87"
+    },
+    {
+      "path": "tech/physical.json",
+      "json_pointer": "",
+      "scope": "fixture_expected_only",
+      "actual_byte_sha256": "b2e28e8464c450f0eed55d5e03464bfea1c6502ba29256d3376eb3d158c659af"
+    },
+    {
+      "path": "tech/rules.json",
+      "json_pointer": "",
+      "scope": "fixture_expected_only",
+      "actual_byte_sha256": "40ce0b76abb28c07ab734734a19d61e1259bc5aee42a8cf2c02fabb9e4457480"
+    },
+    {
+      "path": "validation_policy.json",
+      "json_pointer": "",
+      "scope": "fixture_expected_only",
+      "actual_byte_sha256": "eb72ecf8a5b5c2e9796d6195cb3059b069a92488e3ec0fa44c192b1b3bc3b000"
     }
   ],
   "current_target_fin_counts": {
@@ -74,10 +146,21 @@
   "coverage": {
     "provenance": "synthetic_source_evidence",
     "unannotated_marker": "MARK",
-    "disconnected_labelled_islands": [
-      "LB.left",
-      "LB.right"
-    ],
+    "disconnected_labelled_islands": [],
+    "special_islands_ref": {
+      "path": "special/cut_islands/oracle.json",
+      "json_pointer": "",
+      "scope": "fixture_expected_only",
+      "actual_byte_sha256": "458ade29772a72c6be5efb7952521570ddbc3dabb8a4ea5caa79fcd5706bd092"
+    },
+    "body_scope": "local graph separate from 2 bound context associations",
+    "body_context_ref": {
+      "path": "body/context.json",
+      "json_pointer": "",
+      "scope": "fixture_expected_only",
+      "actual_byte_sha256": "bfeec36baf831f7c4e8ffe9cb7d37470807176afcb39ebb386ae786cf43aa039"
+    },
+    "production_matched_body_evidence": false,
     "post_edit_lvs_match": "not_run",
     "production_rules": "not_covered"
   },
@@ -92,16 +175,112 @@
   "deployment_disposition": "requires_review",
   "reason": "synthetic engineering specimen; real signoff deferred",
   "deferred": [
-    "real_calibre_drc",
-    "real_calibre_lvs",
+    "calibre_drc",
+    "calibre_lvs",
+    "production_downstream_open_syntax",
+    "virtuoso_dry_run",
     "virtuoso_readback"
   ],
+  "check_obligations": [
+    {
+      "check_id": "geometry_readback",
+      "inputs": [
+        "expected/output.gds",
+        "source.gds"
+      ],
+      "expected_proof": "exact local tagged geometry, units, top and original XY",
+      "status": "expected_pass_not_product_run",
+      "original_obligation": "self_consistency: local GDS semantics"
+    },
+    {
+      "check_id": "cdl_semantics",
+      "inputs": [
+        "source.cdl",
+        "target.cdl",
+        "expected/output.cdl"
+      ],
+      "expected_proof": "full ordered pins/globals/models/DGSB/parameters",
+      "status": "expected_pass_not_product_run",
+      "original_obligation": "self_consistency: CDL"
+    },
+    {
+      "check_id": "json_components",
+      "inputs": [
+        "expected/layout.json",
+        "oracle.json"
+      ],
+      "expected_proof": "listed components, scope and refs; incomplete snapshot disclosed",
+      "status": "expected_pass_not_product_run",
+      "original_obligation": "self_consistency: JSON"
+    },
+    {
+      "check_id": "production_downstream_open_syntax",
+      "inputs": [
+        "production GDS/CDL artifacts",
+        "independent downstream tool profile"
+      ],
+      "expected_proof": "independent production tool can open/parse outputs; not local semantic equality",
+      "status": "deferred",
+      "original_obligation": "architecture 10.5 downstream readability gate; separated from legacy readback"
+    },
+    {
+      "check_id": "virtuoso_dry_run",
+      "inputs": [
+        "frozen snapshot",
+        "ordered export edits",
+        "future SKILL",
+        "Virtuoso context"
+      ],
+      "expected_proof": "shape locate/exact match; missing/ambiguity failure and return code; no apply",
+      "status": "deferred",
+      "original_obligation": "records virtuoso_dry_run / architecture 10.3 and 10.5"
+    },
+    {
+      "check_id": "virtuoso_readback",
+      "inputs": [
+        "unresolved legacy production readback inputs"
+      ],
+      "expected_proof": "retain original unresolved scope until PM closes MR-074-Q1 after revised review",
+      "status": "deferred",
+      "original_obligation": "old policy/report virtuoso_readback retained; neither deleted nor assumed alias"
+    },
+    {
+      "check_id": "calibre_drc",
+      "inputs": [
+        "production GDS",
+        "PDK/deck"
+      ],
+      "expected_proof": "real DRC with bound tool/deck",
+      "status": "deferred",
+      "original_obligation": "real_calibre_drc explicit identity mapping"
+    },
+    {
+      "check_id": "calibre_lvs",
+      "inputs": [
+        "production GDS/CDL",
+        "target",
+        "PDK/deck"
+      ],
+      "expected_proof": "matched full semantics with fresh xref",
+      "status": "deferred",
+      "original_obligation": "real_calibre_lvs explicit identity mapping"
+    }
+  ],
+  "scope_counts": {
+    "local_drawn": 40,
+    "local_connector_edges": 8,
+    "local_physical_components": 6,
+    "external_shapes": 6,
+    "context_associations": 2,
+    "net_regions": 8,
+    "device_regions": 2
+  },
   "actual_product_generation_time": null,
   "actual_tool_command": null,
   "limitations_ref": {
     "path": "limitations.json",
     "json_pointer": "",
     "scope": "fixture_expected_only",
-    "actual_byte_sha256": "539b84b71eca61566640b3dacf03de86d6def441899978d6ca635d16cf1147be"
+    "actual_byte_sha256": "89367994f10953fe9d4694048ad88b8fc4210d2b5a3ed7d0fe49c9cf4899be05"
   }
 }

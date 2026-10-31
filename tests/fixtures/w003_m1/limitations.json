@@ -12,7 +12,10 @@
     "body": "toy only",
     "abutment": "not covered",
     "real_lvs_match": "not_run",
-    "real_drc": "not_run"
+    "real_drc": "not_run",
+    "downstream_open_syntax": "not_run",
+    "virtuoso_dry_run": "not_run",
+    "legacy_virtuoso_readback_scope": "unresolved; retained deferred"
   },
   "query_assurance": "synthetic",
   "parser_status": "fixture-only structural consistency checker; future product importer not implemented",
@@ -26,8 +29,8 @@
     "uploading fixtures or wheels"
   ],
   "intentional_geometry_cases": [
-    "two disconnected LI fragments share A label with remote A gate; no physical edge by label",
-    "MARK is unannotated nonconducting C2 and preserved"
+    "no local BTAP; six-shape read-only synthetic context; no physical local body-rail edge",
+    "MARK retained unannotated; CUT/island purpose in special/cut_islands"
   ],
   "unsupported": [
     "any ECO including resize",
@@ -46,7 +49,10 @@
     "target.cdl",
     "query/raw/*",
     "query/header.json",
-    "tech.json"
+    "tech.json",
+    "body/context.json",
+    "tech/*.json",
+    "query/dialect.json"
   ],
   "oracle_not_input": [
     "spec.json",

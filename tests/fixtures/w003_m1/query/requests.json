@@ -1,0 +1,64 @@
+{
+  "schema_version": "w004-query-requests/2",
+  "source": "synthetic query selection manifest; object identity is explicit, never inferred from filename",
+  "requests": [
+    {
+      "capability": "device_regions",
+      "path": "query/raw/device_info_Q17.txt",
+      "object": "Q17",
+      "command_intent": "DEVICE INFO",
+      "record_ids": [
+        "D0"
+      ]
+    },
+    {
+      "capability": "device_regions",
+      "path": "query/raw/device_info_Q93.txt",
+      "object": "Q93",
+      "command_intent": "DEVICE INFO",
+      "record_ids": [
+        "D1"
+      ]
+    },
+    {
+      "capability": "net_regions",
+      "path": "query/raw/net_shapes_n_a.txt",
+      "object": "n_a",
+      "command_intent": "NET SHAPES",
+      "record_ids": [
+        "R00",
+        "R01"
+      ]
+    },
+    {
+      "capability": "net_regions",
+      "path": "query/raw/net_shapes_n_y.txt",
+      "object": "n_y",
+      "command_intent": "NET SHAPES",
+      "record_ids": [
+        "R02",
+        "R03"
+      ]
+    },
+    {
+      "capability": "net_regions",
+      "path": "query/raw/net_shapes_n_lo.txt",
+      "object": "n_lo",
+      "command_intent": "NET SHAPES",
+      "record_ids": [
+        "R04",
+        "R05"
+      ]
+    },
+    {
+      "capability": "net_regions",
+      "path": "query/raw/net_shapes_n_hi.txt",
+      "object": "n_hi",
+      "command_intent": "NET SHAPES",
+      "record_ids": [
+        "R06",
+        "R07"
+      ]
+    }
+  ]
+}

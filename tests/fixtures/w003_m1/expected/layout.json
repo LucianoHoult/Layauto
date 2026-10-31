@@ -1,6 +1,6 @@
 {
-  "schema_version": "w003-layout-export-sample/1",
-  "classification": "expected_sample_not_run",
+  "schema_version": "w004-layout-export-sample/2",
+  "classification": "synthetic_expected_sample",
   "source_truth": false,
   "cell": "INV_M1_SYNTH",
   "canonical_tick_nm": 1,
@@ -324,26 +324,6 @@
       ]
     },
     {
-      "id": "LB",
-      "layer": "LI",
-      "bbox": [
-        130,
-        20,
-        150,
-        24
-      ]
-    },
-    {
-      "id": "CUTB",
-      "layer": "CUT",
-      "bbox": [
-        139,
-        18,
-        141,
-        26
-      ]
-    },
-    {
       "id": "CNS",
       "layer": "CONTACT",
       "bbox": [
@@ -421,26 +401,6 @@
         92,
         61,
         96
-      ]
-    },
-    {
-      "id": "TN",
-      "layer": "BTAP_N",
-      "bbox": [
-        8,
-        50,
-        12,
-        54
-      ]
-    },
-    {
-      "id": "TP",
-      "layer": "BTAP_P",
-      "bbox": [
-        8,
-        150,
-        12,
-        154
       ]
     },
     {
@@ -546,32 +506,6 @@
       ],
       "component": "C_Y",
       "net": "Y"
-    },
-    {
-      "id": "LB.left",
-      "drawn_shape": "LB",
-      "layer": "LI",
-      "bbox": [
-        130,
-        20,
-        139,
-        24
-      ],
-      "component": "C_A_island_left",
-      "net": "A"
-    },
-    {
-      "id": "LB.right",
-      "drawn_shape": "LB",
-      "layer": "LI",
-      "bbox": [
-        141,
-        20,
-        150,
-        24
-      ],
-      "component": "C_A_island_right",
-      "net": "A"
     }
   ],
   "annotation": {
@@ -580,21 +514,17 @@
     "unannotated_nonconducting": [
       "MARK"
     ],
-    "same_label_separate_components": [
-      "C_A",
-      "C_A_island_left",
-      "C_A_island_right"
-    ]
+    "same_label_separate_components": []
   },
   "connectivity": {
+    "scope": "local_physical_graph",
     "components": [
       {
         "id": "C_VSS",
         "regions": [
           "ON.S",
           "LN",
-          "MN",
-          "BN"
+          "MN"
         ],
         "net": "VSS"
       },
@@ -603,8 +533,7 @@
         "regions": [
           "OP.S",
           "LP",
-          "MP",
-          "BP"
+          "MP"
         ],
         "net": "VDD"
       },
@@ -627,18 +556,18 @@
         "net": "A"
       },
       {
-        "id": "C_A_island_left",
+        "id": "C_BN",
         "regions": [
-          "LB.left"
+          "BN"
         ],
-        "net": "A"
+        "net": null
       },
       {
-        "id": "C_A_island_right",
+        "id": "C_BP",
         "regions": [
-          "LB.right"
+          "BP"
         ],
-        "net": "A"
+        "net": null
       }
     ],
     "edges": [
@@ -697,20 +626,6 @@
           "G",
           "MA"
         ]
-      },
-      {
-        "connector": "TN",
-        "ends": [
-          "BN",
-          "MN"
-        ]
-      },
-      {
-        "connector": "TP",
-        "ends": [
-          "BP",
-          "MP"
-        ]
       }
     ],
     "terminals": [
@@ -739,8 +654,9 @@
         "device": "MN0",
         "role": "B",
         "region": "BN",
-        "component": "C_VSS",
-        "net": "VSS"
+        "component": "C_BN",
+        "net": "VSS",
+        "net_basis": "context_supported_association_not_local_edge"
       },
       {
         "device": "MP0",
@@ -767,10 +683,61 @@
         "device": "MP0",
         "role": "B",
         "region": "BP",
-        "component": "C_VDD",
-        "net": "VDD"
+        "component": "C_BP",
+        "net": "VDD",
+        "net_basis": "context_supported_association_not_local_edge"
       }
     ]
+  },
+  "body_associations": [
+    {
+      "device": "MN0",
+      "terminal": "B",
+      "local_body": "BN",
+      "local_component": "C_BN",
+      "context_path": [
+        "BN",
+        "BN.ext",
+        "TN.ext",
+        "MN.ext",
+        "MN"
+      ],
+      "semantic_rail": "VSS",
+      "body_edge_length_nm": 90,
+      "rail_edge_length_nm": 10,
+      "tap_body_enclosure_nm": 8,
+      "tap_rail_enclosure_nm": 2,
+      "active_body_enclosure_nm": 20,
+      "association_scope": "read_only_external_context",
+      "not_local_physical_edge": true
+    },
+    {
+      "device": "MP0",
+      "terminal": "B",
+      "local_body": "BP",
+      "local_component": "C_BP",
+      "context_path": [
+        "BP",
+        "BP.ext",
+        "TP.ext",
+        "MP.ext",
+        "MP"
+      ],
+      "semantic_rail": "VDD",
+      "body_edge_length_nm": 100,
+      "rail_edge_length_nm": 10,
+      "tap_body_enclosure_nm": 8,
+      "tap_rail_enclosure_nm": 2,
+      "active_body_enclosure_nm": 10,
+      "association_scope": "read_only_external_context",
+      "not_local_physical_edge": true
+    }
+  ],
+  "body_context": {
+    "input_ref": "../body/context.json",
+    "sha256": "bfeec36baf831f7c4e8ffe9cb7d37470807176afcb39ebb386ae786cf43aa039",
+    "exported": false,
+    "production_matched_body_evidence": false
   },
   "lifecycle": {
     "profile_ref": "../tech.json",
@@ -782,7 +749,7 @@
   "linkage": {
     "oracle_ref": "../oracle.json",
     "spec_ref": "../spec.json",
-    "evidence_header_id": "w003.synthetic.query.1"
+    "evidence_header_id": "w004.synthetic.query.2"
   },
   "is_complete_runtime_snapshot": false
 }

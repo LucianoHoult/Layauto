@@ -1,8 +1,8 @@
-# W003 接收与后续实施入口
+# W004修订后的接收与后续入口
 
 本附件交 PM 核对本地 synthetic 样本；阶段和验收结论仍由 PM 在 [W003](../W003-m1-fixture-contracts.md) 维护。当前产品 runtime 未实现，本包不授权进入下一实现任务。
 
-PM 在执行期间新增了完成后的人工核验安排。用户确认尚未执行：应以同一冻结版本覆盖正常例与 `failures/cases.json` 全部22例，逐项记录正确性/使用预期的已确认、需修改、未决；独立技术 review 不能替代用户这一步。实际 parser 上传/目标机验证另待后续明确实现包，不上传本包辅助当产品 parser。
+原人工答复已保存在manual-verification及MR-076，不能重记为新版通过或抹掉已有确认。本次按W004正式派发完成修订交回；应以同一新版证据核对受影响正常例、原C01–C22及七项body新增见证，由PM关闭受影响人工结论。独立技术review不替代这一步。实际 parser 上传/目标机验证另待后续明确实现包，不上传本包辅助当产品 parser。
 
 ## 要求到产物
 
@@ -21,7 +21,7 @@ PM 在执行期间新增了完成后的人工核验安排。用户确认尚未�
 
 | 旧材料 | 保留的启发 | 替换/拒绝的部分 |
 | --- | --- | --- |
-| gen_buffer_layout.py 的 generate_calibre_ixref/nxref/net_names/device_info/net_shapes | instance/net 四种 capability 分文件、显式 record count/terminator、numeric lexeme 的组织 | 另选显式 `w003` synthetic dialect/version；不用旧名字假装 Calibre 标准，不复制默认单位/模型/swap/未trim bbox，重建 source/closure/hash |
+| gen_buffer_layout.py 的 generate_calibre_ixref/nxref/net_names/device_info/net_shapes | 9raw提供四capability、nXref+NET NAMES关联、响应count/terminator、(y,x)/precision与numeric lexeme组织 | 采用来源可追溯的单一calibre_like_synthetic/2；保留未核实metadata/section tuple为opaque；不用旧名字假装 Calibre 标准，不复制默认单位/模型/swap/未trim bbox，重建 source/closure/hash |
 | generate_cdl、矩形序列化思路 | 小 inverter、D G S B 和文本保真测试组织 | 显式 TOY_N/TOY_P 全参数/轴；保持 top 身份，单位 exact；不用旧 float/round、FIN参数命名top或未知层忽略逻辑 |
 | generate_all_fixtures、旧 target GDS/JSON | 只作反面依据 | 不调用、不整体迁移；其按目标参数重建 FIN/frame/rails 不适合作 fixed-frame ECO golden |
 | test_calibre_query.py | 正常 raw、缺输出、count/terminator/格式漂移和 mocked failure 的分层 | 本包只是样本辅助；真实 runner/正式 parser 首交另测；mock 不证明 live acquisition |
@@ -52,3 +52,5 @@ PM 在执行期间新增了完成后的人工核验安排。用户确认尚未�
 | 样张格式状态 | 本包选定的 toy 与审查 wire schema 是本地 fixture 合同；实际生产 CDL/query syntax、关键对外wire/验收变化需带具体样例交 PM |
 
 现有信息足以制作本地 synthetic dialect，不存在必须现在向用户索取生产材料的语法阻塞。未来发现具体 ambiguity，再以不含生产数值/标识的最小语法样例澄清；不得扩大回传权限。
+
+新版入口：[W004](../W004-fixture-revision.md#w004-execution)、[迁移/证据表](revision-evidence.md)、[fixture README](../../../tests/fixtures/w003_m1/README.md)。D1 A外部context、D2后置MR-040、D3三类检查分列及未消歧旧义务均已由本轮正式派发确定；不重复准备收敛。W004/W003最终验收与M1派发仍归PM。

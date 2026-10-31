@@ -1,0 +1,166 @@
+{
+  "schema_version": "w004-synthetic-tapcell-context/2",
+  "classification": "synthetic",
+  "author": "Layauto W004 execution; D1=A user decision 2026-10-31",
+  "source": "hand-authored geometry; no Calibre capture or production PDK",
+  "read_only": true,
+  "exported": false,
+  "top": "INV_M1_SYNTH",
+  "frame_id": "FRAME",
+  "frame_bbox_nm": [
+    0,
+    0,
+    160,
+    200
+  ],
+  "coordinate_frame": "source local frame; identity transform",
+  "unit": {
+    "name": "nm",
+    "metres_per_tick": {
+      "numerator": "1",
+      "denominator": "1000000000"
+    }
+  },
+  "profile_ref": "toy_readonly_tapcell_context/2",
+  "operator_ref": "body_context/2",
+  "production_matched_body_evidence": false,
+  "lvs_status": "not_run",
+  "local_bindings": [
+    {
+      "id": "FRAME",
+      "layer": "BOUNDARY",
+      "bbox": [
+        0,
+        0,
+        160,
+        200
+      ]
+    },
+    {
+      "id": "BN",
+      "layer": "BODY_N",
+      "bbox": [
+        0,
+        0,
+        120,
+        90
+      ]
+    },
+    {
+      "id": "BP",
+      "layer": "BODY_P",
+      "bbox": [
+        0,
+        100,
+        120,
+        200
+      ]
+    },
+    {
+      "id": "MN",
+      "layer": "M1",
+      "bbox": [
+        0,
+        48,
+        45,
+        58
+      ]
+    },
+    {
+      "id": "MP",
+      "layer": "M1",
+      "bbox": [
+        0,
+        148,
+        45,
+        158
+      ]
+    }
+  ],
+  "shapes": [
+    {
+      "id": "BN.ext",
+      "layer": "BODY_N",
+      "bbox": [
+        -20,
+        0,
+        0,
+        90
+      ]
+    },
+    {
+      "id": "BP.ext",
+      "layer": "BODY_P",
+      "bbox": [
+        -20,
+        100,
+        0,
+        200
+      ]
+    },
+    {
+      "id": "MN.ext",
+      "layer": "M1",
+      "bbox": [
+        -20,
+        48,
+        0,
+        58
+      ]
+    },
+    {
+      "id": "MP.ext",
+      "layer": "M1",
+      "bbox": [
+        -20,
+        148,
+        0,
+        158
+      ]
+    },
+    {
+      "id": "TN.ext",
+      "layer": "BTAP_P",
+      "bbox": [
+        -12,
+        50,
+        -8,
+        54
+      ]
+    },
+    {
+      "id": "TP.ext",
+      "layer": "BTAP_P",
+      "bbox": [
+        -12,
+        150,
+        -8,
+        154
+      ]
+    }
+  ],
+  "associations": [
+    {
+      "device": "MN0",
+      "local_body": "BN",
+      "external_body": "BN.ext",
+      "tap": "TN.ext",
+      "external_rail": "MN.ext",
+      "local_rail": "MN",
+      "expected_semantic_rail": "VSS"
+    },
+    {
+      "device": "MP0",
+      "local_body": "BP",
+      "external_body": "BP.ext",
+      "tap": "TP.ext",
+      "external_rail": "MP.ext",
+      "local_rail": "MP",
+      "expected_semantic_rail": "VDD"
+    }
+  ],
+  "source_gds": {
+    "uri": "source.gds",
+    "sha256": "97cf8d88771ff97f2cf189f6ae6a2fdcce585fc14f93c93d0ecf32326b415429"
+  }
+}

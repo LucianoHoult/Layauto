@@ -1,6 +1,6 @@
 {
   "schema_version": "w003-export-policy/1",
-  "profile_id": "synthetic_static_fin_no_change_v1",
+  "profile_id": "synthetic_static_fin_context_no_change_v2",
   "classification": "expected_policy_sample",
   "required_artifacts": [
     {

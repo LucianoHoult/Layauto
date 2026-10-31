@@ -1,0 +1,57 @@
+{
+  "schema_version": "w004-calibre-like-dialect/2",
+  "id": "calibre_like_synthetic/2",
+  "classification": "synthetic_from_legacy_format_description",
+  "source_version": "9f6735dcede8e8b2135f89ff10f079a752ed758b",
+  "source_refs": [
+    {
+      "repository_path": "legacy_mvp/io_adapters/calibre_query.py",
+      "sha256": "94ecded4929abc53e0596337bd095b121e297f7e4e52d60caf2b19d292297149"
+    },
+    {
+      "repository_path": "legacy_mvp/dummy/fixtures/iXref.temp",
+      "sha256": "4280ecbefce9d5098afd298ca0c4a9e952c9eb5bafe81101236b8722eee3e0e6"
+    },
+    {
+      "repository_path": "legacy_mvp/dummy/fixtures/nXref.temp",
+      "sha256": "dae2be8429e909cf0b095e740775c4ca59cef3dbfe144d0c999f9fa51ebeb79c"
+    },
+    {
+      "repository_path": "legacy_mvp/dummy/fixtures/net_names.txt",
+      "sha256": "fb2fb37958850d9b78c008dca42bdb4db8130162e23b5df488273af5c66defc1"
+    },
+    {
+      "repository_path": "legacy_mvp/dummy/fixtures/device_info_M0.txt",
+      "sha256": "885c762b81beb7c6cbc30698b2486154a190a56f33056720b7e8a9a560e9db57"
+    },
+    {
+      "repository_path": "legacy_mvp/dummy/fixtures/net_shapes_IN.txt",
+      "sha256": "b99d62262684198cbda8a335f2c44c5415110471f93099302f5b6d81005164d2"
+    }
+  ],
+  "tool_version": null,
+  "production_verified": false,
+  "encoding": "ASCII subset of UTF-8, LF, final LF; no blank/trailing unknown records",
+  "xref": "File format 1; header ends at # SVDB: End of header.; summary pin count 4, rows use 0 namespace indices; no EOF terminator; entire file consumed; optional X preserved and not admitted",
+  "net_names": "count is third token of 0 0 count timestamp; unique names; END OF RESPONSE to EOF; opener 20000 opaque, not geometry precision",
+  "net_index": "1-based ordinal of NET NAMES; query-run scoped opaque; join nXref by lvs_name",
+  "response": "Device_Info/Net_Shapes 20000, Info:, 0 0 metadata_count timestamp, metadata lines (last first layer); layer, opaque 1 1 0 timestamp, p 1 4, four y x vertices; repeated layers allowed only as listed; END OF RESPONSE",
+  "metadata": "DEVICE INFO: numeric device-type lexeme plus first-layer tag (both opaque); NET SHAPES: first-layer tag. No pin/property semantics inferred; section tuple opaque due source ambiguity",
+  "geometry": {
+    "raw_axis_order": [
+      "y",
+      "x"
+    ],
+    "precision": 20000,
+    "raw_unit": "micrometres / precision",
+    "raw_tick_nm": {
+      "numerator": "1",
+      "denominator": "20"
+    },
+    "rectangle_proof": "four distinct corners; two x and y values; alternating orthogonal nonzero edges; implicit closing edge; preserve full vertices",
+    "quality": "exact only after rectangle proof + registry, never copied from nonexistent raw quality token"
+  },
+  "identity": "explicit query requests manifest supplies object; no filename-inferred identity; record IDs are authored ordinal labels",
+  "unknown_structure": "reject; no bbox downgrade or legacy float-rounding fallback",
+  "limits": "fixed fixture subset only; future product importer separate"
+}

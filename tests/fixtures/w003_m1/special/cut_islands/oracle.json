@@ -1,0 +1,58 @@
+{
+  "schema_version": "w004-cut-answer/1",
+  "provenance": "hand exact subtraction before writer",
+  "fragments": [
+    {
+      "id": "LB.left",
+      "bbox_nm": [
+        130,
+        20,
+        139,
+        24
+      ]
+    },
+    {
+      "id": "LB.right",
+      "bbox_nm": [
+        141,
+        20,
+        150,
+        24
+      ]
+    },
+    {
+      "id": "A_REMOTE",
+      "bbox_nm": [
+        50,
+        20,
+        60,
+        24
+      ]
+    }
+  ],
+  "component_count": 3,
+  "edges": [],
+  "common_bucket": [
+    128,
+    16,
+    160,
+    32
+  ],
+  "shared_label": "A",
+  "minimum_spacing_nm": 2,
+  "spacing_pair": [
+    "LB.left",
+    "LB.right"
+  ],
+  "cut_effective_area_nm2": 72,
+  "all_pair_distance_squared_nm2": [
+    4,
+    4900,
+    6561
+  ],
+  "rule_scope": [
+    "T06.li_spacing",
+    "T08.terminal_graph",
+    "T10.coverage"
+  ]
+}

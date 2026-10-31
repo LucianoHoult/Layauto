@@ -8,8 +8,8 @@
     58,
     74
   ],
-  "original_gds_sha256": "60246c5f1ed62cc26267c0682b3e75e510267a6e74e793c4b273655abac6a5b4",
-  "normalized_gds_sha256": "93485a21b0cf628423c437cd28fee5164bf03c345e7505ba9696ae924fbe9ff8",
+  "original_gds_sha256": "a005ff34cbc2d1aa542aae7540b55f4432e6149337270f7692d280a9184b343a",
+  "normalized_gds_sha256": "02023f9fc7c7f01827d46885d8ab2729dd1ea8b046543ff97da53fbf182d5417",
   "reason": "KLayout binary64 DBU conversion exceeds declared nearest56 half-ULP; normalize UNITS payload only to existing contract, never XY",
   "independent_scope": "geometry serialization and readback; unit writer intentionally shared, independently exact-decoded by verifier"
 }

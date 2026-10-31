@@ -1,183 +1,157 @@
-# W003 synthetic fixture and handwritten oracle
+# W004 synthetic no_change fixture (W003 paths retained)
 
-This is a review input and an expected output sample. There has been **no
-Layauto product run, Calibre run, production model validation, or production
-acceptance**. All identifiers, dimensions and rules are invented for this toy.
-`oracle.json` was authored from the coordinates and circuit, before writing the
-fixture helpers; it is not a runtime extractor's output. `spec.json` is a
-hand-authored construction specification, and is never a runtime truth input.
+This is a synthetic input and expected output specimen, with **no Layauto
+product run, production model validation, Calibre/LVS or Virtuoso execution**.
+The active revision implements W004 D1=A, D2 and D3. Historical W003 reviews
+and manual decisions retain their original version; PM owns their closure.
 
-The fixed cell is `INV_M1_SYNTH`, 160 × 200 nm. Every coordinate in `spec.json`
-is an exact integer tick of nominal 1 nm. FIN has 18 horizontal rectangles at
-10 nm pitch, each 2 nm high, spanning x = 10..110. Five lie inside ON and seven
-inside OP. The other six remain drawn, but have no qualified active/channel
-intersection. N's channel is [58,20,62,70]; P's is [58,110,62,180]. Each
-qualified intersection is 4 × 2 = 8 nm². `oracle.json.crossings` lists every
-included FIN identity, not just the totals. One continuous gate conductor
-crosses two separate active windows: each device has exactly one channel,
-one layout identity, NF=1, M=1 and no device reduction.
+`spec.json` is the construction recipe. `oracle.json` is the separately authored
+coordinate/terminal/component/rule answer. `independent-design-answer.json`
+records a second investigator's integer/Fraction design calculation made before
+generation; its suggested full-cell island overlay was replaced by the explicit
+standalone `special/cut_islands` specimen and its own answer. None is a product
+truth input. `sources.json` maps each actual dimension, design choice, rule,
+condition, owner and missing production/PCell source.
 
-The CDL order is D G S B. Both sources connect left of the gate, both drains
-right of the gate; the gate region is removed from OD's conductor domain.
-The transistor's S/D device relation is never an electrical conductor edge.
-W=2n means toy FIN width; L=4n means channel width; no production model meanings
-or defaults are implied. Source and target differ in text ordering, but retain
-every semantic parameter and pin. The source CDL include/library/preprocess
-dependency closure is explicitly empty; the query closure separately binds
-the source CDL, toy tech and selected policies by content hash.
-`expected/output.cdl` is a portable semantic example.
+The normal input is one flat `INV_M1_SYNTH`, 160 × 200 nominal nm, with 40 local
+BOUNDARY rectangles. All 18 FIN stripes remain, with width 2, pitch 10 and lower
+edge offset 24 nm; 5 N and 7 P crossings qualify. Six stripes are preserved but
+unqualified. Each crossing has area 4 × 2 = 8 nm². CDL has ordered D G S B,
+NF=M=1; **L=4n is channel length**, W=2n is toy fin width. Source, target and
+expected CDL retain all pins, globals (empty), models, terminals and parameters.
 
-```text
-BODY_P --TP-- M1 VDD --VP-- LP --CPS-- OP.S    OP.D --CPD-- LY
-                                            | device       |
-                           gate G -----------+               VY--M1 Y
-                                            | device       |
-BODY_N --TN-- M1 VSS --VN-- LN --CNS-- ON.S    ON.D --CND-- LY
-                           gate G --GC-- M1 A
+## Local geometry and external body support
 
-LI LB = [130,20,150,24], minus CUTB = [139,18,141,26]
- => LB.left [130,20,139,24]    LB.right [141,20,150,24]
-       label A                      label A
-       different physical components, also separate from gate G
-```
+| Domain | Exact normal answer |
+| --- | --- |
+| Local physical graph | 14 effective conductor regions, 8 connector edges, 6 components |
+| VSS | ON.S, LN, MN |
+| VDD | OP.S, LP, MP |
+| Y | ON.D, OP.D, LY, MY |
+| A | G, MA |
+| Local body | BN alone; BP alone; no local BTAP and no local body-to-rail edge |
+| Read-only context | 6 external shapes; two separately proven B-to-rail associations |
 
-There are ten explicit connector edges and six components. Contacts require
-positive-area intersection with exactly one conductor on each declared side,
-and an independent mandatory 1 nm enclosure on every side. Same-layer contact
-allows positive-area overlap or positive-length shared edge, never corner
-touch or grid adjacency. Body_N and Body_P are distinct typed conductors;
-BTAP_N/BTAP_P explicitly tie them to M1. Body/OD overlap creates no implicit
-edge. The selected body operator is complete for the toy, and does not claim
-the real-LVS frozen-body exception. `non_edges` in the oracle means *no direct
-edge*: BN and ON.S nevertheless join indirectly through their common rail.
-
-Both cut fragments occupy coarse index cell [128,16,160,32]; a bare cell key
-would lose their separation. Query records R08/R09 annotate them separately.
-All query shapes are explicitly tagged **rectangle geometry**, with exact
-quality. They are not bbox-only approximate captures. The LI effective
-operator is exact set subtraction by CUT; gate seeds are exact OD∩POLY.
-Unannotated MARK is nonconducting C2; FIN, body and connector interpretation
-comes from geometry/operators and does not require fabricated query labels.
-Disconnected A islands are disclosed as synthetic incomplete physical routing
-and do not create edges from names; the toy terminal check still checks that
-all eight actual device terminals reach their declared rails/pins.
-
-`oracle.json.rules` lists the complete required toy rule set. LI spacing checks
-all 10 pairs of its five effective rectangles: the limiting pair is the cut
-fragments at 2 nm. M1 spacing checks all six pairs: MA to MY is 5 nm. These
-geometry-only rules have no same-label exemption. Body enclosure is at least
-10 nm. No-change closure must run these whole-cell predicates; matching 5/7
-is insufficient. T10's predicate passes while its independent coverage record
-discloses unannotated nonconductors and disconnected same-label islands.
-Unknown context yields indeterminate/reject; evaluator failure yields
-error/reject. No check can be disabled by site policy.
-
-## Files and exact encoding
-
-- `source.gds` is generated by a stdlib integer/Fraction writer. GDSII 600,
-  one flat cell, BOUNDARY rectangles only, datatype 0; no properties or other
-  elements. `tech.json` lists every accepted stream key and rejection.
-- GDS UNITS are nominal 1/1000 user units per DBU and 1/10^9 m per DBU.
-  REAL8 uses a base-16 exponent and 56-bit mantissa, nearest/ties-even.
-  The exact decoded rational, raw hexadecimal bytes, nominal scale and delta
-  are printed by the verifier. Each field must bind to the single nominal
-  candidate within half its mantissa ULP at the nominal exponent for the Fraction writer.
-  The KLayout expected writer initially emits a DBU field one mantissa ULP
-  above the nearest56 source value and outside that contract. Its UNITS payload
-  alone is normalized to nearest56. `expected/unit-provenance.json` preserves
-  original bytes, hashes, exact reconstruction range and reason; the independent
-  verifier prints original decoded rational/delta. Independent-writer scope is
-  geometry serialization, not unit serialization. This numerical
-  encoding tolerance cannot move XY coordinates or absorb a 2 nm source unit.
-- `expected/output.gds` uses a separate KLayout writer, different order/library
-  and timestamp representation. Its bytes need not match `source.gds`.
-  Independent KLayout readback must match the handwritten shape specification;
-  Boolean, terminal and rule results must match the separate handwritten
-  oracle. Both expected files remain regression examples, not the sole oracle.
-- `expected/layout.json` is an expected export view, not a serialized complete
-  runtime snapshot; its component tables link to the handwritten oracle.
-- `tech.json` has layer/derived registries, units, Geometry/CDL/FinCount/
-  DeviceExtraction/body contracts, complete toy operators and mandatory rules.
-  Site config only selects paths/profiles. Its paths resolve relative to itself.
-- JSON files use UTF-8, no binary floating-point geometry or NaN/Inf. Rational
-  fields use decimal strings `numerator` / `denominator`, positive denominator.
-  Normalized `.yaml` and `site_config.yaml` deliberately use the JSON subset
-  of YAML, with duplicate/unknown keys and executable YAML tags forbidden.
-- `query/header.json` binds source/target/top/raw/tech/policy hashes. Its
-  synthetic status, null tool/database versions and not_run match status are
-  intentional. Unknown production facts are in `limitations.json`.
-
-## Synthetic raw dialect 1
-
-Each of the four `query/raw/*.txt` files is ASCII with LF termination:
+`body/context.json` binds actual source GDS bytes, top, FRAME and exact local
+BN/BP/MN/MP identities, local coordinate frame, nominal unit, selected profile
+and operator. Its own bytes are bound by the query closure and F1 request.
+`body/context-template.json` is a construction input, never a runtime input.
+External geometry is not exported or included in the local physical graph.
 
 ```text
-W003_QUERY 1 instance_xref w003.synthetic.query.1 nm
-COUNT 2
-I Q17 MN0 NOSWAP
-I Q93 MP0 NOSWAP
-END W003_QUERY
+MN0.B -> BN --90 nm boundary edge-- BN.ext --TN.ext-- MN.ext --10 nm edge-- MN -> VSS
+MP0.B -> BP --100 nm boundary edge-- BP.ext --TP.ext-- MP.ext --10 nm edge-- MP -> VDD
 ```
 
-The first line has exactly five whitespace-separated fields: fixed magic,
-version, capability, header-id, unit. The fixed grammar supports identifiers
-`[A-Za-z_][A-Za-z0-9_.]*`, opaque digit-string net indexes (leading zeros
-preserved), and decimal integer coordinate lexemes. No quoting, escaping,
-optional sections, comments, continuations or unknown record types are
-accepted. Blank interior lines, extra/missing columns, wrong count, absent
-terminator or data after terminator fail. The four row forms are:
+Type and each unique geometry match are checked before comparing the semantic
+rail. External tap minimum enclosure is 8 nm in body, 2 nm in rail, against
+T05's 1 nm requirement. Local active/body enclosure minima are 20/10 nm against
+T04's 10 nm. `production_matched_body_evidence=false`, LVS `not_run` persist;
+this is not a baseline-LVS frozen-body exemption or production abutment proof.
 
-```text
-I layout_instance schematic_instance NOSWAP|SWAP
-N lvs_index lvs_name schematic_name
-D record_id layout_instance derived_layer RECT exact x0 y0 x1 y1
-R record_id lvs_index derived_layer RECT exact x0 y0 x1 y1
-```
+T05 evaluates 8 local connectors and 2 external taps in separate scopes. T08
+compares D/G/S via local components and B via the proved context association.
+T06 checks 3 local LI pairs, minimum 50 nm, requirement 2 nm. T07 checks 6 M1
+pairs, minimum 5 nm, requirement 5 nm. FIN gap 8 nm and body gap 10 nm are
+measured geometry, not invented minimum rules. All mandatory rules remain
+required before no_change closure. Unknown support rejects; no label builds
+an edge. MARK is preserved as an unannotated nonconductor.
 
-I's SWAP is representable evidence but rejected by this toy extraction
-capability (ordered asymmetric S/D). Coordinates are **x,y**; unit is bound
-by the first line plus header, with no implicit µm default. Rectangle bounds
-must be increasing. `normalized/*.yaml` preserves the original lexeme strings,
-unit, record IDs and raw-byte hash. These are expected normalized records;
-the future product importer must parse actual raw through the same production
-schema boundary and compare any cache. This task's read-only helper implements
-only this fixed teaching grammar for consistency checks; it is not the product
-parser or a claim about Calibre's format.
+`special/cut_islands` separately retains LB/CUTB and R08/R09, plus a remote A
+conductor. LB minus CUTB yields [130,20,139,24] and [141,20,150,24], 2 nm apart.
+The two fragments share the hand-selected 32×16 bucket [128,16,160,32] and
+label A, yet remain separate from each other and A_REMOTE: 3 components, no
+edges. This index demonstration is not a complete runtime coordinate model.
 
-Legacy `generate_calibre_ixref/nxref/net_names/device_info/net_shapes` were
-read for organization, explicit row counts and terminator failure seeds.
-No legacy code is imported or executed. Legacy float rounding, guessed model
-meaning, parameterized top renaming, untrimmed bbox and convenience JSON
-state were replaced. Raw token spellings are deliberately labelled synthetic,
-not claimed to be a verified Calibre dialect.
+## Unique technology owners and inputs
 
-## Regeneration and verification
+`tech.json` only identifies the bundle and six owner files. `tech/drawn.json`
+owns stream/lifecycle/connection mapping; `derived.json` owns annotation mapping
+and tolerance; `physical.json` owns FIN/models/extraction/operators/body profile;
+`formats.json` owns units and format capability; `coordinate.json` is explicitly
+an incomplete example reference; `rules.json` owns mandatory rule conditions
+and thresholds. The fixture helpers actually consume these files; duplicate
+owner keys reject. Models are referenced from CDL syntax, not copied into it.
 
-From the repository root, with the configured Python 3.11/KLayout environment:
+Site, export/validation policies and limitations retain their entrances.
+Site outputs.core/directory must agree exactly with export policy names/path;
+conflicts reject with no priority, override or default. MR-040 mechanism changes
+remain deferred. Spec/oracle/expected and body template are construction or
+comparison inputs; source GDS/CDL, selected body context, raw/header and selected
+tech/config/policy are the input evidence closure.
+
+Nominal 1 nm is the versioned `w004-toy-unit-choice/2`, retained from the authored
+W003 toy choice; GCD does not create a unit or process rule. GDS UNITS preserve
+REAL8 bytes and exact rational decode, nominal scale, delta and half-mantissa-ULP
+bound. Both fields bind independently. Original signed XY remain integers with
+no snap. Output tick representability/range is a separate check. Source writer
+uses Fraction; expected writer uses KLayout. KLayout geometry serialization is
+independent, but its UNITS payload is normalized by the same nearest56 encoder;
+`expected/unit-provenance.json` preserves originals and reconstruction hashes.
+The verifier independently exact-decodes units and reads geometry using KLayout.
+
+## Single Calibre-like synthetic dialect
+
+`query/dialect.json` identifies **calibre_like_synthetic/2** and hashes the legacy
+format descriptions used as sources. Nine raw inputs provide four capabilities:
+
+| Capability | Raw inputs | Normalized |
+| --- | --- | --- |
+| instance xref | iXref.temp | instance_xref.yaml |
+| net xref | nXref.temp + net_names.txt | net_xref.yaml |
+| device regions | device_info_Q17.txt, device_info_Q93.txt | device_regions.yaml |
+| net regions | net_shapes_n_a/n_y/n_lo/n_hi.txt | net_regions.yaml |
+
+Xref `# SVDB: End of header.` ends only the header. Xrefs have no EOF marker;
+all rows are consumed and mapped. NET NAMES has an explicit count and
+`END OF RESPONSE`; Device_Info/Net_Shapes have metadata count, polygon vertex
+count and the same response terminator. `query/requests.json` explicitly binds
+response objects, rather than deriving identity from filenames. Net index is
+the **one-based ordinal** of NET NAMES, opaque outside this query run; nXref
+joins by layout net name. Normalized records are 2/4/2/8 respectively.
+
+Geometry raw vertices are **(y,x), integer/20000 µm**. Thus `400 1160` is
+`y=20 nm, x=58 nm`, precisely. Full vertices and named rational bbox values are
+retained; exact quality follows a lossless four-corner rectangle proof plus
+registry, not a nonexistent raw quality token. Each normalized field carries
+its raw/manifest sources, line/token or JSON pointer, lexeme, bytes hash and
+conversion/derivation. Metadata and section tuples remain opaque where legacy
+meaning was not verified. NET NAMES opener 20000 is not a geometry unit source.
+This selected synthetic subtype is not a verified production Calibre dialect.
+No legacy runtime, float rounding, bbox downgrade or intermediate toy raw path
+is used. Normalized files are comparison caches, never sole inputs.
+
+## Checks, failures and reproduction
+
+D3 check identity/input/proof/status/original obligation mapping is in
+`validation_policy.json.check_obligations` and the human/machine reports.
+Local GDS/CDL/JSON semantic readback, production independent downstream
+open/syntax and Virtuoso/SKILL dry-run are separate. Original `virtuoso_readback`
+remains deferred with explicitly unresolved scope; it is not silently renamed
+away. Calibre old/new names have an explicit mapping. All real-tool checks
+remain deferred/coverage none/requires_review; runtime and return code null.
+
+`failures/cases.json` retains C01–C22 plus seven body witnesses. Apply every
+replacement and removal to an independent normal copy. Nonbinding cases have
+current source/raw/context/closure/cache hashes, including actual malformed raw.
+Only C06/C07/C21 deliberately retain the named hash/top/cache defect. C22 tests
+missing required body operator; absence of local BTAP itself is valid.
+The helper detects input/geometry witnesses; future typed product failure,
+zero ECO and no normal publication remain unexecuted runtime obligations.
+
+From a Python ≥3.10 environment with KLayout 0.30.12 and matplotlib:
 
 ```sh
-PYTHONDONTWRITEBYTECODE=1 "$HOME/.virtualenvs/layauto/bin/python" -B tests/support/w003_generate.py --output /private/tmp/w003-regenerated
-PYTHONDONTWRITEBYTECODE=1 "$HOME/.virtualenvs/layauto/bin/python" -B tests/support/w003_verify.py --fixture tests/fixtures/w003_m1 --regenerated /private/tmp/w003-regenerated
+python -B tests/support/w003_generate.py --output /tmp/w004-regenerated
+python -B tests/support/w003_verify.py --fixture tests/fixtures/w003_m1 --regenerated /tmp/w004-regenerated
+python -B tests/support/w003_record_examples.py
+python -B tests/support/w003_plot.py --fixture tests/fixtures/w003_m1 --output /tmp/w004-layout.png
 ```
 
-The verifier is read-only. It checks exact GDS records and units, independent
-KLayout readback/Boolean fragments/connectivity/rules, source/target CDL
-semantics, raw→normalized/hash/closure binding, representative negative inputs,
-and byte equality of all regenerated fixture files. No packages are installed.
-Generation requires the already-installed KLayout 0.30.12 only for the separate
-expected GDS writer. Geometry computation in the source writer never uses
-binary float. KLayout's DBU API takes a float; both resulting unit fields are
-independently decoded and bound before geometry comparisons.
-
-`failures/cases.json` maps concrete replacement inputs to expected future
-failure categories/stages and publication assertions. Each is an overlay on
-the normal fixture; all replacement files, cache removals and already-rebound headers
-are included. Copy the normal fixture, apply replacements, then remove listed
-files: each overlay reaches its intended defect without manual hash repair.
-Only the explicit raw-byte/cache/header-drift cases retain intentional binding
-defects. The helpers
-check sample failure conditions locally; they do not execute StageFailure,
-repository publication, parser runtime, export pipeline or reports. Product
-build/type/supported-interpreter tests and required runtime failure paths remain
-the next implementation task. The normal example disposition is
-`requires_review`; every required violation or execution error remains reject.
+Generation only writes the selected fixture directory. Record `--write` authors
+samples, never runs a pipeline. Verification actually materializes all overlays;
+`--work` preserves them in a chosen empty directory. Byte regeneration is checked
+separately from correctness. The W004 execution record identifies tested snapshot,
+commands, environment, output, independent review and unrun obligations. Normal
+and eight failure record combinations remain expected samples, not production
+results. PM alone may accept W004, close W003 and dispatch M1 parser work.

@@ -1,0 +1,96 @@
+{
+  "schema_version": "w004-cut-islands/1",
+  "classification": "synthetic",
+  "cell": "CUT_ISLANDS_SYNTH",
+  "unit": "nm",
+  "shapes": [
+    {
+      "id": "FRAME",
+      "layer": "BOUNDARY",
+      "bbox": [
+        0,
+        0,
+        160,
+        200
+      ]
+    },
+    {
+      "id": "LB",
+      "layer": "LI",
+      "bbox": [
+        130,
+        20,
+        150,
+        24
+      ]
+    },
+    {
+      "id": "CUTB",
+      "layer": "CUT",
+      "bbox": [
+        139,
+        18,
+        141,
+        26
+      ]
+    },
+    {
+      "id": "A_REMOTE",
+      "layer": "LI",
+      "bbox": [
+        50,
+        20,
+        60,
+        24
+      ]
+    }
+  ],
+  "annotations": [
+    {
+      "record_id": "R08",
+      "fragment_id": "LB.left",
+      "schematic_net": "A",
+      "bbox_nm": [
+        130,
+        20,
+        139,
+        24
+      ]
+    },
+    {
+      "record_id": "R09",
+      "fragment_id": "LB.right",
+      "schematic_net": "A",
+      "bbox_nm": [
+        141,
+        20,
+        150,
+        24
+      ]
+    },
+    {
+      "record_id": "Rremote",
+      "fragment_id": "A_REMOTE",
+      "schematic_net": "A",
+      "bbox_nm": [
+        50,
+        20,
+        60,
+        24
+      ]
+    }
+  ],
+  "index_witness": {
+    "index_cell_width_nm": 32,
+    "index_cell_height_nm": 16,
+    "origin_nm": [
+      0,
+      0
+    ],
+    "allow_multiple_fragments": true,
+    "exact_predicates_use_geometry_not_cell_adjacency": true,
+    "example_only": true,
+    "is_runtime_coordinate_model": false,
+    "selection_basis": "hand chosen 32 x 16 bucket includes both fragments; no fabrication grid claim"
+  }
+}

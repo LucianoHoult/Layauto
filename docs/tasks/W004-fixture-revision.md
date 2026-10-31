@@ -1,5 +1,7 @@
 # W004 — W003 样本修订与验证
 
+> 执行恢复补记：2026-10-31用户已在准备交付后正式派发本任务，D1=A、D2后置MR-040机制、D3保留三类检查及未消歧旧义务均已落定。下方“仅准备/待PM”是保留的交接历史；本轮实施与证据从[E3](#w004-execution)恢复，不重复收敛。最终任务阶段/验收及W003关闭仍归PM。
+
 最终目标是将W003人工修改要求落实为可复现的新样本。**按用户最新指令，当前只收敛任务，尚不开始实际样本修改。** 讨论历史留在[MR-076及其原记录](W003/manual-verification.md#mr-076)；本任务是当前唯一修订准备入口，产品合同仍归[架构](../architecture.md)。
 
 ## 任务要求（PM）
@@ -227,6 +229,34 @@ P＝pre_context，S＝sealed_no_publication，E＝export，沿用现有目的/�
 
 仍待PM决定D1 body上下文的输入/scope与绑定、D2是否明确后置MR-040、D3 Virtuoso检查范围/身份；推荐和具体示意见第3节。此次只做文档diff/身份/链接/恢复检查及Git发布，未运行fixture/helper、生成器、pytest、产品或EDA；未新增新版样本验证结论，下一角色仍为PM核验接收准备成果。
 
+
+<a id="w004-execution"></a>
+### E3. 正式派发后的样本执行交回（2026-10-31）
+
+**授权与恢复。** 本session用户明确以执行角色完成R1–R5/V1–V7，已接收五项准备交付并给定D1=A、D2、D3；因此历史“仅准备”不是本轮停止点。初始`/workspace/Layauto`为`work@da55ca6`，staged/untracked为空，unstaged为W004/current-work两份准备文档。先完整备份到`/workspace/work/w004/initial/`。Git CLI当时代理连接失败，GitHub连接器读到指定9f6735d与两份原文，核对blob、tree和commit SHA均精确相同，且现有修改为发布文件的完整保留子集；恢复指定`codex/w004-task-convergence@9f6735dcede8e8b2135f89ff10f079a752ed758b`。没有新建实现commit或推送、合并main、删分支；本轮提交/推送没有新增授权。
+
+**实物。** 沿用F/H/D路径；主执行者串行集成全部共享文件。实现前`independent_answers`以源坐标和整数/Fraction推导独立答案，`dialect_sources`只读legacy格式资料，两者不参与最终审阅。正常40个本地图形、14有效导体、8本地connector边、6本地分量；BN/BP分别独立，外部六形状通过2条独立context association支持有序B语义。LB/CUTB/R08/R09及同标签同格目的迁至单独`special/cut_islands`（4 drawn、3有效片段/分量、0边）。[新导航](W003/README.md)、[来源表](../../tests/fixtures/w003_m1/sources.json)、[迁移/覆盖与两域图](W003/revision-evidence.md)、[合同](W003/contracts.md)及[人机报告](W003/examples/report.expected.md)已同步。
+
+**D1–D3落地。** `body/context.json`显式绑定source bytes、top、FRAME/本地body/rail对象、单位与坐标框架、profile/operator、来源及synthetic限制；header closure与F1 request纳入该输入及全部技术叶。外部图形不导出、不并入local graph；接续长度90/100及10/10 nm、tap body/rail最小包围8/2 nm、类型/唯一匹配及目标rail分别核验。T04/T05/T08使用新版context作用域和版本，C22保留“缺必需body算子”目的，另7项body失败见证；无本地BTAP本身合法。tech六owner实际消费，规则/模型/单位无隐藏重复配置权威。site/policy/limitations入口保持，重复outputs不一致reject，未实现MR-040新机制。D3完整“身份—输入—证明—状态—原义务去向”表由validation policy拥有并进入人机报告；production downstream open/syntax、Virtuoso/SKILL dry-run与本地语义读回分项，旧virtuoso_readback未消歧义务明确保留，MR-074-Q1待PM关闭。
+
+**已执行验证。** Python 3.12.14，KLayout 0.30.12；独立review另用gdstk 1.0.2。命令、环境覆写及stdout/stderr保存在完整证据包`validation/`。辅助检查实测：116个fixture文件、9raw→4capabilities记录2/4/2/8、558处字段回链、17个实际closure叶、27个F1输入路径；20正常记录、8失败变体、133处record/report文件引用、3核心artifact实际size/hash。29个failure overlay与9个配置/单位声明冲突变体均真实复制/替换/删除/重绑后检查；未用意外hash错误覆盖目标缺陷。F1逐operation/run/head/lineage/key及27个实际文件bytes改变证明摘要敏感，旧摘要拒绝；共66个非法记录/摘要组合检查。F2坏DEVICE INFO缺END OF RESPONSE，其header→独立读取回执→ParseResult→StageFailure定位→failure RunRecord completed链同源。GDS完整语义/REAL8/nominal/bound/原XY字节位置、CDL全字段、JSON范围/组件、T01–T10和图逐项核对。独立目录重生成116文件、图及20/8记录/人机报告逐字节一致，可重复性与正确性分别报告。
+
+**独立review与修复。** 未参与实现的`independent_review`及`raw_independent_review`对冻结snapshot开展独立stream/CDL/integer/Fraction/多输入raw核验，未import生成器作为答案。初审IR1–IR5指出owner消费未完整、export旧profile、错rail见证混入异型body重叠、query单位/quality声明冲突未拒绝、DEVICE INFO缺数字type；原finding与复现脚本完整保留。已修复：实际消费或显式核验固定owner合同，增加9类实际声明冲突见证，补opaque数字type和owner回链，纠正profile、升级T04/T05/T08版本，错rail改为单一目标rail冲突并检查外部异型body不重叠。复核结论由reviewer另记，不由执行者代写。
+
+**身份与未运行。** 受审最终实现快照位于`/workspace/work/w004/review-r3/`，完整封包保存在`/workspace/work/w004/artifacts/W004-delivery.tar.gz`（本云环境无法创建线程指定的`/codex/browser/projectless/.../output`展示目录；并非上传或Git发布，跨主机时须携带该包），含完整相关snapshot、相对9f6735d的binary patch（修改/新增/移除）、SHA-256、原始review/独立脚本与输出、复现命令和环境；包含被测实物，不要求记录文字自指最终hash。生产matched body=false、LVS not_run；产品parser/runtime/Stage1–6、publication、完整grid/CSP/DTO/codec/CAS、真实PDK/Calibre、production downstream tool gate、Virtuoso/SKILL dry-run和旧readback未消歧范围均未运行。KLayout expected几何序列化独立，unit encoder共用已披露；不把synthetic通过作为生产通过。
+
+**交回PM。** 以同一新版身份核对R1–R5/V1–V7及原22目的、独立review处置，再闭合受影响MR/人工结论；保留既有确认，不重复要求已定选择。尚需PM处理MR-074-Q1及其未消歧scope、MR-051经052收窄后的样张结论、相关A/B/C/D新版人工闭合和真实生产准入缺项。执行者不最终验收W004、不关闭W003、不进入M1 parser。
+
+### E4. 原路径提交与 GitHub 交付（2026-10-31）
+
+E3/R2及封包身份记录的是提交前的受测/受审版本；其“未授权提交/推送”“仅本机路径”是当时事实。本轮用户随后明确要求“对照repo内原来相应fixture等所在位置，将你的更新以git push可更新的那种形式，推送到github上”，据此授权本次提交并推送到现有`codex/w004-task-convergence`分支，不合并main、不删除分支、不改变PM验收状态。
+
+本轮恢复核对本地HEAD与远端分支均为`9f6735dcede8e8b2135f89ff10f079a752ed758b`，staged为空；原149个修改/新增/移除路径逐一与交付包identity一致。fixture、support、合同、报告、图和review原文仍在原路径；仅追加本段和W003附件导航。没有重新运行修订、生成器或产品/EDA验证；之前验证与review的适用范围继续按E3/R2及原包说明。
+
+为解决PM实例不能访问本机工作目录的问题，将原`artifacts`目录的9个文件逐字节转存至[W004交付附件](W003/delivery/w004-20261031/)，包括[原始完整封包](W003/delivery/w004-20261031/W004-delivery.tar.gz)、[封包独立审计](W003/delivery/w004-20261031/W004-package-audit.md)、[原校验清单](W003/delivery/w004-20261031/SHA256SUMS.json)、原binary patch、原图及校验回执。该目录是受审交付的不可变历史附件，当前可编辑fixture仍由原路径拥有；包内的本机路径用于说明历史执行位置。
+
+原包大小为10,570,253 bytes，SHA-256保持`3cd7bc497391d76656e0327b415ec5c77ce26aa827423dc2b054654977173b39`。本轮只做原身份比对、转存字节/清单核对、文档链接及Git差异检查；发布commit与远端核验结果由Git和交接回复标识，不追求文档自指hash。原包和工作区恢复证据保留。MR-074-Q1等人工闭合、W004最终验收、W003关闭仍归PM，未进入M1 parser。
+
 ## Review 结论（reviewer）
 
 当前收敛review只检查原决定覆盖、范围/依赖、候选状态、验收可执行性及是否越界。尚未开展新版样本review；未来由未参与修订实现者绑定完整版本，核对独立答案和实际证据。准备review或旧W003技术通过都不自动覆盖新版样本。
@@ -249,6 +279,15 @@ Reviewer：`w004_preparation_review`，未参与本轮准备正文编写。结�
 主执行准备代理的文档初检证据为`review-input/checks.json`：25个相对链接/锚点、11张表、22个迁移目的及diff格式通过；主代理另报告从HEAD两份原文应用完整patch可逐字节重建受审snapshot。Reviewer核验了snapshot身份、实际修改范围及22个case对应，不将上述主代理检查冒充本人的重复执行。追加本段后由主代理另做最终文档检查与snapshot/manifest。
 
 限制与交回：本次只做准备文档及静态来源对照，未运行生成器、fixture校验器、pytest、产品或EDA，也未复验旧Mac附件。D1–D3仍待PM及必要用户语义决定；新版实际输入、几何、反例、报告和产品行为均未由本review验证。下一角色仅为PM接收准备结果并明确后续范围，执行者不得自动开始样本修订。
+
+### R2. 新版独立review及修复复核（2026-10-31，reviewer原文）
+
+Reviewer：`independent_review`，未参与实现。对冻结 `review-r3/snapshot` 的145文件逐bytes核对，manifest SHA-256为 `9136e0509ab50e03ea260eb0d1ecaedfb4aa6a58cda17a5cc926d715de0fbd76`。原IR1–IR5及r2残余均修正并独立复核，剩余必须修正项为0，可交PM接收实施交付。独立stream/CDL/Fraction计算得到40本地图形、8边、6本地组件、两条外部context支持关联；29个实际overlay保留C01–C22及7个body见证。raw/F1/F2独立专项、133处文件/JSON pointer引用、D3八行义务及116文件/图/记录再生成实物对账通过。原finding和修复证据保留，完整结论见新增review附件。此结论只覆盖synthetic样本及辅助材料；production matched body=false、LVS及真实工具未运行，不构成W004最终验收、W003关闭或MR-074-Q1等人工结论关闭。最终review附件/patch封包另作身份核对，不能冒充该快照已包含后续新增正文。
+
+
+原文与处置保留：[初审IR1–IR5](W003/reviews/independent-r1.md)、[第二轮残余](W003/reviews/independent-r2.md)、[第三轮最终复核](W003/reviews/independent-r3.md)、[raw专项初审](W003/reviews/raw-r1.md)及[修复复核](W003/reviews/raw-r2.md)、[owner专项第三轮](W003/reviews/owner-raw-r3.md)。这些附件是reviewer所写原文的逐字节副本；独立脚本、实际overlay、命令/环境与stdout/stderr随完整交付包保存。最终复核报告SHA-256为`56c89de6087c92f3ba215a7f8fa4ed5c035e51b07f3939476f2b3daedad86822`。
+
+最终附件加入后，执行者重新生成相对准备提交的完整binary patch并在独立基线目录实际应用，核对全部新增/修改/移除文件。被审fixture/helper/报告/图与145文件r3清单保持同一bytes；仅W004身份/交回文字及新增review原文在其后加入。最终完整snapshot/patch和SHA-256由交付包identity.json/SHA256SUMS.json标识，避免自指hash。最终Git状态为未提交工作区交回，未推送/合并/删分支。
 
 ## PM 验收与交接（PM）
 

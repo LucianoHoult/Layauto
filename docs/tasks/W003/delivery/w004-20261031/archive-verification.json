@@ -1,0 +1,10 @@
+{
+  "archive_sha256": "3cd7bc497391d76656e0327b415ec5c77ce26aa827423dc2b054654977173b39",
+  "archive_bytes": 10570253,
+  "manifest_payload_files_verified": 8988,
+  "unlisted_files": 0,
+  "all_payload_hashes_match": true,
+  "patch_and_figure_match_archive": true,
+  "changed_paths": 149,
+  "base": "9f6735dcede8e8b2135f89ff10f079a752ed758b"
+}

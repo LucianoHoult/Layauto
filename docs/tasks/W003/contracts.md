@@ -1,6 +1,6 @@
 # M1 文件及共享记录样张合同
 
-本包用显式的小子集解释每个字段，以便 reviewer 从输入算出答案。它落实 [W003 要求](../W003-m1-fixture-contracts.md)，没有修改 [架构](../../architecture.md)。`w003-example/1` 是本包示例版本；未来 runtime schema、CLI 与产品持久化实现另行派发、review，不由本文件发布。
+本包已按[W004](../W004-fixture-revision.md)正式D1–D3派发修订，保留W003路径与原MR/E/R历史。新版样本未由PM最终验收。用显式的小子集解释每个字段，以便 reviewer 从输入算出答案。它落实 [W003 要求](../W003-m1-fixture-contracts.md)，没有修改 [架构](../../architecture.md)。`w003-example/1` 是本包示例版本；未来 runtime schema、CLI 与产品持久化实现另行派发、review，不由本文件发布。
 
 ## 文件链与双方 owner
 
@@ -8,8 +8,8 @@
 | --- | --- | --- |
 | Source GDS | 手写 synthetic spec → fixture writer；未来 importer → normalization | 单 top `INV_M1_SYNTH`；flat axis-aligned BOUNDARY，仅精确闭合矩形。每个 element-tagged layer/datatype、XY integer tick、UNITS REAL8 原 bytes 和 exact rational 保留；unknown key、非矩形、hierarchy、property、PATH/TEXT/BOX 等本子集外记录拒绝，不包络或丢弃 |
 | Source/target CDL | 独立文本样本 → importer → current circuit / immutable target | 同一 top/pin order；TOY_N/TOY_P 有序 D G S B、显式 NFIN/NF/M/L/W/VT；模型含义由 toy profile 给出，不能从 token 猜。只支持所声明 literal/suffix/注释/空白；include/library/表达式/未知 directive/escape 均拒绝；空 include closure 也留记录。全量语义比较包括未改参数、模型、端子、top、pins |
-| 四类 raw query | spec 的 synthetic capture → 将来的正式 importer | instance/net xref、device/net rectangle region；header、unit、lexeme、count、terminator 和 dialect version 完整；raw 是输入，normalized 仅可重解析缓存/期望。无真实 binary invocation，无 matched/live 声称 |
-| Header/closure | fixture assembly → importer 基础 binding 校验 → normalization identity join | source layout/netlist/top、netlist transitive closure、deck/map/runset/options/preprocess closure、四 raw 实际 bytes hashes、parser/dialect/generator 版本；header hash、缺项/漂移 required-fail。合成 query database id 只在本 bundle 内有效 |
+| 四类 capability / 九份 raw query | spec 的 synthetic capture → 将来的正式 importer | iXref/nXref/NET NAMES、两device及四net polygon响应；单一calibre_like_synthetic/2；xref无文件终止符，响应有END OF RESPONSE；逐字段source/lexeme/exact unit/quality完整；raw 是输入，normalized 仅可重解析缓存/期望。无真实 binary invocation，无 matched/live 声称 |
+| Header/closure | fixture assembly → importer 基础 binding 校验 → normalization identity join | source layout/netlist/top、netlist transitive closure、deck/map/runset/options/preprocess closure、九份 raw 实际 bytes hashes、显式response object选择、只读body context及六个tech owner叶子、parser/dialect/generator 版本；header hash、缺项/漂移 required-fail。合成 query database id 只在本 bundle 内有效 |
 | Drawn/derived registry | toy tech → config loader、normalization/annotation/extraction/export | drawn registry 独占 stream key、tier、projection、edit/lifecycle、via/cut；derived registry 独占 carries、quality/trim/tolerance/aliases。ref 唯一解析，双重或未知映射拒绝 |
 | Geometry/CDL/FinCount/DeviceExtraction/body/units/rules | toy tech → Stage 1–6 对应 consumer | 完整 toy 算子和适用范围；normal no_change 的全部 mandatory checks 不能 disabled/deferred。single-finger/one-to-one/no reduction；resize operator 不支持，不能据本包启用真实 shrink |
 | Site / export / validation policy | fixture run selection → pipeline/config importer | 路径相对 site YAML 所在目录；选择 tech/inputs/raw/normalized/mode/output，不能重复 design facts。required GDS/CDL/JSON + 人机报告；immutable versioned output path；源坐标禁止 snap，输出不可表示/越界拒绝。synthetic 正常 requires_review；required failure reject |
@@ -37,7 +37,7 @@
 
 本包 exact encoding 选择如下，待 reviewer/PM 核对后才可供下一实现任务采用：
 
-Snapshot 的 component refs 指向独立期望中的字段/fragment witness，用于展示编码，不是完整预制状态。`expected/layout.json` 明示 `is_complete_runtime_snapshot=false`；它的 geometry、terminal graph 与 current semantic 有完整本例期望，occupancy 以两个 fragment 的同 cell 反例及相关 region 样张说明。后续实现必须从实际 Stage 1/2 构造全部 occupancy/annotation components，逐项验证这些独立期望与投影不变量，不能以直接加载该 JSON 或只比其中已列字段代替完整 snapshot/export 验收。
+Snapshot 的 component refs 指向独立期望中的字段/fragment witness，用于展示编码，不是完整预制状态。`expected/layout.json` 明示 `is_complete_runtime_snapshot=false`；它的 geometry、terminal graph 与 current semantic 有完整本例期望，正常occupancy仅给四个OD片段见证；两个同cell fragment反例已迁special/cut_islands。后续实现必须从实际 Stage 1/2 构造全部 occupancy/annotation components，逐项验证这些独立期望与投影不变量，不能以直接加载该 JSON 或只比其中已列字段代替完整 snapshot/export 验收。
 
 - ID 为 `{ "type": "RunId", "value": "example-run" }`；ref 保留 type，不把裸字符串碰巧相等当 join。示例 ID 是可读 symbol，不冒充内容 hash。
 - 坐标、版本、size、序号是 JSON 整数；rational 是约分后的 `{ "numerator": "1", "denominator": "1000000000" }`，分母正；Decimal 若用则 tagged decimal-string，无 float/NaN/Infinity。enum 为字段表中字符串；路径为显式 UTF-8 POSIX 相对路径或 URI，禁止隐式 cwd。
@@ -62,3 +62,13 @@ Snapshot 的 component refs 指向独立期望中的字段/fragment witness，�
 `examples/failures.json` 分别给上述记录/ref 组合和有/无 artifact 断言。Stage 6 no_change 的失败仍保留原 no_change RunRecord；空 ECO chain 不能使它倒退成 pre-context failure。显式 partial、重新 seal、unsealed close、未 close 正常 finalize、terminal 后 mutation、同 key 异 digest 均须 typed conflict；同 key 同 digest 重放必须先返回旧 refs，不被后来的 revision/head 变化误拦。
 
 Unexpected programmer/infrastructure error 在 pipeline boundary 变为 InternalStageFailure；KeyboardInterrupt/SystemExit 不吞，crash/OOM/断电不保证当场存在 PipelineResult。本包仅示范错误记录，未实现 repository、terminal publication、原子性或恢复。
+
+## W004 body、owner与检查范围补充
+
+正常source/expected各40个本地图形，14有效导体、8本地connector边、6本地分量。BN/BP各自独立；两个B端子的供电关系由显式选定、绑定source实际bytes/top/FRAME/对象/单位/profile/operator的只读synthetic context支持。六个外部图形不导出、不写入本地physical graph。接续正长度共边、类型、每侧唯一匹配、enclosure与最终语义rail独立检查。缺算子/context或错source binding在pre_context拒绝；几何/类型/歧义/包围/rail失败见证属于sealed_no_publication预期。无本地BTAP不是错误。T04/T05/T08分别列两域；production_matched_body_evidence=false，LVS not_run。
+
+唯一owner入口为fixture tech.json的owners：drawn、derived、physical、formats、coordinate、rules。全部读取者通过显式owner访问；模型轴、FIN width/pitch/offset、source nominal unit、connector/spacing规则无隐藏第二配置。sources.json列原字段归属与实际consumer、所有本地尺寸与规则来源；没有PDK/PCell证据的项保持toy/unknown。site/policy/limitations入口保留，重复outputs字段必须一致；不引入MR-040默认/override/优先级。
+
+检查身份—输入—预期证明—状态—原义务去向的唯一数据表为[validation_policy.json](../../../tests/fixtures/w003_m1/validation_policy.json)的check_obligations；[人读报告](examples/report.expected.md)逐行展示，[机器报告](examples/report.expected.json)携带同表。geometry_readback、cdl_semantics、json_components为本地语义读回预期；production_downstream_open_syntax单列production独立工具gate；virtuoso_dry_run保留shape locate/exact/歧义/缺失/return-code且不含apply；旧virtuoso_readback仍保留未消歧义务，不能因重命名消失。real_calibre_drc/lvs明确映射calibre_drc/lvs。全部真实工具deferred、coverage none、runtime/return code null，requires_review。MR-074-Q1由PM在新版review后决定关闭。
+
+F1 pre-context request列全部27个实际input/raw/config/policy路径及bytes，绑定operation/run/head/lineage/key；不含尚未建立canonical context id。F2使用真正缺END OF RESPONSE的device_info_Q17坏raw，坏header→独立fixture-read ToolRun→ParseResult→StageFailure/localized→失败RunRecord completed refs保持同源。四类normalized各字段具名、完整顶点和精确有理数、source位置/lexeme/hash可遍历；质量来自几何证明和registry，不伪造raw字段。

@@ -1,24 +1,25 @@
-# INV_M1_SYNTH — no_change 预期报告
+# W004 no_change 人读报告样张
 
-**预期样张，未执行产品 run。** 下述 pass/feasible/terminal 是后续 M1 应观察的结果，不是本轮生成器、独立 reader 或真实工具的运行结果。来源为 synthetic，生产接收状态为 `requires_review`。
+synthetic expected sample；产品未运行。INV_M1_SYNTH；5/7 FIN，NF=M=1，L=4 nm channel length，W=2 nm fin width。
+baseline version 0；InitializationEvent；空 ECO 链；所有 committed changes 为0；terminal requires_review。
 
-输入为 source GDS、source/target CDL、四种 raw query 及其 header/normalized、toy tech 与 site policy。完整输入定位和实际样本 bytes hashes 在 [机器报告](report.expected.json)，core 样本文件 hash/size 在 [ArtifactManifest 样张](records.json)。真实 Calibre build、query database、PDK、生产平台和真实 tool command 均无运行事实。
+本地40图形、8 connector edges、6 physical components；BN/BP独立。外部6形状、2 body associations仅作绑定的只读支持，不导出、不冒充本地边。
+8 net regions、2 device regions；9 raw。CUT/同标签/同格孤岛目的迁至 special/cut_islands；MARK保留。
+单位为有来源的synthetic nominal 1 nm；原XY精确保留；query (y,x)/20000 micrometres。全部技术事实为toy；production_matched_body_evidence=false、LVS not_run。
 
-| 核对内容 | 预期结果 |
-| --- | --- |
-| Source / target | 同一 `INV_M1_SYNTH`；pin order `A Y VSS VDD`；全部模型、D/G/S/B、参数和拓扑语义相同 |
-| 有效 fin / finger / multiplicity | MN0：5 → 5 / 1 / 1；MP0：7 → 7 / 1 / 1；one-to-one、无 device reduction |
-| 固定 FIN 背景 | 共 18 根；N 的 5 根与 P 的 7 根参与 crossing，余 6 根不被数入器件。逐根见 fixture oracle |
-| 几何与连接 | 44 个 drawn records 完整保留；8 个 terminals、10 条 connector edges、6 个 components；S/D 无直连；CUT 把 LI bridge 分成两岛 |
-| 规划 / 约束 | all-delta ledger 空，unsupported 空，无 candidate/repair/mutation；全 cell 10 条 mandatory toy 规则 feasible |
-| Publication | baseline version 0、InitializationEvent；ECO ordered commit chain 空；geometry/semantic/occupancy/annotation/connectivity 变化均 0 |
-| Lifecycle / derived | preserve/frame signatures 相同；没有 prepublication-derived layer；无 ECO 引起的 derived/view refresh |
-| Core artifacts | GDS/CDL/JSON 与 frozen snapshot 语义一致；expected GDS 可因顺序不同而 bytes 不同，不能据此判几何错 |
-| Validation | self-consistency、fixture oracle、audit-readiness 在声明 toy scope 内预期 pass/complete；它们不表示全部生产规则被覆盖 |
-| Signoff | real Calibre DRC/LVS、Virtuoso readback 为 deferred/coverage=none；无 signoff clean 或生产 matched 声称 |
+| 检查身份 | 输入 | 预期证明 | 状态 | 原义务去向 |
+| --- | --- | --- | --- | --- |
+| geometry_readback | expected/output.gds, source.gds | exact local tagged geometry, units, top and original XY | expected_pass_not_product_run | self_consistency: local GDS semantics |
+| cdl_semantics | source.cdl, target.cdl, expected/output.cdl | full ordered pins/globals/models/DGSB/parameters | expected_pass_not_product_run | self_consistency: CDL |
+| json_components | expected/layout.json, oracle.json | listed components, scope and refs; incomplete snapshot disclosed | expected_pass_not_product_run | self_consistency: JSON |
+| production_downstream_open_syntax | production GDS/CDL artifacts, independent downstream tool profile | independent production tool can open/parse outputs; not local semantic equality | deferred | architecture 10.5 downstream readability gate; separated from legacy readback |
+| virtuoso_dry_run | frozen snapshot, ordered export edits, future SKILL, Virtuoso context | shape locate/exact match; missing/ambiguity failure and return code; no apply | deferred | records virtuoso_dry_run / architecture 10.3 and 10.5 |
+| virtuoso_readback | unresolved legacy production readback inputs | retain original unresolved scope until PM closes MR-074-Q1 after revised review | deferred | old policy/report virtuoso_readback retained; neither deleted nor assumed alias |
+| calibre_drc | production GDS, PDK/deck | real DRC with bound tool/deck | deferred | real_calibre_drc explicit identity mapping |
+| calibre_lvs | production GDS/CDL, target, PDK/deck | matched full semantics with fresh xref | deferred | real_calibre_lvs explicit identity mapping |
 
-Annotation 披露：query 是 synthetic source evidence；MARK 是保留的未注释非导电 marker。`LB.left`、`LB.right` 虽同标 A，仍为互不导通的 islands，并与 gate 所在 A component 分开。这里披露 source evidence 的覆盖和孤岛，不把标签作为增加物理边的依据，也不声称 post-edit LVS match。
-
-本例未改变目标、未选择 candidate、未执行 routing 或 resize。通过全部 required toy 检查后仍须 `requires_review`，因为这是 synthetic 工程样本。任何 required rule violation、check execution error、core export 或 required report failure 均须 reject，不能由 golden match 或 deferred signoff 掩盖。
-
-Manifest 只标识完整可寻址的样本 export set。未来 production consumer 只能从 terminal PipelineResult/repository root 判断是否允许消费；本样张没有真实 terminal root，没有生产批准。生成时间与真实工具命令不填虚构值。
+其余必需检查：fixture_oracle、audit_readiness、all_mandatory_toy_rules，以及human_report/machine_report交付；本报告内pass仅是未来预期，不是本轮产品执行结果。
+所有deferred：calibre_drc, calibre_lvs, production_downstream_open_syntax, virtuoso_dry_run, virtuoso_readback；coverage none，runtime/return code null，requires_review；不能汇总为pass。
+MR-074-Q1仍待新版核验后由PM关闭；旧virtuoso_readback未消歧范围明确保留。
+限制：无产品Stage1–6、publication、完整grid/CSP/DTO/codec/CAS、生产PDK/Calibre/Virtuoso或production downstream gate运行；无生产上传。
+机器报告实际input/limitations/hash refs见report.expected.json；Manifest仅引用本包三个expected实物，size和SHA-256按实际bytes，不表示生产发布。
