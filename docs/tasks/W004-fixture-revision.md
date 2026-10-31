@@ -2,22 +2,22 @@
 
 > 执行恢复补记：2026-10-31用户已在准备交付后正式派发本任务，D1=A、D2后置MR-040机制、D3保留三类检查及未消歧旧义务均已落定。下方“仅准备/待PM”是保留的交接历史；本轮实施与证据从[E3](#w004-execution)恢复，不重复收敛。最终任务阶段/验收及W003关闭仍归PM。
 
-最终目标是将W003人工修改要求落实为可复现的新样本。**按用户最新指令，当前只收敛任务，尚不开始实际样本修改。** 讨论历史留在[MR-076及其原记录](W003/manual-verification.md#mr-076)；本任务是当前唯一修订准备入口，产品合同仍归[架构](../architecture.md)。
+最终目标是将W003人工修改要求落实为可复现的新样本。**本轮synthetic样本修订及辅助交付已验收，绑定发布提交633e3fe；不重复准备或实施。** 当前接收依据与限制见[PM3](#pm3-20261031)，W003最终收口另见[MR-078](W003/manual-verification.md#mr-078)。PM1/PM2及原执行、review保留历史身份；产品合同仍归[架构](../architecture.md)。
 
 ## 任务要求（PM）
 
 | 字段 | 内容 |
 | --- | --- |
-| 目标 / 依赖 | 承接[W003](W003-m1-fixture-contracts.md)人工核验遗留，形成可供后续M1 parser使用的修订版fixture、合同、独立答案与反例。W003保持待验收，完成后PM用同一套新版证据关闭两任务相应要求 |
-| 授权 / 阶段 | 2026-10-31用户明确“在实际修改前还是先收敛任务”，并授权推送文档及修改prompt。**待准备：下一session仅任务收敛。** 此指令替代此前“已定项可直接修改”的安排；收敛结果交PM接收，后续明确启动后才实施 |
-| 版本 | 准备基线为`codex/w003-manual-review@b41ba92940516ecadd26c64fc9fcb6829d21cbe1`，已含MR-076。本任务及入口随本轮文档提交保存；接手使用包含“仅任务收敛”的已发布提交，具体SHA以Git及交接回复为准 |
-| 当前写入范围 | 本任务的方案/准备结果、独立准备review及必要恢复入口。正式fixture、support helper、既有样本合同/图/报告、架构与产品代码均只读；原人工决定及W003 E/R历史不得覆盖 |
-| 后续拟修改范围 | 经收敛接收并明确启动后，再修改`tests/fixtures/`专用样本、`tests/support/w003_*`及必要专用辅助、`docs/tasks/W003/`受影响附件；范围和依赖在本次收敛中明确。沿用既有路径，不因编号批量搬迁 |
+| 目标 / 依赖 | 承接[W003](W003-m1-fixture-contracts.md)人工核验遗留，交付可供后续M1 parser使用的修订版fixture、合同、独立答案与反例；PM已用同一新版证据完成W003/W004样本范围验收 |
+| 授权 / 阶段 | **已验收：本轮synthetic样本修订、合同/辅助及证据范围。** D1=A已由用户选择，D2后置、D3分项保留，R1–R5/V1–V7和独立review处置经PM核验。W003已按P10/MR-078收口，原逐项用户状态保留历史身份；产品/真实工具未验收 |
+| 版本 | 接收发布提交`codex/w004-task-convergence@633e3feef8062565019838f2d270e89b7f81c4ed`；准备基线为`9f6735dcede8e8b2135f89ff10f079a752ed758b`。原包、受审r3与发布实物一致，发布补记差异见PM3；后续PM记录及W005随本轮同步提交，最终SHA以Git/交接回复为准。main未合入本轮修订 |
+| 本PM session写入范围 | 本任务PM要求/验收、W003 PM闭合与人工追加记录、current-work及文档/路线图入口；原人工决定、执行E/R及review原文不得覆盖 |
+| 本轮已执行范围 | 按R1–R5及第2节依赖修改`tests/fixtures/w003_m1/`专用样本、`tests/support/w003_*`及必要专用辅助、`docs/tasks/W003/`受影响合同/图/报告/附件，并在本任务执行段记录结果。沿用既有路径；已交付，不再派发同一修订 |
 | 非目标 | 不实现`layauto_v2/` parser/runtime、完整grid/CSP/DTO/codec/CAS；不改架构、legacy或部署EDA/生产上传；不扩大真实PDK/工具能力承诺 |
 | 架构依据 | §2.2、§3.4–3.6、§4.8、§5、§10.3/10.5、§11.14–11.15、§12.1–12.8；按修改读取原条款与两侧合同，不以本表替代原文 |
-| 分工 | 下一session负责只读调查和任务收敛，独立reviewer检查要求覆盖/边界；PM接收并安排后续实施。未来样本由一名执行者串行集成，再做新版技术review；新关键语义按协作规则§5处理 |
+| 分工 | 执行及新版独立review已交回，PM已完成W003/W004样本范围验收；下一节点为W005读取组件。新关键语义仍按协作规则§5处理，不重跑历史派发 |
 
-以下为待收敛的修订要求输入；本表不授权本阶段修改样本，也不表示验收已经执行。
+以下为本轮已核验的修订要求，具体实物、执行/review与PM接收见后文；历史派发不再作为当前执行指令。
 
 | ID | 应改成什么 / 关键限制 | 后续样本验收证据 | 来源 |
 | --- | --- | --- | --- |
@@ -291,6 +291,65 @@ Reviewer：`independent_review`，未参与实现。对冻结 `review-r3/snapsho
 
 ## PM 验收与交接（PM）
 
+<a id="pm1-20261031"></a>
+### PM1. 准备接收、用户决定与实施派发（2026-10-31）
+
+**接收`9f6735dcede8e8b2135f89ff10f079a752ed758b`的五项准备交付：精简要求、实际依赖、最少待决、后续验收清单及实施顺序。** 用户随后明确回复“A：本地cell＋独立外部上下文（推荐）”；PM据此将W004推进为可执行，以下prompt为下一执行session的正式派发。W004仍未最终验收，W003保持待验收，本PM session未修改样本。
+
+已fetch并核对远端交接分支为9f6735d、main为da55ca6；提交父节点为da55ca6，只改本任务和current-work。独立身份核验从**已发布9f6735d原文**按E2方法复原RP1受审稿及上一轮final稿，四项SHA-256全部匹配；核对五项覆盖、18个tech顶层字段归属与C01–C22实物身份。RP1记录的0项必须修正是准备review结论；本次不将其扩大为新版样本验证，也未重跑原RP1或取得原临时附件。复原记录为`/workspace/work/w004-pm-identity-xqrukxhd/checks.json`，SHA-256为`4a55cd6a918f359ad7039ebad73ce3aa36ae4a9d6167ae86dc880ec3205070be`；临时路径不随Git上传。本段和PM入口更新均晚于上述受审身份。
+
+| 决定 | PM接收结论 / 后续边界 |
+| --- | --- |
+| D1 用户已选择A | 主输入是无本地tap的单个flat逻辑cell，另附只读、显式绑定本次输入的synthetic tapcell几何上下文；外部几何不导出，也不伪装成本地连通边。缺失、错绑定或几何关系不成立不能通过。采用第3节A的输入绑定、scope及失败预期，不采用B的整体窗口。用户选择确定样本输入与解释范围，不证明候选坐标、几何链或技术答案正确；字段名、最终toy坐标和辅助组织由执行者在获准范围内细化，无需再确认A或tapcell方向 |
+| D2 PM决定后置 | W004不实施MR-040的配置机制精简；继续MR-004分类和唯一owner消费，沿用现有site/policy/limitations入口。重复输出字段须一致并披露冲突，不新增优先级、默认或override。MR-040保持未采纳，后续配置机制方案再处理；这不表示用户接受永久五文件结构或复杂度问题已解决 |
+| D3 PM决定分项保留 | 接收§10.3所述Virtuoso/SKILL dry-run定义，但**不采纳以统一改名取消读回义务**。既有GDS/CDL/JSON语义读回、production profile独立downstream open/syntax gate及Virtuoso/SKILL dry-run分别保留并建立policy→check→报告映射。第3节“若PM实际需要此能力”不能作为删除已有读回要求的依据 |
+
+D3后续修订须交一张“检查身份—输入—预期证明—状态—原义务去向”对照表。历史`virtuoso_readback`未证明只是dry-run别名；如尚不能消歧，明确保留其待澄清范围，不静默删除。保留全部既有义务的拆分/映射可由执行者落实、PM及reviewer接收；删除、替换或缩小能力预期则另交具体影响决定。MR-074-Q1在新版映射与实际报告核验后才可关闭。真实工具继续deferred/coverage none/requires_review；本轮不安装或运行EDA。
+
+**下一步与停止点：**PM现明确启动下一执行session按R1–R5、第4节V1–V7及第5节第2步起实施；旧准备阶段的“仅收敛/到PM停止”已完成，不再阻止本次派发。先独立答案与scope，再串行集成、验证及新版独立review，处理必须修正项后交PM接收。新关键输入/能力变化或无法在获准范围解决的问题交PM；普通实现选择和修复自主处理。执行session不代作W004最终验收、关闭W003人工结论或开始产品parser；合并main/删分支不在本派发内。
+
+本次PM接收更新仅写本任务和current-work，未提交/推送；已发布的准备成果仍以9f6735d为准。执行E1/E2、reviewer RP1及原W003人工记录保留原文，候选状态以本段后续决定为准。
+
+<a id="pm2-20261031"></a>
+### PM2. 收到执行完成通知，待取得实物（2026-10-31）
+
+用户转交执行方完成摘要：声称D1–D3/R1–R5/V1–V7、22原例和7个新增body见证、F1/F2均落实，116个fixture文件独立再生成一致，149个变更路径补丁经独立重建，E3/R2及封包审计完成且剩余必须修正项为0。**上述是执行方报告，尚非本PM已核验事实。** 报告交付包为`/workspace/work/w004/artifacts/W004-delivery.tar.gz`，声明SHA-256为`3cd7bc497391d76656e0327b415ec5c77ce26aa827423dc2b054654977173b39`。
+
+本PM实例检查该目录/文件不存在；搜索本机工作区和临时目录未取得该包或本任务E3/R2。当前checkout仍为9f6735d，仅有此前PM维护的W004/current-work两份未提交文档；GitHub只读接口核验交接分支仍为9f6735d。原执行session未提交/推送的实物没有自动共享至本实例，GitHub访问正常。本次未能计算包SHA、查看E3/R2、重建149路径或核对新版样本，不能复述摘要为验收通过。
+
+**下一步仅转交原包及同目录审计/校验清单为PM可下载附件或可访问文件。** 保留原包bytes及SHA，不为跨session交付重跑修订或改写证据。取得后先验包身份及snapshot/patch/review一致性，再核对R1–R5/V1–V7、body独立答案、22例/8失败、F1/F2和MR-074-Q1实际映射；按新版证据处理人工遗留、W004验收及W003对应闭合。MR-040继续后置，不重复询问已定方向。当前无最终验收、合并或parser派发。
+
+<a id="pm3-20261031"></a>
+### PM3. 新版实物核验与验收（2026-10-31）
+
+**验收633e3fe的本轮synthetic修订交付。** R1–R5/V1–V7、D1–D3在PM1允许的范围内落实；IR1–IR5及r2残余有独立复核闭合，PM接收专项未发现新的必须修正项。该结论不代替W003尚未完成的人工确认，不证明M1产品、真实PDK/工具或生产准入。PM2的文件不可访问阻塞已解除。
+
+**身份闭合：**从Git取得633e3fe，原包10,570,253 bytes，SHA-256为`3cd7bc497391d76656e0327b415ec5c77ce26aa827423dc2b054654977173b39`。独立核对8,988条manifest全部bytes；从9f6735d重建并实际应用149路径patch（135在场、14删除），155文件snapshot全部一致。r3的145项受审清单匹配；最终包保留144项原bytes，仅W004补交回/review文字。发布相对原包仅有9个delivery附件、W003导航一行及W004 E4，fixture/helper/合同/报告/图及review原文无变化。原包、原review与审计现可从[Git交付目录](W003/delivery/w004-20261031/)恢复。
+
+| 接收范围 | PM及委派专项实际核查 / 结论 |
+| --- | --- |
+| R1/R2/D1、V1 | `body_scope`自写stdlib直接解码source/expected GDS并重建图：40本地图形、14导体、8边、6组件，BN/BP独立；六外部形状仅支持两条关联且不导出。接续90/100与10/10 nm、tap包围8/2 nm、目标VSS/VDD及C22/7个新增body见证独立成立。用户选A未被当作技术答案 |
+| R1/D2 | `config_scope`读取实际owner与消费者，六owner无重复顶层权威、全部bytes进入closure，tech入口只保留身份及refs；输出重复字段冲突拒绝，无默认/override/优先级机制。MR-004已落实，MR-040继续后置 |
+| R3/R5、V2/V3/V5/V6 | `w004_raw_acceptance`在发布版重执行原独立stdlib raw审计（仅改输出目录），9raw、2/4/2/8记录、146字段/558回链、17closure叶、27F1输入及F2坏raw全链通过。独立核对6份legacy来源指纹和29个物化overlay；唯一hash错误为C06声明的故意漂移；27文件及5类selector旧摘要实际拒绝 |
+| R4/D3、V4 | policy、11个唯一check ID、5个deferred与人机报告8行义务表逐项一致。语义读回、production downstream gate、Virtuoso/SKILL dry-run及未消歧旧readback分项保留；全部真实工具仍none/requires_review/null。正常20记录/8失败组合及133引用证据与受审身份一致 |
+| R4坐标、V1/V7 | 独立核对CUT专例4图形、差集72 nm²、3分量/0边、距离与同桶不连通，以及17处coordinate/layout引用；32×16仅人为专例，不冒充完整runtime。PM查看四域新图并对照来源；116文件、图及报告再生成一致性采用已核对身份的原独立review实物/输出，本次不重跑生成器 |
+
+**人工与后续边界：**对应技术修订闭合见[MR-077](W003/manual-verification.md#mr-077)及[W003 P9](W003-m1-fixture-contracts.md#p9-w004-received)。MR-074-Q1的身份/映射不一致和义务丢失风险已闭合；旧`virtuoso_readback`的生产输入、操作及正确性判据仍待真实工具集成前明确，不能记成已消歧或自动删除/合并。MR-051/052坐标样张技术要求已落实，B4.03c.2及A/B原用户确认状态保留。MR-033-Q1/MR-038-Q1的通用parser/loader覆盖进入后续实现验收，不扩大本轮样本范围。
+
+**PM复核证据：**本机汇总目录`/workspace/work/w004-pm-receipt-kryfgf84/`保存发布前PM文档、无损集成材料及本次接收证据。专项原始结果：`w004-pm-rebuild-f_dibb6l/identity-checks.json` SHA-256 `89a53e889a385521a0bb725decfe179c7cc8c188b521b8043202970513343e9e`；`w004-pm-raw-1p411v4n/summary.json`为`d8d5905bda9af2c250258444199132574c5fb745c71860f057c220e036546b08`；`body-pm-633e3fe/result.json`为`617064f5e974bcc2369a1cde20c7881bda9fd82dcf8b391f3ae2aad2ee4e43e8`；`w004-coordinate-pm-633e3fe/result.json`为`0fe19c8ebb957ae15f28075672362cb5a16f77be0ed9b37d9554845615aa02fc`（均相对`/workspace/work/`）。这些本次PM复核附件尚未上传，不能与Git中的原交付包混淆。
+
+本次只更新PM验收/人工闭合及导航，不修改受审样本/helper/原E/R，不重跑全量生成或产品/EDA。原包独立review的未运行限制保持；没有提交推送PM更新、合并main、删分支或派发parser。下一节点是W003剩余人工收口，已有确认不重问，旧A/B未确认不默认为整组通过。
+
+### PM4. 接收记录同步与后续任务（2026-10-31）
+
+用户同意按“已落实/已后置/后续开发”整理清单、同步验收记录并准备最小读取任务。[W003 P10](W003-m1-fixture-contracts.md#p10-w003-accepted)及[MR-078](W003/manual-verification.md#mr-078)现已完成样本范围收口；PM3中“下一节点为W003剩余人工收口”已办结，不再重派W004。后置MR-040、旧readback具体scope及真实门有明确后续归属，未冒记为已解决或已运行。
+
+下一项[W005](W005-input-reading-binding.md)只交正式输入读取/绑定组件。用户本轮同意同步，PM接收与W005任务将推送现有分支；具体commit/远端结果见交接回复。原633e3fe实物及原包不变，main合并另行记录。
+
+### 任务建立与首次发布的历史记录
+
+以下是准备交付前的历史事实，旧“待下一session完成”和旧分支均不作为当前恢复指令；当前状态以PM4及current-work为准。
+
 已建立任务并按最新指令收窄下一session范围，**任务收敛本身仍待下一session完成**。收敛结果接收后，再明确启动实际修订；最终必要修订、独立review及人工结论闭合后，PM一次接收W004并在W003补闭合依据，随后才派发M1 parser/输入绑定。
 
 2026-10-31准备时`git fetch/ls-remote`成功：审核分支为上述b41ba92，main为b1f0301cf76b2e1808cb293cfdb4e1bfededde73，main是审核分支祖先，审核分支领先4个提交。用户本轮明确授权提交推送这些PM文档；具体推送结果/最终SHA以交接回复和远端核验为准，不作自指提交hash。未授权执行本轮main合并或删除审核分支。
@@ -301,15 +360,28 @@ Reviewer：`independent_review`，未参与实现。对冻结 `review-r3/snapsho
 
 本轮“仅任务收敛”任务文档及五份入口经`w004_convergence_check`独立只读复核，无必须修正问题；受审W004 SHA-256为`89994271fa2894e38388dc84ce89434166362c47312a0f2aa4f68438d5b615ba`，之后仅追加本段复核事实。79个相对链接、diff格式及原W003执行/reviewer正文保留检查通过。此结论只覆盖交接文档，不表示任务收敛已完成或新版样本通过。
 
-### 下一session prompt
+### 历史实施prompt（已交付，不重复执行）
 
 ```text
-按Layauto项目规范，完成W004的任务收敛/执行准备；本session不修改样本。
-从交接指定的codex/w003-manual-review已发布提交恢复，先核对branch/HEAD和已有差异。
-读AGENTS、README、协作规则、current-work、W004及MR-076，按R1–R5回查原MR、架构与实物。
-只读调查后，在W004形成：精简要求表、文件/依赖表、最少待决项及推荐、后续验收清单、实施顺序和停止点。
-区分已定、候选和后续实现；tapcell方向不用重问，具体body输入与MR-040配置精简未批准。
-只写任务准备文档及必要恢复入口，不改fixture/helper/既有合同报告、架构或产品，不运行改写产物的生成器。
-安排独立准备review，检查覆盖与边界；交回PM接收后结束，不自动进入实际修订。
-保留原W003 E/R及人工决定。提交/推送按该session明确授权，不能把本轮发布授权泛化为以后合并/删分支。
+以Layauto执行角色完成W004样本修订，不再做一轮任务收敛。本prompt是准备交付之后的PM正式派发。
+
+恢复：准备成果为codex/w004-task-convergence@9f6735dcede8e8b2135f89ff10f079a752ed758b，父提交da55ca656e5e38caba1e7f47483137c68c044907。
+先核对实际branch/HEAD和staged/unstaged/untracked，保留已有改动。读取AGENTS、README、协作规则、环境说明、current-work、W004及相关架构原文和MR；不重讲全部历史。
+若只取得9f6735d，其中“待PM/只做准备”是旧阶段；以本prompt中的PM接收、用户选择及范围为后续依据，在交接中原文保留，不自行扩张。若已有PM1更新则保留。共享环境不等于共享未提交文件。
+
+PM已接收五项准备交付；用户明确选择D1方案A，阶段可执行，由本session开展实际修订。
+D1：主GDS保留无本地tap的单个flat逻辑cell，另附与实际输入显式绑定的只读synthetic tapcell几何上下文。落实第3节A的来源/单位/对象/版本/bytes绑定与closure/F1输入依赖；外部图形不导出、不伪装成本地物理边，分别给本地graph与context-supported body答案。逐段证明几何、类型、接续、enclosure及rail关系，缺失/错绑定/几何不成立均须有失败见证。用户选A不等于候选坐标已验证；T04/T05/T08须按实际scope修订，C22保留缺必需支持目的。body_complete_for_toy只在独立证明后声明，production_matched_body_evidence=false、LVS not_run不变。字段名/最终toy坐标/辅助组织自行细化，无需重问A。
+D2：后置MR-040机制精简，继续MR-004分类和唯一owner实际消费。沿用现有site/policy/limitations入口；重复字段一致并披露冲突，不增加默认、override或优先级。MR-040仍未采纳。
+D3：既有GDS/CDL/JSON语义读回、production独立downstream open/syntax gate与Virtuoso/SKILL dry-run分项保留，交检查身份—输入—预期证明—状态—原义务去向表，并同步policy/check/报告。历史virtuoso_readback不能直接重命名删除；未消歧的范围明确保留。工具继续deferred/coverage none/requires_review，MR-074-Q1待新版核验，不提前宣布关闭。
+
+执行R1–R5：
+1. 先形成独立坐标/端子/body/组件/规则适用答案、tech owner与单位/尺寸来源表、单一Calibre-like方言明细；不杜撰生产规则，不引入legacy runtime。
+2. 修订正常样本并将LB/CUTB、R08/R09及孤岛/CUT/同标签同格目的迁专例；落实D1，重新计算数量。
+3. 实际消费分类tech，替换旧W003_QUERY active入口及normalized，保留原文定位、lexeme、exact单位和quality；随真实文件依赖重绑raw/header/closure/hash/request/refs。
+4. 迁移全部C01–C22原目的及新增body见证，更新正常与8类失败记录、人机报告、合同、图和导航；按第2节依赖由一名执行者串行集成共享文件。
+
+验收必须落实第4节V1–V7：独立integer/Fraction与GDS/CDL语义读回；raw→normalized逐字段回链；实际在独立目录应用每例replacement/remove且不让意外hash错误遮蔽目标缺陷；遍历全部记录/报告refs；保留F1全输入摘要及变更敏感性、F2坏raw→ToolRun→ParseResult→StageFailure→RunRecord全链。再生成在独立目录核对字节与图；byte-clean不替代正确性。
+修改仅限专用fixture、support辅助、W003受影响附件/合同/报告及W004新增执行记录。原MR、W003 E/R和本任务E1/E2/RP1不覆盖；不实现产品parser/runtime、完整grid/CSP/DTO/codec/CAS，不改架构/legacy，不部署EDA或生产上传。
+完成后安排未参与实现者做新版独立review，修复必须修正项并复核。保存实际版本、完整相关snapshot/binary patch（含新增/移除文件）、SHA-256、命令环境与输出；明确未运行项、synthetic限制和待人工闭合项，不把helper结果当产品管线通过。
+交付实物、R1–R5/V1–V7覆盖及22例迁移证据、review结论与剩余项，交PM后结束；不自行最终验收、关闭W003或进入M1 parser。新关键语义变化交PM，普通实现/修复自主处理。提交/推送按该session实际授权，不合并main或删除分支。
 ```

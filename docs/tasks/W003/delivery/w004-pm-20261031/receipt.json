@@ -1,0 +1,507 @@
+{
+  "purpose": "Portable PM receipt results; original execution/review evidence remains in w004-20261031/W004-delivery.tar.gz",
+  "accepted_implementation": "633e3feef8062565019838f2d270e89b7f81c4ed",
+  "package_sha256": "3cd7bc497391d76656e0327b415ec5c77ce26aa827423dc2b054654977173b39",
+  "scope": "synthetic fixture/contracts/helpers; not product runtime or production qualification",
+  "checks": {
+    "identity": {
+      "source_sha256": "89a53e889a385521a0bb725decfe179c7cc8c188b521b8043202970513343e9e",
+      "record": {
+        "base": "9f6735dcede8e8b2135f89ff10f079a752ed758b",
+        "published": "633e3feef8062565019838f2d270e89b7f81c4ed",
+        "package_manifest": {
+          "entries": 8988,
+          "errors": [],
+          "unlisted_files": [
+            "SHA256SUMS.json"
+          ],
+          "listed_missing": []
+        },
+        "identity": {
+          "base_matches": true,
+          "changes": 149,
+          "present": 135,
+          "removed": 14,
+          "snapshot_file_count": 155,
+          "snapshot_exact_to_present_map": false,
+          "patch_sha256": "78cadcd685f0b794166c0bb02da1fc9d6fb535dc7ac54a1c8418d937b9d172d4",
+          "patch_hash_matches": true,
+          "snapshot_present_entries_match": true,
+          "snapshot_extra_context_files": [
+            "AGENTS.md",
+            "README.md",
+            "docs/README.md",
+            "docs/architecture.md",
+            "docs/collaboration/rules.md",
+            "docs/collaboration/task-template.md",
+            "docs/current-work.md",
+            "docs/environment/local-setup.md",
+            "docs/environment/remote-development.md",
+            "docs/tasks/W003-m1-fixture-contracts.md",
+            "docs/tasks/W003/examples/schema.json",
+            "docs/tasks/W003/manual-verification.md",
+            "docs/tasks/W003/web-codex-handoff.md",
+            "pyproject.toml",
+            "tests/fixtures/w003_m1/failures/cdl_expression/source.cdl",
+            "tests/fixtures/w003_m1/failures/cdl_include/source.cdl",
+            "tests/fixtures/w003_m1/failures/multifinger/source.cdl",
+            "tests/fixtures/w003_m1/failures/unsupported_target/target.cdl",
+            "tests/fixtures/w003_m1/source.cdl",
+            "tests/fixtures/w003_m1/target.cdl"
+          ],
+          "snapshot_all_155_match_rebuilt": true,
+          "snapshot_extra20_match_base": true
+        },
+        "rebuild": {
+          "changed_paths_count": 149,
+          "paths_exact_to_identity": true,
+          "present_hash_mismatches": [],
+          "removed_still_present": [],
+          "nonidentity_paths_unchanged": true
+        },
+        "review_r3": {
+          "manifest_count": 145,
+          "manifest_sha256": "9136e0509ab50e03ea260eb0d1ecaedfb4aa6a58cda17a5cc926d715de0fbd76",
+          "manifest_sha_matches_identity": true,
+          "snapshot_exact_to_manifest": true,
+          "reviewed_files_unchanged_in_final": 144,
+          "reviewed_changed_in_final": [
+            "docs/tasks/W004-fixture-revision.md"
+          ]
+        },
+        "publication_delta": {
+          "docs/tasks/W003/README.md": {
+            "old": "ddead19f17d8375b8aeea7ed8a1aabeb098f8dcab25ce3ff20b3b2925786f3ab",
+            "published": "74af28c6a65917b37b5fed43fdd544ca37a6d7a41e535fa1d167e8af36585f47"
+          },
+          "docs/tasks/W003/delivery/w004-20261031/SHA256SUMS.json": {
+            "old": null,
+            "published": "466d7c141f82202bcc5131db18a7fea21ca4cec92957c7692c605e0a77e82f37"
+          },
+          "docs/tasks/W003/delivery/w004-20261031/W004-delivery.tar.gz": {
+            "old": null,
+            "published": "3cd7bc497391d76656e0327b415ec5c77ce26aa827423dc2b054654977173b39"
+          },
+          "docs/tasks/W003/delivery/w004-20261031/W004-delivery.tar.gz.sha256": {
+            "old": null,
+            "published": "2ce713eb9309ddb49bd8f969a16de496c60b19de4a5d01768cf3de69caf795ad"
+          },
+          "docs/tasks/W003/delivery/w004-20261031/W004-full.patch": {
+            "old": null,
+            "published": "78cadcd685f0b794166c0bb02da1fc9d6fb535dc7ac54a1c8418d937b9d172d4"
+          },
+          "docs/tasks/W003/delivery/w004-20261031/W004-full.patch.sha256": {
+            "old": null,
+            "published": "30f2c9d01189337fd0d9c1e40f51d06e8ee38f87c77a49b5573d2e0dd14108fd"
+          },
+          "docs/tasks/W003/delivery/w004-20261031/W004-layout.png": {
+            "old": null,
+            "published": "e39f9e101dc7b9639bf23d195490373225c26d26de0f7bf234ed1687f0ce399f"
+          },
+          "docs/tasks/W003/delivery/w004-20261031/W004-layout.png.sha256": {
+            "old": null,
+            "published": "c762ae9005a69a1dbb3fcc8e3a977ea29cc8c0cda9a9cd6df47d87fa71c7adfd"
+          },
+          "docs/tasks/W003/delivery/w004-20261031/W004-package-audit.md": {
+            "old": null,
+            "published": "95b29c5187468599c3d52cb993a9bae2927daf61adc8acfde4f8327c3a713901"
+          },
+          "docs/tasks/W003/delivery/w004-20261031/archive-verification.json": {
+            "old": null,
+            "published": "473c0830635527ca7a7c3b86f56d4ec7c7a21e290957a969a5078e39f94863f4"
+          },
+          "docs/tasks/W004-fixture-revision.md": {
+            "old": "b9e925e011cb9afa3fee8041a366f1cb17ceff1a7352aa556f1b43c572be46d5",
+            "published": "778e06cb1f23fe77624c45471a31f6a02f60edbad4f5bf51b8bf3f36b510ceb7"
+          }
+        },
+        "fixture_helper_differences": [],
+        "protected_unchanged_in_package": {
+          "AGENTS.md": true,
+          "README.md": true,
+          "docs/current-work.md": true,
+          "docs/collaboration/rules.md": true,
+          "docs/architecture.md": true,
+          "docs/tasks/W003-m1-fixture-contracts.md": true,
+          "docs/tasks/W003/manual-verification.md": true,
+          "docs/tasks/W003/web-codex-handoff.md": true
+        },
+        "protected_unchanged_in_publication": {
+          "AGENTS.md": true,
+          "README.md": true,
+          "docs/current-work.md": true,
+          "docs/collaboration/rules.md": true,
+          "docs/architecture.md": true,
+          "docs/tasks/W003-m1-fixture-contracts.md": true,
+          "docs/tasks/W003/manual-verification.md": true,
+          "docs/tasks/W003/web-codex-handoff.md": true
+        },
+        "repo_status_after": "",
+        "review_r2_to_r3": {
+          "r2_count": 145,
+          "r3_count": 145,
+          "changed": [
+            "docs/tasks/W003/revision-evidence.md",
+            "docs/tasks/W004-fixture-revision.md",
+            "tests/support/w003_verify.py"
+          ],
+          "r2_manifest_sha256": "af14667908160f6388881c0c67cc862cecba81f78ee936f28e7817e3d68c01bd",
+          "r2_snapshot_exact": true
+        },
+        "eight_published_review_reports_verbatim": {
+          "independent-r1.md": true,
+          "independent-r2.md": true,
+          "independent-r3.md": true,
+          "owner-raw-r1.md": true,
+          "owner-raw-r2.md": true,
+          "owner-raw-r3.md": true,
+          "raw-r1.md": true,
+          "raw-r2.md": true
+        },
+        "publication_artifacts": {
+          "tar_size": 10570253,
+          "tar_sha256": "3cd7bc497391d76656e0327b415ec5c77ce26aa827423dc2b054654977173b39",
+          "tar_matches_user_sha": true,
+          "patch_equals_package": true,
+          "plot_equals_reviewed": true
+        },
+        "publication_content_review": "Two existing text files only add one W003 attachment-navigation row and W004 E4 publishing/delivery metadata; nine added files are delivery archive/evidence copies. No fixture/helper, contract/report/plot, original review, architecture or product changes relative to original final package.",
+        "IR_disposition_review": {
+          "IR1": "R2 report retained three unresolved owner probes; R3 seven-probe results plus independent owner-probe R3 now show explicit rejection for model axis, nominal tick, CDL suffix, nominal user unit, canonical tick.",
+          "IR2": "R3 repair result rejects old export profile; r3 final report documents v2 T04/T05/T08 identities.",
+          "IR3": "R2/R3 reports and R3 independent overlay result retain only wrong target-rail declaration; separate external-overlap probe rejects BodyOppositeTypeOverlap.",
+          "IR4": "raw-review/r2/conflicts-results.json shows QueryUnitDeclarationConflict for axis/precision and QueryQualityDeclarationConflict for registry; affected R2 raw/helper inputs unchanged in R3.",
+          "IR5": "raw-review/r2/metadata-results.json shows missing and nonnumeric type reject DeviceMetadataDrift; known opaque type and EvidenceRecord backlink restored.",
+          "conclusion": "No remaining mandatory IR1-IR5 findings in recorded independent reviews and retained outputs; this PM check verifies identities and consistency of closure evidence, without rerunning those technical probes."
+        },
+        "limits": [
+          "No fixture generators, all-suite checks, product runtime or EDA executed.",
+          "No independent rerun of original IR technical probes; original scripts/results/materialized cases retained and byte-verified.",
+          "Review acceptance is synthetic-sample technical evidence only; MR-074-Q1 and remaining user-facing/PM closure are separate."
+        ]
+      }
+    },
+    "raw_f1_f2": {
+      "source_sha256": "d8d5905bda9af2c250258444199132574c5fb745c71860f057c220e036546b08",
+      "record": {
+        "reviewer": "w004_raw_acceptance",
+        "commit": "633e3feef8062565019838f2d270e89b7f81c4ed",
+        "mandatory_findings": 0,
+        "scope": "PM targeted R3/R5/V2-V6/F1/F2 acceptance check; fixed synthetic fixture only",
+        "checked": [
+          "Re-executed delivered independent stdlib raw audit against published worktree; only OUT relocated",
+          "Six legacy source fingerprints match actual tracked files",
+          "All 29 retained overlay directories equal normal base with exact declared replacements/removals",
+          "All overlay dependency and raw hashes close except sole deliberate C06 raw drift; header closure digest valid",
+          "Recorded witness IDs/phases equal cases.json, no product execution claim",
+          "Recomputed 27 actual byte perturbation hashes and canonical digest changes; fixed helper rejects 27 stale byte digests plus 5 selector digests"
+        ],
+        "limitations": [
+          "Did not rerun all geometry witnesses or generators",
+          "Reused delivered independent raw script, not a newly authored independent raw parser",
+          "No product parser/runtime, Calibre/Virtuoso or production verification"
+        ],
+        "files": {
+          "overlay-f1-result.json": "758a818220b9ce6d31dc6e7857939ee66e84c6d4b461f7facf456bf7a404850d",
+          "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "independent-results.json": "68ae109abdf038ae150e97299aa1851be12ba75e0ed5277ade737d3b757e2c68",
+          "stdout.json": "68ae109abdf038ae150e97299aa1851be12ba75e0ed5277ade737d3b757e2c68",
+          "check_raw.py": "521b5a8f0ba8000b058a96bfa9c410bcea31c882d41db760a41a7e1819ac3d3b",
+          "check_overlay_f1.py": "d25e342e55e3aceb3e0480dcd32f2ec9e7e3c0ad8eba9ff76831c686bd0f0988"
+        }
+      }
+    },
+    "body": {
+      "source_sha256": "617064f5e974bcc2369a1cde20c7881bda9fd82dcf8b391f3ae2aad2ee4e43e8",
+      "record": {
+        "version": "633e3feef8062565019838f2d270e89b7f81c4ed",
+        "method": "independent stdlib GDS/integers/closure/overlay checks; no delivered helper imports",
+        "local": {
+          "drawn": 40,
+          "effective_conductors": 14,
+          "edges": 8,
+          "components": [
+            [
+              "BN"
+            ],
+            [
+              "BP"
+            ],
+            [
+              "G",
+              "MA"
+            ],
+            [
+              "LN",
+              "MN",
+              "ON.S"
+            ],
+            [
+              "LP",
+              "MP",
+              "OP.S"
+            ],
+            [
+              "LY",
+              "MY",
+              "ON.D",
+              "OP.D"
+            ]
+          ],
+          "body_enclosure_nm": [
+            20,
+            10
+          ],
+          "minimum_local_contact_enclosure_nm": 1,
+          "source_expected_gds_exact_rectangles_match": true,
+          "no_external_exported_or_local_union": true
+        },
+        "raw_rail_nets": {
+          "MN": "VSS",
+          "MP": "VDD"
+        },
+        "normal_body": [
+          {
+            "device": "MN0",
+            "body_edge_nm": 90,
+            "rail_edge_nm": 10,
+            "body_enclosure_min_nm": 8,
+            "rail_enclosure_min_nm": 2
+          },
+          {
+            "device": "MP0",
+            "body_edge_nm": 100,
+            "rail_edge_nm": 10,
+            "body_enclosure_min_nm": 8,
+            "rail_enclosure_min_nm": 2
+          }
+        ],
+        "body_context_in_request_digest": true,
+        "body_cases": [
+          {
+            "id": "missing_body_operator",
+            "observed": "RequiredBodyOperatorUnavailable",
+            "detail": {},
+            "closure_leaf_hashes_valid": true,
+            "saved_overlay_matches": true,
+            "future_phase": "pre_context"
+          },
+          {
+            "id": "missing_body_context",
+            "observed": "RequiredBodyContextUnavailable",
+            "detail": {},
+            "closure_leaf_hashes_valid": true,
+            "saved_overlay_matches": true,
+            "future_phase": "pre_context"
+          },
+          {
+            "id": "body_wrong_binding",
+            "observed": "BodySourceBindingMismatch",
+            "detail": {},
+            "closure_leaf_hashes_valid": true,
+            "saved_overlay_matches": true,
+            "future_phase": "pre_context"
+          },
+          {
+            "id": "body_wrong_type",
+            "observed": "BodyTypeMismatch",
+            "detail": {},
+            "closure_leaf_hashes_valid": true,
+            "saved_overlay_matches": true,
+            "future_phase": "sealed_no_publication"
+          },
+          {
+            "id": "body_disconnected",
+            "observed": "BodyContinuationMismatch",
+            "detail": {
+              "body_edge": 0,
+              "rail_edge": 10
+            },
+            "closure_leaf_hashes_valid": true,
+            "saved_overlay_matches": true,
+            "future_phase": "sealed_no_publication"
+          },
+          {
+            "id": "body_ambiguous",
+            "observed": "BodyUniqueMatchFailure",
+            "detail": {},
+            "closure_leaf_hashes_valid": true,
+            "saved_overlay_matches": true,
+            "future_phase": "sealed_no_publication"
+          },
+          {
+            "id": "body_enclosure",
+            "observed": "BodyTapEnclosureFailure",
+            "detail": {
+              "body_margins": [
+                8,
+                48,
+                8,
+                38
+              ],
+              "rail_margins": [
+                8,
+                0,
+                8,
+                6
+              ]
+            },
+            "closure_leaf_hashes_valid": true,
+            "saved_overlay_matches": true,
+            "future_phase": "sealed_no_publication"
+          },
+          {
+            "id": "body_wrong_rail",
+            "observed": "BodyTargetRailMismatch",
+            "detail": {
+              "physical_rail": "VSS",
+              "declared_rail": "VDD"
+            },
+            "closure_leaf_hashes_valid": true,
+            "saved_overlay_matches": true,
+            "future_phase": "sealed_no_publication"
+          }
+        ],
+        "limitations": [
+          "fixed synthetic sample only",
+          "no product parser/pipeline execution",
+          "no real PDK/LVS or baseline-LVS exemption",
+          "raw read limited to two rail polygons, request joins and nXref, no duplicate full raw parsing"
+        ]
+      }
+    },
+    "coordinate": {
+      "source_sha256": "0fe19c8ebb957ae15f28075672362cb5a16f77be0ed9b37d9554845615aa02fc",
+      "record": {
+        "commit": "633e3feef8062565019838f2d270e89b7f81c4ed",
+        "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+        "scope": "PM coordinate/special read-only exact check; no generator/product import",
+        "components": [
+          [
+            50,
+            20,
+            60,
+            24
+          ],
+          [
+            130,
+            20,
+            139,
+            24
+          ],
+          [
+            141,
+            20,
+            150,
+            24
+          ]
+        ],
+        "remaining_LB_area_nm2": 72,
+        "pair_distance_squared_nm2": [
+          4,
+          4900,
+          6561
+        ],
+        "bucket_indices": [
+          [
+            4,
+            1
+          ]
+        ],
+        "gds_integer_rectangles": 4,
+        "targeted_refs_verified": [
+          [
+            "tech/coordinate.json",
+            "/coordinate_projection"
+          ],
+          [
+            "expected/layout.json",
+            "/current_semantic"
+          ],
+          [
+            "expected/layout.json",
+            "/geometry"
+          ],
+          [
+            "expected/layout.json",
+            "/occupancy_fragment_witnesses"
+          ],
+          [
+            "expected/layout.json",
+            "/annotation"
+          ],
+          [
+            "expected/layout.json",
+            "/connectivity"
+          ],
+          [
+            "expected/layout.json",
+            "/lifecycle"
+          ],
+          [
+            "expected/layout.json",
+            "/linkage"
+          ],
+          [
+            "tech/coordinate.json",
+            ""
+          ],
+          [
+            "expected/layout.json",
+            "/current_semantic"
+          ],
+          [
+            "expected/layout.json",
+            "/geometry"
+          ],
+          [
+            "expected/layout.json",
+            "/occupancy_fragment_witnesses"
+          ],
+          [
+            "expected/layout.json",
+            "/annotation"
+          ],
+          [
+            "expected/layout.json",
+            "/connectivity"
+          ],
+          [
+            "expected/layout.json",
+            "/lifecycle"
+          ],
+          [
+            "expected/layout.json",
+            "/linkage"
+          ],
+          [
+            "tech/coordinate.json",
+            "/coordinate_projection"
+          ]
+        ],
+        "coordinate_example_only": true,
+        "runtime_model_complete": false,
+        "findings": [],
+        "limitations": [
+          "GDS REAL8/nominal binding not independently recomputed in this narrow check",
+          "No product grid, projection, runtime or pipeline test"
+        ]
+      }
+    },
+    "config": {
+      "source_sha256": "aa9adb681b38f5936a2135ffbe0891181dcafbf575216b866059718afef1b05a",
+      "record": {
+        "reviewer": "config_scope",
+        "source": "Delegated reviewer final response saved by PM; not a replacement for original execution logs",
+        "commit": "633e3feef8062565019838f2d270e89b7f81c4ed",
+        "method": "Read implementation/contracts and independent stdlib comparisons; no fixture/helper execution",
+        "mandatory_findings": 0,
+        "check_ids": 11,
+        "deferred_checks": 5,
+        "obligation_rows": 8,
+        "tech_owners": 6,
+        "conclusion": "D2 preserved existing boundaries and owner consumption. D3 identities/report mappings agree; old virtuoso_readback scope explicitly unresolved, retained, deferred and distinct from dry-run."
+      }
+    }
+  }
+}
