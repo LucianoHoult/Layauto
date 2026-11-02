@@ -2,7 +2,7 @@
 
 先让一个小输入按完整规则得到可信产物，再扩大同一闭环能处理的变化。例如先证明一个单元无需修改时能保真导出，再让一个器件的 `fins_per_finger: 5 → 4` 经检查、原子提交后生成一致的 GDS/CDL/JSON，最后覆盖同一单元内多个器件一起缩小。
 
-本文只分配里程碑、依赖和验收义务；产品语义仍唯一归 [architecture.md](architecture.md)。R/D/U 编号是规划索引，不新增产品合同。依据为 `main@6eccdff99a4da64e46921d16a4c339198813bc78` 的完整架构 §1–13；2026-09-08 编写，2026-09-09 独立规划 review 后经 PM 接收，**规划文档已验收；全部产品里程碑尚未实现或验收**。详细盘点、review、PM 接收与快照见 [W001](tasks/W001-v2-global-plan.md)，当前恢复见 [current-work.md](current-work.md)。用户随后授权提交已验收文档，原稿 `8482b68` 与集成记录 `156e62d` 已推送 GitHub main；集成恢复见 W001/current-work。尚未产品实现或架构正文拆分。
+本文只分配里程碑、依赖和验收义务；产品语义仍唯一归 [architecture.md](architecture.md)。R/D/U 编号是规划索引，不新增产品合同。依据为 `main@6eccdff99a4da64e46921d16a4c339198813bc78` 的完整架构 §1–13；2026-09-08 编写，2026-09-09 独立规划 review 后经 PM 接收，**规划文档已验收；完整产品里程碑尚未验收**。详细盘点、review、PM 接收与快照见 [W001](tasks/W001-v2-global-plan.md)，当前恢复见 [current-work.md](current-work.md)。用户随后授权提交已验收文档，原稿 `8482b68` 与集成记录 `156e62d` 已推送 GitHub main；集成恢复见 W001/current-work。以下原始盘点保留其日期，后续组件实现及接收见W005。
 
 ## 1. 已确认范围与规划原则
 
@@ -27,7 +27,7 @@
 
 主线：**M0 准入准备 → M1 保真无变更闭环 → M2 首个 shrink 闭环 → M3 首版范围覆盖 → M4 可复现首版验收**。
 
-M1样本准备[W003](tasks/W003-m1-fixture-contracts.md#p10-w003-accepted)及[W004](tasks/W004-fixture-revision.md#pm3-20261031)已在synthetic范围收口；首个产品组件任务为[W005输入读取与绑定](tasks/W005-input-reading-binding.md)。之后组合pipeline/pre-context审计、Stage2/baseline及Stage6文件闭环；W002 E7/R4首交义务按实际触及接口落实，未完成组合前不宣称M1完成。具体阶段归任务文件。
+M1样本准备[W003](tasks/W003-m1-fixture-contracts.md#p10-w003-accepted)及[W004](tasks/W004-fixture-revision.md#pm3-20261031)已在synthetic范围收口；首个产品组件[W005输入读取与绑定](tasks/W005-input-reading-binding.md)已交付实现，补修、review与集成进展见该任务当前记录。之后组合pipeline/pre-context审计、Stage2/baseline及Stage6文件闭环；W002 E7/R4首交义务按实际触及接口落实，未完成组合前不宣称M1完成。具体阶段与证据归任务文件。
 
 M0 分开交付“工程输入/合同准备”和“真实 profile 证据准入”。前者足以让 M1 在明确 synthetic profile 内开发；后者可以并行补证，但必须在 M2 接纳真实 profile 前完成。若真实材料不可得，M1 和相应合成测试可以继续，M2 保持有依据的阻塞，不通过把验收改成 dummy 成功消除阻塞。
 

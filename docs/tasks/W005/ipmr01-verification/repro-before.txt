@@ -1,0 +1,7 @@
+cache UnicodeEncodeError 'utf-8' codec can't encode character '\ud800' in position 27729: surrogates not allowed
+escaped_note status= success issues= []
+escaped_note note= 'example \ud83d\ude00'
+escaped_note UnicodeEncodeError 'utf-8' codec can't encode characters in position 2101-2102: surrogates not allowed
+literal_note status= success issues= []
+literal_note note= 'example \U0001f600'
+literal_note digest_ok

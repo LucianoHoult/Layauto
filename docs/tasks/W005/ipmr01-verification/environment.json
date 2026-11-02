@@ -1,0 +1,21 @@
+{
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "executable": "/workspace/work/w005-ipmr01/dev/bin/python",
+  "tools": {
+    "pytest": "9.2.0",
+    "mypy": "2.4.1",
+    "PyYAML": "6.0.3",
+    "types-PyYAML": "6.0.12.20261030",
+    "build": "1.6.1"
+  },
+  "development_setup": [
+    "python3 -m venv /workspace/work/w005-ipmr01/dev",
+    "/workspace/work/w005-ipmr01/dev/bin/python -m pip install -e '.[dev]'"
+  ],
+  "python310_setup": [
+    "UV_CACHE_DIR=/workspace/work/w005-ipmr01/uv-cache uv python install --install-dir /workspace/work/w005-ipmr01/python --no-bin 3.10",
+    "/workspace/work/w005-ipmr01/python/cpython-3.10.22-linux-x86_64-gnu/bin/python3.10 -m venv /workspace/work/w005-ipmr01/venv310",
+    "/workspace/work/w005-ipmr01/venv310/bin/python -m pip install pytest PyYAML"
+  ]
+}

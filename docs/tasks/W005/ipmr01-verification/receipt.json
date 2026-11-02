@@ -1,0 +1,102 @@
+{
+  "handoff_commit": "4207e773f93111ba6bfd2c6b6ac9da1eacd87fbb",
+  "source_commit": "0a6de39e02947e3ae8af64a4dca9487ee8898ca3",
+  "branch": "codex/w005-input-reading-binding",
+  "role": "execution",
+  "date": "2026-11-02",
+  "source_manifest": "source-manifest.json",
+  "environment": "environment.json",
+  "checks": {
+    "pytest-312": {
+      "log": "pytest-312.txt",
+      "exit_code": 0
+    },
+    "pytest-310": {
+      "log": "pytest-310.txt",
+      "exit_code": 0
+    },
+    "mypy": {
+      "log": "mypy.txt",
+      "exit_code": 0
+    },
+    "build": {
+      "log": "build.txt",
+      "exit_code": 0
+    },
+    "install-wheel": {
+      "log": "install-wheel.txt",
+      "exit_code": 0
+    },
+    "pip-check-dev": {
+      "log": "pip-check-dev.txt",
+      "exit_code": 0
+    },
+    "pip-check-wheel": {
+      "log": "pip-check-wheel.txt",
+      "exit_code": 0
+    },
+    "wheel-smoke": {
+      "log": "wheel-smoke.txt",
+      "exit_code": 0
+    },
+    "repro-after": {
+      "log": "repro-after.txt",
+      "exit_code": 0
+    }
+  },
+  "results": {
+    "development": "CPython 3.12.14; 284 passed in 34.05s",
+    "minimum_supported": "CPython 3.10.22; 120 affected tests passed in 13.22s; not a full 3.10 suite",
+    "mypy": "strict; 13 source files passed",
+    "new_regressions": 47,
+    "build": "isolated PEP517 sdist then wheel from git archive of source_commit",
+    "wheel": "new clean Python3.12 venv, full declared dependencies, pip check, outside-source -I -B smoke passed; 67 packaged files match source_commit",
+    "smoke": "normal 40 shapes / 8 net regions; invalid surrogate and out-of-range YAML escapes in key/value preserve actual bytes/hash/location and 9 completed; escaped/literal note semantic equality and value/all completed payload digest; decoded DuplicateKey"
+  },
+  "archive_command": "git archive 0a6de39e02947e3ae8af64a4dca9487ee8898ca3 | tar -x -C /workspace/work/w005-ipmr01/build-source-final",
+  "clean_environment_command": "python3 -m venv /workspace/work/w005-ipmr01/wheel-env-final",
+  "unchanged_against_handoff": [
+    "tests/fixtures",
+    "tests/support",
+    "docs/architecture.md",
+    "docs/tasks/W005/verification",
+    "docs/tasks/W005/independent-premerge-review.md",
+    "docs/tasks/W005/code-review.md",
+    "docs/tasks/W005/interface-review.md",
+    "docs/current-work.md",
+    "docs/roadmap.md"
+  ],
+  "not_verified": [
+    "full Python3.10 component suite in this correction",
+    "Python3.10 clean wheel install",
+    "other Python versions and macOS/Windows",
+    "legacy/fixture regeneration",
+    "Calibre/Virtuoso/PDK/production",
+    "pipeline/RunAttempt/RunRecord lifecycle, Stage2, Stage6 or full M1"
+  ],
+  "evidence_sha256": {
+    "build-r1.txt": "eaa11963055248e5dc28d846da77ac158d99f254efa05668c488a1e4988fe224",
+    "build.txt": "1792f451b7b31a4f4f99043dc16644a5495781dcfb845e61ee8d09e699d30358",
+    "environment.json": "b93477583fffa5a3d5129c4f3931c5055e05eaacf406cbcbc422a0dd9171c1f2",
+    "install-wheel-r1.txt": "bb23cc275a47367637d2ca40a502f9457f705ab02c32ef71363c323d06653b97",
+    "install-wheel.txt": "527741f5be1f9a0408bd59f4f00ea886257a5e3441f0aea9e974bf2d4b117a40",
+    "mypy-r1.txt": "d689ebb75736a2721bc2d34d7fe0b1bcf6d410ee8bfe2f4d89d80eb8eab5f6d0",
+    "mypy.txt": "d689ebb75736a2721bc2d34d7fe0b1bcf6d410ee8bfe2f4d89d80eb8eab5f6d0",
+    "original_repro.py": "9832ec3db7ec54e821d6d432bf70ead1ad8be79a27b16d204117fdda6343cb34",
+    "pip-check-dev.txt": "4b084180d483bad69f68d77ee13cebb956e831788efea83193cd55236450e47b",
+    "pip-check-wheel.txt": "5c5bab7e5329fecf487626d2791cda81acb55d3013f82e8bc007b227c4e8d48b",
+    "pytest-310-r1.txt": "c9d48086293b1a4632539f393e793dce626eb18dda198d95e9b94f763fd9c88b",
+    "pytest-310.txt": "7d85eee11d84c3bc979c78fd3278275b12c427a577c9be9c7f9de16003b85bcf",
+    "pytest-312-r1.txt": "64afb3f3380eff0819628fbcd76bdfbdc3c9758f61dc5721e1a3d500af8c93d2",
+    "pytest-312.txt": "4e43a2b4a90573dd743173fad1636e1ea8c682cc055d6a67873343324aeeea45",
+    "python310-dependencies.txt": "9c5754d61ab270db7e2d735dbcb0b0d752eb2bc2b3544499359cec70ff28c89b",
+    "python310-install.txt": "64cb14978ea9c5bc470ec840869d615eb1f0ab48ebc97688433f867be51fac9e",
+    "python310-versions.txt": "54e70d02698646d04b496ecf8e68f45975baa2d6d9f4ae9e1786b11625e50321",
+    "r1-identity.json": "3e8bb0e7d2dd8d595c94ce6b872dbb7cbe0ec1d2555e2c60fc7ebaae4fb54046",
+    "repro-after.txt": "28b83d0da2b346c256465cf558852422dea05761acf6354d6766b3bba27cc7f2",
+    "repro-before.txt": "8a725a5187510c4c736a650086c9254eea5e92da0a178675cbfd098ef5abfa50",
+    "source-manifest.json": "06a9847cd64b5d36b1d4af830a342faf918252ee8b8e9c75a9509aac009dd8f0",
+    "wheel-smoke.txt": "e99a31cfa63118c8096a46b902cc01ba87e09e0507b1f5983f479cfb8b5e7f26",
+    "wheel_smoke.py": "b70a777192717c62e3012e9d6b289feb88ed0c09942f3a61fa541b23bae54020"
+  }
+}

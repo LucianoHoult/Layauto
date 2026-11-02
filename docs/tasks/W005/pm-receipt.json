@@ -1,0 +1,162 @@
+{
+  "schema_version": "w005-pm-receipt/1",
+  "date": "2026-11-02",
+  "reviewed_delivery": "51d4d9d7b0d2715a5a2f3fe578615be4c59e74cb",
+  "decision": "branch technical receipt passed; main integration and final acceptance pending",
+  "environment": {
+    "python": "3.12.14",
+    "pytest": "9.2.0",
+    "mypy": "2.4.1",
+    "PyYAML": "6.0.3",
+    "build": "1.6.1"
+  },
+  "performed_by_pm": {
+    "component_tests_command": "PYTHONDONTWRITEBYTECODE=1 /workspace/work/w005-pm-check-env/bin/python -m pytest -p no:cacheprovider tests/unit tests/contracts -q",
+    "typing_command": "PYTHONDONTWRITEBYTECODE=1 /workspace/work/w005-pm-check-env/bin/python -m mypy --cache-dir /workspace/work/w005-pm-mypy-cache",
+    "build": "git archive delivery to isolated source directory; python -B -m build --outdir <isolated>/dist <isolated>/source",
+    "install": "new Python 3.12 venv without system site-packages; pip install newly built wheel with its declared dependencies; pip check",
+    "smoke_command": "/workspace/work/w005-pm-wheel-env/bin/python -I -B /workspace/Layauto/docs/tasks/W005/verification/wheel_smoke.py /workspace/Layauto/tests/fixtures/w003_m1",
+    "smoke_cwd": "/workspace/work",
+    "outputs": {
+      "pytest_312": "........................................................................ [ 30%]\n........................................................................ [ 60%]\n........................................................................ [ 91%]\n.....................                                                    [100%]\n=============================== warnings summary ===============================\n../../opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/anyio/pytest_plugin.py:14\n  /opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/anyio/pytest_plugin.py:14: PytestRemovedIn10Warning: _pytest.python.CallSpec2 has been renamed to CallSpec.\n  The CallSpec2 alias will be removed in pytest 10.\n  Update imports to use CallSpec instead.\n  See https://docs.pytest.org/en/stable/deprecations.html#callspec2-renamed\n    from _pytest.python import CallSpec2\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n237 passed, 1 warning in 23.61s\n",
+      "strict_mypy": "Success: no issues found in 13 source files\n",
+      "clean_wheel_pip_check": "WARNING: The directory '/home/agent/.cache/pip' or its parent directory is not owned or is not writable by the current user. The cache has been disabled. Check the permissions and owner of that directory. If executing pip with sudo, you should use sudo's -H flag.\nNo broken requirements found.\n",
+      "clean_wheel_smoke": "{\"installed_module\": \"/workspace/work/w005-pm-wheel-env/lib/python3.12/site-packages/layauto_v2/__init__.py\", \"accepted_shapes\": 40, \"net_regions\": 8, \"rebound_bad_raw\": \"MissingTerminator\"}\n"
+    },
+    "build_log_tail": "adding 'layauto-0.2.0.dist-info/WHEEL'\nadding 'layauto-0.2.0.dist-info/top_level.txt'\nadding 'layauto-0.2.0.dist-info/RECORD'\nremoving build/bdist.linux-x86_64/wheel\nSuccessfully built layauto-0.2.0.tar.gz and layauto-0.2.0-py3-none-any.whl",
+    "rebuilt_artifacts": {
+      "layauto-0.2.0-py3-none-any.whl": "a0ebd24185a62df0642c71945eea907f3e1db47979f327bdacab2deaff3bdb98",
+      "layauto-0.2.0.tar.gz": "ec3ee53cda300d97a95617dd9f1ee20ca892528a1352298b3b853e560c463638"
+    },
+    "wheel_product_files_against_manifest": 14,
+    "original_executor_wheel_reused": false
+  },
+  "delegated_identity_check": {
+    "head": "51d4d9d7b0d2715a5a2f3fe578615be4c59e74cb",
+    "base": "5b7205009b3ed7f8fe15e135e674654f2f544557",
+    "published_product": "cf35d97478cd78aa7ad707d18c9e37ceda10eafb",
+    "published_product_tree": "70b905b98691ddcdf58726810ca875dc853069c2",
+    "source_hashes_verified": 22,
+    "evidence_hashes_verified": 13,
+    "published_commit_tree_map_verified": 14,
+    "original_commit_objects_available": 0,
+    "publication_rows": [
+      {
+        "published": "6afd4b2832fae58c594d23f5022c6fcbf6e0fc81",
+        "declared_tree_matches": true,
+        "original_commit_available": false
+      },
+      {
+        "published": "f97e4e67fe668370978619cd94e3ac1f2eb3ae57",
+        "declared_tree_matches": true,
+        "original_commit_available": false
+      },
+      {
+        "published": "c1ddc3d05a1c190044467f2035ff35665db1a346",
+        "declared_tree_matches": true,
+        "original_commit_available": false
+      },
+      {
+        "published": "f4157b9b8f9d9a3484e6df34f446db9db8599f02",
+        "declared_tree_matches": true,
+        "original_commit_available": false
+      },
+      {
+        "published": "68d26f5478ee10345e3df7958b879323962210d6",
+        "declared_tree_matches": true,
+        "original_commit_available": false
+      },
+      {
+        "published": "324b8042ed07c2facb953f336402abb3b132c9d8",
+        "declared_tree_matches": true,
+        "original_commit_available": false
+      },
+      {
+        "published": "fa340f5e84bbd65c6575665ccc0c602e319fb900",
+        "declared_tree_matches": true,
+        "original_commit_available": false
+      },
+      {
+        "published": "a0558cc05cea5937094a82e262af9135a5eb9927",
+        "declared_tree_matches": true,
+        "original_commit_available": false
+      },
+      {
+        "published": "f7d97905577a3d8b25ff7830257e79b5a0016cf5",
+        "declared_tree_matches": true,
+        "original_commit_available": false
+      },
+      {
+        "published": "0d6148684cbc7cf1949758782b75a0f4a83c9e86",
+        "declared_tree_matches": true,
+        "original_commit_available": false
+      },
+      {
+        "published": "1d9f76fc7ad36e5d897a6fd64e02366a3185e5d2",
+        "declared_tree_matches": true,
+        "original_commit_available": false
+      },
+      {
+        "published": "a188e87a1e09072e65dd4f5aac5eb46b3e4ea59b",
+        "declared_tree_matches": true,
+        "original_commit_available": false
+      },
+      {
+        "published": "cf35d97478cd78aa7ad707d18c9e37ceda10eafb",
+        "declared_tree_matches": true,
+        "original_commit_available": false
+      },
+      {
+        "published": "8dd503a37e8b6c491ce06873f880e75f590c0de0",
+        "declared_tree_matches": true,
+        "original_commit_available": false
+      }
+    ],
+    "accepted_materials_unchanged": true,
+    "post_product_diff_docs_only": [
+      "docs/tasks/W005-input-reading-binding.md",
+      "docs/tasks/W005/code-review.md",
+      "docs/tasks/W005/verification/build-final.txt",
+      "docs/tasks/W005/verification/fixture-support.txt",
+      "docs/tasks/W005/verification/install-wheel.txt",
+      "docs/tasks/W005/verification/mypy.txt",
+      "docs/tasks/W005/verification/pip-check-wheel.txt",
+      "docs/tasks/W005/verification/publication-map.json",
+      "docs/tasks/W005/verification/pytest-310-cache-fix.txt",
+      "docs/tasks/W005/verification/pytest-310-final.txt",
+      "docs/tasks/W005/verification/pytest-310.txt",
+      "docs/tasks/W005/verification/pytest-312.txt",
+      "docs/tasks/W005/verification/receipt.json",
+      "docs/tasks/W005/verification/source-manifest.json",
+      "docs/tasks/W005/verification/wheel-smoke.txt",
+      "docs/tasks/W005/verification/wheel_smoke.py"
+    ],
+    "original_wheel_available": false,
+    "tests_run_by_this_agent": false
+  },
+  "delegated_scope_check": {
+    "agent": "w005_scope_acceptance",
+    "new_required_fixes": 0,
+    "normal_input": "success",
+    "independent_repair_probes": {
+      "R1": "NormalizedCacheMismatch",
+      "R2": "BodyReferenceTypeMismatch",
+      "R3": "InvalidSchema at /closure/canonical_encoding",
+      "R4": "InvalidInputPath",
+      "R5": "InputReadError"
+    },
+    "scope": "A1-A6 implementation/test correspondence and Stage 1/2 boundary; no product or test modifications"
+  },
+  "adopted_prior_evidence": {
+    "python_310": "237 passed from hash-verified pytest-310-final.txt and independent code review; not rerun by PM",
+    "original_312_log": "pytest-312.txt remains historical 236-test result; final 237 independently recorded in code-review.md and reproduced above",
+    "original_unpublished_commits": "not available here; email-only equivalence adopted from original independent review; published tree/manifest checked directly",
+    "original_wheel": "not available here; original verification adopted from independent review; new wheel independently rebuilt above"
+  },
+  "limitations": [
+    "No main merge or final integrated W005 acceptance in this receipt",
+    "No pipeline/attempt/RunRecord/terminal, Stage 2 state/physical join, Stage 6 export, or full M1 verification",
+    "No real Calibre/Virtuoso/PDK or production-platform verification",
+    "PM rerun only Python 3.12; Python 3.10 evidence adopted with source identity checks"
+  ]
+}

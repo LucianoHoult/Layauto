@@ -1,0 +1,8 @@
+review_source=/workspace/work/w005-ipmr01/review/layauto_v2/importers/config.py
+cache status= error issues= ['InvalidUnicodeScalar']
+escaped_note status= success issues= []
+escaped_note note= 'example \U0001f600'
+escaped_note digest_ok
+literal_note status= success issues= []
+literal_note note= 'example \U0001f600'
+literal_note digest_ok

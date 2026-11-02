@@ -1,0 +1,5 @@
+3.10.22 (main, Oct  3 2026, 01:32:06) [Clang 22.1.3 ]
+/workspace/work/w005-ipmr01/venv310/bin/python
+PyYAML 6.0.3
+pytest 9.2.0
+No broken requirements found.

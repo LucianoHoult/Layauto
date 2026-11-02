@@ -18,6 +18,7 @@ dependencies = [
 gds = ["gdstk"]
 drc = ["klayout"]
 test = ["pytest"]
+dev = ["pytest", "mypy", "types-PyYAML", "build"]
 viz = ["plotly"]
 all = ["gdstk", "klayout", "pytest", "plotly"]
 
@@ -27,3 +28,11 @@ namespaces = false
 
 [tool.pytest.ini_options]
 norecursedirs = ["legacy_mvp"]
+
+[tool.setuptools.package-data]
+layauto_v2 = ["py.typed"]
+
+[tool.mypy]
+python_version = "3.10"
+strict = true
+files = ["layauto_v2/domain/codec.py", "layauto_v2/domain/evidence.py", "layauto_v2/domain/results.py", "layauto_v2/importers", "layauto_v2/tech"]

@@ -1,0 +1,92 @@
+{
+  "date": "2026-11-02",
+  "role": "PM",
+  "branch": "codex/w005-input-reading-binding",
+  "delivery": "c69018dfd1b8eb67705753bb170ec3dcebb88e8f",
+  "product_commit": "0a6de39e02947e3ae8af64a4dca9487ee8898ca3",
+  "disposition": "IPMR-01 and IPMR01-FR1 closed; branch technical receipt accepted; main integration and final W005 acceptance pending",
+  "environment": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "executable": "/workspace/work/w005-pm-check-env/bin/python",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "working_directory": "/workspace/Layauto",
+    "import_source": "/workspace/Layauto/layauto_v2/importers/config.py",
+    "tools": {
+      "pytest": "9.2.0",
+      "mypy": "2.4.1",
+      "PyYAML": "6.0.3"
+    }
+  },
+  "direct_checks": [
+    {
+      "check": "full_component_tests",
+      "command": "python -B -m pytest -p no:cacheprovider tests/unit tests/contracts -q",
+      "exit_code": 0,
+      "stdout_stderr": "........................................................................ [ 25%]\n........................................................................ [ 50%]\n........................................................................ [ 76%]\n....................................................................     [100%]\n=============================== warnings summary ===============================\n../../opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/anyio/pytest_plugin.py:14\n  /opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/anyio/pytest_plugin.py:14: PytestRemovedIn10Warning: _pytest.python.CallSpec2 has been renamed to CallSpec.\n  The CallSpec2 alias will be removed in pytest 10.\n  Update imports to use CallSpec instead.\n  See https://docs.pytest.org/en/stable/deprecations.html#callspec2-renamed\n    from _pytest.python import CallSpec2\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n284 passed, 1 warning in 29.86s\n",
+      "log_sha256": "7b549b098bfeb88f752167fb87a078f5221a2553115b5e78a869cf33b52f74ca"
+    },
+    {
+      "check": "strict_mypy",
+      "command": "python -B -m mypy --cache-dir /workspace/work/w005-ipmr01-pm-mypy-cache",
+      "exit_code": 0,
+      "stdout_stderr": "Success: no issues found in 13 source files\n",
+      "log_sha256": "8f3f4c0ebcb835e848682f2c6610a1bf32c86a993bdb626d9ff36e3a49408398"
+    },
+    {
+      "check": "original_reproduction",
+      "command": "PYTHONPATH=. python -B docs/tasks/W005/ipmr01-verification/original_repro.py",
+      "exit_code": 0,
+      "stdout_stderr": "cache status= error issues= ['InvalidUnicodeScalar']\nescaped_note status= success issues= []\nescaped_note note= 'example \\U0001f600'\nescaped_note digest_ok\nliteral_note status= success issues= []\nliteral_note note= 'example \\U0001f600'\nliteral_note digest_ok\n",
+      "log_sha256": "e3478422fbff4080fa2ab4fce59675faca76cf720cd05401b7d24d2830eafa75"
+    },
+    {
+      "check": "unicode_probe",
+      "command": "PYTHONPATH=. python -B docs/tasks/W005/ipmr01-verification/review-unicode-probe.py",
+      "exit_code": 0,
+      "stdout_stderr": "review_head=c69018dfd1b8eb67705753bb170ec3dcebb88e8f\nvalid_nested_key_value_scalar_pairs=256: independently constructed scalar and canonical bytes match\nsingle_surrogate_key_value_cases=4096: located InvalidUnicodeScalar with source hash\ndecoded_duplicate_key_cases=64: DuplicateKey at second token\nout_of_range_key_value_cases=128: located InvalidDocumentSyntax\nliteral_backslash_and_maximum_scalar: preserved\npublic_cache_out_of_range_cases=4: actual bytes/hash, location, 9 completed payloads retained\nall_independent_probes_passed\n",
+      "log_sha256": "feb499b5c9ee1f13e808e2938336f3120e60b506fe466c64e648802f9df95237"
+    }
+  ],
+  "identity_check": {
+    "result": {
+      "delivery": "c69018dfd1b8eb67705753bb170ec3dcebb88e8f",
+      "source_commit": "0a6de39e02947e3ae8af64a4dca9487ee8898ca3",
+      "evidence_hashes": 23,
+      "manifest_files_in_source_delivery_working": 77,
+      "product_diff": [
+        "layauto_v2/importers/config.py",
+        "tests/contracts/test_w005_unicode_inputs.py",
+        "tests/unit/test_w005_unicode.py"
+      ],
+      "post_source_paths_all_docs": 23,
+      "preserved_diff": [],
+      "claimed_wheel_sha256": "b7309629177d587aeb0cc0eb2c4e17a2f95c9d9e7496ce426154db0c2f106bfe",
+      "available_old_pm_wheel_sha256": "a0ebd24185a62df0642c71945eea907f3e1db47979f327bdacab2deaff3bdb98",
+      "execution_artifact_dir_exists": false,
+      "errors": []
+    },
+    "source_receipt_sha256": "8b4610e2620b5f5d9c275ccafa880fda6fe37a60e966620a8906645719b56dad"
+  },
+  "adopted_evidence": {
+    "source": "ipmr01-verification/receipt.json",
+    "review": "ipmr01-fix-review.md",
+    "python310": "120 affected tests, including all 47 new regressions; independent reviewer also ran 47 new tests",
+    "build_install": "final source archive PEP517 sdist/wheel; clean Python3.12 install, pip check, installed-source checks and defect smoke",
+    "original_artifact_identity": "67 product files in final wheel and installed package matched reviewed source, verified by independent reviewer; original wheel not available in this PM environment"
+  },
+  "not_run_here": [
+    "Python3.10 tests",
+    "rebuild or clean install of correction wheel",
+    "other interpreter/platform matrix",
+    "fixture regeneration or legacy tests",
+    "real EDA/production, pipeline, Stage2, Stage6"
+  ],
+  "preserved": [
+    "accepted fixtures and answers",
+    "tests/support",
+    "domain/codec.py canonical encoding",
+    "architecture",
+    "historical execution/review/evidence"
+  ],
+  "warning": "PM pytest run had one third-party anyio pytest deprecation warning; no test failures"
+}

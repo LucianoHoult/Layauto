@@ -28,8 +28,58 @@ sections relevant to the task.
 
 | Path | Purpose |
 |------|---------|
-| [`layauto_v2/`](layauto_v2/) | v2 package skeleton and future implementation home. It is intentionally empty of legacy MVP logic today. |
+| [`layauto_v2/`](layauto_v2/) | v2 package with the W005 input reading component; later runtime stages remain skeletons. |
 | [`docs/architecture.md`](docs/architecture.md) | Active v2 architecture source: stage boundaries, fact sources, state ownership, planning, constraints, transactions, export, validation, and module boundaries. |
+
+## Input reading component
+
+The W005 component reads the declared synthetic GDS/CDL/query/config subset from
+actual files and returns immutable evidence or located input errors:
+
+```python
+from pathlib import Path
+from layauto_v2.importers import read_inputs
+
+result = read_inputs(Path("tests/fixtures/w003_m1/site_config.yaml"))
+if result.status == "success":
+    assert result.value is not None
+    geometry = result.value["gds"]
+else:
+    issues = result.issues
+    completed_evidence = result.completed
+```
+
+Paths resolve from the site file directory. Each file is read once per call;
+`result.sources` preserves those bytes and their SHA-256. GDS XY/REAL8, CDL
+lexemes, and query polygons retain exact values and provenance. Optional
+normalized query caches are compared against freshly parsed raw captures.
+The importer does not load expected/spec/oracle answers or call EDA tools.
+
+`read_inputs` is the supported component boundary; lower-level parsers consume
+already validated profiles. Expected input failures return `status="error"`;
+unexpected exceptions and process interrupts propagate. An optional
+`tool_run_id` only links an external execution record. This API does not create
+RunAttempt/RunRecord, layout state, body connectivity, no-change decisions, or
+exports. Its success is not production admission or W005 PM acceptance.
+
+The implemented `layauto-input/1` bootstrap ceilings are 1,000,000 bytes per
+text document and 32 nested containers (root depth 1), with profile limits able
+to tighten them. The record ceiling is 1000: GDS counts all stream records;
+CDL counts non-comment logical lines; query limits xref/name rows, requests,
+and polygon records in each capability. Original LF/whitespace counts toward
+text size. Only the declared schema/dialect versions are accepted.
+
+Install `.[dev]` for engineering checks, then run:
+
+```sh
+python -m pytest tests/unit tests/contracts -q
+python -m mypy
+python -m build
+```
+
+The strict checker targets the input component and its neutral domain/tech
+contracts with Python 3.10 syntax. Execution, independent reviews and supported
+interpreter/build evidence are linked from [W005](docs/tasks/W005-input-reading-binding.md).
 
 ## Legacy MVP archive
 

@@ -1,0 +1,6 @@
+cwd: /workspace/Layauto
+command: ["/workspace/work/w005-ipmr01/dev/bin/python", "-m", "pip", "check"]
+
+No broken requirements found.
+
+exit_code: 0

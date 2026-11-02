@@ -1,0 +1,77 @@
+{
+  "schema_version": "w005-publication-map/1",
+  "reason": "GitHub GH007 rejected private-email metadata; only this session unpushed commit author/committer email changed to existing project GitHub noreply identity. All trees, messages and parent order preserved. No remote force update.",
+  "base": "5b7205009b3ed7f8fe15e135e674654f2f544557",
+  "commits": [
+    {
+      "reviewed_local_commit": "601b7e82c73edc4fb8c4a4da3944f319a2195955",
+      "publishable_commit": "6afd4b2832fae58c594d23f5022c6fcbf6e0fc81",
+      "identical_tree": "3fa08a0ed2f7989eaac6bf6649b7aaca542c6573"
+    },
+    {
+      "reviewed_local_commit": "344896579023246980b275ef8622fe3d15cd6b6b",
+      "publishable_commit": "f97e4e67fe668370978619cd94e3ac1f2eb3ae57",
+      "identical_tree": "e729a5793eb786a7733c3b7ff04cc1c77b5a011a"
+    },
+    {
+      "reviewed_local_commit": "05ff9eef3ff7b308e48d959c1d512653af93839e",
+      "publishable_commit": "c1ddc3d05a1c190044467f2035ff35665db1a346",
+      "identical_tree": "12f2c7871ee637b19c5d029304ffafdf93e94c38"
+    },
+    {
+      "reviewed_local_commit": "72f2135b7349bc76907a77f5769bd1655217a4d8",
+      "publishable_commit": "f4157b9b8f9d9a3484e6df34f446db9db8599f02",
+      "identical_tree": "7da69951b67284c4f0b1bdb0dbe1fb4fdfa5ee5a"
+    },
+    {
+      "reviewed_local_commit": "8f69cf82d1d6cfede5750a7c369c38da939b3ae2",
+      "publishable_commit": "68d26f5478ee10345e3df7958b879323962210d6",
+      "identical_tree": "0065b04d1b09b796420242bc9f6047814d47c384"
+    },
+    {
+      "reviewed_local_commit": "57a688b427f0af87f7bff1fa855372f4c3563f3c",
+      "publishable_commit": "324b8042ed07c2facb953f336402abb3b132c9d8",
+      "identical_tree": "78a2fb082dda82aa090dea5d8593116a293e57bd"
+    },
+    {
+      "reviewed_local_commit": "f227af50cf71b236d0e5fc8508bc93ecbcf94320",
+      "publishable_commit": "fa340f5e84bbd65c6575665ccc0c602e319fb900",
+      "identical_tree": "caa2e4ec44d62467887df0742fd533ece7a7575a"
+    },
+    {
+      "reviewed_local_commit": "81fd44762d2057727dd6c5098acc2b451061e406",
+      "publishable_commit": "a0558cc05cea5937094a82e262af9135a5eb9927",
+      "identical_tree": "ac20d351146f6a69cffcf286580cb3ace43f720c"
+    },
+    {
+      "reviewed_local_commit": "cf87a78774c56386b5962cab29fe35ce516672c2",
+      "publishable_commit": "f7d97905577a3d8b25ff7830257e79b5a0016cf5",
+      "identical_tree": "c1771000ee9de26f5d56fa6bbb2215a0cb51e269"
+    },
+    {
+      "reviewed_local_commit": "f43fe296c9716cf702cfa91756de64d916788875",
+      "publishable_commit": "0d6148684cbc7cf1949758782b75a0f4a83c9e86",
+      "identical_tree": "10dcce67b2ffb8072d526cb7d7c6df77e29fe503"
+    },
+    {
+      "reviewed_local_commit": "19232b5759a034bca27030f26c0efcd3548c8364",
+      "publishable_commit": "1d9f76fc7ad36e5d897a6fd64e02366a3185e5d2",
+      "identical_tree": "f915d158c1a47e0de903f1dab509da731ed1641d"
+    },
+    {
+      "reviewed_local_commit": "f29c84a98c6f68285cad0678e41c5fdfedfad7e4",
+      "publishable_commit": "a188e87a1e09072e65dd4f5aac5eb46b3e4ea59b",
+      "identical_tree": "2361e80f617d767c7499a2c3a6262d49a5b583fb"
+    },
+    {
+      "reviewed_local_commit": "ab7feddff83749b54c1866b1ad95fbc99fd787f1",
+      "publishable_commit": "cf35d97478cd78aa7ad707d18c9e37ceda10eafb",
+      "identical_tree": "70b905b98691ddcdf58726810ca875dc853069c2"
+    },
+    {
+      "reviewed_local_commit": "8903ccd5f431f2bf73d84465cf44e3f10da2e26a",
+      "publishable_commit": "8dd503a37e8b6c491ce06873f880e75f590c0de0",
+      "identical_tree": "89cb4ed598df8758d2783fb57b60448bc1a6e896"
+    }
+  ]
+}
