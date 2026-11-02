@@ -503,3 +503,34 @@ def test_tab_separated_swap_token_keeps_w005_whitespace_semantics(tmp_path):
     assert result.issues[0].source.uri == 'query/raw/iXref.temp'
     assert result.issues[0].source.line == 9
     assert any(identity.sd_swap for identity in result.completed.device_identities)
+
+
+def test_reordered_real_requests_preserve_multiple_polygon_ordinals_and_authored_ids(tmp_path):
+    root = ready_copy(tmp_path)
+    document = read_json(root / 'query/requests.json')
+    labels = {'D0': 'Z_device', 'D1': 'A_device',
+              'R00': 'Z_A_poly', 'R01': 'A_A_m1',
+              'R02': 'Z_Y_li', 'R03': 'A_Y_m1',
+              'R04': 'Z_low_li', 'R05': 'A_low_m1',
+              'R06': 'Z_high_li', 'R07': 'A_high_m1'}
+    # New labels intentionally sort opposite to the two polygons' raw order.
+    for request in document['requests']:
+        request['record_ids'] = [labels[name] for name in request['record_ids']]
+    document['requests'] = [document['requests'][index] for index in (5, 2, 0, 4, 1, 3)]
+    write_json(root / 'query/requests.json', document)
+    rebind(root)
+    result = normal(root)
+    assert result.value.differences == ()
+    seeds = {seed.record['record_id']: seed for seed in result.value.device_seeds + result.value.net_seeds}
+    assert set(seeds) == set(labels.values())
+    for old_id, label in labels.items():
+        name, layer, (x0, y0, x1, y1) = EXPECTED_REGIONS[old_id]
+        seed = seeds[label]
+        assert seed.semantic_id.name == name and seed.record['derived_layer'] == layer
+        assert tuple((exact(p['x']), exact(p['y'])) for p in seed.record['vertices_nm']) == ((x0, y0), (x0, y1), (x1, y1), (x1, y0))
+    for index, request in enumerate(document['requests']):
+        for ordinal, label in enumerate(request['record_ids']):
+            row = seeds[label].record
+            declaration = row['field_sources']['record_id']['sources'][0]
+            assert declaration['json_pointer'] == f'/requests/{index}/record_ids/{ordinal}'
+            assert declaration['lexeme'] == label

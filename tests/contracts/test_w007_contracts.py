@@ -559,3 +559,40 @@ def test_cdl_preservation_cannot_omit_a_captured_device_record(accepted, role):
                       else record for record in parsed.completed)
     with pytest.raises(ValueError):
         from_parse_result(replace(parsed, value=value, completed=completed))
+
+
+@pytest.mark.parametrize('capability', ['device_regions', 'net_regions'])
+def test_cr01_fr2_region_geometry_and_all_provenance_stay_bound_to_request_ordinal(accepted, capability):
+    """Moving whole valid operands must not change which queried object owns them.
+
+    Device rows come from two response captures. The first two net rows are two
+    ordinals of one response, so both cross-capture and within-capture swaps are
+    covered while every original raw block remains represented exactly once.
+    """
+    parsed = accepted.input.parse
+    value = mutable(parsed.value)
+    first, second = value['query'][capability]['records'][:2]
+    identity_fields = ({'record_id', 'layout_instance', 'schematic_instance', 'field_sources'}
+                       if capability == 'device_regions' else
+                       {'record_id', 'lvs_name', 'lvs_index', 'schematic_name', 'field_sources'})
+    for field in set(first) - identity_fields:
+        first[field], second[field] = second[field], first[field]
+        first['field_sources'][field], second['field_sources'][field] = (
+            second['field_sources'][field], first['field_sources'][field])
+    completed = tuple(replace(record, payload=value['query']) if record.kind == 'query'
+                      else record for record in parsed.completed)
+    with pytest.raises(ValueError):
+        from_parse_result(replace(parsed, value=value, completed=completed))
+
+
+def test_cr01_fr2_record_id_and_object_must_use_the_same_request_entry(accepted):
+    parsed = accepted.input.parse
+    value = mutable(parsed.value)
+    first = value['query']['device_regions']['records'][0]
+    declaration = first['field_sources']['record_id']['sources'][0]
+    assert declaration['json_pointer'] == '/requests/0/record_ids/0'
+    declaration['json_pointer'] = '/requests/1/record_ids/0'
+    completed = tuple(replace(record, payload=value['query']) if record.kind == 'query'
+                      else record for record in parsed.completed)
+    with pytest.raises(ValueError):
+        from_parse_result(replace(parsed, value=value, completed=completed))
