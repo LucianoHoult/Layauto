@@ -56,7 +56,15 @@
 
 ## 执行结果（执行）
 
-尚未实施。执行者在此追加恢复位置、产品提交、A1–A7实际命令/环境/结果、最终源码与包身份、未验证范围和交接；不代写reviewer或PM结论。
+### E1. 恢复、调查与内部方案（2026-11-02，执行）
+
+实际恢复于 `/workspace/Layauto`：原本地 `work@4db3aa81d6f01496a680bdcb264afe99cd80f3f3`，staged/unstaged/untracked均为空；远端W007为指定 `64b4ad2f77c017affade69374510dc12e534bc07`，main为 `221492eb72e10cf2e46f1d9c76cb992087806a97`。fetch后从交接提交建立当前W007分支，保留原work分支；提交身份设为项目已有 `LucianoHoult <LucianoHoult@users.noreply.github.com>`，未force push。已读根/协作/环境规则及任务引用原文，无局部AGENTS。
+
+调查确定W005成功value与completed、SourceFile可构成中立输入；W006用现有domain readback records适配，不扩pipeline/repository。复用v2 FrozenMap、Fraction/canonical codec与已捕获evidence。legacy `io_adapters/cdl_parser.py::diff_cdl`忽略结构/model/terminal且parser用float/默认值，不迁移；legacy query显式xref关联模式已由W005更严格实现，不再引入归档依赖。
+
+具体[内部方案](W007/interface-plan.md)已由未参与设计的reviewer审查，IR-01/02修正及复核由reviewer记录于[接口review](W007/interface-review.md)；方案/review提交为`8a2cdf5`。两条修正分别保留W005合法路径alias行为，以及要求聚合DTO完整引用一致性。原范围内直接进入实现，未新增用户审批。
+
+开发解释器为Python3.12.14，另准备Python3.10.22。实施前基线实际为405项通过及strict mypy 21文件通过；这是原W005/W006基线，不是W007最终验证。[环境记录](W007/verification/environment.json)保留版本及依赖。产品与独立手工判据测试在分离worktree开发，由执行者集成。后续最终测试、代码review与交接证据在此追加；执行者不写reviewer或PM结论。
 
 ## Review 结论（reviewer）
 

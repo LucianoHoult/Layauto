@@ -28,7 +28,7 @@ sections relevant to the task.
 
 | Path | Purpose |
 |------|---------|
-| [`layauto_v2/`](layauto_v2/) | v2 input reading and process-local pre-context run audit; later runtime stages remain skeletons. |
+| [`layauto_v2/`](layauto_v2/) | v2 input reading, pre-context run audit and pure semantic normalization; later physical stages remain skeletons. |
 | [`docs/architecture.md`](docs/architecture.md) | Active v2 architecture source: stage boundaries, fact sources, state ownership, planning, constraints, transactions, export, validation, and module boundaries. |
 
 ## Input reading component
@@ -77,8 +77,8 @@ python -m mypy
 python -m build
 ```
 
-The strict checker targets the input component and its neutral domain/tech
-contracts with Python 3.10 syntax. Execution, independent reviews and supported
+The strict checker targets input reading, pre-context audit, semantic normalization
+and their neutral contracts with Python 3.10 syntax. Execution, independent reviews and supported
 interpreter/build evidence are linked from [W005](docs/tasks/W005-input-reading-binding.md).
 
 ## Pre-context run entry
@@ -130,6 +130,38 @@ are atomic within one process only; there is no disk persistence or recovery
 after process loss. Stage 2–6, real EDA and production admission remain outside
 this entry. Requirements, review and validation are recorded in
 [W006](docs/tasks/W006-precontext-run-audit.md).
+
+## Semantic normalization component
+
+W007 consumes already captured W005 evidence. It produces an immutable source
+semantic draft, a separate immutable target, complete typed target differences,
+and query identity links with annotation seeds:
+
+```python
+from layauto_v2.normalization import from_parse_result, normalize
+
+parsed = read_inputs(Path("tests/fixtures/w003_m1/site_config.yaml"))
+if parsed.status == "success":
+    normalized = normalize(from_parse_result(parsed))
+```
+
+The adapter validates the captured evidence and source bindings; normalization
+performs no file IO. W006 callers can pass `InputsReady` and the already read
+checkpoint, parse, tool and evidence records to `from_inputs_ready`. The
+component does not access the repository or advance the attempt.
+
+Device and net identities come from the CDL and explicit query cross-references.
+All model-declared parameter axes, exact values, units and field sources are
+retained. Target differences remain obligations for a future planner, including
+unsupported length or structural changes. Equal source and target semantics do
+not establish extraction equality, body connectivity, no-change closure or run
+success. Annotation seeds retain query polygons and provenance for a future
+spatial overlay; they are not layout geometry or physical connectivity.
+
+The internal DTO/wire contracts are versioned and immutable. Validation and
+independent reviews are recorded in
+[W007](docs/tasks/W007-semantic-identity-normalization.md). This slice does not
+construct or publish a baseline, invoke EDA tools or implement Stage 6.
 
 ## Legacy MVP archive
 
