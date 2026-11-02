@@ -2,15 +2,15 @@
 
 > 执行恢复补记：2026-10-31用户已在准备交付后正式派发本任务，D1=A、D2后置MR-040机制、D3保留三类检查及未消歧旧义务均已落定。下方“仅准备/待PM”是保留的交接历史；本轮实施与证据从[E3](#w004-execution)恢复，不重复收敛。最终任务阶段/验收及W003关闭仍归PM。
 
-最终目标是将W003人工修改要求落实为可复现的新样本。**本轮synthetic样本修订及辅助交付已验收，绑定发布提交633e3fe；不重复准备或实施。** 当前接收依据与限制见[PM3](#pm3-20261031)，W003最终收口另见[MR-078](W003/manual-verification.md#mr-078)。PM1/PM2及原执行、review保留历史身份；产品合同仍归[架构](../architecture.md)。
+最终目标是将W003人工修改要求落实为可复现的新样本。**synthetic样本修订及辅助交付已验收；原实物为633e3fe，后续REQ-01精度补修已独立复核并由PM接收。** 原接收依据与限制见[PM3](#pm3-20261031)，本次补修见[PM5](#pm5-20261102)，W003最终收口另见[MR-078](W003/manual-verification.md#mr-078)。原执行、review及PM记录保留历史身份；产品合同仍归[架构](../architecture.md)。
 
 ## 任务要求（PM）
 
 | 字段 | 内容 |
 | --- | --- |
 | 目标 / 依赖 | 承接[W003](W003-m1-fixture-contracts.md)人工核验遗留，交付可供后续M1 parser使用的修订版fixture、合同、独立答案与反例；PM已用同一新版证据完成W003/W004样本范围验收 |
-| 授权 / 阶段 | **已验收：本轮synthetic样本修订、合同/辅助及证据范围。** D1=A已由用户选择，D2后置、D3分项保留，R1–R5/V1–V7和独立review处置经PM核验。W003已按P10/MR-078收口，原逐项用户状态保留历史身份；产品/真实工具未验收 |
-| 版本 | 接收发布提交`codex/w004-task-convergence@633e3feef8062565019838f2d270e89b7f81c4ed`；准备基线为`9f6735dcede8e8b2135f89ff10f079a752ed758b`。原包、受审r3与发布实物一致，发布补记差异见PM3；后续PM记录及W005随本轮同步提交，最终SHA以Git/交接回复为准。main未合入本轮修订 |
+| 授权 / 阶段 | **已验收：synthetic样本修订、合同/辅助及证据范围，含PM5接收的REQ-01局部补修。** D1=A、D2后置、D3分项保留；R1–R5/V1–V7及新增REQ-01的处置经PM核验。W003按P10/MR-078收口，原逐项用户状态保留历史身份；产品/真实工具未验收 |
+| 版本 | 原交付为`633e3feef8062565019838f2d270e89b7f81c4ed`，准备基线为`9f6735dcede8e8b2135f89ff10f079a752ed758b`。REQ-01报告发布于`06821ef64ac710963dcc947861a374cd0fe9dd6d`，本次helper补修及回归身份见E5/R4/PM5；原633e3fe包保持不变。后续交接使用包含本补修的`codex/w004-task-convergence`提交，最终SHA以Git/交接回复为准。main未合入本轮修订 |
 | 本PM session写入范围 | 本任务PM要求/验收、W003 PM闭合与人工追加记录、current-work及文档/路线图入口；原人工决定、执行E/R及review原文不得覆盖 |
 | 本轮已执行范围 | 按R1–R5及第2节依赖修改`tests/fixtures/w003_m1/`专用样本、`tests/support/w003_*`及必要专用辅助、`docs/tasks/W003/`受影响合同/图/报告/附件，并在本任务执行段记录结果。沿用既有路径；已交付，不再派发同一修订 |
 | 非目标 | 不实现`layauto_v2/` parser/runtime、完整grid/CSP/DTO/codec/CAS；不改架构、legacy或部署EDA/生产上传；不扩大真实PDK/工具能力承诺 |
@@ -257,6 +257,16 @@ E3/R2及封包身份记录的是提交前的受测/受审版本；其“未授�
 
 原包大小为10,570,253 bytes，SHA-256保持`3cd7bc497391d76656e0327b415ec5c77ce26aa827423dc2b054654977173b39`。本轮只做原身份比对、转存字节/清单核对、文档链接及Git差异检查；发布commit与远端核验结果由Git和交接回复标识，不追求文档自指hash。原包和工作区恢复证据保留。MR-074-Q1等人工闭合、W004最终验收、W003关闭仍归PM，未进入M1 parser。
 
+### E5. REQ-01 局部精度修复交回（2026-11-02）
+
+执行基线为 `06821ef64ac710963dcc947861a374cd0fe9dd6d`，启动工作区干净。已读取[要求复核报告 REQ-01](W003/reviews/w004-requirements-review.md)、对应 exact/body 合同与实际辅助调用；先原样执行报告附录，复现绑定通过、GDS不变时 `901/20 nm` 被旧 `check_body()` 截为 `45 nm` 并返回两条正常关联，同时原 `raw_answers()` 整数性前置拒绝该变体。
+
+局部修复仅将 [w004_body.py](../../tests/support/w004_body.py) 的 raw rail bbox 解码由整数除法改为 `Fraction` 精确比较；继续使用原 `BodyTargetRailMismatch`，不改本地整数几何、输入定义或匹配容差。新增 [fixture helper 回归](../../tests/fixture_support/test_w004_body.py)，直接复制真实 fixture 并按原 replacement/remove 应用 C22 与7个body见证；新增精度探针实际改写 raw、重绑 header/hash、重建缓存，先证明绑定/缓存有效及 GDS/CDL/body context 未变，再要求 helper 拒绝不相等的 rail。测试使用固定 spec/oracle 标识未变对象以隔离消费行为，不冒充另一套独立几何答案。
+
+Python `3.12.14`，标准库命令 `python -B -m unittest discover -s tests/fixture_support -v`：修复前3个测试方法中仅新精度拒绝测试失败（未抛错误）；修复后3个方法全部通过，覆盖正常两条关联、C22及7个body目的逐一命中原原因、45.05nm不等于45nm的拒绝。未修改正常fixture、原29例清单/答案、合同/报告或产品代码；未安装依赖，未执行KLayout/完整 `witness()`、全量生成、产品/真实工具或无关回归。
+
+交回实现身份：helper SHA-256 `df0fa16c427b5c104f6f4c73b2c62f4b13a41fa37ed91b99e253599efb824e7b`；新增测试 SHA-256 `7108d32a4bd0c20345feea48cc6d06f64c94983212da8cec82f734439ae1e504`。原样复现、before/after stdout/stderr与命令/环境/身份摘要保存在本机 `/workspace/work/w004-req01-execution-20261102/`；持久回归及原报告附录足以重新执行关键检查。本次未提交/推送/合并，修复是否闭合交未参与实现的独立 reviewer 与 PM，不代改原 finding 或验收状态。
+
 ## Review 结论（reviewer）
 
 当前收敛review只检查原决定覆盖、范围/依赖、候选状态、验收可执行性及是否越界。尚未开展新版样本review；未来由未参与修订实现者绑定完整版本，核对独立答案和实际证据。准备review或旧W003技术通过都不自动覆盖新版样本。
@@ -296,6 +306,12 @@ Reviewer：本轮独立reviewer `/root`，未参与实现。被审交接为`c469
 原文件边界、22个反例目的、独立答案及有效人工修改总体保留，明确后置/后续开发有依据；发现**1项P2必须修正REQ-01**：`w004_body.py:42–44`将精确raw坐标用整数除法截断，45.05nm可误匹配45nm本地rail。正常fixture和原29见证答案未被推翻，整包verify的前置检查可拒绝该变体；缺口限body局部helper的精确关联及定向证据。无需改变W005输入定义/正常答案，后续执行修复此处后定向复核，交PM决定继续；本轮不启动W005或代写PM验收。完整要求对应、复现、证据采用范围及未验证项见[独立要求复核报告](W003/reviews/w004-requirements-review.md)。原RP1/R2及PM记录保持。
 
 **R3发布交接补记（2026-11-02，reviewer）：**用户在收到上述结论后明确要求通过git push将必须交PM的文件更新到GitHub。本次发布仅包含本任务R3追加记录及`W003/reviews/w004-requirements-review.md`；报告附录已内嵌REQ-01完整复现代码，PM无需取得临时目录即可重建关键见证。报告内“未提交/推送”描述独立复核完成时的事实，本补记记录其后发布授权；最终提交及远端核验结果见Git与交接回复。下一步由PM接收REQ-01并安排局部修复/定向复核，不改既有PM验收、fixture/helper或W005，不合并main或删除分支。
+
+### R4. REQ-01 局部修复独立定向复核（2026-11-02）
+
+Reviewer：`/root/req01_review`，未参与修复。基线 `06821ef64ac710963dcc947861a374cd0fe9dd6d`；核对 E5 所列 helper/新增测试的完整 SHA-256，验证前后身份一致。实际重跑标准库 unittest 的3个测试方法通过；另以同一重绑 raw 副本比较旧/新 helper：`901/20nm` 与本地 `45nm` 的差异，旧版误接、新版准确报 `BodyTargetRailMismatch`，bindings/缓存/432处来源回链均有效，未被 hash 或其它前置错误遮蔽。正常两关联保持，C22及7个body见证实际应用后分别命中原原因。
+
+**REQ-01 已修正并独立复核，剩余必须修正项为0，可交PM接收。** W005输入定义和既有正常答案无需改变。完整身份、方法、结果及范围见[局部修复复核](W003/reviews/w004-req01-fix-review.md)。未执行KLayout/完整witness、全量生成或产品/真实工具；原R3/REQ-01及历史结论保留，不以本次定向通过覆盖未执行范围。本次仅写review记录，未修改实现或PM状态、未提交推送。
 
 ## PM 验收与交接（PM）
 
@@ -354,9 +370,20 @@ D3后续修订须交一张“检查身份—输入—预期证明—状态—原
 
 下一项[W005](W005-input-reading-binding.md)只交正式输入读取/绑定组件。用户本轮同意同步，PM接收与W005任务将推送现有分支；具体commit/远端结果见交接回复。原633e3fe实物及原包不变，main合并另行记录。
 
+<a id="pm5-20261102"></a>
+### PM5. 独立要求复核接收与REQ-01闭合（2026-11-02）
+
+**接收06821ef的独立要求复核及本次局部补修，REQ-01已关闭，W004保持已验收。** 报告确认原规划、有效人工意见及原反例目的总体保留；发现的P2是body helper把精确坐标向下取整。PM取得实际提交并在未修改的旧helper上执行报告附录，复现绑定有效、GDS不变时45.05nm误匹配45nm，同时确认整包前置整数性检查会拒绝该变体。因此局部缺陷成立，原正常样本答案不被推翻。
+
+按既有精确值合同安排`req01_execution`修复，`req01_review`独立复核后交回。PM核对实际diff、E5前后日志、R4及两个实现文件身份：只改helper的有理数比较并新增持久回归；正常两关联、C22及7个body目的保持，重绑raw的精度变体由`BodyTargetRailMismatch`准确拒绝。新增测试在旧实现失败、修后通过；独立review另外完成同输入旧/新helper对照。详细命令和SHA见E5及[修复复核](W003/reviews/w004-req01-fix-review.md)，不把各方运行混写为PM重复执行。
+
+原fixture、29例清单/答案、合同、图、报告及633e3fe交付包均未改动；原REQ-01 finding与历史E/R/PM结论保留。此次是附加helper修复，不重建旧包，不宣称旧包已经含有补修。未执行KLayout/完整witness、全量生成或产品/真实工具；既有未执行范围和生产限制保持。
+
+下一步继续既定[W005](W005-input-reading-binding.md)，输入定义、正常答案与Stage1/Stage2责任无需调整，产品代码本轮未开始。补修、回归和执行/review/PM记录沿现有W004分支交接，发布结果及完整提交见Git/回复；不合并main或删除分支。
+
 ### 任务建立与首次发布的历史记录
 
-以下是准备交付前的历史事实，旧“待下一session完成”和旧分支均不作为当前恢复指令；当前状态以PM4及current-work为准。
+以下是准备交付前的历史事实，旧“待下一session完成”和旧分支均不作为当前恢复指令；当前状态以PM5及current-work为准。
 
 已建立任务并按最新指令收窄下一session范围，**任务收敛本身仍待下一session完成**。收敛结果接收后，再明确启动实际修订；最终必要修订、独立review及人工结论闭合后，PM一次接收W004并在W003补闭合依据，随后才派发M1 parser/输入绑定。
 

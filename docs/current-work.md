@@ -1,6 +1,6 @@
 # 当前工作入口
 
-更新：2026-10-31。详细决定、证据与review结论归任务文件。
+更新：2026-11-02。详细决定、证据与review结论归任务文件。
 
 ## 当前节点
 
@@ -8,6 +8,7 @@
 
 - 收口依据：[W003 P10](tasks/W003-m1-fixture-contracts.md#p10-w003-accepted)、[MR-078](tasks/W003/manual-verification.md#mr-078)；原MR答复不改写为用户逐项确认。
 - 样本验收：[W004 PM3](tasks/W004-fixture-revision.md#pm3-20261031)，633e3fe实物与完整review/交付身份已核验；D1=A已落实，D2后置，D3身份映射分项保留。
+- 独立要求复核与补修：[W004 PM5](tasks/W004-fixture-revision.md#pm5-20261102)接收06821ef的原要求复核；REQ-01的body rail整数截断已改为精确比较，并经定向回归及独立复核关闭。原fixture/答案/交付包与W005范围不变，不重开全量样本修订。
 - 已后置：MR-040的配置机制精简；旧Virtuoso readback具体生产scope，分别在对应实现前处理。真实准入G1–G4仍阻塞真实M2，G5最迟M3；不阻塞W005的synthetic读取组件。
 - 后续开发：MR-033-Q1/038-Q1所属parser/schema/safe-load错误检查进入W005；完整运行审计、Stage2状态/坐标、CAS及Stage6交付另按W005后续组合表保留。
 
@@ -17,9 +18,10 @@
 
 | 用途 | 恢复依据 |
 | --- | --- |
-| 已验收实物 | `633e3feef8062565019838f2d270e89b7f81c4ed`，原路径fixture/support/合同/报告及[交付附件](tasks/W003/delivery/w004-20261031/)齐全 |
+| 原已验收实物 | `633e3feef8062565019838f2d270e89b7f81c4ed`，原路径fixture/support/合同/报告及[交付附件](tasks/W003/delivery/w004-20261031/)齐全；helper后续补修见下行 |
+| REQ-01补修 | 在`06821ef64ac710963dcc947861a374cd0fe9dd6d`上修复body helper并新增持久回归；[独立定向复核](tasks/W003/reviews/w004-req01-fix-review.md)绑定修复文件身份。原633e3fe包保留，不冒记其已含本补修 |
 | 原始包身份 | SHA-256 `3cd7bc497391d76656e0327b415ec5c77ce26aa827423dc2b054654977173b39`；8,988项manifest、149路径重建、155文件snapshot及145项r3受审身份已核对 |
-| 本轮PM与W005交接 | 用户同意同步至`codex/w004-task-convergence`；接手使用包含W003 P10/MR-078和W005的发布提交，最终SHA见Git/交接回复。仅633e3fe不含这些后续记录 |
+| 本轮PM与W005交接 | 接手使用`codex/w004-task-convergence`中包含W003 P10/MR-078、W005及REQ-01补修的发布提交，最终SHA见Git/交接回复。仅633e3fe或06821ef不含本次修复 |
 | 历史材料 | 准备基线9f6735d，原技术实物0153505；MR-001–077、执行/review和旧PM记录保留各自历史事实。原包与既有受审实物不随PM状态整理改写 |
 
 本机PM复核材料原位于`/workspace/work/w004-pm-receipt-kryfgf84/`，关键结果与身份另汇入[PM接收摘要](tasks/W003/delivery/w004-pm-20261031/receipt.json)随Git交接；临时全量目录不自动跨实例共享。样本分支已发布，main尚未合入本轮修订。

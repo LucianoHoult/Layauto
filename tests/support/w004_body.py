@@ -1,4 +1,5 @@
-"""Exact integer checks of the declared fixture-only external body domain."""
+"""Exact checks of the declared fixture-only external body domain."""
+from fractions import Fraction
 from w004_support import read,sha
 
 def overlap(a,b):return min(a[2],b[2])>max(a[0],b[0]) and min(a[3],b[3])>max(a[1],b[1])
@@ -39,7 +40,7 @@ def check_body(root,shapes,tech,semantic):
   # Rail semantic identity is joined only after the physical continuation, via
   # actual raw net annotation on that local exact rail, never a name-made edge.
   from w004_query import normalize
-  def val(r):return [int(r['bbox_nm'][k]['numerator'])//int(r['bbox_nm'][k]['denominator']) for k in ['x_min','y_min','x_max','y_max']]
+  def val(r):return [Fraction(int(r['bbox_nm'][k]['numerator']),int(r['bbox_nm'][k]['denominator'])) for k in ['x_min','y_min','x_max','y_max']]
   matched=[r['schematic_name'] for r in normalize(root,'net_regions')['records'] if r['derived_layer']=='toy_m1' and val(r)==rail['bbox']]
   assert len(matched)==1 and matched[0]==dev['terminals']['B']==a['expected_semantic_rail'],'BodyTargetRailMismatch'
   out.append({'device':dev['id'],'local_body':body['id'],'local_rail':rail['id'],'semantic_rail':matched[0],'body_edge_length_nm':edge(body['bbox'],eb['bbox']),'rail_edge_length_nm':edge(rail['bbox'],er['bbox']),'tap_body_enclosure_nm':bm,'tap_rail_enclosure_nm':rm,'local_graph_union':False})
