@@ -147,6 +147,10 @@ git diff --check 5b7205009b3ed7f8fe15e135e674654f2f544557
 
 Reviewer 直接运行最终 Python3.12 完整组件测试 **237 passed**、strict mypy **13 source files**，并在 Python3.10 复跑10项相关修复回归。已对照执行者最终3.10完整237项、构建安装日志和22文件manifest；独立核验最终wheel与受审产品文件相同，并从源码目录外以安装环境`-I`运行正常及重绑坏raw读取。原fixture/答案/support/架构/current-work未改写。pipeline、Stage2状态/物理匹配、Stage6导出及真实工具/生产验证仍按任务边界后置，读取成功不等于其准入通过。
 
+### R2. 独立合并前复核（2026-11-02，reviewer）
+
+对 base `5b7205009b3ed7f8fe15e135e674654f2f544557` 至实际 head `787a09e269062dd5c31df8ced627a6ecb799df57` 完成新一轮独立代码与合同复核，见 [独立合并前报告](W005/independent-premerge-review.md)。本次新环境完整组件测试 **237 passed**、strict mypy **13 source files 通过**，发布身份与既有最低版本/构建证据已核验；另在仓库外副本复现 **1 项 P2 必须修正项 IPMR-01**：转义 surrogate 字符可导致缓存校验抛裸 `UnicodeEncodeError`，并使成功配置 evidence 无法 canonical 编码。**当前不具备合并条件，交 PM 安排修复及独立复核。** 保留 R1 和 PM 接收历史；本轮不改产品实现、不代写最终验收。
+
 ## PM 验收与交接（PM）
 
 <a id="pm1-receipt-20261102"></a>
