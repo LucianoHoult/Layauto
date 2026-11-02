@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from layauto_v2.domain.results import ParseResult
 from layauto_v2.domain.publication import InputsReady, InputCheckpoint, ParseAudit, ToolRunResult, EvidenceAudit
-from layauto_v2.domain.normalization import NormalizationInput, ReadbackBinding
+from .contracts import NormalizationInput, ReadbackBinding
 
 
 def from_parse_result(result: ParseResult) -> NormalizationInput:

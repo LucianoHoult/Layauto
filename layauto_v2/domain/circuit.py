@@ -252,7 +252,7 @@ class Cell:
         raw_pins = _array(self.field_sources['pins'])
         if tuple(_map(p).get('lexeme') for p in raw_pins) != tuple(p.name for p in ports):
             raise ValueError('ordered ports differ from field evidence')
-        from ._normalization_input import ref_from_location
+        from .source_location import ref_from_location
         for net in nets:
             expected_sources = {terminal.source for _, terminal in terminals if terminal.net_id == net.id}
             expected_sources.update(ref_from_location(_map(raw_pins[index])) for index, port in enumerate(ports) if port == net.id)

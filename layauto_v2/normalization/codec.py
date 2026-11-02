@@ -4,15 +4,15 @@ from __future__ import annotations
 import hashlib
 from collections.abc import Callable
 
-from .codec import FrozenMap, Value, canonical_bytes, decode, freeze
-from .evidence import EvidenceRecord, SourceRef, SourceFile
-from .results import ParseResult
-from .publication import InputsReady, InputCheckpoint, ParseAudit, ToolRunResult, EvidenceAudit
-from . import publication_codec
-from .identifiers import CellId, DeviceId, NetId, DeltaId, QueryKey
-from .circuit import Parameter, Terminal, Membership, Device, Net, Cell, SemanticCircuitDraft, TargetCircuit
-from .intent import TargetDifference
-from .normalization import (
+from layauto_v2.domain.codec import FrozenMap, Value, canonical_bytes, decode, freeze
+from layauto_v2.domain.evidence import EvidenceRecord, SourceRef, SourceFile
+from layauto_v2.domain.results import ParseResult
+from layauto_v2.domain.publication import InputsReady, InputCheckpoint, ParseAudit, ToolRunResult, EvidenceAudit
+from layauto_v2.domain import publication_codec
+from layauto_v2.domain.identifiers import CellId, DeviceId, NetId, DeltaId, QueryKey
+from layauto_v2.domain.circuit import Parameter, Terminal, Membership, Device, Net, Cell, SemanticCircuitDraft, TargetCircuit
+from layauto_v2.domain.intent import TargetDifference
+from .contracts import (
     ReadbackBinding, NormalizationInput, NormalizationIssue, DeviceIdentity, NetIdentity,
     DeviceAnnotationSeed, NetAnnotationSeed, NormalizationFacts, NormalizationResult,
 )

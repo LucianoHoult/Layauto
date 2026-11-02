@@ -4,14 +4,15 @@ from __future__ import annotations
 from fractions import Fraction
 from typing import cast
 
-from layauto_v2.domain._normalization_input import mapping, sequence, string, ref_from_location
+from ._validation import mapping, sequence, string
 from layauto_v2.domain.codec import FrozenMap
+from layauto_v2.domain.source_location import ref_from_location
 from layauto_v2.domain.evidence import EvidenceRecord, SourceRef
 from layauto_v2.domain.identifiers import CellId, DeviceId, NetId
 from layauto_v2.domain.circuit import (
     Parameter, Terminal, Membership, Device, Net, Cell, SemanticCircuitDraft, TargetCircuit,
 )
-from layauto_v2.domain.normalization import NormalizationInput
+from .contracts import NormalizationInput
 
 
 

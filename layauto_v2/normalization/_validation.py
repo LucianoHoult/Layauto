@@ -9,11 +9,13 @@ from collections.abc import Mapping
 from typing import TYPE_CHECKING, Literal, cast
 
 if TYPE_CHECKING:
-    from .circuit import SemanticCircuitDraft
+    from layauto_v2.domain.circuit import SemanticCircuitDraft
 
-from .codec import FrozenMap, Value, canonical_bytes, rational
-from .evidence import EvidenceRecord, SourceFile, SourceRef
-from .results import ParseResult
+from layauto_v2.domain.codec import FrozenMap, Value, canonical_bytes, rational
+from layauto_v2.domain.evidence import EvidenceRecord, SourceFile, SourceRef
+from layauto_v2.domain.source_location import ref_from_location
+from layauto_v2.domain.results import InputError, ParseResult
+from layauto_v2.importers.config import load_document, validate_document
 
 KINDS = ('config', 'tech', 'policies', 'header', 'gds', 'source_cdl', 'target_cdl', 'body', 'query')
 CAPABILITIES = ('instance_xref', 'net_xref', 'device_regions', 'net_regions')
@@ -37,14 +39,6 @@ def string(value: object) -> str:
     value.encode('utf-8')
     return value
 
-
-def ref_from_location(value: FrozenMap) -> SourceRef:
-    uri = value.get('uri', value.get('path'))
-    field = value.get('field', value.get('json_pointer'))
-    return SourceRef(string(uri), string(value['sha256']),
-                     cast('str | None', field), cast('int | None', value.get('line', value.get('line_1based'))),
-                     cast('int | None', value.get('column')), cast('int | None', value.get('byte_offset')),
-                     cast('int | None', value.get('record_index')))
 
 
 def source_refs(value: Value) -> tuple[SourceRef, ...]:
@@ -235,7 +229,9 @@ def _same_row(left: FrozenMap, right: FrozenMap) -> bool:
     return tuple(left.get(key) for key in ('path', 'sha256', 'line_1based')) == tuple(right.get(key) for key in ('path', 'sha256', 'line_1based'))
 
 
-def _validate_query(query: FrozenMap, tech: FrozenMap, sources: Mapping[str, SourceFile], header: FrozenMap, query_sources: tuple[SourceRef, ...]) -> None:
+def _validate_query(query: FrozenMap, tech: FrozenMap, sources: Mapping[str, SourceFile], header: FrozenMap, query_sources: tuple[SourceRef, ...], request_document: FrozenMap) -> None:
+    request_source = query_sources[1]
+    requests = tuple(mapping(request) for request in sequence(request_document['requests']))
     instance_rows = tuple(mapping(value) for value in sequence(mapping(query['instance_xref'])['records']))
     net_rows = tuple(mapping(value) for value in sequence(mapping(query['net_xref'])['records']))
     for row in instance_rows:
@@ -289,7 +285,22 @@ def _validate_query(query: FrozenMap, tech: FrozenMap, sources: Mapping[str, Sou
     if sorted(response_sources) != sorted(expected_response_sources):
         raise ValueError('request-ordered response metadata does not cover declared captures')
     response_capabilities = {string(mapping(item)['uri']): string(mapping(item)['capability']) for item in sequence(header['raw'])}
-    request_source = query_sources[1]
+    if len(requests) != len(response_sources):
+        raise ValueError('response metadata count differs from captured requests')
+    all_record_ids: list[str] = []
+    for request, (path, sha) in zip(requests, response_sources):
+        capability = string(request['capability'])
+        expected_command = 'DEVICE INFO' if capability == 'device_regions' else 'NET SHAPES'
+        if request['path'] != path or response_capabilities[path] != capability or request['command_intent'] != expected_command:
+            raise ValueError('request-ordered response metadata differs from captured requests bytes')
+        first_layer_line = 5 if capability == 'device_regions' else 4
+        polygon_lines = len(sources[path].data.splitlines()) - first_layer_line
+        record_ids = sequence(request['record_ids'])
+        if polygon_lines < 7 or polygon_lines % 7 or len(record_ids) != polygon_lines // 7:
+            raise ValueError('captured request record IDs do not cover their response polygons')
+        all_record_ids.extend(string(record_id) for record_id in record_ids)
+    if len(all_record_ids) != len(set(all_record_ids)):
+        raise ValueError('captured request record IDs must be unique across responses')
     observed_requests: set[int] = set()
     registry = {string(mapping(entry)['id']): mapping(entry) for entry in sequence(mapping(tech['derived'])['derived_registry'])}
     for capability, associations in (('device_regions', instance_rows), ('net_regions', net_rows)):
@@ -337,6 +348,13 @@ def _validate_query(query: FrozenMap, tech: FrozenMap, sources: Mapping[str, Sou
                 raise ValueError('seed references an absent captured query request')
             observed_requests.add(request_index)
             expected_path, expected_sha = response_sources[request_index]
+            captured_request = requests[request_index]
+            captured_ids = sequence(captured_request['record_ids'])
+            if (captured_request['capability'] != capability or captured_request['object'] != row[key]
+                    or object_source['lexeme'] != captured_request['object']
+                    or polygon_index >= len(captured_ids) or captured_ids[polygon_index] != row['record_id']
+                    or record_source['lexeme'] != captured_ids[polygon_index]):
+                raise ValueError('seed request pointer values differ from captured requests bytes')
             first_layer_line = 5 if capability == 'device_regions' else 4
             if (response_capabilities[expected_path] != capability
                     or layer_sources[0]['path'] != expected_path or layer_sources[0]['sha256'] != expected_sha
@@ -416,7 +434,37 @@ def manifest_digest(value: Value) -> str:
                                     ensure_ascii=False, allow_nan=False).encode('utf-8')).hexdigest()
 
 
-def validate_parse(result: ParseResult) -> None:
+def request_decoder_input(result: ParseResult) -> tuple[SourceFile, int, int]:
+    """Select the existing requests capture; this step never invokes a decoder."""
+    if type(result) is not ParseResult or result.status != 'success' or result.value is None:
+        raise ValueError('normalization requires a successful ParseResult')
+    records = evidence_by_kind(result)
+    query_sources = records['query'].sources
+    if len(query_sources) < 3:
+        raise ValueError('query receipt omits its requests capture')
+    reference = query_sources[1]
+    sources = {source.uri: source for source in result.sources}
+    source = sources[reference.uri]
+    if source.sha256 != reference.sha256:
+        raise ValueError('requests capture differs from its evidence reference')
+    limits = mapping(mapping(mapping(result.value['tech'])['formats'])['limits'])
+    max_bytes, max_depth = limits['max_bytes_per_text_file'], limits['max_json_depth']
+    if type(max_bytes) is not int or type(max_depth) is not int:
+        raise ValueError('captured profile decoder limits must be exact integers')
+    return source, max_bytes, max_depth
+
+
+def decode_captured_requests(source: SourceFile, max_bytes: int, max_depth: int) -> FrozenMap:
+    """Reuse the existing decoder on captured bytes, translating only its typed failures."""
+    try:
+        document = load_document(source, max_bytes=max_bytes, max_depth=max_depth)
+        validate_document(document, 'requests', source)
+    except InputError as exc:
+        raise ValueError('captured requests do not satisfy the accepted document contract') from exc
+    return document
+
+
+def validate_parse(result: ParseResult, request_document: FrozenMap) -> None:
     if type(result) is not ParseResult or result.status != 'success' or result.value is None:
         raise ValueError('normalization requires a successful ParseResult')
     value = result.value
@@ -498,7 +546,7 @@ def validate_parse(result: ParseResult) -> None:
     validate_locations(query, sources)
     if len(records['query'].sources) != 3 + len(raw):
         raise ValueError('query evidence requires header, requests, dialect and all raw captures')
-    _validate_query(query, mapping(value['tech']), sources, header, records['query'].sources)
+    _validate_query(query, mapping(value['tech']), sources, header, records['query'].sources, request_document)
     validate_refs(mapping(value['gds']), sources)
     # Require role captures to be present in the declared closure, including the
     # selected tech owners. This is membership, not alias→role reconstruction.

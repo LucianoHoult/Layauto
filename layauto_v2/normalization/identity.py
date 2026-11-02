@@ -4,12 +4,13 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import cast
 
-from layauto_v2.domain._normalization_input import mapping, sequence, string, source_refs, ref_from_location, source_admission_problem
+from ._validation import mapping, sequence, string, source_refs, source_admission_problem
 from layauto_v2.domain.codec import FrozenMap
+from layauto_v2.domain.source_location import ref_from_location
 from layauto_v2.domain.evidence import SourceRef
 from layauto_v2.domain.identifiers import DeviceId, NetId, QueryKey
 from layauto_v2.domain.circuit import SemanticCircuitDraft
-from layauto_v2.domain.normalization import (
+from .contracts import (
     NormalizationInput, NormalizationIssue, DeviceIdentity, NetIdentity,
     DeviceAnnotationSeed, NetAnnotationSeed,
 )

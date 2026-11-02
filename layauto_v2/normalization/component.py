@@ -4,7 +4,7 @@ from __future__ import annotations
 from dataclasses import replace
 
 from layauto_v2.domain.intent import build_differences
-from layauto_v2.domain.normalization import NormalizationInput, NormalizationFacts, NormalizationResult
+from .contracts import NormalizationInput, NormalizationFacts, NormalizationResult
 from .semantic import build_source, build_target
 from .identity import NormalizationError, admit_source, join_identities
 

@@ -4,15 +4,15 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Literal
 
-from .codec import FrozenMap, canonical_bytes, freeze_map, rational
-from .evidence import SourceRef
-from .results import ParseResult
-from .publication import InputsReady, InputCheckpoint, ParseAudit, ToolRunResult, EvidenceAudit
-from .publication_codec import content_ref
-from .identifiers import DeviceId, NetId, QueryKey
-from .circuit import SemanticCircuitDraft, TargetCircuit
-from .intent import TargetDifference, build_differences
-from ._normalization_input import mapping, sequence, string, source_refs, validate_parse, validate_refs, source_admission_problem
+from layauto_v2.domain.codec import FrozenMap, canonical_bytes, freeze_map, rational
+from layauto_v2.domain.evidence import SourceRef
+from layauto_v2.domain.results import ParseResult
+from layauto_v2.domain.publication import InputsReady, InputCheckpoint, ParseAudit, ToolRunResult, EvidenceAudit
+from layauto_v2.domain.publication_codec import content_ref
+from layauto_v2.domain.identifiers import DeviceId, NetId, QueryKey
+from layauto_v2.domain.circuit import SemanticCircuitDraft, TargetCircuit
+from layauto_v2.domain.intent import TargetDifference, build_differences
+from ._validation import mapping, sequence, string, source_refs, validate_parse, validate_refs, source_admission_problem, request_decoder_input, decode_captured_requests
 
 VERSION = 'layauto-normalization/1'
 
@@ -75,7 +75,15 @@ class NormalizationInput:
     def __post_init__(self) -> None:
         _version(self.schema_version)
         try:
-            validate_parse(self.parse)
+            source, max_bytes, max_depth = request_decoder_input(self.parse)
+        except (KeyError, TypeError, AttributeError, UnicodeError, IndexError) as exc:
+            raise ValueError('invalid captured normalization input fields') from exc
+        # Keep the decoder outside shape-error translation: programmer failures
+        # and process interrupts must propagate unchanged. Only its InputError
+        # is translated by decode_captured_requests into invalid-receipt ValueError.
+        request_document = decode_captured_requests(source, max_bytes, max_depth)
+        try:
+            validate_parse(self.parse, request_document)
         except (KeyError, TypeError, AttributeError, UnicodeError, IndexError) as exc:
             raise ValueError('invalid captured normalization input fields') from exc
         if self.readback is not None:
