@@ -149,7 +149,9 @@ git diff --check 5b7205009b3ed7f8fe15e135e674654f2f544557
 
 新增两份持久回归文件 `tests/unit/test_w005_unicode.py`、`tests/contracts/test_w005_unicode_inputs.py`：包含原三用例、非 BMP 首尾边界/连续配对、嵌套 key/value、非法序列、两种顺序重复 key、YAML/字面反斜线、unknown key，以及 public API 的 bytes/hash/定位/九项 completed 和成功 payload digest。仅写临时副本，site 变体完整重绑；比较解析后的 config 语义，不要求不同原 bytes/header 的完整结果 digest 相等。开发解释器首次新增回归实际 **34 passed in 4.12s**。
 
-后续验证与独立复核将绑定本补修的明确提交；尚未在本段填写未执行检查为通过。原 fixture、答案、support、codec、历史报告与 PM 状态保持。本执行者不代写 reviewer 关闭结论或 W005 验收。
+第一版补修提交 `9c899c7be309c17931eec656ebdb46482ccb3909` 在开发版完整 271 项、mypy 13 模块、3.10 受影响 107 项及构建/安装中通过，独立 reviewer 另发现同一边界的 IPMR01-FR1：YAML 八位 Unicode escape 超出 U+10FFFF 时，PyYAML 的 chr 在节点创建前抛裸 ValueError/OverflowError。接受为 PM2 范围内必须修正项；第一版日志以 `*-r1.txt` 和 [r1-identity.json](W005/ipmr01-verification/r1-identity.json) 单独保留，不用于证明后续改动。
+
+第二次局部修复在 SafeLoader 的 flow scalar scanner 窄边界识别正在处理的越界八位 `\U` escape，转换为带原 mark 和根因的 ScannerError，再沿既有语法错误路径返回 `InvalidDocumentSyntax`。只有双引号、当前位置前为 `\U`、八位十六进制且值越界时才转换；其他 ValueError/OverflowError、程序错误与进程中断继续传播。新增 key/value、public API 原 bytes/hash/completed、边界合法最大标量与异常传播回归。最终验证及 reviewer 复核按下列补充记录交接；原 fixture、答案、support、codec、历史报告与 PM 状态保持。
 
 ## Review 结论（reviewer）
 

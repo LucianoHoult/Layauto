@@ -1,0 +1,11 @@
+{
+  "source_commit": "9c899c7be309c17931eec656ebdb46482ccb3909",
+  "scope": "First surrogate repair; superseded by scanner range fix after independent IPMR01-FR1. These logs do not validate the later change.",
+  "results": {
+    "pytest_312": "271 passed in 29.00s",
+    "pytest_310_affected": "107 passed in 9.14s",
+    "mypy": "13 source files passed",
+    "build": "sdist and wheel built",
+    "install": "wheel installed; smoke not run before FR1"
+  }
+}

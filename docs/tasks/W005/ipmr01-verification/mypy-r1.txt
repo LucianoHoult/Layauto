@@ -1,0 +1,6 @@
+cwd: /workspace/Layauto
+command: ["/workspace/work/w005-ipmr01/dev/bin/python", "-m", "mypy"]
+
+Success: no issues found in 13 source files
+
+exit_code: 0

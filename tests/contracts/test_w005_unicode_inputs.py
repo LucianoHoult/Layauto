@@ -88,3 +88,30 @@ def test_cache_duplicate_decoded_key_is_not_silently_overwritten(tmp_path):
     assert issue.source.sha256 == hashlib.sha256(raw).hexdigest()
     assert next(source for source in result.sources if source.uri == issue.source.uri).data == raw
     assert len(result.completed) == 9 and result.completed[-1].kind == 'query'
+
+
+@pytest.mark.parametrize('escaped', [r'\U00110000', r'\UFFFFFFFF'])
+@pytest.mark.parametrize('position', ['key', 'value'])
+def test_out_of_range_cache_escape_retains_typed_failure_evidence(tmp_path, escaped, position):
+    root = copy_input(tmp_path)
+    path = root / 'query/normalized/device_regions.yaml'
+    cache = read_json(path)
+    if position == 'key':
+        cache['UNICODE_MARKER'] = cache.pop('schema_version')
+    else:
+        cache['schema_version'] = 'UNICODE_MARKER'
+    raw = (json.dumps(cache).replace('UNICODE_MARKER', escaped) + '\n').encode()
+    path.write_bytes(raw)
+    result = read_inputs(root / 'site_config.yaml')
+    assert result.status == 'error' and result.value is None
+    issue = result.issues[0]
+    assert issue.code == 'InvalidDocumentSyntax' and issue.category == 'parse'
+    assert Path(issue.source.uri) == path
+    assert (issue.source.line, issue.source.column) == (1, raw.decode().index(escaped) + 3)
+    assert issue.source.sha256 == hashlib.sha256(raw).hexdigest()
+    assert next(source for source in result.sources if source.uri == issue.source.uri).data == raw
+    assert [record.kind for record in result.completed] == [
+        'config', 'tech', 'policies', 'header', 'gds', 'source_cdl', 'target_cdl', 'body', 'query',
+    ]
+    for record in result.completed:
+        assert len(digest(record.payload)) == 64

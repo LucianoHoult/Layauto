@@ -5,8 +5,10 @@ import re
 from collections.abc import Mapping
 
 import yaml
+from yaml.error import Mark
 from yaml.events import AliasEvent, CollectionEndEvent, CollectionStartEvent
 from yaml.nodes import MappingNode, Node, ScalarNode, SequenceNode
+from yaml.scanner import ScannerError
 
 from layauto_v2.domain.codec import FrozenMap, freeze_map
 from layauto_v2.domain.evidence import SourceFile
@@ -16,6 +18,22 @@ from layauto_v2.tech.schema import SchemaError, validate_payload, validate_tech_
 MAX_TEXT_BYTES = 1_000_000
 MAX_DEPTH = 32
 MAX_RECORDS = 1000
+
+
+class _SafeLoader(yaml.SafeLoader):
+    def scan_flow_scalar_non_spaces(self, double: bool, start_mark: Mark) -> list[str]:
+        try:
+            return super().scan_flow_scalar_non_spaces(double, start_mark)
+        except (ValueError, OverflowError) as exc:
+            # PyYAML's chr(code) leaves the scanner at the eight hex digits
+            # when a YAML \\U escape exceeds Unicode's maximum code point.
+            # Convert only that known input failure, retaining its exact mark.
+            digits = self.prefix(8)
+            if (not double or self.buffer[self.pointer - 2:self.pointer] != '\\U'
+                    or re.fullmatch(r'[0-9a-fA-F]{8}', digits) is None or int(digits, 16) <= 0x10FFFF):
+                raise
+            raise ScannerError('while scanning a double-quoted scalar', start_mark,
+                               'Unicode escape exceeds U+10FFFF', self.get_mark()) from exc
 
 
 def load_document(source: SourceFile, *, max_bytes: int = MAX_TEXT_BYTES,
@@ -35,7 +53,7 @@ def load_document(source: SourceFile, *, max_bytes: int = MAX_TEXT_BYTES,
         raise InputError('parse', 'InvalidEncoding', 'expected UTF-8 text', source.ref(byte_offset=exc.start)) from exc
     try:
         depth = 0
-        for event in yaml.parse(text, Loader=yaml.SafeLoader):
+        for event in yaml.parse(text, Loader=_SafeLoader):
             if isinstance(event, AliasEvent):
                 assert event.start_mark is not None
                 raise InputError('unsupported', 'UnsupportedAlias', 'YAML aliases are outside the safe subset', source.ref(line=event.start_mark.line + 1, column=event.start_mark.column + 1))
@@ -46,7 +64,7 @@ def load_document(source: SourceFile, *, max_bytes: int = MAX_TEXT_BYTES,
                     raise InputError('config', 'DepthLimitExceeded', f'container depth exceeds {max_depth}', source.ref(line=event.start_mark.line + 1, column=event.start_mark.column + 1))
             elif isinstance(event, CollectionEndEvent):
                 depth -= 1
-        node = yaml.compose(text, Loader=yaml.SafeLoader)
+        node = yaml.compose(text, Loader=_SafeLoader)
     except yaml.MarkedYAMLError as exc:
         mark = exc.problem_mark
         ref = source.ref(line=mark.line + 1, column=mark.column + 1) if mark is not None else source.ref()
