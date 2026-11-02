@@ -7,13 +7,13 @@
 | 字段 | 内容 |
 | --- | --- |
 | 目标 / 依赖 | M1的首个产品组件切片；依赖已验收的W003/W004样本，实物基准`633e3feef8062565019838f2d270e89b7f81c4ed`。W002 E7的完整no_change闭环目标及R4首交义务保持 |
-| 授权 / 阶段 | **可执行：IPMR-01局部补修，暂不具备合并条件。** 新独立review发现1项P2必须修正项，PM复现并接收，见[PM2](#pm2-ipmr01-20261102)。独立执行session修复后由未参与实现者定向复核，再交PM恢复验收判断；不重做整个读取组件 |
-| 恢复版本 | 同分支`codex/w005-input-reading-binding`，独立review交付`cec15f7e3cd74f8cc439f9a5ab654597a113da78`，接手使用包含PM2的后续PM交接提交，准确SHA见Git/回复。原执行起点`5b7205009b3ed7f8fe15e135e674654f2f544557`、实现交付`51d4d9d7b0d2715a5a2f3fe578615be4c59e74cb`和发布等价产品`cf35d97478cd78aa7ad707d18c9e37ceda10eafb`保留历史身份。已验收fixture与答案未变 |
+| 授权 / 阶段 | **待验收：补修技术接收通过，待main集成及最终验收记录。** IPMR-01与IPMR01-FR1均已独立复核关闭，PM核对新版本、复跑测试并接收，见[PM3](#pm3-ipmr01-receipt-20261102)。无剩余必须修正项，不重新派发已完成补修 |
+| 恢复版本 | 同分支`codex/w005-input-reading-binding`，补修交付`c69018dfd1b8eb67705753bb170ec3dcebb88e8f`，最终产品/回归提交`0a6de39e02947e3ae8af64a4dca9487ee8898ca3`。接手使用包含PM3的后续PM交接提交，准确SHA见Git/回复。原实现交付`51d4d9d7b0d2715a5a2f3fe578615be4c59e74cb`、原review交付`cec15f7e3cd74f8cc439f9a5ab654597a113da78`及PM2派发`4207e773f93111ba6bfd2c6b6ac9da1eacd87fbb`保留历史身份；已验收fixture与答案未变 |
 | 输出边界 | 一个可由测试及未来pipeline调用的组件API，返回不可变、经过运行时校验的配置/tech及versioned evidence、解析结果和定位信息。名称/DTO组织由执行者细化并review；本轮不发布新的稳定CLI或对外wire承诺 |
 | 允许修改 | `layauto_v2/importers/`，必要的中立`domain/` evidence/results/codec类型、`tech/` schema与纯读取公共入口；`tests/unit/`、`tests/contracts/`及读取组合测试；必要依赖/typing/build配置与使用说明、本任务执行记录。新增目录按职责创建，不为所有未来模块填空 |
 | 非目标 | 不实现pipeline/run入口、repository/RunAttempt/terminal publication、Stage 2 identity/spatial join与状态、规则求值/resize/导出、真实Calibre/Virtuoso获取或生产上传；不改变D1=A、MR-040后置及真实工具延期。不修改已验收fixture以迎合程序 |
 | 架构依据 | [architecture](../architecture.md) §2.1–2.3、§3.1–3.2、§4.8、§5、§11.2/11.10/11.13–11.15、§12.1–12.8；架构原文优先，任务不另定产品合同 |
-| 分工 / 阻塞 | 一名执行者统一集成；未参与补修者做定向review，PM核对结果。IPMR-01未关闭前阻塞合并；普通内部选择自主处理，新关键输入/能力/对外行为变化附实例交PM |
+| 分工 / 阻塞 | 执行与独立review已交付；PM接收补修并恢复集成判断。IPMR-01/FR1技术阻塞已解除；实际main集成及组合核验尚未发生，新关键输入/能力/对外行为变化附实例交PM |
 
 ### 输入、结果与范围
 
@@ -222,9 +222,22 @@ PM在该提交、Python3.12.14环境实际运行报告中的完整三用例脚�
 
 完成后将补修、测试、执行/review记录提交推送到同一W005分支，沿用项目既有GitHub noreply身份，核对远端完整SHA；如远端有新提交先核对并安全集成，不force push。交回PM修复版本、关闭依据、实际验证和未执行范围。**不合并main、不删分支、不启动下一产品任务。** PM核对新交付后再决定集成及验收；本次PM仅更新任务/入口，未修改产品或宣称问题已关闭。
 
+<a id="pm3-ipmr01-receipt-20261102"></a>
+### PM3. 补修技术接收，恢复集成判断（2026-11-02）
+
+**接收`c69018dfd1b8eb67705753bb170ec3dcebb88e8f`，确认IPMR-01与IPMR01-FR1关闭，无剩余必须修正项。** W005恢复待验收，已满足本轮补修及合并前技术要求；main集成和最终验收仍待实际执行。原IPMR-01报告、PM2派发时的开放状态和首轮FR1发现保留为历史事实，不再作为当前未关闭问题。
+
+核对交接`4207e77`至当前交付：产品仅修改`importers/config.py`，新增两个回归文件，其余为执行/review证据。合法pair统一解码后再检查key重复，非法surrogate返回定位错误；FR1仅在scanner确认越界八位转义时转换已知底层异常，其他程序错误和中断传播。没有改变codec算法、既有输入来源合同或Stage 1/2边界。已验收fixture/答案、support、架构及原review/verification均未变。
+
+PM在本环境CPython3.12.14、PyYAML6.0.3直接复跑最终代码：完整`tests/unit tests/contracts` **284 passed in 29.86s**，strict mypy **13 source files通过**。原报告三用例变为缓存`InvalidUnicodeScalar`、两种合法note成功且可digest；另运行已入库独立探针，256项合法标量、4096项孤立surrogate key/value、64项重复key、128项越界转义和4项公共缓存用例全部通过，错误保留原bytes/hash/定位和九项completed。原始输出、环境、命令及身份核验另存[PM补修接收回执](W005/ipmr01-pm-receipt.json)。pytest仅有一项第三方anyio弃用提示，无失败。
+
+只读证据专项`w005_fix_receipt`重算23项证据hash及77项source manifest，在最终产品`0a6de39`、交付`c69018d`及当前工作区三处均相符；产品提交之后23个变更路径全部为文档。最终3.10受影响120项（含新增47项）、新构建/干净安装/pip check/安装来源及关键smoke采用已核验身份的执行记录与[独立补修review](W005/ipmr01-fix-review.md)。补修原wheel不在本PM环境；67项wheel/安装文件一致性采用该独立review的实际核验，不以本机旧wheel代替，也不声称本轮重新构建或安装。
+
+3.10本轮未重跑全套或干净安装的边界与PM2受影响回归要求一致，不构成新增补修阻塞；其他平台/解释器及真实工具仍未验证。本轮仅记录技术接收，未合并main或启动下一产品任务。建议下一步完成W005合并与实际集成核验，再准备输入组件接入正式运行审计的近期任务；无需重开完整组件review。pipeline、Stage2、Stage6与完整M1义务仍按后续组合表保留。
+
 ### 历史派发背景（2026-10-31至2026-11-02）
 
-以下保留原派发事实；当前状态以PM2及任务顶部为准，不从旧prompt重新执行。
+以下保留原派发事实；当前状态以PM3及任务顶部为准，不从旧prompt重新执行。
 
 W003/W004样本前置及REQ-01补修已通过PR #58合入main `87fe5a5a87d0cbb1f97952f1485dac9a71416369`，集成事实见[W004 PM6](W004-fixture-revision.md#pm6-20261102)。当前派发W005读取组件，不代表W005实现或M1完成。按用户选择，新独立执行session从`codex/w005-input-reading-binding`的PM交接提交恢复，准确SHA见Git/回复；本轮只更新交接，不提前编写执行者方案或产品代码。
 
