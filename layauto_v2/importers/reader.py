@@ -326,7 +326,11 @@ def read_inputs(site_path: Path, *, tool_run_id: str | None = None) -> ParseResu
         cache_dir = files.path(header_file.uri).parent / 'normalized'
         for capability in _CAPABILITIES:
             path = cache_dir / (capability + '.yaml')
-            if path.exists():
+            try:
+                cache_present = path.exists()
+            except OSError as exc:
+                raise InputError('read', 'InputReadError', str(exc), SourceRef(str(path), field='path')) from exc
+            if cache_present:
                 source = files.read(str(path))
                 cache = load_document(source, max_bytes=max_bytes, max_depth=max_depth)
                 if canonical_bytes(cache) != canonical_bytes(query[capability]):

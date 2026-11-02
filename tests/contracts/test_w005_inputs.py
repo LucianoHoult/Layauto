@@ -468,3 +468,22 @@ def test_symlink_loop_is_a_typed_input_error(tmp_path, selected):
     assert result.status == 'error'
     assert result.issues[0].code == 'InvalidInputPath'
     assert result.issues[0].source.sha256 is None
+
+
+def test_optional_cache_presence_permission_error_is_typed(tmp_path, monkeypatch):
+    root = copy_input(tmp_path)
+    original = Path.exists
+
+    def inaccessible(path):
+        if path.parent.name == 'normalized':
+            raise PermissionError('inaccessible cache directory')
+        return original(path)
+
+    monkeypatch.setattr(Path, 'exists', inaccessible)
+    result = load(root)
+    assert result.status == 'error'
+    issue = result.issues[0]
+    assert issue.category == 'read' and issue.code == 'InputReadError'
+    assert issue.source.sha256 is None
+    assert issue.source.uri.endswith('query/normalized/instance_xref.yaml')
+    assert any(record.kind == 'query' for record in result.completed)
