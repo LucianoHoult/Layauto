@@ -153,6 +153,21 @@ git diff --check 5b7205009b3ed7f8fe15e135e674654f2f544557
 
 第二次局部修复在 SafeLoader 的 flow scalar scanner 窄边界识别正在处理的越界八位 `\U` escape，转换为带原 mark 和根因的 ScannerError，再沿既有语法错误路径返回 `InvalidDocumentSyntax`。只有双引号、当前位置前为 `\U`、八位十六进制且值越界时才转换；其他 ValueError/OverflowError、程序错误与进程中断继续传播。新增 key/value、public API 原 bytes/hash/completed、边界合法最大标量与异常传播回归。最终验证及 reviewer 复核按下列补充记录交接；原 fixture、答案、support、codec、历史报告与 PM 状态保持。
 
+
+**最终受测产品/回归提交：`0a6de39e02947e3ae8af64a4dca9487ee8898ca3`。** [补修验证回执](W005/ipmr01-verification/receipt.json)记录命令、环境、实际输出与 hash；[source-manifest](W005/ipmr01-verification/source-manifest.json)覆盖 77 项产品/测试/配置/说明文件，67 项 wheel 产品文件与提交逐项相同（含 `py.typed`）。后续仅追加执行/review 证据的提交不冒称重新测试产品。
+
+| PM2 验证 | 本次实际结果 |
+| --- | --- |
+| 原报告三用例、持久回归 | 修复后 cache 返回 `InvalidUnicodeScalar`，escaped/literal note 均为 U+1F600 且 digest 成功；新增 47 项持久回归包含在以下完整/最低版测试中。见 [repro-after](W005/ipmr01-verification/repro-after.txt)。 |
+| CPython 3.12.14 完整组件 | `python -B -m pytest -p no:cacheprovider tests/unit tests/contracts -q`：**284 passed in 34.05s**。见 [完整日志](W005/ipmr01-verification/pytest-312.txt)。 |
+| Strict typing | `python -m mypy`：**13 source files，无问题**；采用项目 strict/3.10 配置。见 [mypy](W005/ipmr01-verification/mypy.txt)。 |
+| CPython 3.10.22 受影响回归 | safe config、新增两文件、既有中断/意外异常、cache bool/int 与 key-order 回归：**120 passed in 13.22s**；准确选择见 [命令和日志](W005/ipmr01-verification/pytest-310.txt)。 |
+| 新构建及干净安装 | 从受测提交 `git archive` 到仓库外，隔离 PEP517 sdist→wheel 成功；全新 3.12 venv 安装完整声明依赖，`pip check` 通过。见 [build](W005/ipmr01-verification/build.txt)、[install](W005/ipmr01-verification/install-wheel.txt)、[pip check](W005/ipmr01-verification/pip-check-wheel.txt)。 |
+| 安装来源及实际读取 | 源码目录外 `python -I -B .../wheel_smoke.py <fixture>` 通过；导入为新环境 site-packages，安装 config SHA 与受测源一致。正常 40 图形/8 net regions、三种非法 escape × key/value 的 bytes/hash/定位/九项 completed、两种合法 note 的 config 等价/全 payload digest、解码后重复 key 均断言。见 [脚本](W005/ipmr01-verification/wheel_smoke.py)、[输出](W005/ipmr01-verification/wheel-smoke.txt)。 |
+| 范围及历史保护 | `git diff --check` 通过；fixture/答案/support/architecture、原 verification/三个 review 报告、current-work/roadmap 相对交接 SHA 无 diff。原报告和第一版补修日志未覆盖。 |
+
+本次未重跑 3.10 全套或在 3.10 做干净 wheel 安装，未验证其它解释器/平台、legacy/fixture 生成、真实 EDA/PDK/生产、pipeline/Stage 2/Stage 6 或完整 M1。独立 reviewer 的结论另见 R3 和其报告；交回 PM 决定集成/验收，执行者不改 PM2 状态、不合并 main 或删除分支。
+
 ## Review 结论（reviewer）
 
 ### R1. 独立接口与最终代码复核（2026-11-02，reviewer）

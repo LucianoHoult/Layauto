@@ -1,0 +1,16 @@
+cwd: /workspace/work/w005-ipmr01
+command: ["/workspace/work/w005-ipmr01/wheel-env-final/bin/python", "-I", "-B", "/workspace/Layauto/docs/tasks/W005/ipmr01-verification/wheel_smoke.py", "/workspace/Layauto/tests/fixtures/w003_m1"]
+
+{
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "installed_module": "/workspace/work/w005-ipmr01/wheel-env-final/lib/python3.12/site-packages/layauto_v2/__init__.py",
+  "installed_config": "/workspace/work/w005-ipmr01/wheel-env-final/lib/python3.12/site-packages/layauto_v2/importers/config.py",
+  "installed_config_sha256": "82746f9a7908176600cd2ad6b313c63546fbfa931a4486d5b55bd54c83e9c20f",
+  "accepted_shapes": 40,
+  "net_regions": 8,
+  "invalid_cache_key_and_value": "surrogate and two out-of-range escapes: typed error; actual bytes/hash/location and 9 completed retained",
+  "escaped_and_literal_note": "equal parsed config; all successful payload digests computed",
+  "decoded_duplicate_key": "DuplicateKey"
+}
+
+exit_code: 0

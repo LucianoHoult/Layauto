@@ -1,0 +1,28 @@
+Collecting pytest
+  Downloading pytest-9.2.0-py3-none-any.whl (411 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 411.8/411.8 kB 12.5 MB/s eta 0:00:00
+Collecting PyYAML
+  Downloading pyyaml-6.0.3-cp310-cp310-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (770 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 770.3/770.3 kB 16.2 MB/s eta 0:00:00
+Collecting iniconfig>=2
+  Downloading iniconfig-2.3.1-py3-none-any.whl (7.6 kB)
+Collecting tomli>=2
+  Downloading tomli-2.5.0-py3-none-any.whl (14 kB)
+Collecting packaging>=24
+  Downloading packaging-26.3-py3-none-any.whl (129 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 130.0/130.0 kB 37.3 MB/s eta 0:00:00
+Collecting pluggy<2,>=1.6
+  Downloading pluggy-1.7.0-py3-none-any.whl (27 kB)
+Collecting exceptiongroup>=1
+  Downloading exceptiongroup-1.3.1-py3-none-any.whl (16 kB)
+Collecting pygments>=2.15
+  Downloading pygments-2.21.0-py3-none-any.whl (1.3 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.3/1.3 MB 26.8 MB/s eta 0:00:00
+Collecting typing-extensions>=4.6.0
+  Downloading typing_extensions-4.16.0-py3-none-any.whl (45 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 45.6/45.6 kB 13.1 MB/s eta 0:00:00
+Installing collected packages: typing-extensions, tomli, PyYAML, pygments, pluggy, packaging, iniconfig, exceptiongroup, pytest
+Successfully installed PyYAML-6.0.3 exceptiongroup-1.3.1 iniconfig-2.3.1 packaging-26.3 pluggy-1.7.0 pygments-2.21.0 pytest-9.2.0 tomli-2.5.0 typing-extensions-4.16.0
+
+[notice] A new release of pip is available: 23.0.1 -> 26.2.2
+[notice] To update, run: /workspace/work/w005-ipmr01/venv310/bin/python -m pip install --upgrade pip

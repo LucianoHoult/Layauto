@@ -1,0 +1,12 @@
+cwd: /workspace/Layauto
+command: ["/workspace/work/w005-ipmr01/dev/bin/python", "-B", "docs/tasks/W005/ipmr01-verification/original_repro.py"]
+
+cache status= error issues= ['InvalidUnicodeScalar']
+escaped_note status= success issues= []
+escaped_note note= 'example \U0001f600'
+escaped_note digest_ok
+literal_note status= success issues= []
+literal_note note= 'example \U0001f600'
+literal_note digest_ok
+
+exit_code: 0

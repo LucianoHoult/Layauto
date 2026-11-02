@@ -1,0 +1,6 @@
+cwd: /workspace/work/w005-ipmr01
+command: ["/workspace/work/w005-ipmr01/wheel-env-final/bin/python", "-m", "pip", "check"]
+
+No broken requirements found.
+
+exit_code: 0
