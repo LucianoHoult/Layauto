@@ -641,7 +641,8 @@ def test_captured_requests_decoder_input_error_becomes_invalid_dto(accepted, mon
 
 
 @pytest.mark.parametrize('via', ['adapter', 'wire'])
-@pytest.mark.parametrize('failure', [RuntimeError('decoder implementation bug'), KeyboardInterrupt(), SystemExit(29)])
+@pytest.mark.parametrize('failure', [RuntimeError('decoder implementation bug'), TypeError('decoder bug'),
+                                     KeyError('decoder bug'), KeyboardInterrupt(), SystemExit(29)])
 def test_captured_requests_decoder_unexpected_errors_propagate_unchanged(accepted, monkeypatch, via, failure):
     from layauto_v2.normalization import _validation
     encoded = encode_record(accepted.input)
