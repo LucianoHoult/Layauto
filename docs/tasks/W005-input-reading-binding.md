@@ -139,6 +139,18 @@ git diff --check 5b7205009b3ed7f8fe15e135e674654f2f544557
 
 完整旧→发布身份及每个相同tree见 [publication-map.json](W005/verification/publication-map.json)。原受测/受审产品提交 `ab7feddff83749b54c1866b1ad95fbc99fd787f1` 对应可发布提交 **`cf35d97478cd78aa7ad707d18c9e37ceda10eafb`**，共同tree为 `70b905b98691ddcdf58726810ca875dc853069c2`。原始执行日志、manifest和review保留实际发生时的本地SHA；通过此映射可在远端分支恢复相同完整内容，不能将邮箱元数据变化写成重新运行产品测试。Reviewer另在代码review追加独立内容身份复核。最终推送tip及远端核验SHA见执行交接回复；它还包含本段和发布映射记录。
 
+### E5. IPMR-01 局部补修（2026-11-02，执行）
+
+起始核对：预置 `/workspace/Layauto` 为干净的 `work` / `87fe5a5a87d0cbb1f97952f1485dac9a71416369`。获取指定远端分支后确认其完整 SHA 为交接 `4207e773f93111ba6bfd2c6b6ac9da1eacd87fbb`，切换到 `codex/w005-input-reading-binding`，无既有 staged/unstaged/untracked 改动。适用规则仅根 AGENTS；读取 README、协作/环境规则、PM2、原独立报告及架构 §2.2、§11.2/11.10/11.15、§12.1/12.6 等受影响合同。
+
+先在交接版本、CPython 3.12.14 执行原报告三用例，得到相同两条 `UnicodeEncodeError` 路径和成功的直接 UTF-8 对照；原脚本及实际输出另存 [original_repro.py](W005/ipmr01-verification/original_repro.py)、[repro-before.txt](W005/ipmr01-verification/repro-before.txt)，原报告未改写。
+
+方案与实现：仅在 `importers/config.py` 的 safe document 字符串边界把 high/low surrogate pair 转为对应 Unicode scalar；孤立、反序、不完整配对返回 `InvalidUnicodeScalar`，带实际 source hash 及 scalar 起始行/列。key/value 递归共用该处理，重复 key 在解码后检查。保留原 codec 算法和 facade 的 InputError 捕获边界；不替换或忽略字符。已有 source 捕获及 completed 累积机制因此可直接保留失败证据。
+
+新增两份持久回归文件 `tests/unit/test_w005_unicode.py`、`tests/contracts/test_w005_unicode_inputs.py`：包含原三用例、非 BMP 首尾边界/连续配对、嵌套 key/value、非法序列、两种顺序重复 key、YAML/字面反斜线、unknown key，以及 public API 的 bytes/hash/定位/九项 completed 和成功 payload digest。仅写临时副本，site 变体完整重绑；比较解析后的 config 语义，不要求不同原 bytes/header 的完整结果 digest 相等。开发解释器首次新增回归实际 **34 passed in 4.12s**。
+
+后续验证与独立复核将绑定本补修的明确提交；尚未在本段填写未执行检查为通过。原 fixture、答案、support、codec、历史报告与 PM 状态保持。本执行者不代写 reviewer 关闭结论或 W005 验收。
+
 ## Review 结论（reviewer）
 
 ### R1. 独立接口与最终代码复核（2026-11-02，reviewer）

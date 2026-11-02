@@ -59,6 +59,27 @@ def load_document(source: SourceFile, *, max_bytes: int = MAX_TEXT_BYTES,
     def error(n: Node, code: str, message: str) -> InputError:
         return InputError('config', code, message, source.ref(line=n.start_mark.line + 1, column=n.start_mark.column + 1))
 
+    def string_value(n: ScalarNode) -> str:
+        # PyYAML leaves JSON UTF-16 escapes as separate surrogate code points.
+        # Decode pairs before key comparison; never retain an unpaired surrogate
+        # in a value that will later be encoded as canonical UTF-8 evidence.
+        chars: list[str] = []
+        index = 0
+        while index < len(n.value):
+            code = ord(n.value[index])
+            if 0xD800 <= code <= 0xDBFF:
+                if index + 1 == len(n.value) or not 0xDC00 <= ord(n.value[index + 1]) <= 0xDFFF:
+                    raise error(n, 'InvalidUnicodeScalar', 'high surrogate requires a following low surrogate')
+                low = ord(n.value[index + 1])
+                chars.append(chr(0x10000 + ((code - 0xD800) << 10) + low - 0xDC00))
+                index += 2
+            elif 0xDC00 <= code <= 0xDFFF:
+                raise error(n, 'InvalidUnicodeScalar', 'low surrogate requires a preceding high surrogate')
+            else:
+                chars.append(n.value[index])
+                index += 1
+        return ''.join(chars)
+
     def build(n: Node) -> object:
         if isinstance(n, MappingNode) and n.tag == 'tag:yaml.org,2002:map':
             result: dict[str, object] = {}
@@ -78,7 +99,7 @@ def load_document(source: SourceFile, *, max_bytes: int = MAX_TEXT_BYTES,
                 # YAML does not recognize every JSON nonfinite/numeric token.
                 if n.style is None and (n.value in ('NaN', 'Infinity', '-Infinity') or re.fullmatch(r'[-+]?[0-9]+(?:\.[0-9]*)?[eE][-+]?[0-9]+', n.value)):
                     raise error(n, 'NonExactNumber', 'numeric input requires an integer or explicit exact representation')
-                return n.value
+                return string_value(n)
             if n.tag == 'tag:yaml.org,2002:null':
                 return None
             if n.tag == 'tag:yaml.org,2002:bool':
