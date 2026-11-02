@@ -57,6 +57,8 @@
 | 正式运行与M1 | 同run审计、Stage2 pre-context拒绝、initialize/seal/CAS/幂等、全量目标及semantic/extraction-aware no_change、Stage6 GDS/CDL/JSON读回/报告/terminal；C13的sealed规划拒绝仍需组合验证 |
 | 真实准入/M2 | G1–G4仍为真实M2前置，G5最迟M3；本任务不授予resize/edit capability，不代表真实EDA/PDK验证 |
 
+**后续需求补记（2026-11-02，PM）：** 用户要求考虑生产环境不提供body tapcell的情况，已纳入[路线图U06](../roadmap.md#production-body-evidence)，由生产读取适配及body能力任务落实。该项应区分缺资料、可信替代证据与错误资料，并明确测试能力和完整运行准入；不扩展本任务A1–A8，不在W008中静默删除现有synthetic输入的body_context必填校验。
+
 ## 方案与决定（执行准备，PM 接收）
 
 先调查W005 GDS字段/捕获bytes、W007输入/readback与当前domain/state骨架；定向查看legacy坐标/矩形投影候选，只取可证明正确的纯算法，不保留grid持有occupancy、ViaInstance/Net.segments等多份事实源。

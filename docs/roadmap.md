@@ -136,8 +136,27 @@ M0 分开交付“工程输入/合同准备”和“真实 profile 证据准入�
 | U03 repair、rule、marking/body/halo 可闭合性 | 列所有触及局部 rules/extractors/derivators/dependencies 与来源，验证 fixed-frame/不触 halo 的证明或完整 abutment contract；缺项使用 full-check 或拒绝 | 阻塞对应 M2 candidate，不阻塞独立 codec、repository、baseline/export 工作；不能用“后续 signoff”替代 |
 | U04 报告/CDL/fixture 的关键使用预期与独立 oracle | 先看现有代表材料，形成最小报告字段/样张提纲、CDL preserve 差异、fixture 生成与独立期望来源。技术保真由 agent 核验；若关键用户预期未定义，再提交具体选项 | 不把选图风格当全部主线前置；影响验收解释的选择必须在对应产物实现前解决。Golden 不能由同一实现自造并独自证明正确 |
 | U05 可复现环境与 CI 矩阵 | 保持 Python 3.10+；调查现有依赖、strict checker、支持解释器和 CI 落点，落实构建缺 `wheel` 等实际问题；下游独立 tool open/syntax gate 随所选 production profile 验证 | M1 开始补齐工程条件，M4 收口；本机已安装依赖不等于新机可用，真实工具开通不由本轮规划自动授权 |
+| U06 生产输入未提供body tapcell | 用户2026-11-02明确要求考虑；PM在生产输入适配和body能力任务中落实[场景与验收方向](#production-body-evidence)，关联R05/R08/R12/R16/R17/R22/R25及U01/U03 | 首次生产读取测试入口交付时明确缺资料处理及测试范围；完整生产运行前落实body证据准入。不阻塞W008既定synthetic几何组件，也不把登记需求视为已有可选输入开关 |
 
 **目前没有需要用户立即重新决定的产品范围。** 尚未有足够真实材料把 U01–U04 化成具体选择；下一项先调查并上报实际缺项/分叉，不要求用户凭空选 PDK、方言或图表，也不把未答复当同意。
+
+<a id="production-body-evidence"></a>
+### U06：生产环境未提供body tapcell的处理需求
+
+**需求来源与状态：** 2026-11-02用户要求“把生产环境不提供body tapcell的情景正确处理作为一个需求考虑”。已登记为生产输入适配与body能力的后续必查项；具体生产profile、输入格式、入口及状态编码待方案收敛和独立review，尚未实现。本节保存规划与验收方向，现行产品合同仍归[架构§3.6](architecture.md#36-connectivity-state-作为拓扑解释层)等原文；如方案改变对外行为或上层合同，在实施前同步相应正文与任务。
+
+**需求目标：** 对生产环境未提供本地tap图形或独立外部body上下文的情况，按选定profile、运行目的和实际证据明确可继续范围、缺失材料与受限能力。不能把缺tapcell一律视为版图错误，也不能把body尚未证明记成通过。现有synthetic外部tapcell JSON不是所有生产profile预先确定的必需格式。
+
+| 待覆盖场景 | PM拟定验收方向 |
+| --- | --- |
+| 本地cell无tap，但有符合profile的外部body证据 | 按实际source/top/坐标/作用域等验证绑定和关系；不因本地缺tap直接拒绝，外部图形保持独立scope |
+| 没有独立外部tapcell文件，但有profile认可的其它证据 | 可研究本地完整body几何，或架构§3.6允许的baseline LVS＋body/boundary invariant冻结方案；逐项证明适用范围，不能仅靠B端网名或“LVS通过”文字放行 |
+| 没有body证明，只做明确限定的读取/几何测试 | 设计可独立运行的测试入口或明确测试模式，允许不依赖body的检查继续并报告其实际结果；明确body未验证及能力限制，不产生完整run成功、body_complete或生产准入结论。其它输入错误仍按实际错误处理 |
+| 完整运行所需body证据缺失 | 在相应准入/检查阶段定位拒绝，列出所需证据与受阻能力；不能将已启用的mandatory要求改记deferred来放行 |
+| 显式未选择body资料，或已选择但文件缺失/格式错误/绑定错误/连接违例 | 区分“未提供”与“提供了不可用或错误的资料”；后者报告实际错误及来源，不静默按可选缺省处理，也不把已发现违例改写为未知 |
+| 修改超出body/boundary冻结证明范围 | 旧证明失效，重验或拒绝；不继续沿用旧assurance |
+
+**落实位置与现状：** 生产读取适配首交应覆盖缺资料及部分测试结果；正式body/extraction、mandatory checks与运行接入任务应覆盖替代证据、完整运行拒绝和证明失效。接口及状态应与R22/R25现有错误/验证合同衔接，并保持G1–G4/G5真实准入门。当前W005统一入口仅支持声明的synthetic范围，`body_context`仍必填，缺文件返回`RequiredBodyContextUnavailable`；本次需求登记不修改W003/W004样本、W005–W007实现或W008 A1–A8。准备后续任务时必须回查本项，不能直接把toy必填字段推广为全部生产格式要求。
 
 ## 7. 近期工作与完成前核对
 
