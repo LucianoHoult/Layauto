@@ -1,0 +1,296 @@
+{
+  "date": "2026-11-02",
+  "role": "PM",
+  "branch": "codex/w006-precontext-run-audit",
+  "delivery": "628cc94383fa4c68bd44de51117ef06451ed3a9e",
+  "product_commit": "cc42ae62585755b0b914d4dbec43324941bfe7c6",
+  "preparation_commit": "7320e5d6e819a422e0a446309eb039b1f05e7dd0",
+  "disposition": "A1-A8 branch technical receipt accepted; remaining must-fix items 0; main integration and final W006 acceptance pending",
+  "environment": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "executable": "/workspace/work/w005-pm-check-env/bin/python",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "working_directory": "/workspace/Layauto",
+    "import_source": "/workspace/Layauto/layauto_v2/pipeline.py",
+    "tools": {
+      "pytest": "9.2.0",
+      "mypy": "2.4.1",
+      "PyYAML": "6.0.3"
+    },
+    "clean_install": false,
+    "note": "Existing PM venv with system site packages; this run is source regression, not clean wheel-install evidence"
+  },
+  "direct_checks": [
+    {
+      "check": "full_component_and_pipeline_tests",
+      "command": [
+        "/workspace/work/w005-pm-check-env/bin/python",
+        "-B",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "tests/unit",
+        "tests/contracts",
+        "-q"
+      ],
+      "cwd": "/workspace/Layauto",
+      "exit_code": 0,
+      "stdout_stderr": "........................................................................ [ 18%]\n........................................................................ [ 37%]\n........................................................................ [ 55%]\n........................................................................ [ 74%]\n........................................................................ [ 92%]\n.............................                                            [100%]\n=============================== warnings summary ===============================\n../../opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/anyio/pytest_plugin.py:14\n  /opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/anyio/pytest_plugin.py:14: PytestRemovedIn10Warning: _pytest.python.CallSpec2 has been renamed to CallSpec.\n  The CallSpec2 alias will be removed in pytest 10.\n  Update imports to use CallSpec instead.\n  See https://docs.pytest.org/en/stable/deprecations.html#callspec2-renamed\n    from _pytest.python import CallSpec2\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n389 passed, 1 warning in 81.35s (0:01:21)\n",
+      "log_sha256": "286fc33fba47c0d5e2651467fed0d3464811c66a3b76bb910f8f6f54c8d70194"
+    },
+    {
+      "check": "strict_mypy",
+      "command": [
+        "/workspace/work/w005-pm-check-env/bin/python",
+        "-B",
+        "-m",
+        "mypy",
+        "--cache-dir",
+        "/workspace/work/w006-pm-mypy-cache"
+      ],
+      "cwd": "/workspace/Layauto",
+      "exit_code": 0,
+      "stdout_stderr": "Success: no issues found in 21 source files\n",
+      "log_sha256": "3253c7a5a8535995ce0dc8b25611174b1763d2c9ff1bbb0a29e2e90cca3ca91e"
+    }
+  ],
+  "identity_check": {
+    "result": {
+      "base": "7320e5d6e819a422e0a446309eb039b1f05e7dd0",
+      "delivery": "628cc94383fa4c68bd44de51117ef06451ed3a9e",
+      "product_commit": "cc42ae62585755b0b914d4dbec43324941bfe7c6",
+      "counts": {
+        "source-manifest.json": 214,
+        "tested-source-manifest.json": 88,
+        "fixture-snapshot-manifest.json": 116,
+        "engineering-evidence-manifest.json": 31,
+        "review-source-identity": 16
+      },
+      "interface_plan_sha256": "5a1b9d986871d7ca4a6f10d83e37fb65e439255807fc18e3677b2866ae712b92",
+      "protected_changes": [],
+      "post_product_doc_paths": 99,
+      "commands": [
+        {
+          "name": "environment-wheel312.result.json",
+          "returncode": 0,
+          "cwd": "/workspace/work/w006/engineering-cc42ae6/outside",
+          "command": [
+            "/workspace/work/w006/engineering-cc42ae6/wheel-venv/bin/python",
+            "-B",
+            "-c",
+            "exec(compile(open(\"/workspace/work/w006/engineering-cc42ae6/environment_probe.py\", \"rb\").read(), \"environment_probe.py\", \"exec\"))"
+          ]
+        },
+        {
+          "name": "mypy-310.result.json",
+          "returncode": 0,
+          "cwd": "/workspace/work/w006/engineering-cc42ae6/source",
+          "command": [
+            "/workspace/work/w006/venv310/bin/python",
+            "-B",
+            "-m",
+            "mypy"
+          ]
+        },
+        {
+          "name": "build.result.json",
+          "returncode": 0,
+          "cwd": "/workspace/work/w006/engineering-cc42ae6/source",
+          "command": [
+            "/workspace/work/w006/venv/bin/python",
+            "-B",
+            "-m",
+            "build",
+            "--outdir",
+            "/workspace/work/w006/engineering-cc42ae6/dist"
+          ]
+        },
+        {
+          "name": "environment310.result.json",
+          "returncode": 0,
+          "cwd": "/workspace/work/w006/engineering-cc42ae6/source",
+          "command": [
+            "/workspace/work/w006/venv310/bin/python",
+            "-B",
+            "-c",
+            "exec(compile(open(\"/workspace/work/w006/engineering-cc42ae6/environment_probe.py\", \"rb\").read(), \"environment_probe.py\", \"exec\"))"
+          ]
+        },
+        {
+          "name": "wheel-smoke.result.json",
+          "returncode": 0,
+          "cwd": "/workspace/work/w006/engineering-cc42ae6/outside",
+          "command": [
+            "/workspace/work/w006/engineering-cc42ae6/wheel-venv/bin/python",
+            "-B",
+            "wheel_smoke.py",
+            "/workspace/work/w006/engineering-cc42ae6/source/tests/fixtures/w003_m1",
+            "/workspace/work/w006/engineering-cc42ae6/outside/smoke-output"
+          ]
+        },
+        {
+          "name": "wheel-install.result.json",
+          "returncode": 0,
+          "cwd": "/workspace/work/w006/engineering-cc42ae6/outside",
+          "command": [
+            "/workspace/work/w006/engineering-cc42ae6/wheel-venv/bin/python",
+            "-B",
+            "-m",
+            "pip",
+            "install",
+            "/workspace/work/w006/engineering-cc42ae6/dist/layauto-0.2.0-py3-none-any.whl"
+          ]
+        },
+        {
+          "name": "wheel-venv.result.json",
+          "returncode": 0,
+          "cwd": "/workspace/work/w006/engineering-cc42ae6/outside",
+          "command": [
+            "/workspace/work/w006/venv/bin/python",
+            "-B",
+            "-m",
+            "venv",
+            "/workspace/work/w006/engineering-cc42ae6/wheel-venv"
+          ]
+        },
+        {
+          "name": "artifact-verification.result.json",
+          "returncode": 0,
+          "cwd": "/workspace/work/w006/engineering-cc42ae6/outside",
+          "command": [
+            "/workspace/work/w006/venv/bin/python",
+            "-B",
+            "/workspace/work/w006/engineering-cc42ae6/verify_artifacts.py"
+          ]
+        },
+        {
+          "name": "wheel-pip-check.result.json",
+          "returncode": 0,
+          "cwd": "/workspace/work/w006/engineering-cc42ae6/outside",
+          "command": [
+            "/workspace/work/w006/engineering-cc42ae6/wheel-venv/bin/python",
+            "-B",
+            "-m",
+            "pip",
+            "check"
+          ]
+        },
+        {
+          "name": "pytest-310.result.json",
+          "returncode": 0,
+          "cwd": "/workspace/work/w006/engineering-cc42ae6/source",
+          "command": [
+            "/workspace/work/w006/venv310/bin/python",
+            "-B",
+            "-m",
+            "pytest",
+            "-p",
+            "no:cacheprovider",
+            "tests/unit",
+            "tests/contracts",
+            "-q"
+          ]
+        },
+        {
+          "name": "pip-check-310.result.json",
+          "returncode": 0,
+          "cwd": "/workspace/work/w006/engineering-cc42ae6/source",
+          "command": [
+            "/workspace/work/w006/venv310/bin/python",
+            "-B",
+            "-m",
+            "pip",
+            "check"
+          ]
+        }
+      ],
+      "artifact_observations": {
+        "execution_workspace_exists": false,
+        "wheel_exists": false,
+        "dev_env_exists": false,
+        "py310_env_exists": false,
+        "wheel_env_exists": false,
+        "claimed_wheel_sha256": "ca51366350ce95aba68df523ffaee653cd546a52ad8cfb0f61348bcfa430e8b0"
+      },
+      "errors": []
+    },
+    "source_receipt_sha256": "77939bfbcc1f06cc3ec36b4d6a2e8e16cf01244eb74f861660c116d5131b9a39",
+    "timing": "Verified on clean delivery checkout before PM-owned documentation edits"
+  },
+  "read_only_specialists": {
+    "evidence": {
+      "agent": "/root/w006_accept_evidence",
+      "result": "No new must-fix; final source/evidence identities match; build/install methods inspected"
+    },
+    "repository_domain": {
+      "agent": "/root/w006_accept_scope",
+      "result": "No new must-fix; immutable root atomic publication, replay ordering, frozen checkpoint, guards and freeze/interrupt semantics inspected",
+      "probe_path": "pm-verification/repository_scope_probe.py",
+      "probe_sha256": "0fdeeb293d0b81239ae56738e8db68a373cd8d0baee11800292a3a449b110b67",
+      "probe_result": {
+        "probe": "W006 PM repository/domain acceptance scope",
+        "cwd": "/workspace/Layauto",
+        "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=/workspace/Layauto /workspace/work/w005-pm-check-env/bin/python -B /workspace/work/w006-pm-acceptance/repository_scope_probe.py",
+        "script_path": "/workspace/work/w006-pm-acceptance/repository_scope_probe.py",
+        "script_sha256": "0fdeeb293d0b81239ae56738e8db68a373cd8d0baee11800292a3a449b110b67",
+        "exit_code": 0,
+        "stdout": "PASS ref/hash/run guards reject without repository mutation; all stored records roundtrip\nPASS before-switch failure publishes nothing; after-switch response loss replays one atomic publication\nPASS empty/surrogate/hostile freeze exception preserves original failure and valid no-RunRecord closure\nPASS original freeze interrupt propagates without half-publication; frozen request remains retryable\n",
+        "capture_note": "Recorded from the already completed exec_command result; the probe was not rerun when writing this receipt. The tool returned a combined output stream, with no separate stderr stream.",
+        "conclusion": "No additional must-fix findings in the repository/domain acceptance scope.",
+        "limits": [
+          "Process-local publication only.",
+          "No new full-suite or packaging run performed by this scoped reviewer.",
+          "Actual fixture acquisition/pipeline ordering and final engineering evidence are reviewed separately by the PM."
+        ],
+        "checkout_commit": "628cc94383fa4c68bd44de51117ef06451ed3a9e"
+      }
+    }
+  },
+  "adopted_evidence": {
+    "execution": "verification/receipt.json",
+    "final_engineering": "verification/final/engineering-receipt.json",
+    "independent_review": "code-review.md",
+    "python310": "389 full source tests and strict typing for 21 source files passed on final product",
+    "python312": "389 full source tests and strict typing for 21 source files also independently rerun by PM here",
+    "build_install": "Final source archive PEP517 sdist/wheel; fresh Python3.12 venv, pip check, installed-source assertion and outside-source normal/F2 smoke passed in delivered evidence",
+    "original_artifact_identity": "74 package source files in final wheel matched Git, verified by published independent reviewer; original wheel and original execution environments unavailable in this PM environment",
+    "wheel_sha256": "ca51366350ce95aba68df523ffaee653cd546a52ad8cfb0f61348bcfa430e8b0",
+    "sdist_sha256": "9e802f092248b57d469bc5992f227ad3f55016f56d9c0e5c52a6ef30bc153724"
+  },
+  "not_run_here": [
+    "Python3.10 tests or typing",
+    "build, original wheel byte verification or clean installation",
+    "fixture regeneration or legacy regression"
+  ],
+  "not_validated_by_delivery": [
+    "Python3.10 clean wheel installation",
+    "other platforms/interpreters",
+    "real EDA/production or matched/live evidence",
+    "durable or cross-process recovery",
+    "Stage2 semantics/baseline/seal/no_change, Stage5 ECO/full modes, Stage6 export/normal terminal, complete M1"
+  ],
+  "main_at_receipt": {
+    "sha": "4db3aa81d6f01496a680bdcb264afe99cd80f3f3",
+    "command": "git ls-remote origin refs/heads/main refs/heads/codex/w006-precontext-run-audit",
+    "branch_delivery_sha_verified": true,
+    "merged_by_this_session": false
+  },
+  "preserved": [
+    "accepted fixtures and answers",
+    "tests/support",
+    "architecture",
+    "W003/W004/W005 execution, review and evidence",
+    "original W006 execution/review sections and historical findings"
+  ],
+  "warning": "PM pytest had one third-party anyio pytest deprecation warning; no test failures",
+  "pm_document_checks": {
+    "local_links_resolved": 88,
+    "pm1_anchor_present": true,
+    "original_behavior_and_acceptance_requirements_preserved": true,
+    "execution_and_review_sections_preserved": true,
+    "historical_execution_prompt_preserved": true,
+    "only_docs_changed": true,
+    "independent_scope_review": "/root/w006_accept_scope checked the four PM document diffs; no must-fix"
+  }
+}

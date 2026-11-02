@@ -8,8 +8,8 @@
 | --- | --- |
 | ID / 目标 | W006；实现process-local的pre-context入口、审计与失败终结，成功读取交接仍为unsealed |
 | 里程碑 / 依赖 | M1的第二个产品切片；依赖已验收W003/W004输入与W005组件。W005经[PR #59](https://github.com/LucianoHoult/Layauto/pull/59)合入main `4db3aa81d6f01496a680bdcb264afe99cd80f3f3`，验收见[W005 PM4](W005-input-reading-binding.md#pm4-integration-20261102)；完整M1仍待后续组合 |
-| 授权依据 / 当前阶段 | 用户2026-11-02同意继续合并、验收并准备下一任务；沿用独立执行session。**可执行：先补内部接口方案并独立review，原范围内修正后直接实施。** 本次PM仅准备要求/分支，尚无W006产品实现或测试结果 |
-| 恢复位置 | `codex/w006-precontext-run-audit`，从上述main集成版本建立，接手使用包含本任务的PM交接提交，准确SHA见Git/回复。先核对远端、HEAD及已有差异，不假定临时环境/未提交文件跨session存在 |
+| 授权依据 / 当前阶段 | 用户2026-11-02同意继续合并W005、验收并准备下一任务；沿用独立执行session。**待验收：W006分支技术接收通过，待main集成与最终验收。** 实现、接口/代码review及补修已交付；PM核验见[PM1](#pm1-20261102)，未据此扩大到W006合并或下一任务实现 |
+| 恢复位置 | `codex/w006-precontext-run-audit`；执行交付`628cc94383fa4c68bd44de51117ef06451ed3a9e`，最终产品/回归`cc42ae62585755b0b914d4dbec43324941bfe7c6`。接手包含PM1的后续文档提交，准确SHA见Git/回复。先核对远端、HEAD及已有差异，不假定临时环境/未提交文件跨session存在 |
 | 允许修改 | `layauto_v2/pipeline.py`；新增职责明确的`repository/`、`tooling/`及必要中立`domain/` request/ids/results/publication合同；必要的W005读取/捕获接口重构；`tests/unit/`、`tests/contracts/`及真实文件组合测试；受影响typing/build配置、README及本任务执行/review附件 |
 | 非目标 | 不实现Stage 2语义/空间/body/extraction及baseline/seal，不判断no_change，不实现ECO/Stage 5修改、Stage 6 geometry导出/完整报告，不运行真实EDA或生产上传，不承诺持久化/跨进程恢复；不发布新稳定CLI或新增必需外部输入文件，不改已验收fixture/答案/合同来迁就实现 |
 | 架构依据 | 基线中的[architecture](../architecture.md) §2.1–2.2、§2.6–2.7、§9.2、§11.2/11.4/11.10/11.13/11.15、§12.1/12.6–12.7；以各段原文为准。另读[W002](W002-first-input-admission.md) E6/E7/R4、[W003合同](W003/contracts.md)共享记录/失败/F1–F2与[W005后续组合表](W005-input-reading-binding.md#pm已确定的任务拆分) |
@@ -122,11 +122,32 @@ Repository只提供本切片所需create、audit/checkpoint、pre-context finali
 
 ## PM 验收与交接（PM）
 
-当前只有任务要求和分支准备，未验收W006。执行者完成实现与独立review后，将本任务产物、证据及记录提交推送到`codex/w006-precontext-run-audit`，使用项目既有GitHub noreply身份，核对远端完整SHA并交回PM。远端变化先核对并安全集成，不force push；不自行验收、合并main、删除分支或扩展下一产品任务。
+**原派发记录（2026-11-02，已完成交回）：** 派发时只有任务要求和分支准备，未验收W006；执行者完成实现与独立review后，将本任务产物、证据及记录提交推送到`codex/w006-precontext-run-audit`，使用项目既有GitHub noreply身份，核对远端完整SHA并交回PM。远端变化先核对并安全集成，不force push；不自行验收、合并main、删除分支或扩展下一产品任务。该段保留原交接边界，当前接收结果见PM1。
 
 **派发文档复核（2026-11-02，PM记录）：** 未参与草稿设计/编写的`w006_handoff_review`对照架构及W002/W003/W005完成独立检查，剩余必须修正项为0；整体交接中一处旧W005分支导航句已修正并复核。受审任务全文SHA-256为`59b296fa93d7fc72e59a9b68b46ce1e50819fdb27f7bd938dcef702c841e7179`，对应追加本段前的内容；六份文档的状态、103个本地链接、相关锚点及W005集成身份/历史保护核对通过。此为派发要求review，不替代未来接口方案或产品代码review。
 
+<a id="pm1-20261102"></a>
+### PM1 分支技术接收（2026-11-02）
+
+**结论：A1–A8在本任务范围内满足接收条件，剩余必须修正项0；建议合入main后完成集成验收。** 当前阶段仍为待验收，集成状态为未合并；本轮没有合并、删分支或启动下一产品任务。正常输入只交接unsealed attempt，不能据此宣称完整M1或整轮运行成功。
+
+PM从干净工作区取得并核对远端交付`628cc94383fa4c68bd44de51117ef06451ed3a9e`，最终产品为`cc42ae62585755b0b914d4dbec43324941bfe7c6`。直接检查pipeline、读取/捕获接口及W005兼容性，并委派未参与该实现的repository/domain与证据专项；原接口IR-01/02、代码CR-01/02/03及CR-02空消息追加项均保留且独立关闭，无新增必须修正项。详细命令、输出、环境与采用边界保存于[PM接收回执](W006/pm-receipt.json)。
+
+| 核验方式 | 实际结果 |
+| --- | --- |
+| PM本机完整回归 | Python3.12.14，`python -B -m pytest -p no:cacheprovider tests/unit tests/contracts -q`：**389 passed**；包含W005读取、真实正常/F2入口及W006失败/重试组合。仅有第三方anyio的pytest弃用warning |
+| PM本机strict typing | `python -B -m mypy --cache-dir /workspace/work/w006-pm-mypy-cache`：**21 source files，无错误** |
+| 独立repository专项 | 核对单root原子发布、幂等优先、稳定失败checkpoint和unsealed边界；[公共API探针](W006/pm-verification/repository_scope_probe.py)验证错ref/hash/run拒绝、切换前失败/切换后丢响应重放、freeze诊断异常及原始中断传播，无半发布 |
+| 身份与历史保护 | 214项source、88项tested-source、116项fixture在最终产品、交付及工作区一致；31项工程证据hash、16项review身份及接口方案hash一致。最终产品后99个变化路径均为docs；fixture、答案、support、架构及W003/W004/W005历史未改 |
+| 采用已核对的独立证据 | Python3.10完整389项、两解释器typing、新sdist/wheel、Python3.12干净安装及源码外正常/F2 smoke均对应最终产品。原W006环境与wheel不在本机，74个wheel产品文件身份采用已发表的独立review核验，不冒记为PM本轮重建或重验原包 |
+
+PM本轮未重跑Python3.10、构建/干净安装或fixture生成；原执行也未覆盖Python3.10干净wheel安装、其他平台/解释器、真实EDA/生产、durability及后续Stage2–6。源码回归环境复用现有PM虚拟环境，明确不作为干净安装证据。
+
+下一步先核对拟合并head与已审产品身份，完成main合并及受影响组合验证，再记录W006最终验收。之后收敛后续Stage2任务：把输入转换为内部模型并完成该阶段校验，继续明确baseline/no_change、Stage6闭环的任务归属；本轮不提前实现或宣称这些能力。远端main在接收时仍为`4db3aa81d6f01496a680bdcb264afe99cd80f3f3`。
+
 ### 独立执行session prompt
+
+以下为已完成派发的历史prompt，保留原授权与范围；当前恢复应从PM1继续，不重新执行本段。
 
 ```text
 按Layauto项目规范，以执行角色完成W006运行入口与输入失败记录。

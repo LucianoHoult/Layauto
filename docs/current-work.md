@@ -4,7 +4,7 @@
 
 ## 当前节点
 
-**当前任务为[W006 — 运行入口与输入失败记录](tasks/W006-precontext-run-audit.md)，阶段可执行，等待独立执行session接手。** 在W005读取组件前建立run身份，真实输入失败后保留读取/解析/失败记录并终结为reject；正常读取交接仍unsealed，供后续Stage2继续。本轮只准备任务要求、分支与prompt，尚未实现W006。
+**当前任务为[W006 — 运行入口与输入失败记录](tasks/W006-precontext-run-audit.md)，分支技术接收通过，待main集成与最终验收。** 已在W005读取组件前建立run身份；真实输入失败可保留读取/解析/失败记录并终结为reject，正常读取仍交接unsealed attempt给后续Stage2。PM复跑Python3.12完整389项及21模块strict typing通过，独立review剩余必须修正项0；身份、证据采用边界与后续步骤见[W006 PM1](tasks/W006-precontext-run-audit.md#pm1-20261102)。
 
 **W005已验收，并通过[PR #59](https://github.com/LucianoHoult/Layauto/pull/59)合入main `4db3aa81d6f01496a680bdcb264afe99cd80f3f3`。** 合并内容与已审head完全相同，实际集成21项通过，原284项/typing/独立review证据保持适用，见[PM4](tasks/W005-input-reading-binding.md#pm4-integration-20261102)。IPMR-01/FR1均关闭；W003/W004样本及最小合同的验收和[PR #58](https://github.com/LucianoHoult/Layauto/pull/58)集成事实保留。
 
@@ -16,7 +16,7 @@
 
 ## 恢复与版本身份
 
-先读根[AGENTS](../AGENTS.md)、[README](../README.md)、[协作规则](collaboration/rules.md)及W006；回查任务引用的架构、W003 F1/F2及W005组件合同。不要从旧W004实施或W005补修prompt重新开始。
+先读根[AGENTS](../AGENTS.md)、[README](../README.md)、[协作规则](collaboration/rules.md)及W006 PM1；回查任务引用的架构、W003 F1/F2及W005组件合同。不要从旧W004实施、W005补修或已完成的W006执行prompt重新开始。
 
 | 用途 | 恢复依据 |
 | --- | --- |
@@ -28,16 +28,16 @@
 | 原PM技术接收 | [PM接收回执](tasks/W005/pm-receipt.json)保存PM1对原交付的3.12测试、typing、重建/干净安装及身份核验；不能覆盖后续补修版本 |
 | 当前补修交付 | `c69018dfd1b8eb67705753bb170ec3dcebb88e8f`；最终产品/回归提交`0a6de39e02947e3ae8af64a4dca9487ee8898ca3`，见[补修独立review](tasks/W005/ipmr01-fix-review.md)。原finding及复现保存在[原报告](tasks/W005/independent-premerge-review.md) |
 | W005当前集成 | main `4db3aa81d6f01496a680bdcb264afe99cd80f3f3`，合并head `ef31139465d01c170ccaf081484d3bd7cf5ff858`；[集成回执](tasks/W005/integration-receipt.json)与[PM4](tasks/W005-input-reading-binding.md#pm4-integration-20261102)记录最终验收，原[补修接收回执](tasks/W005/ipmr01-pm-receipt.json)保留实际复跑及采用边界 |
-| W006恢复入口 | `codex/w006-precontext-run-audit`，起点为上述main集成版本；接手包含W006要求及本入口的PM交接提交，完整SHA见Git/回复。W005 PM4及W006派发文档随此新分支交接，未提前改变产品 |
+| W006恢复入口 | `codex/w006-precontext-run-audit`；执行交付`628cc94383fa4c68bd44de51117ef06451ed3a9e`，最终产品/回归`cc42ae62585755b0b914d4dbec43324941bfe7c6`。接手包含[PM1](tasks/W006-precontext-run-audit.md#pm1-20261102)及[PM回执](tasks/W006/pm-receipt.json)的后续文档提交，完整SHA见Git/回复；尚未合入main |
 | 历史材料 | 准备基线9f6735d，原技术实物0153505；MR-001–077、执行/review和旧PM记录保留各自历史事实。原包与既有受审实物不随PM状态整理改写 |
 
-本机PM复核材料原位于`/workspace/work/w004-pm-receipt-kryfgf84/`，关键结果与身份另汇入[PM接收摘要](tasks/W003/delivery/w004-pm-20261031/receipt.json)随Git交接；临时全量目录不自动跨实例共享。W004/W005分支均已合入main并保留，当前实现从新的W006分支接手。
+本机PM复核材料原位于`/workspace/work/w004-pm-receipt-kryfgf84/`，关键结果与身份另汇入[PM接收摘要](tasks/W003/delivery/w004-pm-20261031/receipt.json)随Git交接；临时全量目录不自动跨实例共享。W004/W005分支均已合入main并保留，W006在自己的分支完成技术接收，当前从该分支的PM记录继续。
 
-## 下一步：独立执行W006
+## 下一步：W006集成与后续任务收敛
 
-执行者从W006分支恢复，先形成内部API/DTO/调用次序方案并独立review，原范围内修正后直接实现A1–A8。重点是parser前attempt、F1请求声明与实际read事实分离、ToolRun/Parse同bytes、F2失败链、process-local原子终结/幂等及freeze/terminal/interrupt边界。完整prompt位于[W006交接段](tasks/W006-precontext-run-audit.md#独立执行session-prompt)。
+W006已具备本分支的技术合并条件。下一步核对拟合并head与已审代码身份，合入main后验证受影响组合并补最终验收；本轮main未变。沿用独立执行session方式，集成完成后再收敛Stage2任务与交接prompt，本轮尚未建立或启动下一产品任务。
 
-正常输入在W006仅交接unsealed attempt，不产生成功terminal。后续Stage2/baseline/no_change与Stage6完整文件闭环仍是M1硬门；真实工具与配置机制后置项保持，新增关键预期带实例交PM/用户。执行/review交回后由PM验收，不自行合并main或启动后续实现。
+正常输入在W006仅交接unsealed attempt，不产生成功terminal。后续Stage2/baseline/no_change与Stage6完整文件闭环仍是M1硬门；真实工具与配置机制后置项保持，新增关键预期带实例交PM/用户。分支技术接收不等同main集成、W006最终验收或完整M1通过。
 
 ## 生产 parser 测试与真实缺项
 

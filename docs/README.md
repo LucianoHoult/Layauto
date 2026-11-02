@@ -13,7 +13,7 @@
 | 如何查看样本意见的最终处理？ | [MR-078](tasks/W003/manual-verification.md#mr-078)：本轮已落实、已后置及后续开发归属；原人工答复与独立技术证据各保留来源 |
 | 如何查看已修订样本及接收依据？ | [W004 PM3](tasks/W004-fixture-revision.md#pm3-20261031)：633e3fe的synthetic修订已验收；[W003 P10](tasks/W003-m1-fixture-contracts.md#p10-w003-accepted)完成样本范围收口 |
 | 输入读取组件及接收记录在哪里？ | [W005](tasks/W005-input-reading-binding.md)：读取实际GDS/CDL/raw/config并核对输入绑定，交可组合的evidence/错误结果；实现、review和PM接收归任务文件，完整运行流程另行组合 |
-| 下一步如何接入运行记录？ | [W006](tasks/W006-precontext-run-audit.md)：parser前建立attempt，真实读取与失败记录同源，process-local原子终结；正常输入交接后续Stage2。任务要求及独立执行prompt归该文件 |
+| 运行入口与失败记录做到哪里？ | [W006](tasks/W006-precontext-run-audit.md)：parser前建立attempt，真实读取与失败记录同源，process-local原子终结；正常输入交接后续Stage2。交付、review及[PM接收](tasks/W006-precontext-run-audit.md#pm1-20261102)归该文件 |
 | 整体开发顺序怎样安排？ | [roadmap.md](roadmap.md)：首版里程碑、依赖、架构要求到验收的覆盖；规划已 review 并由 PM 接收，产品能力未验收 |
 | 如何准备与运行环境？ | [environment/local-setup.md](environment/local-setup.md)：Python、安装、测试及历史环境记录 |
 | 如何跨机器工作？ | [environment/remote-development.md](environment/remote-development.md)：运行位置、环境准备与代码交接 |
