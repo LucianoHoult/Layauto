@@ -6,7 +6,8 @@
     "gds": "source.gds",
     "source_cdl": "source.cdl",
     "target_cdl": "target.cdl",
-    "query_header": "query/header.json"
+    "query_header": "query/header.json",
+    "body_context": "body/context.json"
   },
   "tech_ref": "tech.json",
   "export_policy_ref": "export_policy.json",

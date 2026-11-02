@@ -1,0 +1,10 @@
+{
+  "W004-delivery.tar.gz": "3cd7bc497391d76656e0327b415ec5c77ce26aa827423dc2b054654977173b39",
+  "W004-delivery.tar.gz.sha256": "2ce713eb9309ddb49bd8f969a16de496c60b19de4a5d01768cf3de69caf795ad",
+  "W004-full.patch": "78cadcd685f0b794166c0bb02da1fc9d6fb535dc7ac54a1c8418d937b9d172d4",
+  "W004-full.patch.sha256": "30f2c9d01189337fd0d9c1e40f51d06e8ee38f87c77a49b5573d2e0dd14108fd",
+  "W004-layout.png": "e39f9e101dc7b9639bf23d195490373225c26d26de0f7bf234ed1687f0ce399f",
+  "W004-layout.png.sha256": "c762ae9005a69a1dbb3fcc8e3a977ea29cc8c0cda9a9cd6df47d87fa71c7adfd",
+  "W004-package-audit.md": "95b29c5187468599c3d52cb993a9bae2927daf61adc8acfde4f8327c3a713901",
+  "archive-verification.json": "473c0830635527ca7a7c3b86f56d4ec7c7a21e290957a969a5078e39f94863f4"
+}

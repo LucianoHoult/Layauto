@@ -1,0 +1,127 @@
+{
+  "schema_version": "w004-tech-owner/2",
+  "fin_count_profile": {
+    "id": "toy_fin_crossing/1",
+    "fin_representation": "explicit_static_fin_plus_active_window",
+    "effective_fin_operator": "identity",
+    "effective_active_operator": "identity_OD",
+    "recognized_channel_operator": "positive_area_OD_intersect_POLY_with_exactly_one_gate_stripe_per_active",
+    "qualification": "FIN intersects full channel x span and is fully contained in active y interval; partial fin is unsupported, never rounded",
+    "count": "distinct qualified FIN rectangles for each recognized channel, grouped by the one-to-one device identity join",
+    "finger_count_required": 1,
+    "multiplicity_required": 1,
+    "fin_width_nm": 2,
+    "fin_pitch_nm": 10,
+    "fin_lower_edge_offset_nm": 24
+  },
+  "models": {
+    "TOY_N": {
+      "terminal_order": [
+        "D",
+        "G",
+        "S",
+        "B"
+      ],
+      "parameter_axes": {
+        "NFIN": "fins_per_finger",
+        "NF": "finger_count",
+        "M": "multiplicity",
+        "L": "channel_length",
+        "W": "fin_width",
+        "VT": "threshold_token"
+      },
+      "required_parameters": [
+        "NFIN",
+        "NF",
+        "M",
+        "L",
+        "W",
+        "VT"
+      ],
+      "default_parameters": {},
+      "sd_symmetry": false
+    },
+    "TOY_P": {
+      "terminal_order": [
+        "D",
+        "G",
+        "S",
+        "B"
+      ],
+      "parameter_axes": {
+        "NFIN": "fins_per_finger",
+        "NF": "finger_count",
+        "M": "multiplicity",
+        "L": "channel_length",
+        "W": "fin_width",
+        "VT": "threshold_token"
+      },
+      "required_parameters": [
+        "NFIN",
+        "NF",
+        "M",
+        "L",
+        "W",
+        "VT"
+      ],
+      "default_parameters": {},
+      "sd_symmetry": false
+    }
+  },
+  "device_extraction_contract": {
+    "id": "toy_device_terminal_context/2",
+    "cardinality": "one_to_one",
+    "device_reduction": "forbidden",
+    "layout_instance_names": "query-only backlinks; never semantic ids",
+    "sd_policy": "left connected component of OD minus channel is S, right is D; ordered terminals, swap unsupported",
+    "body_operator": "one same-type local body enclosing active; local graph separate; selected bound read-only external tapcell context supports body-to-rail association by exact geometry; no implicit edge from names",
+    "gate_operator": "POLY conductor continuous through channels; never an OD S-to-D conductor edge",
+    "mapping_missing_or_ambiguous": "typed_fail",
+    "body_operator_ref": "body_context/2"
+  },
+  "body_context_profile": {
+    "id": "toy_readonly_tapcell_context/2",
+    "operator_ref": "body_context/2",
+    "coordinates": "source local frame; integer nominal nm; identity transform only",
+    "geometry_scope": "external x<=frame left; never exported",
+    "source_binding": "actual source GDS bytes, top, FRAME and exact body/rail object identities required",
+    "types": {
+      "TOY_N": [
+        "BODY_N",
+        "BTAP_N"
+      ],
+      "TOY_P": [
+        "BODY_P",
+        "BTAP_P"
+      ]
+    },
+    "missing_support": "pre_context reject",
+    "geometry_failure": "sealed_no_publication reject",
+    "unique_matches_required": true
+  },
+  "operators": {
+    "rectangle_set_difference/1": "exact set subtraction, retain all positive-area rectangles, split disconnected results",
+    "same_layer_contact/1": "positive-area overlap OR positive-length shared edge; corner/point touch never edge",
+    "cross_layer_contact/1": "connector positive-area overlap with exactly one region in each declared conductor layer; no via-as-wire duplication; enclosure independently mandatory",
+    "terminal_split/1": "effective OD minus recognized channel; device S/D relation never union",
+    "spacing/1": "Euclidean minimum separation of closed exact rectangles; compare squared integer distance with squared threshold; geometry_only has no label exemption",
+    "lifecycle/1": "all preserve_drawn elements retain drawn signatures; frame_static also binds frame signature; no prepublication_derived layer in this profile; operator DAG effective geometry -> fragments -> contacts/body -> terminal graph -> mandatory rules",
+    "body_context/2": "same-type positive-length boundary-edge continuation local body to external body; unique typed external BTAP overlaps and is enclosed by exactly one external body and rail; external M1 rail uniquely continues local M1 at frame boundary; semantic rail checked only after geometry; no local graph union"
+  },
+  "capabilities": {
+    "no_change": true,
+    "resize": false,
+    "body_complete_for_toy": true,
+    "production_matched_body_evidence": false,
+    "production_abutment": false
+  },
+  "required_operator_refs": [
+    "rectangle_set_difference/1",
+    "same_layer_contact/1",
+    "cross_layer_contact/1",
+    "terminal_split/1",
+    "body_context/2",
+    "spacing/1",
+    "lifecycle/1"
+  ]
+}

@@ -1,36 +1,1192 @@
 {
-  "schema_version": "w003-query-normalized/1",
-  "header_id": "w003.synthetic.query.1",
+  "schema_version": "w004-query-normalized/2",
+  "header_id": "w004.synthetic.query.2",
+  "dialect": "calibre_like_synthetic/2",
   "capability": "device_regions",
-  "raw_sha256": "86d154d3f3976abc42d60c8fd20bb333d1fb2c4160728ab79e941013f9782e67",
+  "raw_refs": [
+    {
+      "path": "query/raw/device_info_Q17.txt",
+      "sha256": "0f530a0a0b11fdcae759eebc0d8efd989b9442add651e0ac79d74d0ab9a8c7a5"
+    },
+    {
+      "path": "query/raw/device_info_Q93.txt",
+      "sha256": "3966dc3d7339ca98cf9b4e0c24a563a0ada8b2d7f7a896ea8bed4df200a53efe"
+    },
+    {
+      "path": "query/raw/iXref.temp",
+      "sha256": "36bdbfb105e5e953740ea475b38a7022c671532990838c6040efcbf4dd92d074"
+    }
+  ],
   "records": [
     {
       "record_id": "D0",
-      "layout_instance": "Q17",
       "derived_layer": "toy_ngate",
       "geometry_kind": "rectangle",
       "quality": "exact",
-      "bbox_lexemes": [
-        "58",
-        "20",
-        "62",
-        "70"
+      "vertices_nm": [
+        {
+          "x": {
+            "numerator": "58",
+            "denominator": "1"
+          },
+          "y": {
+            "numerator": "20",
+            "denominator": "1"
+          }
+        },
+        {
+          "x": {
+            "numerator": "58",
+            "denominator": "1"
+          },
+          "y": {
+            "numerator": "70",
+            "denominator": "1"
+          }
+        },
+        {
+          "x": {
+            "numerator": "62",
+            "denominator": "1"
+          },
+          "y": {
+            "numerator": "70",
+            "denominator": "1"
+          }
+        },
+        {
+          "x": {
+            "numerator": "62",
+            "denominator": "1"
+          },
+          "y": {
+            "numerator": "20",
+            "denominator": "1"
+          }
+        }
       ],
-      "unit": "nm"
+      "bbox_nm": {
+        "x_min": {
+          "numerator": "58",
+          "denominator": "1"
+        },
+        "y_min": {
+          "numerator": "20",
+          "denominator": "1"
+        },
+        "x_max": {
+          "numerator": "62",
+          "denominator": "1"
+        },
+        "y_max": {
+          "numerator": "70",
+          "denominator": "1"
+        }
+      },
+      "unit": "nm",
+      "precision": 20000,
+      "metadata_opaque": [
+        "0",
+        "toy_ngate"
+      ],
+      "section_header_opaque": "1 1 0 May 07 03:00:00 2026",
+      "layout_instance": "Q17",
+      "schematic_instance": "MN0",
+      "field_sources": {
+        "record_id": {
+          "derivation": "author ordinal label, not a raw identity",
+          "sources": [
+            {
+              "path": "query/requests.json",
+              "sha256": "57f5f38cb3ec450fd1815ef88c618c03a9703690672348b313fa35fbce97bc62",
+              "json_pointer": "/requests/0/record_ids/0",
+              "lexeme": "D0"
+            }
+          ]
+        },
+        "derived_layer": {
+          "derivation": "verbatim",
+          "sources": [
+            {
+              "path": "query/raw/device_info_Q17.txt",
+              "sha256": "0f530a0a0b11fdcae759eebc0d8efd989b9442add651e0ac79d74d0ab9a8c7a5",
+              "line_1based": 5,
+              "token_0based": null,
+              "lexeme": "toy_ngate"
+            },
+            {
+              "path": "tech/derived.json",
+              "sha256": "0806468843e018c9dda461dc7c6c583773f63453392143ce6b6a92259a7ec1d9",
+              "json_pointer": "/derived_registry/0",
+              "lexeme": {
+                "id": "toy_ngate",
+                "target_layer": "POLY",
+                "carries": [
+                  "device_id"
+                ],
+                "accepted_geometry_kinds": [
+                  "rectangle"
+                ],
+                "quality": "exact",
+                "annotation_match_tolerance_nm": 0,
+                "trim_operator": "recognized_channel_intersection",
+                "conflict_policy": "reject_ambiguous",
+                "source": "calibre_like_synthetic/2"
+              }
+            }
+          ]
+        },
+        "geometry_kind": {
+          "derivation": "prove four distinct axis-aligned rectangle corners",
+          "sources": [
+            {
+              "path": "query/raw/device_info_Q17.txt",
+              "sha256": "0f530a0a0b11fdcae759eebc0d8efd989b9442add651e0ac79d74d0ab9a8c7a5",
+              "line_1based": 8,
+              "token_0based": 0,
+              "lexeme": "400"
+            },
+            {
+              "path": "query/raw/device_info_Q17.txt",
+              "sha256": "0f530a0a0b11fdcae759eebc0d8efd989b9442add651e0ac79d74d0ab9a8c7a5",
+              "line_1based": 8,
+              "token_0based": 1,
+              "lexeme": "1160"
+            },
+            {
+              "path": "query/raw/device_info_Q17.txt",
+              "sha256": "0f530a0a0b11fdcae759eebc0d8efd989b9442add651e0ac79d74d0ab9a8c7a5",
+              "line_1based": 9,
+              "token_0based": 0,
+              "lexeme": "1400"
+            },
+            {
+              "path": "query/raw/device_info_Q17.txt",
+              "sha256": "0f530a0a0b11fdcae759eebc0d8efd989b9442add651e0ac79d74d0ab9a8c7a5",
+              "line_1based": 9,
+              "token_0based": 1,
+              "lexeme": "1160"
+            },
+            {
+              "path": "query/raw/device_info_Q17.txt",
+              "sha256": "0f530a0a0b11fdcae759eebc0d8efd989b9442add651e0ac79d74d0ab9a8c7a5",
+              "line_1based": 10,
+              "token_0based": 0,
+              "lexeme": "1400"
+            },
+            {
+              "path": "query/raw/device_info_Q17.txt",
+              "sha256": "0f530a0a0b11fdcae759eebc0d8efd989b9442add651e0ac79d74d0ab9a8c7a5",
+              "line_1based": 10,
+              "token_0based": 1,
+              "lexeme": "1240"
+            },
+            {
+              "path": "query/raw/device_info_Q17.txt",
+              "sha256": "0f530a0a0b11fdcae759eebc0d8efd989b9442add651e0ac79d74d0ab9a8c7a5",
+              "line_1based": 11,
+              "token_0based": 0,
+              "lexeme": "400"
+            },
+            {
+              "path": "query/raw/device_info_Q17.txt",
+              "sha256": "0f530a0a0b11fdcae759eebc0d8efd989b9442add651e0ac79d74d0ab9a8c7a5",
+              "line_1based": 11,
+              "token_0based": 1,
+              "lexeme": "1240"
+            },
+            {
+              "path": "tech/derived.json",
+              "sha256": "0806468843e018c9dda461dc7c6c583773f63453392143ce6b6a92259a7ec1d9",
+              "json_pointer": "/derived_registry/0",
+              "lexeme": {
+                "id": "toy_ngate",
+                "target_layer": "POLY",
+                "carries": [
+                  "device_id"
+                ],
+                "accepted_geometry_kinds": [
+                  "rectangle"
+                ],
+                "quality": "exact",
+                "annotation_match_tolerance_nm": 0,
+                "trim_operator": "recognized_channel_intersection",
+                "conflict_policy": "reject_ambiguous",
+                "source": "calibre_like_synthetic/2"
+              }
+            }
+          ]
+        },
+        "quality": {
+          "derivation": "lossless rectangle proof + selected dialect/derived registry, not raw token",
+          "sources": [
+            {
+              "path": "query/raw/device_info_Q17.txt",
+              "sha256": "0f530a0a0b11fdcae759eebc0d8efd989b9442add651e0ac79d74d0ab9a8c7a5",
+              "line_1based": 8,
+              "token_0based": 0,
+              "lexeme": "400"
+            },
+            {
+              "path": "query/raw/device_info_Q17.txt",
+              "sha256": "0f530a0a0b11fdcae759eebc0d8efd989b9442add651e0ac79d74d0ab9a8c7a5",
+              "line_1based": 8,
+              "token_0based": 1,
+              "lexeme": "1160"
+            },
+            {
+              "path": "query/raw/device_info_Q17.txt",
+              "sha256": "0f530a0a0b11fdcae759eebc0d8efd989b9442add651e0ac79d74d0ab9a8c7a5",
+              "line_1based": 9,
+              "token_0based": 0,
+              "lexeme": "1400"
+            },
+            {
+              "path": "query/raw/device_info_Q17.txt",
+              "sha256": "0f530a0a0b11fdcae759eebc0d8efd989b9442add651e0ac79d74d0ab9a8c7a5",
+              "line_1based": 9,
+              "token_0based": 1,
+              "lexeme": "1160"
+            },
+            {
+              "path": "query/raw/device_info_Q17.txt",
+              "sha256": "0f530a0a0b11fdcae759eebc0d8efd989b9442add651e0ac79d74d0ab9a8c7a5",
+              "line_1based": 10,
+              "token_0based": 0,
+              "lexeme": "1400"
+            },
+            {
+              "path": "query/raw/device_info_Q17.txt",
+              "sha256": "0f530a0a0b11fdcae759eebc0d8efd989b9442add651e0ac79d74d0ab9a8c7a5",
+              "line_1based": 10,
+              "token_0based": 1,
+              "lexeme": "1240"
+            },
+            {
+              "path": "query/raw/device_info_Q17.txt",
+              "sha256": "0f530a0a0b11fdcae759eebc0d8efd989b9442add651e0ac79d74d0ab9a8c7a5",
+              "line_1based": 11,
+              "token_0based": 0,
+              "lexeme": "400"
+            },
+            {
+              "path": "query/raw/device_info_Q17.txt",
+              "sha256": "0f530a0a0b11fdcae759eebc0d8efd989b9442add651e0ac79d74d0ab9a8c7a5",
+              "line_1based": 11,
+              "token_0based": 1,
+              "lexeme": "1240"
+            },
+            {
+              "path": "tech/derived.json",
+              "sha256": "0806468843e018c9dda461dc7c6c583773f63453392143ce6b6a92259a7ec1d9",
+              "json_pointer": "/derived_registry/0",
+              "lexeme": {
+                "id": "toy_ngate",
+                "target_layer": "POLY",
+                "carries": [
+                  "device_id"
+                ],
+                "accepted_geometry_kinds": [
+                  "rectangle"
+                ],
+                "quality": "exact",
+                "annotation_match_tolerance_nm": 0,
+                "trim_operator": "recognized_channel_intersection",
+                "conflict_policy": "reject_ambiguous",
+                "source": "calibre_like_synthetic/2"
+              }
+            }
+          ]
+        },
+        "vertices_nm": {
+          "derivation": "raw(y,x) * 1000 / precision nm; preserve vertex order",
+          "sources": [
+            {
+              "path": "query/raw/device_info_Q17.txt",
+              "sha256": "0f530a0a0b11fdcae759eebc0d8efd989b9442add651e0ac79d74d0ab9a8c7a5",
+              "line_1based": 1,
+              "token_0based": 1,
+              "lexeme": "20000"
+            },
+            {
+              "path": "query/raw/device_info_Q17.txt",
+              "sha256": "0f530a0a0b11fdcae759eebc0d8efd989b9442add651e0ac79d74d0ab9a8c7a5",
+              "line_1based": 8,
+              "token_0based": 0,
+              "lexeme": "400"
+            },
+            {
+              "path": "query/raw/device_info_Q17.txt",
+              "sha256": "0f530a0a0b11fdcae759eebc0d8efd989b9442add651e0ac79d74d0ab9a8c7a5",
+              "line_1based": 8,
+              "token_0based": 1,
+              "lexeme": "1160"
+            },
+            {
+              "path": "query/raw/device_info_Q17.txt",
+              "sha256": "0f530a0a0b11fdcae759eebc0d8efd989b9442add651e0ac79d74d0ab9a8c7a5",
+              "line_1based": 9,
+              "token_0based": 0,
+              "lexeme": "1400"
+            },
+            {
+              "path": "query/raw/device_info_Q17.txt",
+              "sha256": "0f530a0a0b11fdcae759eebc0d8efd989b9442add651e0ac79d74d0ab9a8c7a5",
+              "line_1based": 9,
+              "token_0based": 1,
+              "lexeme": "1160"
+            },
+            {
+              "path": "query/raw/device_info_Q17.txt",
+              "sha256": "0f530a0a0b11fdcae759eebc0d8efd989b9442add651e0ac79d74d0ab9a8c7a5",
+              "line_1based": 10,
+              "token_0based": 0,
+              "lexeme": "1400"
+            },
+            {
+              "path": "query/raw/device_info_Q17.txt",
+              "sha256": "0f530a0a0b11fdcae759eebc0d8efd989b9442add651e0ac79d74d0ab9a8c7a5",
+              "line_1based": 10,
+              "token_0based": 1,
+              "lexeme": "1240"
+            },
+            {
+              "path": "query/raw/device_info_Q17.txt",
+              "sha256": "0f530a0a0b11fdcae759eebc0d8efd989b9442add651e0ac79d74d0ab9a8c7a5",
+              "line_1based": 11,
+              "token_0based": 0,
+              "lexeme": "400"
+            },
+            {
+              "path": "query/raw/device_info_Q17.txt",
+              "sha256": "0f530a0a0b11fdcae759eebc0d8efd989b9442add651e0ac79d74d0ab9a8c7a5",
+              "line_1based": 11,
+              "token_0based": 1,
+              "lexeme": "1240"
+            },
+            {
+              "path": "query/dialect.json",
+              "sha256": "c07bba5e95ac83d5f9e72b5e5e9b134893bf70b8881fa76dbb5ab3cb28ca1666",
+              "json_pointer": "/geometry",
+              "lexeme": {
+                "raw_axis_order": [
+                  "y",
+                  "x"
+                ],
+                "precision": 20000,
+                "raw_unit": "micrometres / precision",
+                "raw_tick_nm": {
+                  "numerator": "1",
+                  "denominator": "20"
+                },
+                "rectangle_proof": "four distinct corners; two x and y values; alternating orthogonal nonzero edges; implicit closing edge; preserve full vertices",
+                "quality": "exact only after rectangle proof + registry, never copied from nonexistent raw quality token"
+              }
+            }
+          ]
+        },
+        "bbox_nm": {
+          "derivation": "extrema of proven exact vertices",
+          "sources": [
+            {
+              "path": "query/raw/device_info_Q17.txt",
+              "sha256": "0f530a0a0b11fdcae759eebc0d8efd989b9442add651e0ac79d74d0ab9a8c7a5",
+              "line_1based": 1,
+              "token_0based": 1,
+              "lexeme": "20000"
+            },
+            {
+              "path": "query/raw/device_info_Q17.txt",
+              "sha256": "0f530a0a0b11fdcae759eebc0d8efd989b9442add651e0ac79d74d0ab9a8c7a5",
+              "line_1based": 8,
+              "token_0based": 0,
+              "lexeme": "400"
+            },
+            {
+              "path": "query/raw/device_info_Q17.txt",
+              "sha256": "0f530a0a0b11fdcae759eebc0d8efd989b9442add651e0ac79d74d0ab9a8c7a5",
+              "line_1based": 8,
+              "token_0based": 1,
+              "lexeme": "1160"
+            },
+            {
+              "path": "query/raw/device_info_Q17.txt",
+              "sha256": "0f530a0a0b11fdcae759eebc0d8efd989b9442add651e0ac79d74d0ab9a8c7a5",
+              "line_1based": 9,
+              "token_0based": 0,
+              "lexeme": "1400"
+            },
+            {
+              "path": "query/raw/device_info_Q17.txt",
+              "sha256": "0f530a0a0b11fdcae759eebc0d8efd989b9442add651e0ac79d74d0ab9a8c7a5",
+              "line_1based": 9,
+              "token_0based": 1,
+              "lexeme": "1160"
+            },
+            {
+              "path": "query/raw/device_info_Q17.txt",
+              "sha256": "0f530a0a0b11fdcae759eebc0d8efd989b9442add651e0ac79d74d0ab9a8c7a5",
+              "line_1based": 10,
+              "token_0based": 0,
+              "lexeme": "1400"
+            },
+            {
+              "path": "query/raw/device_info_Q17.txt",
+              "sha256": "0f530a0a0b11fdcae759eebc0d8efd989b9442add651e0ac79d74d0ab9a8c7a5",
+              "line_1based": 10,
+              "token_0based": 1,
+              "lexeme": "1240"
+            },
+            {
+              "path": "query/raw/device_info_Q17.txt",
+              "sha256": "0f530a0a0b11fdcae759eebc0d8efd989b9442add651e0ac79d74d0ab9a8c7a5",
+              "line_1based": 11,
+              "token_0based": 0,
+              "lexeme": "400"
+            },
+            {
+              "path": "query/raw/device_info_Q17.txt",
+              "sha256": "0f530a0a0b11fdcae759eebc0d8efd989b9442add651e0ac79d74d0ab9a8c7a5",
+              "line_1based": 11,
+              "token_0based": 1,
+              "lexeme": "1240"
+            },
+            {
+              "path": "query/dialect.json",
+              "sha256": "c07bba5e95ac83d5f9e72b5e5e9b134893bf70b8881fa76dbb5ab3cb28ca1666",
+              "json_pointer": "/geometry",
+              "lexeme": {
+                "raw_axis_order": [
+                  "y",
+                  "x"
+                ],
+                "precision": 20000,
+                "raw_unit": "micrometres / precision",
+                "raw_tick_nm": {
+                  "numerator": "1",
+                  "denominator": "20"
+                },
+                "rectangle_proof": "four distinct corners; two x and y values; alternating orthogonal nonzero edges; implicit closing edge; preserve full vertices",
+                "quality": "exact only after rectangle proof + registry, never copied from nonexistent raw quality token"
+              }
+            }
+          ]
+        },
+        "unit": {
+          "derivation": "dialect micrometres/precision converted to nm",
+          "sources": [
+            {
+              "path": "query/raw/device_info_Q17.txt",
+              "sha256": "0f530a0a0b11fdcae759eebc0d8efd989b9442add651e0ac79d74d0ab9a8c7a5",
+              "line_1based": 1,
+              "token_0based": 1,
+              "lexeme": "20000"
+            },
+            {
+              "path": "query/dialect.json",
+              "sha256": "c07bba5e95ac83d5f9e72b5e5e9b134893bf70b8881fa76dbb5ab3cb28ca1666",
+              "json_pointer": "/geometry",
+              "lexeme": {
+                "raw_axis_order": [
+                  "y",
+                  "x"
+                ],
+                "precision": 20000,
+                "raw_unit": "micrometres / precision",
+                "raw_tick_nm": {
+                  "numerator": "1",
+                  "denominator": "20"
+                },
+                "rectangle_proof": "four distinct corners; two x and y values; alternating orthogonal nonzero edges; implicit closing edge; preserve full vertices",
+                "quality": "exact only after rectangle proof + registry, never copied from nonexistent raw quality token"
+              }
+            }
+          ]
+        },
+        "precision": {
+          "derivation": "positive exact geometry precision",
+          "sources": [
+            {
+              "path": "query/raw/device_info_Q17.txt",
+              "sha256": "0f530a0a0b11fdcae759eebc0d8efd989b9442add651e0ac79d74d0ab9a8c7a5",
+              "line_1based": 1,
+              "token_0based": 1,
+              "lexeme": "20000"
+            },
+            {
+              "path": "query/dialect.json",
+              "sha256": "c07bba5e95ac83d5f9e72b5e5e9b134893bf70b8881fa76dbb5ab3cb28ca1666",
+              "json_pointer": "/geometry",
+              "lexeme": {
+                "raw_axis_order": [
+                  "y",
+                  "x"
+                ],
+                "precision": 20000,
+                "raw_unit": "micrometres / precision",
+                "raw_tick_nm": {
+                  "numerator": "1",
+                  "denominator": "20"
+                },
+                "rectangle_proof": "four distinct corners; two x and y values; alternating orthogonal nonzero edges; implicit closing edge; preserve full vertices",
+                "quality": "exact only after rectangle proof + registry, never copied from nonexistent raw quality token"
+              }
+            }
+          ]
+        },
+        "metadata_opaque": {
+          "derivation": "verbatim unknown metadata semantics",
+          "sources": [
+            {
+              "path": "query/raw/device_info_Q17.txt",
+              "sha256": "0f530a0a0b11fdcae759eebc0d8efd989b9442add651e0ac79d74d0ab9a8c7a5",
+              "line_1based": 4,
+              "token_0based": null,
+              "lexeme": "0"
+            },
+            {
+              "path": "query/raw/device_info_Q17.txt",
+              "sha256": "0f530a0a0b11fdcae759eebc0d8efd989b9442add651e0ac79d74d0ab9a8c7a5",
+              "line_1based": 5,
+              "token_0based": null,
+              "lexeme": "toy_ngate"
+            }
+          ]
+        },
+        "section_header_opaque": {
+          "derivation": "verbatim; count meanings unverified",
+          "sources": [
+            {
+              "path": "query/raw/device_info_Q17.txt",
+              "sha256": "0f530a0a0b11fdcae759eebc0d8efd989b9442add651e0ac79d74d0ab9a8c7a5",
+              "line_1based": 6,
+              "token_0based": null,
+              "lexeme": "1 1 0 May 07 03:00:00 2026"
+            }
+          ]
+        },
+        "layout_instance": {
+          "derivation": "bound query object plus xref/NET NAMES join",
+          "sources": [
+            {
+              "path": "query/requests.json",
+              "sha256": "57f5f38cb3ec450fd1815ef88c618c03a9703690672348b313fa35fbce97bc62",
+              "json_pointer": "/requests/0/object",
+              "lexeme": "Q17"
+            },
+            {
+              "path": "query/raw/iXref.temp",
+              "sha256": "36bdbfb105e5e953740ea475b38a7022c671532990838c6040efcbf4dd92d074",
+              "line_1based": 9,
+              "token_0based": 1,
+              "lexeme": "Q17"
+            }
+          ]
+        },
+        "schematic_instance": {
+          "derivation": "bound query object plus xref/NET NAMES join",
+          "sources": [
+            {
+              "path": "query/requests.json",
+              "sha256": "57f5f38cb3ec450fd1815ef88c618c03a9703690672348b313fa35fbce97bc62",
+              "json_pointer": "/requests/0/object",
+              "lexeme": "Q17"
+            },
+            {
+              "path": "query/raw/iXref.temp",
+              "sha256": "36bdbfb105e5e953740ea475b38a7022c671532990838c6040efcbf4dd92d074",
+              "line_1based": 9,
+              "token_0based": 3,
+              "lexeme": "MN0"
+            }
+          ]
+        }
+      }
     },
     {
       "record_id": "D1",
-      "layout_instance": "Q93",
       "derived_layer": "toy_pgate",
       "geometry_kind": "rectangle",
       "quality": "exact",
-      "bbox_lexemes": [
-        "58",
-        "110",
-        "62",
-        "180"
+      "vertices_nm": [
+        {
+          "x": {
+            "numerator": "58",
+            "denominator": "1"
+          },
+          "y": {
+            "numerator": "110",
+            "denominator": "1"
+          }
+        },
+        {
+          "x": {
+            "numerator": "58",
+            "denominator": "1"
+          },
+          "y": {
+            "numerator": "180",
+            "denominator": "1"
+          }
+        },
+        {
+          "x": {
+            "numerator": "62",
+            "denominator": "1"
+          },
+          "y": {
+            "numerator": "180",
+            "denominator": "1"
+          }
+        },
+        {
+          "x": {
+            "numerator": "62",
+            "denominator": "1"
+          },
+          "y": {
+            "numerator": "110",
+            "denominator": "1"
+          }
+        }
       ],
-      "unit": "nm"
+      "bbox_nm": {
+        "x_min": {
+          "numerator": "58",
+          "denominator": "1"
+        },
+        "y_min": {
+          "numerator": "110",
+          "denominator": "1"
+        },
+        "x_max": {
+          "numerator": "62",
+          "denominator": "1"
+        },
+        "y_max": {
+          "numerator": "180",
+          "denominator": "1"
+        }
+      },
+      "unit": "nm",
+      "precision": 20000,
+      "metadata_opaque": [
+        "1",
+        "toy_pgate"
+      ],
+      "section_header_opaque": "1 1 0 May 07 03:00:00 2026",
+      "layout_instance": "Q93",
+      "schematic_instance": "MP0",
+      "field_sources": {
+        "record_id": {
+          "derivation": "author ordinal label, not a raw identity",
+          "sources": [
+            {
+              "path": "query/requests.json",
+              "sha256": "57f5f38cb3ec450fd1815ef88c618c03a9703690672348b313fa35fbce97bc62",
+              "json_pointer": "/requests/1/record_ids/0",
+              "lexeme": "D1"
+            }
+          ]
+        },
+        "derived_layer": {
+          "derivation": "verbatim",
+          "sources": [
+            {
+              "path": "query/raw/device_info_Q93.txt",
+              "sha256": "3966dc3d7339ca98cf9b4e0c24a563a0ada8b2d7f7a896ea8bed4df200a53efe",
+              "line_1based": 5,
+              "token_0based": null,
+              "lexeme": "toy_pgate"
+            },
+            {
+              "path": "tech/derived.json",
+              "sha256": "0806468843e018c9dda461dc7c6c583773f63453392143ce6b6a92259a7ec1d9",
+              "json_pointer": "/derived_registry/1",
+              "lexeme": {
+                "id": "toy_pgate",
+                "target_layer": "POLY",
+                "carries": [
+                  "device_id"
+                ],
+                "accepted_geometry_kinds": [
+                  "rectangle"
+                ],
+                "quality": "exact",
+                "annotation_match_tolerance_nm": 0,
+                "trim_operator": "recognized_channel_intersection",
+                "conflict_policy": "reject_ambiguous",
+                "source": "calibre_like_synthetic/2"
+              }
+            }
+          ]
+        },
+        "geometry_kind": {
+          "derivation": "prove four distinct axis-aligned rectangle corners",
+          "sources": [
+            {
+              "path": "query/raw/device_info_Q93.txt",
+              "sha256": "3966dc3d7339ca98cf9b4e0c24a563a0ada8b2d7f7a896ea8bed4df200a53efe",
+              "line_1based": 8,
+              "token_0based": 0,
+              "lexeme": "2200"
+            },
+            {
+              "path": "query/raw/device_info_Q93.txt",
+              "sha256": "3966dc3d7339ca98cf9b4e0c24a563a0ada8b2d7f7a896ea8bed4df200a53efe",
+              "line_1based": 8,
+              "token_0based": 1,
+              "lexeme": "1160"
+            },
+            {
+              "path": "query/raw/device_info_Q93.txt",
+              "sha256": "3966dc3d7339ca98cf9b4e0c24a563a0ada8b2d7f7a896ea8bed4df200a53efe",
+              "line_1based": 9,
+              "token_0based": 0,
+              "lexeme": "3600"
+            },
+            {
+              "path": "query/raw/device_info_Q93.txt",
+              "sha256": "3966dc3d7339ca98cf9b4e0c24a563a0ada8b2d7f7a896ea8bed4df200a53efe",
+              "line_1based": 9,
+              "token_0based": 1,
+              "lexeme": "1160"
+            },
+            {
+              "path": "query/raw/device_info_Q93.txt",
+              "sha256": "3966dc3d7339ca98cf9b4e0c24a563a0ada8b2d7f7a896ea8bed4df200a53efe",
+              "line_1based": 10,
+              "token_0based": 0,
+              "lexeme": "3600"
+            },
+            {
+              "path": "query/raw/device_info_Q93.txt",
+              "sha256": "3966dc3d7339ca98cf9b4e0c24a563a0ada8b2d7f7a896ea8bed4df200a53efe",
+              "line_1based": 10,
+              "token_0based": 1,
+              "lexeme": "1240"
+            },
+            {
+              "path": "query/raw/device_info_Q93.txt",
+              "sha256": "3966dc3d7339ca98cf9b4e0c24a563a0ada8b2d7f7a896ea8bed4df200a53efe",
+              "line_1based": 11,
+              "token_0based": 0,
+              "lexeme": "2200"
+            },
+            {
+              "path": "query/raw/device_info_Q93.txt",
+              "sha256": "3966dc3d7339ca98cf9b4e0c24a563a0ada8b2d7f7a896ea8bed4df200a53efe",
+              "line_1based": 11,
+              "token_0based": 1,
+              "lexeme": "1240"
+            },
+            {
+              "path": "tech/derived.json",
+              "sha256": "0806468843e018c9dda461dc7c6c583773f63453392143ce6b6a92259a7ec1d9",
+              "json_pointer": "/derived_registry/1",
+              "lexeme": {
+                "id": "toy_pgate",
+                "target_layer": "POLY",
+                "carries": [
+                  "device_id"
+                ],
+                "accepted_geometry_kinds": [
+                  "rectangle"
+                ],
+                "quality": "exact",
+                "annotation_match_tolerance_nm": 0,
+                "trim_operator": "recognized_channel_intersection",
+                "conflict_policy": "reject_ambiguous",
+                "source": "calibre_like_synthetic/2"
+              }
+            }
+          ]
+        },
+        "quality": {
+          "derivation": "lossless rectangle proof + selected dialect/derived registry, not raw token",
+          "sources": [
+            {
+              "path": "query/raw/device_info_Q93.txt",
+              "sha256": "3966dc3d7339ca98cf9b4e0c24a563a0ada8b2d7f7a896ea8bed4df200a53efe",
+              "line_1based": 8,
+              "token_0based": 0,
+              "lexeme": "2200"
+            },
+            {
+              "path": "query/raw/device_info_Q93.txt",
+              "sha256": "3966dc3d7339ca98cf9b4e0c24a563a0ada8b2d7f7a896ea8bed4df200a53efe",
+              "line_1based": 8,
+              "token_0based": 1,
+              "lexeme": "1160"
+            },
+            {
+              "path": "query/raw/device_info_Q93.txt",
+              "sha256": "3966dc3d7339ca98cf9b4e0c24a563a0ada8b2d7f7a896ea8bed4df200a53efe",
+              "line_1based": 9,
+              "token_0based": 0,
+              "lexeme": "3600"
+            },
+            {
+              "path": "query/raw/device_info_Q93.txt",
+              "sha256": "3966dc3d7339ca98cf9b4e0c24a563a0ada8b2d7f7a896ea8bed4df200a53efe",
+              "line_1based": 9,
+              "token_0based": 1,
+              "lexeme": "1160"
+            },
+            {
+              "path": "query/raw/device_info_Q93.txt",
+              "sha256": "3966dc3d7339ca98cf9b4e0c24a563a0ada8b2d7f7a896ea8bed4df200a53efe",
+              "line_1based": 10,
+              "token_0based": 0,
+              "lexeme": "3600"
+            },
+            {
+              "path": "query/raw/device_info_Q93.txt",
+              "sha256": "3966dc3d7339ca98cf9b4e0c24a563a0ada8b2d7f7a896ea8bed4df200a53efe",
+              "line_1based": 10,
+              "token_0based": 1,
+              "lexeme": "1240"
+            },
+            {
+              "path": "query/raw/device_info_Q93.txt",
+              "sha256": "3966dc3d7339ca98cf9b4e0c24a563a0ada8b2d7f7a896ea8bed4df200a53efe",
+              "line_1based": 11,
+              "token_0based": 0,
+              "lexeme": "2200"
+            },
+            {
+              "path": "query/raw/device_info_Q93.txt",
+              "sha256": "3966dc3d7339ca98cf9b4e0c24a563a0ada8b2d7f7a896ea8bed4df200a53efe",
+              "line_1based": 11,
+              "token_0based": 1,
+              "lexeme": "1240"
+            },
+            {
+              "path": "tech/derived.json",
+              "sha256": "0806468843e018c9dda461dc7c6c583773f63453392143ce6b6a92259a7ec1d9",
+              "json_pointer": "/derived_registry/1",
+              "lexeme": {
+                "id": "toy_pgate",
+                "target_layer": "POLY",
+                "carries": [
+                  "device_id"
+                ],
+                "accepted_geometry_kinds": [
+                  "rectangle"
+                ],
+                "quality": "exact",
+                "annotation_match_tolerance_nm": 0,
+                "trim_operator": "recognized_channel_intersection",
+                "conflict_policy": "reject_ambiguous",
+                "source": "calibre_like_synthetic/2"
+              }
+            }
+          ]
+        },
+        "vertices_nm": {
+          "derivation": "raw(y,x) * 1000 / precision nm; preserve vertex order",
+          "sources": [
+            {
+              "path": "query/raw/device_info_Q93.txt",
+              "sha256": "3966dc3d7339ca98cf9b4e0c24a563a0ada8b2d7f7a896ea8bed4df200a53efe",
+              "line_1based": 1,
+              "token_0based": 1,
+              "lexeme": "20000"
+            },
+            {
+              "path": "query/raw/device_info_Q93.txt",
+              "sha256": "3966dc3d7339ca98cf9b4e0c24a563a0ada8b2d7f7a896ea8bed4df200a53efe",
+              "line_1based": 8,
+              "token_0based": 0,
+              "lexeme": "2200"
+            },
+            {
+              "path": "query/raw/device_info_Q93.txt",
+              "sha256": "3966dc3d7339ca98cf9b4e0c24a563a0ada8b2d7f7a896ea8bed4df200a53efe",
+              "line_1based": 8,
+              "token_0based": 1,
+              "lexeme": "1160"
+            },
+            {
+              "path": "query/raw/device_info_Q93.txt",
+              "sha256": "3966dc3d7339ca98cf9b4e0c24a563a0ada8b2d7f7a896ea8bed4df200a53efe",
+              "line_1based": 9,
+              "token_0based": 0,
+              "lexeme": "3600"
+            },
+            {
+              "path": "query/raw/device_info_Q93.txt",
+              "sha256": "3966dc3d7339ca98cf9b4e0c24a563a0ada8b2d7f7a896ea8bed4df200a53efe",
+              "line_1based": 9,
+              "token_0based": 1,
+              "lexeme": "1160"
+            },
+            {
+              "path": "query/raw/device_info_Q93.txt",
+              "sha256": "3966dc3d7339ca98cf9b4e0c24a563a0ada8b2d7f7a896ea8bed4df200a53efe",
+              "line_1based": 10,
+              "token_0based": 0,
+              "lexeme": "3600"
+            },
+            {
+              "path": "query/raw/device_info_Q93.txt",
+              "sha256": "3966dc3d7339ca98cf9b4e0c24a563a0ada8b2d7f7a896ea8bed4df200a53efe",
+              "line_1based": 10,
+              "token_0based": 1,
+              "lexeme": "1240"
+            },
+            {
+              "path": "query/raw/device_info_Q93.txt",
+              "sha256": "3966dc3d7339ca98cf9b4e0c24a563a0ada8b2d7f7a896ea8bed4df200a53efe",
+              "line_1based": 11,
+              "token_0based": 0,
+              "lexeme": "2200"
+            },
+            {
+              "path": "query/raw/device_info_Q93.txt",
+              "sha256": "3966dc3d7339ca98cf9b4e0c24a563a0ada8b2d7f7a896ea8bed4df200a53efe",
+              "line_1based": 11,
+              "token_0based": 1,
+              "lexeme": "1240"
+            },
+            {
+              "path": "query/dialect.json",
+              "sha256": "c07bba5e95ac83d5f9e72b5e5e9b134893bf70b8881fa76dbb5ab3cb28ca1666",
+              "json_pointer": "/geometry",
+              "lexeme": {
+                "raw_axis_order": [
+                  "y",
+                  "x"
+                ],
+                "precision": 20000,
+                "raw_unit": "micrometres / precision",
+                "raw_tick_nm": {
+                  "numerator": "1",
+                  "denominator": "20"
+                },
+                "rectangle_proof": "four distinct corners; two x and y values; alternating orthogonal nonzero edges; implicit closing edge; preserve full vertices",
+                "quality": "exact only after rectangle proof + registry, never copied from nonexistent raw quality token"
+              }
+            }
+          ]
+        },
+        "bbox_nm": {
+          "derivation": "extrema of proven exact vertices",
+          "sources": [
+            {
+              "path": "query/raw/device_info_Q93.txt",
+              "sha256": "3966dc3d7339ca98cf9b4e0c24a563a0ada8b2d7f7a896ea8bed4df200a53efe",
+              "line_1based": 1,
+              "token_0based": 1,
+              "lexeme": "20000"
+            },
+            {
+              "path": "query/raw/device_info_Q93.txt",
+              "sha256": "3966dc3d7339ca98cf9b4e0c24a563a0ada8b2d7f7a896ea8bed4df200a53efe",
+              "line_1based": 8,
+              "token_0based": 0,
+              "lexeme": "2200"
+            },
+            {
+              "path": "query/raw/device_info_Q93.txt",
+              "sha256": "3966dc3d7339ca98cf9b4e0c24a563a0ada8b2d7f7a896ea8bed4df200a53efe",
+              "line_1based": 8,
+              "token_0based": 1,
+              "lexeme": "1160"
+            },
+            {
+              "path": "query/raw/device_info_Q93.txt",
+              "sha256": "3966dc3d7339ca98cf9b4e0c24a563a0ada8b2d7f7a896ea8bed4df200a53efe",
+              "line_1based": 9,
+              "token_0based": 0,
+              "lexeme": "3600"
+            },
+            {
+              "path": "query/raw/device_info_Q93.txt",
+              "sha256": "3966dc3d7339ca98cf9b4e0c24a563a0ada8b2d7f7a896ea8bed4df200a53efe",
+              "line_1based": 9,
+              "token_0based": 1,
+              "lexeme": "1160"
+            },
+            {
+              "path": "query/raw/device_info_Q93.txt",
+              "sha256": "3966dc3d7339ca98cf9b4e0c24a563a0ada8b2d7f7a896ea8bed4df200a53efe",
+              "line_1based": 10,
+              "token_0based": 0,
+              "lexeme": "3600"
+            },
+            {
+              "path": "query/raw/device_info_Q93.txt",
+              "sha256": "3966dc3d7339ca98cf9b4e0c24a563a0ada8b2d7f7a896ea8bed4df200a53efe",
+              "line_1based": 10,
+              "token_0based": 1,
+              "lexeme": "1240"
+            },
+            {
+              "path": "query/raw/device_info_Q93.txt",
+              "sha256": "3966dc3d7339ca98cf9b4e0c24a563a0ada8b2d7f7a896ea8bed4df200a53efe",
+              "line_1based": 11,
+              "token_0based": 0,
+              "lexeme": "2200"
+            },
+            {
+              "path": "query/raw/device_info_Q93.txt",
+              "sha256": "3966dc3d7339ca98cf9b4e0c24a563a0ada8b2d7f7a896ea8bed4df200a53efe",
+              "line_1based": 11,
+              "token_0based": 1,
+              "lexeme": "1240"
+            },
+            {
+              "path": "query/dialect.json",
+              "sha256": "c07bba5e95ac83d5f9e72b5e5e9b134893bf70b8881fa76dbb5ab3cb28ca1666",
+              "json_pointer": "/geometry",
+              "lexeme": {
+                "raw_axis_order": [
+                  "y",
+                  "x"
+                ],
+                "precision": 20000,
+                "raw_unit": "micrometres / precision",
+                "raw_tick_nm": {
+                  "numerator": "1",
+                  "denominator": "20"
+                },
+                "rectangle_proof": "four distinct corners; two x and y values; alternating orthogonal nonzero edges; implicit closing edge; preserve full vertices",
+                "quality": "exact only after rectangle proof + registry, never copied from nonexistent raw quality token"
+              }
+            }
+          ]
+        },
+        "unit": {
+          "derivation": "dialect micrometres/precision converted to nm",
+          "sources": [
+            {
+              "path": "query/raw/device_info_Q93.txt",
+              "sha256": "3966dc3d7339ca98cf9b4e0c24a563a0ada8b2d7f7a896ea8bed4df200a53efe",
+              "line_1based": 1,
+              "token_0based": 1,
+              "lexeme": "20000"
+            },
+            {
+              "path": "query/dialect.json",
+              "sha256": "c07bba5e95ac83d5f9e72b5e5e9b134893bf70b8881fa76dbb5ab3cb28ca1666",
+              "json_pointer": "/geometry",
+              "lexeme": {
+                "raw_axis_order": [
+                  "y",
+                  "x"
+                ],
+                "precision": 20000,
+                "raw_unit": "micrometres / precision",
+                "raw_tick_nm": {
+                  "numerator": "1",
+                  "denominator": "20"
+                },
+                "rectangle_proof": "four distinct corners; two x and y values; alternating orthogonal nonzero edges; implicit closing edge; preserve full vertices",
+                "quality": "exact only after rectangle proof + registry, never copied from nonexistent raw quality token"
+              }
+            }
+          ]
+        },
+        "precision": {
+          "derivation": "positive exact geometry precision",
+          "sources": [
+            {
+              "path": "query/raw/device_info_Q93.txt",
+              "sha256": "3966dc3d7339ca98cf9b4e0c24a563a0ada8b2d7f7a896ea8bed4df200a53efe",
+              "line_1based": 1,
+              "token_0based": 1,
+              "lexeme": "20000"
+            },
+            {
+              "path": "query/dialect.json",
+              "sha256": "c07bba5e95ac83d5f9e72b5e5e9b134893bf70b8881fa76dbb5ab3cb28ca1666",
+              "json_pointer": "/geometry",
+              "lexeme": {
+                "raw_axis_order": [
+                  "y",
+                  "x"
+                ],
+                "precision": 20000,
+                "raw_unit": "micrometres / precision",
+                "raw_tick_nm": {
+                  "numerator": "1",
+                  "denominator": "20"
+                },
+                "rectangle_proof": "four distinct corners; two x and y values; alternating orthogonal nonzero edges; implicit closing edge; preserve full vertices",
+                "quality": "exact only after rectangle proof + registry, never copied from nonexistent raw quality token"
+              }
+            }
+          ]
+        },
+        "metadata_opaque": {
+          "derivation": "verbatim unknown metadata semantics",
+          "sources": [
+            {
+              "path": "query/raw/device_info_Q93.txt",
+              "sha256": "3966dc3d7339ca98cf9b4e0c24a563a0ada8b2d7f7a896ea8bed4df200a53efe",
+              "line_1based": 4,
+              "token_0based": null,
+              "lexeme": "1"
+            },
+            {
+              "path": "query/raw/device_info_Q93.txt",
+              "sha256": "3966dc3d7339ca98cf9b4e0c24a563a0ada8b2d7f7a896ea8bed4df200a53efe",
+              "line_1based": 5,
+              "token_0based": null,
+              "lexeme": "toy_pgate"
+            }
+          ]
+        },
+        "section_header_opaque": {
+          "derivation": "verbatim; count meanings unverified",
+          "sources": [
+            {
+              "path": "query/raw/device_info_Q93.txt",
+              "sha256": "3966dc3d7339ca98cf9b4e0c24a563a0ada8b2d7f7a896ea8bed4df200a53efe",
+              "line_1based": 6,
+              "token_0based": null,
+              "lexeme": "1 1 0 May 07 03:00:00 2026"
+            }
+          ]
+        },
+        "layout_instance": {
+          "derivation": "bound query object plus xref/NET NAMES join",
+          "sources": [
+            {
+              "path": "query/requests.json",
+              "sha256": "57f5f38cb3ec450fd1815ef88c618c03a9703690672348b313fa35fbce97bc62",
+              "json_pointer": "/requests/1/object",
+              "lexeme": "Q93"
+            },
+            {
+              "path": "query/raw/iXref.temp",
+              "sha256": "36bdbfb105e5e953740ea475b38a7022c671532990838c6040efcbf4dd92d074",
+              "line_1based": 10,
+              "token_0based": 1,
+              "lexeme": "Q93"
+            }
+          ]
+        },
+        "schematic_instance": {
+          "derivation": "bound query object plus xref/NET NAMES join",
+          "sources": [
+            {
+              "path": "query/requests.json",
+              "sha256": "57f5f38cb3ec450fd1815ef88c618c03a9703690672348b313fa35fbce97bc62",
+              "json_pointer": "/requests/1/object",
+              "lexeme": "Q93"
+            },
+            {
+              "path": "query/raw/iXref.temp",
+              "sha256": "36bdbfb105e5e953740ea475b38a7022c671532990838c6040efcbf4dd92d074",
+              "line_1based": 10,
+              "token_0based": 3,
+              "lexeme": "MP0"
+            }
+          ]
+        }
+      }
     }
   ]
 }

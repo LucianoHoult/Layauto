@@ -35,12 +35,12 @@
           "localized_refs": [
             {
               "raw_ref": {
-                "path": "failures/missing_terminator/query/raw/instance_xref.txt",
+                "path": "failures/missing_terminator/query/raw/device_info_Q17.txt",
                 "json_pointer": "",
                 "scope": "fixture_expected_only",
-                "actual_byte_sha256": "2eb4b99046e910c8b7d1ec5d0e1d20dc20cb766b88abfb723d1a87fc1824a9ff"
+                "actual_byte_sha256": "5e1ef71218be96a097fa261772bd6cede4ec244d65af9dc1a44e50034e7e7073"
               },
-              "location": "missing END W003_QUERY at EOF"
+              "location": "missing END OF RESPONSE at EOF"
             }
           ]
         },
@@ -90,15 +90,15 @@
               "path": "failures/missing_terminator/query/header.json",
               "json_pointer": "",
               "scope": "fixture_expected_only",
-              "actual_byte_sha256": "29517730fef3b28124e3831394e5bffa0aa11437d544aa8d21b76e9795f130cb"
+              "actual_byte_sha256": "b878df177d72844ec2d847d17d4b075d907c5909616df67978aacfdba7e15411"
             }
           ],
           "raw_output_refs": [
             {
-              "path": "failures/missing_terminator/query/raw/instance_xref.txt",
+              "path": "failures/missing_terminator/query/raw/device_info_Q17.txt",
               "json_pointer": "",
               "scope": "fixture_expected_only",
-              "actual_byte_sha256": "2eb4b99046e910c8b7d1ec5d0e1d20dc20cb766b88abfb723d1a87fc1824a9ff"
+              "actual_byte_sha256": "5e1ef71218be96a097fa261772bd6cede4ec244d65af9dc1a44e50034e7e7073"
             }
           ],
           "exit_status": 0,
@@ -118,14 +118,14 @@
             "type": "ToolRunResultId",
             "value": "malformed-fixture-read"
           },
-          "parser_version": "w003-query-normalized/1 (contract only)",
-          "dialect_version": "synthetic_query_dialect/1",
+          "parser_version": "w004-query-normalized/2 (contract only)",
+          "dialect_version": "calibre_like_synthetic/2",
           "raw_refs": [
             {
-              "path": "failures/missing_terminator/query/raw/instance_xref.txt",
+              "path": "failures/missing_terminator/query/raw/device_info_Q17.txt",
               "json_pointer": "",
               "scope": "fixture_expected_only",
-              "actual_byte_sha256": "2eb4b99046e910c8b7d1ec5d0e1d20dc20cb766b88abfb723d1a87fc1824a9ff"
+              "actual_byte_sha256": "5e1ef71218be96a097fa261772bd6cede4ec244d65af9dc1a44e50034e7e7073"
             }
           ],
           "evidence_refs": [],
@@ -514,7 +514,7 @@
                   "path": "oracle.json",
                   "json_pointer": "",
                   "scope": "fixture_expected_only",
-                  "actual_byte_sha256": "6268db9090251f9a7ed7a562e0ad62e919304cef9da3edf09fae747cc5f03191"
+                  "actual_byte_sha256": "cd328ff61f048c94f8903f84f00bc26e5944438020cd519dd60c3a7ce97e93d5"
                 }
               ],
               "localized_refs": [],
@@ -639,7 +639,7 @@
                   "path": "oracle.json",
                   "json_pointer": "",
                   "scope": "fixture_expected_only",
-                  "actual_byte_sha256": "6268db9090251f9a7ed7a562e0ad62e919304cef9da3edf09fae747cc5f03191"
+                  "actual_byte_sha256": "cd328ff61f048c94f8903f84f00bc26e5944438020cd519dd60c3a7ce97e93d5"
                 }
               ],
               "localized_refs": [],

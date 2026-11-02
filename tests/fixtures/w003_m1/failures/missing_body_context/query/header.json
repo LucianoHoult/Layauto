@@ -1,0 +1,171 @@
+{
+  "schema_version": "w004-query-header/2",
+  "header_id": "w004.synthetic.query.2",
+  "query_run_id": "w004.synthetic.query.2",
+  "query_database_id": null,
+  "query_database_absence_reason": "synthetic construction; no database",
+  "mode": "dummy_fixture",
+  "classification": "synthetic",
+  "assurance": "synthetic",
+  "lvs_completion_status": "not_run",
+  "lvs_match_status": "not_run",
+  "top_identities": {
+    "layout": "INV_M1_SYNTH",
+    "source": "INV_M1_SYNTH"
+  },
+  "hierarchy_mode": "flat",
+  "layout": {
+    "uri": "source.gds",
+    "sha256": "97cf8d88771ff97f2cf189f6ae6a2fdcce585fc14f93c93d0ecf32326b415429"
+  },
+  "source_netlist": {
+    "uri": "source.cdl",
+    "include_library_preprocess_closure": [],
+    "empty_closure_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "preprocess": "none",
+    "sha256": "c71f40728a979c918e083b924a3045cf53bece51dd837f9ae2834cf242776fa4"
+  },
+  "target": {
+    "uri": "target.cdl",
+    "sha256": "ddfd4713579743f578170efede62ce978a02680b42e5e2a6faeeb99016cff8db"
+  },
+  "closure": {
+    "entries": [
+      {
+        "uri": "export_policy.json",
+        "sha256": "0077a28df12a5c6e5ecb30e85e26322cff6455183c9a97982795632cb0e809c7"
+      },
+      {
+        "uri": "limitations.json",
+        "sha256": "89367994f10953fe9d4694048ad88b8fc4210d2b5a3ed7d0fe49c9cf4899be05"
+      },
+      {
+        "uri": "query/dialect.json",
+        "sha256": "c07bba5e95ac83d5f9e72b5e5e9b134893bf70b8881fa76dbb5ab3cb28ca1666"
+      },
+      {
+        "uri": "query/requests.json",
+        "sha256": "57f5f38cb3ec450fd1815ef88c618c03a9703690672348b313fa35fbce97bc62"
+      },
+      {
+        "uri": "site_config.yaml",
+        "sha256": "63c498d5b18bf4e49a9e73efff5b32447f1dd63b9d4966f82caec41105584a40"
+      },
+      {
+        "uri": "source.cdl",
+        "sha256": "c71f40728a979c918e083b924a3045cf53bece51dd837f9ae2834cf242776fa4"
+      },
+      {
+        "uri": "source.gds",
+        "sha256": "97cf8d88771ff97f2cf189f6ae6a2fdcce585fc14f93c93d0ecf32326b415429"
+      },
+      {
+        "uri": "target.cdl",
+        "sha256": "ddfd4713579743f578170efede62ce978a02680b42e5e2a6faeeb99016cff8db"
+      },
+      {
+        "uri": "tech.json",
+        "sha256": "edea25c124e275a8e2baa793a8a8f9954854f8cb69c52da50af65dd147d56f61"
+      },
+      {
+        "uri": "tech/coordinate.json",
+        "sha256": "651b4342abe40a3d7c1b808ba24ca2266381342411ab7aacc0e36a861a38f515"
+      },
+      {
+        "uri": "tech/derived.json",
+        "sha256": "0806468843e018c9dda461dc7c6c583773f63453392143ce6b6a92259a7ec1d9"
+      },
+      {
+        "uri": "tech/drawn.json",
+        "sha256": "29b675eefb2e957f2519ffa1a9ec0eed57a6055ccfa3b0bbe85d7d00e8382428"
+      },
+      {
+        "uri": "tech/formats.json",
+        "sha256": "6ccf919d844b7336af97ab68f7e58c34908802ee79ef7cf3071e937a5396ec87"
+      },
+      {
+        "uri": "tech/physical.json",
+        "sha256": "b2e28e8464c450f0eed55d5e03464bfea1c6502ba29256d3376eb3d158c659af"
+      },
+      {
+        "uri": "tech/rules.json",
+        "sha256": "40ce0b76abb28c07ab734734a19d61e1259bc5aee42a8cf2c02fabb9e4457480"
+      },
+      {
+        "uri": "validation_policy.json",
+        "sha256": "eb72ecf8a5b5c2e9796d6195cb3059b069a92488e3ec0fa44c192b1b3bc3b000"
+      }
+    ],
+    "canonical_encoding": "UTF-8 sorted-key compact JSON, array sorted by uri, no LF",
+    "sha256": "d647c56c27674e8afc1e4fc857a2d85af88c44bb47d1a125ec75e3d2d2b3a200"
+  },
+  "tool": {
+    "name": null,
+    "version": null,
+    "executed": false
+  },
+  "query_dialect_version": "calibre_like_synthetic/2",
+  "parser_contract_version": "w004-query-normalized/2",
+  "product_parser_version": null,
+  "query_unit": {
+    "name": "micrometres/precision",
+    "metres_per_unit": {
+      "numerator": "1",
+      "denominator": "1000000"
+    },
+    "geometry_precision": 20000,
+    "axis_order": [
+      "y",
+      "x"
+    ]
+  },
+  "geometry_unit_contract": "toy_gds_real8_nm/1",
+  "raw": [
+    {
+      "capability": "instance_xref",
+      "uri": "query/raw/iXref.temp",
+      "sha256": "36bdbfb105e5e953740ea475b38a7022c671532990838c6040efcbf4dd92d074"
+    },
+    {
+      "capability": "net_xref",
+      "uri": "query/raw/nXref.temp",
+      "sha256": "0ad811405e3fc0893b5d97eba2a786dcbe97ba55b699480e8013734db7da80ad"
+    },
+    {
+      "capability": "net_xref",
+      "uri": "query/raw/net_names.txt",
+      "sha256": "6cc3977d84a42a43df548dd65b30b2d05d07b7aa32ab327b38f5f6b2fead06ab"
+    },
+    {
+      "capability": "device_regions",
+      "uri": "query/raw/device_info_Q17.txt",
+      "sha256": "0f530a0a0b11fdcae759eebc0d8efd989b9442add651e0ac79d74d0ab9a8c7a5"
+    },
+    {
+      "capability": "device_regions",
+      "uri": "query/raw/device_info_Q93.txt",
+      "sha256": "3966dc3d7339ca98cf9b4e0c24a563a0ada8b2d7f7a896ea8bed4df200a53efe"
+    },
+    {
+      "capability": "net_regions",
+      "uri": "query/raw/net_shapes_n_a.txt",
+      "sha256": "38fdc36e1fcf3fe8651567b91d1ba7fd061b23d09e485da718d40b9e394ac339"
+    },
+    {
+      "capability": "net_regions",
+      "uri": "query/raw/net_shapes_n_y.txt",
+      "sha256": "ccf7d35dc5d9340970737d9e94497fefaa2428af3780a92b59c1cd839dd479c3"
+    },
+    {
+      "capability": "net_regions",
+      "uri": "query/raw/net_shapes_n_lo.txt",
+      "sha256": "930681f091fa835ceac3948a44d629a086a0b38b65ad786b47eec6fe9ced3e44"
+    },
+    {
+      "capability": "net_regions",
+      "uri": "query/raw/net_shapes_n_hi.txt",
+      "sha256": "9a24daf5ceb930fc38406e8b6957c6b2618ba2b35f3b1e110dbea4278fe1199d"
+    }
+  ],
+  "limitations_ref": "limitations.json"
+}

@@ -1,8 +1,8 @@
 {
-  "schema_version": "w003-hand-oracle/1",
+  "schema_version": "w004-hand-oracle/2",
   "provenance": "hand-authored exact arithmetic and topology; not extracted from generated GDS",
   "cell": "INV_M1_SYNTH",
-  "drawn_shape_count": 44,
+  "drawn_shape_count": 40,
   "crossings": [
     {
       "device": "MN0",
@@ -109,32 +109,6 @@
       ],
       "component": "C_Y",
       "net": "Y"
-    },
-    {
-      "id": "LB.left",
-      "drawn_shape": "LB",
-      "layer": "LI",
-      "bbox": [
-        130,
-        20,
-        139,
-        24
-      ],
-      "component": "C_A_island_left",
-      "net": "A"
-    },
-    {
-      "id": "LB.right",
-      "drawn_shape": "LB",
-      "layer": "LI",
-      "bbox": [
-        141,
-        20,
-        150,
-        24
-      ],
-      "component": "C_A_island_right",
-      "net": "A"
     }
   ],
   "components": [
@@ -143,8 +117,7 @@
       "regions": [
         "ON.S",
         "LN",
-        "MN",
-        "BN"
+        "MN"
       ],
       "net": "VSS"
     },
@@ -153,8 +126,7 @@
       "regions": [
         "OP.S",
         "LP",
-        "MP",
-        "BP"
+        "MP"
       ],
       "net": "VDD"
     },
@@ -177,18 +149,18 @@
       "net": "A"
     },
     {
-      "id": "C_A_island_left",
+      "id": "C_BN",
       "regions": [
-        "LB.left"
+        "BN"
       ],
-      "net": "A"
+      "net": null
     },
     {
-      "id": "C_A_island_right",
+      "id": "C_BP",
       "regions": [
-        "LB.right"
+        "BP"
       ],
-      "net": "A"
+      "net": null
     }
   ],
   "edges": [
@@ -247,20 +219,6 @@
         "G",
         "MA"
       ]
-    },
-    {
-      "connector": "TN",
-      "ends": [
-        "BN",
-        "MN"
-      ]
-    },
-    {
-      "connector": "TP",
-      "ends": [
-        "BP",
-        "MP"
-      ]
     }
   ],
   "terminals": [
@@ -289,8 +247,9 @@
       "device": "MN0",
       "role": "B",
       "region": "BN",
-      "component": "C_VSS",
-      "net": "VSS"
+      "component": "C_BN",
+      "net": "VSS",
+      "net_basis": "context_supported_association_not_local_edge"
     },
     {
       "device": "MP0",
@@ -317,8 +276,9 @@
       "device": "MP0",
       "role": "B",
       "region": "BP",
-      "component": "C_VDD",
-      "net": "VDD"
+      "component": "C_BP",
+      "net": "VDD",
+      "net_basis": "context_supported_association_not_local_edge"
     }
   ],
   "non_edges": [
@@ -331,14 +291,6 @@
       "OP.D"
     ],
     [
-      "LB.left",
-      "LB.right"
-    ],
-    [
-      "LB.left",
-      "G"
-    ],
-    [
       "BN",
       "BP"
     ],
@@ -349,26 +301,20 @@
     [
       "BP",
       "OP.S"
+    ],
+    [
+      "BN",
+      "MN"
+    ],
+    [
+      "BP",
+      "MP"
     ]
   ],
-  "occupancy_witness": {
-    "cell_bbox": [
-      128,
-      16,
-      160,
-      32
-    ],
-    "layer": "LI",
-    "fragment_ids": [
-      "LB.left",
-      "LB.right"
-    ],
-    "same_cell_does_not_connect": true
-  },
   "rules": [
     {
       "id": "T01.frame",
-      "applies_to": "all 43 non-frame drawn shapes",
+      "applies_to": "all 39 non-frame local drawn shapes; external context excluded",
       "expected": "pass",
       "minimum_margin_ticks": 0
     },
@@ -391,7 +337,7 @@
         5,
         7
       ],
-      "channel_width_ticks": 4
+      "channel_length_ticks": 4
     },
     {
       "id": "T04.body",
@@ -399,8 +345,7 @@
         "ON in BN",
         "OP in BP",
         "BN disjoint BP",
-        "TN connects BN to MN",
-        "TP connects BP to MP"
+        "two independent context body associations"
       ],
       "expected": "pass",
       "minimum_active_enclosure_ticks": 10
@@ -416,20 +361,20 @@
         "VP",
         "VY",
         "GC",
-        "TN",
-        "TP"
+        "context:TN.ext",
+        "context:TP.ext"
       ],
       "expected": "pass",
       "minimum_enclosure_ticks": 1
     },
     {
       "id": "T06.li_spacing",
-      "applies_to": "all 10 unordered pairs of 5 effective LI rectangles, geometry_only, no same-net exemption",
+      "applies_to": "3 unordered pairs of 3 effective LI rectangles; geometry_only",
       "expected": "pass",
-      "minimum_distance_ticks": 2,
+      "minimum_distance_ticks": 50,
       "limiting_pair": [
-        "LB.left",
-        "LB.right"
+        "LN",
+        "LY"
       ]
     },
     {
@@ -444,12 +389,12 @@
     },
     {
       "id": "T08.terminal_graph",
-      "applies_to": "8 terminals, 10 connector edges, 6 components and listed non-edges",
+      "applies_to": "8 terminals, 8 local connector edges, 6 local components, 2 external body associations",
       "expected": "pass"
     },
     {
       "id": "T09.lifecycle",
-      "applies_to": "all 44 drawn records; no ECO; preserve/frame equality",
+      "applies_to": "all 40 local drawn records; external context read-only and not exported; empty ECO",
       "expected": "pass"
     },
     {
@@ -457,11 +402,8 @@
       "applies_to": "all drawn/effective regions",
       "expected": "pass",
       "unannotated_marker": "MARK",
-      "same_label_islands": [
-        "LB.left",
-        "LB.right"
-      ],
-      "coverage": "disclosed_unannotated_nonconductors_and_disconnected_same_label_islands"
+      "same_label_islands": [],
+      "coverage": "unannotated MARK retained; cut/island purpose in special/cut_islands"
     }
   ],
   "semantic": {
@@ -519,5 +461,49 @@
     "baseline_event_kind": "InitializationEvent",
     "expected_terminal_disposition": "requires_review",
     "product_run_executed": false
-  }
+  },
+  "body_associations": [
+    {
+      "device": "MN0",
+      "terminal": "B",
+      "local_body": "BN",
+      "local_component": "C_BN",
+      "context_path": [
+        "BN",
+        "BN.ext",
+        "TN.ext",
+        "MN.ext",
+        "MN"
+      ],
+      "semantic_rail": "VSS",
+      "body_edge_length_nm": 90,
+      "rail_edge_length_nm": 10,
+      "tap_body_enclosure_nm": 8,
+      "tap_rail_enclosure_nm": 2,
+      "active_body_enclosure_nm": 20,
+      "association_scope": "read_only_external_context",
+      "not_local_physical_edge": true
+    },
+    {
+      "device": "MP0",
+      "terminal": "B",
+      "local_body": "BP",
+      "local_component": "C_BP",
+      "context_path": [
+        "BP",
+        "BP.ext",
+        "TP.ext",
+        "MP.ext",
+        "MP"
+      ],
+      "semantic_rail": "VDD",
+      "body_edge_length_nm": 100,
+      "rail_edge_length_nm": 10,
+      "tap_body_enclosure_nm": 8,
+      "tap_rail_enclosure_nm": 2,
+      "active_body_enclosure_nm": 10,
+      "association_scope": "read_only_external_context",
+      "not_local_physical_edge": true
+    }
+  ]
 }

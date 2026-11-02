@@ -1,0 +1,1377 @@
+{
+  "schema_version": "w004-source-dimension-table/2",
+  "classification": "synthetic",
+  "unit_chain": [
+    "source.gds UNITS bytes -> exact REAL8 rational",
+    "tech/formats.json unit_scale_contract nominal 1nm and nearest56 half-ULP bound",
+    "original signed integer XY -> exact canonical integer nm; no snap",
+    "CDL n suffix -> 1/1000000000 m; query geometry integer/20000 micrometre",
+    "output policy rational tick -> exact representability and signed32 range"
+  ],
+  "unit_choice_origin": "W003 hand-authored toy choice retained and versioned w004-toy-unit-choice/2; all integer coordinates fit, not inferred fabrication rule or GCD",
+  "technology_source": "all rules/model/layer numbers synthetic; no foundry deck, PCell or process verification",
+  "dimensions": [
+    {
+      "object": "FRAME",
+      "actual_bbox_nm": [
+        0,
+        0,
+        160,
+        200
+      ],
+      "actual_size_xy_nm": [
+        160,
+        200
+      ],
+      "design_source": "spec.json; hand-authored W003 toy design preserved except explicitly removed shapes; W004 revision 2",
+      "source_coordinate": "source.gds integer XY; see runtime support unit evidence for byte identity",
+      "rule_refs": [
+        "T01.frame",
+        "T09.lifecycle",
+        "T10.coverage"
+      ],
+      "model_pcell_track_relation": "FIN width/pitch/phase physical.json; channel L=4nm and fin W=2nm via models; PCell/production track unknown",
+      "not_rule_value": "actual bbox and width/height are design choices, not minimum rules"
+    },
+    {
+      "object": "BN",
+      "actual_bbox_nm": [
+        0,
+        0,
+        120,
+        90
+      ],
+      "actual_size_xy_nm": [
+        120,
+        90
+      ],
+      "design_source": "spec.json; hand-authored W003 toy design preserved except explicitly removed shapes; W004 revision 2",
+      "source_coordinate": "source.gds integer XY; see runtime support unit evidence for byte identity",
+      "rule_refs": [
+        "T01.frame",
+        "T09.lifecycle",
+        "T10.coverage",
+        "T04.body"
+      ],
+      "model_pcell_track_relation": "FIN width/pitch/phase physical.json; channel L=4nm and fin W=2nm via models; PCell/production track unknown",
+      "not_rule_value": "actual bbox and width/height are design choices, not minimum rules"
+    },
+    {
+      "object": "BP",
+      "actual_bbox_nm": [
+        0,
+        100,
+        120,
+        200
+      ],
+      "actual_size_xy_nm": [
+        120,
+        100
+      ],
+      "design_source": "spec.json; hand-authored W003 toy design preserved except explicitly removed shapes; W004 revision 2",
+      "source_coordinate": "source.gds integer XY; see runtime support unit evidence for byte identity",
+      "rule_refs": [
+        "T01.frame",
+        "T09.lifecycle",
+        "T10.coverage",
+        "T04.body"
+      ],
+      "model_pcell_track_relation": "FIN width/pitch/phase physical.json; channel L=4nm and fin W=2nm via models; PCell/production track unknown",
+      "not_rule_value": "actual bbox and width/height are design choices, not minimum rules"
+    },
+    {
+      "object": "ON",
+      "actual_bbox_nm": [
+        20,
+        20,
+        100,
+        70
+      ],
+      "actual_size_xy_nm": [
+        80,
+        50
+      ],
+      "design_source": "spec.json; hand-authored W003 toy design preserved except explicitly removed shapes; W004 revision 2",
+      "source_coordinate": "source.gds integer XY; see runtime support unit evidence for byte identity",
+      "rule_refs": [
+        "T01.frame",
+        "T09.lifecycle",
+        "T10.coverage",
+        "T03.recognition",
+        "T08.terminal_graph",
+        "T04.body"
+      ],
+      "model_pcell_track_relation": "FIN width/pitch/phase physical.json; channel L=4nm and fin W=2nm via models; PCell/production track unknown",
+      "not_rule_value": "actual bbox and width/height are design choices, not minimum rules"
+    },
+    {
+      "object": "OP",
+      "actual_bbox_nm": [
+        20,
+        110,
+        100,
+        180
+      ],
+      "actual_size_xy_nm": [
+        80,
+        70
+      ],
+      "design_source": "spec.json; hand-authored W003 toy design preserved except explicitly removed shapes; W004 revision 2",
+      "source_coordinate": "source.gds integer XY; see runtime support unit evidence for byte identity",
+      "rule_refs": [
+        "T01.frame",
+        "T09.lifecycle",
+        "T10.coverage",
+        "T03.recognition",
+        "T08.terminal_graph",
+        "T04.body"
+      ],
+      "model_pcell_track_relation": "FIN width/pitch/phase physical.json; channel L=4nm and fin W=2nm via models; PCell/production track unknown",
+      "not_rule_value": "actual bbox and width/height are design choices, not minimum rules"
+    },
+    {
+      "object": "G",
+      "actual_bbox_nm": [
+        58,
+        10,
+        62,
+        190
+      ],
+      "actual_size_xy_nm": [
+        4,
+        180
+      ],
+      "design_source": "spec.json; hand-authored W003 toy design preserved except explicitly removed shapes; W004 revision 2",
+      "source_coordinate": "source.gds integer XY; see runtime support unit evidence for byte identity",
+      "rule_refs": [
+        "T01.frame",
+        "T09.lifecycle",
+        "T10.coverage",
+        "T03.recognition",
+        "T08.terminal_graph"
+      ],
+      "model_pcell_track_relation": "FIN width/pitch/phase physical.json; channel L=4nm and fin W=2nm via models; PCell/production track unknown",
+      "not_rule_value": "actual bbox and width/height are design choices, not minimum rules"
+    },
+    {
+      "object": "F01",
+      "actual_bbox_nm": [
+        10,
+        24,
+        110,
+        26
+      ],
+      "actual_size_xy_nm": [
+        100,
+        2
+      ],
+      "design_source": "spec.json; hand-authored W003 toy design preserved except explicitly removed shapes; W004 revision 2",
+      "source_coordinate": "source.gds integer XY; see runtime support unit evidence for byte identity",
+      "rule_refs": [
+        "T01.frame",
+        "T09.lifecycle",
+        "T10.coverage",
+        "T02.fin_grid",
+        "T03.recognition"
+      ],
+      "model_pcell_track_relation": "FIN width/pitch/phase physical.json; channel L=4nm and fin W=2nm via models; PCell/production track unknown",
+      "not_rule_value": "actual bbox and width/height are design choices, not minimum rules"
+    },
+    {
+      "object": "F02",
+      "actual_bbox_nm": [
+        10,
+        34,
+        110,
+        36
+      ],
+      "actual_size_xy_nm": [
+        100,
+        2
+      ],
+      "design_source": "spec.json; hand-authored W003 toy design preserved except explicitly removed shapes; W004 revision 2",
+      "source_coordinate": "source.gds integer XY; see runtime support unit evidence for byte identity",
+      "rule_refs": [
+        "T01.frame",
+        "T09.lifecycle",
+        "T10.coverage",
+        "T02.fin_grid",
+        "T03.recognition"
+      ],
+      "model_pcell_track_relation": "FIN width/pitch/phase physical.json; channel L=4nm and fin W=2nm via models; PCell/production track unknown",
+      "not_rule_value": "actual bbox and width/height are design choices, not minimum rules"
+    },
+    {
+      "object": "F03",
+      "actual_bbox_nm": [
+        10,
+        44,
+        110,
+        46
+      ],
+      "actual_size_xy_nm": [
+        100,
+        2
+      ],
+      "design_source": "spec.json; hand-authored W003 toy design preserved except explicitly removed shapes; W004 revision 2",
+      "source_coordinate": "source.gds integer XY; see runtime support unit evidence for byte identity",
+      "rule_refs": [
+        "T01.frame",
+        "T09.lifecycle",
+        "T10.coverage",
+        "T02.fin_grid",
+        "T03.recognition"
+      ],
+      "model_pcell_track_relation": "FIN width/pitch/phase physical.json; channel L=4nm and fin W=2nm via models; PCell/production track unknown",
+      "not_rule_value": "actual bbox and width/height are design choices, not minimum rules"
+    },
+    {
+      "object": "F04",
+      "actual_bbox_nm": [
+        10,
+        54,
+        110,
+        56
+      ],
+      "actual_size_xy_nm": [
+        100,
+        2
+      ],
+      "design_source": "spec.json; hand-authored W003 toy design preserved except explicitly removed shapes; W004 revision 2",
+      "source_coordinate": "source.gds integer XY; see runtime support unit evidence for byte identity",
+      "rule_refs": [
+        "T01.frame",
+        "T09.lifecycle",
+        "T10.coverage",
+        "T02.fin_grid",
+        "T03.recognition"
+      ],
+      "model_pcell_track_relation": "FIN width/pitch/phase physical.json; channel L=4nm and fin W=2nm via models; PCell/production track unknown",
+      "not_rule_value": "actual bbox and width/height are design choices, not minimum rules"
+    },
+    {
+      "object": "F05",
+      "actual_bbox_nm": [
+        10,
+        64,
+        110,
+        66
+      ],
+      "actual_size_xy_nm": [
+        100,
+        2
+      ],
+      "design_source": "spec.json; hand-authored W003 toy design preserved except explicitly removed shapes; W004 revision 2",
+      "source_coordinate": "source.gds integer XY; see runtime support unit evidence for byte identity",
+      "rule_refs": [
+        "T01.frame",
+        "T09.lifecycle",
+        "T10.coverage",
+        "T02.fin_grid",
+        "T03.recognition"
+      ],
+      "model_pcell_track_relation": "FIN width/pitch/phase physical.json; channel L=4nm and fin W=2nm via models; PCell/production track unknown",
+      "not_rule_value": "actual bbox and width/height are design choices, not minimum rules"
+    },
+    {
+      "object": "F06",
+      "actual_bbox_nm": [
+        10,
+        84,
+        110,
+        86
+      ],
+      "actual_size_xy_nm": [
+        100,
+        2
+      ],
+      "design_source": "spec.json; hand-authored W003 toy design preserved except explicitly removed shapes; W004 revision 2",
+      "source_coordinate": "source.gds integer XY; see runtime support unit evidence for byte identity",
+      "rule_refs": [
+        "T01.frame",
+        "T09.lifecycle",
+        "T10.coverage",
+        "T02.fin_grid",
+        "T03.recognition"
+      ],
+      "model_pcell_track_relation": "FIN width/pitch/phase physical.json; channel L=4nm and fin W=2nm via models; PCell/production track unknown",
+      "not_rule_value": "actual bbox and width/height are design choices, not minimum rules"
+    },
+    {
+      "object": "F07",
+      "actual_bbox_nm": [
+        10,
+        114,
+        110,
+        116
+      ],
+      "actual_size_xy_nm": [
+        100,
+        2
+      ],
+      "design_source": "spec.json; hand-authored W003 toy design preserved except explicitly removed shapes; W004 revision 2",
+      "source_coordinate": "source.gds integer XY; see runtime support unit evidence for byte identity",
+      "rule_refs": [
+        "T01.frame",
+        "T09.lifecycle",
+        "T10.coverage",
+        "T02.fin_grid",
+        "T03.recognition"
+      ],
+      "model_pcell_track_relation": "FIN width/pitch/phase physical.json; channel L=4nm and fin W=2nm via models; PCell/production track unknown",
+      "not_rule_value": "actual bbox and width/height are design choices, not minimum rules"
+    },
+    {
+      "object": "F08",
+      "actual_bbox_nm": [
+        10,
+        124,
+        110,
+        126
+      ],
+      "actual_size_xy_nm": [
+        100,
+        2
+      ],
+      "design_source": "spec.json; hand-authored W003 toy design preserved except explicitly removed shapes; W004 revision 2",
+      "source_coordinate": "source.gds integer XY; see runtime support unit evidence for byte identity",
+      "rule_refs": [
+        "T01.frame",
+        "T09.lifecycle",
+        "T10.coverage",
+        "T02.fin_grid",
+        "T03.recognition"
+      ],
+      "model_pcell_track_relation": "FIN width/pitch/phase physical.json; channel L=4nm and fin W=2nm via models; PCell/production track unknown",
+      "not_rule_value": "actual bbox and width/height are design choices, not minimum rules"
+    },
+    {
+      "object": "F09",
+      "actual_bbox_nm": [
+        10,
+        134,
+        110,
+        136
+      ],
+      "actual_size_xy_nm": [
+        100,
+        2
+      ],
+      "design_source": "spec.json; hand-authored W003 toy design preserved except explicitly removed shapes; W004 revision 2",
+      "source_coordinate": "source.gds integer XY; see runtime support unit evidence for byte identity",
+      "rule_refs": [
+        "T01.frame",
+        "T09.lifecycle",
+        "T10.coverage",
+        "T02.fin_grid",
+        "T03.recognition"
+      ],
+      "model_pcell_track_relation": "FIN width/pitch/phase physical.json; channel L=4nm and fin W=2nm via models; PCell/production track unknown",
+      "not_rule_value": "actual bbox and width/height are design choices, not minimum rules"
+    },
+    {
+      "object": "F10",
+      "actual_bbox_nm": [
+        10,
+        144,
+        110,
+        146
+      ],
+      "actual_size_xy_nm": [
+        100,
+        2
+      ],
+      "design_source": "spec.json; hand-authored W003 toy design preserved except explicitly removed shapes; W004 revision 2",
+      "source_coordinate": "source.gds integer XY; see runtime support unit evidence for byte identity",
+      "rule_refs": [
+        "T01.frame",
+        "T09.lifecycle",
+        "T10.coverage",
+        "T02.fin_grid",
+        "T03.recognition"
+      ],
+      "model_pcell_track_relation": "FIN width/pitch/phase physical.json; channel L=4nm and fin W=2nm via models; PCell/production track unknown",
+      "not_rule_value": "actual bbox and width/height are design choices, not minimum rules"
+    },
+    {
+      "object": "F11",
+      "actual_bbox_nm": [
+        10,
+        154,
+        110,
+        156
+      ],
+      "actual_size_xy_nm": [
+        100,
+        2
+      ],
+      "design_source": "spec.json; hand-authored W003 toy design preserved except explicitly removed shapes; W004 revision 2",
+      "source_coordinate": "source.gds integer XY; see runtime support unit evidence for byte identity",
+      "rule_refs": [
+        "T01.frame",
+        "T09.lifecycle",
+        "T10.coverage",
+        "T02.fin_grid",
+        "T03.recognition"
+      ],
+      "model_pcell_track_relation": "FIN width/pitch/phase physical.json; channel L=4nm and fin W=2nm via models; PCell/production track unknown",
+      "not_rule_value": "actual bbox and width/height are design choices, not minimum rules"
+    },
+    {
+      "object": "F12",
+      "actual_bbox_nm": [
+        10,
+        164,
+        110,
+        166
+      ],
+      "actual_size_xy_nm": [
+        100,
+        2
+      ],
+      "design_source": "spec.json; hand-authored W003 toy design preserved except explicitly removed shapes; W004 revision 2",
+      "source_coordinate": "source.gds integer XY; see runtime support unit evidence for byte identity",
+      "rule_refs": [
+        "T01.frame",
+        "T09.lifecycle",
+        "T10.coverage",
+        "T02.fin_grid",
+        "T03.recognition"
+      ],
+      "model_pcell_track_relation": "FIN width/pitch/phase physical.json; channel L=4nm and fin W=2nm via models; PCell/production track unknown",
+      "not_rule_value": "actual bbox and width/height are design choices, not minimum rules"
+    },
+    {
+      "object": "F13",
+      "actual_bbox_nm": [
+        10,
+        174,
+        110,
+        176
+      ],
+      "actual_size_xy_nm": [
+        100,
+        2
+      ],
+      "design_source": "spec.json; hand-authored W003 toy design preserved except explicitly removed shapes; W004 revision 2",
+      "source_coordinate": "source.gds integer XY; see runtime support unit evidence for byte identity",
+      "rule_refs": [
+        "T01.frame",
+        "T09.lifecycle",
+        "T10.coverage",
+        "T02.fin_grid",
+        "T03.recognition"
+      ],
+      "model_pcell_track_relation": "FIN width/pitch/phase physical.json; channel L=4nm and fin W=2nm via models; PCell/production track unknown",
+      "not_rule_value": "actual bbox and width/height are design choices, not minimum rules"
+    },
+    {
+      "object": "F14",
+      "actual_bbox_nm": [
+        10,
+        194,
+        110,
+        196
+      ],
+      "actual_size_xy_nm": [
+        100,
+        2
+      ],
+      "design_source": "spec.json; hand-authored W003 toy design preserved except explicitly removed shapes; W004 revision 2",
+      "source_coordinate": "source.gds integer XY; see runtime support unit evidence for byte identity",
+      "rule_refs": [
+        "T01.frame",
+        "T09.lifecycle",
+        "T10.coverage",
+        "T02.fin_grid",
+        "T03.recognition"
+      ],
+      "model_pcell_track_relation": "FIN width/pitch/phase physical.json; channel L=4nm and fin W=2nm via models; PCell/production track unknown",
+      "not_rule_value": "actual bbox and width/height are design choices, not minimum rules"
+    },
+    {
+      "object": "F15",
+      "actual_bbox_nm": [
+        10,
+        74,
+        110,
+        76
+      ],
+      "actual_size_xy_nm": [
+        100,
+        2
+      ],
+      "design_source": "spec.json; hand-authored W003 toy design preserved except explicitly removed shapes; W004 revision 2",
+      "source_coordinate": "source.gds integer XY; see runtime support unit evidence for byte identity",
+      "rule_refs": [
+        "T01.frame",
+        "T09.lifecycle",
+        "T10.coverage",
+        "T02.fin_grid",
+        "T03.recognition"
+      ],
+      "model_pcell_track_relation": "FIN width/pitch/phase physical.json; channel L=4nm and fin W=2nm via models; PCell/production track unknown",
+      "not_rule_value": "actual bbox and width/height are design choices, not minimum rules"
+    },
+    {
+      "object": "F16",
+      "actual_bbox_nm": [
+        10,
+        94,
+        110,
+        96
+      ],
+      "actual_size_xy_nm": [
+        100,
+        2
+      ],
+      "design_source": "spec.json; hand-authored W003 toy design preserved except explicitly removed shapes; W004 revision 2",
+      "source_coordinate": "source.gds integer XY; see runtime support unit evidence for byte identity",
+      "rule_refs": [
+        "T01.frame",
+        "T09.lifecycle",
+        "T10.coverage",
+        "T02.fin_grid",
+        "T03.recognition"
+      ],
+      "model_pcell_track_relation": "FIN width/pitch/phase physical.json; channel L=4nm and fin W=2nm via models; PCell/production track unknown",
+      "not_rule_value": "actual bbox and width/height are design choices, not minimum rules"
+    },
+    {
+      "object": "F17",
+      "actual_bbox_nm": [
+        10,
+        104,
+        110,
+        106
+      ],
+      "actual_size_xy_nm": [
+        100,
+        2
+      ],
+      "design_source": "spec.json; hand-authored W003 toy design preserved except explicitly removed shapes; W004 revision 2",
+      "source_coordinate": "source.gds integer XY; see runtime support unit evidence for byte identity",
+      "rule_refs": [
+        "T01.frame",
+        "T09.lifecycle",
+        "T10.coverage",
+        "T02.fin_grid",
+        "T03.recognition"
+      ],
+      "model_pcell_track_relation": "FIN width/pitch/phase physical.json; channel L=4nm and fin W=2nm via models; PCell/production track unknown",
+      "not_rule_value": "actual bbox and width/height are design choices, not minimum rules"
+    },
+    {
+      "object": "F18",
+      "actual_bbox_nm": [
+        10,
+        184,
+        110,
+        186
+      ],
+      "actual_size_xy_nm": [
+        100,
+        2
+      ],
+      "design_source": "spec.json; hand-authored W003 toy design preserved except explicitly removed shapes; W004 revision 2",
+      "source_coordinate": "source.gds integer XY; see runtime support unit evidence for byte identity",
+      "rule_refs": [
+        "T01.frame",
+        "T09.lifecycle",
+        "T10.coverage",
+        "T02.fin_grid",
+        "T03.recognition"
+      ],
+      "model_pcell_track_relation": "FIN width/pitch/phase physical.json; channel L=4nm and fin W=2nm via models; PCell/production track unknown",
+      "not_rule_value": "actual bbox and width/height are design choices, not minimum rules"
+    },
+    {
+      "object": "LN",
+      "actual_bbox_nm": [
+        28,
+        30,
+        34,
+        55
+      ],
+      "actual_size_xy_nm": [
+        6,
+        25
+      ],
+      "design_source": "spec.json; hand-authored W003 toy design preserved except explicitly removed shapes; W004 revision 2",
+      "source_coordinate": "source.gds integer XY; see runtime support unit evidence for byte identity",
+      "rule_refs": [
+        "T01.frame",
+        "T09.lifecycle",
+        "T10.coverage",
+        "T06.li_spacing",
+        "T08.terminal_graph"
+      ],
+      "model_pcell_track_relation": "FIN width/pitch/phase physical.json; channel L=4nm and fin W=2nm via models; PCell/production track unknown",
+      "not_rule_value": "actual bbox and width/height are design choices, not minimum rules"
+    },
+    {
+      "object": "LP",
+      "actual_bbox_nm": [
+        28,
+        130,
+        34,
+        155
+      ],
+      "actual_size_xy_nm": [
+        6,
+        25
+      ],
+      "design_source": "spec.json; hand-authored W003 toy design preserved except explicitly removed shapes; W004 revision 2",
+      "source_coordinate": "source.gds integer XY; see runtime support unit evidence for byte identity",
+      "rule_refs": [
+        "T01.frame",
+        "T09.lifecycle",
+        "T10.coverage",
+        "T06.li_spacing",
+        "T08.terminal_graph"
+      ],
+      "model_pcell_track_relation": "FIN width/pitch/phase physical.json; channel L=4nm and fin W=2nm via models; PCell/production track unknown",
+      "not_rule_value": "actual bbox and width/height are design choices, not minimum rules"
+    },
+    {
+      "object": "LY",
+      "actual_bbox_nm": [
+        84,
+        30,
+        90,
+        165
+      ],
+      "actual_size_xy_nm": [
+        6,
+        135
+      ],
+      "design_source": "spec.json; hand-authored W003 toy design preserved except explicitly removed shapes; W004 revision 2",
+      "source_coordinate": "source.gds integer XY; see runtime support unit evidence for byte identity",
+      "rule_refs": [
+        "T01.frame",
+        "T09.lifecycle",
+        "T10.coverage",
+        "T06.li_spacing",
+        "T08.terminal_graph"
+      ],
+      "model_pcell_track_relation": "FIN width/pitch/phase physical.json; channel L=4nm and fin W=2nm via models; PCell/production track unknown",
+      "not_rule_value": "actual bbox and width/height are design choices, not minimum rules"
+    },
+    {
+      "object": "CNS",
+      "actual_bbox_nm": [
+        29,
+        40,
+        33,
+        44
+      ],
+      "actual_size_xy_nm": [
+        4,
+        4
+      ],
+      "design_source": "spec.json; hand-authored W003 toy design preserved except explicitly removed shapes; W004 revision 2",
+      "source_coordinate": "source.gds integer XY; see runtime support unit evidence for byte identity",
+      "rule_refs": [
+        "T01.frame",
+        "T09.lifecycle",
+        "T10.coverage",
+        "T05.contact_enclosure",
+        "T08.terminal_graph"
+      ],
+      "model_pcell_track_relation": "FIN width/pitch/phase physical.json; channel L=4nm and fin W=2nm via models; PCell/production track unknown",
+      "not_rule_value": "actual bbox and width/height are design choices, not minimum rules"
+    },
+    {
+      "object": "CND",
+      "actual_bbox_nm": [
+        85,
+        40,
+        89,
+        44
+      ],
+      "actual_size_xy_nm": [
+        4,
+        4
+      ],
+      "design_source": "spec.json; hand-authored W003 toy design preserved except explicitly removed shapes; W004 revision 2",
+      "source_coordinate": "source.gds integer XY; see runtime support unit evidence for byte identity",
+      "rule_refs": [
+        "T01.frame",
+        "T09.lifecycle",
+        "T10.coverage",
+        "T05.contact_enclosure",
+        "T08.terminal_graph"
+      ],
+      "model_pcell_track_relation": "FIN width/pitch/phase physical.json; channel L=4nm and fin W=2nm via models; PCell/production track unknown",
+      "not_rule_value": "actual bbox and width/height are design choices, not minimum rules"
+    },
+    {
+      "object": "CPS",
+      "actual_bbox_nm": [
+        29,
+        140,
+        33,
+        144
+      ],
+      "actual_size_xy_nm": [
+        4,
+        4
+      ],
+      "design_source": "spec.json; hand-authored W003 toy design preserved except explicitly removed shapes; W004 revision 2",
+      "source_coordinate": "source.gds integer XY; see runtime support unit evidence for byte identity",
+      "rule_refs": [
+        "T01.frame",
+        "T09.lifecycle",
+        "T10.coverage",
+        "T05.contact_enclosure",
+        "T08.terminal_graph"
+      ],
+      "model_pcell_track_relation": "FIN width/pitch/phase physical.json; channel L=4nm and fin W=2nm via models; PCell/production track unknown",
+      "not_rule_value": "actual bbox and width/height are design choices, not minimum rules"
+    },
+    {
+      "object": "CPD",
+      "actual_bbox_nm": [
+        85,
+        140,
+        89,
+        144
+      ],
+      "actual_size_xy_nm": [
+        4,
+        4
+      ],
+      "design_source": "spec.json; hand-authored W003 toy design preserved except explicitly removed shapes; W004 revision 2",
+      "source_coordinate": "source.gds integer XY; see runtime support unit evidence for byte identity",
+      "rule_refs": [
+        "T01.frame",
+        "T09.lifecycle",
+        "T10.coverage",
+        "T05.contact_enclosure",
+        "T08.terminal_graph"
+      ],
+      "model_pcell_track_relation": "FIN width/pitch/phase physical.json; channel L=4nm and fin W=2nm via models; PCell/production track unknown",
+      "not_rule_value": "actual bbox and width/height are design choices, not minimum rules"
+    },
+    {
+      "object": "VN",
+      "actual_bbox_nm": [
+        29,
+        50,
+        33,
+        54
+      ],
+      "actual_size_xy_nm": [
+        4,
+        4
+      ],
+      "design_source": "spec.json; hand-authored W003 toy design preserved except explicitly removed shapes; W004 revision 2",
+      "source_coordinate": "source.gds integer XY; see runtime support unit evidence for byte identity",
+      "rule_refs": [
+        "T01.frame",
+        "T09.lifecycle",
+        "T10.coverage",
+        "T05.contact_enclosure",
+        "T08.terminal_graph"
+      ],
+      "model_pcell_track_relation": "FIN width/pitch/phase physical.json; channel L=4nm and fin W=2nm via models; PCell/production track unknown",
+      "not_rule_value": "actual bbox and width/height are design choices, not minimum rules"
+    },
+    {
+      "object": "VP",
+      "actual_bbox_nm": [
+        29,
+        150,
+        33,
+        154
+      ],
+      "actual_size_xy_nm": [
+        4,
+        4
+      ],
+      "design_source": "spec.json; hand-authored W003 toy design preserved except explicitly removed shapes; W004 revision 2",
+      "source_coordinate": "source.gds integer XY; see runtime support unit evidence for byte identity",
+      "rule_refs": [
+        "T01.frame",
+        "T09.lifecycle",
+        "T10.coverage",
+        "T05.contact_enclosure",
+        "T08.terminal_graph"
+      ],
+      "model_pcell_track_relation": "FIN width/pitch/phase physical.json; channel L=4nm and fin W=2nm via models; PCell/production track unknown",
+      "not_rule_value": "actual bbox and width/height are design choices, not minimum rules"
+    },
+    {
+      "object": "VY",
+      "actual_bbox_nm": [
+        85,
+        92,
+        89,
+        96
+      ],
+      "actual_size_xy_nm": [
+        4,
+        4
+      ],
+      "design_source": "spec.json; hand-authored W003 toy design preserved except explicitly removed shapes; W004 revision 2",
+      "source_coordinate": "source.gds integer XY; see runtime support unit evidence for byte identity",
+      "rule_refs": [
+        "T01.frame",
+        "T09.lifecycle",
+        "T10.coverage",
+        "T05.contact_enclosure",
+        "T08.terminal_graph"
+      ],
+      "model_pcell_track_relation": "FIN width/pitch/phase physical.json; channel L=4nm and fin W=2nm via models; PCell/production track unknown",
+      "not_rule_value": "actual bbox and width/height are design choices, not minimum rules"
+    },
+    {
+      "object": "GC",
+      "actual_bbox_nm": [
+        59,
+        92,
+        61,
+        96
+      ],
+      "actual_size_xy_nm": [
+        2,
+        4
+      ],
+      "design_source": "spec.json; hand-authored W003 toy design preserved except explicitly removed shapes; W004 revision 2",
+      "source_coordinate": "source.gds integer XY; see runtime support unit evidence for byte identity",
+      "rule_refs": [
+        "T01.frame",
+        "T09.lifecycle",
+        "T10.coverage",
+        "T05.contact_enclosure",
+        "T08.terminal_graph"
+      ],
+      "model_pcell_track_relation": "FIN width/pitch/phase physical.json; channel L=4nm and fin W=2nm via models; PCell/production track unknown",
+      "not_rule_value": "actual bbox and width/height are design choices, not minimum rules"
+    },
+    {
+      "object": "MN",
+      "actual_bbox_nm": [
+        0,
+        48,
+        45,
+        58
+      ],
+      "actual_size_xy_nm": [
+        45,
+        10
+      ],
+      "design_source": "spec.json; hand-authored W003 toy design preserved except explicitly removed shapes; W004 revision 2",
+      "source_coordinate": "source.gds integer XY; see runtime support unit evidence for byte identity",
+      "rule_refs": [
+        "T01.frame",
+        "T09.lifecycle",
+        "T10.coverage",
+        "T07.m1_spacing",
+        "T08.terminal_graph"
+      ],
+      "model_pcell_track_relation": "FIN width/pitch/phase physical.json; channel L=4nm and fin W=2nm via models; PCell/production track unknown",
+      "not_rule_value": "actual bbox and width/height are design choices, not minimum rules"
+    },
+    {
+      "object": "MP",
+      "actual_bbox_nm": [
+        0,
+        148,
+        45,
+        158
+      ],
+      "actual_size_xy_nm": [
+        45,
+        10
+      ],
+      "design_source": "spec.json; hand-authored W003 toy design preserved except explicitly removed shapes; W004 revision 2",
+      "source_coordinate": "source.gds integer XY; see runtime support unit evidence for byte identity",
+      "rule_refs": [
+        "T01.frame",
+        "T09.lifecycle",
+        "T10.coverage",
+        "T07.m1_spacing",
+        "T08.terminal_graph"
+      ],
+      "model_pcell_track_relation": "FIN width/pitch/phase physical.json; channel L=4nm and fin W=2nm via models; PCell/production track unknown",
+      "not_rule_value": "actual bbox and width/height are design choices, not minimum rules"
+    },
+    {
+      "object": "MA",
+      "actual_bbox_nm": [
+        50,
+        90,
+        75,
+        98
+      ],
+      "actual_size_xy_nm": [
+        25,
+        8
+      ],
+      "design_source": "spec.json; hand-authored W003 toy design preserved except explicitly removed shapes; W004 revision 2",
+      "source_coordinate": "source.gds integer XY; see runtime support unit evidence for byte identity",
+      "rule_refs": [
+        "T01.frame",
+        "T09.lifecycle",
+        "T10.coverage",
+        "T07.m1_spacing",
+        "T08.terminal_graph"
+      ],
+      "model_pcell_track_relation": "FIN width/pitch/phase physical.json; channel L=4nm and fin W=2nm via models; PCell/production track unknown",
+      "not_rule_value": "actual bbox and width/height are design choices, not minimum rules"
+    },
+    {
+      "object": "MY",
+      "actual_bbox_nm": [
+        80,
+        90,
+        110,
+        98
+      ],
+      "actual_size_xy_nm": [
+        30,
+        8
+      ],
+      "design_source": "spec.json; hand-authored W003 toy design preserved except explicitly removed shapes; W004 revision 2",
+      "source_coordinate": "source.gds integer XY; see runtime support unit evidence for byte identity",
+      "rule_refs": [
+        "T01.frame",
+        "T09.lifecycle",
+        "T10.coverage",
+        "T07.m1_spacing",
+        "T08.terminal_graph"
+      ],
+      "model_pcell_track_relation": "FIN width/pitch/phase physical.json; channel L=4nm and fin W=2nm via models; PCell/production track unknown",
+      "not_rule_value": "actual bbox and width/height are design choices, not minimum rules"
+    },
+    {
+      "object": "MARK",
+      "actual_bbox_nm": [
+        145,
+        180,
+        150,
+        185
+      ],
+      "actual_size_xy_nm": [
+        5,
+        5
+      ],
+      "design_source": "spec.json; hand-authored W003 toy design preserved except explicitly removed shapes; W004 revision 2",
+      "source_coordinate": "source.gds integer XY; see runtime support unit evidence for byte identity",
+      "rule_refs": [
+        "T01.frame",
+        "T09.lifecycle",
+        "T10.coverage"
+      ],
+      "model_pcell_track_relation": "FIN width/pitch/phase physical.json; channel L=4nm and fin W=2nm via models; PCell/production track unknown",
+      "not_rule_value": "actual bbox and width/height are design choices, not minimum rules"
+    }
+  ],
+  "key_derived_values": [
+    {
+      "quantity": "FIN edge gap",
+      "actual_nm": 8,
+      "formula": "10 pitch - 2 width",
+      "rule": "no independent min FIN spacing rule"
+    },
+    {
+      "quantity": "channel length",
+      "actual_nm": 4,
+      "formula": "62-58; L=4n",
+      "rule": "model consistency, not gate spacing minimum"
+    },
+    {
+      "quantity": "body N/P gap",
+      "actual_nm": 10,
+      "formula": "100-90",
+      "rule": "no body minimum spacing rule claimed"
+    },
+    {
+      "quantity": "LI minimum separation",
+      "actual_nm": 50,
+      "formula": "84-34; 3 local pairs",
+      "rule": "T06 >=2nm"
+    },
+    {
+      "quantity": "M1 minimum separation",
+      "actual_nm": 5,
+      "formula": "80-75; 6 local pairs",
+      "rule": "T07 >=5nm"
+    },
+    {
+      "quantity": "active body minimum enclosure N/P",
+      "actual_nm": [
+        20,
+        10
+      ],
+      "rule": "T04 >=10nm"
+    },
+    {
+      "quantity": "local connector minimum enclosure",
+      "actual_nm": 1,
+      "rule": "T05 >=1nm"
+    },
+    {
+      "quantity": "context tap body/rail minimum enclosure",
+      "actual_nm": [
+        8,
+        2
+      ],
+      "rule": "T05 >=1nm separately external scope"
+    }
+  ],
+  "rule_sources": [
+    {
+      "id": "T01.frame",
+      "parameters": {
+        "margin_nm": 0
+      },
+      "condition": "all non-frame drawn records",
+      "relation_basis": "geometry_only",
+      "source": {
+        "classification": "hand_authored_synthetic",
+        "version": "1"
+      },
+      "owner": "tech/rules.json",
+      "direction_unit": "exact nm, x/y rectangles; spacing Euclidean squared integer; profile identity refs instead of duplicate numeric authority"
+    },
+    {
+      "id": "T02.fin_grid",
+      "parameters": {},
+      "condition": "all FIN",
+      "relation_basis": "geometry_only",
+      "source": {
+        "classification": "hand_authored_synthetic",
+        "version": "1"
+      },
+      "owner": "tech/rules.json",
+      "direction_unit": "exact nm, x/y rectangles; spacing Euclidean squared integer; profile identity refs instead of duplicate numeric authority"
+    },
+    {
+      "id": "T03.recognition",
+      "parameters": {},
+      "condition": "all source/target devices and all recognized channels",
+      "relation_basis": "geometry_only",
+      "source": {
+        "classification": "hand_authored_synthetic",
+        "version": "1"
+      },
+      "owner": "tech/rules.json",
+      "direction_unit": "exact nm, x/y rectangles; spacing Euclidean squared integer; profile identity refs instead of duplicate numeric authority"
+    },
+    {
+      "id": "T04.body",
+      "parameters": {
+        "active_enclosure_nm": 10
+      },
+      "condition": "local active/body and separate read-only context body chain",
+      "relation_basis": "same_component",
+      "source": {
+        "classification": "hand_authored_synthetic",
+        "version": "2"
+      },
+      "owner": "tech/rules.json",
+      "direction_unit": "exact nm, x/y rectangles; spacing Euclidean squared integer; profile identity refs instead of duplicate numeric authority"
+    },
+    {
+      "id": "T05.contact_enclosure",
+      "parameters": {
+        "enclosure_nm": 1
+      },
+      "condition": "local CONTACT,VIA0,GCONTACT; separately context BTAP_N/BTAP_P",
+      "relation_basis": "geometry_only",
+      "source": {
+        "classification": "hand_authored_synthetic",
+        "version": "2"
+      },
+      "owner": "tech/rules.json",
+      "direction_unit": "exact nm, x/y rectangles; spacing Euclidean squared integer; profile identity refs instead of duplicate numeric authority"
+    },
+    {
+      "id": "T06.li_spacing",
+      "parameters": {
+        "min_distance_nm": 2
+      },
+      "condition": "local effective LI; dedicated cut-island specimen evaluated separately",
+      "relation_basis": "geometry_only",
+      "source": {
+        "classification": "hand_authored_synthetic",
+        "version": "1"
+      },
+      "owner": "tech/rules.json",
+      "direction_unit": "exact nm, x/y rectangles; spacing Euclidean squared integer; profile identity refs instead of duplicate numeric authority"
+    },
+    {
+      "id": "T07.m1_spacing",
+      "parameters": {
+        "min_distance_nm": 5
+      },
+      "condition": "all unordered pairs of M1 rectangles",
+      "relation_basis": "geometry_only",
+      "source": {
+        "classification": "hand_authored_synthetic",
+        "version": "1"
+      },
+      "owner": "tech/rules.json",
+      "direction_unit": "exact nm, x/y rectangles; spacing Euclidean squared integer; profile identity refs instead of duplicate numeric authority"
+    },
+    {
+      "id": "T08.terminal_graph",
+      "parameters": {
+        "terminal_order": [
+          "D",
+          "G",
+          "S",
+          "B"
+        ]
+      },
+      "condition": "all device terminals and conductor components",
+      "relation_basis": "same_component",
+      "source": {
+        "classification": "hand_authored_synthetic",
+        "version": "2"
+      },
+      "owner": "tech/rules.json",
+      "direction_unit": "exact nm, x/y rectangles; spacing Euclidean squared integer; profile identity refs instead of duplicate numeric authority"
+    },
+    {
+      "id": "T09.lifecycle",
+      "parameters": {
+        "ordered_eco_commit_count": 0
+      },
+      "condition": "local exported records and CDL only; context read-only bound input",
+      "relation_basis": "geometry_only",
+      "source": {
+        "classification": "hand_authored_synthetic",
+        "version": "1"
+      },
+      "owner": "tech/rules.json",
+      "direction_unit": "exact nm, x/y rectangles; spacing Euclidean squared integer; profile identity refs instead of duplicate numeric authority"
+    },
+    {
+      "id": "T10.coverage",
+      "parameters": {
+        "unknown_nonconductor_policy": "preserve_disclose",
+        "disconnected_label_policy": "keep_separate_disclose"
+      },
+      "condition": "all drawn and effective regions",
+      "relation_basis": "none",
+      "source": {
+        "classification": "hand_authored_synthetic",
+        "version": "1"
+      },
+      "owner": "tech/rules.json",
+      "direction_unit": "exact nm, x/y rectangles; spacing Euclidean squared integer; profile identity refs instead of duplicate numeric authority"
+    }
+  ],
+  "owner_consumers": {
+    "drawn": {
+      "path": "tech/drawn.json",
+      "keys": [
+        "layers"
+      ],
+      "consumers": [
+        "w004_support.load_tech",
+        "w003_generate",
+        "w003_verify",
+        "w003_record_examples"
+      ]
+    },
+    "derived": {
+      "path": "tech/derived.json",
+      "keys": [
+        "derived_registry"
+      ],
+      "consumers": [
+        "w004_support.load_tech",
+        "w003_generate",
+        "w003_verify",
+        "w003_record_examples"
+      ]
+    },
+    "physical": {
+      "path": "tech/physical.json",
+      "keys": [
+        "fin_count_profile",
+        "models",
+        "device_extraction_contract",
+        "body_context_profile",
+        "operators",
+        "capabilities",
+        "required_operator_refs"
+      ],
+      "consumers": [
+        "w004_support.load_tech",
+        "w003_generate",
+        "w003_verify",
+        "w003_record_examples"
+      ]
+    },
+    "formats": {
+      "path": "tech/formats.json",
+      "keys": [
+        "geometry_capability",
+        "unit_scale_contract",
+        "cdl_dialect",
+        "limits"
+      ],
+      "consumers": [
+        "w004_support.load_tech",
+        "w003_generate",
+        "w003_verify",
+        "w003_record_examples"
+      ]
+    },
+    "coordinate": {
+      "path": "tech/coordinate.json",
+      "keys": [
+        "coordinate_projection"
+      ],
+      "consumers": [
+        "w004_support.load_tech",
+        "w003_generate",
+        "w003_verify",
+        "w003_record_examples"
+      ]
+    },
+    "rules": {
+      "path": "tech/rules.json",
+      "keys": [
+        "rules",
+        "mandatory_rule_policy"
+      ],
+      "consumers": [
+        "w004_support.load_tech",
+        "w003_generate",
+        "w003_verify",
+        "w003_record_examples"
+      ]
+    }
+  },
+  "independent_answer": "independent-design-answer.json; authored before generated output by independent_answers; standalone cut specimen differs from suggested full-cell overlay and has its own hand answer",
+  "policy_duplicates": "site outputs.core/directory must exactly equal export policy required_artifacts/output_directory; mismatch rejected; no precedence/default/override introduced",
+  "deferred_mechanism": "MR-040",
+  "external_dimensions": [
+    {
+      "object": "BN.ext",
+      "bbox_nm": [
+        -20,
+        0,
+        0,
+        90
+      ],
+      "size_xy_nm": [
+        20,
+        90
+      ],
+      "source": "body/context-template.json; W004 D1=A authorized, independent integer answer before generator",
+      "rules": [
+        "T04.body",
+        "T05.contact_enclosure",
+        "T08.terminal_graph"
+      ],
+      "scope": "external read-only not exported"
+    },
+    {
+      "object": "BP.ext",
+      "bbox_nm": [
+        -20,
+        100,
+        0,
+        200
+      ],
+      "size_xy_nm": [
+        20,
+        100
+      ],
+      "source": "body/context-template.json; W004 D1=A authorized, independent integer answer before generator",
+      "rules": [
+        "T04.body",
+        "T05.contact_enclosure",
+        "T08.terminal_graph"
+      ],
+      "scope": "external read-only not exported"
+    },
+    {
+      "object": "MN.ext",
+      "bbox_nm": [
+        -20,
+        48,
+        0,
+        58
+      ],
+      "size_xy_nm": [
+        20,
+        10
+      ],
+      "source": "body/context-template.json; W004 D1=A authorized, independent integer answer before generator",
+      "rules": [
+        "T04.body",
+        "T05.contact_enclosure",
+        "T08.terminal_graph"
+      ],
+      "scope": "external read-only not exported"
+    },
+    {
+      "object": "MP.ext",
+      "bbox_nm": [
+        -20,
+        148,
+        0,
+        158
+      ],
+      "size_xy_nm": [
+        20,
+        10
+      ],
+      "source": "body/context-template.json; W004 D1=A authorized, independent integer answer before generator",
+      "rules": [
+        "T04.body",
+        "T05.contact_enclosure",
+        "T08.terminal_graph"
+      ],
+      "scope": "external read-only not exported"
+    },
+    {
+      "object": "TN.ext",
+      "bbox_nm": [
+        -12,
+        50,
+        -8,
+        54
+      ],
+      "size_xy_nm": [
+        4,
+        4
+      ],
+      "source": "body/context-template.json; W004 D1=A authorized, independent integer answer before generator",
+      "rules": [
+        "T04.body",
+        "T05.contact_enclosure",
+        "T08.terminal_graph"
+      ],
+      "scope": "external read-only not exported"
+    },
+    {
+      "object": "TP.ext",
+      "bbox_nm": [
+        -12,
+        150,
+        -8,
+        154
+      ],
+      "size_xy_nm": [
+        4,
+        4
+      ],
+      "source": "body/context-template.json; W004 D1=A authorized, independent integer answer before generator",
+      "rules": [
+        "T04.body",
+        "T05.contact_enclosure",
+        "T08.terminal_graph"
+      ],
+      "scope": "external read-only not exported"
+    }
+  ]
+}

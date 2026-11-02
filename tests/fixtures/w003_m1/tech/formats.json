@@ -1,0 +1,106 @@
+{
+  "schema_version": "w004-tech-owner/2",
+  "geometry_capability": {
+    "id": "flat_boundary_rectangles/1",
+    "stream": "GDSII",
+    "version": 600,
+    "top": "one_reachable_flat_cell",
+    "supported_elements": [
+      "BOUNDARY"
+    ],
+    "polygon": "exact four-corner axis-aligned rectangle plus repeated closing vertex; any rotation/reversal permitted",
+    "unsupported": [
+      "BOX",
+      "PATH",
+      "TEXT",
+      "SREF",
+      "AREF",
+      "STRANS",
+      "MAG",
+      "ANGLE",
+      "PROPATTR",
+      "PROPVALUE",
+      "NODE",
+      "unknown_record",
+      "unknown_stream_key",
+      "nonrectangle",
+      "additional_cell"
+    ],
+    "handling": "typed_fail_before_baseline",
+    "comparator": "multiset(element,layer,datatype,exact_integer_bbox) and top identity; source-record backlinks retained; no byte equality requirement"
+  },
+  "unit_scale_contract": {
+    "id": "toy_gds_real8_nm/1",
+    "nominal_tick_m": {
+      "numerator": "1",
+      "denominator": "1000000000"
+    },
+    "nominal_user_unit_m": {
+      "numerator": "1",
+      "denominator": "1000000"
+    },
+    "canonical_tick_nm": 1,
+    "gds_units_first_nominal": {
+      "numerator": "1",
+      "denominator": "1000"
+    },
+    "encoding": "GDS base16 REAL8 round-nearest ties-to-even 56-bit mantissa",
+    "equivalence": "Both UNITS fields bind independently to the sole nominal candidate with exact normal exponent and absolute error <= REAL8_ULP/2. KLayout-generated expected GDS has UNITS-only nearest56 normalization with explicit provenance; XY never changed.",
+    "geometry_quantization": "forbidden",
+    "source_tick_policy": "preserve integers without snap",
+    "output_xy_range": [
+      -2147483648,
+      2147483647
+    ],
+    "output_nominal_selection": "source nominal tick is fixed at 1 nm; output policy may select any positive rational nominal tick exactly encodable to nearest56 units, but every source-coordinate/output-tick ratio must be an integer in signed 32-bit range; source and output scale bindings are separate",
+    "nominal_source": {
+      "identity": "w004-toy-unit-choice/2",
+      "kind": "hand_authored_test_choice",
+      "basis": "1 nm accommodates all integer source coordinates; inherited W003 toy choice, not inferred by GCD; no PDK/PCell/production default"
+    }
+  },
+  "cdl_dialect": {
+    "id": "toy_literal_cdl/1",
+    "case_policy": "case_sensitive identifiers, directives and parameter names",
+    "identifier_regex": "[A-Za-z_][A-Za-z0-9_]*",
+    "escaping": "none; whitespace inside identifier unsupported",
+    "pin_order": "source declaration preserved",
+    "globals": "empty only",
+    "numeric_suffixes": {
+      "n": {
+        "numerator": "1",
+        "denominator": "1000000000"
+      }
+    },
+    "literal_grammar": "positive integer for NFIN,NF,M; positive integer followed by n for L,W; VT token toy",
+    "comments": "full-line star only",
+    "continuation": "unsupported",
+    "supported_directives": [
+      ".SUBCKT",
+      ".ENDS"
+    ],
+    "unsupported": [
+      ".INCLUDE",
+      ".LIB",
+      ".GLOBAL",
+      ".PARAM",
+      "expressions",
+      "continuation",
+      "inline_comments",
+      "unknown_parameters",
+      "unknown_directives",
+      "implicit_defaults"
+    ],
+    "dependency_closure": "empty, explicitly hashed; include/lib/preprocess unsupported",
+    "semantic_comparator": "cell, ordered pins, globals, device identities, models, ordered terminals and every parameter axis equal; line/parameter order, full-line comments and whitespace irrelevant",
+    "models_ref": "physical.json#/models"
+  },
+  "limits": {
+    "max_records": 1000,
+    "max_bytes_per_text_file": 1000000,
+    "max_json_depth": 32,
+    "safe_json_yaml_subset_only": true,
+    "duplicate_unknown_keys": "reject",
+    "floats_nan_inf_executable_tags": "reject"
+  }
+}

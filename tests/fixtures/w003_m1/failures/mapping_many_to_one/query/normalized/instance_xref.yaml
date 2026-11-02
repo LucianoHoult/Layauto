@@ -1,18 +1,100 @@
 {
-  "schema_version": "w003-query-normalized/1",
-  "header_id": "w003.synthetic.query.1",
+  "schema_version": "w004-query-normalized/2",
+  "header_id": "w004.synthetic.query.2",
+  "dialect": "calibre_like_synthetic/2",
   "capability": "instance_xref",
-  "raw_sha256": "554cf6f64625ce3114215f17c3927c7d211a1ea8c8e41ea82d564cfeba175c33",
+  "raw_refs": [
+    {
+      "path": "query/raw/iXref.temp",
+      "sha256": "89cc8a1563a0c1a33ba58e02f650f070e95bf0c63f62dae005855f1eabc3b052"
+    }
+  ],
   "records": [
     {
       "layout_instance": "Q17",
       "schematic_instance": "MN0",
-      "sd_swap": false
+      "sd_swap": false,
+      "field_sources": {
+        "layout_instance": {
+          "derivation": "verbatim",
+          "sources": [
+            {
+              "path": "query/raw/iXref.temp",
+              "sha256": "89cc8a1563a0c1a33ba58e02f650f070e95bf0c63f62dae005855f1eabc3b052",
+              "line_1based": 9,
+              "token_0based": 1,
+              "lexeme": "Q17"
+            }
+          ]
+        },
+        "schematic_instance": {
+          "derivation": "verbatim",
+          "sources": [
+            {
+              "path": "query/raw/iXref.temp",
+              "sha256": "89cc8a1563a0c1a33ba58e02f650f070e95bf0c63f62dae005855f1eabc3b052",
+              "line_1based": 9,
+              "token_0based": 3,
+              "lexeme": "MN0"
+            }
+          ]
+        },
+        "sd_swap": {
+          "derivation": "optional X token; absent is false",
+          "sources": [
+            {
+              "path": "query/raw/iXref.temp",
+              "sha256": "89cc8a1563a0c1a33ba58e02f650f070e95bf0c63f62dae005855f1eabc3b052",
+              "line_1based": 9,
+              "token_0based": null,
+              "lexeme": "0 Q17 0 MN0"
+            }
+          ]
+        }
+      }
     },
     {
       "layout_instance": "Q93",
       "schematic_instance": "MN0",
-      "sd_swap": false
+      "sd_swap": false,
+      "field_sources": {
+        "layout_instance": {
+          "derivation": "verbatim",
+          "sources": [
+            {
+              "path": "query/raw/iXref.temp",
+              "sha256": "89cc8a1563a0c1a33ba58e02f650f070e95bf0c63f62dae005855f1eabc3b052",
+              "line_1based": 10,
+              "token_0based": 1,
+              "lexeme": "Q93"
+            }
+          ]
+        },
+        "schematic_instance": {
+          "derivation": "verbatim",
+          "sources": [
+            {
+              "path": "query/raw/iXref.temp",
+              "sha256": "89cc8a1563a0c1a33ba58e02f650f070e95bf0c63f62dae005855f1eabc3b052",
+              "line_1based": 10,
+              "token_0based": 3,
+              "lexeme": "MN0"
+            }
+          ]
+        },
+        "sd_swap": {
+          "derivation": "optional X token; absent is false",
+          "sources": [
+            {
+              "path": "query/raw/iXref.temp",
+              "sha256": "89cc8a1563a0c1a33ba58e02f650f070e95bf0c63f62dae005855f1eabc3b052",
+              "line_1based": 10,
+              "token_0based": null,
+              "lexeme": "0 Q93 0 MN0"
+            }
+          ]
+        }
+      }
     }
   ]
 }

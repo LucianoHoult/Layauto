@@ -10,8 +10,9 @@
 | PM、执行、review 怎样协作？ | [collaboration/rules.md](collaboration/rules.md)：角色、读取、推进、验收、上报和交接 |
 | 一项任务记录哪些内容？ | [collaboration/task-template.md](collaboration/task-template.md)：模板；真实记录位于 `docs/tasks/Wxxx-目标.md`，当前任务由 current-work 定位 |
 | 项目现在从哪里继续？ | [current-work.md](current-work.md)：当前节点与任务入口；详细任务状态归任务文件 |
-| 如何人工核验 W003 样本？ | [人工核验清单](tasks/W003/manual-verification.md)：PM 维护正常例、全部22负例、格式及报告的逐项用户确认；技术依据仍归原样本/合同与独立review |
-| 如何落实人工要求并修订样本？ | [W004](tasks/W004-fixture-revision.md)：当前先收敛要求、依赖、待决及验收；接收后再明确启动修改。W003保留原版交付和决定来源 |
+| 如何查看样本意见的最终处理？ | [MR-078](tasks/W003/manual-verification.md#mr-078)：本轮已落实、已后置及后续开发归属；原人工答复与独立技术证据各保留来源 |
+| 如何查看已修订样本及接收依据？ | [W004 PM3](tasks/W004-fixture-revision.md#pm3-20261031)：633e3fe的synthetic修订已验收；[W003 P10](tasks/W003-m1-fixture-contracts.md#p10-w003-accepted)完成样本范围收口 |
+| 下一项产品开发是什么？ | [W005](tasks/W005-input-reading-binding.md)：正式读取实际GDS/CDL/raw/config并核对输入绑定，交可组合的evidence/错误结果；完整运行流程另行组合 |
 | 整体开发顺序怎样安排？ | [roadmap.md](roadmap.md)：首版里程碑、依赖、架构要求到验收的覆盖；规划已 review 并由 PM 接收，产品能力未验收 |
 | 如何准备与运行环境？ | [environment/local-setup.md](environment/local-setup.md)：Python、安装、测试及历史环境记录 |
 | 如何跨机器工作？ | [environment/remote-development.md](environment/remote-development.md)：运行位置、环境准备与代码交接 |

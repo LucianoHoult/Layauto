@@ -15,6 +15,14 @@ ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / 'docs/tasks/W003/examples'
 FIX = ROOT / 'tests/fixtures/w003_m1'
 VERSION = 'w003-example/1'
+from w004_support import dependencies, load_tech
+from w004_query import DIALECT
+
+def tech_ref(key):
+    bundle = json.loads((FIX/'tech.json').read_text())
+    owner = next(o for o in bundle['owners'].values() if key in o['keys'])
+    return file_ref(owner['path'], '/' + key)
+
 
 
 def canonical(value):
@@ -94,8 +102,9 @@ def build():
         ('ConstraintAuditRecord', 'mandatory'), ('LifecycleAuditRecord', 'lifecycle'),
         ('RunRecord', 'run-record'), ('Stage5Closure', 'closure'), ('ArtifactManifest', 'manifest'),
         ('ValidationResult', 'validation'), ('ReportingResult', 'reporting')]}
-    refs = [file_ref('query/raw/' + n + '.txt') for n in
-            ['instance_xref', 'net_xref', 'device_regions', 'net_regions']]
+    header = json.loads((FIX/'query/header.json').read_text())
+    refs = [file_ref(r['uri']) for r in header['raw']]
+    policy = json.loads((FIX/'validation_policy.json').read_text())
     # Ref fields link to hand-written oracle/expected view, never runtime bootstrap.
     components = {name: file_ref('expected/layout.json', '/' + pointer) for name, pointer in
                   [('current_semantic', 'current_semantic'), ('geometry', 'geometry'),
@@ -109,32 +118,32 @@ def build():
                   'expected_state_head': None, 'proposed_lineage_id': tid('StateLineageId', 'example-lineage'),
                   'idempotency_key': 'example-create-1', 'requested_mode': 'dummy_fixture',
                   'raw_input_selections': [file_ref(p) for p in
-                                           ['source.gds', 'source.cdl', 'target.cdl', 'query/header.json']],
+                                           ['source.gds', 'source.cdl', 'target.cdl', 'query/header.json', 'body/context.json']],
                   'raw_capture_selections': refs,
                   'config_policy_selections': [file_ref(p) for p in
-                                              ['site_config.yaml', 'tech.json', 'export_policy.json', 'validation_policy.json', 'limitations.json']]}
+                                              [n for n in dependencies(FIX) if n not in ['source.gds','source.cdl','target.cdl','body/context.json']]]}
     idem['request_digest'] = hashlib.sha256(canonical(descriptor)).hexdigest()
     rows = [
         rec('ToolRunResult', 'fixture-read', mode='dummy_fixture', tool_name='fixture-reader',
             command=['read-preexisting-raw-captures'], input_refs=[file_ref('site_config.yaml')],
             raw_output_refs=refs, exit_status=0, execution_status='pass', stdout_ref=None, stderr_ref=None),
-        rec('ParseResult', 'query-parse', tool_run_ref=ids['ToolRunResult'], parser_version='w003-query-normalized/1 (contract only; product parser not implemented)',
-            dialect_version='synthetic_query_dialect/1', raw_refs=refs, evidence_refs=[ids['EvidenceRecord']], execution_status='pass'),
+        rec('ParseResult', 'query-parse', tool_run_ref=ids['ToolRunResult'], parser_version='w004-query-normalized/2 (contract only; product parser not implemented)',
+            dialect_version=DIALECT, raw_refs=refs, evidence_refs=[ids['EvidenceRecord']], execution_status='pass'),
         rec('EvidenceRecord', 'evidence', parse_ref=ids['ParseResult'], header_ref=file_ref('query/header.json'),
-            raw_refs=refs, assurance='synthetic', exact_value_example={'original_lexeme': '20', 'value_ticks': 20,
+            raw_refs=refs, assurance='synthetic', exact_value_example={'original_lexeme': '400', 'value_ticks': 20,
                 'nominal_tick_m': {'numerator': '1', 'denominator': '1000000000'},
-                'numeric_precision': 'exact integer lexeme; query unit 1 nm',
-                'unit_contract_ref': file_ref('tech.json', '/unit_scale_contract')},
-            source_backlink={'raw_ref': file_ref('query/raw/device_regions.txt'), 'line_1based': 3,
-                             'token_0based': 7, 'meaning': 'D0 rectangle y_min',
+                'numeric_precision': 'exact integer / 20000 micrometres; raw(y,x) -> named exact nm',
+                'unit_contract_ref': tech_ref('unit_scale_contract')},
+            source_backlink={'raw_ref': file_ref('query/raw/device_info_Q17.txt'), 'line_1based': 8,
+                             'token_0based': 0, 'meaning': 'D0 rectangle y_min',
                              'source_dbu_backlink': file_ref('query/header.json', '/geometry_unit_contract'),
                              'original_xy_ticks_preserved': True}),
         rec('ImmutableContext', 'context', tech_ref=file_ref('tech.json'), evidence_ref=ids['EvidenceRecord'],
-            coordinate_ref=file_ref('tech.json', '/coordinate_projection'),
-            capability_refs=[file_ref('tech.json', '/' + key) for key in
+            coordinate_ref=tech_ref('coordinate_projection'),
+            capability_refs=[tech_ref(key) for key in
                              ['geometry_capability', 'cdl_dialect', 'fin_count_profile', 'device_extraction_contract']],
             target_ref=file_ref('target.cdl'), policy_refs=[file_ref('export_policy.json'), file_ref('validation_policy.json')]),
-        rec('LifecycleAuditRecord', 'lifecycle', operator_profile_ref=file_ref('tech.json'), scope='all drawn records',
+        rec('LifecycleAuditRecord', 'lifecycle', operator_profile_ref=tech_ref('operators'), scope='all drawn records',
             outcome='pass', no_derived_layers=True, comparator='exact tagged layer/rectangle multiset; frame identity'),
         rec('ProposedInitialState', 'proposed', context_ref=ids['ImmutableContext'], component_refs=components,
             current_semantic_ref=file_ref('source.cdl'), target_ref=file_ref('target.cdl'), lifecycle_audit_ref=ids['LifecycleAuditRecord']),
@@ -162,7 +171,7 @@ def build():
             all_delta_ledger=[], planning_audit_ref=ids['PlanningAuditRecord'], required_constraint_audit_ref=ids['ConstraintAuditRecord']),
         rec('RunRecord', 'run-record', variant='no_change', run_id=run,
             input_summary={'source_gds': file_ref('source.gds'), 'source_cdl': file_ref('source.cdl'),
-                           'target_cdl': file_ref('target.cdl'), 'tech': file_ref('tech.json'), 'coordinate': file_ref('tech.json'),
+                           'target_cdl': file_ref('target.cdl'), 'tech': file_ref('tech.json'), 'coordinate': tech_ref('coordinate_projection'), 'body_context': file_ref('body/context.json'),
                            'query_header': file_ref('query/header.json'), 'assurance': 'synthetic'},
             context_ref=ids['ImmutableContext'], final_snapshot_ref=ids['Snapshot'], ordered_commit_ids=[],
             stage_audit_refs=[ids['ParseResult'], ids['LifecycleAuditRecord'], ids['PlanningAuditRecord'], ids['ConstraintAuditRecord']],
@@ -177,8 +186,8 @@ def build():
         objects.append({'type': kind, 'required': True, 'uri': 'example-object:sha256:' + h,
                         'sample_file': 'expected/' + name, 'size_bytes': path.stat().st_size, 'actual_byte_sha256': h})
     checks = []
-    for name in ['geometry_readback', 'cdl_semantics', 'json_components', 'fixture_oracle', 'audit_readiness', 'calibre_drc', 'calibre_lvs', 'virtuoso_dry_run']:
-        deferred = name.startswith(('calibre', 'virtuoso'))
+    for name in [n for n in policy['required'] if n not in ['human_report','machine_report']] + policy['deferred']:
+        deferred = name in policy['deferred']
         checks.append({'check_id': name, 'execution_status': 'deferred' if deferred else 'pass',
                        'coverage': 'none' if deferred else 'complete', 'finding_severity': 'warning' if deferred else 'info',
                        'policy_disposition': 'requires_review' if deferred else 'accept',
@@ -215,17 +224,17 @@ def build():
                 fields.update(stable_snapshot_ref=ids['Snapshot'], context_ref=ids['ImmutableContext'], ordered_commit_ids=[])
             r = rec('RunRecord', variant + '-record', **fields); additions.append(r); rr = r['id']
             if variant == 'pre_context':
-                malformed = file_ref('failures/missing_terminator/query/raw/instance_xref.txt')
+                malformed = file_ref('failures/missing_terminator/query/raw/device_info_Q17.txt')
                 failed_header = file_ref('failures/missing_terminator/query/header.json')
                 failed_read = rec('ToolRunResult', 'malformed-fixture-read', mode='dummy_fixture', tool_name='fixture-reader',
                                   command=['read-preexisting-raw-captures'], input_refs=[failed_header],
                                   raw_output_refs=[malformed], exit_status=0, execution_status='pass', stdout_ref=None, stderr_ref=None)
                 parsed = rec('ParseResult', 'failed-parse', tool_run_ref=failed_read['id'],
-                             parser_version='w003-query-normalized/1 (contract only)', dialect_version='synthetic_query_dialect/1',
+                             parser_version='w004-query-normalized/2 (contract only)', dialect_version=DIALECT,
                              raw_refs=[malformed], evidence_refs=[], execution_status='error')
                 additions.extend([failed_read, parsed]); r['completed_audit_refs'] = [failed_read['id'], parsed['id']]
                 fail['completed_refs'] = [failed_read['id'], parsed['id']]
-                fail['localized_refs'] = [{'raw_ref': malformed, 'location': 'missing END W003_QUERY at EOF'}]
+                fail['localized_refs'] = [{'raw_ref': malformed, 'location': 'missing END OF RESPONSE at EOF'}]
             else:
                 closed = rec('Stage5Closure', 'sealed-failure-closure', variant='with_run_record', run_id=run,
                              run_record_ref=rr, final_snapshot_ref=ids['Snapshot'], ordered_commit_ids=[])
@@ -287,7 +296,7 @@ def validate_record(row):
             if check['execution_status'] in ['skipped', 'deferred']: assert check['coverage'] == 'none'
             if check['execution_status'] in ['fail', 'error']: assert check['policy_disposition'] == 'reject'
         assert ranks[row['aggregate_disposition']] >= max(ranks[c['policy_disposition']] for c in row['checks'])
-    if row['kind'] == 'PipelineResult':
+    if row.get('kind') == 'PipelineResult':
         assert row['lifecycle_status'] == 'terminal'
         assert row['deployment_disposition'] in ['requires_review', 'reject']
     if key == 'RunAttempt/unsealed':
@@ -315,9 +324,14 @@ def verify():
             tool = next(r for r in case['records'] if r['kind'] == 'ToolRunResult')
             assert parsed['tool_run_ref'] == tool['id'] and parsed['raw_refs'] == tool['raw_output_refs']
             raw = parsed['raw_refs'][0]
-            assert 'END W003_QUERY' not in (FIX / raw['path']).read_text()
+            assert 'END OF RESPONSE' not in (FIX / raw['path']).read_text()
+            failure = next(r for r in case['records'] if r['kind']=='StageFailure')
+            failed_run = next(r for r in case['records'] if r['kind']=='RunRecord')
+            assert failure['completed_refs']==failed_run['completed_audit_refs']==[tool['id'],parsed['id']]
+            assert failure['localized_refs'][0]['raw_ref']==raw and failed_run['failure_ref']==failure['id']
+            assert parsed['execution_status']=='error' and parsed['evidence_refs']==[]
             header = json.loads((FIX / tool['input_refs'][0]['path']).read_text())
-            assert next(r['sha256'] for r in header['raw'] if r['capability'] == 'instance_xref') == raw['actual_byte_sha256']
+            assert next(r['sha256'] for r in header['raw'] if r['uri'] == 'query/raw/device_info_Q17.txt') == raw['actual_byte_sha256']
         if case['variant'] in ['pre_context', 'sealed_no_publication', 'run_record_freeze', 'export_failure']:
             assert not case['core_manifest_present'] and not case['validation_present']
         if case['variant'] == 'terminal_storage_failure':
@@ -327,7 +341,7 @@ def verify():
             assert case['existing_run_record_ref'] == tid('RunRecordId', 'run-record')
     def check_refs(records):
         # Failure worlds may refer to completed immutable normal specimens.
-        by_id = {canonical(r['id']): r for r in rows + records}
+        by_id = {canonical(r['id']): r for r in rows + records if 'id' in r}
         def inspect(value):
             if isinstance(value, dict):
                 if set(value) == {'type', 'value'} and value['type'] not in ['RunId', 'StateLineageId']:
@@ -337,11 +351,11 @@ def verify():
                 for child in value: inspect(child)
         inspect(records)
         for row in records:
-            if row['kind'] == 'PipelineResult' and 'closure_ref' in row:
+            if row.get('kind') == 'PipelineResult' and 'closure_ref' in row:
                 closure = by_id[canonical(row['closure_ref'])]
                 if 'run_record_ref' in closure:
                     assert row['run_record_ref'] == closure['run_record_ref']
-            if row['kind'] == 'PipelineResult' and 'validation_ref' in row:
+            if row.get('kind') == 'PipelineResult' and 'validation_ref' in row:
                 val = by_id[canonical(row['validation_ref'])]
                 assert val['manifest_ref'] == row['manifest_ref']
     check_refs(rows)
@@ -371,6 +385,13 @@ def verify():
             for child in value: walk(child)
     walk(rows); walk(cases)
     report = json.loads((OUT / 'report.expected.json').read_text())
+    walk(report); check_refs([report])
+    policy = json.loads((FIX/'validation_policy.json').read_text())
+    validation = next(r for r in rows if r['kind']=='ValidationResult')
+    assert {c['check_id'] for c in validation['checks']} == set(policy['required']+policy['deferred'])-{'human_report','machine_report'}
+    assert report['deferred']==policy['deferred'] and report['check_obligations']==policy['check_obligations']
+    assert report['scope_counts']=={'local_drawn':40,'local_connector_edges':8,'local_physical_components':6,'external_shapes':6,'context_associations':2,'net_regions':8,'device_regions':2}
+    assert (OUT/'report.expected.md').read_text()==human_report(report)
     assert report['example_only'] is True and report['product_run_executed'] is False
     assert report['ordered_commit_ids'] == [] and report['deployment_disposition'] == 'requires_review'
     # Negative schema examples: these must be rejected, not silently admitted.
@@ -386,6 +407,32 @@ def verify():
     tool = copy.deepcopy(rows[0]); tool['parse_ref'] = rows[1]['id']; mutations.append(tool)
     val = copy.deepcopy(next(r for r in rows if r['kind'] == 'ValidationResult'))
     val['checks'][0].update(execution_status='error', policy_disposition='accept'); mutations.append(val)
+    # F1: every request selector and each entry field must affect canonical digest.
+    sensitivity=[]
+    for field in ['operation_kind','proposed_run_id','expected_state_head','proposed_lineage_id','idempotency_key']:
+        bad=copy.deepcopy(unsealed);bad['raw_request_descriptor'][field]={'changed':field}
+        assert hashlib.sha256(canonical(bad['raw_request_descriptor'])).hexdigest()!=unsealed['raw_request_digest']
+        mutations.append(bad);sensitivity.append(field)
+    selections=unsealed['raw_request_descriptor']
+    expected=set(dependencies(FIX))|{'query/header.json'}|{r['uri'] for r in json.loads((FIX/'query/header.json').read_text())['raw']}
+    actual={v['path'] for key in ['raw_input_selections','raw_capture_selections','config_policy_selections'] for v in selections[key]}
+    assert actual==expected,('incomplete raw request',actual^expected)
+    for key in ['raw_input_selections','raw_capture_selections','config_policy_selections']:
+        for i,ref in enumerate(selections[key]):
+            bad=copy.deepcopy(unsealed);bad['raw_request_descriptor'][key][i]['actual_byte_sha256']='0'*64
+            assert hashlib.sha256(canonical(bad['raw_request_descriptor'])).hexdigest()!=unsealed['raw_request_digest']
+            mutations.append(bad);sensitivity.append(ref['path'])
+    import tempfile
+    byte_sensitivity=[]
+    with tempfile.TemporaryDirectory(prefix='w004-f1-selected-bytes-') as td:
+        for key in ['raw_input_selections','raw_capture_selections','config_policy_selections']:
+            for i,ref in enumerate(selections[key]):
+                path=Path(td)/ref['path'];path.parent.mkdir(parents=True,exist_ok=True)
+                path.write_bytes((FIX/ref['path']).read_bytes()+b'\n')
+                new_hash=digest(path);assert new_hash!=ref['actual_byte_sha256']
+                bad=copy.deepcopy(unsealed);bad['raw_request_descriptor'][key][i]['actual_byte_sha256']=new_hash
+                assert hashlib.sha256(canonical(bad['raw_request_descriptor'])).hexdigest()!=unsealed['raw_request_digest']
+                mutations.append(bad);byte_sensitivity.append({'path':ref['path'],'old_sha256':ref['actual_byte_sha256'],'changed_file_sha256':new_hash,'old_digest_rejected':True})
     for bad in mutations:
         try: validate_record(bad)
         except AssertionError: pass
@@ -393,7 +440,25 @@ def verify():
     print(json.dumps({'scope': 'W003 review specimens only; no product execution', 'records': len(rows),
                       'failure_variants': len(cases), 'fixture_refs_checked': checked,
                       'actual_sample_artifact_hashes_checked': len(manifest['objects']),
-                      'invalid_combinations_rejected': len(mutations)}, indent=2))
+                      'invalid_combinations_rejected': len(mutations), 'request_sensitivity_cases': sensitivity, 'actual_file_byte_sensitivity':byte_sensitivity, 'all_request_input_paths':sorted(actual), 'human_machine_report_equal':True}, indent=2))
+
+
+def human_report(report):
+    rows=['# W004 no_change 人读报告样张','',
+          'synthetic expected sample；产品未运行。INV_M1_SYNTH；5/7 FIN，NF=M=1，L=4 nm channel length，W=2 nm fin width。',
+          'baseline version 0；InitializationEvent；空 ECO 链；所有 committed changes 为0；terminal requires_review。','',
+          '本地40图形、8 connector edges、6 physical components；BN/BP独立。外部6形状、2 body associations仅作绑定的只读支持，不导出、不冒充本地边。',
+          '8 net regions、2 device regions；9 raw。CUT/同标签/同格孤岛目的迁至 special/cut_islands；MARK保留。',
+          '单位为有来源的synthetic nominal 1 nm；原XY精确保留；query (y,x)/20000 micrometres。全部技术事实为toy；production_matched_body_evidence=false、LVS not_run。','',
+          '| 检查身份 | 输入 | 预期证明 | 状态 | 原义务去向 |','| --- | --- | --- | --- | --- |']
+    for c in report['check_obligations']:
+        rows.append('| '+ ' | '.join([c['check_id'],', '.join(c['inputs']),c['expected_proof'],c['status'],c['original_obligation']])+' |')
+    rows+=['','其余必需检查：fixture_oracle、audit_readiness、all_mandatory_toy_rules，以及human_report/machine_report交付；本报告内pass仅是未来预期，不是本轮产品执行结果。',
+           '所有deferred：'+', '.join(report['deferred'])+'；coverage none，runtime/return code null，requires_review；不能汇总为pass。',
+           'MR-074-Q1仍待新版核验后由PM关闭；旧virtuoso_readback未消歧范围明确保留。',
+           '限制：无产品Stage1–6、publication、完整grid/CSP/DTO/codec/CAS、生产PDK/Calibre/Virtuoso或production downstream gate运行；无生产上传。',
+           '机器报告实际input/limitations/hash refs见report.expected.json；Manifest仅引用本包三个expected实物，size和SHA-256按实际bytes，不表示生产发布。','']
+    return '\n'.join(rows)
 
 
 def main():
@@ -408,7 +473,7 @@ def main():
             (OUT / name).write_text(json.dumps(payload, ensure_ascii=False, indent=2) + '\n')
         report = {'schema_version': VERSION, 'example_only': True, 'product_run_executed': False,
                   'kind': 'MachineReportExpected', 'cell': 'INV_M1_SYNTH', 'input_mode': 'dummy_fixture',
-                  'input_refs': [file_ref(p) for p in ['source.gds', 'source.cdl', 'target.cdl', 'query/header.json', 'tech.json', 'site_config.yaml']],
+                  'input_refs': [file_ref(p) for p in ['source.gds', 'source.cdl', 'target.cdl', 'query/header.json', 'tech.json', 'site_config.yaml', 'body/context.json']]+[file_ref(n) for n in dependencies(FIX) if n not in ['source.gds','source.cdl','target.cdl','tech.json','site_config.yaml','body/context.json']],
                   'current_target_fin_counts': {'MN0': [5, 5], 'MP0': [7, 7]},
                   'all_delta_ledger': [], 'unsupported_deltas': [], 'candidate_selection': None,
                   'repair_requirements': [], 'constraint_scope': 'whole_cell', 'constraint_outcome': 'expected_feasible',
@@ -416,14 +481,17 @@ def main():
                   'committed_changes': {'geometry': 0, 'current_semantic': 0, 'occupancy': 0, 'annotation': 0, 'connectivity': 0},
                   'derived_changes': [], 'view_refresh': 'baseline construction only; no ECO refresh',
                   'coverage': {'provenance': 'synthetic_source_evidence', 'unannotated_marker': 'MARK',
-                               'disconnected_labelled_islands': ['LB.left', 'LB.right'],
+                               'disconnected_labelled_islands': [], 'special_islands_ref': file_ref('special/cut_islands/oracle.json'), 'body_scope': 'local graph separate from 2 bound context associations', 'body_context_ref': file_ref('body/context.json'), 'production_matched_body_evidence':False,
                                'post_edit_lvs_match': 'not_run', 'production_rules': 'not_covered'},
                   'validation_ref': tid('ValidationResultId', 'validation'), 'manifest_ref': tid('ArtifactManifestId', 'manifest'),
                   'deployment_disposition': 'requires_review', 'reason': 'synthetic engineering specimen; real signoff deferred',
-                  'deferred': ['real_calibre_drc', 'real_calibre_lvs', 'virtuoso_readback'],
+                  'deferred': json.loads((FIX/'validation_policy.json').read_text())['deferred'],
+                  'check_obligations': json.loads((FIX/'validation_policy.json').read_text())['check_obligations'],
+                  'scope_counts':{'local_drawn':40,'local_connector_edges':8,'local_physical_components':6,'external_shapes':6,'context_associations':2,'net_regions':8,'device_regions':2},
                   'actual_product_generation_time': None, 'actual_tool_command': None,
                   'limitations_ref': file_ref('limitations.json')}
         (OUT / 'report.expected.json').write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n')
+        (OUT/'report.expected.md').write_text(human_report(report))
     verify()
 
 

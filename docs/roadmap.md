@@ -27,7 +27,7 @@
 
 主线：**M0 准入准备 → M1 保真无变更闭环 → M2 首个 shrink 闭环 → M3 首版范围覆盖 → M4 可复现首版验收**。
 
-M1样本准备由[W003](tasks/W003-m1-fixture-contracts.md)保留原版交付与人工决定，[W004](tasks/W004-fixture-revision.md)先收敛任务、经接收和明确启动后落实修订及新版验证；两者闭合后再派发产品parser/输入绑定，具体状态归任务文件。
+M1样本准备[W003](tasks/W003-m1-fixture-contracts.md#p10-w003-accepted)及[W004](tasks/W004-fixture-revision.md#pm3-20261031)已在synthetic范围收口；首个产品组件任务为[W005输入读取与绑定](tasks/W005-input-reading-binding.md)。之后组合pipeline/pre-context审计、Stage2/baseline及Stage6文件闭环；W002 E7/R4首交义务按实际触及接口落实，未完成组合前不宣称M1完成。具体阶段归任务文件。
 
 M0 分开交付“工程输入/合同准备”和“真实 profile 证据准入”。前者足以让 M1 在明确 synthetic profile 内开发；后者可以并行补证，但必须在 M2 接纳真实 profile 前完成。若真实材料不可得，M1 和相应合成测试可以继续，M2 保持有依据的阻塞，不通过把验收改成 dummy 成功消除阻塞。
 

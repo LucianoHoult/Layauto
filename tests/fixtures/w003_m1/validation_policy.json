@@ -1,8 +1,10 @@
 {
   "schema_version": "w003-validation-policy/1",
-  "classification": "synthetic expected policy sample, pending independent review",
+  "classification": "synthetic expected policy sample",
   "required": [
-    "self_consistency",
+    "geometry_readback",
+    "cdl_semantics",
+    "json_components",
     "fixture_oracle",
     "audit_readiness",
     "all_mandatory_toy_rules",
@@ -19,11 +21,98 @@
     "disposition"
   ],
   "deferred": [
-    "real_calibre_drc",
-    "real_calibre_lvs",
+    "calibre_drc",
+    "calibre_lvs",
+    "production_downstream_open_syntax",
+    "virtuoso_dry_run",
     "virtuoso_readback"
   ],
   "deferred_coverage": "none",
   "deferred_is_pass": false,
-  "production_acceptance": false
+  "production_acceptance": false,
+  "check_obligations": [
+    {
+      "check_id": "geometry_readback",
+      "inputs": [
+        "expected/output.gds",
+        "source.gds"
+      ],
+      "expected_proof": "exact local tagged geometry, units, top and original XY",
+      "status": "expected_pass_not_product_run",
+      "original_obligation": "self_consistency: local GDS semantics"
+    },
+    {
+      "check_id": "cdl_semantics",
+      "inputs": [
+        "source.cdl",
+        "target.cdl",
+        "expected/output.cdl"
+      ],
+      "expected_proof": "full ordered pins/globals/models/DGSB/parameters",
+      "status": "expected_pass_not_product_run",
+      "original_obligation": "self_consistency: CDL"
+    },
+    {
+      "check_id": "json_components",
+      "inputs": [
+        "expected/layout.json",
+        "oracle.json"
+      ],
+      "expected_proof": "listed components, scope and refs; incomplete snapshot disclosed",
+      "status": "expected_pass_not_product_run",
+      "original_obligation": "self_consistency: JSON"
+    },
+    {
+      "check_id": "production_downstream_open_syntax",
+      "inputs": [
+        "production GDS/CDL artifacts",
+        "independent downstream tool profile"
+      ],
+      "expected_proof": "independent production tool can open/parse outputs; not local semantic equality",
+      "status": "deferred",
+      "original_obligation": "architecture 10.5 downstream readability gate; separated from legacy readback"
+    },
+    {
+      "check_id": "virtuoso_dry_run",
+      "inputs": [
+        "frozen snapshot",
+        "ordered export edits",
+        "future SKILL",
+        "Virtuoso context"
+      ],
+      "expected_proof": "shape locate/exact match; missing/ambiguity failure and return code; no apply",
+      "status": "deferred",
+      "original_obligation": "records virtuoso_dry_run / architecture 10.3 and 10.5"
+    },
+    {
+      "check_id": "virtuoso_readback",
+      "inputs": [
+        "unresolved legacy production readback inputs"
+      ],
+      "expected_proof": "retain original unresolved scope until PM closes MR-074-Q1 after revised review",
+      "status": "deferred",
+      "original_obligation": "old policy/report virtuoso_readback retained; neither deleted nor assumed alias"
+    },
+    {
+      "check_id": "calibre_drc",
+      "inputs": [
+        "production GDS",
+        "PDK/deck"
+      ],
+      "expected_proof": "real DRC with bound tool/deck",
+      "status": "deferred",
+      "original_obligation": "real_calibre_drc explicit identity mapping"
+    },
+    {
+      "check_id": "calibre_lvs",
+      "inputs": [
+        "production GDS/CDL",
+        "target",
+        "PDK/deck"
+      ],
+      "expected_proof": "matched full semantics with fresh xref",
+      "status": "deferred",
+      "original_obligation": "real_calibre_lvs explicit identity mapping"
+    }
+  ]
 }

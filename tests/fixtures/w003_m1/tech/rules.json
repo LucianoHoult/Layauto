@@ -1,0 +1,207 @@
+{
+  "schema_version": "w004-tech-owner/2",
+  "rules": [
+    {
+      "id": "T01.frame",
+      "scope": "all non-frame drawn records",
+      "predicate": "each bbox contained in sole BOUNDARY",
+      "relation_basis": "geometry_only",
+      "schema_version": "w003-toy-rule/1",
+      "unit": "nm",
+      "parameters": {
+        "margin_nm": 0
+      },
+      "source": {
+        "classification": "hand_authored_synthetic",
+        "version": "1"
+      },
+      "exact_evaluator_ref": "w003-toy-predicate/T01.frame/1",
+      "required_relation_assurance": "none",
+      "missing_context_policy": "reject_indeterminate",
+      "required": true
+    },
+    {
+      "id": "T02.fin_grid",
+      "scope": "all FIN",
+      "predicate": "exact width, pitch and phase from selected FIN profile; full fixture sequence from input/oracle",
+      "relation_basis": "geometry_only",
+      "schema_version": "w003-toy-rule/1",
+      "unit": "nm",
+      "parameters": {},
+      "source": {
+        "classification": "hand_authored_synthetic",
+        "version": "1"
+      },
+      "exact_evaluator_ref": "w003-toy-predicate/T02.fin_grid/1",
+      "required_relation_assurance": "none",
+      "missing_context_policy": "reject_indeterminate",
+      "required": true,
+      "profile_ref": "physical.json#/fin_count_profile"
+    },
+    {
+      "id": "T03.recognition",
+      "scope": "all source/target devices and all recognized channels",
+      "predicate": "one stripe per active, full crossings, counts and L/W match CDL, NF=M=1, one-to-one and no reduction",
+      "relation_basis": "geometry_only",
+      "schema_version": "w003-toy-rule/1",
+      "unit": "nm",
+      "parameters": {},
+      "source": {
+        "classification": "hand_authored_synthetic",
+        "version": "1"
+      },
+      "exact_evaluator_ref": "w003-toy-predicate/T03.recognition/1",
+      "required_relation_assurance": "none",
+      "missing_context_policy": "reject_indeterminate",
+      "required": true,
+      "profile_ref": "physical.json#/fin_count_profile"
+    },
+    {
+      "id": "T04.body",
+      "scope": "local active/body and separate read-only context body chain",
+      "predicate": "matching local body encloses active >=10; no opposite body positive-area overlap in either local or external domain; bound external tapcell context proves body association to target rail",
+      "relation_basis": "same_component",
+      "schema_version": "w004-toy-rule/2",
+      "unit": "nm",
+      "parameters": {
+        "active_enclosure_nm": 10
+      },
+      "source": {
+        "classification": "hand_authored_synthetic",
+        "version": "2"
+      },
+      "exact_evaluator_ref": "w004-toy-predicate/T04.body/2",
+      "required_relation_assurance": "exact_local_components_plus_bound_context_association",
+      "missing_context_policy": "reject_indeterminate",
+      "required": true
+    },
+    {
+      "id": "T05.contact_enclosure",
+      "scope": "local CONTACT,VIA0,GCONTACT; separately context BTAP_N/BTAP_P",
+      "predicate": "exactly one region on each side encloses connector >=1 nm on all sides",
+      "relation_basis": "geometry_only",
+      "schema_version": "w004-toy-rule/2",
+      "unit": "nm",
+      "parameters": {
+        "enclosure_nm": 1
+      },
+      "source": {
+        "classification": "hand_authored_synthetic",
+        "version": "2"
+      },
+      "exact_evaluator_ref": "w004-toy-predicate/T05.contact_enclosure/2",
+      "required_relation_assurance": "none",
+      "missing_context_policy": "reject_indeterminate",
+      "required": true
+    },
+    {
+      "id": "T06.li_spacing",
+      "scope": "local effective LI; dedicated cut-island specimen evaluated separately",
+      "predicate": "distance>=2 nm unless actual same-layer contact makes one region",
+      "relation_basis": "geometry_only",
+      "schema_version": "w003-toy-rule/1",
+      "unit": "nm",
+      "parameters": {
+        "min_distance_nm": 2
+      },
+      "source": {
+        "classification": "hand_authored_synthetic",
+        "version": "1"
+      },
+      "exact_evaluator_ref": "w003-toy-predicate/T06.li_spacing/1",
+      "required_relation_assurance": "none",
+      "missing_context_policy": "reject_indeterminate",
+      "required": true
+    },
+    {
+      "id": "T07.m1_spacing",
+      "scope": "all unordered pairs of M1 rectangles",
+      "predicate": "distance>=5 nm unless actual same-layer contact makes one region",
+      "relation_basis": "geometry_only",
+      "schema_version": "w003-toy-rule/1",
+      "unit": "nm",
+      "parameters": {
+        "min_distance_nm": 5
+      },
+      "source": {
+        "classification": "hand_authored_synthetic",
+        "version": "1"
+      },
+      "exact_evaluator_ref": "w003-toy-predicate/T07.m1_spacing/1",
+      "required_relation_assurance": "none",
+      "missing_context_policy": "reject_indeterminate",
+      "required": true
+    },
+    {
+      "id": "T08.terminal_graph",
+      "scope": "all device terminals and conductor components",
+      "predicate": "ordered D/G/S agree with local exact components; B uses separately proven context association; no union by labels",
+      "relation_basis": "same_component",
+      "schema_version": "w004-toy-rule/2",
+      "unit": "nm",
+      "parameters": {
+        "terminal_order": [
+          "D",
+          "G",
+          "S",
+          "B"
+        ]
+      },
+      "source": {
+        "classification": "hand_authored_synthetic",
+        "version": "2"
+      },
+      "exact_evaluator_ref": "w004-toy-predicate/T08.terminal_graph/2",
+      "required_relation_assurance": "exact_local_components_plus_bound_context_association",
+      "missing_context_policy": "reject_indeterminate",
+      "required": true
+    },
+    {
+      "id": "T09.lifecycle",
+      "scope": "local exported records and CDL only; context read-only bound input",
+      "predicate": "no_change preserves all declared semantics, drawn geometry and frame; empty ECO chain",
+      "relation_basis": "geometry_only",
+      "schema_version": "w003-toy-rule/1",
+      "unit": "nm",
+      "parameters": {
+        "ordered_eco_commit_count": 0
+      },
+      "source": {
+        "classification": "hand_authored_synthetic",
+        "version": "1"
+      },
+      "exact_evaluator_ref": "w003-toy-predicate/T09.lifecycle/1",
+      "required_relation_assurance": "none",
+      "missing_context_policy": "reject_indeterminate",
+      "required": true
+    },
+    {
+      "id": "T10.coverage",
+      "scope": "all drawn and effective regions",
+      "predicate": "retain every shape, disclose absent annotations, marker nonconducting, same-label islands not electrically shorted by label",
+      "relation_basis": "none",
+      "schema_version": "w003-toy-rule/1",
+      "unit": "nm",
+      "parameters": {
+        "unknown_nonconductor_policy": "preserve_disclose",
+        "disconnected_label_policy": "keep_separate_disclose"
+      },
+      "source": {
+        "classification": "hand_authored_synthetic",
+        "version": "1"
+      },
+      "exact_evaluator_ref": "w003-toy-predicate/T10.coverage/1",
+      "required_relation_assurance": "none",
+      "missing_context_policy": "reject_indeterminate",
+      "required": true
+    }
+  ],
+  "mandatory_rule_policy": {
+    "all_listed_rules_required": true,
+    "run_before_no_change_closure": true,
+    "missing_operator_or_context": "indeterminate_then_reject",
+    "predicate_execution_error": "error_then_reject",
+    "scope": "whole_cell",
+    "site_may_disable": false
+  }
+}

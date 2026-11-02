@@ -1,0 +1,270 @@
+{
+  "schema_version": "w004-tech-owner/2",
+  "layers": [
+    {
+      "name": "BOUNDARY",
+      "stream_key": {
+        "element": "BOUNDARY",
+        "layer": 100,
+        "datatype": 0
+      },
+      "purpose": "drawing",
+      "tier": "C1",
+      "role": "boundary",
+      "lifecycle": "frame_static",
+      "edit_policy": "no_direct_edit",
+      "projection_kind": "none",
+      "derived_layer_refs": []
+    },
+    {
+      "name": "BODY_N",
+      "stream_key": {
+        "element": "BOUNDARY",
+        "layer": 10,
+        "datatype": 0
+      },
+      "purpose": "drawing",
+      "tier": "B",
+      "role": "body",
+      "lifecycle": "frame_static",
+      "edit_policy": "no_direct_edit",
+      "projection_kind": "exact_fragment_rectangles",
+      "derived_layer_refs": []
+    },
+    {
+      "name": "BODY_P",
+      "stream_key": {
+        "element": "BOUNDARY",
+        "layer": 11,
+        "datatype": 0
+      },
+      "purpose": "drawing",
+      "tier": "B",
+      "role": "body",
+      "lifecycle": "frame_static",
+      "edit_policy": "no_direct_edit",
+      "projection_kind": "exact_fragment_rectangles",
+      "derived_layer_refs": []
+    },
+    {
+      "name": "OD",
+      "stream_key": {
+        "element": "BOUNDARY",
+        "layer": 2,
+        "datatype": 0
+      },
+      "purpose": "drawing",
+      "tier": "B",
+      "role": "diffusion",
+      "lifecycle": "preserve_drawn",
+      "edit_policy": "fixed_for_this_no_change_capability",
+      "projection_kind": "exact_fragment_rectangles",
+      "derived_layer_refs": []
+    },
+    {
+      "name": "POLY",
+      "stream_key": {
+        "element": "BOUNDARY",
+        "layer": 3,
+        "datatype": 0
+      },
+      "purpose": "drawing",
+      "tier": "A",
+      "role": "gate",
+      "lifecycle": "frame_static",
+      "edit_policy": "no_direct_edit",
+      "projection_kind": "exact_fragment_rectangles",
+      "derived_layer_refs": [
+        "toy_ngate",
+        "toy_pgate",
+        "toy_poly"
+      ]
+    },
+    {
+      "name": "FIN",
+      "stream_key": {
+        "element": "BOUNDARY",
+        "layer": 1,
+        "datatype": 0
+      },
+      "purpose": "drawing",
+      "tier": "A",
+      "role": "fin",
+      "lifecycle": "frame_static",
+      "edit_policy": "no_direct_edit",
+      "projection_kind": "exact_fragment_rectangles",
+      "derived_layer_refs": []
+    },
+    {
+      "name": "LI",
+      "stream_key": {
+        "element": "BOUNDARY",
+        "layer": 4,
+        "datatype": 0
+      },
+      "purpose": "drawing",
+      "tier": "B",
+      "role": "interconnect",
+      "lifecycle": "preserve_drawn",
+      "edit_policy": "fixed_for_this_no_change_capability",
+      "projection_kind": "exact_fragment_rectangles",
+      "derived_layer_refs": [
+        "toy_li"
+      ]
+    },
+    {
+      "name": "CUT",
+      "stream_key": {
+        "element": "BOUNDARY",
+        "layer": 6,
+        "datatype": 0
+      },
+      "purpose": "drawing",
+      "tier": "B",
+      "role": "cut",
+      "lifecycle": "preserve_drawn",
+      "edit_policy": "fixed_for_this_no_change_capability",
+      "projection_kind": "exact_fragment_rectangles",
+      "derived_layer_refs": [],
+      "cut_target": "LI",
+      "effective_geometry_operator": "rectangle_set_difference/1"
+    },
+    {
+      "name": "CONTACT",
+      "stream_key": {
+        "element": "BOUNDARY",
+        "layer": 7,
+        "datatype": 0
+      },
+      "purpose": "drawing",
+      "tier": "B",
+      "role": "contact",
+      "lifecycle": "preserve_drawn",
+      "edit_policy": "fixed_for_this_no_change_capability",
+      "projection_kind": "exact_fragment_rectangles",
+      "derived_layer_refs": [],
+      "electrical_connects": [
+        "OD",
+        "LI"
+      ],
+      "contact_predicate": "positive_area_overlap_with_exactly_one_effective_region_on_each_side",
+      "enclosure_rule": "T05.contact_enclosure"
+    },
+    {
+      "name": "VIA0",
+      "stream_key": {
+        "element": "BOUNDARY",
+        "layer": 5,
+        "datatype": 0
+      },
+      "purpose": "drawing",
+      "tier": "B",
+      "role": "via",
+      "lifecycle": "preserve_drawn",
+      "edit_policy": "fixed_for_this_no_change_capability",
+      "projection_kind": "exact_fragment_rectangles",
+      "derived_layer_refs": [],
+      "electrical_connects": [
+        "LI",
+        "M1"
+      ],
+      "contact_predicate": "positive_area_overlap_with_exactly_one_effective_region_on_each_side",
+      "enclosure_rule": "T05.contact_enclosure"
+    },
+    {
+      "name": "GCONTACT",
+      "stream_key": {
+        "element": "BOUNDARY",
+        "layer": 8,
+        "datatype": 0
+      },
+      "purpose": "drawing",
+      "tier": "B",
+      "role": "contact",
+      "lifecycle": "preserve_drawn",
+      "edit_policy": "fixed_for_this_no_change_capability",
+      "projection_kind": "exact_fragment_rectangles",
+      "derived_layer_refs": [],
+      "electrical_connects": [
+        "POLY",
+        "M1"
+      ],
+      "contact_predicate": "positive_area_overlap_with_exactly_one_effective_region_on_each_side",
+      "enclosure_rule": "T05.contact_enclosure"
+    },
+    {
+      "name": "BTAP_N",
+      "stream_key": {
+        "element": "BOUNDARY",
+        "layer": 12,
+        "datatype": 0
+      },
+      "purpose": "drawing",
+      "tier": "B",
+      "role": "body_contact",
+      "lifecycle": "preserve_drawn",
+      "edit_policy": "fixed_for_this_no_change_capability",
+      "projection_kind": "exact_fragment_rectangles",
+      "derived_layer_refs": [],
+      "electrical_connects": [
+        "BODY_N",
+        "M1"
+      ],
+      "contact_predicate": "positive_area_overlap_with_exactly_one_effective_region_on_each_side",
+      "enclosure_rule": "T05.contact_enclosure"
+    },
+    {
+      "name": "BTAP_P",
+      "stream_key": {
+        "element": "BOUNDARY",
+        "layer": 13,
+        "datatype": 0
+      },
+      "purpose": "drawing",
+      "tier": "B",
+      "role": "body_contact",
+      "lifecycle": "preserve_drawn",
+      "edit_policy": "fixed_for_this_no_change_capability",
+      "projection_kind": "exact_fragment_rectangles",
+      "derived_layer_refs": [],
+      "electrical_connects": [
+        "BODY_P",
+        "M1"
+      ],
+      "contact_predicate": "positive_area_overlap_with_exactly_one_effective_region_on_each_side",
+      "enclosure_rule": "T05.contact_enclosure"
+    },
+    {
+      "name": "M1",
+      "stream_key": {
+        "element": "BOUNDARY",
+        "layer": 9,
+        "datatype": 0
+      },
+      "purpose": "drawing",
+      "tier": "B",
+      "role": "interconnect",
+      "lifecycle": "preserve_drawn",
+      "edit_policy": "fixed_for_this_no_change_capability",
+      "projection_kind": "exact_fragment_rectangles",
+      "derived_layer_refs": [
+        "toy_m1"
+      ]
+    },
+    {
+      "name": "MARKER",
+      "stream_key": {
+        "element": "BOUNDARY",
+        "layer": 101,
+        "datatype": 0
+      },
+      "purpose": "drawing",
+      "tier": "C2",
+      "role": "marker",
+      "lifecycle": "preserve_drawn",
+      "edit_policy": "fixed_for_this_no_change_capability",
+      "projection_kind": "none",
+      "derived_layer_refs": []
+    }
+  ]
+}

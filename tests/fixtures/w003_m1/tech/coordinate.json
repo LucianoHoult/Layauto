@@ -1,0 +1,14 @@
+{
+  "schema_version": "w004-tech-owner/2",
+  "coordinate_projection": {
+    "id": "w004-coordinate-example/2",
+    "example_only": true,
+    "is_complete_runtime_model": false,
+    "unit_contract_ref": "formats.json#/unit_scale_contract",
+    "frame_origin_nm": [
+      0,
+      0
+    ],
+    "purpose": "component refs only; full Stage 2 coordinate/grid design deferred"
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "schema_version": "w004-tech-owner/2",
+  "derived_registry": [
+    {
+      "id": "toy_ngate",
+      "target_layer": "POLY",
+      "carries": [
+        "device_id"
+      ],
+      "accepted_geometry_kinds": [
+        "rectangle"
+      ],
+      "quality": "exact",
+      "annotation_match_tolerance_nm": 0,
+      "trim_operator": "recognized_channel_intersection",
+      "conflict_policy": "reject_ambiguous",
+      "source": "calibre_like_synthetic/2"
+    },
+    {
+      "id": "toy_pgate",
+      "target_layer": "POLY",
+      "carries": [
+        "device_id"
+      ],
+      "accepted_geometry_kinds": [
+        "rectangle"
+      ],
+      "quality": "exact",
+      "annotation_match_tolerance_nm": 0,
+      "trim_operator": "recognized_channel_intersection",
+      "conflict_policy": "reject_ambiguous",
+      "source": "calibre_like_synthetic/2"
+    },
+    {
+      "id": "toy_poly",
+      "target_layer": "POLY",
+      "carries": [
+        "net_id"
+      ],
+      "accepted_geometry_kinds": [
+        "rectangle"
+      ],
+      "quality": "exact",
+      "annotation_match_tolerance_nm": 0,
+      "trim_operator": "identity",
+      "conflict_policy": "reject_ambiguous",
+      "source": "calibre_like_synthetic/2"
+    },
+    {
+      "id": "toy_li",
+      "target_layer": "LI",
+      "carries": [
+        "net_id"
+      ],
+      "accepted_geometry_kinds": [
+        "rectangle"
+      ],
+      "quality": "exact",
+      "annotation_match_tolerance_nm": 0,
+      "trim_operator": "cut_effective_intersection",
+      "conflict_policy": "reject_ambiguous",
+      "source": "calibre_like_synthetic/2"
+    },
+    {
+      "id": "toy_m1",
+      "target_layer": "M1",
+      "carries": [
+        "net_id"
+      ],
+      "accepted_geometry_kinds": [
+        "rectangle"
+      ],
+      "quality": "exact",
+      "annotation_match_tolerance_nm": 0,
+      "trim_operator": "identity",
+      "conflict_policy": "reject_ambiguous",
+      "source": "calibre_like_synthetic/2"
+    }
+  ]
+}

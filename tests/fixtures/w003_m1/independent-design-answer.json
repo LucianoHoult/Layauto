@@ -1,0 +1,1429 @@
+{
+  "identity": {
+    "author": "independent_answers agent; no generator/verifier imports",
+    "python": "3.12.14",
+    "baseline_head": "da55ca656e5e38caba1e7f47483137c68c044907",
+    "classification": "independent design arithmetic before implementation; not final-version review",
+    "input_sha256": {
+      "spec.json": "bcfe2e34460d49a5a77619b4cf8884b8004786ffe50bb7d2efd25a59a8409505",
+      "tech.json": "1bd3681c6fc3f07677d40c2d45ff593e0f41d36c67999995b19b8e774a69ba47",
+      "source.gds": "18c769696c66fa856bd8fa2c950397d4649a6d0392825b63a6185025a5e41149",
+      "source.cdl": "c71f40728a979c918e083b924a3045cf53bece51dd837f9ae2834cf242776fa4",
+      "target.cdl": "ddfd4713579743f578170efede62ce978a02680b42e5e2a6faeeb99016cff8db"
+    },
+    "sources": [
+      "architecture §3.4–3.6, §4.8, §12.2–12.6, §12.8",
+      "manual-verification MR-002, MR-004, MR-020, MR-046",
+      "W004 §3 D1 A and current formal user dispatch"
+    ]
+  },
+  "local_scope": {
+    "top": "INV_M1_SYNTH",
+    "flat_cells": 1,
+    "units": "nm",
+    "removed_ids": [
+      "LB",
+      "CUTB",
+      "TN",
+      "TP"
+    ],
+    "removed_region_ids": [
+      "R08",
+      "R09"
+    ],
+    "drawn_shape_count": 40,
+    "shape_counts_by_layer": {
+      "BOUNDARY": 1,
+      "BODY_N": 1,
+      "BODY_P": 1,
+      "OD": 2,
+      "POLY": 1,
+      "FIN": 18,
+      "LI": 3,
+      "CONTACT": 4,
+      "VIA0": 3,
+      "GCONTACT": 1,
+      "M1": 4,
+      "MARKER": 1
+    },
+    "coordinates": {
+      "FRAME": {
+        "layer": "BOUNDARY",
+        "bbox": [
+          0,
+          0,
+          160,
+          200
+        ]
+      },
+      "BN": {
+        "layer": "BODY_N",
+        "bbox": [
+          0,
+          0,
+          120,
+          90
+        ]
+      },
+      "BP": {
+        "layer": "BODY_P",
+        "bbox": [
+          0,
+          100,
+          120,
+          200
+        ]
+      },
+      "ON": {
+        "layer": "OD",
+        "bbox": [
+          20,
+          20,
+          100,
+          70
+        ]
+      },
+      "OP": {
+        "layer": "OD",
+        "bbox": [
+          20,
+          110,
+          100,
+          180
+        ]
+      },
+      "G": {
+        "layer": "POLY",
+        "bbox": [
+          58,
+          10,
+          62,
+          190
+        ]
+      },
+      "F01": {
+        "layer": "FIN",
+        "bbox": [
+          10,
+          24,
+          110,
+          26
+        ]
+      },
+      "F02": {
+        "layer": "FIN",
+        "bbox": [
+          10,
+          34,
+          110,
+          36
+        ]
+      },
+      "F03": {
+        "layer": "FIN",
+        "bbox": [
+          10,
+          44,
+          110,
+          46
+        ]
+      },
+      "F04": {
+        "layer": "FIN",
+        "bbox": [
+          10,
+          54,
+          110,
+          56
+        ]
+      },
+      "F05": {
+        "layer": "FIN",
+        "bbox": [
+          10,
+          64,
+          110,
+          66
+        ]
+      },
+      "F06": {
+        "layer": "FIN",
+        "bbox": [
+          10,
+          84,
+          110,
+          86
+        ]
+      },
+      "F07": {
+        "layer": "FIN",
+        "bbox": [
+          10,
+          114,
+          110,
+          116
+        ]
+      },
+      "F08": {
+        "layer": "FIN",
+        "bbox": [
+          10,
+          124,
+          110,
+          126
+        ]
+      },
+      "F09": {
+        "layer": "FIN",
+        "bbox": [
+          10,
+          134,
+          110,
+          136
+        ]
+      },
+      "F10": {
+        "layer": "FIN",
+        "bbox": [
+          10,
+          144,
+          110,
+          146
+        ]
+      },
+      "F11": {
+        "layer": "FIN",
+        "bbox": [
+          10,
+          154,
+          110,
+          156
+        ]
+      },
+      "F12": {
+        "layer": "FIN",
+        "bbox": [
+          10,
+          164,
+          110,
+          166
+        ]
+      },
+      "F13": {
+        "layer": "FIN",
+        "bbox": [
+          10,
+          174,
+          110,
+          176
+        ]
+      },
+      "F14": {
+        "layer": "FIN",
+        "bbox": [
+          10,
+          194,
+          110,
+          196
+        ]
+      },
+      "F15": {
+        "layer": "FIN",
+        "bbox": [
+          10,
+          74,
+          110,
+          76
+        ]
+      },
+      "F16": {
+        "layer": "FIN",
+        "bbox": [
+          10,
+          94,
+          110,
+          96
+        ]
+      },
+      "F17": {
+        "layer": "FIN",
+        "bbox": [
+          10,
+          104,
+          110,
+          106
+        ]
+      },
+      "F18": {
+        "layer": "FIN",
+        "bbox": [
+          10,
+          184,
+          110,
+          186
+        ]
+      },
+      "LN": {
+        "layer": "LI",
+        "bbox": [
+          28,
+          30,
+          34,
+          55
+        ]
+      },
+      "LP": {
+        "layer": "LI",
+        "bbox": [
+          28,
+          130,
+          34,
+          155
+        ]
+      },
+      "LY": {
+        "layer": "LI",
+        "bbox": [
+          84,
+          30,
+          90,
+          165
+        ]
+      },
+      "CNS": {
+        "layer": "CONTACT",
+        "bbox": [
+          29,
+          40,
+          33,
+          44
+        ]
+      },
+      "CND": {
+        "layer": "CONTACT",
+        "bbox": [
+          85,
+          40,
+          89,
+          44
+        ]
+      },
+      "CPS": {
+        "layer": "CONTACT",
+        "bbox": [
+          29,
+          140,
+          33,
+          144
+        ]
+      },
+      "CPD": {
+        "layer": "CONTACT",
+        "bbox": [
+          85,
+          140,
+          89,
+          144
+        ]
+      },
+      "VN": {
+        "layer": "VIA0",
+        "bbox": [
+          29,
+          50,
+          33,
+          54
+        ]
+      },
+      "VP": {
+        "layer": "VIA0",
+        "bbox": [
+          29,
+          150,
+          33,
+          154
+        ]
+      },
+      "VY": {
+        "layer": "VIA0",
+        "bbox": [
+          85,
+          92,
+          89,
+          96
+        ]
+      },
+      "GC": {
+        "layer": "GCONTACT",
+        "bbox": [
+          59,
+          92,
+          61,
+          96
+        ]
+      },
+      "MN": {
+        "layer": "M1",
+        "bbox": [
+          0,
+          48,
+          45,
+          58
+        ]
+      },
+      "MP": {
+        "layer": "M1",
+        "bbox": [
+          0,
+          148,
+          45,
+          158
+        ]
+      },
+      "MA": {
+        "layer": "M1",
+        "bbox": [
+          50,
+          90,
+          75,
+          98
+        ]
+      },
+      "MY": {
+        "layer": "M1",
+        "bbox": [
+          80,
+          90,
+          110,
+          98
+        ]
+      },
+      "MARK": {
+        "layer": "MARKER",
+        "bbox": [
+          145,
+          180,
+          150,
+          185
+        ]
+      }
+    },
+    "effective_conductor_region_count": 14,
+    "regions": {
+      "BN": [
+        0,
+        0,
+        120,
+        90
+      ],
+      "BP": [
+        0,
+        100,
+        120,
+        200
+      ],
+      "G": [
+        58,
+        10,
+        62,
+        190
+      ],
+      "LN": [
+        28,
+        30,
+        34,
+        55
+      ],
+      "LP": [
+        28,
+        130,
+        34,
+        155
+      ],
+      "LY": [
+        84,
+        30,
+        90,
+        165
+      ],
+      "MN": [
+        0,
+        48,
+        45,
+        58
+      ],
+      "MP": [
+        0,
+        148,
+        45,
+        158
+      ],
+      "MA": [
+        50,
+        90,
+        75,
+        98
+      ],
+      "MY": [
+        80,
+        90,
+        110,
+        98
+      ],
+      "ON.S": [
+        20,
+        20,
+        58,
+        70
+      ],
+      "ON.D": [
+        62,
+        20,
+        100,
+        70
+      ],
+      "OP.S": [
+        20,
+        110,
+        58,
+        180
+      ],
+      "OP.D": [
+        62,
+        110,
+        100,
+        180
+      ]
+    },
+    "local_edges": {
+      "CNS": [
+        "ON.S",
+        "LN"
+      ],
+      "CND": [
+        "ON.D",
+        "LY"
+      ],
+      "CPS": [
+        "OP.S",
+        "LP"
+      ],
+      "CPD": [
+        "OP.D",
+        "LY"
+      ],
+      "VN": [
+        "LN",
+        "MN"
+      ],
+      "VP": [
+        "LP",
+        "MP"
+      ],
+      "VY": [
+        "LY",
+        "MY"
+      ],
+      "GC": [
+        "G",
+        "MA"
+      ]
+    },
+    "local_component_count": 6,
+    "local_components": {
+      "C_VSS": [
+        "ON.S",
+        "LN",
+        "MN"
+      ],
+      "C_VDD": [
+        "OP.S",
+        "LP",
+        "MP"
+      ],
+      "C_Y": [
+        "ON.D",
+        "OP.D",
+        "LY",
+        "MY"
+      ],
+      "C_A": [
+        "G",
+        "MA"
+      ],
+      "C_BN": [
+        "BN"
+      ],
+      "C_BP": [
+        "BP"
+      ]
+    },
+    "net_region_count": 8,
+    "local_contact_margins": {
+      "CNS": {
+        "ON.S": {
+          "margins_left_bottom_right_top_nm": [
+            9,
+            20,
+            25,
+            26
+          ],
+          "minimum_nm": 9
+        },
+        "LN": {
+          "margins_left_bottom_right_top_nm": [
+            1,
+            10,
+            1,
+            11
+          ],
+          "minimum_nm": 1
+        }
+      },
+      "CND": {
+        "ON.D": {
+          "margins_left_bottom_right_top_nm": [
+            23,
+            20,
+            11,
+            26
+          ],
+          "minimum_nm": 11
+        },
+        "LY": {
+          "margins_left_bottom_right_top_nm": [
+            1,
+            10,
+            1,
+            121
+          ],
+          "minimum_nm": 1
+        }
+      },
+      "CPS": {
+        "OP.S": {
+          "margins_left_bottom_right_top_nm": [
+            9,
+            30,
+            25,
+            36
+          ],
+          "minimum_nm": 9
+        },
+        "LP": {
+          "margins_left_bottom_right_top_nm": [
+            1,
+            10,
+            1,
+            11
+          ],
+          "minimum_nm": 1
+        }
+      },
+      "CPD": {
+        "OP.D": {
+          "margins_left_bottom_right_top_nm": [
+            23,
+            30,
+            11,
+            36
+          ],
+          "minimum_nm": 11
+        },
+        "LY": {
+          "margins_left_bottom_right_top_nm": [
+            1,
+            110,
+            1,
+            21
+          ],
+          "minimum_nm": 1
+        }
+      },
+      "VN": {
+        "LN": {
+          "margins_left_bottom_right_top_nm": [
+            1,
+            20,
+            1,
+            1
+          ],
+          "minimum_nm": 1
+        },
+        "MN": {
+          "margins_left_bottom_right_top_nm": [
+            29,
+            2,
+            12,
+            4
+          ],
+          "minimum_nm": 2
+        }
+      },
+      "VP": {
+        "LP": {
+          "margins_left_bottom_right_top_nm": [
+            1,
+            20,
+            1,
+            1
+          ],
+          "minimum_nm": 1
+        },
+        "MP": {
+          "margins_left_bottom_right_top_nm": [
+            29,
+            2,
+            12,
+            4
+          ],
+          "minimum_nm": 2
+        }
+      },
+      "VY": {
+        "LY": {
+          "margins_left_bottom_right_top_nm": [
+            1,
+            62,
+            1,
+            69
+          ],
+          "minimum_nm": 1
+        },
+        "MY": {
+          "margins_left_bottom_right_top_nm": [
+            5,
+            2,
+            21,
+            2
+          ],
+          "minimum_nm": 2
+        }
+      },
+      "GC": {
+        "G": {
+          "margins_left_bottom_right_top_nm": [
+            1,
+            82,
+            1,
+            94
+          ],
+          "minimum_nm": 1
+        },
+        "MA": {
+          "margins_left_bottom_right_top_nm": [
+            9,
+            2,
+            14,
+            2
+          ],
+          "minimum_nm": 2
+        }
+      }
+    },
+    "non_edges": [
+      [
+        "BN",
+        "MN"
+      ],
+      [
+        "BP",
+        "MP"
+      ],
+      [
+        "BN",
+        "ON.S"
+      ],
+      [
+        "BP",
+        "OP.S"
+      ],
+      [
+        "ON.S",
+        "ON.D"
+      ],
+      [
+        "OP.S",
+        "OP.D"
+      ],
+      [
+        "BN",
+        "BP"
+      ]
+    ]
+  },
+  "terminals": {
+    "order": [
+      "D",
+      "G",
+      "S",
+      "B"
+    ],
+    "MN0": {
+      "regions": [
+        "ON.D",
+        "G",
+        "ON.S",
+        "BN"
+      ],
+      "local_components": [
+        "C_Y",
+        "C_A",
+        "C_VSS",
+        "C_BN"
+      ],
+      "semantic_nets": [
+        "Y",
+        "A",
+        "VSS",
+        "VSS"
+      ],
+      "B_association_scope": "context-supported, not local physical C_VSS membership"
+    },
+    "MP0": {
+      "regions": [
+        "OP.D",
+        "G",
+        "OP.S",
+        "BP"
+      ],
+      "local_components": [
+        "C_Y",
+        "C_A",
+        "C_VDD",
+        "C_BP"
+      ],
+      "semantic_nets": [
+        "Y",
+        "A",
+        "VDD",
+        "VDD"
+      ],
+      "B_association_scope": "context-supported, not local physical C_VDD membership"
+    }
+  },
+  "context": {
+    "classification": "hand-authored synthetic geometric support; not production capture",
+    "read_only": true,
+    "exported": false,
+    "coordinates": {
+      "BN.ext": {
+        "layer": "BODY_N",
+        "bbox": [
+          -20,
+          0,
+          0,
+          90
+        ]
+      },
+      "BP.ext": {
+        "layer": "BODY_P",
+        "bbox": [
+          -20,
+          100,
+          0,
+          200
+        ]
+      },
+      "MN.ext": {
+        "layer": "M1",
+        "bbox": [
+          -20,
+          48,
+          0,
+          58
+        ]
+      },
+      "MP.ext": {
+        "layer": "M1",
+        "bbox": [
+          -20,
+          148,
+          0,
+          158
+        ]
+      },
+      "TN.ext": {
+        "layer": "BTAP_N",
+        "bbox": [
+          -12,
+          50,
+          -8,
+          54
+        ]
+      },
+      "TP.ext": {
+        "layer": "BTAP_P",
+        "bbox": [
+          -12,
+          150,
+          -8,
+          154
+        ]
+      }
+    },
+    "source_bindings_required": [
+      "source.gds actual byte SHA-256",
+      "top",
+      "frame id+exact bounds",
+      "local BN/BP/MN/MP identities and exact geometry",
+      "coordinate frame and exact nm unit",
+      "profile/operator version",
+      "context byte SHA-256 in header dependency closure and request selection",
+      "author/source/version"
+    ],
+    "boundary_contacts": [
+      {
+        "local": "BN",
+        "external": "BN.ext",
+        "overlap_dimensions_nm": [
+          0,
+          90
+        ],
+        "positive_shared_edge_length_nm": 90
+      },
+      {
+        "local": "BP",
+        "external": "BP.ext",
+        "overlap_dimensions_nm": [
+          0,
+          100
+        ],
+        "positive_shared_edge_length_nm": 100
+      },
+      {
+        "local": "MN",
+        "external": "MN.ext",
+        "overlap_dimensions_nm": [
+          0,
+          10
+        ],
+        "positive_shared_edge_length_nm": 10
+      },
+      {
+        "local": "MP",
+        "external": "MP.ext",
+        "overlap_dimensions_nm": [
+          0,
+          10
+        ],
+        "positive_shared_edge_length_nm": 10
+      }
+    ],
+    "tap_chains": [
+      {
+        "terminal": "MN0.B",
+        "local_body": "BN",
+        "external_body": "BN.ext",
+        "tap": "TN.ext",
+        "external_rail": "MN.ext",
+        "local_rail": "MN",
+        "semantic_target": "VSS",
+        "body_margins_nm": [
+          8,
+          50,
+          8,
+          36
+        ],
+        "rail_margins_nm": [
+          8,
+          2,
+          8,
+          4
+        ]
+      },
+      {
+        "terminal": "MP0.B",
+        "local_body": "BP",
+        "external_body": "BP.ext",
+        "tap": "TP.ext",
+        "external_rail": "MP.ext",
+        "local_rail": "MP",
+        "semantic_target": "VDD",
+        "body_margins_nm": [
+          8,
+          50,
+          8,
+          46
+        ],
+        "rail_margins_nm": [
+          8,
+          2,
+          8,
+          4
+        ]
+      }
+    ],
+    "candidate_uniqueness": "TN.ext overlaps exactly BN.ext on BODY_N and MN.ext on M1; TP.ext overlaps exactly BP.ext on BODY_P and MP.ext on M1. No other declared regions overlap respective tap. Each same-type boundary pair is unique.",
+    "local_graph_unchanged": true,
+    "context_supported_associations": [
+      {
+        "body_component": "C_BN",
+        "rail_component": "C_VSS",
+        "net": "VSS"
+      },
+      {
+        "body_component": "C_BP",
+        "rail_component": "C_VDD",
+        "net": "VDD"
+      }
+    ],
+    "production_matched_body_evidence": false,
+    "LVS": "not_run"
+  },
+  "rule_answers": {
+    "T01": {
+      "scope_nonframe_shapes": 39,
+      "minimum_frame_margin_nm": 0
+    },
+    "T02": {
+      "fin_count": 18,
+      "lower_y_sequence_nm": [
+        24,
+        34,
+        44,
+        54,
+        64,
+        74,
+        84,
+        94,
+        104,
+        114,
+        124,
+        134,
+        144,
+        154,
+        164,
+        174,
+        184,
+        194
+      ],
+      "width_nm": 2,
+      "pitch_nm": 10,
+      "actual_gap_nm": 8,
+      "gap_is_separate_min_spacing_rule": false
+    },
+    "T03": {
+      "channel_boxes": [
+        [
+          58,
+          20,
+          62,
+          70
+        ],
+        [
+          58,
+          110,
+          62,
+          180
+        ]
+      ],
+      "qualified_fin_ids": [
+        [
+          "F01",
+          "F02",
+          "F03",
+          "F04",
+          "F05"
+        ],
+        [
+          "F07",
+          "F08",
+          "F09",
+          "F10",
+          "F11",
+          "F12",
+          "F13"
+        ]
+      ],
+      "counts": [
+        5,
+        7
+      ],
+      "area_per_crossing_nm2": 8,
+      "total_channel_fin_area_nm2": [
+        40,
+        56
+      ],
+      "L_channel_length_nm": 4,
+      "W_fin_width_nm": 2,
+      "NF_M": [
+        1,
+        1
+      ],
+      "unqualified": [
+        "F06",
+        "F14",
+        "F15",
+        "F16",
+        "F17",
+        "F18"
+      ]
+    },
+    "T04": {
+      "active_body_margins_nm": {
+        "ON_in_BN": [
+          20,
+          20,
+          20,
+          20
+        ],
+        "OP_in_BP": [
+          20,
+          10,
+          20,
+          20
+        ]
+      },
+      "minimum_active_enclosure_nm": 10,
+      "body_opposite_type_gap_nm": 10,
+      "body_association": "two context chains independently checked; absence of local BTAP succeeds"
+    },
+    "T05": {
+      "local_connector_count": 8,
+      "minimum_local_enclosure_nm": 1,
+      "external_connector_count": 2,
+      "minimum_context_enclosure_nm": 2,
+      "context_body_minimum_nm": 8,
+      "threshold_nm": 1,
+      "scope": "local and context results separate"
+    },
+    "T06": {
+      "pair_count": 3,
+      "pairs": [
+        {
+          "pair": [
+            "LN",
+            "LP"
+          ],
+          "distance_squared_nm2": 5625
+        },
+        {
+          "pair": [
+            "LN",
+            "LY"
+          ],
+          "distance_squared_nm2": 2500
+        },
+        {
+          "pair": [
+            "LP",
+            "LY"
+          ],
+          "distance_squared_nm2": 2500
+        }
+      ],
+      "minimum_nm": 50,
+      "threshold_nm": 2
+    },
+    "T07": {
+      "pair_count": 6,
+      "pairs": [
+        {
+          "pair": [
+            "MN",
+            "MP"
+          ],
+          "distance_squared_nm2": 8100
+        },
+        {
+          "pair": [
+            "MN",
+            "MA"
+          ],
+          "distance_squared_nm2": 1049
+        },
+        {
+          "pair": [
+            "MN",
+            "MY"
+          ],
+          "distance_squared_nm2": 2249
+        },
+        {
+          "pair": [
+            "MP",
+            "MA"
+          ],
+          "distance_squared_nm2": 2525
+        },
+        {
+          "pair": [
+            "MP",
+            "MY"
+          ],
+          "distance_squared_nm2": 3725
+        },
+        {
+          "pair": [
+            "MA",
+            "MY"
+          ],
+          "distance_squared_nm2": 25
+        }
+      ],
+      "minimum_nm": 5,
+      "threshold_nm": 5,
+      "scope": "local M1; external M1 separately participates in context support only"
+    },
+    "T08": {
+      "terminals": 8,
+      "local_edges": 8,
+      "local_components": 6,
+      "external_body_associations": 2,
+      "local_body_components_not_same_as_rails": true
+    },
+    "T09": {
+      "local_drawn_preserved": 40,
+      "external_shapes_exported": 0,
+      "eco_count": 0
+    },
+    "T10": {
+      "marker": "MARK",
+      "normal_same_label_islands": [],
+      "special_case_required": [
+        "CUT difference",
+        "two fragments same A label",
+        "same index cell does not connect",
+        "disclosed islands"
+      ]
+    }
+  },
+  "special_case": {
+    "add_to_new_normal": [
+      "LB=[130,20,150,24] on LI",
+      "CUTB=[139,18,141,26] on CUT",
+      "R08 left and R09 right bound to A"
+    ],
+    "drawn_count": 42,
+    "effective_region_count": 16,
+    "local_edges": 8,
+    "local_components": 8,
+    "fragments": {
+      "LB.left": [
+        130,
+        20,
+        139,
+        24
+      ],
+      "LB.right": [
+        141,
+        20,
+        150,
+        24
+      ]
+    },
+    "gap_nm": 2,
+    "index_witness": {
+      "cell_bbox": [
+        128,
+        16,
+        160,
+        32
+      ],
+      "width": 32,
+      "height": 16,
+      "origin": [
+        0,
+        0
+      ],
+      "purpose": "human-selected test bin; not full runtime coordinate model"
+    },
+    "li_pairs": 10,
+    "minimum_li_spacing_nm": 2
+  },
+  "unit_answers": {
+    "pre_revision_source_units": [
+      {
+        "raw_hex": "3e4189374bc6a7f0",
+        "decoded": "1152921504606847/1152921504606846976",
+        "nominal": "1/1000",
+        "delta": "3/144115188075855872000",
+        "half_ulp": "1/36893488147419103232",
+        "unique_selected_nominal_within_bound": true
+      },
+      {
+        "raw_hex": "3944b82fa09b5a53",
+        "decoded": "19342813113834067/19342813113834066795298816",
+        "nominal": "1/1000000000",
+        "delta": "399807/37778931862957161709568000000000",
+        "half_ulp": "1/38685626227668133590597632",
+        "unique_selected_nominal_within_bound": true
+      }
+    ],
+    "nominal_tick_nm": 1,
+    "canonical_tick_nm": 1,
+    "rationale": "versioned hand-authored toy choice with exact integer geometry representability; no production default or GCD derivation",
+    "source_XY_unchanged_by_unit_binding": true
+  },
+  "suggested_failure_witnesses": [
+    {
+      "purpose": "C22 missing mandatory support",
+      "mutation": "remove external context selection/file OR required body context operator definition; all other bindings reclosed",
+      "stage": "pre_context",
+      "not_failure": "no local BTAP"
+    },
+    {
+      "purpose": "wrong source binding",
+      "mutation": "body context source_gds_sha256 differs from actual source while outer closure correctly hashes edited context",
+      "stage": "pre_context"
+    },
+    {
+      "purpose": "body type failure",
+      "mutation": "BN.ext layer BODY_P; retain TN.ext BTAP_N; outer bindings recomputed",
+      "witness": "same-type BN/BN.ext contact and N-side tap match absent",
+      "stage": "interpretation/validation as explicitly chosen"
+    },
+    {
+      "purpose": "body boundary noncontact",
+      "mutation": "BN.ext right x=-1; retain other geometry",
+      "witness": "1nm gap to BN at x=0"
+    },
+    {
+      "purpose": "connector ambiguity",
+      "mutation": "add distinct external candidate region spanning the tap with same required layer and preserve both identities",
+      "witness": "candidate match cardinality=2; ensure checker checks object identity before any dedup/union"
+    },
+    {
+      "purpose": "tap enclosure failure",
+      "mutation": "TN.ext=[-20,50,-16,54]",
+      "witness": "body and rail left enclosure=0<1; positive overlaps, boundary continuation and unique side matches remain"
+    },
+    {
+      "purpose": "wrong target rail",
+      "mutation": "retain valid external geometry ending at MN but select expected local rail MP for N body in association",
+      "witness": "geometric chain endpoint MN differs from selected MP and CDL MN0.B=VSS; do not create edge from either name",
+      "note": "must report target endpoint/semantic mismatch, not merely hash error"
+    }
+  ],
+  "owner_suggestions": [
+    {
+      "facts": "rule thresholds and conditions",
+      "unique_owner": "tech/drc_rules.json",
+      "consumers": "fixture exact arithmetic verifier and source dimension table; FIN profile references T02 instead of duplicate numbers"
+    },
+    {
+      "facts": "drawn stream mapping, connector sides, CUT/lifecycle",
+      "unique_owner": "tech/layer_map.json",
+      "consumers": "GDS writer/reader, connectivity, plot mapping"
+    },
+    {
+      "facts": "derived names, carries, trim, annotation tolerance",
+      "unique_owner": "tech/calibre_layer_map.json",
+      "consumers": "raw normalization and annotation association; no duplicate tolerance in unit owner"
+    },
+    {
+      "facts": "raw/nominal/canonical/output unit scale contract",
+      "unique_owner": "tech/units.json",
+      "consumers": "GDS bytes writer, exact reader/binding, normalized coordinates, output checks"
+    },
+    {
+      "facts": "CDL format syntax and GDS capability/limits",
+      "unique_owner": "tech/format_profiles.json",
+      "consumers": "fixture semantic readers"
+    },
+    {
+      "facts": "model terminal axes/FIN count/body interpretation/operators",
+      "unique_owner": "tech/device_profiles.json",
+      "consumers": "extraction/connectivity/body verifier; unit and rule refs resolved"
+    },
+    {
+      "facts": "cell-specific context geometry, bindings and target relation evidence",
+      "unique_owner": "body_context.json input",
+      "consumers": "header closure/F1 descriptor and context-support verifier; not in tech/site"
+    },
+    {
+      "facts": "32x16 artificial test bin",
+      "unique_owner": "special-case witness",
+      "consumers": "special-case occupancy illustration only; no full runtime coordinate claim"
+    }
+  ],
+  "dimension_sources": {
+    "all_units": "nm unless area nm2; hand-authored synthetic versioned toy, not PDK",
+    "FIN_width_pitch_offset": {
+      "actual": [
+        2,
+        10,
+        24
+      ],
+      "rule": "T02 exact values",
+      "model_axis": "W=2n and FIN crossing profile",
+      "gap": 8,
+      "gap_rule": "absent"
+    },
+    "gate": {
+      "actual_x_extent": 4,
+      "actual_y_extent": 180,
+      "rule": "T03 consistency with L=4n, not independent min-width",
+      "gate_spacing_rule": "absent; one gate stripe"
+    },
+    "OD": {
+      "N_width_height": [
+        80,
+        50
+      ],
+      "P_width_height": [
+        80,
+        70
+      ],
+      "rule": "T03 crossing count; T04 active enclosure >=10",
+      "size_min_rule": "absent"
+    },
+    "LI": {
+      "LN_LP_width_height": [
+        6,
+        25
+      ],
+      "LY_width_height": [
+        6,
+        135
+      ],
+      "rule": "T05 contact enclosure >=1; T06 spacing>=2",
+      "min_width_rule": "absent"
+    },
+    "M1": {
+      "MN_MP_width_height": [
+        45,
+        10
+      ],
+      "MA": [
+        25,
+        8
+      ],
+      "MY": [
+        30,
+        8
+      ],
+      "rule": "T05 enclosure>=1; T07 spacing>=5",
+      "min_width_rule": "absent"
+    },
+    "connectors": {
+      "CONTACT_VIA0_sizes": [
+        4,
+        4
+      ],
+      "GCONTACT_size": [
+        2,
+        4
+      ],
+      "external_BTAP_size": [
+        4,
+        4
+      ],
+      "rule": "T05 enclosure>=1",
+      "size_rule": "absent; design selections"
+    },
+    "frame_marker": {
+      "frame": [
+        160,
+        200
+      ],
+      "marker": [
+        5,
+        5
+      ],
+      "rule": "T01 frame containment; T09 preservation; T10 marker disclosure",
+      "production_dimensions": "unknown"
+    }
+  }
+}

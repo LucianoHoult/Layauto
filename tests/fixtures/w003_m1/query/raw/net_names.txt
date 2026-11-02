@@ -1,0 +1,8 @@
+Net_Names 20000
+Nets:
+0 0 4 May 07 03:00:00 2026
+n_a
+n_y
+n_lo
+n_hi
+END OF RESPONSE

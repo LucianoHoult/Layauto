@@ -10,6 +10,9 @@ import re
 import struct
 import sys
 import klayout.db as kdb
+from w004_support import load_tech, bindings, canonical
+from w004_query import CAPS, normalize, verify_backlinks
+from w004_body import check_body
 
 
 def read(path: Path) -> dict:
@@ -48,10 +51,14 @@ def decode_real8(raw: bytes) -> Fraction:
     return sign*Fraction(int.from_bytes(raw[1:],'big'),1<<56)*Fraction(16)**exponent
 
 
-def units(path: Path) -> list[dict]:
+def units(path: Path, contract: dict) -> list[dict]:
     raw=next(payload for kind,_,payload in records(path) if kind==3)
     result=[]
-    for offset,nominal in [(0,Fraction(1,1000)),(8,Fraction(1,1000000000))]:
+    assert contract['id']=='toy_gds_real8_nm/1' and contract.get('nominal_source',{}).get('identity')=='w004-toy-unit-choice/2','UnitSourceMissing'
+    def q(v):return Fraction(int(v['numerator']),int(v['denominator']))
+    assert q(contract['nominal_tick_m'])==Fraction(1,1000000000),'UnitSourceConflict'
+    assert q(contract['nominal_user_unit_m'])==Fraction(1,1000000) and q(contract['gds_units_first_nominal'])==q(contract['nominal_tick_m'])/q(contract['nominal_user_unit_m']) and Fraction(contract['canonical_tick_nm'])==q(contract['nominal_tick_m'])*1000000000,'UnitContractConflict'
+    for offset,nominal in [(0,q(contract['gds_units_first_nominal'])),(8,q(contract['nominal_tick_m']))]:
         field=raw[offset:offset+8];decoded=decode_real8(field);exponent=(field[0]&127)-64
         nominal_exponent=0;normalized=nominal
         while normalized>=1:normalized/=16;nominal_exponent+=1
@@ -62,43 +69,23 @@ def units(path: Path) -> list[dict]:
     return result
 
 
-def parse_raw(path: Path, cap: str) -> list[dict]:
-    data=path.read_bytes();assert data.endswith(b'\n'),'MissingTerminator'
-    lines=data.decode('ascii').splitlines()
-    assert lines[-1]=='END W003_QUERY','MissingTerminator'
-    assert lines[0].split()==['W003_QUERY','1',cap,'w003.synthetic.query.1','nm'],'UnitBindingMismatch'
-    assert len(lines[1].split())==2 and lines[1].split()[0]=='COUNT','CountMismatch'
-    assert int(lines[1].split()[1])==len(lines)-3,'CountMismatch'
-    rows=[]
-    for line in lines[2:-1]:
-        f=line.split()
-        if cap=='instance_xref':
-            assert len(f)==4 and f[0]=='I' and f[3] in ('SWAP','NOSWAP'),'InvalidRecord'
-            rows.append({'layout_instance':f[1],'schematic_instance':f[2],'sd_swap':f[3]=='SWAP'})
-        elif cap=='net_xref':
-            assert len(f)==4 and f[0]=='N' and re.fullmatch(r'[0-9]+',f[1]),'InvalidRecord'
-            rows.append({'lvs_index':f[1],'lvs_name':f[2],'schematic_name':f[3]})
-        else:
-            assert len(f)==10 and f[0]==('D' if cap=='device_regions' else 'R'),'InvalidRecord'
-            assert f[4]=='RECT','UnsupportedGeometryToken'
-            assert f[5]=='exact','UnsupportedQuality'
-            assert all(re.fullmatch(r'-?(0|[1-9][0-9]*)',v) for v in f[6:]),'InvalidCoordinate'
-            box=list(map(int,f[6:])); assert box[0]<box[2] and box[1]<box[3],'InvalidRectangle'
-            rows.append({'record_id':f[1],('layout_instance' if cap=='device_regions' else 'lvs_index'):f[2],'derived_layer':f[3],'geometry_kind':'rectangle','quality':f[5],'bbox_lexemes':f[6:],'unit':'nm'})
-    return rows
-
-
-def parse_cdl(path: Path) -> dict:
+def parse_cdl(path: Path, tech: dict) -> dict:
+    assert tech['cdl_dialect']['numeric_suffixes']=={'n':{'numerator':'1','denominator':'1000000000'}},'CdlUnitContractConflict'
+    assert not any(l.upper().startswith(('.INCLUDE','.LIB')) for l in path.read_text().splitlines()), 'UnsupportedDependencyDirective'
     rows=[l.split() for l in path.read_text().splitlines() if l and not l.startswith('*')]
     assert rows[0][0]=='.SUBCKT' and rows[-1]==['.ENDS',rows[0][1]]
     result={'cell':rows[0][1],'pins':rows[0][2:],'globals':[],'devices':[]}
     for row in rows[1:-1]:
-        assert len(row)==12 and row[5] in ('TOY_N','TOY_P'), 'UnsupportedCdl'
+        assert len(row)==12 and row[5] in tech['models'], 'UnsupportedCdl'
+        model=tech['models'][row[5]]
+        assert model['terminal_order']==list('DGSB') and not model['sd_symmetry']
+        assert model['parameter_axes']=={'NFIN':'fins_per_finger','NF':'finger_count','M':'multiplicity','L':'channel_length','W':'fin_width','VT':'threshold_token'},'UnsupportedModelAxes'
+        assert model['default_parameters']=={} and tech['cdl_dialect']['models_ref']=='physical.json#/models'
         pairs=[v.split('=') for v in row[6:]];assert all(len(v)==2 for v in pairs),'UnsupportedCdlExpression'
-        params=dict(pairs);assert len(params)==len(pairs) and set(params)=={'NFIN','NF','M','L','W','VT'}
+        params=dict(pairs);assert len(params)==len(pairs) and set(params)==set(model['required_parameters'])
         assert all(re.fullmatch(r'[1-9][0-9]*',params[k]) for k in ['NFIN','NF','M']),'UnsupportedCdlExpression'
         assert all(re.fullmatch(r'[1-9][0-9]*n',params[k]) for k in ['L','W']) and params['VT']=='toy'
-        result['devices'].append({'id':row[0],'model':row[5],'terminals':dict(zip('DGSB',row[1:5])),'parameters':{'fins_per_finger':int(params['NFIN']),'finger_count':int(params['NF']),'multiplicity':int(params['M']),'L_nm':int(params['L'][:-1]),'W_nm':int(params['W'][:-1]),'VT':params['VT']}})
+        result['devices'].append({'id':row[0],'model':row[5],'terminals':dict(zip(model['terminal_order'],row[1:5])),'parameters':{'fins_per_finger':int(params['NFIN']),'finger_count':int(params['NF']),'multiplicity':int(params['M']),'L_nm':int(params['L'][:-1]),'W_nm':int(params['W'][:-1]),'VT':params['VT']}})
     return result
 
 
@@ -158,7 +145,8 @@ def physics(spec: dict, oracle: dict, tech: dict) -> dict:
         parts=rectangles(box(shapes[drawn])-box(shapes['G']))
         assert len(parts)==2
         for suffix,part in zip(['S','D'],parts):effective[prefix+'.'+suffix]={'bbox':part,'layer':'OD'}
-    cut=box(shapes['CUTB'])
+    cut=kdb.Region()
+    for sid in by_layer.get('CUT',[]):cut |= box(shapes[sid])
     for drawn in by_layer['LI']:
         parts=rectangles(box(shapes[drawn])-cut)
         for suffix,part in zip(['.left','.right'] if len(parts)==2 else [''],parts):effective[drawn+suffix]={'bbox':part,'layer':'LI'}
@@ -179,7 +167,7 @@ def physics(spec: dict, oracle: dict, tech: dict) -> dict:
     edges=[];margins=[]
     for layer in tech['layers']:
         if 'electrical_connects' not in layer:continue
-        for connector in by_layer[layer['name']]:
+        for connector in by_layer.get(layer['name'],[]):
             ends=[]
             for target in layer['electrical_connects']:
                 touched=[rid for rid,r in effective.items() if r['layer']==target and not (box(r['bbox'])&box(shapes[connector])).is_empty()]
@@ -190,22 +178,25 @@ def physics(spec: dict, oracle: dict, tech: dict) -> dict:
     components=sorted(sorted(k for k in effective if find(k)==root) for root in {find(k) for k in effective})
     assert components==sorted(sorted(c['regions']) for c in oracle['components'])
     for a,b in oracle['non_edges']:assert [a,b] not in direct and [b,a] not in direct
-    if min(margins)<1:failures.append('T05.contact_enclosure')
+    rr={r['id']:r for r in tech['rules']}
+    if min(margins)<rr['T05.contact_enclosure']['parameters']['enclosure_nm']:failures.append('T05.contact_enclosure')
     minimum={}
-    for layer,threshold,rid in [('LI',2,'T06.li_spacing'),('M1',5,'T07.m1_spacing')]:
+    for layer,threshold,rid in [('LI',rr['T06.li_spacing']['parameters']['min_distance_nm'],'T06.li_spacing'),('M1',rr['T07.m1_spacing']['parameters']['min_distance_nm'],'T07.m1_spacing')]:
         regions=[v['bbox'] for v in effective.values() if v['layer']==layer]
         distances=[distance2(a,b) for i,a in enumerate(regions) for b in regions[i+1:]]
         minimum[layer]={'pairs':len(distances),'minimum_squared_distance_nm2':min(distances)}
         if min(distances)<threshold**2:failures.append(rid)
     if any(encl(shapes['FRAME'],s['bbox'])<0 for s in spec['shapes']):failures.append('T01.frame')
     fins=sorted(shapes[f] for f in by_layer['FIN']);ys=sorted(r[1] for r in fins)
-    assert len(fins)==18 and all(r[0]==10 and r[2]==110 and r[3]-r[1]==2 for r in fins)
-    assert ys==list(range(24,195,10))
-    assert encl(shapes['BN'],shapes['ON'])>=10 and encl(shapes['BP'],shapes['OP'])>=10
+    assert len(fins)==18 and all(r[0]==10 and r[2]==110 and r[3]-r[1]==tech['fin_count_profile']['fin_width_nm'] for r in fins)
+    assert ys==list(range(tech['fin_count_profile']['fin_lower_edge_offset_nm'],195,tech['fin_count_profile']['fin_pitch_nm']))
+    assert encl(shapes['BN'],shapes['ON'])>=rr['T04.body']['parameters']['active_enclosure_nm'] and encl(shapes['BP'],shapes['OP'])>=rr['T04.body']['parameters']['active_enclosure_nm']
     assert (box(shapes['BN'])&box(shapes['BP'])).is_empty()
     for terminal in oracle['terminals']:
         component=next(c for c in oracle['components'] if terminal['region'] in c['regions'])
-        assert component['id']==terminal['component'] and component['net']==terminal['net']
+        assert component['id']==terminal['component']
+        if terminal['role']!='B':assert component['net']==terminal['net']
+        else:assert component['net'] is None
         dev=next(d for d in oracle['semantic']['devices'] if d['id']==terminal['device'])
         assert dev['terminals'][terminal['role']]==terminal['net']
     # Independently join actual synthetic query identities and exact regions.
@@ -221,109 +212,191 @@ def physics(spec: dict, oracle: dict, tech: dict) -> dict:
         assert len(targets)==1,'ambiguous exact synthetic annotation'
         component=next(c for c in oracle['components'] if targets[0] in c['regions'])
         assert component['net']==nx[r['lvs_index']]
-    assert len(spec['shapes'])==oracle['drawn_shape_count']==44
-    return {'crossings':crossing_results,'fragment_count_witnesses':6,'physical_component_count':len(components),'qualified_connector_edges':len(edges),'independent_exact_net_annotations':len(spec['net_regions']),'independent_device_joins':len(ix),'minimum_contact_enclosure_nm':min(margins),'spacing':minimum,'mandatory_rule_failures':sorted(set(failures))}
+    assert len(spec['shapes'])==oracle['drawn_shape_count']==40
+    return {'crossings':crossing_results,'fragment_count_witnesses':len(oracle['fragments']),'physical_component_count':len(components),'qualified_connector_edges':len(edges),'independent_exact_net_annotations':len(spec['net_regions']),'independent_device_joins':len(ix),'minimum_contact_enclosure_nm':min(margins),'spacing':minimum,'mandatory_rule_failures':sorted(set(failures))}
 
 
-def verify(root: Path, regenerated: Path|None) -> dict:
-    spec,oracle,tech=[read(root/n) for n in ['spec.json','oracle.json','tech.json']]
-    evidence={p:units(root/p) for p in ['source.gds','expected/output.gds']}
-    prov=read(root/'expected/unit-provenance.json')
-    reconstructed=bytearray((root/'expected/output.gds').read_bytes())
-    start,end=prov['modified_byte_range'];reconstructed[start:end]=bytes.fromhex(prov['original_units_hex'])
-    assert hashlib.sha256(reconstructed).hexdigest()==prov['original_gds_sha256']
-    assert sha(root/'expected/output.gds')==prov['normalized_gds_sha256']
-    original=bytes.fromhex(prov['original_units_hex'])
-    evidence['klayout_original_units']=[{'raw_hex':original[i:i+8].hex(),'decoded':rational(decode_real8(original[i:i+8])),'delta_from_nominal':rational(decode_real8(original[i:i+8])-n)} for i,n in [(0,Fraction(1,1000)),(8,Fraction(1,1000000000))]]
-    for p in ['source.gds','expected/output.gds']:layout_shapes(root/p,spec,tech)
-    assert sha(root/'source.gds')!=sha(root/'expected/output.gds'),'independent writer should yield differing bytes'
-    for p in ['source.cdl','target.cdl','expected/output.cdl']:assert parse_cdl(root/p)==oracle['semantic']
-    header=read(root/'query/header.json')
-    assert header['mode']=='dummy_fixture' and not header['tool']['executed'] and header['product_parser_version'] is None
-    assert header['top_identities']=={'layout':spec['cell'],'source':spec['cell']}
-    for obj in [header['layout'],header['source_netlist'],header['target'],*header['closure']['entries'],*header['raw']]:assert sha(root/obj['uri'])==obj['sha256']
-    closure=json.dumps(header['closure']['entries'],sort_keys=True,separators=(',',':'),ensure_ascii=False).encode()
-    assert hashlib.sha256(closure).hexdigest()==header['closure']['sha256']
-    assert header['source_netlist']['include_library_preprocess_closure']==[]
-    raw_counts={}
-    for entry in header['raw']:
-        cap=entry['capability'];normalized=read(root/f'query/normalized/{cap}.yaml')
-        actual=parse_raw(root/entry['uri'],cap)
-        assert actual==normalized['records']==spec[cap]
-        assert normalized['header_id']==header['header_id'] and normalized['raw_sha256']==entry['sha256']
-        raw_counts[cap]=len(actual)
-    result=physics(spec,oracle,tech);assert result['mandatory_rule_failures']==[]
-    failures={}
-    for case,cap,error in [('missing_terminator','instance_xref','MissingTerminator'),('wrong_count','net_xref','CountMismatch'),('dialect_drift','device_regions','UnsupportedGeometryToken'),('unknown_unit','net_regions','UnitBindingMismatch')]:
-        try:parse_raw(root/f'failures/{case}/query/raw/{cap}.txt',cap)
-        except AssertionError as exc:assert str(exc)==error;failures[case]=error
-        else:raise AssertionError(f'{case} not detected')
-    try:units(root/'failures/unit_mismatch/source.gds')
-    except AssertionError as exc:assert str(exc)=='UnitScaleMismatch';failures['unit_mismatch']='UnitScaleMismatch'
-    else:raise AssertionError('unit mismatch not detected')
-    assert sha(root/'failures/raw_byte_drift/query/raw/net_xref.txt')!=next(x['sha256'] for x in header['raw'] if x['capability']=='net_xref');failures['raw_byte_drift']='RawHashMismatch'
-    assert read(root/'failures/normalized_cache_drift/query/normalized/net_xref.yaml')['records']!=spec['net_xref'];failures['normalized_cache_drift']='NormalizedCacheMismatch'
-    for case,rule in [('count_correct_rule_wrong','T07.m1_spacing'),('via_enclosure','T05.contact_enclosure')]:
-        mutation=read(root/f'failures/{case}/geometry_change.json');changed=json.loads(json.dumps(spec));next(s for s in changed['shapes'] if s['id']==mutation['shape'])['bbox']=mutation['bbox']
-        if case=='count_correct_rule_wrong':next(r for r in changed['net_regions'] if r['record_id']=='R03')['bbox_lexemes'][0]='79'
-        layout_shapes(root/f'failures/{case}/source.gds',changed,tech)
-        checked=physics(changed,oracle,tech)
-        assert rule in checked['mandatory_rule_failures'] and [x['count'] for x in checked['crossings']]==[5,7]
-        failures[case]=rule
-    for case in ['output_nonrepresentable','output_overflow']:
-        p=read(root/f'failures/{case}/export_policy.json')['gds_tick_nm'];tick=Fraction(int(p['numerator']),int(p['denominator']))
-        values=[Fraction(v)/tick for s in spec['shapes'] for v in s['bbox']]
-        if case=='output_nonrepresentable':assert any(v.denominator!=1 for v in values)
-        else:assert all(v.denominator==1 for v in values) and any(v<-(1<<31) or v>=(1<<31) for v in values)
-        failures[case]='exact arithmetic detects rejection condition'
-    for case,kind in [('gds_text',12),('gds_nonrectangle',8)]:
-        rec=records(root/f'failures/{case}/source.gds')
-        assert any(k==kind for k,_,_ in rec)
-        if case=='gds_nonrectangle':assert any(k==16 and len(p)==56 for k,_,p in rec)
-        failures[case]='unsupported stream witness present'
-    assert read(root/'failures/header_top_mismatch/query/header.json')['top_identities']['source']!=spec['cell'];failures['header_top_mismatch']='TopBindingMismatch'
-    for case in ['mapping_many_to_one','device_reduction']:
-        rows=parse_raw(root/f'failures/{case}/query/raw/instance_xref.txt','instance_xref')
-        assert len(set(r['schematic_instance'] for r in rows))<len(rows)
-        failures[case]='non-one-to-one mapping witness'
-    assert parse_cdl(root/'failures/multifinger/source.cdl')['devices'][0]['parameters']['finger_count']==2;failures['multifinger']='UnsupportedFingerCount'
-    for case in ['cdl_expression','cdl_include']:
-        try:parse_cdl(root/f'failures/{case}/source.cdl')
-        except AssertionError:failures[case]='unsupported CDL grammar witness'
-        else:raise AssertionError(f'{case} not detected')
-    changed_target=parse_cdl(root/'failures/unsupported_target/target.cdl')
-    assert changed_target['devices'][0]['parameters']['L_nm']==5 and changed_target!=oracle['semantic'];failures['unsupported_target']='UnsupportedTargetAxis:L'
-    changed=read(root/'failures/extraction_mismatch/geometry_change.json');changed_spec=json.loads(json.dumps(spec));next(s for s in changed_spec['shapes'] if s['id']==changed['shape'])['bbox']=changed['bbox']
-    layout_shapes(root/'failures/extraction_mismatch/source.gds',changed_spec,tech)
-    negative_channel=box(changed['bbox'])&box(next(s['bbox'] for s in spec['shapes'] if s['id']=='G'))
-    count=sum(not (box(s['bbox'])&negative_channel).is_empty() for s in spec['shapes'] if s['layer']=='FIN')
-    assert count==4 and oracle['crossings'][0]['count']==5;failures['extraction_mismatch']='4 physical crossings versus 5 declared'
-    badtech=read(root/'failures/missing_body_operator/tech.json')
-    assert badtech['device_extraction_contract']['body_operator_ref'] not in badtech['operators'];failures['missing_body_operator']='RequiredBodyOperatorUnavailable'
-    overlay_count=0
+def actual_shapes(path, spec, tech):
+    """Read actual stream and join stable toy object ids by declared record order.
+    Normal exact comparison uses KLayout separately; variants preserve order.
+    """
+    names={r['stream_key']['layer']:r['name'] for r in tech['layers']};result=[];layer=None
+    for kind,dtype,payload in records(path):
+        assert kind!=12,'UnsupportedGdsElement:TEXT'
+        if kind==13:layer=names[struct.unpack('>h',payload)[0]]
+        if kind==16:
+            points=list(zip(*[iter(struct.unpack('>'+str(len(payload)//4)+'i',payload))]*2))
+            assert len(points)==5 and points[0]==points[-1] and len(set(points[:-1]))==4,'UnsupportedNonrectangle'
+            xs={x for x,y in points};ys={y for x,y in points}
+            assert len(xs)==len(ys)==2 and all((points[i][0]==points[i+1][0]) != (points[i][1]==points[i+1][1]) for i in range(4)),'UnsupportedNonrectangle'
+            result.append({'id':spec['shapes'][len(result)]['id'],'layer':layer,'bbox':[min(xs),min(ys),max(xs),max(ys)]})
+    assert len(result)==len(spec['shapes'])
+    return result
+
+def raw_answers(root,spec):
+    total=0;counts={}
+    for cap in CAPS:
+        cache=read(root/f'query/normalized/{cap}.yaml');parsed=normalize(root,cap)
+        assert parsed==cache,'NormalizedCacheMismatch'
+        total+=verify_backlinks(root,cache);counts[cap]=len(parsed['records'])
+        stripped=[]
+        for row in parsed['records']:
+            if cap=='instance_xref':d={k:row[k] for k in ['layout_instance','schematic_instance','sd_swap']}
+            elif cap=='net_xref':d={k:row[k] for k in ['lvs_index','lvs_name','schematic_name']}
+            else:
+                d={k:row[k] for k in ['record_id','derived_layer','geometry_kind','quality','unit']}
+                key='layout_instance' if cap=='device_regions' else 'lvs_index';d[key]=row[key]
+                vals=[Fraction(int(row['bbox_nm'][k]['numerator']),int(row['bbox_nm'][k]['denominator'])) for k in ['x_min','y_min','x_max','y_max']]
+                assert all(v.denominator==1 for v in vals);d['bbox_lexemes']=[str(v.numerator) for v in vals]
+            stripped.append(d)
+        assert stripped==spec[cap],('IndependentHandTableMismatch',cap)
+    return {'counts':counts,'backlinks_checked':total}
+
+def witness(world,spec):
+    """Detect the first actual fixture defect; no selection by case id."""
+    h=bindings(world,allow_missing_context=not (world/'body/context.json').exists())
+    t=load_tech(world)
+    assert 'body_context/2' in t['operators'],'RequiredBodyOperatorUnavailable'
+    assert (world/'body/context.json').exists(),'RequiredBodyContextUnavailable'
+    units(world/'source.gds',t['unit_scale_contract']);ss=actual_shapes(world/'source.gds',spec,t)
+    data={}
+    for cap in CAPS:
+        data[cap]=normalize(world,cap)
+        p=world/f'query/normalized/{cap}.yaml'
+        if p.exists():assert read(p)==data[cap],'NormalizedCacheMismatch'
+    ix=data['instance_xref']['records'];assert len(ix)<=2,'UnsupportedDeviceReduction'
+    assert len({r['schematic_instance'] for r in ix})==len(ix),'UnsupportedDeviceCardinality'
+    source=parse_cdl(world/'source.cdl',t);target=parse_cdl(world/'target.cdl',t)
+    assert all(d['parameters']['finger_count']==1 for d in source['devices']),'UnsupportedFingerCount'
+    assert source==target,'UnsupportedTargetAxis'
+    sm={x['id']:x for x in ss}
+    check_body(world,sm,t,source)
+    for active,count in [('ON',5),('OP',7)]:
+        channel=box(sm[active]['bbox'])&box(sm['G']['bbox'])
+        n=sum(not (box(x['bbox'])&channel).is_empty() for x in ss if x['layer']=='FIN')
+        assert n==count,'ExtractionCountMismatch'
+    rr={r['id']:r for r in t['rules']}
+    # Exact independent witness checks on changed geometry, without oracle equality.
+    for layer in t['layers']:
+        if 'electrical_connects' not in layer:continue
+        for s in ss:
+            if s['layer']!=layer['name']:continue
+            for target_layer in layer['electrical_connects']:
+                hits=[x for x in ss if x['layer']==target_layer and not (box(s['bbox'])&box(x['bbox'])).is_empty()]
+                assert len(hits)==1 and encl(hits[0]['bbox'],s['bbox'])>=rr['T05.contact_enclosure']['parameters']['enclosure_nm'],'MandatoryRuleViolation:T05.contact_enclosure'
+    metals=[x['bbox'] for x in ss if x['layer']=='M1']
+    assert all(distance2(a,b)>=rr['T07.m1_spacing']['parameters']['min_distance_nm']**2 for i,a in enumerate(metals) for b in metals[i+1:]),'MandatoryRuleViolation:T07.m1_spacing'
+    tick=read(world/'export_policy.json')['gds_tick_nm'];tick=Fraction(int(tick['numerator']),int(tick['denominator']))
+    values=[Fraction(v)/tick for x in ss for v in x['bbox']]
+    assert all(v.denominator==1 for v in values),'OutputCoordinateNotRepresentable'
+    assert all(-(1<<31)<=v<(1<<31) for v in values),'OutputCoordinateOverflow'
+    return 'no_defect'
+
+def overlays(root,spec,work):
+    import shutil
+    results=[]
     for case in read(root/'failures/cases.json')['cases']:
-        if case['id'] in ['raw_byte_drift','normalized_cache_drift','header_top_mismatch']:continue
-        folder=root/'failures'/case['id']
-        def current(n: str) -> Path:
-            assert n not in case['remove_files']
-            return folder/n if (folder/n).exists() else root/n
-        h=read(folder/'query/header.json')
-        for obj in [h['layout'],h['source_netlist'],h['target'],*h['closure']['entries'],*h['raw']]:assert sha(current(obj['uri']))==obj['sha256']
-        assert hashlib.sha256(json.dumps(h['closure']['entries'],sort_keys=True,separators=(',',':'),ensure_ascii=False).encode()).hexdigest()==h['closure']['sha256']
-        for raw in h['raw']:
-            cap=raw['capability'];n=f'query/normalized/{cap}.yaml'
-            if n in case['remove_files']:continue
-            cache=read(current(n));assert cache['raw_sha256']==raw['sha256'] and cache['records']==parse_raw(current(raw['uri']),cap)
-        overlay_count+=1
-    regen=None
-    if regenerated:
-        left={str(p.relative_to(root)):sha(p) for p in root.rglob('*') if p.is_file()}
-        right={str(p.relative_to(regenerated)):sha(p) for p in regenerated.rglob('*') if p.is_file()}
-        assert left==right, f'regeneration mismatch: {sorted(k for k in left.keys()|right.keys() if left.get(k)!=right.get(k))}'
-        regen={'byte_clean':True,'file_count':len(left)}
-    return {'kind':'fixture_support_verification_not_product_run','python':sys.version.split()[0],'klayout':kdb.__version__,'profile':tech['profile_id'],'units':evidence,'geometry_records':len(spec['shapes']),'independent_gds_bytes_different':True,'raw_record_counts':raw_counts,'physics':result,'checked_negative_witnesses':failures,'negative_case_count':len(read(root/'failures/cases.json')['cases']),'coherently_rebound_negative_overlays':overlay_count,'regeneration':regen,'unexecuted':['product parser/runtime','Stage 1-6','repository publication','full negative runtime outcomes','production EDA/model/PDK','real signoff','strict typing/build/other interpreter versions']}
+        world=work/case['id'];shutil.copytree(root,world,ignore=shutil.ignore_patterns('failures'))
+        for dst,src in case['replacement_files'].items():
+            assert (root/'failures'/src).is_file();(world/dst).parent.mkdir(parents=True,exist_ok=True);shutil.copy2(root/'failures'/src,world/dst)
+        for path in case['remove_files']:assert (world/path).is_file();(world/path).unlink()
+        bind_status='intentional top/raw defect' if case['id'] in ['raw_byte_drift','header_top_mismatch'] else 'all actual dependency bytes bound'
+        if case['id'] not in ['raw_byte_drift','header_top_mismatch']:bindings(world,allow_missing_context=case['id']=='missing_body_context')
+        try:got=witness(world,spec)
+        except AssertionError as e:got=str(e)
+        assert got==case['expected_issue'],(case['id'],got,case['expected_issue'])
+        results.append({'original_id':case['original_id'],'id':case['id'],'replacements':case['replacement_files'],'removals':case['remove_files'],'expected_issue':case['expected_issue'],'observed_witness':got,'phase_expectation':case['phase'],'binding_check':bind_status,'materialized_directory':str(world),'product_run':False})
+    return results
 
+def special(root,tech):
+    p=root/'special/cut_islands';s=read(p/'spec.json');o=read(p/'oracle.json');layout_shapes(p/'source.gds',s,tech)
+    m={x['id']:x['bbox'] for x in s['shapes']};parts=rectangles(box(m['LB'])-box(m['CUTB']))
+    assert parts==[x['bbox_nm'] for x in o['fragments'][:2]]
+    assert distance2(*parts)==4 and sum(box(b).area() for b in parts)==72
+    assert all(encl(o['common_bucket'],b)>=0 for b in parts)
+    b=m['A_REMOTE'];dist=sorted([distance2(parts[0],parts[1]),distance2(parts[0],b),distance2(parts[1],b)])
+    assert dist==sorted(o['all_pair_distance_squared_nm2']);assert o['component_count']==3 and o['edges']==[]
+    return {'drawn':len(s['shapes']),'fragments':3,'physical_components':3,'connector_edges':0,'same_label':'A','same_cell_is_not_edge':True,'spacing_squared_nm2':dist}
+
+def xy_provenance(path,spec,tech):
+    """Actual byte positions and exact original XY-to-nominal source backlink."""
+    data=path.read_bytes();offset=0;layer=None;items=[]
+    mapping={x['name']:x['stream_key']['layer'] for x in tech['layers']}
+    expected={(mapping[x['layer']],tuple(x['bbox'])):x['id'] for x in spec['shapes']}
+    while offset<len(data):
+        length,kind,dtype=struct.unpack('>HBB',data[offset:offset+4]);payload=data[offset+4:offset+length]
+        if kind==13:layer=struct.unpack('>h',payload)[0]
+        if kind==16:
+            xy=list(struct.unpack('>'+str(len(payload)//4)+'i',payload));xs=xy[::2];ys=xy[1::2]
+            sid=expected[(layer,(min(xs),min(ys),max(xs),max(ys)))]
+            items.append({'shape_id':sid,'byte_range':[offset+4,offset+length],'raw_hex':payload.hex(),'original_xy_integer_ticks':xy,'nominal_tick_m':tech['unit_scale_contract']['nominal_tick_m'],'canonical_xy_nm':xy,'unit_owner':'tech/formats.json#/unit_scale_contract','source_dbu_backlink':{'file':path.name,'sha256':sha(path),'UNITS_kind':3},'coordinate_delta_nm':0})
+        offset+=length
+    assert len(items)==40
+    return items
+
+
+def contract_conflicts(root,spec,work):
+    """Actual isolated selected-owner mutations with correct leaf/closure bytes."""
+    import shutil
+    from w004_support import bind_header,write
+    trials=[('header_axis','query/header.json','QueryUnitDeclarationConflict'),
+            ('dialect_precision','query/dialect.json','QueryUnitDeclarationConflict'),
+            ('derived_quality','tech/derived.json','QueryQualityDeclarationConflict'),
+            ('unit_source_missing','tech/formats.json','UnitSourceMissing'),
+            ('unit_source_conflict','tech/formats.json','UnitSourceConflict'),
+            ('duplicate_output_conflict','site_config.yaml','ConflictingDuplicatePolicy'),
+            ('cdl_suffix_conflict','tech/formats.json','CdlUnitContractConflict'),
+            ('user_unit_conflict','tech/formats.json','UnitContractConflict'),
+            ('canonical_tick_conflict','tech/formats.json','UnitContractConflict')]
+    results=[]
+    for name,path,expected in trials:
+        w=work/('contract-'+name);shutil.copytree(root,w,ignore=shutil.ignore_patterns('failures'))
+        d=read(w/path)
+        if name=='header_axis':d['query_unit']['axis_order']=['x','y']
+        if name=='dialect_precision':d['geometry']['precision']=10000;d['geometry']['raw_tick_nm']={'numerator':'1','denominator':'10'}
+        if name=='derived_quality':d['derived_registry'][0]['quality']='approximate_bbox'
+        if name=='unit_source_missing':d['unit_scale_contract'].pop('nominal_source')
+        if name=='unit_source_conflict':d['unit_scale_contract']['nominal_tick_m']={'numerator':'2','denominator':'1000000000'}
+        if name=='duplicate_output_conflict':d['outputs']['directory']='different'
+        if name=='cdl_suffix_conflict':d['cdl_dialect']['numeric_suffixes']['n']={'numerator':'2','denominator':'1000000000'}
+        if name=='user_unit_conflict':d['unit_scale_contract']['nominal_user_unit_m']={'numerator':'2','denominator':'1000000'}
+        if name=='canonical_tick_conflict':d['unit_scale_contract']['canonical_tick_nm']=2
+        write(w/path,d)
+        write(w/'query/header.json',bind_header(w,read(w/'query/header.json')))
+        try:actual=witness(w,spec)
+        except AssertionError as e:actual=str(e)
+        assert actual==expected,(name,actual,expected)
+        results.append({'id':name,'actual_issue':actual,'input':path,'actual_sha256':sha(w/path),'closure_rebound':True,'materialized_directory':str(w),'product_run':False})
+    return results
+
+
+def verify(root,regenerated,work):
+    spec,oracle=[read(root/n) for n in ['spec.json','oracle.json']];tech=load_tech(root)
+    evidence={p:units(root/p,tech['unit_scale_contract']) for p in ['source.gds','expected/output.gds']}
+    prov=read(root/'expected/unit-provenance.json');reconstructed=bytearray((root/'expected/output.gds').read_bytes())
+    start,end=prov['modified_byte_range'];reconstructed[start:end]=bytes.fromhex(prov['original_units_hex'])
+    assert hashlib.sha256(reconstructed).hexdigest()==prov['original_gds_sha256'];assert sha(root/'expected/output.gds')==prov['normalized_gds_sha256']
+    for p in ['source.gds','expected/output.gds']:layout_shapes(root/p,spec,tech)
+    assert sha(root/'source.gds')!=sha(root/'expected/output.gds')
+    for p in ['source.cdl','target.cdl','expected/output.cdl']:assert parse_cdl(root/p,tech)==oracle['semantic']
+    header=bindings(root);raw=raw_answers(root,spec);result=physics(spec,oracle,tech);assert result['mandatory_rule_failures']==[]
+    bodies=check_body(root,{s['id']:s for s in actual_shapes(root/'source.gds',spec,tech)},tech,oracle['semantic'])
+    for actual,expected in zip(bodies,oracle['body_associations']):
+        for k in ['device','local_body','semantic_rail','body_edge_length_nm','rail_edge_length_nm','tap_body_enclosure_nm','tap_rail_enclosure_nm']:assert actual[k]==expected[k]
+    layout=read(root/'expected/layout.json');assert layout['geometry']==spec['shapes'];assert layout['connectivity']=={'scope':'local_physical_graph','components':oracle['components'],'edges':oracle['edges'],'terminals':oracle['terminals']};assert layout['current_semantic']==oracle['semantic'] and layout['body_associations']==oracle['body_associations']
+    assert layout['body_context']['sha256']==sha(root/'body/context.json') and not layout['body_context']['exported']
+    assert witness(root,spec)=='no_defect'
+    failures=overlays(root,spec,work);regen=None
+    if regenerated:
+        left={str(p.relative_to(root)):sha(p) for p in root.rglob('*') if p.is_file()};right={str(p.relative_to(regenerated)):sha(p) for p in regenerated.rglob('*') if p.is_file()}
+        assert left==right,sorted(k for k in left.keys()|right.keys() if left.get(k)!=right.get(k))
+        regen={'byte_clean':True,'file_count':len(left)}
+    return {'kind':'fixture_support_verification_not_product_run','python':sys.version.split()[0],'klayout':kdb.__version__,'profile':tech['profile_id'],'units':evidence,'source_xy_provenance':xy_provenance(root/'source.gds',spec,tech),'geometry_records':len(spec['shapes']),'independent_gds_bytes_different':True,'raw':raw,'closure_entries':len(header['closure']['entries']),'physics':result,'body_context_associations':bodies,'cut_islands':special(root,tech),'contract_conflict_witnesses':contract_conflicts(root,spec,work),'negative_cases':failures,'negative_case_count':len(failures),'regeneration':regen,'unexecuted':['product parser/runtime/Stage1-6','repository publication or typed product failure pipeline','production EDA/model/PDK','real LVS/DRC','production independent downstream open/syntax','Virtuoso/SKILL dry-run','legacy virtuoso_readback unresolved scope','full grid/CSP/DTO/codec/CAS']}
 
 if __name__=='__main__':
-    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--fixture',type=Path,required=True);parser.add_argument('--regenerated',type=Path)
-    args=parser.parse_args();print(json.dumps(verify(args.fixture,args.regenerated),indent=2))
+    import tempfile
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--fixture',type=Path,required=True);p.add_argument('--regenerated',type=Path);p.add_argument('--work',type=Path)
+    a=p.parse_args()
+    if a.work:a.work.mkdir(parents=True,exist_ok=True);print(json.dumps(verify(a.fixture,a.regenerated,a.work),indent=2))
+    else:
+        with tempfile.TemporaryDirectory(prefix='w004-verify-overlays-') as td:print(json.dumps(verify(a.fixture,a.regenerated,Path(td)),indent=2))
