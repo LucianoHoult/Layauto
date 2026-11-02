@@ -1,11 +1,10 @@
 """Profile-directed source admission and query-to-semantic identity joins."""
 from __future__ import annotations
 
-from fractions import Fraction
 from dataclasses import dataclass, field
 from typing import cast
 
-from layauto_v2.domain._normalization_input import mapping, sequence, string, source_refs, ref_from_location
+from layauto_v2.domain._normalization_input import mapping, sequence, string, source_refs, ref_from_location, source_admission_problem
 from layauto_v2.domain.codec import FrozenMap
 from layauto_v2.domain.evidence import SourceRef
 from layauto_v2.domain.identifiers import DeviceId, NetId, QueryKey
@@ -14,7 +13,6 @@ from layauto_v2.domain.normalization import (
     NormalizationInput, NormalizationIssue, DeviceIdentity, NetIdentity,
     DeviceAnnotationSeed, NetAnnotationSeed,
 )
-from .semantic import COMPARATOR
 
 
 class NormalizationError(Exception):
@@ -35,29 +33,10 @@ def _located(record: FrozenMap, fallback: SourceRef) -> SourceRef:
 
 
 def admit_source(input: NormalizationInput, source: SemanticCircuitDraft) -> None:
-    tech = mapping(input.value['tech'])
-    physical = mapping(tech['physical'])
-    dialect = mapping(mapping(tech['formats'])['cdl_dialect'])
-    tech_evidence = next(record for record in input.parse.completed if record.kind == 'tech')
-    owner_order = ('drawn', 'derived', 'physical', 'formats', 'coordinate', 'rules')
-    formats_ref = tech_evidence.sources[1 + owner_order.index('formats')]
-    physical_ref = tech_evidence.sources[1 + owner_order.index('physical')]
-    if dialect['semantic_comparator'] != COMPARATOR or dialect['id'] != 'toy_literal_cdl/1':
-        fail('UnsupportedSemanticComparator', 'selected comparator is not implemented',
-             SourceRef(formats_ref.uri, formats_ref.sha256, field='/cdl_dialect/semantic_comparator'), unsupported=True)
-    contract = mapping(physical['device_extraction_contract'])
-    if contract['cardinality'] != 'one_to_one' or contract['device_reduction'] != 'forbidden' or contract['mapping_missing_or_ambiguous'] != 'typed_fail':
-        fail('UnsupportedIdentityProfile', 'unsupported identity admission policy',
-             SourceRef(physical_ref.uri, physical_ref.sha256, field='/device_extraction_contract'), unsupported=True)
-    fin = mapping(physical['fin_count_profile'])
-    for cell in source.cells:
-        for device in cell.devices:
-            by_axis = {parameter.axis: parameter for parameter in device.parameters}
-            for axis, required_key, code in (('finger_count', 'finger_count_required', 'UnsupportedFingerCount'),
-                                            ('multiplicity', 'multiplicity_required', 'UnsupportedMultiplicity')):
-                parameter = by_axis[axis]
-                if parameter.exact != Fraction(cast(int, fin[required_key])):  # exact int selected by validated profile
-                    fail(code, axis + ' is outside the selected source subset', parameter.source, unsupported=True)
+    records = {record.kind: record for record in input.parse.completed}
+    problem = source_admission_problem(input.value, source, records['tech'].sources, records['header'].sources[0])
+    if problem is not None:
+        raise NormalizationError(NormalizationIssue(*problem))
 
 
 @dataclass
@@ -88,11 +67,6 @@ def _join_identities(input: NormalizationInput, source: SemanticCircuitDraft, pr
     selected = next(cell for cell in source.cells if cell.id == source.selected_cell)
     devices = {device.id.name: device for device in selected.devices}
     nets = {net.id.name: net for net in selected.nets}
-    metadata = mapping(query['_format_metadata'])
-    for cap in ('instance_xref', 'net_xref'):
-        summary = mapping(metadata[cap])
-        if summary['source_top'] != selected.id.name or summary['source_pin_count'] != len(selected.ports):
-            fail('SourceTopIdentityMismatch', 'query summary differs from source cell/ordered port count', _located(mapping(summary['summary']), header_ref))
     instance_rows = tuple(mapping(row) for row in sequence(mapping(query['instance_xref'])['records']))
     layout_seen: set[str] = set()
     source_seen: set[str] = set()

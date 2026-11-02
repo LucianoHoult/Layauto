@@ -12,7 +12,7 @@ from .publication_codec import content_ref
 from .identifiers import DeviceId, NetId, QueryKey
 from .circuit import SemanticCircuitDraft, TargetCircuit
 from .intent import TargetDifference, build_differences
-from ._normalization_input import mapping, sequence, string, source_refs, validate_parse, validate_refs
+from ._normalization_input import mapping, sequence, string, source_refs, validate_parse, validate_refs, source_admission_problem
 
 VERSION = 'layauto-normalization/1'
 
@@ -321,7 +321,17 @@ class NormalizationResult:
         for seed in seeds:
             validate_refs(seed.record, sources)
         if self.status == 'success':
+            problem = source_admission_problem(self.input.value, facts.source, records['tech'].sources, records['header'].sources[0])
+            if problem is not None:
+                raise ValueError('successful normalization violates source admission: ' + problem[1])
+            if (len(facts.device_identities) != len(sequence(mapping(query['instance_xref'])['records']))
+                    or len(facts.net_identities) != len(sequence(mapping(query['net_xref'])['records']))):
+                raise ValueError('successful normalization must cover every xref record without reduction')
+            models = mapping(mapping(mapping(self.input.value['tech'])['physical'])['models'])
             selected = next(cell for cell in facts.source.cells if cell.id == facts.source.selected_cell)
+            source_models = {device.id: device.model for device in selected.devices}
+            if any(identity.sd_swap and mapping(models[source_models[identity.device_id]])['sd_symmetry'] is not True for identity in facts.device_identities):
+                raise ValueError('successful normalization contains a forbidden terminal swap')
             if ({item.device_id for item in facts.device_identities} != {device.id for device in selected.devices}
                     or {item.net_id for item in facts.net_identities} != {net.id for net in selected.nets}):
                 raise ValueError('successful normalization omits source identity associations')

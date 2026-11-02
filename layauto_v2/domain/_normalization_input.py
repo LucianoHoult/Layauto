@@ -6,7 +6,10 @@ import json
 import re
 from fractions import Fraction
 from collections.abc import Mapping
-from typing import cast
+from typing import TYPE_CHECKING, Literal, cast
+
+if TYPE_CHECKING:
+    from .circuit import SemanticCircuitDraft
 
 from .codec import FrozenMap, Value, canonical_bytes, rational
 from .evidence import EvidenceRecord, SourceFile, SourceRef
@@ -133,6 +136,12 @@ def _validate_cdl(doc: FrozenMap, tech: FrozenMap) -> None:
     if not tops:
         raise ValueError('CDL evidence has no cells')
     top_names: set[str] = set()
+    raw_document = doc['raw_document']
+    if type(raw_document) is not bytes:
+        raise ValueError('CDL preservation requires captured bytes')
+    raw_lines = raw_document.decode('utf-8').splitlines()
+    expected_lines = {index for index, line in enumerate(raw_lines, 1) if line.strip() and not line.strip().startswith('*')}
+    covered_lines: list[int] = []
     for top_value in tops:
         top = mapping(top_value)
         if set(top) != {'name', 'pins', 'globals', 'devices', 'start_line', 'end_line', 'field_sources'}:
@@ -141,7 +150,13 @@ def _validate_cdl(doc: FrozenMap, tech: FrozenMap) -> None:
         if name in top_names or top['globals'] != ():
             raise ValueError('duplicate top or unsupported globals')
         top_names.add(name)
+        start, end = top['start_line'], top['end_line']
+        if type(start) is not int or type(end) is not int or not 1 <= start < end <= len(raw_lines):
+            raise ValueError('invalid captured CDL top record span')
+        covered_lines.extend((start, end))
         pins = sequence(top['pins'])
+        if raw_lines[start - 1].split() != ['.SUBCKT', name, *pins] or raw_lines[end - 1].split() != ['.ENDS', name]:
+            raise ValueError('CDL top declaration differs from captured record span')
         if len(set(pins)) != len(pins):
             raise ValueError('duplicate ordered port')
         fields = mapping(top['field_sources'])
@@ -173,10 +188,15 @@ def _validate_cdl(doc: FrozenMap, tech: FrozenMap) -> None:
                     or mapping(device['source']).get('line') != line
                     or any(mapping(location).get('line') != line for location in fields.values())):
                 raise ValueError('CDL fields do not belong to their declared device record')
+            covered_lines.append(line)
             parameters = mapping(device['parameters'])
             axes = mapping(model['parameter_axes'])
             if set(parameters) != set(axes):
                 raise ValueError('device omits parameter axes')
+            raw_tokens = raw_lines[line - 1].split()
+            if (raw_tokens[:6] != [device_name, *sequence(device['terminals']), device['model']]
+                    or sorted(raw_tokens[6:]) != sorted(string(mapping(mapping(parameter)['source'])['lexeme']) for parameter in parameters.values())):
+                raise ValueError('CDL device fields do not completely cover their captured record')
             for token, parameter_value in parameters.items():
                 parameter = mapping(parameter_value)
                 if set(parameter) != {'lexeme', 'exact', 'unit', 'axis', 'source'} or parameter['axis'] != axes[token]:
@@ -196,6 +216,9 @@ def _validate_cdl(doc: FrozenMap, tech: FrozenMap) -> None:
                 elif parameter['unit'] != 'token' or parameter['exact'] != 'toy' or lexeme != 'toy':
                     raise ValueError('token parameter differs from selected literal grammar')
 
+    if len(covered_lines) != len(set(covered_lines)) or set(covered_lines) != expected_lines or doc['logical_record_count'] != len(expected_lines):
+        raise ValueError('CDL evidence omits or duplicates captured logical records')
+
 
 def _field_sources(record: FrozenMap, field: str) -> tuple[FrozenMap, ...]:
     definition = mapping(mapping(record['field_sources'])[field])
@@ -212,7 +235,7 @@ def _same_row(left: FrozenMap, right: FrozenMap) -> bool:
     return tuple(left.get(key) for key in ('path', 'sha256', 'line_1based')) == tuple(right.get(key) for key in ('path', 'sha256', 'line_1based'))
 
 
-def _validate_query(query: FrozenMap, tech: FrozenMap) -> None:
+def _validate_query(query: FrozenMap, tech: FrozenMap, sources: Mapping[str, SourceFile], header: FrozenMap) -> None:
     instance_rows = tuple(mapping(value) for value in sequence(mapping(query['instance_xref'])['records']))
     net_rows = tuple(mapping(value) for value in sequence(mapping(query['net_xref'])['records']))
     for row in instance_rows:
@@ -223,7 +246,7 @@ def _validate_query(query: FrozenMap, tech: FrozenMap) -> None:
                 or layout[0]['lexeme'] != row['layout_instance'] or schematic[0]['lexeme'] != row['schematic_instance']
                 or layout[0].get('token_0based') != 1 or schematic[0].get('token_0based') != 3
                 or not _same_row(layout[0], schematic[0]) or not _same_row(layout[0], swap[0])
-                or type(row['sd_swap']) is not bool or row['sd_swap'] != string(swap[0]['lexeme']).endswith(' X')):
+                or type(row['sd_swap']) is not bool or row['sd_swap'] != (len(string(swap[0]['lexeme']).split()) == 5 and string(swap[0]['lexeme']).split()[-1] == 'X')):
             raise ValueError('instance identity fields disagree with their captured xref row')
     for row in net_rows:
         if set(row) != {'lvs_name', 'schematic_name', 'lvs_index', 'field_sources'} or set(mapping(row['field_sources'])) != {'lvs_name', 'schematic_name', 'lvs_index'}:
@@ -238,10 +261,24 @@ def _validate_query(query: FrozenMap, tech: FrozenMap) -> None:
         ordinal_line = index[0].get('line_1based')
         if type(ordinal_line) is not int or ordinal_line < 4 or row['lvs_index'] != str(ordinal_line - 3):
             raise ValueError('LVS index is not its captured NET NAMES ordinal')
+    metadata = mapping(query['_format_metadata'])
+    for capability, rows, field in (('instance_xref', instance_rows, 'layout_instance'), ('net_xref', net_rows, 'lvs_name')):
+        reference = mapping(mapping(metadata[capability])['source'])
+        source = sources[string(reference['path'])]
+        positions = [(_field_sources(row, field)[0]['path'], _field_sources(row, field)[0]['line_1based']) for row in rows]
+        expected_positions = [(source.uri, line) for line in range(9, len(source.data.splitlines()) + 1)]
+        if sorted(positions) != sorted(expected_positions):
+            raise ValueError('xref evidence omits or duplicates captured rows')
+    names_reference = mapping(mapping(metadata['net_names'])['count_header'])
+    names_source = sources[string(names_reference['path'])]
+    names_positions = [(_field_sources(row, 'lvs_index')[0]['path'], _field_sources(row, 'lvs_index')[0]['line_1based']) for row in net_rows]
+    if sorted(names_positions) != [(names_source.uri, line) for line in range(4, len(names_source.data.splitlines()))]:
+        raise ValueError('net identity evidence omits or duplicates NET NAMES records')
     registry = {string(mapping(entry)['id']): mapping(entry) for entry in sequence(mapping(tech['derived'])['derived_registry'])}
     for capability, associations in (('device_regions', instance_rows), ('net_regions', net_rows)):
         key = 'layout_instance' if capability == 'device_regions' else 'lvs_name'
         identity_fields = ('layout_instance', 'schematic_instance') if capability == 'device_regions' else ('lvs_name', 'schematic_name', 'lvs_index')
+        actual_positions: list[tuple[str, int]] = []
         for row_value in sequence(mapping(query[capability])['records']):
             row = mapping(row_value)
             matches = [candidate for candidate in associations if candidate[key] == row[key]]
@@ -269,6 +306,7 @@ def _validate_query(query: FrozenMap, tech: FrozenMap) -> None:
             layer_sources = _field_sources(row, 'derived_layer')
             if len(layer_sources) != 2 or layer_sources[0]['lexeme'] != row['derived_layer']:
                 raise ValueError('derived layer differs from captured raw layer')
+            actual_positions.append((string(layer_sources[0]['path']), cast(int, layer_sources[0]['line_1based'])))
             registry_entry = mapping(layer_sources[1]['lexeme'])
             if registry.get(string(row['derived_layer'])) != registry_entry or row['quality'] != registry_entry['quality']:
                 raise ValueError('seed quality/derived layer differs from selected registry')
@@ -299,6 +337,19 @@ def _validate_query(query: FrozenMap, tech: FrozenMap) -> None:
                     or _field_sources(row, 'section_header_opaque')[0]['lexeme'] != row['section_header_opaque']
                     or _field_sources(row, 'record_id')[0]['lexeme'] != row['record_id']):
                 raise ValueError('seed opaque/author fields differ from their captured operands')
+
+        expected_regions: list[tuple[str, int]] = []
+        for declaration_value in sequence(header['raw']):
+            declaration = mapping(declaration_value)
+            if declaration['capability'] != capability:
+                continue
+            source = sources[string(declaration['uri'])]
+            # This selected captured dialect has seven lines per rectangle,
+            # after its declared device/net metadata, then one final terminator.
+            first_layer_line = 5 if capability == 'device_regions' else 4
+            expected_regions.extend((source.uri, line) for line in range(first_layer_line, len(source.data.splitlines()), 7))
+        if sorted(actual_positions) != sorted(expected_regions):
+            raise ValueError('region evidence omits or duplicates captured polygon records')
 
 
 def evidence_by_kind(result: ParseResult) -> dict[str, EvidenceRecord]:
@@ -403,7 +454,7 @@ def validate_parse(result: ParseResult) -> None:
         sequence(document['records'])
     validate_refs(query, sources)
     validate_locations(query, sources)
-    _validate_query(query, mapping(value['tech']))
+    _validate_query(query, mapping(value['tech']), sources, header)
     validate_refs(mapping(value['gds']), sources)
     # Require role captures to be present in the declared closure, including the
     # selected tech owners. This is membership, not alias→role reconstruction.
@@ -411,3 +462,45 @@ def validate_parse(result: ParseResult) -> None:
     for kind in ('config', 'tech', 'policies', 'gds', 'source_cdl', 'target_cdl', 'body'):
         if any(ref.sha256 not in closure_hashes for ref in records[kind].sources):
             raise ValueError('captured parser role absent from header dependency closure')
+
+
+SEMANTIC_COMPARATOR = ('cell, ordered pins, globals, device identities, models, ordered terminals and every '
+                       'parameter axis equal; line/parameter order, full-line comments and whitespace irrelevant')
+AdmissionProblem = tuple[Literal['unsupported', 'identity'], str, str, SourceRef]
+
+
+def source_admission_problem(value: FrozenMap, source: SemanticCircuitDraft,
+                             tech_sources: tuple[SourceRef, ...], header_ref: SourceRef) -> AdmissionProblem | None:
+    """The same source-only admission guard serves the component and success DTO."""
+    tech = mapping(value['tech'])
+    physical = mapping(tech['physical'])
+    dialect = mapping(mapping(tech['formats'])['cdl_dialect'])
+    owner_order = ('drawn', 'derived', 'physical', 'formats', 'coordinate', 'rules')
+    formats_ref = tech_sources[1 + owner_order.index('formats')]
+    physical_ref = tech_sources[1 + owner_order.index('physical')]
+    if dialect['semantic_comparator'] != SEMANTIC_COMPARATOR or dialect['id'] != 'toy_literal_cdl/1':
+        return ('unsupported', 'UnsupportedSemanticComparator', 'selected comparator is not implemented',
+                SourceRef(formats_ref.uri, formats_ref.sha256, field='/cdl_dialect/semantic_comparator'))
+    contract = mapping(physical['device_extraction_contract'])
+    if contract['cardinality'] != 'one_to_one' or contract['device_reduction'] != 'forbidden' or contract['mapping_missing_or_ambiguous'] != 'typed_fail':
+        return ('unsupported', 'UnsupportedIdentityProfile', 'unsupported identity admission policy',
+                SourceRef(physical_ref.uri, physical_ref.sha256, field='/device_extraction_contract'))
+    fin = mapping(physical['fin_count_profile'])
+    for cell in source.cells:
+        for device in cell.devices:
+            by_axis = {parameter.axis: parameter for parameter in device.parameters}
+            for axis, required_key, code in (('finger_count', 'finger_count_required', 'UnsupportedFingerCount'),
+                                            ('multiplicity', 'multiplicity_required', 'UnsupportedMultiplicity')):
+                parameter = by_axis[axis]
+                if parameter.exact != Fraction(cast(int, fin[required_key])):
+                    return ('unsupported', code, axis + ' is outside the selected source subset', parameter.source)
+    query = mapping(value['query'])
+    selected = next(cell for cell in source.cells if cell.id == source.selected_cell)
+    metadata = mapping(query['_format_metadata'])
+    for capability in ('instance_xref', 'net_xref'):
+        summary = mapping(metadata[capability])
+        if summary['source_top'] != selected.id.name or summary['source_pin_count'] != len(selected.ports):
+            locations = source_refs(mapping(summary['summary']))
+            return ('identity', 'SourceTopIdentityMismatch', 'query summary differs from source cell/ordered port count',
+                    locations[0] if locations else header_ref)
+    return None

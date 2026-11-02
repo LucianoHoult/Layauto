@@ -13,8 +13,6 @@ from layauto_v2.domain.circuit import (
 )
 from layauto_v2.domain.normalization import NormalizationInput
 
-COMPARATOR = ('cell, ordered pins, globals, device identities, models, ordered terminals and every '
-              'parameter axis equal; line/parameter order, full-line comments and whitespace irrelevant')
 
 
 def _cells(evidence: EvidenceRecord, tech: FrozenMap) -> tuple[Cell, ...]:
