@@ -2,7 +2,6 @@
 from __future__ import annotations
 
 import hashlib
-import io
 from collections import Counter
 from fractions import Fraction
 from pathlib import Path
@@ -35,7 +34,7 @@ def test_accepted_actual_files_match_independent_answers_without_runtime_oracles
     answer = read_json(FIXTURE / 'independent-design-answer.json')['local_scope']
     semantic = read_json(FIXTURE / 'oracle.json')['semantic']
     before = inventory(FIXTURE)
-    original_open = io.open
+    original_open = Path.open
     opened = []
 
     def guarded_open(file, *args, **kwargs):
@@ -47,7 +46,7 @@ def test_accepted_actual_files_match_independent_answers_without_runtime_oracles
         return original_open(file, *args, **kwargs)
 
     with monkeypatch.context() as patch:
-        patch.setattr(io, 'open', guarded_open)
+        patch.setattr(Path, 'open', guarded_open)
         result = load(FIXTURE, tool_run_id='external-read-17')
     value = success(result)
     assert result.tool_run_id == 'external-read-17'
@@ -247,14 +246,14 @@ def test_second_legal_input_reads_changed_bytes_names_order_and_coordinates(tmp_
 
 @pytest.mark.parametrize('failure', [KeyboardInterrupt, SystemExit, RuntimeError])
 def test_interrupts_and_unexpected_errors_preserve_root_cause(monkeypatch, failure):
-    original_open = io.open
+    original_open = Path.open
 
     def broken(file, *args, **kwargs):
         if isinstance(file, (str, Path)) and Path(file).name == 'site_config.yaml':
             raise failure('injected-root-cause')
         return original_open(file, *args, **kwargs)
 
-    monkeypatch.setattr(io, 'open', broken)
+    monkeypatch.setattr(Path, 'open', broken)
     with pytest.raises(failure, match='injected-root-cause'):
         load(FIXTURE)
 
