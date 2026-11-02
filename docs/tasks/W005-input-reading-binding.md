@@ -7,13 +7,13 @@
 | 字段 | 内容 |
 | --- | --- |
 | 目标 / 依赖 | M1的首个产品组件切片；依赖已验收的W003/W004样本，实物基准`633e3feef8062565019838f2d270e89b7f81c4ed`。W002 E7的完整no_change闭环目标及R4首交义务保持 |
-| 授权 / 阶段 | **待验收：分支技术接收通过，待main集成及最终验收记录。** 独立执行已交付实现/测试和review；PM核验见PM1，无剩余必须修正项。本轮未合并main，不重新派发已完成的读取实现 |
-| 恢复版本 | 执行起点`5b7205009b3ed7f8fe15e135e674654f2f544557`，交付为`codex/w005-input-reading-binding@51d4d9d7b0d2715a5a2f3fe578615be4c59e74cb`，受审产品的发布等价提交为`cf35d97478cd78aa7ad707d18c9e37ceda10eafb`。PM记录随同分支追加，最新SHA见Git/交接回复。已验收fixture与答案未变 |
+| 授权 / 阶段 | **可执行：IPMR-01局部补修，暂不具备合并条件。** 新独立review发现1项P2必须修正项，PM复现并接收，见[PM2](#pm2-ipmr01-20261102)。独立执行session修复后由未参与实现者定向复核，再交PM恢复验收判断；不重做整个读取组件 |
+| 恢复版本 | 同分支`codex/w005-input-reading-binding`，独立review交付`cec15f7e3cd74f8cc439f9a5ab654597a113da78`，接手使用包含PM2的后续PM交接提交，准确SHA见Git/回复。原执行起点`5b7205009b3ed7f8fe15e135e674654f2f544557`、实现交付`51d4d9d7b0d2715a5a2f3fe578615be4c59e74cb`和发布等价产品`cf35d97478cd78aa7ad707d18c9e37ceda10eafb`保留历史身份。已验收fixture与答案未变 |
 | 输出边界 | 一个可由测试及未来pipeline调用的组件API，返回不可变、经过运行时校验的配置/tech及versioned evidence、解析结果和定位信息。名称/DTO组织由执行者细化并review；本轮不发布新的稳定CLI或对外wire承诺 |
 | 允许修改 | `layauto_v2/importers/`，必要的中立`domain/` evidence/results/codec类型、`tech/` schema与纯读取公共入口；`tests/unit/`、`tests/contracts/`及读取组合测试；必要依赖/typing/build配置与使用说明、本任务执行记录。新增目录按职责创建，不为所有未来模块填空 |
 | 非目标 | 不实现pipeline/run入口、repository/RunAttempt/terminal publication、Stage 2 identity/spatial join与状态、规则求值/resize/导出、真实Calibre/Virtuoso获取或生产上传；不改变D1=A、MR-040后置及真实工具延期。不修改已验收fixture以迎合程序 |
 | 架构依据 | [architecture](../architecture.md) §2.1–2.3、§3.1–3.2、§4.8、§5、§11.2/11.10/11.13–11.15、§12.1–12.8；架构原文优先，任务不另定产品合同 |
-| 分工 / 阻塞 | 一名执行者统一集成；未参与实现者做接口/最终代码review，PM核对结果。当前无阻塞；普通内部选择自主处理，新关键输入/能力/对外行为变化附实例交PM |
+| 分工 / 阻塞 | 一名执行者统一集成；未参与补修者做定向review，PM核对结果。IPMR-01未关闭前阻塞合并；普通内部选择自主处理，新关键输入/能力/对外行为变化附实例交PM |
 
 ### 输入、结果与范围
 
@@ -166,9 +166,28 @@ Python3.10完整237项采用已核验身份的执行日志及独立review记录�
 
 下一步是安排W005合入main并记录集成版本及组合检查，再准备输入组件接入正式运行审计的近期任务；不重开W003/W004，不把所有Stage 2或Stage 6工作塞进本次组件验收。本轮不合并main、不创建或启动下一产品任务。
 
+<a id="pm2-ipmr01-20261102"></a>
+### PM2. 接收独立合并前review，派发IPMR-01补修（2026-11-02）
+
+**接收[独立报告](W005/independent-premerge-review.md)的IPMR-01，P2必须修正，暂缓合并。** 远端review提交已核实为`cec15f7e3cd74f8cc439f9a5ab654597a113da78`，仅增加报告及reviewer记录；main仍为`87fe5a5a87d0cbb1f97952f1485dac9a71416369`。PM1及原R1–R5保留当时事实，当前判断以本段为准。
+
+PM在该提交、Python3.12.14环境实际运行报告中的完整三用例脚本：cache抛`UnicodeEncodeError`；escaped_note返回success但digest抛同类异常；literal_note成功且可digest，与报告一致。命令为报告复现代码使用`/workspace/work/w005-pm-check-env/bin/python -B`运行；只写临时副本。本轮未重跑237项或mypy，相关通过数采用独立报告并明确其未覆盖此缺陷。只读专项`w005_ipmr01_scope`另核对字符串key/value及解码后重复key边界，支持原P2。这是既有safe-load、typed错误及canonical evidence义务内的修复，不新增产品需求或重开样本验收。
+
+**修复范围与关闭条件：**
+
+1. 在文档字符串解析边界一致处理key/value。合法JSON surrogate pair应得到对应Unicode字符，与直接UTF-8表达的语义一致；孤立high/low surrogate、错误顺序或不完整配对应返回有来源和定位的`InputError`。具体helper和错误码由执行者选择；不能只包住缓存比较，也不能全局捕获异常、忽略/替换字符，或通过改变既有canonical编码算法掩盖问题。
+2. 解码后仍拒绝重复key：同一字符分别以转义和直接形式作为key时不能静默覆盖。合法非BMP字符应继续接纳，不因补修统一拒绝。保持原有未知key/schema、size/depth、精度及来源绑定规则。
+3. 公共`read_inputs`缓存错误须返回typed error，定位到实际缓存并保留其原bytes/hash，以及失败前已完成的组件evidence。合法转义配置须读取成功，最终value与已完成evidence的payload均可canonical编码/digest。转义/直接表达的**解析语义payload**应等价；原始文件bytes/hash和重绑header本就不同，不要求两个完整结果的digest相同。
+4. 将原报告三用例及上述key/value、重复key边界变为持久回归；只修改临时输入副本，需要时完整重绑，断言具体错误而非任意失败。非法缓存用例需断言completed保留和原bytes/hash，不被更早的hash错误遮蔽；意外异常和进程中断继续传播。已验收fixture、oracle/expected、support和原报告不改写。
+5. 在当前开发解释器跑新增回归、完整`tests/unit tests/contracts`及strict mypy；最低支持Python3.10补跑受影响回归，保留实际版本/命令/输出。产品文件改变后从补修版本重建wheel并在干净环境做正常读取及本缺陷关键用例，核对安装来源。旧237项、旧wheel与旧manifest只能证明旧版本，不覆盖新改文件；新增验证记录单独保存，不覆盖历史证据。环境缺项如实记录并交PM，不虚报通过，也不机械重跑无关fixture生成/legacy/EDA。
+
+**交接与写入责任。** 沿用独立执行session；允许修改必要的`importers/config.py`及确有需要的相邻中立合同、相关`tests/unit/`/`tests/contracts/`、本任务执行段与新增补修证据。实现前先复现并记录简短方案；既有范围内直接修复，无需重新开全量接口设计。执行者追加E5，保留原finding和PM状态；由未参与实现者在明确修复提交/文件身份上定向复核，报告写入`W005/ipmr01-fix-review.md`并在本任务reviewer区追加结论，说明是否可关闭IPMR-01，不代写最终验收。核查受影响结论，不重做全项目review。
+
+完成后将补修、测试、执行/review记录提交推送到同一W005分支，沿用项目既有GitHub noreply身份，核对远端完整SHA；如远端有新提交先核对并安全集成，不force push。交回PM修复版本、关闭依据、实际验证和未执行范围。**不合并main、不删分支、不启动下一产品任务。** PM核对新交付后再决定集成及验收；本次PM仅更新任务/入口，未修改产品或宣称问题已关闭。
+
 ### 历史派发背景（2026-10-31至2026-11-02）
 
-以下保留原派发事实；当前状态以PM1及任务顶部为准，不从旧prompt重新执行。
+以下保留原派发事实；当前状态以PM2及任务顶部为准，不从旧prompt重新执行。
 
 W003/W004样本前置及REQ-01补修已通过PR #58合入main `87fe5a5a87d0cbb1f97952f1485dac9a71416369`，集成事实见[W004 PM6](W004-fixture-revision.md#pm6-20261102)。当前派发W005读取组件，不代表W005实现或M1完成。按用户选择，新独立执行session从`codex/w005-input-reading-binding`的PM交接提交恢复，准确SHA见Git/回复；本轮只更新交接，不提前编写执行者方案或产品代码。
 

@@ -4,9 +4,9 @@
 
 ## 当前节点
 
-**当前任务为[W005 — 输入读取与绑定组件](tasks/W005-input-reading-binding.md)，分支技术接收通过，阶段待验收，尚未合入main。** 实际交付为51d4d9d，A1–A7及原五项review问题处置已由PM核验，见[PM1](tasks/W005-input-reading-binding.md#pm1-receipt-20261102)。产品读取组件已经实现，不再从旧执行prompt重新开始；完整M1仍待后续组合。
+**当前任务为[W005 — 输入读取与绑定组件](tasks/W005-input-reading-binding.md)，阶段可执行，正在派发IPMR-01局部补修，暂不具备合并条件。** 新独立review发现转义surrogate字符可绕过typed错误或产生无法digest的成功结果；PM已复现并接收，修复范围和关闭条件见[PM2](tasks/W005-input-reading-binding.md#pm2-ipmr01-20261102)。原交付51d4d9d及[PM1](tasks/W005-input-reading-binding.md#pm1-receipt-20261102)保留历史事实。产品组件已经实现，不从旧prompt重做；完整M1仍待后续组合。
 
-**W003/W004样本及最小合同已验收；W004已通过[PR #58](https://github.com/LucianoHoult/Layauto/pull/58)合入main。** W005独立执行session已交回代码、测试与review，PM本轮只接收并同步记录，不合并main或启动后续实现。
+**W003/W004样本及最小合同已验收；W004已通过[PR #58](https://github.com/LucianoHoult/Layauto/pull/58)合入main。** W005补修沿用独立执行session，修复后由未参与实现者定向复核，再交PM；本轮不合并main或启动下一产品任务。
 
 - 收口依据：[W003 P10](tasks/W003-m1-fixture-contracts.md#p10-w003-accepted)、[MR-078](tasks/W003/manual-verification.md#mr-078)；原MR答复不改写为用户逐项确认。
 - 样本验收：[W004 PM3](tasks/W004-fixture-revision.md#pm3-20261031)，633e3fe实物与完整review/交付身份已核验；D1=A已落实，D2后置，D3身份映射分项保留。
@@ -25,14 +25,15 @@
 | 原始包身份 | SHA-256 `3cd7bc497391d76656e0327b415ec5c77ce26aa827423dc2b054654977173b39`；8,988项manifest、149路径重建、155文件snapshot及145项r3受审身份已核对 |
 | main集成版本 | `87fe5a5a87d0cbb1f97952f1485dac9a71416369`，PR #58保留原提交历史；合并tree与已审`f82ad14`相同，含REQ-01补修。接收见[W004 PM6](tasks/W004-fixture-revision.md#pm6-20261102) |
 | W005产品交付 | `codex/w005-input-reading-binding@51d4d9d7b0d2715a5a2f3fe578615be4c59e74cb`；受审产品发布等价提交`cf35d97478cd78aa7ad707d18c9e37ceda10eafb`，源码/证据清单及发布映射随Git保存 |
-| 本轮PM接收 | [PM接收回执](tasks/W005/pm-receipt.json)保存本轮3.12测试、typing、重建/干净安装及身份核验；接手使用包含PM1的同分支提交，最新SHA见Git/回复。main仍是上述W004集成版本 |
+| 原PM技术接收 | [PM接收回执](tasks/W005/pm-receipt.json)保存PM1对原交付的3.12测试、typing、重建/干净安装及身份核验；不能覆盖后续补修版本 |
+| 当前补修入口 | 独立review交付`cec15f7e3cd74f8cc439f9a5ab654597a113da78`，原finding与复现见[报告](tasks/W005/independent-premerge-review.md)。接手同分支包含[PM2](tasks/W005-input-reading-binding.md#pm2-ipmr01-20261102)的后续PM交接提交，准确SHA见Git/回复；main仍是上述W004集成版本 |
 | 历史材料 | 准备基线9f6735d，原技术实物0153505；MR-001–077、执行/review和旧PM记录保留各自历史事实。原包与既有受审实物不随PM状态整理改写 |
 
 本机PM复核材料原位于`/workspace/work/w004-pm-receipt-kryfgf84/`，关键结果与身份另汇入[PM接收摘要](tasks/W003/delivery/w004-pm-20261031/receipt.json)随Git交接；临时全量目录不自动跨实例共享。W004分支已合入main并保留，后续实现使用新的W005分支。
 
-## 下一步：W005集成收口
+## 下一步：W005局部补修与定向复核
 
-安排W005合入main，核对实际集成版本及组合结果后完成最终验收记录。之后准备输入组件接入正式运行审计的近期任务；本轮尚未建立或派发下一产品任务，不重复已完成的接口方案/实现review。
+独立执行session按W005 PM2修复IPMR-01并补持久回归，独立reviewer核查修复及受影响结论。只有该必须修正项关闭并由PM核对新交付后，才恢复main集成及最终验收判断。其后准备输入组件接入正式运行审计的近期任务；本轮未建立或派发下一产品任务。
 
 W005交付是组件API。正式pipeline入口的unsealed attempt、失败RunRecord/terminal及后续Stage2/6组合仍是硬门，不能用组件测试冒充完整run或M1完成；新关键预期再带实例上报。
 
