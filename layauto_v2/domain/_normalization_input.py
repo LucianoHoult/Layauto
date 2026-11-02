@@ -8,7 +8,7 @@ from fractions import Fraction
 from collections.abc import Mapping
 from typing import cast
 
-from .codec import FrozenMap, Value, canonical_bytes
+from .codec import FrozenMap, Value, canonical_bytes, rational
 from .evidence import EvidenceRecord, SourceFile, SourceRef
 from .results import ParseResult
 
@@ -167,6 +167,12 @@ def _validate_cdl(doc: FrozenMap, tech: FrozenMap) -> None:
             if (mapping(fields['name'])['lexeme'] != device_name or mapping(fields['model'])['lexeme'] != device['model']
                     or tuple(mapping(fields[role])['lexeme'] for role in ('D', 'G', 'S', 'B')) != device['terminals']):
                 raise ValueError('device semantic fields differ from captured lexemes')
+            line = device['line']
+            if (type(line) is not int or type(top['start_line']) is not int or type(top['end_line']) is not int
+                    or not top['start_line'] < line < top['end_line']
+                    or mapping(device['source']).get('line') != line
+                    or any(mapping(location).get('line') != line for location in fields.values())):
+                raise ValueError('CDL fields do not belong to their declared device record')
             parameters = mapping(device['parameters'])
             axes = mapping(model['parameter_axes'])
             if set(parameters) != set(axes):
@@ -176,6 +182,8 @@ def _validate_cdl(doc: FrozenMap, tech: FrozenMap) -> None:
                 if set(parameter) != {'lexeme', 'exact', 'unit', 'axis', 'source'} or parameter['axis'] != axes[token]:
                     raise ValueError('parameter interpretation differs from selected profile')
                 lexeme = string(parameter['lexeme'])
+                if mapping(parameter['source']).get('line') != line:
+                    raise ValueError('parameter provenance belongs to another device record')
                 if mapping(parameter['source'])['lexeme'] != token + '=' + lexeme:
                     raise ValueError('parameter token and provenance disagree')
                 axis = string(axes[token])
@@ -187,6 +195,110 @@ def _validate_cdl(doc: FrozenMap, tech: FrozenMap) -> None:
                         raise ValueError('length parameter exact value differs from literal')
                 elif parameter['unit'] != 'token' or parameter['exact'] != 'toy' or lexeme != 'toy':
                     raise ValueError('token parameter differs from selected literal grammar')
+
+
+def _field_sources(record: FrozenMap, field: str) -> tuple[FrozenMap, ...]:
+    definition = mapping(mapping(record['field_sources'])[field])
+    if set(definition) != {'derivation', 'sources'}:
+        raise ValueError('invalid derived field provenance')
+    string(definition['derivation'])
+    refs = tuple(mapping(value) for value in sequence(definition['sources']))
+    if not refs:
+        raise ValueError('derived field must preserve its source operands')
+    return refs
+
+
+def _same_row(left: FrozenMap, right: FrozenMap) -> bool:
+    return tuple(left.get(key) for key in ('path', 'sha256', 'line_1based')) == tuple(right.get(key) for key in ('path', 'sha256', 'line_1based'))
+
+
+def _validate_query(query: FrozenMap, tech: FrozenMap) -> None:
+    instance_rows = tuple(mapping(value) for value in sequence(mapping(query['instance_xref'])['records']))
+    net_rows = tuple(mapping(value) for value in sequence(mapping(query['net_xref'])['records']))
+    for row in instance_rows:
+        if set(row) != {'layout_instance', 'schematic_instance', 'sd_swap', 'field_sources'} or set(mapping(row['field_sources'])) != {'layout_instance', 'schematic_instance', 'sd_swap'}:
+            raise ValueError('invalid instance xref evidence fields')
+        layout, schematic, swap = (_field_sources(row, field) for field in ('layout_instance', 'schematic_instance', 'sd_swap'))
+        if (len(layout) != 1 or len(schematic) != 1 or len(swap) != 1
+                or layout[0]['lexeme'] != row['layout_instance'] or schematic[0]['lexeme'] != row['schematic_instance']
+                or layout[0].get('token_0based') != 1 or schematic[0].get('token_0based') != 3
+                or not _same_row(layout[0], schematic[0]) or not _same_row(layout[0], swap[0])
+                or type(row['sd_swap']) is not bool or row['sd_swap'] != string(swap[0]['lexeme']).endswith(' X')):
+            raise ValueError('instance identity fields disagree with their captured xref row')
+    for row in net_rows:
+        if set(row) != {'lvs_name', 'schematic_name', 'lvs_index', 'field_sources'} or set(mapping(row['field_sources'])) != {'lvs_name', 'schematic_name', 'lvs_index'}:
+            raise ValueError('invalid net xref evidence fields')
+        layout, schematic, index = (_field_sources(row, field) for field in ('lvs_name', 'schematic_name', 'lvs_index'))
+        if (len(layout) != 2 or len(schematic) != 1 or len(index) != 1
+                or layout[0]['lexeme'] != row['lvs_name'] or layout[1]['lexeme'] != row['lvs_name']
+                or schematic[0]['lexeme'] != row['schematic_name']
+                or layout[0].get('token_0based') != 1 or schematic[0].get('token_0based') != 3
+                or not _same_row(layout[0], schematic[0]) or index[0] != layout[1]):
+            raise ValueError('net identity fields disagree with xref and NET NAMES operands')
+        ordinal_line = index[0].get('line_1based')
+        if type(ordinal_line) is not int or ordinal_line < 4 or row['lvs_index'] != str(ordinal_line - 3):
+            raise ValueError('LVS index is not its captured NET NAMES ordinal')
+    registry = {string(mapping(entry)['id']): mapping(entry) for entry in sequence(mapping(tech['derived'])['derived_registry'])}
+    for capability, associations in (('device_regions', instance_rows), ('net_regions', net_rows)):
+        key = 'layout_instance' if capability == 'device_regions' else 'lvs_name'
+        identity_fields = ('layout_instance', 'schematic_instance') if capability == 'device_regions' else ('lvs_name', 'schematic_name', 'lvs_index')
+        for row_value in sequence(mapping(query[capability])['records']):
+            row = mapping(row_value)
+            matches = [candidate for candidate in associations if candidate[key] == row[key]]
+            # Duplicate association/cardinality remains the normalizer's typed
+            # admission error; never repair it by silently picking another row.
+            if len(matches) == 1:
+                association = matches[0]
+                for field in identity_fields:
+                    refs = _field_sources(row, field)
+                    if (row[field] != association[field] or refs[0]['lexeme'] != row[key]
+                            or refs[1:] != _field_sources(association, field)):
+                        raise ValueError('region identity differs from its declared association sources')
+            vertices_sources = _field_sources(row, 'vertices_nm')
+            if len(vertices_sources) != 10:
+                raise ValueError('region vertices require precision, eight coordinates and dialect')
+            precision_source, geometry_source = vertices_sources[0], vertices_sources[-1]
+            coordinate_sources = vertices_sources[1:-1]
+            precision = row['precision']
+            if type(precision) is not int or precision <= 0 or precision_source['lexeme'] != str(precision):
+                raise ValueError('region precision differs from captured precision token')
+            geometry = mapping(geometry_source['lexeme'])
+            if (geometry['raw_axis_order'] != ('y', 'x') or geometry['raw_unit'] != 'micrometres / precision'
+                    or geometry['precision'] != precision or rational(geometry['raw_tick_nm']) != Fraction(1000, precision)):
+                raise ValueError('region geometry dialect operands disagree')
+            layer_sources = _field_sources(row, 'derived_layer')
+            if len(layer_sources) != 2 or layer_sources[0]['lexeme'] != row['derived_layer']:
+                raise ValueError('derived layer differs from captured raw layer')
+            registry_entry = mapping(layer_sources[1]['lexeme'])
+            if registry.get(string(row['derived_layer'])) != registry_entry or row['quality'] != registry_entry['quality']:
+                raise ValueError('seed quality/derived layer differs from selected registry')
+            coords: list[tuple[Fraction, Fraction]] = []
+            for vertex_index in range(4):
+                y, x = coordinate_sources[vertex_index * 2:vertex_index * 2 + 2]
+                if (not _same_row(x, y) or y.get('token_0based') != 0 or x.get('token_0based') != 1
+                        or x.get('path') != layer_sources[0].get('path') or x.get('sha256') != layer_sources[0].get('sha256')
+                        or x.get('line_1based') != cast(int, layer_sources[0]['line_1based']) + 3 + vertex_index):
+                    raise ValueError('vertex provenance belongs to another region record')
+                coords.append((Fraction(string(x['lexeme'])) * 1000 / precision,
+                               Fraction(string(y['lexeme'])) * 1000 / precision))
+            actual = tuple((rational(mapping(point)['x']), rational(mapping(point)['y'])) for point in sequence(row['vertices_nm']))
+            if actual != tuple(coords):
+                raise ValueError('seed exact vertices disagree with captured coordinate operands')
+            bbox = mapping(row['bbox_nm'])
+            expected_box = (min(x for x, y in coords), min(y for x, y in coords), max(x for x, y in coords), max(y for x, y in coords))
+            if tuple(rational(bbox[field]) for field in ('x_min', 'y_min', 'x_max', 'y_max')) != expected_box:
+                raise ValueError('seed bbox differs from exact coordinate extrema')
+            if _field_sources(row, 'bbox_nm') != vertices_sources or row['geometry_kind'] != 'rectangle' or row['unit'] != 'nm':
+                raise ValueError('seed geometry/provenance differs from declared exact conversion')
+            if (_field_sources(row, 'precision') != (precision_source, geometry_source)
+                    or _field_sources(row, 'unit') != (precision_source, geometry_source)
+                    or _field_sources(row, 'geometry_kind') != (*coordinate_sources, layer_sources[1])
+                    or _field_sources(row, 'quality') != (*coordinate_sources, layer_sources[1])):
+                raise ValueError('seed derived fields do not retain their declared operands')
+            if (tuple(ref['lexeme'] for ref in _field_sources(row, 'metadata_opaque')) != row['metadata_opaque']
+                    or _field_sources(row, 'section_header_opaque')[0]['lexeme'] != row['section_header_opaque']
+                    or _field_sources(row, 'record_id')[0]['lexeme'] != row['record_id']):
+                raise ValueError('seed opaque/author fields differ from their captured operands')
 
 
 def evidence_by_kind(result: ParseResult) -> dict[str, EvidenceRecord]:
@@ -227,6 +339,8 @@ def validate_parse(result: ParseResult) -> None:
         for ref in record.sources:
             if ref.uri not in sources or sources[ref.uri].sha256 != ref.sha256:
                 raise ValueError('completed evidence references uncaptured bytes')
+    if len(records['tech'].sources) != 7:
+        raise ValueError('tech evidence requires bundle plus six declared owner captures')
     for kind in ('config', 'header', 'gds', 'source_cdl', 'target_cdl'):
         if len(records[kind].sources) != 1:
             raise ValueError('parser role must bind one captured source: ' + kind)
@@ -289,6 +403,7 @@ def validate_parse(result: ParseResult) -> None:
         sequence(document['records'])
     validate_refs(query, sources)
     validate_locations(query, sources)
+    _validate_query(query, mapping(value['tech']))
     validate_refs(mapping(value['gds']), sources)
     # Require role captures to be present in the declared closure, including the
     # selected tech owners. This is membership, not alias→role reconstruction.

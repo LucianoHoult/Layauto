@@ -164,6 +164,11 @@ class Device:
                 or raw.get('terminal_order') != tuple(t.role for t in terminals)
                 or raw.get('field_sources') != self.field_sources):
             raise ValueError('device preservation disagrees with semantic fields')
+        line = raw.get('line')
+        if type(line) is not int or _map(raw.get('source')).get('line') != line or any(_map(item).get('line') != line for item in self.field_sources.values()):
+            raise ValueError('device field provenance belongs to another record')
+        if any(parameter.source.line != line for parameter in parameters):
+            raise ValueError('parameter provenance belongs to another device record')
         raw_parameters = _map(raw.get('parameters'))
         if set(raw_parameters) != {p.token for p in parameters}:
             raise ValueError('device parameter preservation is incomplete')
@@ -247,6 +252,12 @@ class Cell:
         raw_pins = _array(self.field_sources['pins'])
         if tuple(_map(p).get('lexeme') for p in raw_pins) != tuple(p.name for p in ports):
             raise ValueError('ordered ports differ from field evidence')
+        from ._normalization_input import ref_from_location
+        for net in nets:
+            expected_sources = {terminal.source for _, terminal in terminals if terminal.net_id == net.id}
+            expected_sources.update(ref_from_location(_map(raw_pins[index])) for index, port in enumerate(ports) if port == net.id)
+            if set(net.sources) != expected_sources:
+                raise ValueError('net provenance must exactly cover its ports and terminal members')
 
 
 def _circuit(cells: object, preservation: EvidenceRecord, kind: str) -> tuple[Cell, ...]:

@@ -39,11 +39,16 @@ def admit_source(input: NormalizationInput, source: SemanticCircuitDraft) -> Non
     physical = mapping(tech['physical'])
     dialect = mapping(mapping(tech['formats'])['cdl_dialect'])
     tech_evidence = next(record for record in input.parse.completed if record.kind == 'tech')
+    owner_order = ('drawn', 'derived', 'physical', 'formats', 'coordinate', 'rules')
+    formats_ref = tech_evidence.sources[1 + owner_order.index('formats')]
+    physical_ref = tech_evidence.sources[1 + owner_order.index('physical')]
     if dialect['semantic_comparator'] != COMPARATOR or dialect['id'] != 'toy_literal_cdl/1':
-        fail('UnsupportedSemanticComparator', 'selected comparator is not implemented', tech_evidence.sources[0], unsupported=True)
+        fail('UnsupportedSemanticComparator', 'selected comparator is not implemented',
+             SourceRef(formats_ref.uri, formats_ref.sha256, field='/cdl_dialect/semantic_comparator'), unsupported=True)
     contract = mapping(physical['device_extraction_contract'])
     if contract['cardinality'] != 'one_to_one' or contract['device_reduction'] != 'forbidden' or contract['mapping_missing_or_ambiguous'] != 'typed_fail':
-        fail('UnsupportedIdentityProfile', 'unsupported identity admission policy', tech_evidence.sources[0], unsupported=True)
+        fail('UnsupportedIdentityProfile', 'unsupported identity admission policy',
+             SourceRef(physical_ref.uri, physical_ref.sha256, field='/device_extraction_contract'), unsupported=True)
     fin = mapping(physical['fin_count_profile'])
     for cell in source.cells:
         for device in cell.devices:

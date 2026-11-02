@@ -117,8 +117,13 @@ class DeviceIdentity:
         if type(self.device_id) is not DeviceId or type(self.query_key) is not QueryKey or self.query_key.kind != 'device' or type(self.sd_swap) is not bool:
             raise ValueError('invalid device identity association')
         object.__setattr__(self, 'provenance', freeze_map(self.provenance))
-        if not source_refs(self.provenance):
-            raise ValueError('device identity requires captured provenance')
+        if (set(self.provenance) != {'layout_instance', 'schematic_instance', 'sd_swap', 'field_sources'}
+                or self.provenance['layout_instance'] != self.query_key.identity
+                or self.provenance['schematic_instance'] != self.device_id.name
+                or self.provenance['sd_swap'] != self.sd_swap
+                or set(mapping(self.provenance['field_sources'])) != {'layout_instance', 'schematic_instance', 'sd_swap'}
+                or not source_refs(self.provenance)):
+            raise ValueError('device identity disagrees with its captured association')
 
 
 @dataclass(frozen=True)
@@ -131,8 +136,13 @@ class NetIdentity:
         if type(self.net_id) is not NetId or type(self.query_key) is not QueryKey or self.query_key.kind != 'net':
             raise ValueError('invalid net identity association')
         object.__setattr__(self, 'provenance', freeze_map(self.provenance))
-        if not source_refs(self.provenance):
-            raise ValueError('net identity requires captured provenance')
+        if (set(self.provenance) != {'lvs_name', 'schematic_name', 'lvs_index', 'field_sources'}
+                or self.provenance['lvs_name'] != self.query_key.identity
+                or self.provenance['schematic_name'] != self.net_id.name
+                or self.provenance['lvs_index'] != self.query_key.index
+                or set(mapping(self.provenance['field_sources'])) != {'lvs_name', 'schematic_name', 'lvs_index'}
+                or not source_refs(self.provenance)):
+            raise ValueError('net identity disagrees with its captured association')
 
 
 def _seed(record: FrozenMap, key: QueryKey, semantic_name: str, kind: str) -> None:
@@ -149,7 +159,11 @@ def _seed(record: FrozenMap, key: QueryKey, semantic_name: str, kind: str) -> No
     vertices = sequence(record['vertices_nm'])
     if len(vertices) != 4:
         raise ValueError('rectangle seed requires four exact vertices')
+    if any(set(mapping(point)) != {'x', 'y'} for point in vertices):
+        raise ValueError('invalid exact seed vertex fields')
     coords = tuple((rational(mapping(point)['x']), rational(mapping(point)['y'])) for point in vertices)
+    if any((left[0] == right[0]) == (left[1] == right[1]) for left, right in zip(coords, (*coords[1:], coords[0]))):
+        raise ValueError('seed vertices must trace orthogonal nonzero rectangle edges')
     box = mapping(record['bbox_nm'])
     if set(box) != {'x_min', 'y_min', 'x_max', 'y_max'}:
         raise ValueError('invalid exact seed box')
@@ -211,6 +225,11 @@ class NormalizationFacts:
         for name, cls in (('differences', TargetDifference), ('device_identities', DeviceIdentity),
                           ('net_identities', NetIdentity), ('device_seeds', DeviceAnnotationSeed), ('net_seeds', NetAnnotationSeed)):
             _tuple(self, name, cls)
+        object.__setattr__(self, 'differences', tuple(sorted(self.differences, key=lambda item: (item.op_type, item.operand_ref.id, item.axis or '', item.delta_id.value))))
+        object.__setattr__(self, 'device_identities', tuple(sorted(self.device_identities, key=lambda item: item.device_id.name)))
+        object.__setattr__(self, 'net_identities', tuple(sorted(self.net_identities, key=lambda item: item.net_id.name)))
+        object.__setattr__(self, 'device_seeds', tuple(sorted(self.device_seeds, key=lambda item: string(item.record['record_id']))))
+        object.__setattr__(self, 'net_seeds', tuple(sorted(self.net_seeds, key=lambda item: string(item.record['record_id']))))
         if self.differences != build_differences(self.source, self.target):
             raise ValueError('differences do not completely describe this source and target')
         selected = next(cell for cell in self.source.cells if cell.id == self.source.selected_cell)
