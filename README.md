@@ -28,7 +28,7 @@ sections relevant to the task.
 
 | Path | Purpose |
 |------|---------|
-| [`layauto_v2/`](layauto_v2/) | v2 package with the W005 input reading component; later runtime stages remain skeletons. |
+| [`layauto_v2/`](layauto_v2/) | v2 input reading and process-local pre-context run audit; later runtime stages remain skeletons. |
 | [`docs/architecture.md`](docs/architecture.md) | Active v2 architecture source: stage boundaries, fact sources, state ownership, planning, constraints, transactions, export, validation, and module boundaries. |
 
 ## Input reading component
@@ -80,6 +80,56 @@ python -m build
 The strict checker targets the input component and its neutral domain/tech
 contracts with Python 3.10 syntax. Execution, independent reviews and supported
 interpreter/build evidence are linked from [W005](docs/tasks/W005-input-reading-binding.md).
+
+## Pre-context run entry
+
+The internal W006 entry creates a run identity before reading or parsing any
+input. It drives the same reader with actual fixture captures and retains the
+bytes, execution facts, parse evidence and failures in a process-local repository:
+
+```python
+from pathlib import Path
+from layauto_v2.domain.publication import RunRequest, InputsReady
+from layauto_v2.pipeline import prepare_inputs
+from layauto_v2.repository import PublicationRepository
+
+repository = PublicationRepository()
+# The caller retains this exact request, run id and key across retries.
+request = RunRequest(
+    proposed_run_id="example-run-001",
+    lineage_id="example-lineage",
+    idempotency_key="create-001",
+    site_path=str(Path("tests/fixtures/w003_m1/site_config.yaml").resolve()),
+)
+result = prepare_inputs(repository, request)
+if isinstance(result, InputsReady):
+    assert result.attempt.phase == "unsealed"
+    parsed_inputs = result.value  # Handoff to a future Stage 2.
+```
+
+Callers may additionally supply `Selection(uri, declared_sha256)` in the
+request's `raw_input_selections`, `raw_capture_selections` and
+`config_policy_selections`. Relative selections use the site directory; the
+site path itself must be absolute. Declared hashes remain frozen separately
+from the actual acquisition hashes. Later discovered sources, including
+optional normalized caches, are audited without rewriting the request.
+
+`InputsReady` is not a completed run, baseline, no-change decision or successful
+terminal result. A captured input failure normally produces a repository-owned
+terminal `PipelineResult` with `deployment_disposition="reject"`, linked to its
+failure RunRecord and audit chain. RunRecord construction failure has the sole
+`run_record_freeze_failure` closure variant. `PublicationUnavailable` means
+publication could not be confirmed; it retains available refs and in-memory
+diagnostics without inventing a terminal pointer. Repository conflicts raise
+`RepositoryConflict`; `KeyboardInterrupt` and `SystemExit` propagate after
+best-effort recording.
+
+Repository reads resolve typed content refs. A failed finalization resumes its
+saved checkpoint on retry without reading changed files. Publication and replay
+are atomic within one process only; there is no disk persistence or recovery
+after process loss. Stage 2–6, real EDA and production admission remain outside
+this entry. Requirements, review and validation are recorded in
+[W006](docs/tasks/W006-precontext-run-audit.md).
 
 ## Legacy MVP archive
 
