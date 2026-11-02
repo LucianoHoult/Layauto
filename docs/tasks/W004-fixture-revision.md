@@ -289,6 +289,14 @@ Reviewer：`independent_review`，未参与实现。对冻结 `review-r3/snapsho
 
 最终附件加入后，执行者重新生成相对准备提交的完整binary patch并在独立基线目录实际应用，核对全部新增/修改/移除文件。被审fixture/helper/报告/图与145文件r3清单保持同一bytes；仅W004身份/交回文字及新增review原文在其后加入。最终完整snapshot/patch和SHA-256由交付包identity.json/SHA256SUMS.json标识，避免自指hash。最终Git状态为未提交工作区交回，未推送/合并/删分支。
 
+### R3. 对W003原规划及manual原意见的独立要求复核（2026-11-02）
+
+Reviewer：本轮独立reviewer `/root`，未参与实现。被审交接为`c46952a9085aecf3aa17f60346b61bc2870d2614`，实物为`633e3feef8062565019838f2d270e89b7f81c4ed`，实际检查准备基线`9f6735dcede8e8b2135f89ff10f079a752ed758b`至实物的diff。先从W003/manual原文整理要求，再对照合同、实物与有版本身份的证据；不以既有验收状态或0 findings作结论。
+
+原文件边界、22个反例目的、独立答案及有效人工修改总体保留，明确后置/后续开发有依据；发现**1项P2必须修正REQ-01**：`w004_body.py:42–44`将精确raw坐标用整数除法截断，45.05nm可误匹配45nm本地rail。正常fixture和原29见证答案未被推翻，整包verify的前置检查可拒绝该变体；缺口限body局部helper的精确关联及定向证据。无需改变W005输入定义/正常答案，后续执行修复此处后定向复核，交PM决定继续；本轮不启动W005或代写PM验收。完整要求对应、复现、证据采用范围及未验证项见[独立要求复核报告](W003/reviews/w004-requirements-review.md)。原RP1/R2及PM记录保持。
+
+**R3发布交接补记（2026-11-02，reviewer）：**用户在收到上述结论后明确要求通过git push将必须交PM的文件更新到GitHub。本次发布仅包含本任务R3追加记录及`W003/reviews/w004-requirements-review.md`；报告附录已内嵌REQ-01完整复现代码，PM无需取得临时目录即可重建关键见证。报告内“未提交/推送”描述独立复核完成时的事实，本补记记录其后发布授权；最终提交及远端核验结果见Git与交接回复。下一步由PM接收REQ-01并安排局部修复/定向复核，不改既有PM验收、fixture/helper或W005，不合并main或删除分支。
+
 ## PM 验收与交接（PM）
 
 <a id="pm1-20261031"></a>
