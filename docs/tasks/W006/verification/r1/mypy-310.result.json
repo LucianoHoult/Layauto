@@ -1,0 +1,12 @@
+{
+  "name": "mypy-310",
+  "returncode": 0,
+  "duration_seconds": 1.87,
+  "command": [
+    "/workspace/work/w006/venv310/bin/python",
+    "-B",
+    "-m",
+    "mypy"
+  ],
+  "cwd": "/workspace/Layauto"
+}

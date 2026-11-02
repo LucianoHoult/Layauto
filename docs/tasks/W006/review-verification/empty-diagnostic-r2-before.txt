@@ -1,0 +1,3 @@
+{"boundary": "parse", "raised": "ValueError", "message": "message must be a nonempty string"}
+{"boundary": "create.before_switch", "raised": "ValueError", "message": "message must be a nonempty string"}
+{"boundary": "finalize.freeze", "result": "PipelineResult"}

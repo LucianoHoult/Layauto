@@ -1,0 +1,13 @@
+{
+  "name": "wheel-smoke",
+  "returncode": 0,
+  "duration_seconds": 4.184,
+  "command": [
+    "/workspace/work/w006/engineering-cc42ae6/wheel-venv/bin/python",
+    "-B",
+    "wheel_smoke.py",
+    "/workspace/work/w006/engineering-cc42ae6/source/tests/fixtures/w003_m1",
+    "/workspace/work/w006/engineering-cc42ae6/outside/smoke-output"
+  ],
+  "cwd": "/workspace/work/w006/engineering-cc42ae6/outside"
+}

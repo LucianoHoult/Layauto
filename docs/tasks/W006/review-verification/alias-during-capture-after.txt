@@ -1,0 +1,10 @@
+{
+  "returned": "InputsReady",
+  "phase": "unsealed",
+  "checkpoint": true,
+  "terminal": false,
+  "cdl_reads": [
+    "source-first.cdl",
+    "target.cdl"
+  ]
+}

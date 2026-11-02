@@ -1,0 +1,2 @@
+{"original_type": "SystemExit", "caught_type": "RuntimeError", "same_object": false, "checkpoint": false, "terminal": false}
+{"original_type": "KeyboardInterrupt", "caught_type": "UnicodeEncodeError", "same_object": false, "checkpoint": false, "terminal": false}

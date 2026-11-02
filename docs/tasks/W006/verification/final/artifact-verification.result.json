@@ -1,0 +1,11 @@
+{
+  "name": "artifact-verification",
+  "returncode": 0,
+  "duration_seconds": 0.061,
+  "command": [
+    "/workspace/work/w006/venv/bin/python",
+    "-B",
+    "/workspace/work/w006/engineering-cc42ae6/verify_artifacts.py"
+  ],
+  "cwd": "/workspace/work/w006/engineering-cc42ae6/outside"
+}

@@ -1,0 +1,14 @@
+{
+  "name": "wheel-install",
+  "returncode": 0,
+  "duration_seconds": 10.031,
+  "command": [
+    "/workspace/work/w006/engineering-36161ca/wheel-venv/bin/python",
+    "-B",
+    "-m",
+    "pip",
+    "install",
+    "/workspace/work/w006/engineering-36161ca/dist/layauto-0.2.0-py3-none-any.whl"
+  ],
+  "cwd": "/workspace/work/w006/engineering-36161ca/outside"
+}

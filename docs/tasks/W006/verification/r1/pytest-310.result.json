@@ -1,0 +1,17 @@
+{
+  "name": "pytest-310",
+  "returncode": 0,
+  "duration_seconds": 123.637,
+  "command": [
+    "/workspace/work/w006/venv310/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-p",
+    "no:cacheprovider",
+    "tests/unit",
+    "tests/contracts",
+    "-q"
+  ],
+  "cwd": "/workspace/Layauto"
+}

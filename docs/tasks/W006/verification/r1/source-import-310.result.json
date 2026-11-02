@@ -1,0 +1,12 @@
+{
+  "name": "source-import-310",
+  "returncode": 0,
+  "duration_seconds": 0.178,
+  "command": [
+    "/workspace/work/w006/venv310/bin/python",
+    "-B",
+    "-c",
+    "import json, layauto_v2, layauto_v2.pipeline; print(json.dumps({\"module\": layauto_v2.__file__, \"pipeline\": layauto_v2.pipeline.__file__}))"
+  ],
+  "cwd": "/workspace/Layauto"
+}

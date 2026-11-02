@@ -1,0 +1,13 @@
+{
+  "name": "pip-check-310",
+  "returncode": 0,
+  "duration_seconds": 0.555,
+  "command": [
+    "/workspace/work/w006/venv310/bin/python",
+    "-B",
+    "-m",
+    "pip",
+    "check"
+  ],
+  "cwd": "/workspace/work/w006/engineering-cc42ae6/source"
+}

@@ -1,0 +1,2 @@
+{"original_type": "SystemExit", "caught_type": "SystemExit", "same_object": true, "checkpoint": true, "terminal": true}
+{"original_type": "KeyboardInterrupt", "caught_type": "KeyboardInterrupt", "same_object": true, "checkpoint": true, "terminal": true}

@@ -51,6 +51,8 @@ F1/F2材料在[W003合同](W003/contracts.md)、[records样张](W003/examples/re
 
 ## 方案与决定（执行准备，PM 接收）
 
+本轮内部接口方案与时序保存在[interface-plan](W006/interface-plan.md)。未参与实现的 reviewer 在实施前提出 IR-01（已发布审计后的稳定恢复请求）与 IR-02（路径基准及捕获身份），执行者修正后由其独立关闭，见[接口 review](W006/interface-review.md)。以下起步要求保留作为原派发依据；实现没有新增外部 manifest 或稳定 CLI。
+
 起步先补一页内部API/DTO与调用时序方案，至少给出：
 
 - caller raw request/入口可得digest与后续实际读取事实的区别，F1完整性如何验证；无需新外部manifest文件。
@@ -63,11 +65,60 @@ F1/F2材料在[W003合同](W003/contracts.md)、[records样张](W003/examples/re
 
 ## 执行结果（执行）
 
-未执行。执行者在此记录恢复位置、起点/产品提交、方案与实现范围、A1–A8实际命令/环境/结果、独立review处置及未执行范围。原W005验收与fixture记录保留，不代写PM阶段。
+### E1 恢复、实现与交付身份
+
+2026-11-02，以执行角色接手。初始 checkout 为干净的 `work@4db3aa81d6f01496a680bdcb264afe99cd80f3f3`；获取目标分支后核对 `FETCH_HEAD` 与用户交接 SHA 一致，切换到 `codex/w006-precontext-run-audit@7320e5d6e819a422e0a446309eb039b1f05e7dd0`，无已有 staged/unstaged/untracked 修改。根 AGENTS 为唯一适用规则，已读协作/环境、架构原条款和 W002/W003/W005 双方合同。
+
+执行集成由 `/root` 负责；publication 与测试子任务在各自 worktree 进行，集成后统一验证。接口和最终 reviewer 均未参与产品实现。已有 W005 exact codec、SourceFile/evidence 和 parser 被复用；调查 legacy pipeline 后未迁移其先解析 site、隐含默认路径及输出写回逻辑，没有新增 archive runtime 依赖。
+
+| 版本 | 可复核内容 |
+| --- | --- |
+| `36161ca84f69de589a2733ad94d5c7a41a892cf3` | 首次完整实现与测试；[R1证据](W006/verification/r1/engineering-receipt.json)只证明该版本，不能覆盖 review 补修 |
+| `3a597742b72d29971f56b9e47e1bf7147ec068f3` | CR-01/02/03 首次修正；64 项定向通过，review 又发现 CR-02 空消息 fallback 遗漏。该版本未执行完整工程矩阵，不作为最终交付验证 |
+| **`cc42ae62585755b0b914d4dbec43324941bfe7c6`** | **最终产品与回归版本**；补齐空消息诊断，所有独立 findings 复核关闭。后续交付提交只保存本任务执行/review与验证证据；准确交付/远端 SHA 以 Git 和交回 PM 的回复为准 |
+
+### E2 A1–A8 覆盖与实际行为
+
+| 要求 | 实现与验证结果 |
+| --- | --- |
+| A1 | `prepare_inputs` 首先 `create_attempt`，成功取得身份后才驱动 parser。正常、缺失、坏 site 顺序 spy 通过；create 存储失败/typed conflict 均不读取解析，稳定 caller run/key 支持响应丢失重放。 |
+| A2 | 独立测试 caller 按实际选择构造完整 5+9+13 声明，并单独对照 F1 样张；产品不知道27项或样张路径。声明 hash 与实际 bytes 分别冻结，漂移返回 InputDrift，未读声明返回 UnreadSelection；第二套名字、raw路径与site文件名通过。捕获时路径映射避免 symlink 切换重读；未捕获的 `link/../source.cdl` 不获错误绑定。 |
+| A3 | Tooling 实际捕获 SourceFile，经 pipeline send 回同一个增量 parser；正常31份读取（含4个可选缓存）返回 unsealed InputsReady 与可解析 refs。显式 versioned wire/typed refs、nested alias、canonical digest与跨进程 hash-seed 检查通过；无 canonical context、baseline、seal或成功terminal。 |
+| A4 | 临时副本覆盖已验收 missing_terminator 的坏header/raw并去掉对应cache，再构造声明。真实错误为 MissingTerminator；ToolRun读取成功、Parse失败、StageFailure定位/raw SHA、completed evidence、failure RunRecord、closure及terminal reject沿同run可查。未用提前hash mismatch代替解析错误，未声称调用Calibre。 |
+| A5 | Repository mutex + 单 immutable composite root 同时拥有 content、attempt与幂等。create/finalize丢响应、同key同digest、异digest竞争、16线程重放及读者不可见半记录通过；4线程真实入口同request只获取一次。失败checkpoint保存原finalize请求，terminal写失败后即使磁盘输入改变也不重读。 |
+| A6 | 首次执行检查head/revision/phase/mode与run/ref/hash；错误head/revision、错run/ref/hash、terminal后新mutation及partial均typed拒绝。幂等命中先于已变化的guards。没有未实现seal/initialize/正常close/partial假成功接口。 |
+| A7 | RunRecord构造失败只发布run_record_freeze_failure closure与reject，原StageFailure/audits保留。terminal切换前失败明确未发布；切换后丢响应通过实际读回确认。审计存储或ToolRun构造失败交回PublicationUnavailable及内存facts，不伪造terminal。意外异常保留InternalStageFailure/cause chain；格式化失败、surrogate、空消息及诊断再失败均不替换原KeyboardInterrupt/SystemExit。 |
+| A8 | Python3.10/3.12完整读取与新入口回归、strict typing、新sdist/wheel、干净wheel安装及源码外正常/F2 smoke均通过；实际矩阵与限制见E3。 |
+
+Repository只提供本切片所需create、audit/checkpoint、pre-context finalize及readback。路径/bytes获取、解析、发布分别由tooling/importers/repository拥有，只有pipeline编排。原 `read_inputs` 签名和组件异常传播保持；fixture、答案、support、W003/W004/W005历史、architecture、current-work与legacy均未改。
+
+### E3 最终工程证据
+
+最终受测源码清单：[source-manifest](W006/verification/final/source-manifest.json)，覆盖214项产品/测试/fixture/配置/说明；工程快照、构建包及逐文件来源见[engineering-receipt](W006/verification/final/engineering-receipt.json)和[构建身份](W006/verification/final/build-artifact-identity.json)。[完整命令](W006/verification/final/commands.txt)保留独立工程检查的实际cwd、解释器、参数和退出码。主线程开发版命令在仓库根执行，源码在检查前后均与最终产品提交相同。
+
+| 实际环境 / 命令 | 结果与证据 |
+| --- | --- |
+| Linux x86_64，CPython3.12.14；`python -B -m pytest -p no:cacheprovider tests/unit tests/contracts -q` | **389 passed，117.01s**；[日志](W006/verification/final/pytest312.txt)、[环境](W006/verification/final/environment312.json) |
+| CPython3.10.22，最终commit独立snapshot；同一完整pytest命令 | **389 passed，153.98s**；[日志](W006/verification/final/pytest-310.txt)、[环境与实际导入位置](W006/verification/final/environment310.txt) |
+| 两解释器 `python -m mypy`（strict，Python3.10语法） | **21 source files，无错误**；[3.12](W006/verification/final/mypy312.txt)、[3.10](W006/verification/final/mypy-310.txt) |
+| 最终commit导出的源码执行 `python -B -m build --outdir <dist>`，新Python3.12环境安装wheel | 默认先构建sdist再从sdist构建wheel；构建、安装和pip check通过；[build](W006/verification/final/build.txt)、[install](W006/verification/final/wheel-install.txt)、[pip check](W006/verification/final/wheel-pip-check.txt)。wheel/sdist中74个包源文件与Git相同，含py.typed，无tests/legacy runtime。 |
+| 干净安装、源码外执行[wheel_smoke.py](W006/verification/wheel_smoke.py) | 27项声明→InputsReady/unsealed、refs读回及重放；真实F2→MissingTerminator/reject均通过，[日志](W006/verification/final/wheel-smoke.txt)证明导入来自新venv的site-packages。 |
+
+最终wheel SHA-256为 `ca51366350ce95aba68df523ffaee653cd546a52ad8cfb0f61348bcfa430e8b0`；sdist为 `9e802f092248b57d469bc5992f227ad3f55016f56d9c0e5c52a6ef30bc153724`。日志、manifest和可重运行smoke随Git保存；本机临时venv/build目录不当作跨session交付。
+
+### E4 Review处置与交回PM
+
+接口IR-01/02及最终CR-01/02/03均按原要求修正，原finding与复现保留，独立关闭见下方review段。CR-02修正复核追加的空消息反例也已补回归并关闭；执行者没有代写reviewer结论。最后一次产品改动后重新运行完整双解释器矩阵并重新构建安装包，没有沿用旧包证明新源码。
+
+**未执行/不在范围：** Stage2语义/空间/body/extraction、baseline/seal/no_change、Stage5 ECO/完整mode矩阵、Stage6几何导出/完整报告/正常terminal、完整M1；真实Calibre/Virtuoso/PDK、matched/live或生产准入、隔离生产上传；durable存储/跨进程或断电恢复、crash/OOM当场结果保证；其他OS/解释器，Python3.10的干净wheel安装（3.10执行完整源码测试，干净安装为3.12）；legacy回归和fixture重生成。没有启动下一任务。
+
+用户已授权本任务提交推送；执行交付到指定W006分支并核对远端完整SHA后交回PM。PM仍负责接收/验收、current-work与集成决定；本轮不自行验收、合并main或删除分支。
 
 ## Review 结论（reviewer）
 
-未执行。接口review和最终代码review分别绑定明确版本；原finding保留，由reviewer填写独立关闭依据。报告放在`docs/tasks/W006/`；检查F1/F2真实链、先建attempt、same-bytes、所有权/原子性/错误和成功交接边界，不能只核对测试计数。
+接口 review 见[独立接口报告](W006/interface-review.md)，IR-01/IR-02 已修正并独立复核。最终代码 review 见[独立代码报告](W006/code-review.md)，主审 `/root/final_review` 与 repository 专项均未参与实现。
+
+最终受审产品/回归提交为 `cc42ae62585755b0b914d4dbec43324941bfe7c6`；CR-01（解析中途路径漂移/捕获）、CR-02（诊断替换中断及空异常消息）、CR-03（未捕获路径别名误绑定）均保留原反例并经独立复核关闭，**剩余必须修正项 0**。版本、五个复现及修正后 73 项专项回归、12 项真实文件代表组合、21 模块 strict typing 证据见[review身份清单](W006/review-verification/identity.json)及报告。正常读取仍仅 unsealed InputsReady；此为技术 review，不代写 PM 验收、main 集成或完整 M1 结论。
 
 ## PM 验收与交接（PM）
 

@@ -1,0 +1,13 @@
+{
+  "name": "wheel-venv",
+  "returncode": 0,
+  "duration_seconds": 3.447,
+  "command": [
+    "/workspace/work/w006/venv/bin/python",
+    "-B",
+    "-m",
+    "venv",
+    "/workspace/work/w006/engineering-cc42ae6/wheel-venv"
+  ],
+  "cwd": "/workspace/work/w006/engineering-cc42ae6/outside"
+}

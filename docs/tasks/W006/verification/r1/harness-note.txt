@@ -1,0 +1,1 @@
+Initial wrapper invocation failed before executing tests/build: TypeError in constructing mypy cache path (Path + str). Corrected to base/("mypy-cache-"+name), then reran the intended checks. No product code changed.

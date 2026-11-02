@@ -1,0 +1,14 @@
+{
+  "name": "build",
+  "returncode": 0,
+  "duration_seconds": 4.419,
+  "command": [
+    "/workspace/work/w006/venv/bin/python",
+    "-B",
+    "-m",
+    "build",
+    "--outdir",
+    "/workspace/work/w006/engineering-cc42ae6/dist"
+  ],
+  "cwd": "/workspace/work/w006/engineering-cc42ae6/source"
+}

@@ -1,0 +1,12 @@
+{
+  "raised": "ValueError",
+  "message": "duplicate acquisition source URI",
+  "phase": "unsealed",
+  "checkpoint": false,
+  "terminal": false,
+  "cdl_reads": [
+    "source-first.cdl",
+    "target.cdl",
+    "source-second.cdl"
+  ]
+}

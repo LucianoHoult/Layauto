@@ -1,0 +1,23 @@
+{
+  "executable": "/workspace/work/w006/engineering-cc42ae6/wheel-venv/bin/python",
+  "import_path": "/workspace/work/w006/engineering-cc42ae6/wheel-venv/lib/python3.12/site-packages/layauto_v2/__init__.py",
+  "packages": {
+    "PyYAML": "6.0.3",
+    "contourpy": "1.4.0",
+    "cycler": "0.12.1",
+    "fonttools": "4.68.0",
+    "kiwisolver": "1.5.1",
+    "layauto": "0.2.0",
+    "matplotlib": "3.11.2",
+    "numpy": "2.5.4",
+    "packaging": "26.3",
+    "pillow": "13.0.0",
+    "pip": "25.0.1",
+    "pyparsing": "3.3.3",
+    "python-dateutil": "4.0.0",
+    "tzdata": "2026.6"
+  },
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "prefix": "/workspace/work/w006/engineering-cc42ae6/wheel-venv",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]"
+}

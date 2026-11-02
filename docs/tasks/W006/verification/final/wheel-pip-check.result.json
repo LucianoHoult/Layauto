@@ -1,0 +1,13 @@
+{
+  "name": "wheel-pip-check",
+  "returncode": 0,
+  "duration_seconds": 0.264,
+  "command": [
+    "/workspace/work/w006/engineering-cc42ae6/wheel-venv/bin/python",
+    "-B",
+    "-m",
+    "pip",
+    "check"
+  ],
+  "cwd": "/workspace/work/w006/engineering-cc42ae6/outside"
+}

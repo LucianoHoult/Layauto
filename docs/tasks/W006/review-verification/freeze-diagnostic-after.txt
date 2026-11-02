@@ -1,0 +1,2 @@
+{"result": "PipelineResult", "closure_kind": "run_record_freeze_failure", "preserved_original": true, "terminal": true, "closure_count": 1}
+{"result": "PipelineResult", "closure_kind": "run_record_freeze_failure", "preserved_original": true, "terminal": true, "closure_count": 1}

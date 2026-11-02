@@ -1,0 +1,11 @@
+{
+  "name": "environment310",
+  "returncode": 0,
+  "duration_seconds": 0.091,
+  "command": [
+    "/workspace/work/w006/venv310/bin/python",
+    "-B",
+    "/workspace/work/w006/engineering-36161ca/environment_probe.py"
+  ],
+  "cwd": "/workspace/Layauto"
+}
