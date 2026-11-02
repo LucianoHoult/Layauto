@@ -1,0 +1,14 @@
+{
+  "command": [
+    "python",
+    "-B",
+    "docs/tasks/W006/ipmr01-verification/engineering/complete_snapshot.py"
+  ],
+  "cwd": "/workspace/Layauto",
+  "product_commit": "f19ac0448a5d0111f799660bd7be043ebfd16e41",
+  "start_utc": "2026-11-02T08:46:53.031164+00:00",
+  "duration_seconds": 0.043,
+  "exit_code": 0,
+  "combined_output": "snapshot-completion.txt",
+  "log_sha256": "d1e5b39e8ef31aaadecd387fab90ed37d412be1818442a08db1306aa876c712b"
+}

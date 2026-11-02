@@ -1,0 +1,18 @@
+{
+  "command": [
+    "/workspace/.venvs/layauto/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-p",
+    "no:cacheprovider",
+    "tests/contracts/test_w006_ipmr01.py",
+    "tests/contracts/test_w006_review_regressions.py",
+    "-q"
+  ],
+  "cwd": "/workspace/Layauto",
+  "head": "f19ac0448a5d0111f799660bd7be043ebfd16e41",
+  "returncode": 0,
+  "elapsed_seconds": 22.556,
+  "output_sha256": "6a4a2928b8c92a0e0f7d9c68bda16960d721205bb5cdf16476bf6546916f2d6c"
+}

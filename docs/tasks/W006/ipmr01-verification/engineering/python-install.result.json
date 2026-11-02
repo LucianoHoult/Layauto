@@ -1,0 +1,19 @@
+{
+  "command": [
+    "uv",
+    "python",
+    "install",
+    "3.10",
+    "--no-bin",
+    "--install-dir",
+    "/workspace/work/w006-ipmr01/engineering/python",
+    "--cache-dir",
+    "/workspace/work/w006-ipmr01/engineering/uv-cache",
+    "--system-certs"
+  ],
+  "cwd": "/workspace/Layauto",
+  "exit_code": 0,
+  "combined_output": "python-install.txt",
+  "log_sha256": "715a841b44bb09f96116b1fdbd9c15bec24188a2be60fb89323725314c09e36a",
+  "scope": "environment preparation only; no product test"
+}

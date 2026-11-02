@@ -1,0 +1,19 @@
+{
+  "started_utc": "2026-11-02T08:42:25.183382+00:00",
+  "cwd": "/workspace/Layauto",
+  "command": [
+    "/workspace/.venvs/layauto/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-p",
+    "no:cacheprovider",
+    "tests/unit",
+    "tests/contracts",
+    "-q"
+  ],
+  "head": "f19ac0448a5d0111f799660bd7be043ebfd16e41",
+  "returncode": 0,
+  "elapsed_seconds": 134.867,
+  "output_sha256": "56076b189910c38a847c1a9d2c6376b176c9eab35b479a64dc8f3b7a1c04207e"
+}

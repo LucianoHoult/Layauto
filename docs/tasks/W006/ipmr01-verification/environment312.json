@@ -1,0 +1,14 @@
+{
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "executable": "/workspace/.venvs/layauto/bin/python",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "import_source": "/workspace/Layauto/layauto_v2/pipeline.py",
+  "tools": {
+    "pytest": "9.2.0",
+    "mypy": "2.4.1",
+    "build": "1.6.1",
+    "PyYAML": "6.0.3"
+  },
+  "clean_install": false,
+  "note": "Existing dedicated editable development venv; fresh wheel evidence is separate."
+}

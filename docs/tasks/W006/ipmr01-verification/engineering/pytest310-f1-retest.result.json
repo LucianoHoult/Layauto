@@ -1,0 +1,19 @@
+{
+  "command": [
+    "/workspace/work/w006-ipmr01/engineering/venv310/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-p",
+    "no:cacheprovider",
+    "tests/contracts/test_w006_pipeline.py::test_f1_request_independently_matches_accepted_sample",
+    "-q"
+  ],
+  "cwd": "/workspace/work/w006-ipmr01/engineering/source-f19ac04",
+  "product_commit": "f19ac0448a5d0111f799660bd7be043ebfd16e41",
+  "start_utc": "2026-11-02T08:46:53.115694+00:00",
+  "duration_seconds": 0.865,
+  "exit_code": 0,
+  "combined_output": "pytest310-f1-retest.txt",
+  "log_sha256": "3dd8a455f93386b2d78b9d5605f1c2f52fd55f0962f89b0bd7d602cae0ead952"
+}

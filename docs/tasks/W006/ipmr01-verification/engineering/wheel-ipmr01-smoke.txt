@@ -1,0 +1,22 @@
+{
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "installed_module": "/workspace/work/w006-ipmr01/engineering/wheel-venv/lib/python3.12/site-packages/layauto_v2/__init__.py",
+  "ipmr01": [
+    {
+      "boundary": "parser",
+      "original_causes": 2,
+      "secondary_causes": 1,
+      "sources": 27,
+      "evidence": 8,
+      "terminal": null
+    },
+    {
+      "boundary": "acquisition",
+      "original_causes": 2,
+      "secondary_causes": 1,
+      "sources": 11,
+      "evidence": 3,
+      "terminal": null
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "executable": "/workspace/work/w006-ipmr01/engineering/wheel-venv/bin/python",
+  "prefix": "/workspace/work/w006-ipmr01/engineering/wheel-venv",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "module": "/workspace/work/w006-ipmr01/engineering/wheel-venv/lib/python3.12/site-packages/layauto_v2/__init__.py",
+  "versions": {
+    "layauto": "0.2.0",
+    "PyYAML": "6.0.3",
+    "numpy": "2.5.4",
+    "matplotlib": "3.11.2"
+  }
+}

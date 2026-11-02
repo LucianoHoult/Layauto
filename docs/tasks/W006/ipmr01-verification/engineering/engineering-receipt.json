@@ -1,0 +1,399 @@
+{
+  "date": "2026-11-02",
+  "role": "execution engineering verification (not independent review or PM acceptance)",
+  "product_commit": "f19ac0448a5d0111f799660bd7be043ebfd16e41",
+  "snapshot": "/workspace/work/w006-ipmr01/engineering/source-f19ac04",
+  "initial_snapshot_files_checked_against_git": 216,
+  "completed_snapshot_files_checked_against_git": 217,
+  "snapshot_unchanged_after_run": true,
+  "python310_scope": "All W006 unit/contracts: pipeline, publication, boundaries, historical review regressions, and new IPMR-01 regressions; not the full W005 suite",
+  "python310_result": "120 cases passed in the initial run; one F1 sample-dependency error. Restored the unchanged same-commit sample and reran that one case successfully. 121 distinct cases passed across the two runs, not a single 121-pass run.",
+  "python310_initial_log": "pytest310.txt",
+  "python310_retest_log": "pytest310-f1-retest.txt",
+  "harness_correction": {
+    "initial_manifest": "source-manifest-initial.json",
+    "initial_result": "pytest310.result.json",
+    "reason": "The initial partial git archive omitted the F1 test-only sample dependency.",
+    "restored_from_same_commit": "docs/tasks/W003/examples/records.json",
+    "sha256": "7a1eda0d255aab377319d5cb104089f7788ba4398d8e8f91a098cc5dc0832a31",
+    "product_tests_and_fixture_unchanged": true,
+    "retest_scope": "test_f1_request_independently_matches_accepted_sample only; other 120 cases already passed on identical product/test bytes."
+  },
+  "python310_typing": "Success: no issues found in 21 source files",
+  "new_artifacts": {
+    "product_commit": "f19ac0448a5d0111f799660bd7be043ebfd16e41",
+    "snapshot_drift": [],
+    "verified_package_source_files": 74,
+    "py_typed_present": true,
+    "wheel_excludes_legacy_tests_docs": true,
+    "sdist_sources_match": true,
+    "artifacts": {
+      "layauto-0.2.0-py3-none-any.whl": {
+        "bytes": 74719,
+        "sha256": "8b71ed7438c1c95e1987d13d08c4dce23d21fc80e91d86a339d260b83ef5e064"
+      },
+      "layauto-0.2.0.tar.gz": {
+        "bytes": 56877,
+        "sha256": "31dc9826729e5488c867bb3451dd62c8b234663b461a958c30afc884aa033d63"
+      }
+    }
+  },
+  "clean_wheel_install": true,
+  "wheel_runtime": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "executable": "/workspace/work/w006-ipmr01/engineering/wheel-venv/bin/python",
+    "prefix": "/workspace/work/w006-ipmr01/engineering/wheel-venv",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "module": "/workspace/work/w006-ipmr01/engineering/wheel-venv/lib/python3.12/site-packages/layauto_v2/__init__.py",
+    "versions": {
+      "layauto": "0.2.0",
+      "PyYAML": "6.0.3",
+      "numpy": "2.5.4",
+      "matplotlib": "3.11.2"
+    }
+  },
+  "normal_f2_smoke": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "installed_module": "/workspace/work/w006-ipmr01/engineering/wheel-venv/lib/python3.12/site-packages/layauto_v2/__init__.py",
+    "normal": "inputs_ready",
+    "attempt_phase": "unsealed",
+    "declarations": 27,
+    "f2": "MissingTerminator",
+    "disposition": "reject",
+    "scope": "pre-context only; no Stage 2, success terminal or EDA"
+  },
+  "ipmr01_smoke": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "installed_module": "/workspace/work/w006-ipmr01/engineering/wheel-venv/lib/python3.12/site-packages/layauto_v2/__init__.py",
+    "ipmr01": [
+      {
+        "boundary": "parser",
+        "original_causes": 2,
+        "secondary_causes": 1,
+        "sources": 27,
+        "evidence": 8,
+        "terminal": null
+      },
+      {
+        "boundary": "acquisition",
+        "original_causes": 2,
+        "secondary_causes": 1,
+        "sources": 11,
+        "evidence": 3,
+        "terminal": null
+      }
+    ]
+  },
+  "commands": [
+    {
+      "result_file": "artifact-verification.result.json",
+      "command": [
+        "python",
+        "-B",
+        "/workspace/Layauto/docs/tasks/W006/ipmr01-verification/engineering/verify_artifacts.py",
+        "/workspace/work/w006-ipmr01/engineering/dist"
+      ],
+      "cwd": "/workspace/work/w006-ipmr01/engineering",
+      "product_commit": "f19ac0448a5d0111f799660bd7be043ebfd16e41",
+      "start_utc": "2026-11-02T08:43:47.991024+00:00",
+      "duration_seconds": 0.059,
+      "exit_code": 0,
+      "combined_output": "artifact-verification.txt",
+      "log_sha256": "383ceaad7fc1af3577a0231c70ec13e1e71f8b82c744e937d6f057f08999fd39"
+    },
+    {
+      "result_file": "build.result.json",
+      "command": [
+        "/workspace/.venvs/layauto/bin/python",
+        "-B",
+        "-m",
+        "build",
+        "--outdir",
+        "/workspace/work/w006-ipmr01/engineering/dist"
+      ],
+      "cwd": "/workspace/work/w006-ipmr01/engineering/source-f19ac04",
+      "product_commit": "f19ac0448a5d0111f799660bd7be043ebfd16e41",
+      "start_utc": "2026-11-02T08:42:59.997005+00:00",
+      "duration_seconds": 4.685,
+      "exit_code": 0,
+      "combined_output": "build.txt",
+      "log_sha256": "20c6bee15cbb2e6d4218bd0fa264793bc2567c76667570d911a7346a6531c3ca"
+    },
+    {
+      "result_file": "environment310.result.json",
+      "command": [
+        "/workspace/work/w006-ipmr01/engineering/venv310/bin/python",
+        "-B",
+        "/workspace/Layauto/docs/tasks/W006/ipmr01-verification/engineering/environment_probe.py"
+      ],
+      "cwd": "/workspace/work/w006-ipmr01/engineering/source-f19ac04",
+      "product_commit": "f19ac0448a5d0111f799660bd7be043ebfd16e41",
+      "start_utc": "2026-11-02T08:43:15.170787+00:00",
+      "duration_seconds": 0.092,
+      "exit_code": 0,
+      "combined_output": "environment310.txt",
+      "log_sha256": "9d3f7c01df12bc585b9690a85c32917d8a55cd35e2de593200bfc093cbdae9c5"
+    },
+    {
+      "result_file": "install310.result.json",
+      "command": [
+        "/workspace/work/w006-ipmr01/engineering/venv310/bin/python",
+        "-m",
+        "pip",
+        "install",
+        "-e",
+        ".[dev]"
+      ],
+      "cwd": "/workspace/work/w006-ipmr01/engineering/source-f19ac04",
+      "product_commit": "f19ac0448a5d0111f799660bd7be043ebfd16e41",
+      "start_utc": "2026-11-02T08:42:16.123908+00:00",
+      "duration_seconds": 4.098,
+      "exit_code": 0,
+      "combined_output": "install310.txt",
+      "log_sha256": "5c6a22e7b3cefb2bbc558a5be951c253cd500b0121c2ed452310089c34cf9ff7"
+    },
+    {
+      "result_file": "mypy310.result.json",
+      "command": [
+        "/workspace/work/w006-ipmr01/engineering/venv310/bin/python",
+        "-B",
+        "-m",
+        "mypy",
+        "--cache-dir",
+        "/workspace/work/w006-ipmr01/engineering/mypy310-cache"
+      ],
+      "cwd": "/workspace/work/w006-ipmr01/engineering/source-f19ac04",
+      "product_commit": "f19ac0448a5d0111f799660bd7be043ebfd16e41",
+      "start_utc": "2026-11-02T08:42:53.322889+00:00",
+      "duration_seconds": 2.292,
+      "exit_code": 0,
+      "combined_output": "mypy310.txt",
+      "log_sha256": "3253c7a5a8535995ce0dc8b25611174b1763d2c9ff1bbb0a29e2e90cca3ca91e"
+    },
+    {
+      "result_file": "pip-check310.result.json",
+      "command": [
+        "/workspace/work/w006-ipmr01/engineering/venv310/bin/python",
+        "-m",
+        "pip",
+        "check"
+      ],
+      "cwd": "/workspace/work/w006-ipmr01/engineering/source-f19ac04",
+      "product_commit": "f19ac0448a5d0111f799660bd7be043ebfd16e41",
+      "start_utc": "2026-11-02T08:43:15.178565+00:00",
+      "duration_seconds": 0.692,
+      "exit_code": 0,
+      "combined_output": "pip-check310.txt",
+      "log_sha256": "35bb3d1e4d1d0091788acae77c6d707f1dfb81d2384e34fd54a205f9497ce313"
+    },
+    {
+      "result_file": "pytest310-f1-retest.result.json",
+      "command": [
+        "/workspace/work/w006-ipmr01/engineering/venv310/bin/python",
+        "-B",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "tests/contracts/test_w006_pipeline.py::test_f1_request_independently_matches_accepted_sample",
+        "-q"
+      ],
+      "cwd": "/workspace/work/w006-ipmr01/engineering/source-f19ac04",
+      "product_commit": "f19ac0448a5d0111f799660bd7be043ebfd16e41",
+      "start_utc": "2026-11-02T08:46:53.115694+00:00",
+      "duration_seconds": 0.865,
+      "exit_code": 0,
+      "combined_output": "pytest310-f1-retest.txt",
+      "log_sha256": "3dd8a455f93386b2d78b9d5605f1c2f52fd55f0962f89b0bd7d602cae0ead952"
+    },
+    {
+      "result_file": "pytest310.result.json",
+      "command": [
+        "/workspace/work/w006-ipmr01/engineering/venv310/bin/python",
+        "-B",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "tests/contracts/test_w006_pipeline.py",
+        "tests/contracts/test_w006_review_regressions.py",
+        "tests/contracts/test_w006_ipmr01.py",
+        "tests/contracts/test_w006_boundaries.py",
+        "tests/unit/test_w006_publication.py",
+        "-q"
+      ],
+      "cwd": "/workspace/work/w006-ipmr01/engineering/source-f19ac04",
+      "product_commit": "f19ac0448a5d0111f799660bd7be043ebfd16e41",
+      "start_utc": "2026-11-02T08:42:51.944966+00:00",
+      "duration_seconds": 125.009,
+      "exit_code": 1,
+      "combined_output": "pytest310.txt",
+      "log_sha256": "de22eb34ca35ed5c0a8011ab85ef43bb64263a413d250917d43777ed8f2ca85c"
+    },
+    {
+      "result_file": "python-install.result.json",
+      "command": [
+        "uv",
+        "python",
+        "install",
+        "3.10",
+        "--no-bin",
+        "--install-dir",
+        "/workspace/work/w006-ipmr01/engineering/python",
+        "--cache-dir",
+        "/workspace/work/w006-ipmr01/engineering/uv-cache",
+        "--system-certs"
+      ],
+      "cwd": "/workspace/Layauto",
+      "exit_code": 0,
+      "combined_output": "python-install.txt",
+      "log_sha256": "715a841b44bb09f96116b1fdbd9c15bec24188a2be60fb89323725314c09e36a",
+      "scope": "environment preparation only; no product test"
+    },
+    {
+      "result_file": "setup310.result.json",
+      "command": [
+        "/workspace/work/w006-ipmr01/engineering/venv310/bin/python",
+        "-m",
+        "pip",
+        "install",
+        "numpy",
+        "matplotlib",
+        "pyyaml",
+        "pytest",
+        "mypy",
+        "types-PyYAML",
+        "build"
+      ],
+      "cwd": "/workspace/work/w006-ipmr01/engineering",
+      "product_commit": null,
+      "start_utc": "2026-11-02T08:40:17.235441+00:00",
+      "duration_seconds": 18.314,
+      "exit_code": 0,
+      "combined_output": "setup310.txt",
+      "log_sha256": "057ef508e8bf21c898c28470f680a6426ba6374a50dd48fca2e05e5f4e1559a8"
+    },
+    {
+      "result_file": "snapshot-completion.result.json",
+      "command": [
+        "python",
+        "-B",
+        "docs/tasks/W006/ipmr01-verification/engineering/complete_snapshot.py"
+      ],
+      "cwd": "/workspace/Layauto",
+      "product_commit": "f19ac0448a5d0111f799660bd7be043ebfd16e41",
+      "start_utc": "2026-11-02T08:46:53.031164+00:00",
+      "duration_seconds": 0.043,
+      "exit_code": 0,
+      "combined_output": "snapshot-completion.txt",
+      "log_sha256": "d1e5b39e8ef31aaadecd387fab90ed37d412be1818442a08db1306aa876c712b"
+    },
+    {
+      "result_file": "wheel-environment.result.json",
+      "command": [
+        "/workspace/work/w006-ipmr01/engineering/wheel-venv/bin/python",
+        "-I",
+        "-B",
+        "environment_probe.py"
+      ],
+      "cwd": "/workspace/work/w006-ipmr01/engineering/outside",
+      "product_commit": "f19ac0448a5d0111f799660bd7be043ebfd16e41",
+      "start_utc": "2026-11-02T08:44:23.588151+00:00",
+      "duration_seconds": 0.158,
+      "exit_code": 0,
+      "combined_output": "wheel-environment.txt",
+      "log_sha256": "d85c5b85fb841ad86912994226d65f3e2249f31f533762eb01c6aac4a430c027"
+    },
+    {
+      "result_file": "wheel-install.result.json",
+      "command": [
+        "/workspace/work/w006-ipmr01/engineering/wheel-venv/bin/python",
+        "-m",
+        "pip",
+        "install",
+        "/workspace/work/w006-ipmr01/engineering/dist/layauto-0.2.0-py3-none-any.whl"
+      ],
+      "cwd": "/workspace/work/w006-ipmr01/engineering",
+      "product_commit": "f19ac0448a5d0111f799660bd7be043ebfd16e41",
+      "start_utc": "2026-11-02T08:43:48.091588+00:00",
+      "duration_seconds": 12.69,
+      "exit_code": 0,
+      "combined_output": "wheel-install.txt",
+      "log_sha256": "f639687e2dbc4068f0cbd5e8ff7a4847d661c5a03d9b201e9c49c822789412a9"
+    },
+    {
+      "result_file": "wheel-ipmr01-smoke.result.json",
+      "command": [
+        "/workspace/work/w006-ipmr01/engineering/wheel-venv/bin/python",
+        "-I",
+        "-B",
+        "wheel_diagnostic_smoke.py",
+        "fixture"
+      ],
+      "cwd": "/workspace/work/w006-ipmr01/engineering/outside",
+      "product_commit": "f19ac0448a5d0111f799660bd7be043ebfd16e41",
+      "start_utc": "2026-11-02T08:44:23.638910+00:00",
+      "duration_seconds": 1.058,
+      "exit_code": 0,
+      "combined_output": "wheel-ipmr01-smoke.txt",
+      "log_sha256": "28147f279d655bc0729ce3c52ce6ae59643b1084b8f420916305779221a6384b"
+    },
+    {
+      "result_file": "wheel-normal-f2-smoke.result.json",
+      "command": [
+        "/workspace/work/w006-ipmr01/engineering/wheel-venv/bin/python",
+        "-I",
+        "-B",
+        "normal_f2_smoke.py",
+        "fixture",
+        "normal-f2-output"
+      ],
+      "cwd": "/workspace/work/w006-ipmr01/engineering/outside",
+      "product_commit": "f19ac0448a5d0111f799660bd7be043ebfd16e41",
+      "start_utc": "2026-11-02T08:44:23.574773+00:00",
+      "duration_seconds": 4.407,
+      "exit_code": 0,
+      "combined_output": "wheel-normal-f2-smoke.txt",
+      "log_sha256": "d754d86dc0a293d10d2877a43bb1dfd94df1658331896c9662cff034b8fff91a"
+    },
+    {
+      "result_file": "wheel-pip-check.result.json",
+      "command": [
+        "/workspace/work/w006-ipmr01/engineering/wheel-venv/bin/python",
+        "-m",
+        "pip",
+        "check"
+      ],
+      "cwd": "/workspace/work/w006-ipmr01/engineering/outside",
+      "product_commit": "f19ac0448a5d0111f799660bd7be043ebfd16e41",
+      "start_utc": "2026-11-02T08:44:23.798345+00:00",
+      "duration_seconds": 0.457,
+      "exit_code": 0,
+      "combined_output": "wheel-pip-check.txt",
+      "log_sha256": "35bb3d1e4d1d0091788acae77c6d707f1dfb81d2384e34fd54a205f9497ce313"
+    },
+    {
+      "result_file": "wheel-venv.result.json",
+      "command": [
+        "/workspace/.venvs/layauto/bin/python",
+        "-m",
+        "venv",
+        "/workspace/work/w006-ipmr01/engineering/wheel-venv"
+      ],
+      "cwd": "/workspace/work/w006-ipmr01/engineering",
+      "product_commit": "f19ac0448a5d0111f799660bd7be043ebfd16e41",
+      "start_utc": "2026-11-02T08:43:15.197302+00:00",
+      "duration_seconds": 2.313,
+      "exit_code": 0,
+      "combined_output": "wheel-venv.txt",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "limits": [
+    "Python3.12 full source suite and typing are recorded separately by the main execution agent.",
+    "No Python3.10 clean-wheel installation, other interpreter/platform, real EDA or production validation.",
+    "No fixture generation; accepted fixtures copied unchanged; F2 overlay applies existing bad raw/header only to a temporary copy.",
+    "No Stage2-6, baseline/seal/no_change, durable or cross-process recovery claim.",
+    "Local build artifacts and venvs are transient; committed logs/manifests identify the actual new bytes, not a promise those paths exist in another session."
+  ]
+}

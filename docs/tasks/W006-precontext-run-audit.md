@@ -114,6 +114,24 @@ Repository只提供本切片所需create、audit/checkpoint、pre-context finali
 
 用户已授权本任务提交推送；执行交付到指定W006分支并核对远端完整SHA后交回PM。PM仍负责接收/验收、current-work与集成决定；本轮不自行验收、合并main或删除分支。
 
+### E5 IPMR-01 局部补修（2026-11-02，执行）
+
+按 PM2 接手：初始为干净的 `codex/w006-precontext-run-audit@ccd157fe1a3dee4267d4f0b119a4eda53cfdcf9f`，远端 W006 为用户指定的 `e8fec97b918938a5b431eb8ad38c2d63ed67e9d2`；核对其仅含 PM 交接文档后 fast-forward，main 仍为 `4db3aa81d6f01496a680bdcb264afe99cd80f3f3`。没有覆盖已有修改或 reset/force push；沿用根 AGENTS、协作/环境规则及 W006 A7、architecture §2.7/11.13、W003 失败合同和现有接口边界。
+
+**补修产品与回归提交：`f19ac0448a5d0111f799660bd7be043ebfd16e41`。** 产品仅改 `pipeline.py` 的 ToolRun freeze 异常分支：已有 `StageFailure` 不再被覆盖，保留原 type/message/cause chain；二次冻结失败仍由 `PublicationUnavailable.operation/message/causes` 单独表达。没有原 failure 时继续创建冻结诊断；sources/events/completed evidence 和未发布状态保持，未改 DTO/schema，未借用 RunRecord freeze closure。新增 `test_w006_ipmr01.py` 保护 parser/acquisition 双 Exception、两层 cause、空消息/surrogate/坏 `__str__`、单独 freeze 失败及原 KeyboardInterrupt/SystemExit 对象传播。
+
+| 本轮实际验证 | 结果与证据 |
+| --- | --- |
+| 原复现先红后绿 | 未改原 `double_exception.py`：补修前 exit 1，仅二次 ValueError；修后 exit 0，原 RuntimeError→LookupError 与二次 ValueError 分开，27 sources/8 evidence 保留，checkpoint/terminal 均无。[前](W006/ipmr01-verification/repro-before.txt)、[后](W006/ipmr01-verification/repro-after.txt)。 |
+| 新增持久回归先红后绿 | 同一份测试字节在旧实现 **8 failed / 8 passed**，修后 **16 passed**；[前](W006/ipmr01-verification/regression-before.txt)、[后](W006/ipmr01-verification/regression-after.txt)。这两次在产品提交前运行，实际文件身份及最终提交映射见[identity](W006/ipmr01-verification/product-identity.json)。 |
+| 最终提交 Python 3.12.14 完整回归 / typing | `python -B -m pytest -p no:cacheprovider tests/unit tests/contracts -q`：**405 passed，134.53s**，覆盖 W005 原回归、正常/F2、原诊断回归及本次新增；strict mypy **21 source files 无错误**，pip check 通过。[pytest](W006/ipmr01-verification/pytest312.txt)、[typing](W006/ipmr01-verification/mypy312.txt)、[环境](W006/ipmr01-verification/environment312.json)。 |
+| Python 3.10.22 受影响回归 / typing | 独立 snapshot 的五个 W006 测试文件首轮 **120 passed / 1 failed**：工程快照漏带 F1 样张 `docs/tasks/W003/examples/records.json`，报 FileNotFoundError。原样补入同提交文件后，失败的 1 项定向重跑通过；两次共 **121 个不同用例通过**，不冒记单次全绿。strict typing **21 模块通过**。首轮、补跑及 snapshot 修正身份均保存在[工程回执](W006/ipmr01-verification/engineering/engineering-receipt.json)。 |
+| 最终源码新构建与干净安装 | 从 f19ac04 导出的源码构建 sdist→wheel，新 Python 3.12 venv 安装/pip check、源码外 `-I` 正常/F2 smoke 和 parser/acquisition 双异常 smoke 均通过；新包各 74 个产品文件与 Git 一致。初始 snapshot 216 项，补入 F1 测试样张后 217 项；补入项不改变包源文件，无需重建。[包身份](W006/ipmr01-verification/engineering/artifact-identity.json)、[正常/F2](W006/ipmr01-verification/engineering/wheel-normal-f2-smoke.txt)、[双异常](W006/ipmr01-verification/engineering/wheel-ipmr01-smoke.txt)。 |
+
+完整命令、cwd、解释器、退出码、日志 hash、源码/包身份及采用边界见[补修执行回执](W006/ipmr01-verification/receipt.json)。本次新 wheel SHA-256 为 `8b71ed7438c1c95e1987d13d08c4dce23d21fc80e91d86a339d260b83ef5e064`，新 sdist 为 `31dc9826729e5488c867bb3451dd62c8b234663b461a958c30afc884aa033d63`；未用旧 cc42ae6 的包证明新修复。新包 bytes 在本轮可用并已核验，临时 venv/dist 不假定跨 session 存在。
+
+本轮主线程执行修复；`/root/ipmr01_engineering` 独立完成 3.10 与包工程验证；未参与修复的 `/root/ipmr01_fix_review` 负责[补修独立报告](W006/ipmr01-fix-review.md)及 reviewer 追加，finding 是否关闭由其判断，执行者不代写。原 finding/复现/历史报告、fixture/答案、W005 输入定义、PM 段、任务阶段和 current-work 均保留。未运行 3.10 的 W005 全量或干净 wheel 安装、其他平台、legacy/fixture 生成、真实 EDA/生产、durability 或 Stage2–6/完整 M1；这些不由本补修宣称通过。提交推送本次产品、回归及执行/review 证据后交 PM 重新接收，不自行验收、合并或启动下一任务。
+
 ## Review 结论（reviewer）
 
 接口 review 见[独立接口报告](W006/interface-review.md)，IR-01/IR-02 已修正并独立复核。最终代码 review 见[独立代码报告](W006/code-review.md)，主审 `/root/final_review` 与 repository 专项均未参与实现。
@@ -127,6 +145,14 @@ Repository只提供本切片所需create、audit/checkpoint、pre-context finali
 **新增 IPMR-01（P2，必须修正），剩余必须修正项 1，阻止当前版本合并。** parser 意外 Exception 后若 ToolRun 诊断冻结再次抛 Exception，`pipeline.py` 覆盖已建立的 failure，返回的 `PublicationUnavailable` 丢掉原异常及 cause chain。主审及只读 Repository 专项独立复现一致；[最小复现与输出](W006/independent-premerge-review.md#ipmr-01)随报告保存。需保留原 stage failure 并另记二次诊断失败，补双重错误回归后由独立 reviewer 复核；本轮未修改实现或自行关闭新 finding。
 
 本次 Python 3.12.14 实际执行：W006 入口/异常/边界 49 项、Repository/边界 58 项（两命令重叠 2 项）、W005 原回归 284 项及 21 模块 strict typing 均通过；新增缺陷探针按合同断言退出 1。source/test/fixture/工程证据身份核对通过；原 Python 3.10 与构建安装证据按报告采用，原 wheel 不在本环境，未冒记重新核验包字节。IR-01/02、CR-01/02/03 原反例关闭依据保留；本条追加不改写原 finding、PM 接收事实或任务阶段。交 PM 安排修复和复核，不代替验收、main 集成或完整 M1 判断。
+
+### IPMR2 局部补修独立复核（2026-11-02）
+
+未参与补修实现的 reviewer `/root/ipmr01_fix_review` 以 PM2 交接 `e8fec97b918938a5b431eb8ad38c2d63ed67e9d2` 为 base，对产品/回归 `f19ac0448a5d0111f799660bd7be043ebfd16e41` 完成独立复核。[补修报告](W006/ipmr01-fix-review.md)保存依据、实际命令、证据采用和范围；原 IPMR1 finding、复现及历史报告保持原样。
+
+**W006 IPMR-01 经独立复核关闭，剩余必须修正项 0。** 已有 StageFailure/cause chain 不再被 ToolRun freeze 的第二个 Exception 覆盖，顶层 PublicationUnavailable 单独保留二次诊断；无原 failure 时仍有冻结诊断。亲自运行原复现 exit 0、新增及旧 review 回归 **33 passed**，另两组独立探针确认原异常快照在二次格式化和诊断 readback 再失败时保持，未捏造 checkpoint/terminal；原 KeyboardInterrupt/SystemExit 对象传播不回退。
+
+已独立核对本次执行证据：3.12 全套 **405 passed**、两解释器 21 模块 typing、新包干净安装源码外正常/F2及双异常 smoke。3.10 首轮 **120 passed / 1 failed** 的失败是 snapshot 漏带 F1 样张；补入同提交原文件后该项 **1 passed**，采用为两次运行共 121 个不同受影响用例通过，不冒记单轮全绿。reviewer 直接核验新 wheel/sdist 各 74 项产品 bytes 及最终 217 项 snapshot/Git/工作区身份一致。结论仅覆盖 PM2 局部补修；交 PM 重新接收，不代写任务阶段、PM 验收、main 集成或完整 M1 判断。
 
 ## PM 验收与交接（PM）
 

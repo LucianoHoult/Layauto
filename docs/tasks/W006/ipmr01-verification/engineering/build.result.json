@@ -1,0 +1,17 @@
+{
+  "command": [
+    "/workspace/.venvs/layauto/bin/python",
+    "-B",
+    "-m",
+    "build",
+    "--outdir",
+    "/workspace/work/w006-ipmr01/engineering/dist"
+  ],
+  "cwd": "/workspace/work/w006-ipmr01/engineering/source-f19ac04",
+  "product_commit": "f19ac0448a5d0111f799660bd7be043ebfd16e41",
+  "start_utc": "2026-11-02T08:42:59.997005+00:00",
+  "duration_seconds": 4.685,
+  "exit_code": 0,
+  "combined_output": "build.txt",
+  "log_sha256": "20c6bee15cbb2e6d4218bd0fa264793bc2567c76667570d911a7346a6531c3ca"
+}

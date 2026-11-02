@@ -1,0 +1,13 @@
+{
+  "started_utc": "2026-11-02T08:38:40.865622+00:00",
+  "cwd": "/workspace/Layauto",
+  "command": [
+    "/workspace/.venvs/layauto/bin/python",
+    "-B",
+    "docs/tasks/W006/independent-premerge-verification/double_exception.py"
+  ],
+  "head": "e8fec97b918938a5b431eb8ad38c2d63ed67e9d2",
+  "returncode": 1,
+  "elapsed_seconds": 0.439,
+  "output_sha256": "d966ab663387d73b3c597cda3f82eab822d41c3cbb7912b109a31adc7e1a5e2e"
+}

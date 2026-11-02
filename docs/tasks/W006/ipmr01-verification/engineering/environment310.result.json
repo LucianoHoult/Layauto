@@ -1,0 +1,14 @@
+{
+  "command": [
+    "/workspace/work/w006-ipmr01/engineering/venv310/bin/python",
+    "-B",
+    "/workspace/Layauto/docs/tasks/W006/ipmr01-verification/engineering/environment_probe.py"
+  ],
+  "cwd": "/workspace/work/w006-ipmr01/engineering/source-f19ac04",
+  "product_commit": "f19ac0448a5d0111f799660bd7be043ebfd16e41",
+  "start_utc": "2026-11-02T08:43:15.170787+00:00",
+  "duration_seconds": 0.092,
+  "exit_code": 0,
+  "combined_output": "environment310.txt",
+  "log_sha256": "9d3f7c01df12bc585b9690a85c32917d8a55cd35e2de593200bfc093cbdae9c5"
+}

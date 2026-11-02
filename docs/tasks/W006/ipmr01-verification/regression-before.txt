@@ -1,0 +1,440 @@
+FF.FF.FF.FF.....                                                         [100%]
+=================================== FAILURES ===================================
+__________ test_stage_cause_survives_tool_freeze_failure[plain-parse] __________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-2/test_stage_cause_survives_tool0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fb27f466f30>
+boundary = 'parse', message = 'failure', stage_message = 'failure'
+freeze_message = 'failure'
+
+    @pytest.mark.parametrize('boundary', ['parse', 'read', None], ids=['parse', 'read', 'freeze-only'])
+    @pytest.mark.parametrize('message,stage_message,freeze_message', [
+        ('failure', 'failure', 'failure'),
+        ('', 'RuntimeError', 'ValueError'),
+        ('\ud800', '\\ud800', '\\ud800'),
+        (BrokenMessage(), '<unprintable exception>', '<unprintable exception>'),
+    ], ids=['plain', 'empty', 'surrogate', 'broken-str'])
+    def test_stage_cause_survives_tool_freeze_failure(
+            tmp_path, monkeypatch, boundary, message, stage_message, freeze_message):
+        root = copy_input(tmp_path)
+        request = caller_request(root)
+        repository = PublicationRepository()
+    
+        def fail_stage(*args, **kwargs):
+            try:
+                raise LookupError('original underlying cause')
+            except LookupError as cause:
+                raise RuntimeError(message) from cause
+    
+        def fail_freeze(self):
+            try:
+                raise ArithmeticError('secondary underlying cause')
+            except ArithmeticError as cause:
+                raise ValueError(message) from cause
+    
+        with monkeypatch.context() as patch:
+            inject_stage_failure(patch, root, boundary, fail_stage)
+            patch.setattr(FixtureCapture, 'freeze', fail_freeze)
+            result = prepare_inputs(repository, request)
+    
+        assert isinstance(result, PublicationUnavailable)
+        assert result.operation == 'freeze_tool_run' and result.message == freeze_message
+        secondary = [('ValueError', freeze_message), ('ArithmeticError', 'secondary underlying cause')]
+        assert [(cause.exception_type, cause.message) for cause in result.causes] == secondary
+        failure = result.pending_failure
+        assert failure.category == 'internal' and failure.code == 'InternalStageFailure'
+        assert failure.stage == 'stage1' and failure.run_id == request.run_id
+        expected = secondary if boundary is None else [
+            ('RuntimeError', stage_message), ('LookupError', 'original underlying cause')]
+>       assert [(cause.exception_type, cause.message) for cause in failure.causes] == expected
+E       AssertionError: assert [('ValueError...lying cause')] == [('RuntimeErr...lying cause')]
+E         
+E         At index 0 diff: ('ValueError', 'failure') != ('RuntimeError', 'failure')
+E         Use -v to get more diff
+
+tests/contracts/test_w006_ipmr01.py:77: AssertionError
+__________ test_stage_cause_survives_tool_freeze_failure[plain-read] ___________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-2/test_stage_cause_survives_tool1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fb27edb30b0>
+boundary = 'read', message = 'failure', stage_message = 'failure'
+freeze_message = 'failure'
+
+    @pytest.mark.parametrize('boundary', ['parse', 'read', None], ids=['parse', 'read', 'freeze-only'])
+    @pytest.mark.parametrize('message,stage_message,freeze_message', [
+        ('failure', 'failure', 'failure'),
+        ('', 'RuntimeError', 'ValueError'),
+        ('\ud800', '\\ud800', '\\ud800'),
+        (BrokenMessage(), '<unprintable exception>', '<unprintable exception>'),
+    ], ids=['plain', 'empty', 'surrogate', 'broken-str'])
+    def test_stage_cause_survives_tool_freeze_failure(
+            tmp_path, monkeypatch, boundary, message, stage_message, freeze_message):
+        root = copy_input(tmp_path)
+        request = caller_request(root)
+        repository = PublicationRepository()
+    
+        def fail_stage(*args, **kwargs):
+            try:
+                raise LookupError('original underlying cause')
+            except LookupError as cause:
+                raise RuntimeError(message) from cause
+    
+        def fail_freeze(self):
+            try:
+                raise ArithmeticError('secondary underlying cause')
+            except ArithmeticError as cause:
+                raise ValueError(message) from cause
+    
+        with monkeypatch.context() as patch:
+            inject_stage_failure(patch, root, boundary, fail_stage)
+            patch.setattr(FixtureCapture, 'freeze', fail_freeze)
+            result = prepare_inputs(repository, request)
+    
+        assert isinstance(result, PublicationUnavailable)
+        assert result.operation == 'freeze_tool_run' and result.message == freeze_message
+        secondary = [('ValueError', freeze_message), ('ArithmeticError', 'secondary underlying cause')]
+        assert [(cause.exception_type, cause.message) for cause in result.causes] == secondary
+        failure = result.pending_failure
+        assert failure.category == 'internal' and failure.code == 'InternalStageFailure'
+        assert failure.stage == 'stage1' and failure.run_id == request.run_id
+        expected = secondary if boundary is None else [
+            ('RuntimeError', stage_message), ('LookupError', 'original underlying cause')]
+>       assert [(cause.exception_type, cause.message) for cause in failure.causes] == expected
+E       AssertionError: assert [('ValueError...lying cause')] == [('RuntimeErr...lying cause')]
+E         
+E         At index 0 diff: ('ValueError', 'failure') != ('RuntimeError', 'failure')
+E         Use -v to get more diff
+
+tests/contracts/test_w006_ipmr01.py:77: AssertionError
+__________ test_stage_cause_survives_tool_freeze_failure[empty-parse] __________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-2/test_stage_cause_survives_tool3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fb27ef9db50>
+boundary = 'parse', message = '', stage_message = 'RuntimeError'
+freeze_message = 'ValueError'
+
+    @pytest.mark.parametrize('boundary', ['parse', 'read', None], ids=['parse', 'read', 'freeze-only'])
+    @pytest.mark.parametrize('message,stage_message,freeze_message', [
+        ('failure', 'failure', 'failure'),
+        ('', 'RuntimeError', 'ValueError'),
+        ('\ud800', '\\ud800', '\\ud800'),
+        (BrokenMessage(), '<unprintable exception>', '<unprintable exception>'),
+    ], ids=['plain', 'empty', 'surrogate', 'broken-str'])
+    def test_stage_cause_survives_tool_freeze_failure(
+            tmp_path, monkeypatch, boundary, message, stage_message, freeze_message):
+        root = copy_input(tmp_path)
+        request = caller_request(root)
+        repository = PublicationRepository()
+    
+        def fail_stage(*args, **kwargs):
+            try:
+                raise LookupError('original underlying cause')
+            except LookupError as cause:
+                raise RuntimeError(message) from cause
+    
+        def fail_freeze(self):
+            try:
+                raise ArithmeticError('secondary underlying cause')
+            except ArithmeticError as cause:
+                raise ValueError(message) from cause
+    
+        with monkeypatch.context() as patch:
+            inject_stage_failure(patch, root, boundary, fail_stage)
+            patch.setattr(FixtureCapture, 'freeze', fail_freeze)
+            result = prepare_inputs(repository, request)
+    
+        assert isinstance(result, PublicationUnavailable)
+        assert result.operation == 'freeze_tool_run' and result.message == freeze_message
+        secondary = [('ValueError', freeze_message), ('ArithmeticError', 'secondary underlying cause')]
+        assert [(cause.exception_type, cause.message) for cause in result.causes] == secondary
+        failure = result.pending_failure
+        assert failure.category == 'internal' and failure.code == 'InternalStageFailure'
+        assert failure.stage == 'stage1' and failure.run_id == request.run_id
+        expected = secondary if boundary is None else [
+            ('RuntimeError', stage_message), ('LookupError', 'original underlying cause')]
+>       assert [(cause.exception_type, cause.message) for cause in failure.causes] == expected
+E       AssertionError: assert [('ValueError...lying cause')] == [('RuntimeErr...lying cause')]
+E         
+E         At index 0 diff: ('ValueError', 'ValueError') != ('RuntimeError', 'RuntimeError')
+E         Use -v to get more diff
+
+tests/contracts/test_w006_ipmr01.py:77: AssertionError
+__________ test_stage_cause_survives_tool_freeze_failure[empty-read] ___________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-2/test_stage_cause_survives_tool4')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fb27e14c1d0>
+boundary = 'read', message = '', stage_message = 'RuntimeError'
+freeze_message = 'ValueError'
+
+    @pytest.mark.parametrize('boundary', ['parse', 'read', None], ids=['parse', 'read', 'freeze-only'])
+    @pytest.mark.parametrize('message,stage_message,freeze_message', [
+        ('failure', 'failure', 'failure'),
+        ('', 'RuntimeError', 'ValueError'),
+        ('\ud800', '\\ud800', '\\ud800'),
+        (BrokenMessage(), '<unprintable exception>', '<unprintable exception>'),
+    ], ids=['plain', 'empty', 'surrogate', 'broken-str'])
+    def test_stage_cause_survives_tool_freeze_failure(
+            tmp_path, monkeypatch, boundary, message, stage_message, freeze_message):
+        root = copy_input(tmp_path)
+        request = caller_request(root)
+        repository = PublicationRepository()
+    
+        def fail_stage(*args, **kwargs):
+            try:
+                raise LookupError('original underlying cause')
+            except LookupError as cause:
+                raise RuntimeError(message) from cause
+    
+        def fail_freeze(self):
+            try:
+                raise ArithmeticError('secondary underlying cause')
+            except ArithmeticError as cause:
+                raise ValueError(message) from cause
+    
+        with monkeypatch.context() as patch:
+            inject_stage_failure(patch, root, boundary, fail_stage)
+            patch.setattr(FixtureCapture, 'freeze', fail_freeze)
+            result = prepare_inputs(repository, request)
+    
+        assert isinstance(result, PublicationUnavailable)
+        assert result.operation == 'freeze_tool_run' and result.message == freeze_message
+        secondary = [('ValueError', freeze_message), ('ArithmeticError', 'secondary underlying cause')]
+        assert [(cause.exception_type, cause.message) for cause in result.causes] == secondary
+        failure = result.pending_failure
+        assert failure.category == 'internal' and failure.code == 'InternalStageFailure'
+        assert failure.stage == 'stage1' and failure.run_id == request.run_id
+        expected = secondary if boundary is None else [
+            ('RuntimeError', stage_message), ('LookupError', 'original underlying cause')]
+>       assert [(cause.exception_type, cause.message) for cause in failure.causes] == expected
+E       AssertionError: assert [('ValueError...lying cause')] == [('RuntimeErr...lying cause')]
+E         
+E         At index 0 diff: ('ValueError', 'ValueError') != ('RuntimeError', 'RuntimeError')
+E         Use -v to get more diff
+
+tests/contracts/test_w006_ipmr01.py:77: AssertionError
+________ test_stage_cause_survives_tool_freeze_failure[surrogate-parse] ________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-2/test_stage_cause_survives_tool6')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fb27f0054c0>
+boundary = 'parse', message = '\ud800', stage_message = '\\ud800'
+freeze_message = '\\ud800'
+
+    @pytest.mark.parametrize('boundary', ['parse', 'read', None], ids=['parse', 'read', 'freeze-only'])
+    @pytest.mark.parametrize('message,stage_message,freeze_message', [
+        ('failure', 'failure', 'failure'),
+        ('', 'RuntimeError', 'ValueError'),
+        ('\ud800', '\\ud800', '\\ud800'),
+        (BrokenMessage(), '<unprintable exception>', '<unprintable exception>'),
+    ], ids=['plain', 'empty', 'surrogate', 'broken-str'])
+    def test_stage_cause_survives_tool_freeze_failure(
+            tmp_path, monkeypatch, boundary, message, stage_message, freeze_message):
+        root = copy_input(tmp_path)
+        request = caller_request(root)
+        repository = PublicationRepository()
+    
+        def fail_stage(*args, **kwargs):
+            try:
+                raise LookupError('original underlying cause')
+            except LookupError as cause:
+                raise RuntimeError(message) from cause
+    
+        def fail_freeze(self):
+            try:
+                raise ArithmeticError('secondary underlying cause')
+            except ArithmeticError as cause:
+                raise ValueError(message) from cause
+    
+        with monkeypatch.context() as patch:
+            inject_stage_failure(patch, root, boundary, fail_stage)
+            patch.setattr(FixtureCapture, 'freeze', fail_freeze)
+            result = prepare_inputs(repository, request)
+    
+        assert isinstance(result, PublicationUnavailable)
+        assert result.operation == 'freeze_tool_run' and result.message == freeze_message
+        secondary = [('ValueError', freeze_message), ('ArithmeticError', 'secondary underlying cause')]
+        assert [(cause.exception_type, cause.message) for cause in result.causes] == secondary
+        failure = result.pending_failure
+        assert failure.category == 'internal' and failure.code == 'InternalStageFailure'
+        assert failure.stage == 'stage1' and failure.run_id == request.run_id
+        expected = secondary if boundary is None else [
+            ('RuntimeError', stage_message), ('LookupError', 'original underlying cause')]
+>       assert [(cause.exception_type, cause.message) for cause in failure.causes] == expected
+E       AssertionError: assert [('ValueError...lying cause')] == [('RuntimeErr...lying cause')]
+E         
+E         At index 0 diff: ('ValueError', '\\ud800') != ('RuntimeError', '\\ud800')
+E         Use -v to get more diff
+
+tests/contracts/test_w006_ipmr01.py:77: AssertionError
+________ test_stage_cause_survives_tool_freeze_failure[surrogate-read] _________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-2/test_stage_cause_survives_tool7')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fb27ee29670>
+boundary = 'read', message = '\ud800', stage_message = '\\ud800'
+freeze_message = '\\ud800'
+
+    @pytest.mark.parametrize('boundary', ['parse', 'read', None], ids=['parse', 'read', 'freeze-only'])
+    @pytest.mark.parametrize('message,stage_message,freeze_message', [
+        ('failure', 'failure', 'failure'),
+        ('', 'RuntimeError', 'ValueError'),
+        ('\ud800', '\\ud800', '\\ud800'),
+        (BrokenMessage(), '<unprintable exception>', '<unprintable exception>'),
+    ], ids=['plain', 'empty', 'surrogate', 'broken-str'])
+    def test_stage_cause_survives_tool_freeze_failure(
+            tmp_path, monkeypatch, boundary, message, stage_message, freeze_message):
+        root = copy_input(tmp_path)
+        request = caller_request(root)
+        repository = PublicationRepository()
+    
+        def fail_stage(*args, **kwargs):
+            try:
+                raise LookupError('original underlying cause')
+            except LookupError as cause:
+                raise RuntimeError(message) from cause
+    
+        def fail_freeze(self):
+            try:
+                raise ArithmeticError('secondary underlying cause')
+            except ArithmeticError as cause:
+                raise ValueError(message) from cause
+    
+        with monkeypatch.context() as patch:
+            inject_stage_failure(patch, root, boundary, fail_stage)
+            patch.setattr(FixtureCapture, 'freeze', fail_freeze)
+            result = prepare_inputs(repository, request)
+    
+        assert isinstance(result, PublicationUnavailable)
+        assert result.operation == 'freeze_tool_run' and result.message == freeze_message
+        secondary = [('ValueError', freeze_message), ('ArithmeticError', 'secondary underlying cause')]
+        assert [(cause.exception_type, cause.message) for cause in result.causes] == secondary
+        failure = result.pending_failure
+        assert failure.category == 'internal' and failure.code == 'InternalStageFailure'
+        assert failure.stage == 'stage1' and failure.run_id == request.run_id
+        expected = secondary if boundary is None else [
+            ('RuntimeError', stage_message), ('LookupError', 'original underlying cause')]
+>       assert [(cause.exception_type, cause.message) for cause in failure.causes] == expected
+E       AssertionError: assert [('ValueError...lying cause')] == [('RuntimeErr...lying cause')]
+E         
+E         At index 0 diff: ('ValueError', '\\ud800') != ('RuntimeError', '\\ud800')
+E         Use -v to get more diff
+
+tests/contracts/test_w006_ipmr01.py:77: AssertionError
+_______ test_stage_cause_survives_tool_freeze_failure[broken-str-parse] ________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-2/test_stage_cause_survives_tool9')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fb27efa33e0>
+boundary = 'parse'
+message = <test_w006_ipmr01.BrokenMessage object at 0x7fb27ef9d9a0>
+stage_message = '<unprintable exception>'
+freeze_message = '<unprintable exception>'
+
+    @pytest.mark.parametrize('boundary', ['parse', 'read', None], ids=['parse', 'read', 'freeze-only'])
+    @pytest.mark.parametrize('message,stage_message,freeze_message', [
+        ('failure', 'failure', 'failure'),
+        ('', 'RuntimeError', 'ValueError'),
+        ('\ud800', '\\ud800', '\\ud800'),
+        (BrokenMessage(), '<unprintable exception>', '<unprintable exception>'),
+    ], ids=['plain', 'empty', 'surrogate', 'broken-str'])
+    def test_stage_cause_survives_tool_freeze_failure(
+            tmp_path, monkeypatch, boundary, message, stage_message, freeze_message):
+        root = copy_input(tmp_path)
+        request = caller_request(root)
+        repository = PublicationRepository()
+    
+        def fail_stage(*args, **kwargs):
+            try:
+                raise LookupError('original underlying cause')
+            except LookupError as cause:
+                raise RuntimeError(message) from cause
+    
+        def fail_freeze(self):
+            try:
+                raise ArithmeticError('secondary underlying cause')
+            except ArithmeticError as cause:
+                raise ValueError(message) from cause
+    
+        with monkeypatch.context() as patch:
+            inject_stage_failure(patch, root, boundary, fail_stage)
+            patch.setattr(FixtureCapture, 'freeze', fail_freeze)
+            result = prepare_inputs(repository, request)
+    
+        assert isinstance(result, PublicationUnavailable)
+        assert result.operation == 'freeze_tool_run' and result.message == freeze_message
+        secondary = [('ValueError', freeze_message), ('ArithmeticError', 'secondary underlying cause')]
+        assert [(cause.exception_type, cause.message) for cause in result.causes] == secondary
+        failure = result.pending_failure
+        assert failure.category == 'internal' and failure.code == 'InternalStageFailure'
+        assert failure.stage == 'stage1' and failure.run_id == request.run_id
+        expected = secondary if boundary is None else [
+            ('RuntimeError', stage_message), ('LookupError', 'original underlying cause')]
+>       assert [(cause.exception_type, cause.message) for cause in failure.causes] == expected
+E       AssertionError: assert [('ValueError...lying cause')] == [('RuntimeErr...lying cause')]
+E         
+E         At index 0 diff: ('ValueError', '<unprintable exception>') != ('RuntimeError', '<unprintable exception>')
+E         Use -v to get more diff
+
+tests/contracts/test_w006_ipmr01.py:77: AssertionError
+________ test_stage_cause_survives_tool_freeze_failure[broken-str-read] ________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-2/test_stage_cause_survives_tool10')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fb27df29be0>
+boundary = 'read'
+message = <test_w006_ipmr01.BrokenMessage object at 0x7fb27ef9d9a0>
+stage_message = '<unprintable exception>'
+freeze_message = '<unprintable exception>'
+
+    @pytest.mark.parametrize('boundary', ['parse', 'read', None], ids=['parse', 'read', 'freeze-only'])
+    @pytest.mark.parametrize('message,stage_message,freeze_message', [
+        ('failure', 'failure', 'failure'),
+        ('', 'RuntimeError', 'ValueError'),
+        ('\ud800', '\\ud800', '\\ud800'),
+        (BrokenMessage(), '<unprintable exception>', '<unprintable exception>'),
+    ], ids=['plain', 'empty', 'surrogate', 'broken-str'])
+    def test_stage_cause_survives_tool_freeze_failure(
+            tmp_path, monkeypatch, boundary, message, stage_message, freeze_message):
+        root = copy_input(tmp_path)
+        request = caller_request(root)
+        repository = PublicationRepository()
+    
+        def fail_stage(*args, **kwargs):
+            try:
+                raise LookupError('original underlying cause')
+            except LookupError as cause:
+                raise RuntimeError(message) from cause
+    
+        def fail_freeze(self):
+            try:
+                raise ArithmeticError('secondary underlying cause')
+            except ArithmeticError as cause:
+                raise ValueError(message) from cause
+    
+        with monkeypatch.context() as patch:
+            inject_stage_failure(patch, root, boundary, fail_stage)
+            patch.setattr(FixtureCapture, 'freeze', fail_freeze)
+            result = prepare_inputs(repository, request)
+    
+        assert isinstance(result, PublicationUnavailable)
+        assert result.operation == 'freeze_tool_run' and result.message == freeze_message
+        secondary = [('ValueError', freeze_message), ('ArithmeticError', 'secondary underlying cause')]
+        assert [(cause.exception_type, cause.message) for cause in result.causes] == secondary
+        failure = result.pending_failure
+        assert failure.category == 'internal' and failure.code == 'InternalStageFailure'
+        assert failure.stage == 'stage1' and failure.run_id == request.run_id
+        expected = secondary if boundary is None else [
+            ('RuntimeError', stage_message), ('LookupError', 'original underlying cause')]
+>       assert [(cause.exception_type, cause.message) for cause in failure.causes] == expected
+E       AssertionError: assert [('ValueError...lying cause')] == [('RuntimeErr...lying cause')]
+E         
+E         At index 0 diff: ('ValueError', '<unprintable exception>') != ('RuntimeError', '<unprintable exception>')
+E         Use -v to get more diff
+
+tests/contracts/test_w006_ipmr01.py:77: AssertionError
+=========================== short test summary info ============================
+FAILED tests/contracts/test_w006_ipmr01.py::test_stage_cause_survives_tool_freeze_failure[plain-parse]
+FAILED tests/contracts/test_w006_ipmr01.py::test_stage_cause_survives_tool_freeze_failure[plain-read]
+FAILED tests/contracts/test_w006_ipmr01.py::test_stage_cause_survives_tool_freeze_failure[empty-parse]
+FAILED tests/contracts/test_w006_ipmr01.py::test_stage_cause_survives_tool_freeze_failure[empty-read]
+FAILED tests/contracts/test_w006_ipmr01.py::test_stage_cause_survives_tool_freeze_failure[surrogate-parse]
+FAILED tests/contracts/test_w006_ipmr01.py::test_stage_cause_survives_tool_freeze_failure[surrogate-read]
+FAILED tests/contracts/test_w006_ipmr01.py::test_stage_cause_survives_tool_freeze_failure[broken-str-parse]
+FAILED tests/contracts/test_w006_ipmr01.py::test_stage_cause_survives_tool_freeze_failure[broken-str-read]
+8 failed, 8 passed in 11.99s
