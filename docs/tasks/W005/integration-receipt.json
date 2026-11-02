@@ -1,0 +1,58 @@
+{
+  "date": "2026-11-02",
+  "role": "PM",
+  "pull_request": "https://github.com/LucianoHoult/Layauto/pull/59",
+  "base": "87fe5a5a87d0cbb1f97952f1485dac9a71416369",
+  "expected_pr_head": "ef31139465d01c170ccaf081484d3bd7cf5ff858",
+  "merge_commit": "4db3aa81d6f01496a680bdcb264afe99cd80f3f3",
+  "merge_method": "merge",
+  "parents": [
+    "87fe5a5a87d0cbb1f97952f1485dac9a71416369",
+    "ef31139465d01c170ccaf081484d3bd7cf5ff858"
+  ],
+  "merged_tree": "4dd2735f5fd089fcdb916d975eb96fc8d1b4a73b",
+  "reviewed_head_tree": "4dd2735f5fd089fcdb916d975eb96fc8d1b4a73b",
+  "tree_diff_exit_code": 0,
+  "premerge_remote_checks": {
+    "mergeable": true,
+    "commit_statuses": 0,
+    "check_runs": 0,
+    "main_protected": false,
+    "repository_rulesets": [],
+    "note": "No configured remote CI checks; local and independently reviewed evidence used, not a CI pass claim"
+  },
+  "integration_check": {
+    "python": "3.12.14",
+    "executable": "/workspace/work/w005-pm-check-env/bin/python",
+    "cwd": "/workspace/Layauto",
+    "checked_head": "4db3aa81d6f01496a680bdcb264afe99cd80f3f3",
+    "command": [
+      "python",
+      "-B",
+      "-m",
+      "pytest",
+      "-p",
+      "no:cacheprovider",
+      "tests/contracts/test_w005_inputs.py::test_accepted_actual_files_match_independent_answers_without_runtime_oracles",
+      "tests/contracts/test_w005_inputs.py::test_bad_raw_cannot_hide_behind_absent_caches",
+      "tests/contracts/test_w005_inputs.py::test_second_legal_input_reads_changed_bytes_names_order_and_coordinates",
+      "tests/contracts/test_w005_inputs.py::test_same_read_bytes_feed_hash_and_parsers_even_if_file_changes",
+      "tests/contracts/test_w005_inputs.py::test_interrupts_and_unexpected_errors_preserve_root_cause",
+      "tests/contracts/test_w005_unicode_inputs.py",
+      "-q"
+    ],
+    "exit_code": 0,
+    "output": ".....................                                                    [100%]\n=============================== warnings summary ===============================\n../../opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/anyio/pytest_plugin.py:14\n  /opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/anyio/pytest_plugin.py:14: PytestRemovedIn10Warning: _pytest.python.CallSpec2 has been renamed to CallSpec.\n  The CallSpec2 alias will be removed in pytest 10.\n  Update imports to use CallSpec instead.\n  See https://docs.pytest.org/en/stable/deprecations.html#callspec2-renamed\n    from _pytest.python import CallSpec2\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n21 passed, 1 warning in 7.24s\n",
+    "output_sha256": "0d152f4ac63c1141c38b1ef06f798196e7b2d121f36d340a318aede619918639"
+  },
+  "adopted_prior_evidence": [
+    "ipmr01-pm-receipt.json: 284 full component tests, strict mypy, original reproduction and Unicode probes against same product files",
+    "ipmr01-fix-review.md and ipmr01-verification/receipt.json: affected Python3.10 and final wheel/installation identity"
+  ],
+  "acceptance": "W005 input component accepted and integrated; full M1 and subsequent stages not accepted",
+  "not_run": [
+    "New full matrix/build repetition after byte-identical merge",
+    "Stage2/Stage6/full pipeline or real EDA/production"
+  ],
+  "branch_retention": "W005 branch preserved; follow-up work uses a dedicated W006 branch"
+}
