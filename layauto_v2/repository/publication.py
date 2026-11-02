@@ -19,7 +19,8 @@ from layauto_v2.domain.publication import (
     Content, ContentRef, EvidenceAudit, FinalizeFailureRequest, InputCheckpoint,
     InputsReady, ParseAudit, PipelineResult, RunAttempt, RunRecord,
     RunRecordFreezeFailureClosure, RunRequest, StageFailure, ToolRunResult,
-    WithRunRecordClosure, exception_causes,
+    WithRunRecordClosure, exception_causes, safe_exception_message,
+    safe_exception_type,
 )
 from layauto_v2.domain.publication_codec import (
     content_ref, decode_record, encode_record, record_digest,
@@ -341,7 +342,7 @@ class PublicationRepository:
                 # The sole no-RunRecord escape hatch. The original stage failure
                 # remains separately addressable alongside this construction failure.
                 freeze_failure = StageFailure(request.run_id, 'run_record_freeze',
-                                              'RunRecordFreezeFailure', str(exc) or type(exc).__name__,
+                                              'RunRecordFreezeFailure', safe_exception_message(exc) or safe_exception_type(exc),
                                               completed=request.completed, causes=exception_causes(exc),
                                               stage='run_record_freeze')
                 freeze_ref = self._put(contents, freeze_failure)

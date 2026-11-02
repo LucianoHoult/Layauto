@@ -9,10 +9,11 @@ from pathlib import Path
 from typing import TypeAlias
 
 from layauto_v2.domain.codec import digest
-from layauto_v2.domain.evidence import EvidenceRecord, SourceRef
+from layauto_v2.domain.evidence import EvidenceRecord, SourceFile, SourceRef
 from layauto_v2.domain.publication import (
-    InputCheckpoint, InputsReady, PipelineResult, PublicationUnavailable, RunAttempt,
-    RunRequest, StageFailure, ToolRunResult, exception_causes,
+    AcquisitionEvent, InputCheckpoint, InputsReady, PipelineResult, PublicationUnavailable,
+    RunAttempt, RunRequest, StageFailure, ToolRunResult, exception_causes,
+    safe_exception_message, safe_exception_type,
 )
 from layauto_v2.domain.results import ParseResult
 from layauto_v2.importers.reader import InputParser
@@ -43,29 +44,36 @@ def _binding_failure(request: RunRequest, tool: ToolRunResult,
                      parse: ParseResult, root: str | None) -> StageFailure | None:
     if root is None:
         return None  # Invalid site path; the parser has the located failure.
-    # Lexical normalization only. Do not re-resolve a symlink after capture.
-    def key(uri: str) -> str:
-        return posixpath.normpath(posixpath.join(root, uri))
-
-    sources = {key(source.uri): source for source in tool.sources}
+    # Only captured spellings/paths are bindings. Collapsing '..' is incorrect
+    # when a preceding component is a symlink, and post-capture resolve is racy.
+    sources: dict[str, SourceFile] = {}
+    by_uri = {source.uri: source for source in tool.sources}
+    for source in tool.sources:
+        sources[source.uri] = source
+        sources[posixpath.join(root, source.uri)] = source
+    for event in tool.events:
+        if event.operation == 'read' and event.status == 'success':
+            sources[event.path] = by_uri[event.uri]
     for selection in request.selections:
-        source = sources.get(key(selection.uri))
-        if source is None:
+        selected = sources.get(selection.uri)
+        if selected is None:
             if parse.status == 'success':
                 return StageFailure(request.run_id, 'binding', 'UnreadSelection',
                                     'declared selection was not acquired: ' + selection.uri,
                                     SourceRef(selection.uri, field='selection'))
-        elif selection.declared_sha256 is not None and selection.declared_sha256 != source.sha256:
+        elif selection.declared_sha256 is not None and selection.declared_sha256 != selected.sha256:
             return StageFailure(request.run_id, 'binding', 'InputDrift',
                                 'declared SHA-256 differs from acquired bytes: ' + selection.uri,
-                                source.ref(field='declared_sha256'))
+                                selected.ref(field='declared_sha256'))
     return None
 
 
 def _unavailable(repository: PublicationRepository, request: RunRequest, operation: str,
                  exc: Exception, *, tool: ToolRunResult | None = None,
                  parse: ParseResult | None = None, evidence: tuple[EvidenceRecord, ...] = (),
-                 failure: StageFailure | None = None) -> PublicationUnavailable:
+                 failure: StageFailure | None = None,
+                 sources: tuple[SourceFile, ...] = (),
+                 events: tuple[AcquisitionEvent, ...] = ()) -> PublicationUnavailable:
     attempt: RunAttempt | None = None
     checkpoint: InputCheckpoint | None = None
     try:
@@ -74,9 +82,10 @@ def _unavailable(repository: PublicationRepository, request: RunRequest, operati
     except Exception:
         pass  # Storage may be unavailable even for diagnostic reads.
     return PublicationUnavailable(
-        request.run_id, operation, str(exc) or type(exc).__name__, exception_causes(exc),
+        request.run_id, operation, safe_exception_message(exc), exception_causes(exc),
         attempt, () if checkpoint is None else checkpoint.completed,
-        pending_tool=tool, pending_parse=parse, pending_evidence=evidence, pending_failure=failure)
+        pending_tool=tool, pending_parse=parse, pending_evidence=evidence, pending_failure=failure,
+        pending_sources=sources, pending_events=events)
 
 
 def _resume(repository: PublicationRepository, request: RunRequest,
@@ -141,17 +150,25 @@ def prepare_inputs(repository: PublicationRepository, request: RunRequest) -> Pr
         failure: StageFailure | None = None
         interrupt: KeyboardInterrupt | SystemExit | None = None
         try:
-            parse = _drive(parser, capture)
-        except (KeyboardInterrupt, SystemExit) as exc:
-            interrupt = exc
-            failure = StageFailure(request.run_id, 'interrupted', type(exc).__name__,
-                                   str(exc) or type(exc).__name__, causes=exception_causes(exc))
-        except Exception as exc:
-            failure = StageFailure(request.run_id, 'internal', 'InternalStageFailure',
-                                   str(exc) or type(exc).__name__, causes=exception_causes(exc))
+            try:
+                parse = _drive(parser, capture)
+            except (KeyboardInterrupt, SystemExit) as exc:
+                # Install the original interrupt before any best-effort diagnostic.
+                interrupt = exc
+                failure = StageFailure(request.run_id, 'interrupted', safe_exception_type(exc),
+                                       safe_exception_message(exc), causes=exception_causes(exc))
+            except Exception as exc:
+                failure = StageFailure(request.run_id, 'internal', 'InternalStageFailure',
+                                       safe_exception_message(exc), causes=exception_causes(exc))
 
-        try:
-            tool = capture.freeze()
+            try:
+                tool = capture.freeze()
+            except Exception as exc:
+                failure = StageFailure(request.run_id, 'internal', 'InternalStageFailure',
+                                       safe_exception_message(exc), causes=exception_causes(exc))
+                return _unavailable(repository, request, 'freeze_tool_run', exc,
+                                    parse=parse, evidence=parser.completed, failure=failure,
+                                    sources=capture.sources, events=capture.events)
             if parse is not None:
                 try:
                     failure = _binding_failure(request, tool, parse, parser.input_root)
@@ -161,7 +178,7 @@ def prepare_inputs(repository: PublicationRepository, request: RunRequest) -> Pr
                                                issue.message, issue.source)
                 except Exception as exc:
                     failure = StageFailure(request.run_id, 'internal', 'InternalStageFailure',
-                                           str(exc) or type(exc).__name__, causes=exception_causes(exc))
+                                           safe_exception_message(exc), causes=exception_causes(exc))
             try:
                 checkpoint = repository.record_audits(
                     request.run_id, expected_revision=attempt.revision,

@@ -431,3 +431,93 @@ def test_audit_response_loss_recovers_same_checkpoint_without_reconstructing_fai
     assert repository.record_audits('run', **audit_args()) == checkpoint
     result = repository.finalize_precontext_failure(checkpoint.finalize_request)
     assert repository.read_terminal('run') == result
+
+
+@pytest.mark.parametrize('exception_class', [RuntimeError, KeyboardInterrupt, SystemExit])
+def test_exception_diagnostics_escape_surrogates_without_replacing_original(exception_class):
+    from layauto_v2.domain.publication import exception_causes, safe_exception_message, safe_exception_type
+    original = exception_class('unpaired:\ud800\udfff')
+    assert safe_exception_message(original) == 'unpaired:\\ud800\\udfff'
+    assert safe_exception_type(original) == exception_class.__name__
+    causes = exception_causes(original)
+    assert causes == (ExceptionCause(exception_class.__name__, 'unpaired:\\ud800\\udfff'),)
+    assert decode_record(encode_record(causes[0])) == causes[0]
+
+
+@pytest.mark.parametrize('replacement_interrupt', [RuntimeError, KeyboardInterrupt, SystemExit])
+def test_hostile_exception_stringification_is_only_a_diagnostic_failure(replacement_interrupt):
+    from layauto_v2.domain.publication import exception_causes, safe_exception_message
+    class HostileArgument:
+        def __str__(self):
+            raise replacement_interrupt('must not replace original')
+    for exception_class in (RuntimeError, KeyboardInterrupt, SystemExit):
+        original = exception_class(HostileArgument())
+        assert safe_exception_message(original) == '<unprintable exception>'
+        assert exception_causes(original) == (ExceptionCause(exception_class.__name__, '<unprintable exception>'),)
+
+
+def test_exception_cause_snapshot_handles_cycles_hostile_attributes_and_type_names():
+    from layauto_v2.domain.publication import exception_causes, safe_exception_type
+    original = RuntimeError('cycle')
+    original.__cause__ = original
+    assert len(exception_causes(original)) == 1
+    class HostileCauseError(RuntimeError):
+        def __getattribute__(self, name):
+            if name == '__cause__':
+                raise KeyboardInterrupt('diagnostic property must not escape')
+            return super().__getattribute__(name)
+    assert exception_causes(HostileCauseError('root')) == (ExceptionCause('HostileCauseError', 'root'),)
+    class HostileMetaclass(type):
+        def __getattribute__(cls, name):
+            if name == '__name__':
+                raise SystemExit('diagnostic type property must not escape')
+            return super().__getattribute__(name)
+    class HostileTypeError(RuntimeError, metaclass=HostileMetaclass):
+        pass
+    assert safe_exception_type(HostileTypeError('root')) == 'BaseException'
+    assert exception_causes(HostileTypeError('root')) == (ExceptionCause('BaseException', 'root'),)
+
+
+@pytest.mark.parametrize('kind', ['surrogate', 'hostile_string'])
+def test_freeze_failure_diagnostics_handle_unsafe_exception_messages(kind):
+    class HostileError(RuntimeError):
+        def __str__(self):
+            raise KeyboardInterrupt('diagnostic formatting must not replace freeze failure')
+    def inject(point):
+        if point == 'finalize.freeze':
+            if kind == 'surrogate':
+                raise RuntimeError('bad:\ud800')
+            raise HostileError()
+    repository = PublicationRepository(fault_injector=inject)
+    checkpoint = failed_checkpoint(repository)
+    result = repository.finalize_precontext_failure(checkpoint.finalize_request)
+    closure = repository.read(result.closure_ref)
+    assert isinstance(closure, RunRecordFreezeFailureClosure)
+    failure = repository.read(closure.freeze_failure_ref)
+    assert failure.message == ('bad:\\ud800' if kind == 'surrogate' else '<unprintable exception>')
+    assert result.deployment_disposition == 'reject'
+    assert repository.read_terminal('run') == result
+
+
+def test_unpublished_diagnostic_keeps_raw_facts_when_tool_invariants_cannot_be_met():
+    from layauto_v2.domain.publication import PublicationUnavailable
+    first = SourceFile('same-uri', b'first capture')
+    second = SourceFile('same-uri', b'second capture')
+    sources = [first, second]
+    events = [AcquisitionEvent('same-uri', '/first', 'read', 'success', first.sha256),
+              AcquisitionEvent('same-uri', '/second', 'read', 'success', second.sha256)]
+    with pytest.raises(ValueError, match='duplicate'):
+        ToolRunResult('run', 'tool', sources, events)
+    diagnostic = PublicationUnavailable('run', 'record_audits', 'tool construction failed',
+                                        pending_sources=sources, pending_events=events)
+    sources.clear()
+    events.clear()
+    assert diagnostic.pending_tool is None
+    assert diagnostic.pending_sources == (first, second)
+    assert len(diagnostic.pending_events) == 2
+    assert not diagnostic.completed and diagnostic.attempt is None
+    assert decode_record(encode_record(diagnostic)) == diagnostic
+    with pytest.raises(ValueError):
+        replace(diagnostic, pending_sources=(object(),))
+    with pytest.raises(ValueError):
+        replace(diagnostic, pending_events=(object(),))

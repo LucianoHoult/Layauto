@@ -204,16 +204,44 @@ class ExceptionCause:
         self.message.encode('utf-8')
 
 
+def safe_exception_message(exc: BaseException) -> str:
+    """Format a diagnostic without allowing it to replace the original failure.
+
+    Exception arguments can have hostile __str__ methods, including ones that
+    raise interrupts. Lone surrogates are escaped, preserving their identity in
+    a valid UTF-8 diagnostic rather than breaking canonical record construction.
+    """
+    try:
+        message = str(exc)
+        return str.encode(message, 'utf-8', errors='backslashreplace').decode('utf-8')
+    except BaseException:
+        return '<unprintable exception>'
+
+
+def safe_exception_type(exc: BaseException) -> str:
+    """Obtain a type label without trusting a custom exception metaclass."""
+    try:
+        name = type(exc).__name__
+        return str.encode(name, 'utf-8', errors='backslashreplace').decode('utf-8') or 'BaseException'
+    except BaseException:
+        return 'BaseException'
+
+
 def exception_causes(exc: BaseException) -> tuple[ExceptionCause, ...]:
-    """Snapshot explicit/implicit causes, retaining the original exception first."""
+    """Best-effort cause snapshot; diagnostic errors never replace the failure."""
     result: list[ExceptionCause] = []
     seen: set[int] = set()
     current: BaseException | None = exc
     while current is not None and id(current) not in seen:
         seen.add(id(current))
-        result.append(ExceptionCause(type(current).__name__, str(current)))
-        current = current.__cause__ if current.__cause__ is not None else (
-            None if current.__suppress_context__ else current.__context__)
+        result.append(ExceptionCause(safe_exception_type(current), safe_exception_message(current)))
+        try:
+            cause = current.__cause__
+            following = cause if cause is not None else (
+                None if current.__suppress_context__ else current.__context__)
+            current = following if isinstance(following, BaseException) else None
+        except BaseException:
+            break
     return tuple(result)
 
 
@@ -541,6 +569,8 @@ class PublicationUnavailable:
     pending_parse: ParseResult | None = None
     pending_evidence: tuple[EvidenceRecord, ...] = ()
     pending_failure: StageFailure | None = None
+    pending_sources: tuple[SourceFile, ...] = ()
+    pending_events: tuple[AcquisitionEvent, ...] = ()
     status: Literal['publication_unavailable'] = 'publication_unavailable'
     schema_version: str = VERSION
 
@@ -559,6 +589,11 @@ class PublicationUnavailable:
         if self.pending_parse is not None and type(self.pending_parse) is not ParseResult:
             raise ValueError('invalid pending parse')
         _sequence(self, 'pending_evidence', EvidenceRecord)
+        # These are best-effort facts, not a ToolRunResult. In particular, a
+        # malformed/duplicate acquisition sequence can still be diagnosed when
+        # the stronger ToolRunResult invariants prevent its construction.
+        _sequence(self, 'pending_sources', SourceFile)
+        _sequence(self, 'pending_events', AcquisitionEvent)
         if self.pending_failure is not None and (type(self.pending_failure) is not StageFailure or self.pending_failure.run_id != self.run_id):
             raise ValueError('pending failure/run mismatch')
 

@@ -43,7 +43,7 @@ _SPEC: dict[str, tuple[Callable[..., object], tuple[str, ...]]] = {
     'RunRecordFreezeFailureClosure': (RunRecordFreezeFailureClosure, ('run_id', 'failure_ref', 'freeze_failure_ref', 'completed', 'closure_kind', 'schema_version', 'kind')),
     'PipelineResult': (PipelineResult, ('run_id', 'closure_ref', 'lifecycle_status', 'deployment_disposition', 'schema_version', 'kind')),
     'InputsReady': (InputsReady, ('run_id', 'attempt', 'checkpoint_ref', 'tool_ref', 'parse_ref', 'evidence_refs', 'value', 'status', 'schema_version')),
-    'PublicationUnavailable': (PublicationUnavailable, ('run_id', 'operation', 'message', 'causes', 'attempt', 'completed', 'pending_tool', 'pending_parse', 'pending_evidence', 'pending_failure', 'status', 'schema_version')),
+    'PublicationUnavailable': (PublicationUnavailable, ('run_id', 'operation', 'message', 'causes', 'attempt', 'completed', 'pending_tool', 'pending_parse', 'pending_evidence', 'pending_failure', 'pending_sources', 'pending_events', 'status', 'schema_version')),
 }
 
 

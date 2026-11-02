@@ -36,14 +36,21 @@ class _Files:
     def __init__(self, root: Path) -> None:
         self.root = root
         self.files: dict[Path, SourceFile] = {}
+        self.paths: dict[str, Path] = {}
 
     def path(self, uri: str) -> Path:
+        if uri in self.paths:
+            return self.paths[uri]
         try:
             if '\x00' in uri:
                 raise ValueError('embedded NUL in input path')
-            return _resolve(self.root / uri)
+            path = _resolve(self.root / uri)
         except (ValueError, OSError) as exc:
             raise InputError('read', 'InvalidInputPath', str(exc), SourceRef(uri, field='path')) from exc
+        # One URI keeps its first resolved acquisition identity for this session.
+        # Re-resolving a changing symlink during closure checks could read it twice.
+        self.paths[uri] = path
+        return path
 
     def read(self, uri: str, *, missing_code: str = 'MissingInput') -> Generator[AcquisitionRequest, AcquisitionResponse, SourceFile]:
         path = self.path(uri)
