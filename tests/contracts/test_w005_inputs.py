@@ -281,3 +281,39 @@ def test_query_fractional_raw_tick_is_preserved_exactly(tmp_path):
     value = success(load(root))
     region = value['query']['device_regions']['records'][0]
     assert [exact(p['x']) for p in region['vertices_nm']] == [Fraction(1161, 20), Fraction(1161, 20), 62, 62]
+
+
+def test_legal_additional_unannotated_boundary_is_not_dropped(tmp_path):
+    import struct
+
+    root = copy_input(tmp_path)
+    path = root / 'source.gds'
+    raw = path.read_bytes()
+    offset = 0
+    insertion = None
+    while offset < len(raw):
+        length, kind, _ = struct.unpack('>HBB', raw[offset:offset + 4])
+        if kind == 7:  # ENDSTR: append an independently authored legal BOUNDARY.
+            insertion = offset
+            break
+        offset += length
+    assert insertion is not None
+    layer = next(x for x in read_json(root / 'tech/drawn.json')['layers'] if x['name'] == 'MARKER')
+    key = layer['stream_key']
+
+    def record(kind, datatype, payload=b''):
+        return struct.pack('>HBB', len(payload) + 4, kind, datatype) + payload
+
+    rectangle = (151, 180, 156, 185)
+    points = [(151, 180), (156, 180), (156, 185), (151, 185), (151, 180)]
+    boundary = b''.join([
+        record(8, 0), record(13, 2, struct.pack('>h', key['layer'])),
+        record(14, 2, struct.pack('>h', key['datatype'])),
+        record(16, 3, struct.pack('>10i', *(coordinate for p in points for coordinate in p))), record(17, 0),
+    ])
+    path.write_bytes(raw[:insertion] + boundary + raw[insertion:])
+    rebind(root)
+    value = success(load(root))
+    assert len(value['gds']['elements']) == 41
+    added = [x for x in value['gds']['elements'] if x['canonical_layer'] == 'MARKER' and tuple(x['bbox']) == rectangle]
+    assert len(added) == 1 and tuple(added[0]['xy']) == tuple(points)
