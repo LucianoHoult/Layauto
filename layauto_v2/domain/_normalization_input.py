@@ -235,7 +235,7 @@ def _same_row(left: FrozenMap, right: FrozenMap) -> bool:
     return tuple(left.get(key) for key in ('path', 'sha256', 'line_1based')) == tuple(right.get(key) for key in ('path', 'sha256', 'line_1based'))
 
 
-def _validate_query(query: FrozenMap, tech: FrozenMap, sources: Mapping[str, SourceFile], header: FrozenMap) -> None:
+def _validate_query(query: FrozenMap, tech: FrozenMap, sources: Mapping[str, SourceFile], header: FrozenMap, query_sources: tuple[SourceRef, ...]) -> None:
     instance_rows = tuple(mapping(value) for value in sequence(mapping(query['instance_xref'])['records']))
     net_rows = tuple(mapping(value) for value in sequence(mapping(query['net_xref'])['records']))
     for row in instance_rows:
@@ -274,6 +274,23 @@ def _validate_query(query: FrozenMap, tech: FrozenMap, sources: Mapping[str, Sou
     names_positions = [(_field_sources(row, 'lvs_index')[0]['path'], _field_sources(row, 'lvs_index')[0]['line_1based']) for row in net_rows]
     if sorted(names_positions) != [(names_source.uri, line) for line in range(4, len(names_source.data.splitlines()))]:
         raise ValueError('net identity evidence omits or duplicates NET NAMES records')
+    response_metadata = tuple(mapping(entry) for entry in sequence(metadata['responses']))
+    response_sources: list[tuple[str, str]] = []
+    for response in response_metadata:
+        reference = mapping(response['source'])
+        count_header = mapping(response['count_header'])
+        pair = (string(reference['path']), string(reference['sha256']))
+        if (pair != (count_header['path'], count_header['sha256']) or count_header.get('line_1based') != 3
+                or string(count_header['lexeme']).split(maxsplit=3)[-1] != response['timestamp']):
+            raise ValueError('response metadata differs from its captured response')
+        response_sources.append(pair)
+    expected_response_sources = [(string(mapping(item)['uri']), string(mapping(item)['sha256'])) for item in sequence(header['raw'])
+                                 if mapping(item)['capability'] in ('device_regions', 'net_regions')]
+    if sorted(response_sources) != sorted(expected_response_sources):
+        raise ValueError('request-ordered response metadata does not cover declared captures')
+    response_capabilities = {string(mapping(item)['uri']): string(mapping(item)['capability']) for item in sequence(header['raw'])}
+    request_source = query_sources[1]
+    observed_requests: set[int] = set()
     registry = {string(mapping(entry)['id']): mapping(entry) for entry in sequence(mapping(tech['derived'])['derived_registry'])}
     for capability, associations in (('device_regions', instance_rows), ('net_regions', net_rows)):
         key = 'layout_instance' if capability == 'device_regions' else 'lvs_name'
@@ -307,6 +324,29 @@ def _validate_query(query: FrozenMap, tech: FrozenMap, sources: Mapping[str, Sou
             if len(layer_sources) != 2 or layer_sources[0]['lexeme'] != row['derived_layer']:
                 raise ValueError('derived layer differs from captured raw layer')
             actual_positions.append((string(layer_sources[0]['path']), cast(int, layer_sources[0]['line_1based'])))
+            object_source = _field_sources(row, key)[0]
+            record_source = _field_sources(row, 'record_id')[0]
+            object_pointer = string(object_source['json_pointer'])
+            record_pointer = string(record_source['json_pointer'])
+            object_match = re.fullmatch(r'/requests/(0|[1-9][0-9]*)/object', object_pointer)
+            record_match = re.fullmatch(r'/requests/(0|[1-9][0-9]*)/record_ids/(0|[1-9][0-9]*)', record_pointer)
+            if object_match is None or record_match is None or object_match.group(1) != record_match.group(1):
+                raise ValueError('seed object and record ID belong to different query requests')
+            request_index, polygon_index = int(object_match.group(1)), int(record_match.group(2))
+            if request_index >= len(response_metadata):
+                raise ValueError('seed references an absent captured query request')
+            observed_requests.add(request_index)
+            expected_path, expected_sha = response_sources[request_index]
+            first_layer_line = 5 if capability == 'device_regions' else 4
+            if (response_capabilities[expected_path] != capability
+                    or layer_sources[0]['path'] != expected_path or layer_sources[0]['sha256'] != expected_sha
+                    or layer_sources[0]['line_1based'] != first_layer_line + polygon_index * 7):
+                raise ValueError('seed geometry belongs to another request capture or polygon ordinal')
+            for field in identity_fields:
+                if _field_sources(row, field)[0] != object_source:
+                    raise ValueError('seed identity fields refer to different requests')
+            if any(ref.get('path') != request_source.uri or ref.get('sha256') != request_source.sha256 for ref in (object_source, record_source)):
+                raise ValueError('seed request provenance is outside the captured requests role')
             registry_entry = mapping(layer_sources[1]['lexeme'])
             if registry.get(string(row['derived_layer'])) != registry_entry or row['quality'] != registry_entry['quality']:
                 raise ValueError('seed quality/derived layer differs from selected registry')
@@ -350,6 +390,8 @@ def _validate_query(query: FrozenMap, tech: FrozenMap, sources: Mapping[str, Sou
             expected_regions.extend((source.uri, line) for line in range(first_layer_line, len(source.data.splitlines()), 7))
         if sorted(actual_positions) != sorted(expected_regions):
             raise ValueError('region evidence omits or duplicates captured polygon records')
+    if observed_requests != set(range(len(response_metadata))):
+        raise ValueError('seed evidence omits captured query requests')
 
 
 def evidence_by_kind(result: ParseResult) -> dict[str, EvidenceRecord]:
@@ -454,7 +496,9 @@ def validate_parse(result: ParseResult) -> None:
         sequence(document['records'])
     validate_refs(query, sources)
     validate_locations(query, sources)
-    _validate_query(query, mapping(value['tech']), sources, header)
+    if len(records['query'].sources) != 3 + len(raw):
+        raise ValueError('query evidence requires header, requests, dialect and all raw captures')
+    _validate_query(query, mapping(value['tech']), sources, header, records['query'].sources)
     validate_refs(mapping(value['gds']), sources)
     # Require role captures to be present in the declared closure, including the
     # selected tech owners. This is membership, not alias→role reconstruction.

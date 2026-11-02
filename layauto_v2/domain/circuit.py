@@ -28,7 +28,7 @@ def _location(value: object, source: SourceRef) -> None:
         raise ValueError('field evidence and source reference disagree')
     for name in ('line', 'column', 'byte_offset'):
         location = getattr(source, name)
-        if location is not None and value.get(name) != location:
+        if value.get(name) != location:
             raise ValueError('field evidence location disagrees with source reference')
 
 
@@ -204,7 +204,7 @@ class Net:
             _source(source)
         object.__setattr__(self, 'port_indices', tuple(sorted(indices)))
         object.__setattr__(self, 'memberships', tuple(sorted(members, key=lambda m: (m.device_id.name, m.terminal))))
-        object.__setattr__(self, 'sources', tuple(sorted(set(sources), key=lambda s: (s.uri, s.sha256 or '', s.line or 0, s.column or 0, s.byte_offset or 0, s.field or '', s.record_index or 0))))
+        object.__setattr__(self, 'sources', tuple(sorted(set(sources), key=lambda s: (s.uri, s.sha256 or '', s.line or 0, s.column or 0, -1 if s.byte_offset is None else s.byte_offset, s.field or '', s.field is not None, -1 if s.record_index is None else s.record_index))))
 
 
 @dataclass(frozen=True)

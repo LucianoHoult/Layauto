@@ -72,7 +72,7 @@ def _refs(value: object) -> tuple[SourceRef, ...]:
         for item in value:
             refs.extend(_refs(item))
     return tuple(sorted(set(refs), key=lambda s: (s.uri, s.sha256 or '', s.line or 0, s.column or 0,
-                                                 s.byte_offset or 0, s.record_index or 0, s.field or '')))
+                                                 -1 if s.byte_offset is None else s.byte_offset, -1 if s.record_index is None else s.record_index, s.field or '', s.field is not None)))
 
 
 @dataclass(frozen=True)
