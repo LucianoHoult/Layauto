@@ -1,0 +1,29 @@
+{
+  "status": "publication_unavailable",
+  "operation": "freeze_tool_run",
+  "publication_causes": [
+    [
+      "ValueError",
+      "secondary tool diagnostic freeze failure"
+    ]
+  ],
+  "pending_failure_code": "InternalStageFailure",
+  "pending_failure_causes": [
+    [
+      "ValueError",
+      "secondary tool diagnostic freeze failure"
+    ]
+  ],
+  "pending_parse_is_none": true,
+  "captured_sources": 27,
+  "completed_evidence": 8,
+  "checkpoint_is_none": true,
+  "terminal_is_none": true
+}
+Traceback (most recent call last):
+  File "/workspace/Layauto/docs/tasks/W006/independent-premerge-verification/double_exception.py", line 69, in <module>
+    main()
+  File "/workspace/Layauto/docs/tasks/W006/independent-premerge-verification/double_exception.py", line 62, in main
+    assert causes == [
+           ^^^^^^^^^^^
+AssertionError: IPMR-01: diagnostic freeze failure discarded the original parser cause chain

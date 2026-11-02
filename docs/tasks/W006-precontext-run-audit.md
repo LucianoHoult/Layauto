@@ -120,6 +120,14 @@ Repository只提供本切片所需create、audit/checkpoint、pre-context finali
 
 最终受审产品/回归提交为 `cc42ae62585755b0b914d4dbec43324941bfe7c6`；CR-01（解析中途路径漂移/捕获）、CR-02（诊断替换中断及空异常消息）、CR-03（未捕获路径别名误绑定）均保留原反例并经独立复核关闭，**剩余必须修正项 0**。版本、五个复现及修正后 73 项专项回归、12 项真实文件代表组合、21 模块 strict typing 证据见[review身份清单](W006/review-verification/identity.json)及报告。正常读取仍仅 unsealed InputsReady；此为技术 review，不代写 PM 验收、main 集成或完整 M1 结论。
 
+### IPMR1 独立合并前复核（2026-11-02）
+
+本次独立 reviewer 以 main `4db3aa81d6f01496a680bdcb264afe99cd80f3f3` 为 base，交付 `cd1c847e74dc399ce32eeaf01c1ff5ab825c000d` 为 head，核对产品/回归仍为 `cc42ae62585755b0b914d4dbec43324941bfe7c6`。报告见[独立合并前复核](W006/independent-premerge-review.md)。先按原合同及实际 diff 检查，再核对历史 review/PM 证据，未以既有接收替代判断。
+
+**新增 IPMR-01（P2，必须修正），剩余必须修正项 1，阻止当前版本合并。** parser 意外 Exception 后若 ToolRun 诊断冻结再次抛 Exception，`pipeline.py` 覆盖已建立的 failure，返回的 `PublicationUnavailable` 丢掉原异常及 cause chain。主审及只读 Repository 专项独立复现一致；[最小复现与输出](W006/independent-premerge-review.md#ipmr-01)随报告保存。需保留原 stage failure 并另记二次诊断失败，补双重错误回归后由独立 reviewer 复核；本轮未修改实现或自行关闭新 finding。
+
+本次 Python 3.12.14 实际执行：W006 入口/异常/边界 49 项、Repository/边界 58 项（两命令重叠 2 项）、W005 原回归 284 项及 21 模块 strict typing 均通过；新增缺陷探针按合同断言退出 1。source/test/fixture/工程证据身份核对通过；原 Python 3.10 与构建安装证据按报告采用，原 wheel 不在本环境，未冒记重新核验包字节。IR-01/02、CR-01/02/03 原反例关闭依据保留；本条追加不改写原 finding、PM 接收事实或任务阶段。交 PM 安排修复和复核，不代替验收、main 集成或完整 M1 判断。
+
 ## PM 验收与交接（PM）
 
 **原派发记录（2026-11-02，已完成交回）：** 派发时只有任务要求和分支准备，未验收W006；执行者完成实现与独立review后，将本任务产物、证据及记录提交推送到`codex/w006-precontext-run-audit`，使用项目既有GitHub noreply身份，核对远端完整SHA并交回PM。远端变化先核对并安全集成，不force push；不自行验收、合并main、删除分支或扩展下一产品任务。该段保留原交接边界，当前接收结果见PM1。
