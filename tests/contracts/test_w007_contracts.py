@@ -623,11 +623,11 @@ def test_cr01_fr3_geometry_plus_metadata_permutation_cannot_rebind_captured_requ
         from_parse_result(forged)
 
 
-@pytest.mark.parametrize('via', ['adapter', 'wire'])
+@pytest.mark.parametrize('via', ['adapter', 'wire', 'wire_result'])
 def test_captured_requests_decoder_input_error_becomes_invalid_dto(accepted, monkeypatch, via):
     from layauto_v2.normalization import _validation
     from layauto_v2.domain.results import InputError
-    encoded = encode_record(accepted.input)
+    encoded = encode_record(accepted if via == 'wire_result' else accepted.input)
 
     def bad_captured_document(source, **kwargs):
         raise InputError('parse', 'InvalidDocumentSyntax', 'injected invalid captured request', source.ref(line=1, column=1))
@@ -640,12 +640,12 @@ def test_captured_requests_decoder_input_error_becomes_invalid_dto(accepted, mon
             decode_record(encoded)
 
 
-@pytest.mark.parametrize('via', ['adapter', 'wire'])
+@pytest.mark.parametrize('via', ['adapter', 'wire', 'wire_result'])
 @pytest.mark.parametrize('failure', [RuntimeError('decoder implementation bug'), TypeError('decoder bug'),
                                      KeyError('decoder bug'), KeyboardInterrupt(), SystemExit(29)])
 def test_captured_requests_decoder_unexpected_errors_propagate_unchanged(accepted, monkeypatch, via, failure):
     from layauto_v2.normalization import _validation
-    encoded = encode_record(accepted.input)
+    encoded = encode_record(accepted if via == 'wire_result' else accepted.input)
 
     def broken_decoder(*args, **kwargs):
         raise failure
