@@ -1,0 +1,36 @@
+{
+  "source_manifest_sha256": "30b4e446ff6b38f8c06be92916576928b87abdf62d10bc58f1b22ffa34a5f881",
+  "source_file_count": 235,
+  "source_mismatches": [],
+  "packages": {
+    "layauto-0.2.0-py3-none-any.whl": {
+      "sha256": "64526a5b675048c55505fe4d81fa95408ca74c7c91176c1a4a098cafbca5740f",
+      "runtime_files": 86,
+      "all_equal_final_source": true
+    },
+    "layauto-0.2.0.tar.gz": {
+      "sha256": "e600e0735dadae75248675fcc4ec18355b48a29847e4af4424714bc5ec5345b4",
+      "runtime_files": 86,
+      "all_equal_final_source": true
+    }
+  },
+  "installed": {
+    "310": {
+      "site_packages": "/private/tmp/layauto-w008-final-installed-310/lib/python3.10/site-packages",
+      "runtime_files": 86,
+      "all_equal_final_source": true
+    },
+    "311": {
+      "site_packages": "/private/tmp/layauto-w008-final-installed-311/lib/python3.11/site-packages",
+      "runtime_files": 86,
+      "all_equal_final_source": true
+    }
+  },
+  "adopted_receipt_log_hashes_verified": [
+    "build",
+    "mypy-310",
+    "mypy-311",
+    "install-310",
+    "install-311"
+  ]
+}

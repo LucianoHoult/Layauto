@@ -1,0 +1,31 @@
+# W008 independent interface / plan review
+
+Reviewer: `/root/plan_review`, 2026-11-02. The reviewer did not design or implement W008. Input-boundary read-only cross-check delegated to `/root/plan_review/role_probe`; that reviewer did not edit the plan or product.
+
+Review base: branch `codex/w008-geometry-base-occupancy`, HEAD `2d5f42258b5a2cf09f686a06c483e2a6915bc48c`, isolated checkout `/private/tmp/layauto-w008`. Initial plan SHA-256: `f9c15b5e4e6a509acef14c95669b6f7a01577492d7b8de3366fe98d478dc21ef`. The initial working tree contained only untracked W008 plan material. The applicable instruction file is root `AGENTS.md`; no descendant AGENTS exists.
+
+Read AGENTS, README, collaboration rules, current-work, W008 requirements, architecture §§2.2–2.3, 3.1/3.4–3.5, 11.2–11.3, 12.5; inspected W005 reader/config/tech/GDS contracts and W007 input/readback/validation/codec and prior interface review. Scope is the internal interface plan, not final code, testing evidence, PM acceptance or publication.
+
+## Finding
+
+| ID | Severity | Concrete gap and impact | Required disposition | State |
+| --- | --- | --- | --- | --- |
+| IR-01 | P2 / must clarify | Plan line 9 specifies independent raw re-decodes, but does not explicitly recheck cross-document bindings not performed by those decoders or W007. `reader.py` creates body evidence with exactly `(body_file, gds_file)`; W007 does not enforce that arity or second-source identity. Re-decoding body bytes and comparing its payload cannot catch replacing the second ref with another captured closure member. Similarly, `validate_document` does not check `header.top_identities.layout == gds.top` or the body/header unit/profile/scope associations. A mutually consistent collection of independently decoded documents is insufficient to prove the selected source association. | Explicitly bind body's two source roles, require its second ref to equal the selected GDS role ref, and validate body `source_gds`, top, nominal unit, profile/operator and read-only external scope against the selected GDS/tech. Reapply header layout-top and geometry-unit-contract associations. Direct captured URI comparisons must preserve role identity even when hashes match; an uncaptured historic alias remains the W005 path-resolution fact and must not trigger filesystem IO. Add body second-ref and cross-document mismatch constructor/decode tests. Do not run body connectivity or other physical checks. | Awaiting plan amendment / independent recheck |
+
+## Other checked decisions
+
+- Layered trust is appropriate: neutral state constructors verify complete evidence-to-record and record-to-fragment consistency; the normalization input/result boundary authenticates the consumed fields against captured bytes. Standalone state objects must remain explicitly evidence-consistent drafts, not independently authenticated capture receipts or successful Stage 2 results. A successful public result must reject a coherently forged nested draft even when every internal neutral relation agrees.
+- The immutable chain `BaseOccupancy -> BasePartition -> LayoutDraft` retains a single drawn owner. Coordinate has immutable input data for mathematical verification and no occupancy storage; there is no independent mutable geometry copy.
+- The proposed edge partition is exact and finite. Independently counting the hand example gives A cells `(0,0..2)` and `(1,0..2)`, B cells `(1,1)` and `(2,1)`. A area is `3*(1+2+1) + 3*(1+2+1) = 24`; B area is `3*2 + 1*2 = 8`. Cell `(1,1)` has two distinct record occupants. The half-open convention is explicit, its closure preserves polygon boundary, and no same-cell relation is treated as connectivity.
+- Per-layer ordering, capture/position-based record identities, multiset semantic comparison and separate provenance digests preserve duplicate records and ignore only declared nonsemantic stream/vertex order. The selected `toy_gds_real8_nm/1` schema fixes nominal and canonical ticks to 1 nm; tests of general exact conversion must not silently introduce a new accepted unit profile.
+- The coarse same-cell witness must exercise pure projection math or a clearly test-only partition rather than weakening the runtime constructor's `drawn-layer-edges/1` reconstruction guard. This is an implementation detail inside the current plan, not a required external schema.
+- C1/C2 remain drawn records, VIA/CONTACT only occupy their own layer, and raw CUT remains raw geometry. External body shapes, query seeds, terminal splits and physical interpretations do not become local drawn geometry. Full technology coordinate binding, annotation, connectivity, publication and production claims remain deferred.
+- The planned checks cover the relevant actual W005/W006 paths, W007 preservation, closed DTO/wire invariants, exceptions/interrupts, both interpreters and newly built/installable artifacts. They are future obligations; no W008 product checks were run for this plan review.
+
+Initial verdict: amend IR-01, then recheck. No new user decision or scope change is needed. This report makes no code approval or acceptance claim.
+
+## Revision review
+
+Re-read the amended full plan, SHA-256 `67531fbe13f8cda78f0cb3292d0fa517614a61c3f8dd30f666c3dee0d6eb478d`, at the same base HEAD. The new input paragraph explicitly requires the body evidence's two roles, exact URI/hash equality for its GDS backlink, header layout-top/unit-contract associations, and body source/top/unit/profile/operator/read-only/non-exported/local-frame/synthetic scope associations. It preserves the no-IO historical-alias boundary and explicitly avoids interpreting body associations or geometry. The final revision note also clarifies the neutral draft versus capture-authenticated result distinction.
+
+**IR-01 is closed at the plan level; remaining must-fix plan findings: 0. The execution agent may proceed with implementation inside W008.** The corresponding constructor/decode cross-binding negatives remain required by IR-01 and A1/A2/A6 and will be checked in code review. No product code, W008 tests, package or final evidence have been approved by this review. No acceptance, merge, publication, full technology coordinate, physical connectivity or production result is implied.

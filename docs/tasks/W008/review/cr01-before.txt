@@ -1,0 +1,5 @@
+site selected: source.gds
+captured GDS role: another-role.gds
+original URI present: False
+semantic accepts: NormalizationInput
+geometry result: success records: 40

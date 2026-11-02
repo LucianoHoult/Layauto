@@ -1,0 +1,15 @@
+{
+  "command": [
+    "/private/tmp/layauto-w008-final-installed-311/bin/python",
+    "-I",
+    "-B",
+    "/private/tmp/layauto-w008/docs/tasks/W008/verification/wheel_smoke.py",
+    "/private/tmp/layauto-w008/tests/fixtures/w003_m1"
+  ],
+  "cwd": "/private/tmp",
+  "started_utc": "2026-11-02T14:28:55.966256+00:00",
+  "elapsed_seconds": 12.816,
+  "returncode": 0,
+  "output_sha256": "5371a4a03df34a49b7d6cecdc7bf11df07b2acc9d782080767c6378180150dc6",
+  "source_manifest_sha256": "30b4e446ff6b38f8c06be92916576928b87abdf62d10bc58f1b22ffa34a5f881"
+}

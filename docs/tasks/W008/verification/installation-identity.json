@@ -1,0 +1,69 @@
+{
+  "source_manifest_sha256": "30b4e446ff6b38f8c06be92916576928b87abdf62d10bc58f1b22ffa34a5f881",
+  "installations": {
+    "311": {
+      "installed_package": "/private/tmp/layauto-w008-final-installed-311/lib/python3.11/site-packages/layauto_v2/__init__.py",
+      "runtime_file_count": 86,
+      "files_equal_source_manifest": true,
+      "direct_url": {
+        "archive_info": {
+          "hash": "sha256=64526a5b675048c55505fe4d81fa95408ca74c7c91176c1a4a098cafbca5740f",
+          "hashes": {
+            "sha256": "64526a5b675048c55505fe4d81fa95408ca74c7c91176c1a4a098cafbca5740f"
+          }
+        },
+        "url": "file:///private/tmp/layauto-w008/docs/tasks/W008/verification/packages/layauto-0.2.0-py3-none-any.whl"
+      },
+      "input_artifact_actual_sha256": "64526a5b675048c55505fe4d81fa95408ca74c7c91176c1a4a098cafbca5740f",
+      "direct_url_records_archive_hash": true,
+      "checks": {
+        "status": "passed",
+        "local_records": 40,
+        "base_fragments": 41,
+        "independent_body_shapes": 6,
+        "projected_records": 38,
+        "exact_units_and_per_record_coverage": true,
+        "w005_w006_w007_w008_no_io_equivalence": true,
+        "attempt_phase": "unsealed",
+        "terminal": null,
+        "direct_wire_sha256": "055fddecf11fcfda61f4b2fc6f8b600c27c5a56cec5ff0b2b37cd6052b153f54",
+        "readback_wire_sha256": "7a2a2a7ba00943e20816b166349caac48b37c5201c20747f66f4a9702bce62c1",
+        "unsupported_comparator": {
+          "issue": "UnsupportedGeometryComparator",
+          "wire_sha256": "ae11022b6c785360f739deb9fb0cc0f4eeecf0d0973995cf50d27f7d74f83846"
+        },
+        "false_first_acquisition_alias": "GeometryCaptureBindingMismatch"
+      }
+    },
+    "310": {
+      "installed_package": "/private/tmp/layauto-w008-final-installed-310/lib/python3.10/site-packages/layauto_v2/__init__.py",
+      "runtime_file_count": 86,
+      "files_equal_source_manifest": true,
+      "direct_url": {
+        "archive_info": {},
+        "url": "file:///private/tmp/layauto-w008/docs/tasks/W008/verification/packages/layauto-0.2.0.tar.gz"
+      },
+      "input_artifact_actual_sha256": "e600e0735dadae75248675fcc4ec18355b48a29847e4af4424714bc5ec5345b4",
+      "direct_url_records_archive_hash": false,
+      "checks": {
+        "status": "passed",
+        "local_records": 40,
+        "base_fragments": 41,
+        "independent_body_shapes": 6,
+        "projected_records": 38,
+        "exact_units_and_per_record_coverage": true,
+        "w005_w006_w007_w008_no_io_equivalence": true,
+        "attempt_phase": "unsealed",
+        "terminal": null,
+        "direct_wire_sha256": "055fddecf11fcfda61f4b2fc6f8b600c27c5a56cec5ff0b2b37cd6052b153f54",
+        "readback_wire_sha256": "7a2a2a7ba00943e20816b166349caac48b37c5201c20747f66f4a9702bce62c1",
+        "unsupported_comparator": {
+          "issue": "UnsupportedGeometryComparator",
+          "wire_sha256": "ae11022b6c785360f739deb9fb0cc0f4eeecf0d0973995cf50d27f7d74f83846"
+        },
+        "false_first_acquisition_alias": "GeometryCaptureBindingMismatch"
+      }
+    }
+  },
+  "note": "pip 23.0.1 records the sdist file URI with empty archive_info; actual installation command, immutable input archive and all86 installed runtime hashes supply its source evidence."
+}

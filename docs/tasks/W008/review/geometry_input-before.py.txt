@@ -1,0 +1,214 @@
+"""Capture-authenticated, IO-free input for the drawn-geometry component.
+
+The existing semantic receipt remains unchanged.  Re-decoding here authenticates
+only the already captured bytes; it neither acquires files nor resolves aliases.
+"""
+from __future__ import annotations
+
+from dataclasses import dataclass
+from typing import NoReturn, cast
+
+from layauto_v2.domain.codec import FrozenMap, canonical_bytes, freeze_map, rational
+from layauto_v2.domain.evidence import EvidenceRecord, SourceFile
+from layauto_v2.domain.publication import (
+    EvidenceAudit, InputCheckpoint, InputsReady, ParseAudit, ToolRunResult,
+)
+from layauto_v2.domain.results import EvidenceIssue, InputError, ParseResult
+from layauto_v2.importers.config import load_document, validate_document, validate_tech
+from layauto_v2.importers.gds import parse_gds
+from .contracts import NormalizationInput, ReadbackBinding
+from .input import from_inputs_ready, from_parse_result
+
+VERSION = 'layauto-geometry-input/1'
+_OWNERS = ('drawn', 'derived', 'physical', 'formats', 'coordinate', 'rules')
+_POLICIES = ('export_policy', 'validation_policy', 'limitations')
+
+
+class GeometryInputError(ValueError):
+    """Located expected capture mismatch, retaining the prior completed facts."""
+
+    def __init__(self, issue: EvidenceIssue, completed: tuple[EvidenceRecord, ...]) -> None:
+        self.issue = issue
+        self.completed = completed
+        super().__init__(issue.message)
+
+
+def _verify(parse: ParseResult) -> None:
+    assert parse.value is not None  # Guaranteed by the existing semantic receipt.
+    value = parse.value
+    records = {record.kind: record for record in parse.completed}
+    sources = {source.uri: source for source in parse.sources}
+
+    def fail(source: SourceFile, field: str, message: str,
+             code: str = 'GeometryCaptureBindingMismatch') -> NoReturn:
+        raise GeometryInputError(EvidenceIssue('binding', code, message, source.ref(field=field)),
+                                 parse.completed)
+
+    def capture(kind: str, index: int, arity: int) -> SourceFile:
+        record = records[kind]
+        fallback = sources[record.sources[0].uri]
+        if len(record.sources) != arity:
+            fail(fallback, '/', kind + ' evidence has incorrect source-role arity')
+        reference = record.sources[index]
+        source = sources[reference.uri]
+        if reference != source.ref():
+            fail(source, '/', kind + ' source role must name the complete captured file')
+        return source
+
+    def same(actual: object, expected: object, source: SourceFile, field: str) -> None:
+        if canonical_bytes(actual) != canonical_bytes(expected):
+            fail(source, field, 'captured bytes differ from accepted ' + field + ' evidence')
+
+    def document(source: SourceFile, kind: str, *, max_bytes: int = 1_000_000,
+                 max_depth: int = 32) -> FrozenMap:
+        # Deliberately catch only the decoder's expected failure. Unexpected
+        # ValueError/TypeError/KeyError and process interrupts retain identity.
+        try:
+            doc = load_document(source, max_bytes=max_bytes, max_depth=max_depth)
+            validate_document(doc, kind, source)
+        except InputError as exc:
+            raise GeometryInputError(exc.issue, parse.completed) from exc
+        return doc
+
+    def selected(uri: object, actual: SourceFile, owner: SourceFile, field: str,
+                 sha: object | None = None) -> None:
+        if type(uri) is not str or not uri:
+            fail(owner, field, 'source selection requires a nonempty URI')
+        # The W005 source-role receipt fixes acquisition identity. A directly
+        # captured URI cannot be swapped for a sibling with identical bytes.
+        # A missing URI can be a historical symlink alias; never resolve it here.
+        if uri in sources and sources[uri].ref() != actual.ref():
+            fail(owner, field, 'declared URI selects another captured source role')
+        if sha is not None and sha != actual.sha256:
+            fail(owner, field, 'declared hash differs from the selected source role')
+
+    site_source = capture('config', 0, 1)
+    bundle_source = capture('tech', 0, 7)
+    site = document(site_source, 'site')
+    bundle = document(bundle_source, 'tech')
+    same(site, value['config'], site_source, '/config')
+    same(bundle, value['tech_bundle'], bundle_source, '/tech_bundle')
+    selected(site['tech_ref'], bundle_source, site_source, '/tech_ref')
+    owner_sources = {name: capture('tech', index + 1, 7) for index, name in enumerate(_OWNERS)}
+    if len({source.uri for source in owner_sources.values()}) != len(_OWNERS):
+        fail(bundle_source, '/owners', 'tech owners must have distinct captured source roles')
+    owners = cast(FrozenMap, bundle['owners'])
+    tech_docs: dict[str, object] = {}
+    for name, source in owner_sources.items():
+        doc = document(source, name)
+        declaration = cast(FrozenMap, owners[name])
+        selected(declaration['path'], source, bundle_source, '/owners/' + name + '/path')
+        if set(cast(tuple[str, ...], declaration['keys'])) != set(doc) - {'schema_version'}:
+            fail(bundle_source, '/owners/' + name + '/keys', 'owner keys differ from their captured document')
+        tech_docs[name] = doc
+    tech = freeze_map(tech_docs)
+    try:
+        validate_tech(tech, owner_sources)
+    except InputError as exc:
+        raise GeometryInputError(exc.issue, parse.completed) from exc
+    same(tech, value['tech'], bundle_source, '/tech')
+    formats = cast(FrozenMap, tech['formats'])
+    limits = cast(FrozenMap, formats['limits'])
+    max_bytes = cast(int, limits['max_bytes_per_text_file'])
+    max_depth = cast(int, limits['max_json_depth'])
+    bootstrap = ((site_source, 'site'), (bundle_source, 'tech')) + tuple(
+        (source, name) for name, source in owner_sources.items())
+    for source, kind in bootstrap:
+        document(source, kind, max_bytes=max_bytes, max_depth=max_depth)
+
+    inputs = cast(FrozenMap, site['inputs'])
+    input_sources = {kind: capture(kind, 0, 1) for kind in ('gds', 'source_cdl', 'target_cdl', 'header')}
+    body_source = capture('body', 0, 2)
+    gds_source = input_sources['gds']
+    if records['body'].sources[1] != records['gds'].sources[0]:
+        fail(body_source, '/source_gds', 'body evidence backlink is not the selected GDS role')
+    for key, source in (('gds', gds_source), ('source_cdl', input_sources['source_cdl']),
+                        ('target_cdl', input_sources['target_cdl']), ('query_header', input_sources['header']),
+                        ('body_context', body_source)):
+        selected(inputs[key], source, site_source, '/inputs/' + key)
+
+    policy_sources = {kind: capture('policies', index, 3) for index, kind in enumerate(_POLICIES)}
+    for kind, source in policy_sources.items():
+        policy = document(source, kind, max_bytes=max_bytes, max_depth=max_depth)
+        same(policy, cast(FrozenMap, value['policies'])[kind], source, '/' + kind)
+        key = 'limitation_ref' if kind == 'limitations' else kind + '_ref'
+        selected(site[key], source, site_source, '/' + key)
+
+    header_source = input_sources['header']
+    header = document(header_source, 'header', max_bytes=max_bytes, max_depth=max_depth)
+    body = document(body_source, 'body', max_bytes=max_bytes, max_depth=max_depth)
+    same(header, value['header'], header_source, '/header')
+    same(body, value['body'], body_source, '/body')
+    for role, source in (('layout', gds_source), ('source_netlist', input_sources['source_cdl']),
+                         ('target', input_sources['target_cdl'])):
+        declaration = cast(FrozenMap, header[role])
+        selected(declaration['uri'], source, header_source, '/' + role, declaration['sha256'])
+    selected(header['limitations_ref'], policy_sources['limitations'], header_source, '/limitations_ref')
+    try:
+        gds = parse_gds(gds_source, tech)
+    except InputError as exc:
+        raise GeometryInputError(exc.issue, parse.completed) from exc
+    same(gds, value['gds'], gds_source, '/gds')
+    contract = cast(FrozenMap, formats['unit_scale_contract'])
+    if cast(FrozenMap, header['top_identities'])['layout'] != gds['top']:
+        fail(header_source, '/top_identities/layout', 'header layout top differs from captured GDS')
+    if header['geometry_unit_contract'] != contract['id']:
+        fail(header_source, '/geometry_unit_contract', 'header geometry unit contract differs from selected formats owner')
+    if header['mode'] != site['mode']:
+        fail(header_source, '/mode', 'header acquisition mode differs from selected site')
+    query_unit = cast(FrozenMap, header['query_unit'])
+    if rational(query_unit['metres_per_unit']) != rational(contract['nominal_user_unit_m']):
+        fail(header_source, '/query_unit/metres_per_unit', 'query unit differs from selected nominal user unit')
+
+    body_gds = cast(FrozenMap, body['source_gds'])
+    selected(body_gds['uri'], gds_source, body_source, '/source_gds', body_gds['sha256'])
+    if body['top'] != gds['top']:
+        fail(body_source, '/top', 'body context top differs from captured GDS')
+    profile = cast(FrozenMap, cast(FrozenMap, tech['physical'])['body_context_profile'])
+    for field, expected in (('profile_ref', profile['id']), ('operator_ref', profile['operator_ref']),
+                            ('classification', 'synthetic'), ('read_only', True), ('exported', False),
+                            ('production_matched_body_evidence', False),
+                            ('coordinate_frame', 'source local frame; identity transform')):
+        if body[field] != expected:
+            fail(body_source, '/' + field, 'body context scope/profile differs from selected input contract')
+    if body['lvs_status'] not in ('not_run', 'unknown'):
+        fail(body_source, '/lvs_status', 'body context cannot claim matched production evidence')
+    unit = cast(FrozenMap, body['unit'])
+    if unit['name'] != 'nm' or rational(unit['metres_per_tick']) != rational(contract['nominal_tick_m']):
+        fail(body_source, '/unit', 'body context unit differs from selected nominal GDS unit')
+
+
+@dataclass(frozen=True)
+class GeometryInput:
+    semantic_input: NormalizationInput
+    schema_version: str = VERSION
+
+    def __post_init__(self) -> None:
+        if self.schema_version != VERSION or type(self.semantic_input) is not NormalizationInput:
+            raise ValueError('invalid geometry input schema or semantic receipt')
+        _verify(self.semantic_input.parse)
+
+    @property
+    def parse(self) -> ParseResult:
+        return self.semantic_input.parse
+
+    @property
+    def value(self) -> FrozenMap:
+        return self.semantic_input.value
+
+    @property
+    def readback(self) -> ReadbackBinding | None:
+        return self.semantic_input.readback
+
+
+def geometry_from_normalization_input(value: NormalizationInput) -> GeometryInput:
+    return GeometryInput(value)
+
+
+def geometry_from_parse_result(result: ParseResult) -> GeometryInput:
+    return GeometryInput(from_parse_result(result))
+
+
+def geometry_from_inputs_ready(ready: InputsReady, checkpoint: InputCheckpoint, parse_audit: ParseAudit,
+                               tool_run: ToolRunResult, evidence_audits: tuple[EvidenceAudit, ...]) -> GeometryInput:
+    return GeometryInput(from_inputs_ready(ready, checkpoint, parse_audit, tool_run, evidence_audits))

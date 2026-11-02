@@ -1,0 +1,22 @@
+{
+  "source_manifest_sha256": "30b4e446ff6b38f8c06be92916576928b87abdf62d10bc58f1b22ffa34a5f881",
+  "source_entries": 235,
+  "receipt_sha256": "3310f8f8ec5df806dec9f22377124e165fecd47672c3c8c232f1398d5302cb21",
+  "verified_successful_command_count": 13,
+  "checks": [
+    "pytest-311",
+    "pytest-310",
+    "mypy-311",
+    "mypy-310",
+    "build",
+    "create-install-311",
+    "create-install-310",
+    "install-311",
+    "install-310",
+    "pip-check-311",
+    "pip-check-310",
+    "smoke-311",
+    "smoke-310"
+  ],
+  "all_output_hashes_match": true
+}

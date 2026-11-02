@@ -1,0 +1,18 @@
+{
+  "source_files_verified": 235,
+  "local_markdown_links_verified": 59,
+  "diff_check": "passed",
+  "protected_paths_unchanged_relative_to_integrated_pm_head": [
+    "docs/architecture.md",
+    "tests/fixtures",
+    "tests/support",
+    "layauto_v2/importers",
+    "layauto_v2/pipeline.py",
+    "layauto_v2/repository",
+    "docs/current-work.md",
+    "docs/roadmap.md"
+  ],
+  "integrated_pm_head": "2560999021f2551793346187e3c4825276cba2ff",
+  "original_checkout": "W003@765ae5ef4ebf50e6870c5a978795525261d89ff6 with pre-existing .DS_Store modification preserved; separately verified",
+  "reviewer_must_fix_remaining": 0
+}

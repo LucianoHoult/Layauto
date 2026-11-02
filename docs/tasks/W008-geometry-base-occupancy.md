@@ -69,11 +69,34 @@
 
 ## 执行结果（执行）
 
-尚未执行。接手后记录方案、实现版本、A1–A8实际验证与限制；产品/测试变化后重新核对受影响证据，使用项目noreply身份提交推送本分支并核验远端SHA。不得代写reviewer结论或PM验收。
+### E1 执行恢复与方案（2026-11-02）
+
+启动核对时远端W008与指定起点均为`2d5f42258b5a2cf09f686a06c483e2a6915bc48c`。本机原checkout在W003，已有`.DS_Store`修改；保持不动，另建`/private/tmp/layauto-w008` worktree追踪本任务分支。执行角色未改PM阶段、current-work、架构或已验收fixture/答案。
+
+[内部方案](W008/plan.md)与[独立方案review](W008/plan-review.md)先于产品实现。IR-01要求显式核对body双来源、header/body的top/unit/profile/scope跨文档绑定，已按review意见补充后实施。方案和review身份见报告；该review不代表代码或PM验收。
+
+已实现capture-authenticated GeometryInput、完整LayoutDraft、精确单位转换、drawn-layer-edges/1基础分区、多occupant BaseOccupancy及closed/versioned wire。正常40条本地drawn记录形成41片段；body上下文独立保留。完整执行、A1–A8与限制见[执行交接](W008/execution.md)。产品/测试最终身份见下段；独立review结论由reviewer维护。
+
+
+### E2 最终验证与交付身份（2026-11-02）
+
+最终235文件manifest SHA-256：`30b4e446ff6b38f8c06be92916576928b87abdf62d10bc58f1b22ffa34a5f881`。Python3.11.5与3.10.22各**730 passed**（保留553项＋新增177项），双strict typing各40模块通过；新wheel/sdist、两套全新安装、pip check及源码外`-I -B`真实W005–W008组合/错误/codec smoke均通过。两包与两安装的各86个runtime文件逐一等于受测源码。命令、原始输出、包实物、安装来源及hash见[最终回执](W008/verification/receipt.json)、[包身份](W008/verification/package-identity.json)、[安装身份](W008/verification/installation-identity.json)。
+
+独立代码review发现CR-01的首次获取URI/历史alias混淆；已修复，补足直接构造、嵌套wire、15角色反例及真实alias回归，修后完整重跑与重建结果为上述最终身份。修前713项与旧包另存`W008/verification/pre-cr01/`，不混充最终证据。finding原文及独立复核归[代码review](W008/code-review.md)。
+
+执行期间远端新增PM文档提交`2560999021f2551793346187e3c4825276cba2ff`，已安全快进整合并保留本轮全部改动。该提交仅登记U06后续需求，不扩展本轮范围。提交推送沿用`LucianoHoult@users.noreply.github.com`；最终交付SHA在Git与执行回复核验，PM从本分支接收。未自行验收、合并main、删除分支或启动下一任务；完整工艺坐标、physical/body/CUT/terminal解释与正式状态发布均未实现。
 
 ## Review 结论（reviewer）
 
-接口及产品review尚未执行。由未参与被审变更者保存受审版本、独立判据、可复现findings、修正与复核依据；不把设计可执行写成代码已通过。
+### R1 独立方案、代码及修正复核（2026-11-02）
+
+Reviewer `/root/plan_review` 未参与实现；输入绑定专项由独立的 `/root/plan_review/role_probe` 只读复核。[方案 review](W008/plan-review.md) 的 IR-01 已明确 header/body 跨文档及双来源绑定并复核关闭；[代码 review](W008/code-review.md) 的 CR-01 发现“缺失首次采集 URI 被误当作历史 alias”，已由执行者修正并独立复核关闭。**剩余必须修正项 0，可交 PM 核验接收；本节不是 PM 验收或合并决定。**
+
+最终受审材料绑定 [235 文件清单](W008/verification/source-manifest.json)，SHA-256 `30b4e446ff6b38f8c06be92916576928b87abdf62d10bc58f1b22ffa34a5f881`。Reviewer 重算全部条目，零差异；起点 `2d5f42258b5a2cf09f686a06c483e2a6915bc48c`，审查期间整合的 `2560999021f2551793346187e3c4825276cba2ff` 仅补 PM 后续需求文档，产品及清单身份未变。最终提交/远端 SHA 由执行者提交后报告，不虚构预先提交身份。
+
+Reviewer 实跑修后输入/codec **127 项**（3.11）及 CR-01/alias/wire **19 项**（3.10），原反例已定位拒绝；另独立执行 1,000 组数学分区、实际空 GDS 草稿/codec，以及最终 wheel 3.11、sdist 3.10 两套源码外 `-I -B` 组合 smoke。独立核对两个包和两个安装目录各 **86 项 runtime 文件**，均匹配受审源；完整 [13 项命令回执与日志 hash](W008/review/final-receipt-audit.json) 核验通过。两解释器各 **730 项完整测试**、两次 strict mypy **40 模块**及构建/干净安装采用已核验最终执行回执，未冒称 reviewer 重跑全矩阵或重建安装。原 713 项及旧包只保留修前历史身份。
+
+A1–A8 的逐项依据、原 finding/反例、修正关闭和直接运行/采用证据区别见代码报告。当前交付严格限于捕获绑定的全部 drawn geometry 与内部精确 base occupancy；完整工艺坐标、合法移动、物理连通、body/extraction、发布与完整 M1/生产验证仍按原任务后置。
 
 ## PM 验收与交接（PM）
 
