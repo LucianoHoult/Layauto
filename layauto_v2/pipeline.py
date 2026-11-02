@@ -164,8 +164,11 @@ def prepare_inputs(repository: PublicationRepository, request: RunRequest) -> Pr
             try:
                 tool = capture.freeze()
             except Exception as exc:
-                failure = StageFailure(request.run_id, 'internal', 'InternalStageFailure',
-                                       safe_exception_message(exc), causes=exception_causes(exc))
+                # Keep the stage's original cause chain. The unavailable
+                # result separately describes this diagnostic freeze failure.
+                if failure is None:
+                    failure = StageFailure(request.run_id, 'internal', 'InternalStageFailure',
+                                           safe_exception_message(exc), causes=exception_causes(exc))
                 return _unavailable(repository, request, 'freeze_tool_run', exc,
                                     parse=parse, evidence=parser.completed, failure=failure,
                                     sources=capture.sources, events=capture.events)
