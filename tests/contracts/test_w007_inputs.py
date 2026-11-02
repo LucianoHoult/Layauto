@@ -9,7 +9,7 @@ from pathlib import Path
 import pytest
 
 from layauto_v2.domain.circuit import semantic_digest
-from layauto_v2.domain.normalization_codec import record_digest
+from layauto_v2.normalization.codec import record_digest
 from layauto_v2.domain.publication import InputsReady
 from layauto_v2.normalization import from_inputs_ready, from_parse_result, normalize
 from layauto_v2.pipeline import prepare_inputs
@@ -534,3 +534,90 @@ def test_reordered_real_requests_preserve_multiple_polygon_ordinals_and_authored
             declaration = row['field_sources']['record_id']['sources'][0]
             assert declaration['json_pointer'] == f'/requests/{index}/record_ids/{ordinal}'
             assert declaration['lexeme'] == label
+
+
+@pytest.mark.parametrize('document_kind', ['yaml', 'yaml_unicode_escape', 'json_unicode_escape'])
+def test_captured_requests_keep_safe_yaml_unicode_and_ordering_support(tmp_path, monkeypatch, document_kind):
+    import json
+    import yaml
+    from layauto_v2.normalization import _validation
+
+    root = ready_copy(tmp_path)
+    requests = read_json(root / 'query/requests.json')
+    requests['source'] = 'captured request selection \U0001f600'
+    label = 'D\U0001f600' if document_kind != 'yaml' else 'D0'
+    requests['requests'][0]['record_ids'] = [label]
+    requests['requests'].reverse()
+    if document_kind == 'json_unicode_escape':
+        text = json.dumps(requests, ensure_ascii=True)
+        assert '\\ud83d\\ude00' in text
+        selected_path = 'query/selected-requests.data'
+    else:
+        text = yaml.safe_dump(requests, sort_keys=False, allow_unicode=True)
+        assert not text.startswith('{')
+        selected_path = 'query/selected-requests.input'
+        if document_kind == 'yaml_unicode_escape':
+            text = text.replace('object: Q17', 'object: "Q\\u0031\\u0037"')
+            text = text.replace('D\U0001f600', '"D\\uD83D\\uDE00"')
+            assert '\\uD83D\\uDE00' in text
+    (root / selected_path).write_text(text, encoding='utf-8')
+    (root / 'query/requests.json').unlink()
+    header = read_json(root / 'query/header.json')
+    request_ref = next(ref for ref in header['closure']['entries'] if ref['uri'] == 'query/requests.json')
+    request_ref['uri'] = selected_path
+    write_json(root / 'query/header.json', header)
+    rebind(root)
+    parsed = read(root)
+    captured = next(source for source in parsed.sources if source.uri == selected_path)
+    calls = []
+    original = _validation.load_document
+
+    def decode_captured(source, **limits):
+        calls.append(source)
+        assert source is captured or source == captured
+        return original(source, **limits)
+
+    def no_io(*args, **kwargs):
+        pytest.fail('decoding captured request bytes must not reopen files')
+
+    with monkeypatch.context() as patch:
+        patch.setattr(_validation, 'load_document', decode_captured)
+        patch.setattr(Path, 'open', no_io)
+        patch.setattr(Path, 'read_bytes', no_io)
+        patch.setattr(Path, 'read_text', no_io)
+        patch.setattr(Path, 'resolve', no_io)
+        patch.setattr(builtins, 'open', no_io)
+        result = normalize(from_parse_result(parsed))
+    assert calls and result.status == 'success'
+    assert result.value.differences == ()
+    seeds = {seed.record['record_id']: seed for seed in result.value.device_seeds}
+    assert set(seeds) == {label, 'D1'}
+    seed = seeds[label]
+    assert seed.semantic_id.name == 'MN0' and seed.query_key.identity == 'Q17'
+    assert tuple((exact(point['x']), exact(point['y'])) for point in seed.record['vertices_nm']) == ((58, 20), (58, 70), (62, 70), (62, 20))
+    record_source = seed.record['field_sources']['record_id']['sources'][0]
+    assert record_source['path'] == selected_path
+    assert record_source['json_pointer'] == '/requests/5/record_ids/0'
+    assert record_source['lexeme'] == label
+
+
+def test_captured_request_decoder_reuses_selected_byte_and_depth_limits(tmp_path, monkeypatch):
+    from layauto_v2.normalization import _validation
+    root = ready_copy(tmp_path)
+    formats = read_json(root / 'tech/formats.json')
+    formats['limits']['max_bytes_per_text_file'] = 100000
+    formats['limits']['max_json_depth'] = 16
+    write_json(root / 'tech/formats.json', formats)
+    rebind(root)
+    parsed = read(root)
+    calls = []
+    original = _validation.load_document
+
+    def selected_limits(source, **limits):
+        calls.append(limits)
+        return original(source, **limits)
+
+    monkeypatch.setattr(_validation, 'load_document', selected_limits)
+    result = normalize(from_parse_result(parsed))
+    assert result.status == 'success'
+    assert calls and all(limits == {'max_bytes': 100000, 'max_depth': 16} for limits in calls)

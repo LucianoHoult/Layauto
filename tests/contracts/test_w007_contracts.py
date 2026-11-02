@@ -16,7 +16,7 @@ from layauto_v2.domain.circuit import semantic_digest
 from layauto_v2.domain.codec import canonical_bytes, decode
 from layauto_v2.domain.evidence import EvidenceRecord
 from layauto_v2.domain.identifiers import CellId, DeviceId, NetId
-from layauto_v2.domain.normalization_codec import decode_record, encode_record, record_digest
+from layauto_v2.normalization.codec import decode_record, encode_record, record_digest
 from layauto_v2.domain.publication import InputsReady
 from layauto_v2.normalization import from_inputs_ready, from_parse_result, normalize
 from layauto_v2.pipeline import prepare_inputs
@@ -286,7 +286,7 @@ def test_hashseed_stability_in_fresh_processes_for_full_normalized_result(accept
 from pathlib import Path
 from layauto_v2.importers import read_inputs
 from layauto_v2.normalization import from_parse_result, normalize
-from layauto_v2.domain.normalization_codec import record_digest
+from layauto_v2.normalization.codec import record_digest
 from layauto_v2.domain.circuit import semantic_digest
 result = normalize(from_parse_result(read_inputs(Path(%r))))
 print(record_digest(result))
@@ -305,7 +305,7 @@ def test_normalization_and_new_domain_keep_pure_dependency_boundaries():
     import layauto_v2
     root = Path(layauto_v2.__file__).resolve().parent
     files_to_check = list((root / 'normalization').glob('*.py')) + [root / 'domain' / name for name in (
-        'circuit.py', 'identifiers.py', 'intent.py', 'normalization.py', 'normalization_codec.py')]
+        'circuit.py', 'identifiers.py', 'intent.py', 'source_location.py')]
     assert files_to_check
     forbidden = ('pathlib', 'os', 'io', 'subprocess', 'layauto_v2.importers',
                  'layauto_v2.tooling', 'layauto_v2.repository', 'layauto_v2.pipeline',
@@ -320,7 +320,12 @@ def test_normalization_and_new_domain_keep_pure_dependency_boundaries():
                 modules = [node.module or '']
             else:
                 continue
-            violations.extend((str(path), module) for module in modules if module.startswith(forbidden))
+            allowed_decoder = (path.parent.name == 'normalization' and path.name == '_validation.py'
+                               and isinstance(node, ast.ImportFrom)
+                               and node.module == 'layauto_v2.importers.config'
+                               and {alias.name for alias in node.names} <= {'load_document', 'validate_document'})
+            if not allowed_decoder:
+                violations.extend((str(path), module) for module in modules if module.startswith(forbidden))
         for node in ast.walk(tree):
             if isinstance(node, ast.Call) and isinstance(node.func, ast.Name):
                 assert node.func.id not in ('open', 'hash', 'eval', 'exec'), (path, node.lineno)
@@ -484,7 +489,7 @@ def test_cr05_real_unadmitted_source_cannot_be_relabelled_as_success(tmp_path, c
     the other cases retain their real forbidden NF/M/swap evidence unchanged.
     """
     from layauto_v2.domain.identifiers import QueryKey
-    from layauto_v2.domain.normalization import (DeviceIdentity, NetIdentity,
+    from layauto_v2.normalization.contracts import (DeviceIdentity, NetIdentity,
         DeviceAnnotationSeed, NetAnnotationSeed, NormalizationResult)
     from w005_cases import apply_case, copy_input, without_cache
 
@@ -596,3 +601,58 @@ def test_cr01_fr2_record_id_and_object_must_use_the_same_request_entry(accepted)
                       else record for record in parsed.completed)
     with pytest.raises(ValueError):
         from_parse_result(replace(parsed, value=value, completed=completed))
+
+
+def test_cr01_fr3_geometry_plus_metadata_permutation_cannot_rebind_captured_requests(accepted):
+    """Metadata is derived evidence; captured request object/path remains binding."""
+    parsed = accepted.input.parse
+    value = mutable(parsed.value)
+    first, second = value['query']['device_regions']['records']
+    identity_fields = {'record_id', 'layout_instance', 'schematic_instance', 'field_sources'}
+    for field in set(first) - identity_fields:
+        first[field], second[field] = second[field], first[field]
+        first['field_sources'][field], second['field_sources'][field] = (
+            second['field_sources'][field], first['field_sources'][field])
+    responses = value['query']['_format_metadata']['responses']
+    responses[0], responses[1] = responses[1], responses[0]
+    completed = tuple(replace(record, payload=value['query']) if record.kind == 'query'
+                      else record for record in parsed.completed)
+    forged = replace(parsed, value=value, completed=completed)
+    assert forged.sources == parsed.sources
+    with pytest.raises(ValueError):
+        from_parse_result(forged)
+
+
+@pytest.mark.parametrize('via', ['adapter', 'wire'])
+def test_captured_requests_decoder_input_error_becomes_invalid_dto(accepted, monkeypatch, via):
+    from layauto_v2.normalization import _validation
+    from layauto_v2.domain.results import InputError
+    encoded = encode_record(accepted.input)
+
+    def bad_captured_document(source, **kwargs):
+        raise InputError('parse', 'InvalidDocumentSyntax', 'injected invalid captured request', source.ref(line=1, column=1))
+
+    monkeypatch.setattr(_validation, 'load_document', bad_captured_document)
+    with pytest.raises(ValueError):
+        if via == 'adapter':
+            from_parse_result(accepted.input.parse)
+        else:
+            decode_record(encoded)
+
+
+@pytest.mark.parametrize('via', ['adapter', 'wire'])
+@pytest.mark.parametrize('failure', [RuntimeError('decoder implementation bug'), KeyboardInterrupt(), SystemExit(29)])
+def test_captured_requests_decoder_unexpected_errors_propagate_unchanged(accepted, monkeypatch, via, failure):
+    from layauto_v2.normalization import _validation
+    encoded = encode_record(accepted.input)
+
+    def broken_decoder(*args, **kwargs):
+        raise failure
+
+    monkeypatch.setattr(_validation, 'load_document', broken_decoder)
+    with pytest.raises(type(failure)) as raised:
+        if via == 'adapter':
+            from_parse_result(accepted.input.parse)
+        else:
+            decode_record(encoded)
+    assert raised.value is failure
