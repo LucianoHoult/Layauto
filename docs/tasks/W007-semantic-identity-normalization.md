@@ -66,9 +66,45 @@
 
 开发解释器为Python3.12.14，另准备Python3.10.22。实施前基线实际为405项通过及strict mypy 21文件通过；这是原W005/W006基线，不是W007最终验证。[环境记录](W007/verification/environment.json)保留版本及依赖。产品与独立手工判据测试在分离worktree开发，由执行者集成。后续最终测试、代码review与交接证据在此追加；执行者不写reviewer或PM结论。
 
+### E2. 实现、最终验证与交付（2026-11-02，执行）
+
+最终产品与测试提交为 **`0f879f01acbeac033173d0b6c6257c376bb9272a`**；其后的本次交付只追加执行/review文档及证据，不改变被测代码。入口为 `layauto_v2.normalization.from_parse_result`、`from_inputs_ready` 和 `normalize`；使用示例见[README](../../README.md#semantic-normalization-component)。domain保留typed IDs、完整source/target语义、typed differences及纯source-location转换；normalization持有中立输入/结果、聚合校验、codec、identity/seeds与组件组合。
+
+实现保存全部cell/有序ports/globals、器件模型与有序端子、net membership和六个参数轴；exact Fraction/token、单位、lexeme及字段来源均保留。source与target独立，结构/模型/端子/全部参数差异逐项保留before/after、稳定ID、来源与后续capability义务。query-run身份只作backlink，exact polygon/quality/kind等留在独立seeds。C08/C09/C10分别返回定位组件错误；C13的4n→5n是非空channel_length目标差异，不产生pre-context terminal。无差异只代表所选comparator下语义相等。
+
+按独立review反例补齐同capture字段归属、完整记录覆盖、net来源、集合canonical顺序、profile owner定位及公开success准入守卫；保留reader对tab-X的原行为。FR3的requests来源绑定按[独立补审方案](W007/interface-review.md#fr3-捕获请求文档锚定补审)实现：只对同一捕获SourceFile.data复用已有安全JSON/YAML decoder和所选limits，不读取路径或扩大输入语法。专属合同移至normalization以保持domain依赖方向；纯SourceRef转换最终单列 `domain/source_location.py`，既有evidence实现未改。nested wire对decoder意外异常的传播已修复并纳入回归。原findings、修正前输出与reviewer关闭依据均保存在[代码review](W007/code-review.md)，执行者不代写其结论。
+
+| 判据 | 实际完成与可访问证据 |
+| --- | --- |
+| A1 | 真实W005 reader及W006 InputsReady/repository readback适配同一输入；禁IO、alias、readback关联拒绝、attempt/refs/terminal不推进见[输入链测试](../../tests/contracts/test_w007_inputs.py) |
+| A2 | 按CDL/tech独立手写的器件、端口、端子、net和六轴exact期望，全部top、format-only重排及source/target独立性；手工判据见[w007_cases.py](../../tests/contracts/w007_cases.py) |
+| A3 | 第二套合法query重命名/重排、缺失/未知/冲突xref、来源成组交换反例及完整identity/seeds；不以名字相似或fixture常量作runtime回退 |
+| A4 | 临时复制/重绑真实C08/C09/C10，经reader成功后才到source组件准入；另覆盖M、swap及非法public success重标 |
+| A5 | C13完整L差异、全部轴、多delta、cell/device/net结构及ordered ports/terminals/model变化；target义务不因source限制或resize=false丢失 |
+| A6 | [合同测试](../../tests/contracts/test_w007_contracts.py)覆盖递归不可变、schema/typed ref/聚合引用、wire roundtrip、跨hash-seed digest、混源拒绝及意外Exception/interrupt同对象传播 |
+| A7 | 原405项与新增148项组成最终553项；双解释器全部回归、strict typing、新包/干净安装/源码外smoke结果如下；包括W005/W006与IPMR-01 |
+
+实际环境为Linux x86_64；开发解释器 `/workspace/.venvs/layauto/bin/python` **3.12.14**，最低版本环境 `/workspace/work/w007-venv310/bin/python` **3.10.22**。fixture为 `tests/fixtures/w003_m1`，profile为 `synthetic_static_fin_context_no_change_v2`；只在临时副本构造派生输入并重绑既有header，未修改已验收输入、答案、历史报告。完整环境/依赖、每条实际argv/cwd/UTC/耗时/退出码与原始输出在[最终验证索引](W007/verification/README.md)和[汇总回执](W007/verification/receipt.json)。
+
+| 实际检查 | 结果 |
+| --- | --- |
+| 两解释器各 `python -B -m pytest -p no:cacheprovider tests/unit tests/contracts -q` | 3.12：**553 passed / 256.34s**；3.10：**553 passed / 342.94s** |
+| 两解释器各 `python -B -m mypy --cache-dir <外部cache>` | 各 **33 source files，无问题**，strict配置覆盖新模块 |
+| 开发解释器 `python -B -m build --outdir /workspace/work/w007-final-artifacts` | 新sdist与wheel构建成功；每包83个runtime文件逐字节匹配被测清单 |
+| 两套fresh venv安装该wheel，并从 `/workspace/work/w007-final-smoke` 执行独立脚本 | 均exit 0；正常语义相等、C08拒绝、C13 exact差异/义务、W006 readback及wire；载入对应site-packages |
+| 开发/最低版本和两套wheel环境 `python -m pip check` | 四次均exit 0，无依赖破损 |
+
+最终[源码清单](W007/verification/source-manifest.json)覆盖101项runtime/tests/config，content SHA-256为 `f051ae0fecab66a1104e0aa609cc8450c1cf480a99384113027dc5a6f40976a9`；[包身份](W007/verification/package-identity.json)记录清单文件SHA及wheel `626fcf795a3bc00f672eee0e5f869e10e4957a6f1e02145e6c9657eb0c8ff7e9`、sdist `47669e27dc044d3e5e9ec76759a2118479bba796f422cedc5e1f5ca4f471b7ea`。实际包与可移植smoke脚本随Git交付。旧6712cbc候选的530项验证另存历史目录，明确不作为最终修后通过依据。[14处保护路径](W007/verification/protected-paths.json)与PM交接Git对象相同，含fixture、legacy、W005/W006、原evidence/publication、架构和current-work；没有扩展pipeline/repository。
+
+未实现/未验证范围仍是完整几何/坐标/occupancy/connectivity/body/extraction、baseline/seal、整轮no_change/terminal、ECO、Stage6及真实EDA/PDK。最终执行/review记录提交到当前W007分支，远端交付完整SHA在推送核对后的交接回复提供；产品/测试身份以上述提交和清单固定。下一步仅交PM核验A1–A7并维护阶段；本执行不自行验收、合并main、删除分支或启动下一任务。
+
 ## Review 结论（reviewer）
 
-产品尚未实施或review。执行期由未参与实现者分别记录接口和最终代码review，保留原finding及逐项修正复核，绑定真实base/head或完整快照。PM派发要求检查另记下节，不代替产品review。
+2026-11-02，独立 reviewer `/root/code_review`（专项 `/root/code_review/dto_review`；均未参与方案、产品或测试实现）：**最终代码 review 通过，剩余必须修正项 0**。受审产品与测试提交 `0f879f01acbeac033173d0b6c6257c376bb9272a`；[完整报告](W007/code-review.md)保留 CR-01–CR-05、补修 FR1–FR3 及执行补查 ER-01 的原始反例、修正和逐项关闭。接口方案及 FR3 依赖调整另经[独立接口 review](W007/interface-review.md)；reviewer 未改产品或测试。
+
+主 reviewer 实跑全部 W007 **148 passed** 和独立原始 probes，确认 source/target/完整差异、query 身份与 seeds、C08/09/10 组件准入、C13 后续目标义务、DTO/wire/immutable/digest、请求来源闭合和异常边界。独立核对最终双解释器完整回归各 **553 passed**（含 W005/W006/IPMR-01）、双 strict mypy **33 文件**、新包及两套干净安装/源码外 smoke 回执；101 个源码/测试/配置 Git blob 与清单、sdist/wheel 各 83 个 runtime 文件、14 处既有保护路径均匹配。[复核回执](W007/review-evidence/final-review.json)与[交付证据审计](W007/review-evidence/delivery-audit.json)绑定上述版本；source-manifest content SHA-256 为 `f051ae0fecab66a1104e0aa609cc8450c1cf480a99384113027dc5a6f40976a9`。
+
+此结论支持交 PM 接收 W007，不是 PM 验收或完整 Stage2/M1 成功。真实 EDA、几何/物理状态、body/extraction、baseline/seal、整轮 no_change/terminal、ECO 和 Stage6 仍按任务边界留后续；本次未合并 main 或启动下一任务。
 
 ## PM 验收与交接（PM）
 

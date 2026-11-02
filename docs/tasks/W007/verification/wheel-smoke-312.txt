@@ -1,0 +1,18 @@
+{
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "installed": "/workspace/work/w007-final-wheel312/lib/python3.12/site-packages/layauto_v2/__init__.py",
+  "cwd": "/workspace/work/w007-final-smoke",
+  "outcomes": {
+    "normal": {
+      "status": "success",
+      "record_digest": "b01d5567928287f87aabc013dedacea6d08108362415b61e5fa5a29ee5759e58"
+    },
+    "cardinality": "UnsupportedDeviceCardinality",
+    "target_length": {
+      "status": "success",
+      "axis": "channel_length",
+      "delta_id": "95a5c129de7825777bc9ac9a7a624bf69f118314cd3b00101be84016a57e9bdd"
+    },
+    "w006_readback": "success"
+  }
+}

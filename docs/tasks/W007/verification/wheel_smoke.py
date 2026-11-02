@@ -14,7 +14,7 @@ from unittest.mock import patch
 import layauto_v2
 from layauto_v2.domain.publication import InputsReady, RunRequest
 from layauto_v2.domain.circuit import semantic_digest
-from layauto_v2.domain.normalization_codec import encode_record, decode_record, record_digest
+from layauto_v2.normalization.codec import encode_record, decode_record, record_digest
 from layauto_v2.importers import read_inputs
 from layauto_v2.normalization import from_inputs_ready, from_parse_result, normalize
 from layauto_v2.pipeline import prepare_inputs

@@ -1,0 +1,2 @@
+complete geometry/provenance groups swapped between device request objects: success
+[('Q17', FrozenMap(_entries=(('numerator', '110'), ('denominator', '1')))), ('Q93', FrozenMap(_entries=(('numerator', '20'), ('denominator', '1'))))]

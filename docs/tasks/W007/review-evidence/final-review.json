@@ -1,0 +1,147 @@
+{
+  "reviewer": "/root/code_review",
+  "tested_commit": "0f879f01acbeac033173d0b6c6257c376bb9272a",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "cwd": "/workspace/Layauto",
+  "source_manifest_sha256": "5fd13ce5fc1cfb6d9238bb4360027c0054e02e2487cfa8c5e0dd0b36736f2ae7",
+  "source_manifest_files": 101,
+  "source_manifest_verified_before": true,
+  "probe_adaptations": [
+    {
+      "original": "probe.py",
+      "original_sha256": "39eb733bb612217644851075be23e38c4950e74a806b5fa582b1e6d5e9e8aa9c",
+      "adapted": "final-probes/probe.py",
+      "adapted_sha256": "2bf1f506b2a81aeb1b29388a156917308611d6e8603d9f1f591dbfd91cc42aac",
+      "changes": "Only repo bootstrap depth and approved FR3 internal module moves; probe logic unchanged."
+    },
+    {
+      "original": "relabel.py",
+      "original_sha256": "0fe743e012e99961b2b81fbc71c53eca250bd5edca221f0bc7de9a91b5e513d4",
+      "adapted": "final-probes/relabel.py",
+      "adapted_sha256": "8e6fd1e27c77fc136f7a2cc7bca495bcf51a9e3f6beaa4901b65c036fd20ed29",
+      "changes": "Only repo bootstrap depth and approved FR3 internal module moves; probe logic unchanged."
+    },
+    {
+      "original": "readback.py",
+      "original_sha256": "9b27cef48043474f69f72f990d4be0c2e171c2a7371135f5ff8f57a0ab2ad78d",
+      "adapted": "final-probes/readback.py",
+      "adapted_sha256": "58dcd5a1ed4e12693524e044e4c3a8561e489fb08835247f97f86fb6a4ce628e",
+      "changes": "Only repo bootstrap depth and approved FR3 internal module moves; probe logic unchanged."
+    },
+    {
+      "original": "whitespace.py",
+      "original_sha256": "da0c2e75091bef2080ecaa1d82a44fc501f42cd792802b839b7ee1d2b0a86e6d",
+      "adapted": "final-probes/whitespace.py",
+      "adapted_sha256": "2543e8f69c7b1cebf52303d259b954df9128b191e25e0501d9fde1795c0973da",
+      "changes": "Only repo bootstrap depth and approved FR3 internal module moves; probe logic unchanged."
+    },
+    {
+      "original": "seed_capture.py",
+      "original_sha256": "0ae8c48d949d3c2f2624b4d6bce8d643eb23149f41ebd740e8beef7f9f05df29",
+      "adapted": "final-probes/seed_capture.py",
+      "adapted_sha256": "9135732cd885897b928a79794587553948c9253c8761788de12182cbbd7d20f8",
+      "changes": "Only repo bootstrap depth and approved FR3 internal module moves; probe logic unchanged."
+    },
+    {
+      "original": "seed_capture_metadata.py",
+      "original_sha256": "a56bdacc19f0a04781e70aa99148ec1b360161ed5c48075c8a09a71229e029d7",
+      "adapted": "final-probes/seed_capture_metadata.py",
+      "adapted_sha256": "33d4733b0fb458af2160cb7b7b55171730f62ff7ffb2ccde470864966e7b5390",
+      "changes": "Only repo bootstrap depth and approved FR3 internal module moves; probe logic unchanged."
+    }
+  ],
+  "checks": [
+    {
+      "name": "w007-tests",
+      "command": [
+        "/workspace/.venvs/layauto/bin/python",
+        "-B",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "tests/contracts/test_w007_inputs.py",
+        "tests/contracts/test_w007_contracts.py",
+        "-q"
+      ],
+      "returncode": 0,
+      "duration_seconds": 136.855,
+      "output": "final-w007-tests.txt",
+      "output_sha256": "dd3ff54c4ba357123198e134f3977d8ebae1addece36a0e8d3a18863dcf1f90b"
+    },
+    {
+      "name": "original-probe",
+      "command": [
+        "/workspace/.venvs/layauto/bin/python",
+        "-B",
+        "docs/tasks/W007/review-evidence/final-probes/probe.py"
+      ],
+      "returncode": 1,
+      "duration_seconds": 0.906,
+      "output": "final-original-probe.txt",
+      "output_sha256": "ee734fa7b97c139ab62d63787d9abc9b51950138a708087cf0a24ffc4cb4a13d"
+    },
+    {
+      "name": "original-relabel",
+      "command": [
+        "/workspace/.venvs/layauto/bin/python",
+        "-B",
+        "docs/tasks/W007/review-evidence/final-probes/relabel.py"
+      ],
+      "returncode": 1,
+      "duration_seconds": 0.533,
+      "output": "final-original-relabel.txt",
+      "output_sha256": "f7d16d5eb96e470f067c2ab437549f4d5690ce18e0fc44cb548bf6e11698982a"
+    },
+    {
+      "name": "readback",
+      "command": [
+        "/workspace/.venvs/layauto/bin/python",
+        "-B",
+        "docs/tasks/W007/review-evidence/final-probes/readback.py"
+      ],
+      "returncode": 0,
+      "duration_seconds": 16.416,
+      "output": "final-readback.txt",
+      "output_sha256": "8db3623e1891b344af06e15def0a2fe42efc4a6380e3dc666c6afc0e1e135654"
+    },
+    {
+      "name": "whitespace",
+      "command": [
+        "/workspace/.venvs/layauto/bin/python",
+        "-B",
+        "docs/tasks/W007/review-evidence/final-probes/whitespace.py"
+      ],
+      "returncode": 0,
+      "duration_seconds": 0.491,
+      "output": "final-whitespace.txt",
+      "output_sha256": "263dce9e094d177863d3bd9dcad4daa6b755b104c7d01627c7e96c1553b9c2fa"
+    },
+    {
+      "name": "seed-capture",
+      "command": [
+        "/workspace/.venvs/layauto/bin/python",
+        "-B",
+        "docs/tasks/W007/review-evidence/final-probes/seed_capture.py"
+      ],
+      "returncode": 0,
+      "duration_seconds": 1.143,
+      "output": "final-seed-capture.txt",
+      "output_sha256": "e1000d84de4f70c118d5e5b97f26187e882ae59236250e134c3421d512d02995"
+    },
+    {
+      "name": "seed-capture-metadata",
+      "command": [
+        "/workspace/.venvs/layauto/bin/python",
+        "-B",
+        "docs/tasks/W007/review-evidence/final-probes/seed_capture_metadata.py"
+      ],
+      "returncode": 0,
+      "duration_seconds": 0.858,
+      "output": "final-seed-capture-metadata.txt",
+      "output_sha256": "51b2bbaf4d53881d8a1c1cf1d321b1a5699fb23cc793ea42b7c1e58305e18008"
+    }
+  ],
+  "source_manifest_verified_after": true
+}

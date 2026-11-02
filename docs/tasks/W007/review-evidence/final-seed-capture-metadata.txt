@@ -1,0 +1,3 @@
+captured_sources_unchanged True
+request_object_pointers_unchanged ['/requests/0/object', '/requests/1/object']
+REJECT request-ordered response metadata differs from captured requests bytes

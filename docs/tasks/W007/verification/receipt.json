@@ -1,0 +1,267 @@
+{
+  "role": "execution",
+  "tested_commit": "0f879f01acbeac033173d0b6c6257c376bb9272a",
+  "source_manifest": "source-manifest.json",
+  "source_manifest_sha256": "5fd13ce5fc1cfb6d9238bb4360027c0054e02e2487cfa8c5e0dd0b36736f2ae7",
+  "source_manifest_content_sha256": "f051ae0fecab66a1104e0aa609cc8450c1cf480a99384113027dc5a6f40976a9",
+  "runtime_test_config_files": 101,
+  "package_identity": "package-identity.json",
+  "package_identity_sha256": "3437cec551903e42bb8ad4c92191e650934c52d62a7e2ecb2c0982e789f6d9fb",
+  "environment": "environment-final.json",
+  "environment_sha256": "a659c05c596c5fed6587f1085ccf6e0c38d738192c7034e5bb829b07e3c5fc76",
+  "smoke_script": "wheel_smoke.py",
+  "smoke_script_sha256": "59690a77979be8b8a27c5b5b4053d0b5d361bb83f649ffdd52f8190b0d0aeb5b",
+  "smoke_script_matches_outside_source_copy": true,
+  "fixture": "tests/fixtures/w003_m1",
+  "profile": "synthetic_static_fin_context_no_change_v2",
+  "checks": [
+    {
+      "name": "pytest-312",
+      "receipt": "pytest-312.json",
+      "receipt_sha256": "c4320537abbcb8c973be1eaa0dea01f4989aee1ec3287964448d15bb76c22ace",
+      "command": [
+        "/workspace/.venvs/layauto/bin/python",
+        "-B",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "tests/unit",
+        "tests/contracts",
+        "-q"
+      ],
+      "cwd": "/workspace/Layauto",
+      "started_utc": "2026-11-02T10:18:57.914596+00:00",
+      "duration_seconds": 257.121,
+      "exit_code": 0,
+      "log": "pytest-312.txt",
+      "log_sha256": "0c5dd2bbeb8589994c86e7027bd60431c32ec64b573887a27a3aede655fc8568"
+    },
+    {
+      "name": "pytest-310",
+      "receipt": "pytest-310.json",
+      "receipt_sha256": "9d769156f0aefed87830153d7ee4db1ac94eaa2ba16932f3e3f23a40372a3736",
+      "command": [
+        "/workspace/work/w007-venv310/bin/python",
+        "-B",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "tests/unit",
+        "tests/contracts",
+        "-q"
+      ],
+      "cwd": "/workspace/Layauto",
+      "started_utc": "2026-11-02T10:18:57.942976+00:00",
+      "duration_seconds": 343.729,
+      "exit_code": 0,
+      "log": "pytest-310.txt",
+      "log_sha256": "eb484089570a58f5e274a542f23c2e833dd2ac2baed4c930672d25d9dcd23e85"
+    },
+    {
+      "name": "mypy-312",
+      "receipt": "mypy-312.json",
+      "receipt_sha256": "1399e2d8b3586a607e0560db15a4ede570ab9563f9418a5a8cc80fbf13ceaff0",
+      "command": [
+        "/workspace/.venvs/layauto/bin/python",
+        "-B",
+        "-m",
+        "mypy",
+        "--cache-dir",
+        "/workspace/work/w007-mypy312"
+      ],
+      "cwd": "/workspace/Layauto",
+      "started_utc": "2026-11-02T10:18:57.929980+00:00",
+      "duration_seconds": 0.473,
+      "exit_code": 0,
+      "log": "mypy-312.txt",
+      "log_sha256": "81b8a767756bd649de91d7b0c104614fe1e706bce451b754a92161491825cfde"
+    },
+    {
+      "name": "mypy-310",
+      "receipt": "mypy-310.json",
+      "receipt_sha256": "1b6d0b432a041982a6889459c03bab53cfe61719abf9aa3687c307a2c649abed",
+      "command": [
+        "/workspace/work/w007-venv310/bin/python",
+        "-B",
+        "-m",
+        "mypy",
+        "--cache-dir",
+        "/workspace/work/w007-mypy310"
+      ],
+      "cwd": "/workspace/Layauto",
+      "started_utc": "2026-11-02T10:18:58.443082+00:00",
+      "duration_seconds": 0.335,
+      "exit_code": 0,
+      "log": "mypy-310.txt",
+      "log_sha256": "81b8a767756bd649de91d7b0c104614fe1e706bce451b754a92161491825cfde"
+    },
+    {
+      "name": "build",
+      "receipt": "build.json",
+      "receipt_sha256": "00938aa72d243fbc8962063cb98dc3ce4a79d1e3314f850375eaee848914a401",
+      "command": [
+        "/workspace/.venvs/layauto/bin/python",
+        "-B",
+        "-m",
+        "build",
+        "--outdir",
+        "/workspace/work/w007-final-artifacts"
+      ],
+      "cwd": "/workspace/Layauto",
+      "started_utc": "2026-11-02T10:19:17.745779+00:00",
+      "duration_seconds": 3.368,
+      "exit_code": 0,
+      "log": "build.txt",
+      "log_sha256": "cb581e66c1ee2731ccaa69c14b2f0539ac22e6c10ccb75cc768a72b7c979ad98"
+    },
+    {
+      "name": "install-wheel-312",
+      "receipt": "install-wheel-312.json",
+      "receipt_sha256": "e96e44eab080332e8ac8036c468f3d373045b0e015103ce05ba767a2ec0e369a",
+      "command": [
+        "/workspace/work/w007-final-wheel312/bin/python",
+        "-m",
+        "pip",
+        "install",
+        "/workspace/work/w007-final-artifacts/layauto-0.2.0-py3-none-any.whl"
+      ],
+      "cwd": "/workspace/work/w007-final-smoke",
+      "started_utc": "2026-11-02T10:19:40.331545+00:00",
+      "duration_seconds": 9.367,
+      "exit_code": 0,
+      "log": "install-wheel-312.txt",
+      "log_sha256": "a3bdd1fbe6b198adb56c3db832a6d2d5607dd23047aa900f65d55e11e735c668"
+    },
+    {
+      "name": "install-wheel-310",
+      "receipt": "install-wheel-310.json",
+      "receipt_sha256": "3072b2dad88fb4ad51d4dea23a8a748568769a8aaf215886ce93f47ce70f5755",
+      "command": [
+        "/workspace/work/w007-final-wheel310/bin/python",
+        "-m",
+        "pip",
+        "install",
+        "/workspace/work/w007-final-artifacts/layauto-0.2.0-py3-none-any.whl"
+      ],
+      "cwd": "/workspace/work/w007-final-smoke",
+      "started_utc": "2026-11-02T10:19:38.145420+00:00",
+      "duration_seconds": 11.579,
+      "exit_code": 0,
+      "log": "install-wheel-310.txt",
+      "log_sha256": "bc50ebd6ea7bbde3f9d29785b5b3ff55b0d31294b2809c28c20e119685a21b0a"
+    },
+    {
+      "name": "wheel-smoke-312",
+      "receipt": "wheel-smoke-312.json",
+      "receipt_sha256": "6a41ddc97aa460124c223ddd1bf55963bb48c2ae9831c240deed4a695c7c052d",
+      "command": [
+        "/workspace/work/w007-final-wheel312/bin/python",
+        "-B",
+        "/workspace/work/w007-final-smoke/wheel_smoke.py",
+        "/workspace/Layauto/tests/fixtures/w003_m1"
+      ],
+      "cwd": "/workspace/work/w007-final-smoke",
+      "started_utc": "2026-11-02T10:20:13.930133+00:00",
+      "duration_seconds": 33.076,
+      "exit_code": 0,
+      "log": "wheel-smoke-312.txt",
+      "log_sha256": "c33ae6991369fbe4fc23d1bc435a8534f5b012c206b373b5089c160171db8dd4"
+    },
+    {
+      "name": "wheel-smoke-310",
+      "receipt": "wheel-smoke-310.json",
+      "receipt_sha256": "3cb9d850a84e73dd3fe86c27a19f47de16dc38cffe835f63becae51c9c94bf16",
+      "command": [
+        "/workspace/work/w007-final-wheel310/bin/python",
+        "-B",
+        "/workspace/work/w007-final-smoke/wheel_smoke.py",
+        "/workspace/Layauto/tests/fixtures/w003_m1"
+      ],
+      "cwd": "/workspace/work/w007-final-smoke",
+      "started_utc": "2026-11-02T10:20:13.946098+00:00",
+      "duration_seconds": 36.63,
+      "exit_code": 0,
+      "log": "wheel-smoke-310.txt",
+      "log_sha256": "02e457b0edd21541237ad39a6d5b778d03c734cdeebb5a7c3eec5092d6d1cb07"
+    },
+    {
+      "name": "pip-check-dev-312",
+      "receipt": "pip-check-dev-312.json",
+      "receipt_sha256": "484d861808200092091ba27d37086e71d516f59be1f0e672226d7623b084d02d",
+      "command": [
+        "/workspace/.venvs/layauto/bin/python",
+        "-m",
+        "pip",
+        "check"
+      ],
+      "cwd": "/workspace/Layauto",
+      "started_utc": "2026-11-02T10:20:13.990548+00:00",
+      "duration_seconds": 0.398,
+      "exit_code": 0,
+      "log": "pip-check-dev-312.txt",
+      "log_sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09"
+    },
+    {
+      "name": "pip-check-dev-310",
+      "receipt": "pip-check-dev-310.json",
+      "receipt_sha256": "321b13acbf5d7a0454277e470957127b809e36997990772b5de1fa7f26fa36bd",
+      "command": [
+        "/workspace/work/w007-venv310/bin/python",
+        "-m",
+        "pip",
+        "check"
+      ],
+      "cwd": "/workspace/Layauto",
+      "started_utc": "2026-11-02T10:20:14.468592+00:00",
+      "duration_seconds": 0.724,
+      "exit_code": 0,
+      "log": "pip-check-dev-310.txt",
+      "log_sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09"
+    },
+    {
+      "name": "pip-check-wheel-312",
+      "receipt": "pip-check-wheel-312.json",
+      "receipt_sha256": "42f59d8b9783946d4ed9edd9fddf3b154e3655780ac09c0e2ee6e622dbc53554",
+      "command": [
+        "/workspace/work/w007-final-wheel312/bin/python",
+        "-m",
+        "pip",
+        "check"
+      ],
+      "cwd": "/workspace/work/w007-final-smoke",
+      "started_utc": "2026-11-02T10:20:47.080550+00:00",
+      "duration_seconds": 0.362,
+      "exit_code": 0,
+      "log": "pip-check-wheel-312.txt",
+      "log_sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09"
+    },
+    {
+      "name": "pip-check-wheel-310",
+      "receipt": "pip-check-wheel-310.json",
+      "receipt_sha256": "99544c6cbbc07ed74877c3c07c6e7b4f902b8512c31249d1a8a57d67dbc2d65e",
+      "command": [
+        "/workspace/work/w007-final-wheel310/bin/python",
+        "-m",
+        "pip",
+        "check"
+      ],
+      "cwd": "/workspace/work/w007-final-smoke",
+      "started_utc": "2026-11-02T10:20:50.661965+00:00",
+      "duration_seconds": 0.581,
+      "exit_code": 0,
+      "log": "pip-check-wheel-310.txt",
+      "log_sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09"
+    }
+  ],
+  "not_implemented_or_verified": [
+    "real EDA/PDK",
+    "complete geometry/coordinates/occupancy/physical connectivity/body/extraction",
+    "baseline/seal",
+    "whole-run no_change/terminal",
+    "ECO",
+    "Stage 6"
+  ],
+  "handoff": "Only execution/review documentation and evidence follow the tested commit. PM acceptance is outstanding."
+}
