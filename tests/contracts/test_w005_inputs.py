@@ -450,3 +450,21 @@ def test_closure_digest_encoding_declaration_must_match_supported_contract(tmp_p
     result = load(root)
     assert result.status == 'error'
     assert result.issues[0].source.field == '/closure/canonical_encoding'
+
+
+@pytest.mark.parametrize('selected', ['site', 'tech'])
+def test_symlink_loop_is_a_typed_input_error(tmp_path, selected):
+    from layauto_v2.importers import read_inputs
+    root = copy_input(tmp_path)
+    loop = root / 'loop'
+    loop.symlink_to('loop')
+    if selected == 'site':
+        result = read_inputs(loop)
+    else:
+        site = read_json(root / 'site_config.yaml')
+        site['tech_ref'] = 'loop'
+        write_json(root / 'site_config.yaml', site)
+        result = load(root)
+    assert result.status == 'error'
+    assert result.issues[0].code == 'InvalidInputPath'
+    assert result.issues[0].source.sha256 is None

@@ -19,6 +19,17 @@ _OWNERS = ('drawn', 'derived', 'physical', 'formats', 'coordinate', 'rules')
 _CAPABILITIES = ('instance_xref', 'net_xref', 'device_regions', 'net_regions')
 
 
+def _resolve(path: Path) -> Path:
+    try:
+        return path.resolve()
+    except RuntimeError as exc:
+        # Python 3.10/3.12 pathlib uses RuntimeError for a filesystem symlink loop.
+        # Preserve unrelated unexpected exceptions, including injected failures.
+        if not str(exc).startswith('Symlink loop from '):
+            raise
+        raise OSError(str(exc)) from exc
+
+
 class _Files:
     def __init__(self, root: Path) -> None:
         self.root = root
@@ -28,7 +39,7 @@ class _Files:
         try:
             if '\x00' in uri:
                 raise ValueError('embedded NUL in input path')
-            return (self.root / uri).resolve()
+            return _resolve(self.root / uri)
         except (ValueError, OSError) as exc:
             raise InputError('read', 'InvalidInputPath', str(exc), SourceRef(uri, field='path')) from exc
 
@@ -174,7 +185,7 @@ def read_inputs(site_path: Path, *, tool_run_id: str | None = None) -> ParseResu
     try:
         if '\x00' in str(requested):
             raise ValueError('embedded NUL in site path')
-        site_path = requested.resolve()
+        site_path = _resolve(requested)
     except (ValueError, OSError) as exc:
         issue = InputError('read', 'InvalidInputPath', str(exc), SourceRef(str(requested), field='path')).issue
         return ParseResult('error', None, (issue,), (), (), tool_run_id)
