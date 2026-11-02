@@ -69,7 +69,7 @@ def rebind(root: Path) -> None:
 def renamed_input(root: Path) -> dict:
     """Independent byte transforms of the selected subset, with no parser/helper use."""
     old_top, new_top = 'INV_M1_SYNTH', 'SECOND_CELL'
-    renames = {old_top: new_top, 'MN0': 'N_DEVICE', 'MP0': 'P_DEVICE', 'Q17': 'Q101', 'Q93': 'Q202',
+    renames = {old_top: new_top, 'MN0': 'MN_NEW', 'MP0': 'MP_NEW', 'Q17': 'Q101', 'Q93': 'Q202',
                'n_a': 'sig_a', 'n_y': 'sig_y', 'n_lo': 'rail_lo', 'n_hi': 'rail_hi'}
     dx, dy = 10, -3
     raw = (root / 'source.gds').read_bytes()
@@ -113,7 +113,7 @@ def renamed_input(root: Path) -> dict:
             for old, new in renames.items():
                 line = line.replace(old, new)
             fields = line.split()
-            if fields and fields[0] in ('N_DEVICE', 'P_DEVICE'):
+            if fields and fields[0] in ('MN_NEW', 'MP_NEW'):
                 fields[6:] = fields[6:][::-1]
                 line = '  '.join(fields).replace('NFIN=5', 'NFIN=6')
             lines.append(line)
@@ -161,4 +161,4 @@ def renamed_input(root: Path) -> dict:
     write_json(root / 'body/context.json', body)
     without_cache(root)
     rebind(root)
-    return {'top': new_top, 'dx': dx, 'dy': dy, 'device': 'N_DEVICE', 'query_device': 'Q101', 'paths': paths}
+    return {'top': new_top, 'dx': dx, 'dy': dy, 'device': 'MN_NEW', 'query_device': 'Q101', 'paths': paths}
