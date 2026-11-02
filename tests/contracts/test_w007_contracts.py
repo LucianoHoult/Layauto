@@ -474,6 +474,8 @@ def test_unordered_identity_seed_permutations_have_canonical_record_digest(accep
     ('device_reduction', 'UnsupportedDeviceReduction'),
     ('swap', 'UnsupportedTerminalSwap'),
     ('multiplicity', 'UnsupportedMultiplicity'),
+    ('comparator', 'UnsupportedSemanticComparator'),
+    ('pin_count', 'SourceTopIdentityMismatch'),
 ])
 def test_cr05_real_unadmitted_source_cannot_be_relabelled_as_success(tmp_path, case, expected_code):
     """A complete-looking DTO must not bypass actual source profile admission.
@@ -491,6 +493,13 @@ def test_cr05_real_unadmitted_source_cannot_be_relabelled_as_success(tmp_path, c
         apply_case(root, case)
     elif case == 'swap':
         edit(root, 'query/raw/iXref.temp', '0 Q17 0 MN0', '0 Q17 0 MN0 X')
+    elif case == 'comparator':
+        from w005_cases import read_json, write_json
+        profile = read_json(root / 'tech/formats.json')
+        profile['cdl_dialect']['semantic_comparator'] = 'unsupported-comparison-policy'
+        write_json(root / 'tech/formats.json', profile)
+    elif case == 'pin_count':
+        edit(root, 'source.cdl', '.SUBCKT INV_M1_SYNTH A Y VSS VDD', '.SUBCKT INV_M1_SYNTH A Y VSS')
     else:
         edit(root, 'source.cdl', 'NFIN=5 NF=1 M=1', 'NFIN=5 NF=1 M=2')
     without_cache(root)
@@ -527,3 +536,26 @@ def test_cr05_real_unadmitted_source_cannot_be_relabelled_as_success(tmp_path, c
         forged = replace(facts, device_identities=device_identities, net_identities=net_identities,
                          device_seeds=device_seeds, net_seeds=net_seeds)
         NormalizationResult('success', forged, (), forged, outcome.input)
+
+
+
+@pytest.mark.parametrize('capability', ['instance_xref', 'net_xref', 'device_regions', 'net_regions'])
+def test_cr01_completed_query_cannot_omit_one_captured_record(accepted, capability):
+    parsed = accepted.input.parse
+    value = mutable(parsed.value)
+    value['query'][capability]['records'].pop(0)
+    completed = tuple(replace(record, payload=value['query']) if record.kind == 'query'
+                      else record for record in parsed.completed)
+    with pytest.raises(ValueError):
+        from_parse_result(replace(parsed, value=value, completed=completed))
+
+
+@pytest.mark.parametrize('role', ['source_cdl', 'target_cdl'])
+def test_cdl_preservation_cannot_omit_a_captured_device_record(accepted, role):
+    parsed = accepted.input.parse
+    value = mutable(parsed.value)
+    value[role]['tops'][0]['devices'].pop(0)
+    completed = tuple(replace(record, payload=value[role]) if record.kind == role
+                      else record for record in parsed.completed)
+    with pytest.raises(ValueError):
+        from_parse_result(replace(parsed, value=value, completed=completed))
