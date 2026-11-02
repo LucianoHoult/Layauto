@@ -7,8 +7,8 @@
 | 字段 | 内容 |
 | --- | --- |
 | 目标 / 依赖 | M1的首个产品组件切片；依赖已验收的W003/W004样本，实物基准`633e3feef8062565019838f2d270e89b7f81c4ed`。W002 E7的完整no_change闭环目标及R4首交义务保持 |
-| 授权 / 阶段 | 2026-10-31用户同意准备读取任务；2026-11-02选择合并W004后由独立执行session继续，并由PM准备新分支与prompt。**可执行：下一执行session按本任务实现读取/绑定组件；本PM session仅准备交接，产品代码未开始。** 无当前输入语义待决项 |
-| 恢复版本 | 执行分支`codex/w005-input-reading-binding`，从main集成提交`87fe5a5a87d0cbb1f97952f1485dac9a71416369`建立，已含W004及REQ-01修复；使用包含本轮PM交接的提交，准确SHA见Git/回复。主样本仍为633e3fe的原bytes，不从旧W004分支另起实现 |
+| 授权 / 阶段 | **待验收：分支技术接收通过，待main集成及最终验收记录。** 独立执行已交付实现/测试和review；PM核验见PM1，无剩余必须修正项。本轮未合并main，不重新派发已完成的读取实现 |
+| 恢复版本 | 执行起点`5b7205009b3ed7f8fe15e135e674654f2f544557`，交付为`codex/w005-input-reading-binding@51d4d9d7b0d2715a5a2f3fe578615be4c59e74cb`，受审产品的发布等价提交为`cf35d97478cd78aa7ad707d18c9e37ceda10eafb`。PM记录随同分支追加，最新SHA见Git/交接回复。已验收fixture与答案未变 |
 | 输出边界 | 一个可由测试及未来pipeline调用的组件API，返回不可变、经过运行时校验的配置/tech及versioned evidence、解析结果和定位信息。名称/DTO组织由执行者细化并review；本轮不发布新的稳定CLI或对外wire承诺 |
 | 允许修改 | `layauto_v2/importers/`，必要的中立`domain/` evidence/results/codec类型、`tech/` schema与纯读取公共入口；`tests/unit/`、`tests/contracts/`及读取组合测试；必要依赖/typing/build配置与使用说明、本任务执行记录。新增目录按职责创建，不为所有未来模块填空 |
 | 非目标 | 不实现pipeline/run入口、repository/RunAttempt/terminal publication、Stage 2 identity/spatial join与状态、规则求值/resize/导出、真实Calibre/Virtuoso获取或生产上传；不改变D1=A、MR-040后置及真实工具延期。不修改已验收fixture以迎合程序 |
@@ -149,11 +149,28 @@ Reviewer 直接运行最终 Python3.12 完整组件测试 **237 passed**、stric
 
 ## PM 验收与交接（PM）
 
+<a id="pm1-receipt-20261102"></a>
+### PM1. 读取组件分支技术接收（2026-11-02）
+
+**接收51d4d9d的W005读取组件及A1–A7证据，未发现剩余必须修正项；main集成和最终验收尚未发生。** 已取得实际提交，核对39个变更路径及原输入/答案/support/架构未变。`w005_scope_acceptance`只读对照实际组件、测试及Stage 1/2边界，并独立复现原R1–R5修复后的准确错误；`w005_evidence_acceptance`核对22项source manifest、13项证据hash及14个已发布提交的tree/父链。接口方案正文可从E1恢复至原review哈希；交付tip与发布产品提交的22项受审文件完全相同。
+
+PM在本环境Python3.12.14实际复跑完整组件测试：**237 passed**；strict mypy：**13 source files，无问题**。从51d4d9d的git archive在独立目录重建sdist/wheel，wheel内14项产品文件与受审manifest一致；全新3.12环境安装完整依赖，`pip check`通过，在源码目录之外以`-I -B`运行已入库smoke，正常40图形/8个net region及重绑坏raw的`MissingTerminator`均通过。命令、原始结果、重新构建wheel身份及证据核验摘要见[PM接收回执](W005/pm-receipt.json)。本次重建的是新wheel，不冒称重验原执行者wheel。
+
+Python3.10完整237项采用已核验身份的执行日志及独立review记录，本PM未另装3.10重跑；原3.12执行日志的236项历史身份保留，最终237项由原review及本轮实跑分别支撑。原14个未发布commit对象和原wheel不在本环境；原/发布email元数据等价及原wheel核验采用已刊独立review事实，本轮直接证明发布树、manifest与当前受测代码一致。未将这些限制变成新的实现或确认门。
+
+本次只同步PM状态/恢复入口、路线图和接收回执，保留E1–E4、R1及两个原review附件；未修改产品、测试或fixture。组件读取结果只表明格式/来源/绑定成立，pipeline生命周期、Stage 2状态/物理匹配和Stage 6导出及真实工具仍未实现或验证，完整M1尚未通过。
+
+下一步是安排W005合入main并记录集成版本及组合检查，再准备输入组件接入正式运行审计的近期任务；不重开W003/W004，不把所有Stage 2或Stage 6工作塞进本次组件验收。本轮不合并main、不创建或启动下一产品任务。
+
+### 历史派发背景（2026-10-31至2026-11-02）
+
+以下保留原派发事实；当前状态以PM1及任务顶部为准，不从旧prompt重新执行。
+
 W003/W004样本前置及REQ-01补修已通过PR #58合入main `87fe5a5a87d0cbb1f97952f1485dac9a71416369`，集成事实见[W004 PM6](W004-fixture-revision.md#pm6-20261102)。当前派发W005读取组件，不代表W005实现或M1完成。按用户选择，新独立执行session从`codex/w005-input-reading-binding`的PM交接提交恢复，准确SHA见Git/回复；本轮只更新交接，不提前编写执行者方案或产品代码。
 
 **派发文档复核（2026-10-31，PM记录）：**未参与本任务编写的`body_scope`对照架构完成独立复核，剩余必须修正项为0。已落实其body内部引用/Stage2定位分界、header运行与匹配状态组合校验等意见，并明确C09语义准入及图形/stream record区别。受审全文SHA-256为`bd5330364c3107e569841b3271ec3adab23029ab6a6eb427c5bfe586bb7dec62`，覆盖追加本段之前的任务正文。`pm_review`另复核收口/导航/portable receipt，旧阶段冲突已修正，无剩余必须修正项。两项均为文档复核，不表示产品代码或测试已经通过。
 
-### 下一执行session prompt
+### 历史执行session prompt（实现已交付，不重复执行）
 
 ```text
 按Layauto项目规范，以执行角色完成W005输入读取与绑定组件。
