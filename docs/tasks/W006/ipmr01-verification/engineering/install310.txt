@@ -1,0 +1,49 @@
+WARNING: The directory '/home/agent/.cache/pip' or its parent directory is not owned or is not writable by the current user. The cache has been disabled. Check the permissions and owner of that directory. If executing pip with sudo, you should use sudo's -H flag.
+Obtaining file:///workspace/work/w006-ipmr01/engineering/source-f19ac04
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Checking if build backend supports build_editable: started
+  Checking if build backend supports build_editable: finished with status 'done'
+  Getting requirements to build editable: started
+  Getting requirements to build editable: finished with status 'done'
+  Preparing editable metadata (pyproject.toml): started
+  Preparing editable metadata (pyproject.toml): finished with status 'done'
+Requirement already satisfied: matplotlib in /workspace/work/w006-ipmr01/engineering/venv310/lib/python3.10/site-packages (from layauto==0.2.0) (3.10.9)
+Requirement already satisfied: numpy in /workspace/work/w006-ipmr01/engineering/venv310/lib/python3.10/site-packages (from layauto==0.2.0) (2.2.6)
+Requirement already satisfied: pyyaml in /workspace/work/w006-ipmr01/engineering/venv310/lib/python3.10/site-packages (from layauto==0.2.0) (6.0.3)
+Requirement already satisfied: mypy in /workspace/work/w006-ipmr01/engineering/venv310/lib/python3.10/site-packages (from layauto==0.2.0) (2.4.1)
+Requirement already satisfied: build in /workspace/work/w006-ipmr01/engineering/venv310/lib/python3.10/site-packages (from layauto==0.2.0) (1.6.1)
+Requirement already satisfied: pytest in /workspace/work/w006-ipmr01/engineering/venv310/lib/python3.10/site-packages (from layauto==0.2.0) (9.2.0)
+Requirement already satisfied: types-PyYAML in /workspace/work/w006-ipmr01/engineering/venv310/lib/python3.10/site-packages (from layauto==0.2.0) (6.0.12.20261030)
+Requirement already satisfied: packaging>=24.0 in /workspace/work/w006-ipmr01/engineering/venv310/lib/python3.10/site-packages (from build->layauto==0.2.0) (26.3)
+Requirement already satisfied: tomli>=1.1.0 in /workspace/work/w006-ipmr01/engineering/venv310/lib/python3.10/site-packages (from build->layauto==0.2.0) (2.5.0)
+Requirement already satisfied: pyproject_hooks in /workspace/work/w006-ipmr01/engineering/venv310/lib/python3.10/site-packages (from build->layauto==0.2.0) (1.3.3)
+Requirement already satisfied: pillow>=8 in /workspace/work/w006-ipmr01/engineering/venv310/lib/python3.10/site-packages (from matplotlib->layauto==0.2.0) (12.3.0)
+Requirement already satisfied: cycler>=0.10 in /workspace/work/w006-ipmr01/engineering/venv310/lib/python3.10/site-packages (from matplotlib->layauto==0.2.0) (0.12.1)
+Requirement already satisfied: contourpy>=1.0.1 in /workspace/work/w006-ipmr01/engineering/venv310/lib/python3.10/site-packages (from matplotlib->layauto==0.2.0) (1.3.2)
+Requirement already satisfied: kiwisolver>=1.3.1 in /workspace/work/w006-ipmr01/engineering/venv310/lib/python3.10/site-packages (from matplotlib->layauto==0.2.0) (1.5.1)
+Requirement already satisfied: python-dateutil>=2.7 in /workspace/work/w006-ipmr01/engineering/venv310/lib/python3.10/site-packages (from matplotlib->layauto==0.2.0) (3.0.0)
+Requirement already satisfied: fonttools>=4.22.0 in /workspace/work/w006-ipmr01/engineering/venv310/lib/python3.10/site-packages (from matplotlib->layauto==0.2.0) (4.65.0)
+Requirement already satisfied: pyparsing>=3 in /workspace/work/w006-ipmr01/engineering/venv310/lib/python3.10/site-packages (from matplotlib->layauto==0.2.0) (3.3.3)
+Requirement already satisfied: typing_extensions>=4.6.0 in /workspace/work/w006-ipmr01/engineering/venv310/lib/python3.10/site-packages (from mypy->layauto==0.2.0) (4.16.0)
+Requirement already satisfied: ast-serialize<1.0.0,>=0.12.1 in /workspace/work/w006-ipmr01/engineering/venv310/lib/python3.10/site-packages (from mypy->layauto==0.2.0) (0.13.1)
+Requirement already satisfied: librt>=0.16.0 in /workspace/work/w006-ipmr01/engineering/venv310/lib/python3.10/site-packages (from mypy->layauto==0.2.0) (0.16.0)
+Requirement already satisfied: mypy_extensions>=1.0.0 in /workspace/work/w006-ipmr01/engineering/venv310/lib/python3.10/site-packages (from mypy->layauto==0.2.0) (1.1.0)
+Requirement already satisfied: pathspec>=1.0.0 in /workspace/work/w006-ipmr01/engineering/venv310/lib/python3.10/site-packages (from mypy->layauto==0.2.0) (1.1.1)
+Requirement already satisfied: pluggy<2,>=1.6 in /workspace/work/w006-ipmr01/engineering/venv310/lib/python3.10/site-packages (from pytest->layauto==0.2.0) (1.7.0)
+Requirement already satisfied: iniconfig>=2 in /workspace/work/w006-ipmr01/engineering/venv310/lib/python3.10/site-packages (from pytest->layauto==0.2.0) (2.3.1)
+Requirement already satisfied: pygments>=2.15 in /workspace/work/w006-ipmr01/engineering/venv310/lib/python3.10/site-packages (from pytest->layauto==0.2.0) (2.21.0)
+Requirement already satisfied: exceptiongroup>=1 in /workspace/work/w006-ipmr01/engineering/venv310/lib/python3.10/site-packages (from pytest->layauto==0.2.0) (1.3.1)
+Requirement already satisfied: six>=1.6 in /workspace/work/w006-ipmr01/engineering/venv310/lib/python3.10/site-packages (from python-dateutil>=2.7->matplotlib->layauto==0.2.0) (1.17.0)
+Requirement already satisfied: tzdata in /workspace/work/w006-ipmr01/engineering/venv310/lib/python3.10/site-packages (from python-dateutil>=2.7->matplotlib->layauto==0.2.0) (2026.6)
+Building wheels for collected packages: layauto
+  Building editable for layauto (pyproject.toml): started
+  Building editable for layauto (pyproject.toml): finished with status 'done'
+  Created wheel for layauto: filename=layauto-0.2.0-0.editable-py3-none-any.whl size=2853 sha256=af244ef41a5a762c632a7c2813e9f28fa20cb63105d8f1198adc24e6f57cdd02
+  Stored in directory: /tmp/pip-ephem-wheel-cache-ooy92g_i/wheels/51/1f/2a/ca6a9a49467d9c16b7a3e04bb47ef05d6cdc1b1434388cedfd
+Successfully built layauto
+Installing collected packages: layauto
+Successfully installed layauto-0.2.0
+
+[notice] A new release of pip is available: 23.0.1 -> 26.2.2
+[notice] To update, run: /workspace/work/w006-ipmr01/engineering/venv310/bin/python -m pip install --upgrade pip

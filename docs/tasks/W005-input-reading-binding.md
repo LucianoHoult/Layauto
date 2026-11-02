@@ -7,13 +7,13 @@
 | 字段 | 内容 |
 | --- | --- |
 | 目标 / 依赖 | M1的首个产品组件切片；依赖已验收的W003/W004样本，实物基准`633e3feef8062565019838f2d270e89b7f81c4ed`。W002 E7的完整no_change闭环目标及R4首交义务保持 |
-| 授权 / 阶段 | **待验收：补修技术接收通过，待main集成及最终验收记录。** IPMR-01与IPMR01-FR1均已独立复核关闭，PM核对新版本、复跑测试并接收，见[PM3](#pm3-ipmr01-receipt-20261102)。无剩余必须修正项，不重新派发已完成补修 |
-| 恢复版本 | 同分支`codex/w005-input-reading-binding`，补修交付`c69018dfd1b8eb67705753bb170ec3dcebb88e8f`，最终产品/回归提交`0a6de39e02947e3ae8af64a4dca9487ee8898ca3`。接手使用包含PM3的后续PM交接提交，准确SHA见Git/回复。原实现交付`51d4d9d7b0d2715a5a2f3fe578615be4c59e74cb`、原review交付`cec15f7e3cd74f8cc439f9a5ab654597a113da78`及PM2派发`4207e773f93111ba6bfd2c6b6ac9da1eacd87fbb`保留历史身份；已验收fixture与答案未变 |
+| 授权 / 阶段 | **已验收，已合入main。** 用户同意继续后，W005经[PR #59](https://github.com/LucianoHoult/Layauto/pull/59)合并，内容身份及集成检查通过，见[PM4](#pm4-integration-20261102)。原五项review问题、IPMR-01与IPMR01-FR1均已关闭；验收仅覆盖读取组件 |
+| 恢复版本 | main集成`4db3aa81d6f01496a680bdcb264afe99cd80f3f3`，合并head `ef31139465d01c170ccaf081484d3bd7cf5ff858`。补修交付`c69018dfd1b8eb67705753bb170ec3dcebb88e8f`、受测产品`0a6de39e02947e3ae8af64a4dca9487ee8898ca3`及更早身份保留。PM4记录随后续`codex/w006-precontext-run-audit`分支交接，准确SHA见Git/回复；已验收fixture与答案未变 |
 | 输出边界 | 一个可由测试及未来pipeline调用的组件API，返回不可变、经过运行时校验的配置/tech及versioned evidence、解析结果和定位信息。名称/DTO组织由执行者细化并review；本轮不发布新的稳定CLI或对外wire承诺 |
 | 允许修改 | `layauto_v2/importers/`，必要的中立`domain/` evidence/results/codec类型、`tech/` schema与纯读取公共入口；`tests/unit/`、`tests/contracts/`及读取组合测试；必要依赖/typing/build配置与使用说明、本任务执行记录。新增目录按职责创建，不为所有未来模块填空 |
 | 非目标 | 不实现pipeline/run入口、repository/RunAttempt/terminal publication、Stage 2 identity/spatial join与状态、规则求值/resize/导出、真实Calibre/Virtuoso获取或生产上传；不改变D1=A、MR-040后置及真实工具延期。不修改已验收fixture以迎合程序 |
 | 架构依据 | [architecture](../architecture.md) §2.1–2.3、§3.1–3.2、§4.8、§5、§11.2/11.10/11.13–11.15、§12.1–12.8；架构原文优先，任务不另定产品合同 |
-| 分工 / 阻塞 | 执行与独立review已交付；PM接收补修并恢复集成判断。IPMR-01/FR1技术阻塞已解除；实际main集成及组合核验尚未发生，新关键输入/能力/对外行为变化附实例交PM |
+| 分工 / 阻塞 | 本任务无剩余必须修正项，PM已核对要求、review处置、版本与实际集成。后续由[W006](W006-precontext-run-audit.md)接入运行入口/失败审计；Stage2/6及真实工具义务保留 |
 
 ### 输入、结果与范围
 
@@ -235,9 +235,20 @@ PM在本环境CPython3.12.14、PyYAML6.0.3直接复跑最终代码：完整`test
 
 3.10本轮未重跑全套或干净安装的边界与PM2受影响回归要求一致，不构成新增补修阻塞；其他平台/解释器及真实工具仍未验证。本轮仅记录技术接收，未合并main或启动下一产品任务。建议下一步完成W005合并与实际集成核验，再准备输入组件接入正式运行审计的近期任务；无需重开完整组件review。pipeline、Stage2、Stage6与完整M1义务仍按后续组合表保留。
 
+<a id="pm4-integration-20261102"></a>
+### PM4. main集成与组件最终验收（2026-11-02）
+
+**W005已验收并合入main。** 用户在PM3技术接收及合并建议后明确“好的，请继续吧”，本轮完成[PR #59](https://github.com/LucianoHoult/Layauto/pull/59)，以merge commit保留原被测/受审提交身份。合并锁定head `ef31139465d01c170ccaf081484d3bd7cf5ff858`，实际main集成版本为`4db3aa81d6f01496a680bdcb264afe99cd80f3f3`，parents为原main `87fe5a5`与上述head；合并前main为head祖先，无冲突。GitHub没有配置中的commit status/check run或ruleset，未把无CI写成CI通过。
+
+合并tree与已审head完全相同：`4dd2735f5fd089fcdb916d975eb96fc8d1b4a73b`，逐文件diff为空。随后在实际合并版本、CPython3.12.14运行正常实际输入、真实坏raw、第二合法输入、同次bytes绑定、中断/意外异常及Unicode公共API组合：**21 passed in 7.24s**。命令、输出、远端检查与集成身份见[集成回执](W005/integration-receipt.json)。此前284项全组件、strict mypy和独立3.10/构建安装证据通过相同产品内容继续有效；本轮没有机械重跑未改变内容的完整矩阵/构建。
+
+结合PM1/PM3及独立接口/代码/补修review，A1–A7达到本任务授权范围，原五项问题、IPMR-01与IPMR01-FR1均有处置和独立关闭依据。此验收不代表完整pipeline、Stage2状态、Stage6导出、M1 no_change或真实EDA/生产验证已经完成；3.10补修全套/干净安装及其他平台的既有验证边界继续保留。
+
+W005分支保留。按用户此前选择，下一任务[W006](W006-precontext-run-audit.md)在`codex/w006-precontext-run-audit`独立分支准备要求与执行prompt，起点为上述main集成版本；本轮不提前实现W006。PM4和下一任务交接文档在该分支提交，不改写已集成产品或历史执行/review记录。
+
 ### 历史派发背景（2026-10-31至2026-11-02）
 
-以下保留原派发事实；当前状态以PM3及任务顶部为准，不从旧prompt重新执行。
+以下保留原派发事实；当前状态以PM4及任务顶部为准，不从旧prompt重新执行。
 
 W003/W004样本前置及REQ-01补修已通过PR #58合入main `87fe5a5a87d0cbb1f97952f1485dac9a71416369`，集成事实见[W004 PM6](W004-fixture-revision.md#pm6-20261102)。当前派发W005读取组件，不代表W005实现或M1完成。按用户选择，新独立执行session从`codex/w005-input-reading-binding`的PM交接提交恢复，准确SHA见Git/回复；本轮只更新交接，不提前编写执行者方案或产品代码。
 

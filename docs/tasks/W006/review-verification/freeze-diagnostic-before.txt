@@ -1,0 +1,2 @@
+{"raised": "ValueError", "terminal": false, "closure_count": 0}
+{"raised": "UnicodeEncodeError", "terminal": false, "closure_count": 0}

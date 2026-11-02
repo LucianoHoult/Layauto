@@ -1,0 +1,83 @@
+{
+  "reviewer": "/root/ipmr01_fix_review",
+  "product_commit": "f19ac0448a5d0111f799660bd7be043ebfd16e41",
+  "engineering_evidence_hashes_verified": 47,
+  "command_log_hashes_verified": 29,
+  "product_identity_files_verified": 4,
+  "protected_paths_unchanged": true,
+  "python310_adoption": "120 passed in initial 121-case run; test-only missing same-commit sample restored, remaining case passed in focused rerun; not a single all-green 121-case run",
+  "original_reproducer_preserved": true,
+  "reviewer_commands": {
+    "diagnostic-snapshot.result.json": {
+      "command": [
+        "/workspace/.venvs/layauto/bin/python",
+        "-B",
+        "docs/tasks/W006/ipmr01-verification/reviewer/diagnostic_snapshot_probe.py"
+      ],
+      "cwd": "/workspace/Layauto",
+      "head": "f19ac0448a5d0111f799660bd7be043ebfd16e41",
+      "returncode": 0,
+      "elapsed_seconds": 0.966,
+      "output_sha256": "603c14c67c0f8559239ae187b7e7a38cc03aa13e9c54a7fa5dc355fd1db060eb"
+    },
+    "original-repro.result.json": {
+      "command": [
+        "/workspace/.venvs/layauto/bin/python",
+        "-B",
+        "docs/tasks/W006/independent-premerge-verification/double_exception.py"
+      ],
+      "cwd": "/workspace/Layauto",
+      "head": "f19ac0448a5d0111f799660bd7be043ebfd16e41",
+      "returncode": 0,
+      "elapsed_seconds": 0.392,
+      "output_sha256": "2bd3aecfead6306523d5c12dc66facd9890869f45f10546d0c85f1598671b649"
+    },
+    "package-identity-final.result.json": {
+      "command": [
+        "/workspace/.venvs/layauto/bin/python",
+        "-B",
+        "docs/tasks/W006/ipmr01-verification/reviewer/package_identity_probe.py",
+        "/workspace/work/w006-ipmr01/engineering/dist"
+      ],
+      "cwd": "/workspace/Layauto",
+      "head": "f19ac0448a5d0111f799660bd7be043ebfd16e41",
+      "returncode": 0,
+      "elapsed_seconds": 0.658,
+      "output_sha256": "168ffacd5a002f9e24cb8683883c5297fd7f3aa4bd4fc438b0d0dbc893faf100"
+    },
+    "package-identity.result.json": {
+      "command": [
+        "/workspace/.venvs/layauto/bin/python",
+        "-B",
+        "docs/tasks/W006/ipmr01-verification/reviewer/package_identity_probe.py",
+        "/workspace/work/w006-ipmr01/engineering/dist"
+      ],
+      "cwd": "/workspace/Layauto",
+      "head": "f19ac0448a5d0111f799660bd7be043ebfd16e41",
+      "returncode": 0,
+      "elapsed_seconds": 0.667,
+      "output_sha256": "e9574e5be58ce6ee0941465b0f0115338ef3cb7aa49e95a187b06788affbcc23"
+    },
+    "targeted-tests.result.json": {
+      "command": [
+        "/workspace/.venvs/layauto/bin/python",
+        "-B",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "tests/contracts/test_w006_ipmr01.py",
+        "tests/contracts/test_w006_review_regressions.py",
+        "-q"
+      ],
+      "cwd": "/workspace/Layauto",
+      "head": "f19ac0448a5d0111f799660bd7be043ebfd16e41",
+      "returncode": 0,
+      "elapsed_seconds": 22.556,
+      "output_sha256": "6a4a2928b8c92a0e0f7d9c68bda16960d721205bb5cdf16476bf6546916f2d6c"
+    }
+  },
+  "root_execution_evidence_hashes_verified": 19,
+  "execution_receipt_sha256": "e8af9a78b38c6eb4d50db005ebbc652a7670f83af7f1c1e34e33e3a23e309bc3",
+  "execution_record_crosscheck": "E5 and receipt accurately distinguish first 3.10 harness failure, focused retest, final product evidence and adopted reviewer scope; no correction required."
+}

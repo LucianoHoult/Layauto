@@ -1,0 +1,10 @@
+{
+  "result": "InputsReady",
+  "declared_resolves": "external/source.cdl",
+  "selected_bytes": "not the acquired source",
+  "read_uris": [
+    "source.cdl",
+    "target.cdl"
+  ],
+  "declared_uri_was_read": false
+}

@@ -1,0 +1,10 @@
+{
+  "product_commit": "f19ac0448a5d0111f799660bd7be043ebfd16e41",
+  "source_snapshot_git_workspace_files": 216,
+  "new_wheel_and_sdist_package_files": 74,
+  "new_package_bytes_verified_directly": true,
+  "sha256": {
+    "layauto-0.2.0-py3-none-any.whl": "8b71ed7438c1c95e1987d13d08c4dce23d21fc80e91d86a339d260b83ef5e064",
+    "layauto-0.2.0.tar.gz": "31dc9826729e5488c867bb3451dd62c8b234663b461a958c30afc884aa033d63"
+  }
+}

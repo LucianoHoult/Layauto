@@ -1,0 +1,67 @@
+cwd=/workspace/work/w006-ipmr01/engineering
+python -B /workspace/Layauto/docs/tasks/W006/ipmr01-verification/engineering/verify_artifacts.py /workspace/work/w006-ipmr01/engineering/dist
+exit=0
+
+cwd=/workspace/work/w006-ipmr01/engineering/source-f19ac04
+/workspace/.venvs/layauto/bin/python -B -m build --outdir /workspace/work/w006-ipmr01/engineering/dist
+exit=0
+
+cwd=/workspace/work/w006-ipmr01/engineering/source-f19ac04
+/workspace/work/w006-ipmr01/engineering/venv310/bin/python -B /workspace/Layauto/docs/tasks/W006/ipmr01-verification/engineering/environment_probe.py
+exit=0
+
+cwd=/workspace/work/w006-ipmr01/engineering/source-f19ac04
+/workspace/work/w006-ipmr01/engineering/venv310/bin/python -m pip install -e '.[dev]'
+exit=0
+
+cwd=/workspace/work/w006-ipmr01/engineering/source-f19ac04
+/workspace/work/w006-ipmr01/engineering/venv310/bin/python -B -m mypy --cache-dir /workspace/work/w006-ipmr01/engineering/mypy310-cache
+exit=0
+
+cwd=/workspace/work/w006-ipmr01/engineering/source-f19ac04
+/workspace/work/w006-ipmr01/engineering/venv310/bin/python -m pip check
+exit=0
+
+cwd=/workspace/work/w006-ipmr01/engineering/source-f19ac04
+/workspace/work/w006-ipmr01/engineering/venv310/bin/python -B -m pytest -p no:cacheprovider tests/contracts/test_w006_pipeline.py::test_f1_request_independently_matches_accepted_sample -q
+exit=0
+
+cwd=/workspace/work/w006-ipmr01/engineering/source-f19ac04
+/workspace/work/w006-ipmr01/engineering/venv310/bin/python -B -m pytest -p no:cacheprovider tests/contracts/test_w006_pipeline.py tests/contracts/test_w006_review_regressions.py tests/contracts/test_w006_ipmr01.py tests/contracts/test_w006_boundaries.py tests/unit/test_w006_publication.py -q
+exit=1
+
+cwd=/workspace/Layauto
+uv python install 3.10 --no-bin --install-dir /workspace/work/w006-ipmr01/engineering/python --cache-dir /workspace/work/w006-ipmr01/engineering/uv-cache --system-certs
+exit=0
+
+cwd=/workspace/work/w006-ipmr01/engineering
+/workspace/work/w006-ipmr01/engineering/venv310/bin/python -m pip install numpy matplotlib pyyaml pytest mypy types-PyYAML build
+exit=0
+
+cwd=/workspace/Layauto
+python -B docs/tasks/W006/ipmr01-verification/engineering/complete_snapshot.py
+exit=0
+
+cwd=/workspace/work/w006-ipmr01/engineering/outside
+/workspace/work/w006-ipmr01/engineering/wheel-venv/bin/python -I -B environment_probe.py
+exit=0
+
+cwd=/workspace/work/w006-ipmr01/engineering
+/workspace/work/w006-ipmr01/engineering/wheel-venv/bin/python -m pip install /workspace/work/w006-ipmr01/engineering/dist/layauto-0.2.0-py3-none-any.whl
+exit=0
+
+cwd=/workspace/work/w006-ipmr01/engineering/outside
+/workspace/work/w006-ipmr01/engineering/wheel-venv/bin/python -I -B wheel_diagnostic_smoke.py fixture
+exit=0
+
+cwd=/workspace/work/w006-ipmr01/engineering/outside
+/workspace/work/w006-ipmr01/engineering/wheel-venv/bin/python -I -B normal_f2_smoke.py fixture normal-f2-output
+exit=0
+
+cwd=/workspace/work/w006-ipmr01/engineering/outside
+/workspace/work/w006-ipmr01/engineering/wheel-venv/bin/python -m pip check
+exit=0
+
+cwd=/workspace/work/w006-ipmr01/engineering
+/workspace/.venvs/layauto/bin/python -m venv /workspace/work/w006-ipmr01/engineering/wheel-venv
+exit=0

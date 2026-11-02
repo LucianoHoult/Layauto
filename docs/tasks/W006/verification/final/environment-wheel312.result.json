@@ -1,0 +1,12 @@
+{
+  "name": "environment-wheel312",
+  "returncode": 0,
+  "duration_seconds": 0.128,
+  "command": [
+    "/workspace/work/w006/engineering-cc42ae6/wheel-venv/bin/python",
+    "-B",
+    "-c",
+    "exec(compile(open(\"/workspace/work/w006/engineering-cc42ae6/environment_probe.py\", \"rb\").read(), \"environment_probe.py\", \"exec\"))"
+  ],
+  "cwd": "/workspace/work/w006/engineering-cc42ae6/outside"
+}

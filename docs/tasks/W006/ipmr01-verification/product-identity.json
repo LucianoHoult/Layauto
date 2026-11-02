@@ -1,0 +1,21 @@
+{
+  "product_commit": "f19ac0448a5d0111f799660bd7be043ebfd16e41",
+  "base_commit": "e8fec97b918938a5b431eb8ad38c2d63ed67e9d2",
+  "changed_product_paths": [
+    "layauto_v2/pipeline.py",
+    "tests/contracts/test_w006_ipmr01.py"
+  ],
+  "sha256": {
+    "layauto_v2/pipeline.py": "32f435edcf08be9efb31901dde447c2e171f74c428f7d386133e11aebb65e377",
+    "tests/contracts/test_w006_ipmr01.py": "7b986288d4c9638d92eeb946de34142fbd5c76c3fd1dce6d9f8c7f5e6fb680ee",
+    "pyproject.toml": "253a258e430811fa6aba86def5fa03003a73d41b024d739c8129537f5cf6c0cc",
+    "docs/tasks/W006/independent-premerge-verification/double_exception.py": "f5aeb5f131b868121a9c37f838d77391c99445c4235e45e7010738ca88c0e276"
+  },
+  "git_tree_ids": {
+    "layauto_v2": "30bf71194cc5c895de012f603d31386fc742ede2",
+    "tests": "e4c2d2143b71bd655a7144bfb0e486e919297b2c",
+    "tests/fixtures": "5ba612454a6f3bd0cf456616e79770c93f3bc6a4"
+  },
+  "red_green_test_bytes_identical": true,
+  "original_repro_unchanged": true
+}

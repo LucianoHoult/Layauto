@@ -1,0 +1,15 @@
+{
+  "command": [
+    "/workspace/.venvs/layauto/bin/python",
+    "-m",
+    "venv",
+    "/workspace/work/w006-ipmr01/engineering/wheel-venv"
+  ],
+  "cwd": "/workspace/work/w006-ipmr01/engineering",
+  "product_commit": "f19ac0448a5d0111f799660bd7be043ebfd16e41",
+  "start_utc": "2026-11-02T08:43:15.197302+00:00",
+  "duration_seconds": 2.313,
+  "exit_code": 0,
+  "combined_output": "wheel-venv.txt",
+  "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

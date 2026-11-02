@@ -1,0 +1,10 @@
+{
+  "initial_manifest": "source-manifest-initial.json",
+  "initial_result": "pytest310.result.json",
+  "reason": "The initial partial git archive omitted the F1 test-only sample dependency.",
+  "restored_from_same_commit": "docs/tasks/W003/examples/records.json",
+  "sha256": "7a1eda0d255aab377319d5cb104089f7788ba4398d8e8f91a098cc5dc0832a31",
+  "product_tests_and_fixture_unchanged": true,
+  "retest_scope": "test_f1_request_independently_matches_accepted_sample only; other 120 cases already passed on identical product/test bytes."
+}
+Completed snapshot file count: 217

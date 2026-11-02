@@ -1,0 +1,18 @@
+{
+  "product_commit": "f19ac0448a5d0111f799660bd7be043ebfd16e41",
+  "snapshot_drift": [],
+  "verified_package_source_files": 74,
+  "py_typed_present": true,
+  "wheel_excludes_legacy_tests_docs": true,
+  "sdist_sources_match": true,
+  "artifacts": {
+    "layauto-0.2.0-py3-none-any.whl": {
+      "bytes": 74719,
+      "sha256": "8b71ed7438c1c95e1987d13d08c4dce23d21fc80e91d86a339d260b83ef5e064"
+    },
+    "layauto-0.2.0.tar.gz": {
+      "bytes": 56877,
+      "sha256": "31dc9826729e5488c867bb3451dd62c8b234663b461a958c30afc884aa033d63"
+    }
+  }
+}

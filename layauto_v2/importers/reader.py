@@ -4,11 +4,13 @@ from __future__ import annotations
 import hashlib
 import json
 from pathlib import Path
+from collections.abc import Generator
 from typing import NoReturn
 
+from layauto_v2.domain.acquisition import AcquisitionRequest, AcquisitionResponse
 from layauto_v2.domain.codec import FrozenMap, Value, canonical_bytes, freeze_map
 from layauto_v2.domain.evidence import EvidenceRecord, SourceFile, SourceRef
-from layauto_v2.domain.results import InputError, ParseResult
+from layauto_v2.domain.results import EvidenceIssue, InputError, ParseResult
 from ._access import exact, integer, mapping, sequence, string
 from .calibre import parse_query
 from .cdl import parse_cdl
@@ -34,27 +36,41 @@ class _Files:
     def __init__(self, root: Path) -> None:
         self.root = root
         self.files: dict[Path, SourceFile] = {}
+        self.paths: dict[str, Path] = {}
 
     def path(self, uri: str) -> Path:
+        if uri in self.paths:
+            return self.paths[uri]
         try:
             if '\x00' in uri:
                 raise ValueError('embedded NUL in input path')
-            return _resolve(self.root / uri)
+            path = _resolve(self.root / uri)
         except (ValueError, OSError) as exc:
             raise InputError('read', 'InvalidInputPath', str(exc), SourceRef(uri, field='path')) from exc
+        # One URI keeps its first resolved acquisition identity for this session.
+        # Re-resolving a changing symlink during closure checks could read it twice.
+        self.paths[uri] = path
+        return path
 
-    def read(self, uri: str, *, missing_code: str = 'MissingInput') -> SourceFile:
+    def read(self, uri: str, *, missing_code: str = 'MissingInput') -> Generator[AcquisitionRequest, AcquisitionResponse, SourceFile]:
         path = self.path(uri)
         if path in self.files:
             return self.files[path]
-        label = uri  # Preserve the selected URI; canonical paths only key the byte cache.
-        try:
-            data = path.read_bytes()
-        except OSError as exc:
-            raise InputError('read', missing_code, str(exc), SourceRef(label)) from exc
-        result = SourceFile(label, data)
-        self.files[path] = result
-        return result
+        response = yield AcquisitionRequest(str(path), uri, missing_code=missing_code)
+        if isinstance(response, EvidenceIssue):
+            raise InputError(response.category, response.code, response.message, response.source)
+        if not isinstance(response, SourceFile) or response.uri != uri:
+            raise ValueError('acquisition driver returned an invalid source')
+        self.files[path] = response
+        return response
+
+    def probe(self, path: Path) -> Generator[AcquisitionRequest, AcquisitionResponse, bool]:
+        response = yield AcquisitionRequest(str(path), str(path), 'probe', 'InputReadError')
+        if isinstance(response, EvidenceIssue):
+            raise InputError(response.category, response.code, response.message, response.source)
+        if type(response) is not bool:
+            raise ValueError('acquisition driver returned an invalid probe')
+        return response
 
 
 def _doc(source: SourceFile, kind: str, max_bytes: int = 1_000_000,
@@ -175,13 +191,27 @@ def _body(body: FrozenMap, body_file: SourceFile, files: _Files, gds_file: Sourc
                 _fail(body_file, 'BodyReferenceTypeMismatch', 'context reference has an incompatible declared role', f'/associations/{i}/{field}')
 
 
-def read_inputs(site_path: Path, *, tool_run_id: str | None = None) -> ParseResult:
-    """Return immutable evidence or a located input failure; never writes files.
+class InputParser:
+    """Incremental parser; the orchestrator supplies each requested capture.
 
-    This is a component API. Callers must implement their own required attempt,
-    audit and terminal lifecycle before exposing a formal pipeline entry point.
+    The completed snapshot survives unexpected exceptions for boundary diagnostics.
+    This object is an in-flight session, never a published record.
     """
-    requested = Path(site_path)
+    def __init__(self, site_path: Path, *, tool_run_id: str | None = None) -> None:
+        self.site_path = site_path
+        self.tool_run_id = tool_run_id
+        self.input_root: str | None = None
+        self._completed: list[EvidenceRecord] = []
+        self.requests = _parse_inputs(self)
+
+    @property
+    def completed(self) -> tuple[EvidenceRecord, ...]:
+        return tuple(self._completed)
+
+
+def _parse_inputs(session: InputParser) -> Generator[AcquisitionRequest, AcquisitionResponse, ParseResult]:
+    requested = Path(session.site_path)
+    tool_run_id = session.tool_run_id
     try:
         if '\x00' in str(requested):
             raise ValueError('embedded NUL in site path')
@@ -190,16 +220,17 @@ def read_inputs(site_path: Path, *, tool_run_id: str | None = None) -> ParseResu
         issue = InputError('read', 'InvalidInputPath', str(exc), SourceRef(str(requested), field='path')).issue
         return ParseResult('error', None, (issue,), (), (), tool_run_id)
     files = _Files(site_path.parent)
-    completed: list[EvidenceRecord] = []
+    session.input_root = str(site_path.parent)
+    completed = session._completed
 
     def record(kind: str, payload: FrozenMap, *sources: SourceFile) -> None:
         completed.append(EvidenceRecord(kind, payload, tuple(s.ref() for s in sources)))
 
     try:
-        site_file = files.read(site_path.name)
+        site_file = yield from files.read(site_path.name)
         site = _doc(site_file, 'site')
         record('config', site, site_file)
-        tech_file = files.read(string(site['tech_ref']))
+        tech_file = yield from files.read(string(site['tech_ref']))
         tech_root = _doc(tech_file, 'tech')
         owners = mapping(tech_root['owners'])
         owner_sources: dict[str, SourceFile] = {}
@@ -212,7 +243,7 @@ def read_inputs(site_path: Path, *, tool_run_id: str | None = None) -> ParseResu
             if files.path(owner_path) in paths:
                 _fail(tech_file, 'OwnerConflict', 'owner paths must be distinct', f'/owners/{name}/path')
             paths.add(files.path(owner_path))
-            source = files.read(owner_path)
+            source = yield from files.read(owner_path)
             owner_sources[name] = source
             document = _doc(source, name)
             keys = tuple(string(x) for x in sequence(declaration['keys']))
@@ -231,7 +262,7 @@ def read_inputs(site_path: Path, *, tool_run_id: str | None = None) -> ParseResu
         policies: dict[str, object] = {}
         policy_sources: list[SourceFile] = []
         for kind, key in (('export_policy', 'export_policy_ref'), ('validation_policy', 'validation_policy_ref'), ('limitations', 'limitation_ref')):
-            source = files.read(string(site[key]))
+            source = yield from files.read(string(site[key]))
             policies[kind] = _doc(source, kind, max_bytes, max_depth)
             policy_sources.append(source)
         policy = freeze_map(policies)
@@ -244,12 +275,12 @@ def read_inputs(site_path: Path, *, tool_run_id: str | None = None) -> ParseResu
             _fail(policy_sources[0], 'PolicyProfileMismatch', 'export policy disagrees with selected tech', '/profile_id')
         record('policies', policy, *policy_sources)
         inputs = mapping(site['inputs'])
-        gds_file = files.read(string(inputs['gds']))
-        source_file = files.read(string(inputs['source_cdl']))
-        target_file = files.read(string(inputs['target_cdl']))
-        header_file = files.read(string(inputs['query_header']))
+        gds_file = yield from files.read(string(inputs['gds']))
+        source_file = yield from files.read(string(inputs['source_cdl']))
+        target_file = yield from files.read(string(inputs['target_cdl']))
+        header_file = yield from files.read(string(inputs['query_header']))
         header = _doc(header_file, 'header', max_bytes, max_depth)
-        body_file = files.read(string(inputs['body_context']), missing_code='RequiredBodyContextUnavailable')
+        body_file = yield from files.read(string(inputs['body_context']), missing_code='RequiredBodyContextUnavailable')
         body = _doc(body_file, 'body', max_bytes, max_depth)
         _header_status(header, header_file, site, tech)
         if files.path(string(header['limitations_ref'])) != files.path(policy_sources[2].uri):
@@ -274,7 +305,7 @@ def read_inputs(site_path: Path, *, tool_run_id: str | None = None) -> ParseResu
                 _fail(header_file, 'DuplicateBinding', 'duplicate closure file binding', f'/closure/entries/{index}')
             seen.add(path)
             uris.append(uri)
-            source = files.read(uri)
+            source = yield from files.read(uri)
             _binding(files, entry, source, header_file, f'/closure/entries/{index}', 'ClosureHashMismatch')
             if path not in required:
                 document = load_document(source, max_bytes=max_bytes, max_depth=max_depth)
@@ -298,7 +329,7 @@ def read_inputs(site_path: Path, *, tool_run_id: str | None = None) -> ParseResu
                 _fail(header_file, 'DuplicateBinding', 'duplicate raw/dependency binding', f'/raw/{index}')
             raw_paths.add(path)
             capabilities.add(string(entry['capability']))
-            source = files.read(string(entry['uri']))
+            source = yield from files.read(string(entry['uri']))
             if len(source.data) > max_bytes:
                 raise InputError('parse', 'SizeLimitExceeded', 'raw text exceeds selected limit', source.ref())
             _binding(files, entry, source, header_file, f'/raw/{index}', 'RawHashMismatch')
@@ -326,12 +357,9 @@ def read_inputs(site_path: Path, *, tool_run_id: str | None = None) -> ParseResu
         cache_dir = files.path(header_file.uri).parent / 'normalized'
         for capability in _CAPABILITIES:
             path = cache_dir / (capability + '.yaml')
-            try:
-                cache_present = path.exists()
-            except OSError as exc:
-                raise InputError('read', 'InputReadError', str(exc), SourceRef(str(path), field='path')) from exc
+            cache_present = yield from files.probe(path)
             if cache_present:
-                source = files.read(str(path))
+                source = yield from files.read(str(path))
                 cache = load_document(source, max_bytes=max_bytes, max_depth=max_depth)
                 if canonical_bytes(cache) != canonical_bytes(query[capability]):
                     _fail(source, 'NormalizedCacheMismatch', 'cache differs from reparsed raw evidence', '/')
@@ -341,3 +369,34 @@ def read_inputs(site_path: Path, *, tool_run_id: str | None = None) -> ParseResu
         return ParseResult('success', value, (), tuple(completed), tuple(files.files.values()), tool_run_id)
     except InputError as exc:
         return ParseResult('error', None, (exc.issue,), tuple(completed), tuple(files.files.values()), tool_run_id)
+
+
+def _component_acquire(request: AcquisitionRequest) -> AcquisitionResponse:
+    try:
+        path = Path(request.path)
+        if request.operation == 'probe':
+            return path.exists()
+        return SourceFile(request.uri, path.read_bytes())
+    except OSError as exc:
+        return EvidenceIssue('read', request.missing_code, str(exc), SourceRef(request.uri))
+
+
+def read_inputs(site_path: Path, *, tool_run_id: str | None = None) -> ParseResult:
+    """W005 component facade; unexpected exceptions and interrupts propagate.
+
+    The same incremental parser is used by the run-aware pipeline. This facade
+    owns no run or terminal lifecycle and preserves its original public API.
+    """
+    parser = InputParser(site_path, tool_run_id=tool_run_id)
+    try:
+        request = next(parser.requests)
+    except StopIteration as done:
+        result: ParseResult = done.value
+        return result
+    while True:
+        response = _component_acquire(request)
+        try:
+            request = parser.requests.send(response)
+        except StopIteration as done:
+            result = done.value
+            return result

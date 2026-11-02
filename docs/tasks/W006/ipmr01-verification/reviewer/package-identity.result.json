@@ -1,0 +1,13 @@
+{
+  "command": [
+    "/workspace/.venvs/layauto/bin/python",
+    "-B",
+    "docs/tasks/W006/ipmr01-verification/reviewer/package_identity_probe.py",
+    "/workspace/work/w006-ipmr01/engineering/dist"
+  ],
+  "cwd": "/workspace/Layauto",
+  "head": "f19ac0448a5d0111f799660bd7be043ebfd16e41",
+  "returncode": 0,
+  "elapsed_seconds": 0.667,
+  "output_sha256": "e9574e5be58ce6ee0941465b0f0115338ef3cb7aa49e95a187b06788affbcc23"
+}

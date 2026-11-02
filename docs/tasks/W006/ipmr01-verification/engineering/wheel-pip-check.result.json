@@ -1,0 +1,15 @@
+{
+  "command": [
+    "/workspace/work/w006-ipmr01/engineering/wheel-venv/bin/python",
+    "-m",
+    "pip",
+    "check"
+  ],
+  "cwd": "/workspace/work/w006-ipmr01/engineering/outside",
+  "product_commit": "f19ac0448a5d0111f799660bd7be043ebfd16e41",
+  "start_utc": "2026-11-02T08:44:23.798345+00:00",
+  "duration_seconds": 0.457,
+  "exit_code": 0,
+  "combined_output": "wheel-pip-check.txt",
+  "log_sha256": "35bb3d1e4d1d0091788acae77c6d707f1dfb81d2384e34fd54a205f9497ce313"
+}

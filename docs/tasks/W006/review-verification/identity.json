@@ -1,0 +1,28 @@
+{
+  "base": "7320e5d6e819a422e0a446309eb039b1f05e7dd0",
+  "first_review_head": "36161ca84f69de589a2733ad94d5c7a41a892cf3",
+  "first_fix_head": "3a597742b72d29971f56b9e47e1bf7147ec068f3",
+  "reviewed_product_head": "cc42ae62585755b0b914d4dbec43324941bfe7c6",
+  "source_sha256": {
+    "README.md": "721cff4095e5044f629c2924486a6688a4c5b46f6aefb2c2fc574db20b046c2b",
+    "layauto_v2/domain/acquisition.py": "635bd4225bde36871080fc5c0d36413eee52169690a5756d2c06713b66704e48",
+    "layauto_v2/domain/publication.py": "9e36c178f982c94b48070be5e8fd16c64d1af71175bb8fb8a68cf6b36206d9e1",
+    "layauto_v2/domain/publication_codec.py": "3b4399d9ea1f59000e3488540629bd8088b27115928bb82b2e157cfd76b2fc3d",
+    "layauto_v2/importers/reader.py": "ea43085a6dcafdde759a8c930446b911aac33f2a37a82e3c3daabad5c5f947f7",
+    "layauto_v2/pipeline.py": "a995edc83fb2973f2c1a8a7fe03fc4dac07ed562e690af94a9876add4609767f",
+    "layauto_v2/repository/__init__.py": "eb7b069fd378f3e83c10de541c7a4d39a56aaee41127b69fe3306b1a468b5bec",
+    "layauto_v2/repository/publication.py": "e7ae20ed161df0b26c3027c5a15d5d6bc0b65ee5bdfedf4dda21267a6f5aceaa",
+    "layauto_v2/tooling/__init__.py": "9d20319ee2fabe785b0569b92519739a4d41d6f1b728cd83618cf0d6c439764b",
+    "layauto_v2/tooling/fixture.py": "f1db43b38d0c17d4733251c552df3be494371d59397739d6021b09c68babe74e",
+    "pyproject.toml": "253a258e430811fa6aba86def5fa03003a73d41b024d739c8129537f5cf6c0cc",
+    "tests/contracts/test_w006_boundaries.py": "a9c25a72a26cd07da3e63ffb82109d27f6a2b98fe8d0f18d7d71ddd7a9e79ead",
+    "tests/contracts/test_w006_pipeline.py": "1878aa3956ac353c48cbd4339f6915f00c6d9ccbc9a031135f03f0bb5fa7e6af",
+    "tests/contracts/test_w006_review_regressions.py": "9eac71486762d33260efc4023d1cf5c02d24964664b0cf02466c332e9ec26e5f",
+    "tests/contracts/w006_cases.py": "d7af7fce0c85683a06e13be7de0511db4f6795118bc3997880a159504cbfcd21",
+    "tests/unit/test_w006_publication.py": "08a6217e1afec7d053c90639813691228e0a20ede17b449e9e7e37624e602791"
+  },
+  "protected_historical_paths_changed": [],
+  "reviewer": "/root/final_review",
+  "specialist": "/root/final_review/repository_review",
+  "scope": "W006 process-local pre-context only; not PM acceptance"
+}

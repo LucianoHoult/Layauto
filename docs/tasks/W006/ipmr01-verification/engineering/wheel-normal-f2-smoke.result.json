@@ -1,0 +1,17 @@
+{
+  "command": [
+    "/workspace/work/w006-ipmr01/engineering/wheel-venv/bin/python",
+    "-I",
+    "-B",
+    "normal_f2_smoke.py",
+    "fixture",
+    "normal-f2-output"
+  ],
+  "cwd": "/workspace/work/w006-ipmr01/engineering/outside",
+  "product_commit": "f19ac0448a5d0111f799660bd7be043ebfd16e41",
+  "start_utc": "2026-11-02T08:44:23.574773+00:00",
+  "duration_seconds": 4.407,
+  "exit_code": 0,
+  "combined_output": "wheel-normal-f2-smoke.txt",
+  "log_sha256": "d754d86dc0a293d10d2877a43bb1dfd94df1658331896c9662cff034b8fff91a"
+}

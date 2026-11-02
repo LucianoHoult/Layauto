@@ -1,0 +1,55 @@
+{
+  "task": "W006",
+  "handoff_base": "7320e5d6e819a422e0a446309eb039b1f05e7dd0",
+  "final_product_commit": "cc42ae62585755b0b914d4dbec43324941bfe7c6",
+  "branch": "codex/w006-precontext-run-audit",
+  "profile": "process-local / dummy_fixture / layauto-precontext/1",
+  "python312": {
+    "version": "3.12.14",
+    "command": "python -B -m pytest -p no:cacheprovider tests/unit tests/contracts -q",
+    "cwd": "repository root",
+    "result": "389 passed",
+    "seconds": "117.01",
+    "log": "final/pytest312.txt"
+  },
+  "python310": {
+    "version": "3.10.22",
+    "result": "389 passed",
+    "seconds": "153.98",
+    "log": "final/pytest-310.txt"
+  },
+  "typing": {
+    "command": "python -m mypy",
+    "scope": "21 source files",
+    "both_interpreters": "passed"
+  },
+  "engineering": "final/engineering-receipt.json",
+  "independent_review": "../code-review.md",
+  "remaining_required_findings": 0,
+  "normal_outcome": "InputsReady with unsealed attempt; no successful terminal",
+  "f2_outcome": "MissingTerminator -> StageFailure -> failure RunRecord -> terminal reject",
+  "verified_source_manifest_entries": 214,
+  "verified_local_document_links": 61,
+  "protected_paths_unchanged": [
+    "tests/fixtures",
+    "tests/support",
+    "docs/tasks/W003",
+    "docs/tasks/W004-fixture-revision.md",
+    "docs/tasks/W005-input-reading-binding.md",
+    "docs/tasks/W005",
+    "docs/architecture.md",
+    "docs/current-work.md",
+    "legacy_mvp"
+  ],
+  "scope_not_executed": [
+    "Stage 2 semantics/spatial/body/extraction/baseline/seal/no_change",
+    "Stage 5 ECO and full phase/mode matrix",
+    "Stage 6 geometry export/full reports/success terminal and complete M1",
+    "real EDA/PDK, matched/live assurance, production admission/upload",
+    "durability, cross-process/crash/OOM/power-loss recovery guarantees",
+    "other platforms/interpreters; Python 3.10 clean wheel install",
+    "legacy regressions and fixture regeneration"
+  ],
+  "review_role": "Independent reviewers did not implement product changes",
+  "pm_status": "Execution handoff only; no PM acceptance, main merge, branch deletion or next task"
+}

@@ -1,0 +1,19 @@
+{
+  "base": "e8fec97b918938a5b431eb8ad38c2d63ed67e9d2",
+  "product_commit": "f19ac0448a5d0111f799660bd7be043ebfd16e41",
+  "task_original_restored_by_removing_execution_and_reviewer_additions": true,
+  "pm_section_unchanged": true,
+  "all_changes_within_scope": true,
+  "product_and_tests_unchanged_after_validation": true,
+  "local_links_resolved": 71,
+  "new_json_files_parse": true,
+  "staged_whitespace_check": {
+    "full_exit_code": 2,
+    "reason": "Raw pytest failure tracebacks contain trailing spaces; preserve captured log bytes and hashes.",
+    "raw_log_exceptions": [
+      "docs/tasks/W006/ipmr01-verification/regression-before.txt",
+      "docs/tasks/W006/ipmr01-verification/engineering/pytest310.txt"
+    ],
+    "all_other_staged_files_exit_code": 0
+  }
+}

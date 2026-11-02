@@ -1,0 +1,26 @@
+{
+  "status": "publication_unavailable",
+  "operation": "freeze_tool_run",
+  "publication_causes": [
+    [
+      "ValueError",
+      "secondary tool diagnostic freeze failure"
+    ]
+  ],
+  "pending_failure_code": "InternalStageFailure",
+  "pending_failure_causes": [
+    [
+      "RuntimeError",
+      "original parser failure"
+    ],
+    [
+      "LookupError",
+      "original underlying cause"
+    ]
+  ],
+  "pending_parse_is_none": true,
+  "captured_sources": 27,
+  "completed_evidence": 8,
+  "checkpoint_is_none": true,
+  "terminal_is_none": true
+}

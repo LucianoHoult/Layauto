@@ -1,0 +1,89 @@
+{
+  "date": "2026-11-02",
+  "role": "execution",
+  "branch": "codex/w006-precontext-run-audit",
+  "base": "e8fec97b918938a5b431eb8ad38c2d63ed67e9d2",
+  "product_commit": "f19ac0448a5d0111f799660bd7be043ebfd16e41",
+  "change": "Retain existing StageFailure and its cause chain on ToolRun diagnostic freeze failure; PublicationUnavailable independently describes the secondary exception. No schema change.",
+  "product_identity": "product-identity.json",
+  "environment": "environment312.json",
+  "direct_checks": [
+    {
+      "metadata": "repro-before.result.json",
+      "output": "repro-before.txt",
+      "interpretation": "Original IPMR-01 reproduced on e8fec97"
+    },
+    {
+      "metadata": "regression-before.result.json",
+      "output": "regression-before.txt",
+      "interpretation": "8 failed / 8 passed with new regression bytes and original product"
+    },
+    {
+      "metadata": "regression-after.result.json",
+      "output": "regression-after.txt",
+      "interpretation": "16 passed before product commit; bytes equal f19ac04"
+    },
+    {
+      "metadata": "repro-after.result.json",
+      "output": "repro-after.txt",
+      "interpretation": "Original unchanged reproduction passes on committed f19ac04"
+    },
+    {
+      "metadata": "pytest312.result.json",
+      "output": "pytest312.txt",
+      "interpretation": "405 passed on committed final product"
+    },
+    {
+      "metadata": "mypy312.result.json",
+      "output": "mypy312.txt",
+      "interpretation": "21 source files, strict typing"
+    },
+    {
+      "metadata": "pip-check312.result.json",
+      "output": "pip-check312.txt",
+      "interpretation": "No broken requirements"
+    }
+  ],
+  "red_green_identity_note": "Before/after targeted runs happened before the product commit (metadata HEAD e8fec97). before-identity records original pipeline plus new tests; the regression file is identical across both runs and in f19ac04. Final 405 tests, typing and original-repro-after ran at f19ac04.",
+  "engineering_receipt": "engineering/engineering-receipt.json",
+  "python310_scope": "120 passed plus one harness FileNotFoundError in the 121-case W006 run; added the unchanged same-commit F1 sample to the snapshot, then the failed test passed. 121 distinct cases passed across two invocations; not a single 121-pass run. Strict typing: 21 source files.",
+  "new_package_scope": "Built new sdist then wheel from final product snapshot; fresh Python3.12 environment, outside-source normal/F2 and parser/acquisition double-exception smoke passed. 74 package source files checked against final Git product. Added F1 sample after build is a test-only dependency; package product bytes did not change.",
+  "new_wheel_sha256": "8b71ed7438c1c95e1987d13d08c4dce23d21fc80e91d86a339d260b83ef5e064",
+  "new_sdist_sha256": "31dc9826729e5488c867bb3451dd62c8b234663b461a958c30afc884aa033d63",
+  "independent_review": "../ipmr01-fix-review.md",
+  "not_run": [
+    "Full W005 regression on Python3.10 in this correction (W005 covered by full Python3.12 suite)",
+    "Python3.10 clean-wheel installation",
+    "Legacy regression or fixture generation",
+    "Other OS/interpreters",
+    "Real EDA/PDK/production",
+    "Durable or cross-process recovery",
+    "Stage2-6/full M1"
+  ],
+  "preserved": [
+    "Original finding/report/reproduction and historical evidence",
+    "Input schema, fixtures and answers",
+    "PM acceptance sections, current-work and task stage"
+  ],
+  "root_evidence_sha256": {
+    "before-identity.json": "ca950d6ac09f3a5df4806d67ff2bf84eafdf38bde1d67422a1bbc104743e4477",
+    "environment312.json": "451fb63ad7b124527a4fc86ecf03398d4805da7ab8d4a8142f3897d865013337",
+    "mypy312.result.json": "5c5475d27eda4ce67a2dc6bcdc021d0dd0e95965c1a2e9732f2d876733c01171",
+    "mypy312.txt": "3253c7a5a8535995ce0dc8b25611174b1763d2c9ff1bbb0a29e2e90cca3ca91e",
+    "pip-check312.result.json": "074d6c6afd5d5c94696e379523a13f7598e1cfff55190054b85d3a202f951502",
+    "pip-check312.txt": "35bb3d1e4d1d0091788acae77c6d707f1dfb81d2384e34fd54a205f9497ce313",
+    "product-identity.json": "a8fbcecdbca70328f48984b6c3605ab76baad86f377dc2f43c974fe9ce15c512",
+    "pytest312.result.json": "5e2243018782cf33fa11955c8def172731b6543ffcb27e2eeff894d83baf9abd",
+    "pytest312.txt": "56076b189910c38a847c1a9d2c6376b176c9eab35b479a64dc8f3b7a1c04207e",
+    "regression-after.result.json": "4eab7aa855a47d10c73221fbfd5ab9a0728b80bc133743dbcd201ba529f760ab",
+    "regression-after.txt": "b332edeb60b6c51d59bf4fb8d719ef4428eeb33ae23f2f2db56de80ea31216b9",
+    "regression-before.result.json": "122cad322a8261793a9254eb3b1bf29a38d19d28db387cb925d5499530026f45",
+    "regression-before.txt": "1c6f6c145b8de7b1f9ad252cb059fb26401c758348215d62533e7e168706035b",
+    "repro-after.result.json": "e749f44465a62fa8378253fb0b5b5b1385b8e39408b78f8b1c5623ecc64da458",
+    "repro-after.txt": "2bd3aecfead6306523d5c12dc66facd9890869f45f10546d0c85f1598671b649",
+    "repro-before.result.json": "2e3f455a1acf2486ecc78febd120d384a40caceab793bb068db894ebb7ad426e",
+    "repro-before.txt": "d966ab663387d73b3c597cda3f82eab822d41c3cbb7912b109a31adc7e1a5e2e",
+    "engineering/engineering-receipt.json": "a25dde479298c204c01a908f6c296d0b3e101588c702c2d7b27c626b73374cf3",
+    "engineering/engineering-evidence-manifest.json": "c8e9149f6140d031d5c7842bf8c6e404786fab3a5ba2396b0d22ed320fc9b9d9"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "head": "e8fec97b918938a5b431eb8ad38c2d63ed67e9d2",
+  "note": "Before product fix; new regression file is untracked at this point and is identified by these bytes.",
+  "sha256": {
+    "layauto_v2/pipeline.py": "a995edc83fb2973f2c1a8a7fe03fc4dac07ed562e690af94a9876add4609767f",
+    "tests/contracts/test_w006_ipmr01.py": "7b986288d4c9638d92eeb946de34142fbd5c76c3fd1dce6d9f8c7f5e6fb680ee",
+    "docs/tasks/W006/independent-premerge-verification/double_exception.py": "f5aeb5f131b868121a9c37f838d77391c99445c4235e45e7010738ca88c0e276"
+  }
+}

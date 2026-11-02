@@ -1,0 +1,8 @@
+{
+  "result": "PipelineResult",
+  "declared_resolves": "external/source.cdl",
+  "selected_bytes": "not the acquired source",
+  "failure_code": "UnreadSelection",
+  "failure_uri": "link/../source.cdl",
+  "disposition": "reject"
+}

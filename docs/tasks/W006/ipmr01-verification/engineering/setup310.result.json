@@ -1,0 +1,22 @@
+{
+  "command": [
+    "/workspace/work/w006-ipmr01/engineering/venv310/bin/python",
+    "-m",
+    "pip",
+    "install",
+    "numpy",
+    "matplotlib",
+    "pyyaml",
+    "pytest",
+    "mypy",
+    "types-PyYAML",
+    "build"
+  ],
+  "cwd": "/workspace/work/w006-ipmr01/engineering",
+  "product_commit": null,
+  "start_utc": "2026-11-02T08:40:17.235441+00:00",
+  "duration_seconds": 18.314,
+  "exit_code": 0,
+  "combined_output": "setup310.txt",
+  "log_sha256": "057ef508e8bf21c898c28470f680a6426ba6374a50dd48fca2e05e5f4e1559a8"
+}

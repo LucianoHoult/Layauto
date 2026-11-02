@@ -1,0 +1,166 @@
+{
+  "date": "2026-11-02",
+  "role": "PM",
+  "branch": "codex/w006-precontext-run-audit",
+  "delivery": "8d3c36ce4bbc4714765b4aa9ec4b77abae8c3164",
+  "product_commit": "f19ac0448a5d0111f799660bd7be043ebfd16e41",
+  "base": "e8fec97b918938a5b431eb8ad38c2d63ed67e9d2",
+  "disposition": "IPMR-01 independent closure accepted; branch technical receipt accepted; remaining must-fix 0; main integration and final W006 acceptance pending",
+  "environment": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "executable": "/workspace/work/w005-pm-check-env/bin/python",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "cwd": "/workspace/Layauto",
+    "import_source": "/workspace/Layauto/layauto_v2/pipeline.py",
+    "tools": {
+      "pytest": "9.2.0",
+      "mypy": "2.4.1",
+      "PyYAML": "6.0.3"
+    },
+    "clean_install": false,
+    "command_environment": {
+      "PYTHONPATH": "/workspace/Layauto",
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "note": "Existing PM environment reused for source tests and probes; not clean installation evidence. Explicit overrides were applied to pytest and probes; mypy used inherited environment."
+  },
+  "direct_checks": [
+    {
+      "command": [
+        "/workspace/work/w005-pm-check-env/bin/python",
+        "-B",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "tests/unit",
+        "tests/contracts",
+        "-q"
+      ],
+      "cwd": "/workspace/Layauto",
+      "exit_code": 0,
+      "stdout": "........................................................................ [ 17%]\n........................................................................ [ 35%]\n........................................................................ [ 53%]\n........................................................................ [ 71%]\n........................................................................ [ 88%]\n.............................................                            [100%]\n=============================== warnings summary ===============================\n../../opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/anyio/pytest_plugin.py:14\n  /opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/anyio/pytest_plugin.py:14: PytestRemovedIn10Warning: _pytest.python.CallSpec2 has been renamed to CallSpec.\n  The CallSpec2 alias will be removed in pytest 10.\n  Update imports to use CallSpec instead.\n  See https://docs.pytest.org/en/stable/deprecations.html#callspec2-renamed\n    from _pytest.python import CallSpec2\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n405 passed, 1 warning in 91.32s (0:01:31)\n",
+      "stderr": "",
+      "check": "pytest",
+      "output_sha256": "67034c90f168b15a6eb975d80ae016ca07e1647f9acdca082863d961697149b2"
+    },
+    {
+      "command": [
+        "/workspace/work/w005-pm-check-env/bin/python",
+        "-B",
+        "-m",
+        "mypy",
+        "--cache-dir",
+        "/workspace/work/w006-fix-pm/mypy-cache"
+      ],
+      "cwd": "/workspace/Layauto",
+      "exit_code": 0,
+      "stdout": "Success: no issues found in 21 source files\n",
+      "stderr": "",
+      "check": "mypy",
+      "output_sha256": "3253c7a5a8535995ce0dc8b25611174b1763d2c9ff1bbb0a29e2e90cca3ca91e"
+    },
+    {
+      "command": [
+        "/workspace/work/w005-pm-check-env/bin/python",
+        "-B",
+        "docs/tasks/W006/independent-premerge-verification/double_exception.py"
+      ],
+      "cwd": "/workspace/Layauto",
+      "exit_code": 0,
+      "stdout": "{\n  \"status\": \"publication_unavailable\",\n  \"operation\": \"freeze_tool_run\",\n  \"publication_causes\": [\n    [\n      \"ValueError\",\n      \"secondary tool diagnostic freeze failure\"\n    ]\n  ],\n  \"pending_failure_code\": \"InternalStageFailure\",\n  \"pending_failure_causes\": [\n    [\n      \"RuntimeError\",\n      \"original parser failure\"\n    ],\n    [\n      \"LookupError\",\n      \"original underlying cause\"\n    ]\n  ],\n  \"pending_parse_is_none\": true,\n  \"captured_sources\": 27,\n  \"completed_evidence\": 8,\n  \"checkpoint_is_none\": true,\n  \"terminal_is_none\": true\n}\n",
+      "stderr": "",
+      "check": "original_repro",
+      "output_sha256": "2bd3aecfead6306523d5c12dc66facd9890869f45f10546d0c85f1598671b649"
+    },
+    {
+      "command": [
+        "/workspace/work/w005-pm-check-env/bin/python",
+        "-B",
+        "docs/tasks/W006/ipmr01-verification/reviewer/diagnostic_snapshot_probe.py"
+      ],
+      "cwd": "/workspace/Layauto",
+      "exit_code": 0,
+      "stdout": "PASS parse original cause snapshot, secondary hostile message and failed diagnostic readback; no invented publication\nPASS read original cause snapshot, secondary hostile message and failed diagnostic readback; no invented publication\n",
+      "stderr": "",
+      "check": "diagnostic_snapshot",
+      "output_sha256": "603c14c67c0f8559239ae187b7e7a38cc03aa13e9c54a7fa5dc355fd1db060eb"
+    }
+  ],
+  "identity_check": {
+    "result": {
+      "base": "e8fec97b918938a5b431eb8ad38c2d63ed67e9d2",
+      "delivery": "8d3c36ce4bbc4714765b4aa9ec4b77abae8c3164",
+      "product_commit": "f19ac0448a5d0111f799660bd7be043ebfd16e41",
+      "counts": {
+        "snapshot_files": 217,
+        "initial_snapshot_files": 216,
+        "engineering_evidence": 47,
+        "root_evidence": 19,
+        "product_identity": 4,
+        "command_logs": 29,
+        "reviewer_commands": 5,
+        "smoke_inputs": 119,
+        "before_identity": 3
+      },
+      "post_product_docs": 83,
+      "protected_changes": [],
+      "snapshot_added": [
+        "docs/tasks/W003/examples/records.json"
+      ],
+      "snapshot_existing_changed": [],
+      "python310": "120 passed / 1 failed missing F1 sample; same-commit sample only added; named failed test passed on retest, 121 distinct affected cases across two invocations",
+      "artifacts_available_here": {
+        "/workspace/work/w006-ipmr01/engineering/dist/layauto-0.2.0-py3-none-any.whl": false,
+        "/workspace/work/w006-ipmr01/engineering/dist/layauto-0.2.0.tar.gz": false
+      },
+      "artifact_identity_adoption": "New wheel/sdist 74 product-file identity checked by published independent reviewer; no original package byte verification by this PM specialist unless availability noted and checked separately",
+      "new_wheel_sha256": "8b71ed7438c1c95e1987d13d08c4dce23d21fc80e91d86a339d260b83ef5e064",
+      "new_sdist_sha256": "31dc9826729e5488c867bb3451dd62c8b234663b461a958c30afc884aa033d63",
+      "errors": []
+    },
+    "source_receipt_sha256": "f90b1b261ea8ff83427b38e73b972ca511df889ce1d5a957da30bc9991c28619",
+    "reviewer": "/root/w006_fix_evidence",
+    "timing": "checked before PM documentation edits"
+  },
+  "adopted_evidence": {
+    "review": "ipmr01-fix-review.md",
+    "execution": "ipmr01-verification/receipt.json",
+    "engineering": "ipmr01-verification/engineering/engineering-receipt.json",
+    "python310": "120 passed and 1 failed from omitted F1 sample in partial snapshot; same-commit records.json added without changing any existing snapshot files, exact failed node passed on retest; 121 distinct affected cases across two runs, not a single all-green run or full suite",
+    "python310_typing": "21 source files passed",
+    "build_install": "New final-source sdist/wheel, fresh Python3.12 install and isolated (-I) outside-source normal/F2 and parser/acquisition double-exception smoke passed in delivered evidence",
+    "artifact_identity": "Published independent reviewer directly checked 74 product files in both new packages. Original new packages unavailable in this PM environment; no claim of direct byte recheck or rebuild by PM."
+  },
+  "not_run_here": [
+    "Python3.10 tests or typing",
+    "build, clean installation or original new package byte verification",
+    "fixture regeneration or legacy tests"
+  ],
+  "not_validated_by_this_fix": [
+    "Python3.10 full suite or clean wheel installation",
+    "other platforms/interpreters",
+    "real EDA/production or matched/live admission",
+    "durable or cross-process recovery",
+    "Stage2-6 complete runtime and complete M1"
+  ],
+  "remote_at_receipt": {
+    "main": "4db3aa81d6f01496a680bdcb264afe99cd80f3f3",
+    "delivery": "8d3c36ce4bbc4714765b4aa9ec4b77abae8c3164",
+    "command": "git ls-remote origin refs/heads/main refs/heads/codex/w006-precontext-run-audit",
+    "merge_performed": false
+  },
+  "preserved": [
+    "accepted fixtures and answers",
+    "original finding and reproduction",
+    "historical PM1/PM2 and review evidence",
+    "architecture and unchanged product modules"
+  ],
+  "warning": "Full PM regression had one third-party anyio pytest deprecation warning; no failures",
+  "checked_file_sha256": {
+    "layauto_v2/pipeline.py": "32f435edcf08be9efb31901dde447c2e171f74c428f7d386133e11aebb65e377",
+    "tests/contracts/test_w006_ipmr01.py": "7b986288d4c9638d92eeb946de34142fbd5c76c3fd1dce6d9f8c7f5e6fb680ee",
+    "docs/tasks/W006/independent-premerge-verification/double_exception.py": "f5aeb5f131b868121a9c37f838d77391c99445c4235e45e7010738ca88c0e276",
+    "docs/tasks/W006/ipmr01-verification/reviewer/diagnostic_snapshot_probe.py": "b9c8aed52b2441adce86228ecfe5cdd77d35f521be4bae94c588e4e3ba27bf3c"
+  }
+}

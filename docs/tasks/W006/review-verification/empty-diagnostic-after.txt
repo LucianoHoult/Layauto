@@ -1,0 +1,3 @@
+{"boundary": "parse", "result": "PipelineResult", "terminal": true}
+{"boundary": "create.before_switch", "result": "PublicationUnavailable"}
+{"boundary": "finalize.freeze", "result": "PipelineResult"}

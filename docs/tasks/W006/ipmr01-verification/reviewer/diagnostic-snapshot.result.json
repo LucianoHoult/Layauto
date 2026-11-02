@@ -1,0 +1,12 @@
+{
+  "command": [
+    "/workspace/.venvs/layauto/bin/python",
+    "-B",
+    "docs/tasks/W006/ipmr01-verification/reviewer/diagnostic_snapshot_probe.py"
+  ],
+  "cwd": "/workspace/Layauto",
+  "head": "f19ac0448a5d0111f799660bd7be043ebfd16e41",
+  "returncode": 0,
+  "elapsed_seconds": 0.966,
+  "output_sha256": "603c14c67c0f8559239ae187b7e7a38cc03aa13e9c54a7fa5dc355fd1db060eb"
+}
