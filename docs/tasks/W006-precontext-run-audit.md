@@ -8,12 +8,12 @@
 | --- | --- |
 | ID / 目标 | W006；实现process-local的pre-context入口、审计与失败终结，成功读取交接仍为unsealed |
 | 里程碑 / 依赖 | M1的第二个产品切片；依赖已验收W003/W004输入与W005组件。W005经[PR #59](https://github.com/LucianoHoult/Layauto/pull/59)合入main `4db3aa81d6f01496a680bdcb264afe99cd80f3f3`，验收见[W005 PM4](W005-input-reading-binding.md#pm4-integration-20261102)；完整M1仍待后续组合 |
-| 授权依据 / 当前阶段 | 用户2026-11-02同意继续合并W005、验收并准备下一任务；沿用独立执行session。**待验收：W006分支技术接收通过，待main集成与最终验收。** 实现、接口/代码review及补修已交付；PM核验见[PM1](#pm1-20261102)，未据此扩大到W006合并或下一任务实现 |
-| 恢复位置 | `codex/w006-precontext-run-audit`；执行交付`628cc94383fa4c68bd44de51117ef06451ed3a9e`，最终产品/回归`cc42ae62585755b0b914d4dbec43324941bfe7c6`。接手包含PM1的后续文档提交，准确SHA见Git/回复。先核对远端、HEAD及已有差异，不假定临时环境/未提交文件跨session存在 |
+| 授权依据 / 当前阶段 | 用户2026-11-02交回专门session的独立合并前review；沿用独立执行session。**可执行（局部补修）：W006 IPMR-01为P2必须修正项，阻止合并。** 原[PM1](#pm1-20261102)技术接收及合并建议因新反例暂停，当前处置与修复交接见[PM2](#pm2-ipmr01-20261102)；尚未验收或合并W006 |
+| 恢复位置 | `codex/w006-precontext-run-audit`；独立review交付`ccd157fe1a3dee4267d4f0b119a4eda53cfdcf9f`，产品/回归仍为`cc42ae62585755b0b914d4dbec43324941bfe7c6`，尚无IPMR-01产品补修。接手包含PM2的后续文档提交，准确SHA见Git/回复。先核对远端、HEAD及已有差异，不假定临时环境/未提交文件跨session存在 |
 | 允许修改 | `layauto_v2/pipeline.py`；新增职责明确的`repository/`、`tooling/`及必要中立`domain/` request/ids/results/publication合同；必要的W005读取/捕获接口重构；`tests/unit/`、`tests/contracts/`及真实文件组合测试；受影响typing/build配置、README及本任务执行/review附件 |
 | 非目标 | 不实现Stage 2语义/空间/body/extraction及baseline/seal，不判断no_change，不实现ECO/Stage 5修改、Stage 6 geometry导出/完整报告，不运行真实EDA或生产上传，不承诺持久化/跨进程恢复；不发布新稳定CLI或新增必需外部输入文件，不改已验收fixture/答案/合同来迁就实现 |
 | 架构依据 | 基线中的[architecture](../architecture.md) §2.1–2.2、§2.6–2.7、§9.2、§11.2/11.4/11.10/11.13/11.15、§12.1/12.6–12.7；以各段原文为准。另读[W002](W002-first-input-admission.md) E6/E7/R4、[W003合同](W003/contracts.md)共享记录/失败/F1–F2与[W005后续组合表](W005-input-reading-binding.md#pm已确定的任务拆分) |
-| 分工 / 阻塞 | 一名执行者负责集成；未参与变更实现者做接口及最终review；PM接收并维护任务阶段/当前入口。无新的用户预期待决；接口细化见下，不能将内部选择变成额外审批门 |
+| 分工 / 阻塞 | 一名执行者完成IPMR-01局部修复，未参与该修复者独立复核关闭；PM维护阶段并重新核验。IPMR-01关闭前阻止合并及后续产品推进；本次修复属于既定A7，无新的用户预期待决 |
 
 ### 行为要求与边界
 
@@ -130,6 +130,8 @@ Repository只提供本切片所需create、audit/checkpoint、pre-context finali
 
 ## PM 验收与交接（PM）
 
+**当前结论见[PM2](#pm2-ipmr01-20261102)：W006 IPMR-01开放，暂停原技术接收及合并建议。** 以下原派发、PM1及其回执保留历史事实，不代表新反例已关闭。
+
 **原派发记录（2026-11-02，已完成交回）：** 派发时只有任务要求和分支准备，未验收W006；执行者完成实现与独立review后，将本任务产物、证据及记录提交推送到`codex/w006-precontext-run-audit`，使用项目既有GitHub noreply身份，核对远端完整SHA并交回PM。远端变化先核对并安全集成，不force push；不自行验收、合并main、删除分支或扩展下一产品任务。该段保留原交接边界，当前接收结果见PM1。
 
 **派发文档复核（2026-11-02，PM记录）：** 未参与草稿设计/编写的`w006_handoff_review`对照架构及W002/W003/W005完成独立检查，剩余必须修正项为0；整体交接中一处旧W005分支导航句已修正并复核。受审任务全文SHA-256为`59b296fa93d7fc72e59a9b68b46ce1e50819fdb27f7bd938dcef702c841e7179`，对应追加本段前的内容；六份文档的状态、103个本地链接、相关锚点及W005集成身份/历史保护核对通过。此为派发要求review，不替代未来接口方案或产品代码review。
@@ -153,9 +155,33 @@ PM本轮未重跑Python3.10、构建/干净安装或fixture生成；原执行也
 
 下一步先核对拟合并head与已审产品身份，完成main合并及受影响组合验证，再记录W006最终验收。之后收敛后续Stage2任务：把输入转换为内部模型并完成该阶段校验，继续明确baseline/no_change、Stage6闭环的任务归属；本轮不提前实现或宣称这些能力。远端main在接收时仍为`4db3aa81d6f01496a680bdcb264afe99cd80f3f3`。
 
+<a id="pm2-ipmr01-20261102"></a>
+### PM2 接收独立复核与局部修复交接（2026-11-02）
+
+**接收W006 IPMR-01为P2必须修正项，当前1项开放，阻止合并。** 独立review交付`ccd157fe1a3dee4267d4f0b119a4eda53cfdcf9f`只增加报告、复现及reviewer记录；产品、fixture与测试相对`cc42ae6`未变。PM核对[报告](W006/independent-premerge-review.md#ipmr-01)、pipeline控制流与既有DTO，并在Python3.12.14复跑原[double_exception.py](W006/independent-premerge-verification/double_exception.py)：实际退出1，原RuntimeError/LookupError均丢失，只剩二次ValueError；27份来源、8份completed evidence仍在，checkpoint/terminal为空。实际命令与输出见[PM复现回执](W006/ipmr01-pm-reproduction.json)。本轮只复现此缺陷，没有重跑全套测试或构建。
+
+PM1的389项通过及历史findings关闭记录保持原事实；它们没有覆盖这次普通异常叠加诊断冻结异常的组合，不能继续作为当前无阻塞项的结论。无需重开W003/W004样本或改变W005输入定义，也不增加外部输入、持久化或新阶段承诺。
+
+**修复目标与边界：** 在ToolRun冻结失败时，保留已经构造的原StageFailure及cause chain；二次冻结异常由`PublicationUnavailable.operation/message/causes`表达，`pending_failure`保存原失败。此前没有failure时仍需给出冻结异常对应的诊断。现有DTO足以表达这两层原因，优先局部修正；具体实现由执行者负责。继续保留实际sources/events/completed evidence，不伪造ToolRun、checkpoint、terminal或RunRecord；ToolRun冻结失败不改走repository的`run_record_freeze_failure`分支。原KeyboardInterrupt/SystemExit对象继续传播。
+
+**关闭条件：** 原复现及新增持久回归证明parser/acquisition意外Exception（含cause chain）后freeze再失败仍可区分两层原因；检查保留的bytes/hash/events/evidence与未发布状态。单独freeze失败、空消息/非法Unicode/坏`__str__`、原始中断传播的既有能力不回退。最终补修版本须有受影响回归、正常/F2组合、W005保护及strict typing验证；Python3.12完整回归、Python3.10受影响回归和最终源码的新构建/干净安装smoke分别记录实际结果。原双解释器389项及旧wheel只能证明旧版本，不能代替新修复验证。未参与补修实现的reviewer复核后决定是否关闭，交PM重新接收；关闭前不合并或进入后续任务。
+
+#### IPMR-01独立执行session prompt
+
+```text
+按Layauto项目规范，以执行角色完成W006 IPMR-01局部补修，并安排独立复核。
+从codex/w006-precontext-run-audit包含PM2的最新PM交接提交恢复；review基线ccd157fe1a3dee4267d4f0b119a4eda53cfdcf9f，产品仍为cc42ae62585755b0b914d4dbec43324941bfe7c6。核对远端、HEAD及已有修改，不覆盖或force push。
+读取AGENTS、README、协作/环境规则、current-work、W006 PM2及原行为要求7/A7、独立合并前报告和复现，回查相关architecture原文与接口合同。
+先运行原double_exception.py确认失败，再作最小修复：原stage failure/cause chain不被第二次ToolRun冻结异常覆盖；两层原因均可查，已有bytes/hash/events/evidence保留，未发布则仍明确无checkpoint/terminal。
+保留没有原failure时的freeze诊断、空消息/Unicode/坏__str__处理与KeyboardInterrupt/SystemExit原对象传播；不把ToolRun冻结失败伪装成RunRecord冻结失败，不改schema/输入/fixture/答案来迁就实现。
+补parser及acquisition双Exception的持久回归；按PM2关闭条件验证。运行3.12完整回归、3.10受影响回归、strict typing；以最终补修源码重建包并验证干净安装下正常/F2及本缺陷路径，准确记录实际矩阵、源码/包身份和未执行项，不沿用旧包证明新修复。
+请未参与补修实现者独立复核原复现及相关边界，保存W006/ipmr01-fix-review.md并追加任务reviewer记录；执行者不得自写关闭结论。原finding、复现和历史报告保留，执行记录追加在W006执行区。
+提交推送代码、回归、必要证据与执行/review记录到当前W006分支，沿用项目noreply身份，核对远端完整SHA交PM。不自行验收、合并main、删除分支或启动下一任务。
+```
+
 ### 独立执行session prompt
 
-以下为已完成派发的历史prompt，保留原授权与范围；当前恢复应从PM1继续，不重新执行本段。
+以下为已完成派发的历史prompt，保留原授权与范围；当前恢复应从PM2的IPMR-01补修交接继续，不重新执行本段。
 
 ```text
 按Layauto项目规范，以执行角色完成W006运行入口与输入失败记录。

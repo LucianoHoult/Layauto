@@ -1,0 +1,29 @@
+{
+  "delivery": "ccd157fe1a3dee4267d4f0b119a4eda53cfdcf9f",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "cwd": "/workspace/Layauto",
+  "command": [
+    "/workspace/work/w005-pm-check-env/bin/python",
+    "-B",
+    "docs/tasks/W006/independent-premerge-verification/double_exception.py"
+  ],
+  "environment_overrides": {
+    "PYTHONPATH": "/workspace/Layauto",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "exit_code": 1,
+  "stdout": "{\n  \"status\": \"publication_unavailable\",\n  \"operation\": \"freeze_tool_run\",\n  \"publication_causes\": [\n    [\n      \"ValueError\",\n      \"secondary tool diagnostic freeze failure\"\n    ]\n  ],\n  \"pending_failure_code\": \"InternalStageFailure\",\n  \"pending_failure_causes\": [\n    [\n      \"ValueError\",\n      \"secondary tool diagnostic freeze failure\"\n    ]\n  ],\n  \"pending_parse_is_none\": true,\n  \"captured_sources\": 27,\n  \"completed_evidence\": 8,\n  \"checkpoint_is_none\": true,\n  \"terminal_is_none\": true\n}\n",
+  "stderr": "Traceback (most recent call last):\n  File \"/workspace/Layauto/docs/tasks/W006/independent-premerge-verification/double_exception.py\", line 69, in <module>\n    main()\n  File \"/workspace/Layauto/docs/tasks/W006/independent-premerge-verification/double_exception.py\", line 62, in main\n    assert causes == [\n           ^^^^^^^^^^^\nAssertionError: IPMR-01: diagnostic freeze failure discarded the original parser cause chain\n",
+  "role": "PM",
+  "date": "2026-11-02",
+  "product_commit": "cc42ae62585755b0b914d4dbec43324941bfe7c6",
+  "finding": "W006 IPMR-01",
+  "disposition": "Confirmed open P2; suspend prior technical acceptance and merge recommendation; local fix and independent closure pending",
+  "script_sha256": "f5aeb5f131b868121a9c37f838d77391c99445c4235e45e7010738ca88c0e276",
+  "not_run": [
+    "full regression suite",
+    "typing",
+    "build or clean install"
+  ],
+  "note": "Exit 1 is the expected reproduction of the open defect, not a passing product test."
+}
