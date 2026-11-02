@@ -8,8 +8,8 @@
 | --- | --- |
 | ID / 目标 | W007；交付Stage2首个纯归一化组件：source semantic draft、独立immutable target/typed differences、query identity关联及annotation seeds |
 | 里程碑 / 依赖 | M1第三个产品切片；依赖W003/W004已验收synthetic输入、W005读取组件及W006运行审计。W006已通过[PR #60](https://github.com/LucianoHoult/Layauto/pull/60)合入main `221492eb72e10cf2e46f1d9c76cb992087806a97`，接收见[W006 PM4](W006-precontext-run-audit.md#pm4-integration-20261102)。本任务不是完整Stage2或M1 |
-| 授权依据 / 阶段 | 用户2026-11-02派发独立执行任务并交回实现与review结果。**待验收：分支技术接收通过，剩余必须修正项0；main集成及组合验证后再作最终验收。** 依据见[PM1](#pm1-technical-receipt-20261102) |
-| 恢复位置 | `codex/w007-semantic-identity-normalization`；实现交付 `5e874e5e60bb74f58903080bf079796061454962`，产品/测试 `0f879f01acbeac033173d0b6c6257c376bb9272a`。从包含PM1及current-work更新的本分支提交继续，完整SHA见Git/回复；main仍为上述W006集成版本。临时环境不假定跨session存在 |
+| 授权依据 / 阶段 | 用户2026-11-02派发独立执行任务、交回实现与review，随后同意继续合并。**已验收并集成main；剩余必须修正项0。** 最终依据见[PM2](#pm2-integration-20261102)，原[PM1](#pm1-technical-receipt-20261102)保留分支接收事实 |
+| 恢复位置 | W007 main集成 `765ff864f4341b91996f70f25723411eebc0d6c2`；已审head `26dc70ce5dee76f275530f33ad585b459b2b8b5a`，产品/测试 `0f879f01acbeac033173d0b6c6257c376bb9272a`。后续从[current-work](../current-work.md)指定的W008准备分支继续；W007分支保留。临时环境不假定跨session存在 |
 | 允许修改 | 新建职责明确的`layauto_v2/normalization/`；`domain/circuit.py`、`intent.py`、`identifiers.py`及必要中立DTO/codec；必要的纯identity/seed构建模块；相应unit/contracts/真实读取组合测试、typing/build配置、README与本任务附件。内部类型/文件组织留执行方案，不为目录名强造对象 |
 | 非目标 | 不实现geometry store、coordinate/occupancy、spatial overlay、physical connectivity/body/extraction/mandatory规则、完整ProposedInitialState、initialize/seal或state publication；不扩展W006正式pipeline/repository协议，不产生StageFailure终结链、baseline、no_change、ECO或导出；不扩外部输入格式、真实PDK/EDA或方言，不改已验收fixture/答案 |
 | 架构依据 | 上述main的[architecture](../architecture.md) §1.4、§2.2–2.3、§3.2–3.3、§5.3–5.4、§7.1/7.3/7.5、§11.2/11.5/11.10/11.13–11.15；读原文及[W002 E6/E7/R4](W002-first-input-admission.md)、[W003合同](W003/contracts.md)、[W005拆分](W005-input-reading-binding.md#pm已确定的任务拆分)、W006 InputsReady与其[接口方案](W006/interface-plan.md) |
@@ -108,7 +108,7 @@
 
 ## PM 验收与交接（PM）
 
-原派发阶段只准备任务和分支；实现交回后的当前接收状态见PM1。执行者的提交、review与后续PM接收分别保留，不把分支技术接收写成main集成或完整M1通过。
+原派发、PM1分支技术接收及PM2最终集成按各自版本保留；当前状态见PM2。W007任务验收不代表完整M1通过。
 
 **派发要求独立复核（2026-11-02，PM记录）：** 未参与草稿编写的`/root/w007_handoff_review`对照架构与W003–W006相邻合同检查，剩余必须修正项0；确认source/target及seed分工、C08/09/10与C13阶段边界、真实读取适配、后续完整状态/发布/导出义务和授权范围。受审W007全文SHA-256为`7ecfe9a6dfaaeec00fcbc4a80887284d330a1fb618db9ebb7f1545110745b54d`，对应追加本段前的内容；这不是未来接口方案或产品代码review。
 
@@ -131,9 +131,20 @@ FR3所需的内部依赖调整在原范围内接收：只对已捕获的requests
 
 目前得到的是可追溯的source语义、独立target、完整差异与query身份/seeds；无差异仅是语义相等，B端网名不证明body连通。完整几何/坐标/occupancy/connectivity/body/extraction、原子baseline/seal、整轮no_change/terminal、Stage6及真实EDA/PDK仍未由本任务实现或验收。本轮未合并main、删除分支或启动下一任务；建议下一步完成main集成及针对性组合验证，再准备后续Stage2物理状态切片。
 
+<a id="pm2-integration-20261102"></a>
+### PM2. main集成与最终验收（2026-11-02，PM）
+
+用户在PM1建议合并并准备下一任务后回复“好的，继续吧”，授权本次集成与后续任务准备。已通过[PR #61](https://github.com/LucianoHoult/Layauto/pull/61)按merge方式合入main **`765ff864f4341b91996f70f25723411eebc0d6c2`**，保留全部历史提交；合并锁定已审head `26dc70ce5dee76f275530f33ad585b459b2b8b5a`。远端PR与Git均核验，合并tree `9524a47acd9cd6a9c990413bbcc91d2dfbb7add7`与已审head完全一致。**W007按本任务范围最终验收，剩余必须修正项0。**
+
+在实际合并版本上，PM运行W005真实读取→W007、W006 readback→W007、C08/09/10、C13及多轴目标、FR3请求绑定、decoder意外异常和W006 IPMR-01组合：Python3.12.14 **39 passed / 37.01s**。最终101项源码/测试/配置清单仍一致；PM1的553项完整回归、33模块typing、独立review、双解释器及构建安装证据因tree相同继续适用，未冒记重跑。命令、输出、环境、版本和采用边界见[集成回执](W007/integration-receipt.json)。GitHub未返回CI status/workflow记录，不把空列表写成CI通过。
+
+原始diff空白检查仅报历史失败日志的原始空白和`domain/source_location.py`末尾一空行；保留受审字节，不为格式重写原证据或重封包。排除该日志并关闭EOF空行提示后，其余diff检查通过。本次没有产品/测试/fixture修改。
+
+W007分支保留，未删除。下一任务[W008几何事实与基础占用](W008-geometry-base-occupancy.md)从本次main建立准备分支，先细化并独立review内部几何/投影方案；完整工艺坐标、物理解释与发布、no_change/Stage6及真实准入仍保留。本段和集成回执是合并后的PM记录，随W008准备提交交接，不冒记为上述merge commit已含的内容。
+
 ### 独立执行session prompt
 
-以下为已执行的原派发prompt，仅作历史记录；当前从PM1接收结果继续，不重新实施本任务。
+以下为已执行的原派发prompt，仅作历史记录；当前从PM2及current-work继续，不重新实施本任务。
 
 ```text
 按Layauto项目规范，以执行角色完成W007语义身份与目标归一化。

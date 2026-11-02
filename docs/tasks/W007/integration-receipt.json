@@ -1,0 +1,106 @@
+{
+  "date": "2026-11-02",
+  "role": "PM",
+  "task": "W007",
+  "decision": "accepted and integrated into main; W007 scope only, complete M1 remains open",
+  "user_authorization": "User agreed to continue after PM recommended merging W007 and preparing the next independent execution task.",
+  "pull_request": {
+    "number": 61,
+    "url": "https://github.com/LucianoHoult/Layauto/pull/61",
+    "merged": true,
+    "method": "merge",
+    "expected_head_sha": "26dc70ce5dee76f275530f33ad585b459b2b8b5a",
+    "merged_at_utc": "2026-11-02T13:15:44Z"
+  },
+  "base_main": "221492eb72e10cf2e46f1d9c76cb992087806a97",
+  "reviewed_head": "26dc70ce5dee76f275530f33ad585b459b2b8b5a",
+  "main_commit": "765ff864f4341b91996f70f25723411eebc0d6c2",
+  "product_commit": "0f879f01acbeac033173d0b6c6257c376bb9272a",
+  "tree": "9524a47acd9cd6a9c990413bbcc91d2dfbb7add7",
+  "merged_tree_equals_reviewed_head": true,
+  "merge_route": "GitHub connector merge_pull_request with expected_head_sha. Initial sha argument was rejected before execution; gh GraphQL request returned Forbidden and did not merge. Correct connector call succeeded; PR metadata and Git fetch confirmed.",
+  "premerge_remote_checks": {
+    "head_matches_pm_receipt": true,
+    "base_is_ancestor": true,
+    "mergeable": true,
+    "review_threads": [],
+    "github_review_submissions": [],
+    "commit_statuses": [],
+    "pull_request_workflow_runs": [],
+    "note": "No CI statuses or PR workflow runs returned; this is not a claim of CI success. Independent review evidence is in the repository."
+  },
+  "premerge_whitespace": {
+    "raw_diff_check_exit_code": 2,
+    "paths": [
+      "docs/tasks/W007/review-evidence/wire-decoder-output-initial.txt",
+      "layauto_v2/domain/source_location.py"
+    ],
+    "disposition": "Historical failing test output kept byte-for-byte for provenance; one source blank line at EOF is nonfunctional. No code modification. Excluding only the raw historical log and disabling blank-at-EOF warnings yields exit 0."
+  },
+  "actual_postmerge_checks": [
+    {
+      "command": [
+        "/workspace/work/w005-pm-check-env/bin/python",
+        "-B",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "-q",
+        "tests/contracts/test_w007_inputs.py::test_actual_w005_full_manual_semantics_and_source_backlinks_without_io",
+        "tests/contracts/test_w007_inputs.py::test_actual_w006_readback_has_equivalent_semantics_and_cannot_advance_run",
+        "tests/contracts/test_w007_inputs.py::test_original_source_admission_variants_reach_located_component_errors",
+        "tests/contracts/test_w007_inputs.py::test_c13_retains_exact_channel_length_target_obligation_and_no_run_terminal",
+        "tests/contracts/test_w007_inputs.py::test_all_axes_models_and_terminals_remain_multiple_target_obligations",
+        "tests/contracts/test_w007_contracts.py::test_cr01_fr3_geometry_plus_metadata_permutation_cannot_rebind_captured_requests",
+        "tests/contracts/test_w007_contracts.py::test_captured_requests_decoder_unexpected_errors_propagate_unchanged",
+        "tests/contracts/test_w006_ipmr01.py"
+      ],
+      "cwd": "/workspace/Layauto",
+      "commit": "765ff864f4341b91996f70f25723411eebc0d6c2",
+      "started_utc": "2026-11-02T13:16:18.107659+00:00",
+      "exit_code": 0,
+      "stdout": ".......................................                                  [100%]\n=============================== warnings summary ===============================\n../../opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/anyio/pytest_plugin.py:14\n  /opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/anyio/pytest_plugin.py:14: PytestRemovedIn10Warning: _pytest.python.CallSpec2 has been renamed to CallSpec.\n  The CallSpec2 alias will be removed in pytest 10.\n  Update imports to use CallSpec instead.\n  See https://docs.pytest.org/en/stable/deprecations.html#callspec2-renamed\n    from _pytest.python import CallSpec2\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n39 passed, 1 warning in 37.01s\n",
+      "stderr": ""
+    }
+  ],
+  "postmerge_environment": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "executable": "/workspace/work/w005-pm-check-env/bin/python",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "cwd": "/workspace/Layauto",
+    "import_source": "/workspace/Layauto/layauto_v2/normalization/__init__.py",
+    "tools": {
+      "pytest": "9.2.0",
+      "mypy": "2.4.1",
+      "PyYAML": "6.0.3"
+    },
+    "clean_install": false,
+    "note": "Existing PM environment reused for source tests, not clean installation evidence. pytest and probes set PYTHONDONTWRITEBYTECODE=1; pytest sets PYTHONPATH to checkout; mypy uses inherited environment."
+  },
+  "source_manifest_verified_at_merge": {
+    "path": "verification/source-manifest.json",
+    "files": 101,
+    "sha256": "5fd13ce5fc1cfb6d9238bb4360027c0054e02e2487cfa8c5e0dd0b36736f2ae7"
+  },
+  "adopted_unchanged_evidence": {
+    "pm": "pm-receipt.json",
+    "execution": "verification/receipt.json",
+    "independent_review": "code-review.md",
+    "reason": "Merged tree exactly equals reviewed head; no source/test/package changes. PM 553 full tests, 33-file typing, probes and original dual-interpreter build/install evidence remain applicable."
+  },
+  "not_repeated": [
+    "full 553-test suite",
+    "typing",
+    "Python3.10 execution",
+    "build/install and installed smoke"
+  ],
+  "limits": [
+    "complete geometry and physical state",
+    "full process/Stage2 baseline/seal",
+    "whole-run no_change and Stage6 outputs",
+    "real EDA/PDK/production"
+  ],
+  "branch_disposition": "W007 branch retained; W008 preparation branch created at exact main merge commit; no W008 product implementation.",
+  "postmerge_documentation_note": "This receipt and PM2 are post-merge facts saved on the W008 preparation branch, not part of the merge commit itself."
+}
