@@ -1,0 +1,28 @@
+{
+  "base": "5b7205009b3ed7f8fe15e135e674654f2f544557",
+  "tested_head": "ab7feddff83749b54c1866b1ad95fbc99fd787f1",
+  "sha256": {
+    "README.md": "84b6ccc592b40bd3c15b3e3b5524d4e4690e1931f5f31d06351babf097a3cd46",
+    "layauto_v2/domain/codec.py": "f1a3a45fbce452957c1c04b8b8c711f17c63a81c5c30d637e9d89dd67d414252",
+    "layauto_v2/domain/evidence.py": "598f63793abb8e6a00007c0c2b23dd91f5c18b149ed841b5ea47f6a473d540ae",
+    "layauto_v2/domain/results.py": "a02138b82c6ec8effbac7742e5abb75770bd14b9543594ef90ed02c1a7251840",
+    "layauto_v2/importers/__init__.py": "ac0bde328746d945781cad8095104bf7d408abed1e4394b522c626083f2f49f2",
+    "layauto_v2/importers/_access.py": "5413a0732b06f9c3d5e129a06ee5f77687c115a412a9eb04a04193f6c950174f",
+    "layauto_v2/importers/_query_raw.py": "4081f656f0b56c450af1da95945011044ee8d891be04b5d9e0db17c7808755bd",
+    "layauto_v2/importers/calibre.py": "dac697a8292c70b494df8a1a99e175dbe5ecf38800b2b8f3a9348d31fd44b689",
+    "layauto_v2/importers/cdl.py": "51bc0e9401b5880ead716c40d8bf8d8b48f6a0b9393b3b5ec6bc16f595426443",
+    "layauto_v2/importers/config.py": "af28db9747ff981b3f4eb51bdc14debc3ee54cbf60e514aa315ef54e327a0c1f",
+    "layauto_v2/importers/gds.py": "d0dcbe1c9cbf29ca04d7930b4f3dc8a6031ccf7007728898f5b788655dde4ab1",
+    "layauto_v2/importers/reader.py": "b93c9ad02ba954460de22e3b13a302cc4fe72949594e19b2b1e5b557da86357e",
+    "layauto_v2/py.typed": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "layauto_v2/tech/__init__.py": "15d4fafaafda4af20e44c51c1e171623b7df1b79f79bb030e3cd8a48d87d4ce8",
+    "layauto_v2/tech/schema.py": "501565a25d3d6f899a17fca30d79a66dcf116be68b8d48a99e93407865af8b47",
+    "pyproject.toml": "6b095b1718511153b642a29f80f4f56f07ed82ddc4be480055ae96a3a0749645",
+    "tests/contracts/test_w005_contracts.py": "dc4a6775ee1b8fe608fd3248fd309dfb133518589d2087cb87cc26c393532799",
+    "tests/contracts/test_w005_inputs.py": "87d29aa9aa2699cb9f7fea0607d373b6ea193b000411bfef9aa62c15913357a3",
+    "tests/contracts/w005_cases.py": "251db42e365906e471a0d80c56b9778a4de4dbf6cde062246807010af0dc495d",
+    "tests/unit/test_w005_config.py": "ca9c72c643931417b8a8f63ab46b3f4ccbccb00686c7c4268369d38edd337497",
+    "tests/unit/test_w005_formats.py": "99277182490ca4d02579005a8ce748194d7fc4afa51f5b80978ced73a5988c59",
+    "tests/unit/test_w005_query.py": "d0a91261dbcd2601c8d7c3270423557ac2f2551cd2bcd6e4a887d8a3f8411588"
+  }
+}

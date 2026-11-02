@@ -79,11 +79,67 @@ Tests: accepted bytes and independent answers, negative overlay files and explic
 
 ## 执行结果（执行）
 
-未开始。执行者填写起始版本/环境、实际写入范围、A1–A7的命令与结果、未执行范围和完整身份。不得提前填写通过。
+### E2. 实现与验证交付（2026-11-02，执行）
+
+本轮由用户明确授权完整实现、独立 review、提交及推送；结果交 PM 接收，**未自行验收 W005、合并 main 或启动后续任务**。任务阶段、current-work 与 PM 段保持 PM 归属。
+
+恢复时 `/workspace/Layauto` 位于 `work` / `87fe5a5a87d0cbb1f97952f1485dac9a71416369`，staged/unstaged/untracked 均为空。显式 fetch 后切到 `codex/w005-input-reading-binding`，起点精确为 `5b7205009b3ed7f8fe15e135e674654f2f544557`。已逐项读取 AGENTS、README、协作规则、current-work、本任务、引用架构及 W003 contracts/实际输入。检查到仅根 AGENTS，无局部追加规则。初始网络默认沙箱代理不可达；使用受支持的网络权限访问同一代理后同步成功，未绕过网络策略。
+
+独立接口 review 通过后，由主执行统一集成；GDS/CDL、query、config 与测试分别在独立 branch/worktree 实现。共享中立合同先发布，各 worker 提交经 cherry-pick 集成；最终 reviewer 未参与实现。运行组件的最终受测/受审提交为 **`ab7feddff83749b54c1866b1ad95fbc99fd787f1`**，之后的交接提交仅保存文档与验证记录。22 个实现/测试/构建/说明文件的实际 SHA-256 见 [source-manifest.json](W005/verification/source-manifest.json)。完整可恢复内容由该提交及最终分支提交提供，不依赖临时 worktree。
+
+实际交付入口为 `layauto_v2.importers.read_inputs(Path(...), tool_run_id=...)`。中立 `SourceFile/SourceRef/EvidenceRecord/ParseResult/EvidenceIssue`、递归不可变 exact codec、safe schema/tech owner、GDS/CDL/raw query parser 与同次 bytes 绑定共同形成只读组件。输入失败返回 tagged error，保留已读 bytes/hash、定位及已完成组件；意外异常与 KeyboardInterrupt/SystemExit 传播。`tool_run_id` 仅单向关联外部记录。接口用法及限制见 [README](../../README.md#input-reading-component)。
+
+定向调查了 `legacy_mvp/io_adapters/cdl_parser.py`、`calibre_query.py` 与 W004 helper 的格式/缓存约定；实现依据声明 grammar/profile 重新编写，没有迁移或整包复制 legacy/helper 代码。明确纠正 legacy float/suffix-round、忽略未知记录、single-top collapse、固定名字及 convenience JSON 路径；完整 normalized 缓存 parity、独立手写答案及错误回归作为依据。产品与产品测试没有 import legacy 或 tests/support。
+
+| 验证项 | 实际结果与可访问依据 |
+| --- | --- |
+| A1 实际输入 | 从 site 读取配置、六 owner、40 个 BOUNDARY（包括未注释 MARKER）、完整 source/target CDL、四类 query 2/4/2/8 records、绑定只读外部 context。独立几何/CDL答案仅由测试读取；拦截文件打开证明产品不读 spec/oracle/expected，输入目录前后全文件 hash 相同。见 `test_accepted_actual_files_match_independent_answers_without_runtime_oracles`。 |
+| A2 精度/schema | 保留 XY、REAL8 bytes/exact/nominal/delta、CDL lexeme/Fraction、query `(y,x)`/20000 与 1/20 nm 边界；未知/重复 key、版本、类型、tag、float/NaN、size/depth、owner/模型/单位/registry 冲突均测试。codec 拒绝非规范 rational，跨进程 digest 稳定；nested alias 修改不改变返回值。profile 不能改写已声明固定 1 nm source nominal。 |
+| A3 来源拒绝 | 实际复制/替换/删除输入；缺输入/closure/header/context、错 hash/top/profile/单位、重复绑定及 synthetic 假 executed/matched 被定位拒绝。完整重绑后语法缺陷仍命中目标错误；删除 cache 不绕过 raw。额外验证一次读取后磁盘变化不影响已捕获 bytes/hash/parser 同源性、绝对路径与合法 URI 重命名。 |
+| A4 格式边界 | C01–C07、C11/C12、C17/C18、C21/C22、missing_body_context/body_wrong_binding 均覆盖所属错误。C09 的 NF=2 精确保留。其余后置案例读取成功仅证明事实保留，接收方见下表；不声称全29例均在 reader 拒绝。 |
+| A5 第二输入 | 一致重命名 top、器件/query identity、全部 raw 文件路径与 record IDs；改变 NFIN、平移坐标、反转 record/顶点/参数顺序并完整重绑；结果按独立计算读取。另加第41个未注释 BOUNDARY仍保留，证明不写死40图形。 |
+| A6 组合/隔离 | 无 pipeline/state/normalization/tooling/legacy/support runtime import，无 EDA/写输出/状态构造；AST边界检查通过。body只验证内部ID/角色引用及来源单位profile，BTAP_N→BTAP_P等物理兼容判断仍保留后续。 |
+| A7 工程 | Python3.10.22最终完整 **237 passed**；Python3.12.14独立 reviewer 对同提交完整 **237 passed**（执行者此前f29c84a为236 passed，新增缓存权限回归另复核）。strict mypy针对13个产品模块通过。sdist/wheel重建成功；新3.12环境安装完整依赖、`pip check`及源码目录外`-I`正常/重绑坏raw smoke通过。既有fixture-support另为3 passed、8 subtests。 |
+
+### E3. 可复现命令、review处置及限制
+
+环境：Linux x86_64；开发 Python3.12.14，最低支持版本 CPython3.10.22。工具环境 `/workspace/work/w005-venv`、最低版本 `/workspace/work/w005-py310-venv`；均在仓库/用户home之外。以下命令在仓库根执行，`python`分别选择对应环境；使用README所列 `.[dev]` 可重建测试工具。
+
+```sh
+python -B -m pytest -p no:cacheprovider tests/unit tests/contracts -q
+python -m mypy
+python -B -m pytest -p no:cacheprovider tests/fixture_support -q
+python -m build --outdir /workspace/work/w005-dist-final .
+python -m venv /workspace/work/w005-wheel-env
+/workspace/work/w005-wheel-env/bin/python -m pip install /workspace/work/w005-dist-final/layauto-0.2.0-py3-none-any.whl
+/workspace/work/w005-wheel-env/bin/python -m pip check
+# 在源码目录之外执行，传入实际 fixture 绝对路径：
+/workspace/work/w005-wheel-env/bin/python -I /workspace/Layauto/docs/tasks/W005/verification/wheel_smoke.py /workspace/Layauto/tests/fixtures/w003_m1
+git diff --check 5b7205009b3ed7f8fe15e135e674654f2f544557
+```
+
+[验证索引](W005/verification/receipt.json)保存版本、命令、结果和产物 hash；[最低版本完整日志](W005/verification/pytest-310-final.txt)、[strict日志](W005/verification/mypy.txt)、[构建](W005/verification/build-final.txt)、[安装](W005/verification/install-wheel.txt)、[pip check](W005/verification/pip-check-wheel.txt)、[wheel smoke](W005/verification/wheel-smoke.txt)随Git交接。Python3.12最终独立完整复跑见 [代码review](W005/code-review.md)；之前执行者完整日志仍保留原236项身份，没有改写成237项。最低版本首次检查发现4项测试instrumentation在Python3.10未拦截Path.open，修正测试入口后定向及最终全量复跑均通过，没有放宽产品断言。
+
+执行方已按review修复：缓存用canonical exact bytes比较以拒绝bool/int类型漂移；body context按tech声明role检查内部引用；closure编码只接受真实计算的UTF-8约定；循环符号链接及可选cache权限错误进入typed read error。另补NUL路径、固定source单位、键序无关性和实际权限回归。原finding及独立复核结论由 reviewer 保存在 [代码review](W005/code-review.md)，本段仅记录执行处置。
+
+| 已读取事实 / 后置案例 | 接收方与仍需验证的义务 |
+| --- | --- |
+| C08、C09、C10 | Stage2 normalization/admission：跨CDL/query cardinality、single-finger、reduction；reader不代做准入。 |
+| C13 | Stage2目标解释及Stage4能力规划：完整target差异，不能把reader成功写作no_change。 |
+| C14–C16与body类型/断开/歧义/enclosure/rail案例 | Stage2 extraction/connectivity及后续mandatory规则；context内部ID/角色schema检查不等于物理匹配或body_complete。 |
+| C19/C20 | Stage6输出representability/overflow，源文件读取不提前执行导出。 |
+| 全部正式run | 后续pipeline需unsealed attempt、ToolRun/Parse单向关联、失败RunRecord/terminal及Stage2状态与Stage6完整组合。本组件不替代这些硬门。 |
+
+未验证/不在本轮：真实Calibre/Virtuoso/PDK、matched/live assurance、生产准入、目标平台/macOS/Windows及除3.10/3.12外的解释器矩阵；3.10已实际执行完整组件测试，干净wheel安装本轮在3.12验证。没有宣称真实工具运行、完整M1或pipeline通过。现有fixture、答案、support、architecture与current-work相对起点无改动；legacy未运行或修改。待PM核对本分支实际SHA、证据、finding复核及任务范围后作最终接收决定。
+
 
 ## Review 结论（reviewer）
 
-产品代码尚未review。任务派发文档复核与未来接口/代码review需各自注明版本、范围和结论。
+### R1. 独立接口与最终代码复核（2026-11-02，reviewer）
+
+`interface_review` 对 E1 方案独立复核后允许进入实现，记录见 [接口review](W005/interface-review.md)。未参与产品实现或测试编写的 `final_review` 另对 base `5b7205009b3ed7f8fe15e135e674654f2f544557` 至最终实现 `ab7feddff83749b54c1866b1ad95fbc99fd787f1` 完成代码、实际输入、错误路径与 A1–A7 证据复核；[完整报告](W005/code-review.md)保留五项原始 finding、修复及独立关闭依据。**无剩余必须修正项，交 PM 接收；不代替 W005 最终验收。**
+
+Reviewer 直接运行最终 Python3.12 完整组件测试 **237 passed**、strict mypy **13 source files**，并在 Python3.10 复跑10项相关修复回归。已对照执行者最终3.10完整237项、构建安装日志和22文件manifest；独立核验最终wheel与受审产品文件相同，并从源码目录外以安装环境`-I`运行正常及重绑坏raw读取。原fixture/答案/support/架构/current-work未改写。pipeline、Stage2状态/物理匹配、Stage6导出及真实工具/生产验证仍按任务边界后置，读取成功不等于其准入通过。
 
 ## PM 验收与交接（PM）
 

@@ -1,0 +1,109 @@
+{
+  "schema_version": "w005-verification-receipt/1",
+  "date": "2026-11-02",
+  "role": "execution; PM acceptance not performed",
+  "repository": "LucianoHoult/Layauto",
+  "branch": "codex/w005-input-reading-binding",
+  "base": "5b7205009b3ed7f8fe15e135e674654f2f544557",
+  "final_product_head": "ab7feddff83749b54c1866b1ad95fbc99fd787f1",
+  "delivery_commit": "the Git commit containing this receipt; final pushed SHA is verified separately in the execution handoff",
+  "environment": {
+    "system": "Linux",
+    "machine": "x86_64",
+    "development": "CPython 3.12.14",
+    "minimum": "CPython 3.10.22",
+    "mypy": "2.4.1",
+    "pytest": "9.2.0",
+    "PyYAML": "6.0.3"
+  },
+  "results": [
+    {
+      "command": "python -B -m pytest -p no:cacheprovider tests/unit tests/contracts -q",
+      "interpreter": "3.10.22",
+      "head": "ab7feddff83749b54c1866b1ad95fbc99fd787f1",
+      "result": "237 passed",
+      "log": "pytest-310-final.txt"
+    },
+    {
+      "command": "python -B -m pytest -p no:cacheprovider tests/unit tests/contracts -q",
+      "interpreter": "3.12.14",
+      "head": "ab7feddff83749b54c1866b1ad95fbc99fd787f1",
+      "result": "237 passed",
+      "performed_by": "independent final_review",
+      "report": "../code-review.md"
+    },
+    {
+      "command": "python -m mypy",
+      "target_python": "3.10",
+      "result": "Success: no issues found in 13 source files",
+      "log": "mypy.txt"
+    },
+    {
+      "command": "python -B -m pytest -p no:cacheprovider tests/fixture_support -q",
+      "result": "3 passed, 8 subtests passed",
+      "log": "fixture-support.txt"
+    },
+    {
+      "command": "python -m build --outdir /workspace/work/w005-dist-final /workspace/Layauto",
+      "result": "sdist and wheel built",
+      "log": "build-final.txt"
+    },
+    {
+      "command": "python -m venv /workspace/work/w005-wheel-env; <new-env>/bin/python -m pip install <wheel>",
+      "result": "clean Python 3.12 environment full dependency installation succeeded",
+      "log": "install-wheel.txt"
+    },
+    {
+      "command": "<new-env>/bin/python -m pip check",
+      "result": "No broken requirements found",
+      "log": "pip-check-wheel.txt"
+    },
+    {
+      "command": "<new-env>/bin/python -I <repo>/docs/tasks/W005/verification/wheel_smoke.py <repo>/tests/fixtures/w003_m1",
+      "cwd": "outside source checkout",
+      "result": "actual site-packages import; 40 shapes/8 net regions; fully rebound missing terminator fails as MissingTerminator",
+      "log": "wheel-smoke.txt"
+    },
+    {
+      "command": "git diff --check <base>",
+      "result": "passed"
+    },
+    {
+      "command": "git diff --name-only <base> -- tests/fixtures tests/support docs/architecture.md docs/current-work.md",
+      "result": "empty; accepted inputs/answers/support and PM/architecture owners unchanged"
+    }
+  ],
+  "artifacts": {
+    "layauto-0.2.0-py3-none-any.whl": "f6d1bab300b425c54b07c26d54a5903d77ace08a9d2d2530a758fc19a3a0cf4d",
+    "layauto-0.2.0.tar.gz": "2213765078de8e7ef6d1128abf45d78af52e44dd59744f6e003eb96e2680e97c"
+  },
+  "source_manifest": "source-manifest.json",
+  "source_manifest_sha256": "3a67bd199f8ca6aabf34552852f55616e69ff81b0a388558f50d8dd91616af40",
+  "evidence_sha256": {
+    "build-final.txt": "4eb9f256dbca5a339887e5d6263fad4833780c4bca68980ffd7040a576889be6",
+    "fixture-support.txt": "a68f5634bdfd6e86b39a345f282a524752c32aaa544019d06f3f57fa139f1982",
+    "install-wheel.txt": "0aeaf73f84388a357de22b5329ac8021b1dd92b6a69db5461c4bcb44fabb3805",
+    "mypy.txt": "8f3f4c0ebcb835e848682f2c6610a1bf32c86a993bdb626d9ff36e3a49408398",
+    "pip-check-wheel.txt": "35bb3d1e4d1d0091788acae77c6d707f1dfb81d2384e34fd54a205f9497ce313",
+    "pytest-310-cache-fix.txt": "2b414336d15139be9a2e24f4c6fe0cebd10502ae12977afcdd8f6ef67286f321",
+    "pytest-310-final.txt": "8bcb30f0a1d6bad23b35d55014d25d5b9297c88099834762c56c9f7455f93baa",
+    "pytest-310.txt": "ba2a8e863ce2dab4f00849c14926f536112f7f01026ab4308ca453448d3969f6",
+    "pytest-312.txt": "5d253b785f58927c6551436273fa407a530815f7aaad6afeedf2483c3c772dbb",
+    "source-manifest.json": "3a67bd199f8ca6aabf34552852f55616e69ff81b0a388558f50d8dd91616af40",
+    "wheel-smoke.txt": "99983455a8be30776af408da6e7ca8a62d21e71ec2224b80b7acf8ea546b25b8",
+    "wheel_smoke.py": "7d0e835d5b11c01e6c16b409adae15a0a59b4279b7476e49d789ba99e29e2f67"
+  },
+  "review": {
+    "interface": "../interface-review.md",
+    "final": "../code-review.md",
+    "mandatory_findings": "five repaired by execution and independently rechecked; no remaining required fixes"
+  },
+  "limitations": [
+    "Only declared synthetic dummy_fixture input subset implemented",
+    "No pipeline/RunAttempt/RunRecord/terminal or Stage 2 layout state",
+    "No Stage 6 export or body physical validation/no_change decision",
+    "No real Calibre/Virtuoso/PDK, matched/live or production validation",
+    "No other interpreter/platform matrix; clean wheel install checked on 3.12, full component suite checked on 3.10 and 3.12",
+    "No final PM acceptance or merge to main"
+  ]
+}

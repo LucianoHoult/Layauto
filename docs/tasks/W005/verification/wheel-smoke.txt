@@ -1,0 +1,1 @@
+{"installed_module": "/workspace/work/w005-wheel-env/lib/python3.12/site-packages/layauto_v2/__init__.py", "accepted_shapes": 40, "net_regions": 8, "rebound_bad_raw": "MissingTerminator"}
