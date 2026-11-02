@@ -58,6 +58,25 @@ W002 E7的完整M1-P1闭环拆为可验证的组件交付和后续组合，**W00
 
 读取当前v2骨架与上游输入/下游consumer合同，先在本节补一页组件API/DTO、错误与边界验证设计，并请未参与实现者检查依赖方向和Stage 1/2分界。既有范围内review修正后直接实施，不为普通内部接口再造用户审批；代码完成再做独立review。定向查看legacy CDL/query纯格式逻辑与测试，拒绝float-round、固定fixture答案、convenience JSON和归档runtime依赖；W004 helper仅作为行为参考/测试支撑，不能整包复制成产品parser。
 
+### E1. 组件方案（2026-11-02）
+
+W005 API/DTO/error plan v1 (implementation preparation; no acceptance claim)
+
+Public read_inputs(site_path: Path, *, tool_run_id: str | None = None) -> ParseResult.
+Lower-level parsers consume SourceFile (immutable uri, exact bytes, sha256) plus validated immutable profile maps; they never read disk or infer names. read_inputs owns a per-call byte store, resolves every site selection against site parent, hashes and parses the identical bytes, and retains all actually read sources and successful component evidence on failure.
+
+Neutral domain codec: recursive FrozenMap/tuple values; only None/bool/int/str/bytes/Fraction and immutable containers. freeze() defensively copies mappings/sequences; canonical codec encodes bytes/rationals with tagged exact representations, sorted string keys and ordered arrays, SHA-256 (no float/Python hash); decoder rejects invalid/noncanonical exact representations. Evidence: versioned EvidenceRecord(kind, payload, source_refs, parser_version); SourceRef(uri, sha256 when read, field/line/column/byte_offset/record_index as available). ParseResult tagged success/error, runtime checks disallow success with issues or failure with final value; completed component evidence always separately available. EvidenceIssue has read/config/parse/unsupported/binding category, stable reason code, source locations. Internal InputError is converted by public facade; only known OSError/Unicode/format exceptions handled, unexpected exceptions retain traceback; KeyboardInterrupt/SystemExit propagate. Optional tool_run_id is a one-way immutable link only.
+
+Components: safe config loader + tech schema with recursive closed schemas and owner/registry/units/model checks; stream-record GDS parser with original integer vertices and REAL8 bytes/rational/nominal/delta; CDL source+target full document, tops/pins/globals/models/ordered terminals and all parameter lexemes/exact values; query parser for four capabilities from header raw descriptors and explicit request manifest, preserving opaque metadata, complete polygons, named exact provenance and format-level association; binding/context reader validates actual-byte closure, source/top/profile/unit, synthetic status combinations and context internal references.
+
+Schema/profile input limits: bootstrap schema layauto-input/1 hard ceilings max text bytes 1,000,000, nesting depth 32 (root container depth 1), records 1000, matching current formats limit declaration; profile may tighten, never exceed implementation ceiling. Every text byte includes whitespace/newline; depth counts mappings/sequences. Known profile IDs select implemented grammar, supported fields checked recursively. Object IDs/top/filenames/counts/coordinates remain data. Future schema versions require explicit support; no permissive fallback.
+
+Normalized query files are optional cache only: parse all raw first, compare a freshly reconstructed w004-query-normalized/2 cache representation if each conventional capability cache exists; absent cache allowed, malformed raw still fails by its own reason. Profile contract version differs from product parser implementation version. No expected/oracle/spec/records runtime reads.
+
+Tests: accepted bytes and independent answers, negative overlay files and explicit rebinding to isolate parse vs hash errors, all A1-A7 including second legal renamed/transformed source, mutation-alias attempts, cross-process digest, strict mypy, wheel clean install and actual interpreter versions. Fixtures never modified; Stage 2-only negative cases remain parsed facts with deferred receiver list. No pipeline/state/EDA/export or body_complete computation.
+
+接口 review 记录见 [W005/interface-review.md](W005/interface-review.md)。最终代码 review 另记，不以方案 review 代替。
+
 ## 执行结果（执行）
 
 未开始。执行者填写起始版本/环境、实际写入范围、A1–A7的命令与结果、未执行范围和完整身份。不得提前填写通过。
