@@ -7,7 +7,8 @@
 | 字段 | 内容 |
 | --- | --- |
 | 目标 / 依赖 | M1的首个产品组件切片；依赖已验收的W003/W004样本，实物基准`633e3feef8062565019838f2d270e89b7f81c4ed`。W002 E7的完整no_change闭环目标及R4首交义务保持 |
-| 授权 / 阶段 | 2026-10-31用户同意PM清单整理、同步验收记录及准备最小读取任务。**可执行：下一执行session按本任务实现读取/绑定组件；本PM session仅准备任务和文档。** 无当前输入语义待决项 |
+| 授权 / 阶段 | 2026-10-31用户同意准备读取任务；2026-11-02选择合并W004后由独立执行session继续，并由PM准备新分支与prompt。**可执行：下一执行session按本任务实现读取/绑定组件；本PM session仅准备交接，产品代码未开始。** 无当前输入语义待决项 |
+| 恢复版本 | 执行分支`codex/w005-input-reading-binding`，从main集成提交`87fe5a5a87d0cbb1f97952f1485dac9a71416369`建立，已含W004及REQ-01修复；使用包含本轮PM交接的提交，准确SHA见Git/回复。主样本仍为633e3fe的原bytes，不从旧W004分支另起实现 |
 | 输出边界 | 一个可由测试及未来pipeline调用的组件API，返回不可变、经过运行时校验的配置/tech及versioned evidence、解析结果和定位信息。名称/DTO组织由执行者细化并review；本轮不发布新的稳定CLI或对外wire承诺 |
 | 允许修改 | `layauto_v2/importers/`，必要的中立`domain/` evidence/results/codec类型、`tech/` schema与纯读取公共入口；`tests/unit/`、`tests/contracts/`及读取组合测试；必要依赖/typing/build配置与使用说明、本任务执行记录。新增目录按职责创建，不为所有未来模块填空 |
 | 非目标 | 不实现pipeline/run入口、repository/RunAttempt/terminal publication、Stage 2 identity/spatial join与状态、规则求值/resize/导出、真实Calibre/Virtuoso获取或生产上传；不改变D1=A、MR-040后置及真实工具延期。不修改已验收fixture以迎合程序 |
@@ -67,7 +68,7 @@ W002 E7的完整M1-P1闭环拆为可验证的组件交付和后续组合，**W00
 
 ## PM 验收与交接（PM）
 
-W003/W004样本前置已收口，当前派发W005读取组件；不代表W005实现或M1完成。恢复使用包含本文件的已发布提交，不能仅取633e3fe后执行旧W004 prompt。具体发布SHA见Git和本轮交接回复，main合并独立记录。
+W003/W004样本前置及REQ-01补修已通过PR #58合入main `87fe5a5a87d0cbb1f97952f1485dac9a71416369`，集成事实见[W004 PM6](W004-fixture-revision.md#pm6-20261102)。当前派发W005读取组件，不代表W005实现或M1完成。按用户选择，新独立执行session从`codex/w005-input-reading-binding`的PM交接提交恢复，准确SHA见Git/回复；本轮只更新交接，不提前编写执行者方案或产品代码。
 
 **派发文档复核（2026-10-31，PM记录）：**未参与本任务编写的`body_scope`对照架构完成独立复核，剩余必须修正项为0。已落实其body内部引用/Stage2定位分界、header运行与匹配状态组合校验等意见，并明确C09语义准入及图形/stream record区别。受审全文SHA-256为`bd5330364c3107e569841b3271ec3adab23029ab6a6eb427c5bfe586bb7dec62`，覆盖追加本段之前的任务正文。`pm_review`另复核收口/导航/portable receipt，旧阶段冲突已修正，无剩余必须修正项。两项均为文档复核，不表示产品代码或测试已经通过。
 
@@ -75,10 +76,10 @@ W003/W004样本前置已收口，当前派发W005读取组件；不代表W005实
 
 ```text
 按Layauto项目规范，以执行角色完成W005输入读取与绑定组件。
-从PM交接指定分支/提交恢复，先核对HEAD和全部已有差异；读AGENTS、README、协作规则、current-work、W005及引用的架构/已验收W004输入合同。
-W003/W004已收口，不重做样本修订。按W005补简短API/DTO/错误边界方案，安排独立接口review后直接实现；普通内部选择自主处理。
+从codex/w005-input-reading-binding的PM交接提交恢复，先核对HEAD、已包含main集成87fe5a5a87d0cbb1f97952f1485dac9a71416369及全部已有差异；读AGENTS、README、协作规则、current-work、W005及引用的架构/已验收W004输入合同。
+W003/W004已合入main，REQ-01已修复，不重做样本修订或照搬helper为产品代码。按W005补简短API/DTO/错误边界方案，安排独立接口review后直接实现；普通内部选择自主处理，不在接口方案完成后无故停止。
 真正从GDS/CDL/raw/header/config/context读取并校验，不从expected/oracle/spec或normalized-only加载答案；完成A1–A7及跨样本变体验证。
 本任务仅组件API。pipeline/run入口、RunAttempt/RunRecord终态、Stage2状态与Stage6导出按W005后续组合表保留，不虚报本次已完成；新关键行为变化附实例交PM。
 代码完成后安排未参与实现者独立review，修复必须修正项并复核，交完整版本/命令/结果/未执行范围。保留历史MR/E/R和已验收fixture。
-提交/推送按该session实际授权；交回PM接收，不自行合并main或扩展到下一产品任务。
+完成后将本任务实现、测试、执行/review记录提交推送到codex/w005-input-reading-binding，并核对远端SHA，便于PM跨环境接收。交回实际命令、结果、未验证项及可访问证据；不自行最终验收W005、合并main、删分支或扩展到下一产品任务。
 ```

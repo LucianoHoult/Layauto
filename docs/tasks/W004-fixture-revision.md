@@ -2,7 +2,7 @@
 
 > 执行恢复补记：2026-10-31用户已在准备交付后正式派发本任务，D1=A、D2后置MR-040机制、D3保留三类检查及未消歧旧义务均已落定。下方“仅准备/待PM”是保留的交接历史；本轮实施与证据从[E3](#w004-execution)恢复，不重复收敛。最终任务阶段/验收及W003关闭仍归PM。
 
-最终目标是将W003人工修改要求落实为可复现的新样本。**synthetic样本修订及辅助交付已验收；原实物为633e3fe，后续REQ-01精度补修已独立复核并由PM接收。** 原接收依据与限制见[PM3](#pm3-20261031)，本次补修见[PM5](#pm5-20261102)，W003最终收口另见[MR-078](W003/manual-verification.md#mr-078)。原执行、review及PM记录保留历史身份；产品合同仍归[架构](../architecture.md)。
+最终目标是将W003人工修改要求落实为可复现的新样本。**synthetic样本修订及辅助交付已验收，并已连同REQ-01补修合入main。** 原实物633e3fe的接收依据与限制见[PM3](#pm3-20261031)，精度补修见[PM5](#pm5-20261102)，集成事实见[PM6](#pm6-20261102)；W003收口见[MR-078](W003/manual-verification.md#mr-078)。原执行、review及PM记录保留历史身份；产品合同仍归[架构](../architecture.md)。
 
 ## 任务要求（PM）
 
@@ -10,7 +10,7 @@
 | --- | --- |
 | 目标 / 依赖 | 承接[W003](W003-m1-fixture-contracts.md)人工核验遗留，交付可供后续M1 parser使用的修订版fixture、合同、独立答案与反例；PM已用同一新版证据完成W003/W004样本范围验收 |
 | 授权 / 阶段 | **已验收：synthetic样本修订、合同/辅助及证据范围，含PM5接收的REQ-01局部补修。** D1=A、D2后置、D3分项保留；R1–R5/V1–V7及新增REQ-01的处置经PM核验。W003按P10/MR-078收口，原逐项用户状态保留历史身份；产品/真实工具未验收 |
-| 版本 | 原交付为`633e3feef8062565019838f2d270e89b7f81c4ed`，准备基线为`9f6735dcede8e8b2135f89ff10f079a752ed758b`。REQ-01报告发布于`06821ef64ac710963dcc947861a374cd0fe9dd6d`，本次helper补修及回归身份见E5/R4/PM5；原633e3fe包保持不变。后续交接使用包含本补修的`codex/w004-task-convergence`提交，最终SHA以Git/交接回复为准。main未合入本轮修订 |
+| 版本 | 原交付为`633e3feef8062565019838f2d270e89b7f81c4ed`，准备基线为`9f6735dcede8e8b2135f89ff10f079a752ed758b`。REQ-01报告为`06821ef`，修复为`f82ad14af4b5467442f01f43790eef58b61e6b53`，原633e3fe包不变。PR #58已集成到main `87fe5a5a87d0cbb1f97952f1485dac9a71416369`；下一执行使用从该版本建立的`codex/w005-input-reading-binding` |
 | 本PM session写入范围 | 本任务PM要求/验收、W003 PM闭合与人工追加记录、current-work及文档/路线图入口；原人工决定、执行E/R及review原文不得覆盖 |
 | 本轮已执行范围 | 按R1–R5及第2节依赖修改`tests/fixtures/w003_m1/`专用样本、`tests/support/w003_*`及必要专用辅助、`docs/tasks/W003/`受影响合同/图/报告/附件，并在本任务执行段记录结果。沿用既有路径；已交付，不再派发同一修订 |
 | 非目标 | 不实现`layauto_v2/` parser/runtime、完整grid/CSP/DTO/codec/CAS；不改架构、legacy或部署EDA/生产上传；不扩大真实PDK/工具能力承诺 |
@@ -381,9 +381,20 @@ D3后续修订须交一张“检查身份—输入—预期证明—状态—原
 
 下一步继续既定[W005](W005-input-reading-binding.md)，输入定义、正常答案与Stage1/Stage2责任无需调整，产品代码本轮未开始。补修、回归和执行/review/PM记录沿现有W004分支交接，发布结果及完整提交见Git/回复；不合并main或删除分支。
 
+<a id="pm6-20261102"></a>
+### PM6. 合入main与W005独立session交接（2026-11-02）
+
+用户要求检查并合入main后继续，随后明确选择“沿用独立执行session：准备新分支和可直接执行的交接prompt”。PM核对远端main `da55ca6`为交付head `f82ad14`的祖先；5个提交、168个路径限文档/fixture/support/回归，未改产品、架构或构建配置。独立只读`w004_merge_gate`确认既有受审身份及REQ-01闭合，无新的必须修正项。
+
+合并前在`f82ad14`实际运行`python -B -m unittest discover -s tests/fixture_support -v`，3个方法通过；`python -B tests/support/w003_record_examples.py`验证20条记录、8类失败、133处引用、3个实物hash及66个非法组合。活跃文件diff检查通过；原归档`W004-full.patch`的60条单空格上下文是patch原始格式，单独排除该附件进行空白检查，保留其bytes。GitHub当时无status/check runs及活动ruleset，不将此称作CI通过。未重跑全量生成、完整KLayout witness或产品/真实工具。
+
+[PR #58](https://github.com/LucianoHoult/Layauto/pull/58)以merge commit方式合并，锁定head `f82ad14af4b5467442f01f43790eef58b61e6b53`。实际main集成提交为`87fe5a5a87d0cbb1f97952f1485dac9a71416369`，父节点为`da55ca6`及`f82ad14`；fetch与远端核验一致。合并tree `a1b228b4ad4b545e31b0a13b80ada3b3868bb5cb`与受测head相同，因此本次组合检查适用于集成内容，不机械重跑相同文件。
+
+从该集成版本建立`codex/w005-input-reading-binding`，仅同步当前入口、W004集成事实及W005恢复/prompt；W005保持可执行、产品代码未开始。原W004分支保留，不删除。下一角色为独立执行session，按[W005](W005-input-reading-binding.md)先形成接口/错误边界方案并独立review，再完成A1–A7与最终代码review后交PM；普通内部实现不另设审批门。
+
 ### 任务建立与首次发布的历史记录
 
-以下是准备交付前的历史事实，旧“待下一session完成”和旧分支均不作为当前恢复指令；当前状态以PM5及current-work为准。
+以下是准备交付前的历史事实，旧“待下一session完成”和旧分支均不作为当前恢复指令；当前状态以PM6及current-work为准。
 
 已建立任务并按最新指令收窄下一session范围，**任务收敛本身仍待下一session完成**。收敛结果接收后，再明确启动实际修订；最终必要修订、独立review及人工结论闭合后，PM一次接收W004并在W003补闭合依据，随后才派发M1 parser/输入绑定。
 
