@@ -1,0 +1,239 @@
+...F.F....                                                               [100%]
+=================================== FAILURES ===================================
+_ test_captured_requests_decoder_unexpected_errors_propagate_unchanged[failure1-wire] _
+
+accepted = NormalizationResult(status='success', value=NormalizationFacts(source=SemanticCircuitDraft(cells=(Cell(id=CellId(name=...o-parse-result/1'), readback=None, schema_version='layauto-normalization/1'), schema_version='layauto-normalization/1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f9cee5482c0>
+via = 'adapter', failure = TypeError('decoder bug')
+
+    @pytest.mark.parametrize('via', ['adapter', 'wire'])
+    @pytest.mark.parametrize('failure', [RuntimeError('decoder implementation bug'), TypeError('decoder bug'),
+                                         KeyError('decoder bug'), KeyboardInterrupt(), SystemExit(29)])
+    def test_captured_requests_decoder_unexpected_errors_propagate_unchanged(accepted, monkeypatch, via, failure):
+        from layauto_v2.normalization import _validation
+        encoded = encode_record(accepted.input)
+    
+        def broken_decoder(*args, **kwargs):
+            raise failure
+    
+        monkeypatch.setattr(_validation, 'load_document', broken_decoder)
+        with pytest.raises(type(failure)) as raised:
+            if via == 'adapter':
+>               from_parse_result(accepted.input.parse)
+
+tests/contracts/test_w007_contracts.py:656: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+layauto_v2/normalization/input.py:10: in from_parse_result
+    return NormalizationInput(result)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+<string>:6: in __init__
+    ???
+layauto_v2/normalization/contracts.py:84: in __post_init__
+    request_document = decode_captured_requests(source, max_bytes, max_depth)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+layauto_v2/normalization/_validation.py:460: in decode_captured_requests
+    document = load_document(source, max_bytes=max_bytes, max_depth=max_depth)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (SourceFile(uri='query/requests.json', data=b'{\n  "schema_version": "w004-query-requests/2",\n  "source": "synthetic ...n        "R07"\n      ]\n    }\n  ]\n}\n', sha256='57f5f38cb3ec450fd1815ef88c618c03a9703690672348b313fa35fbce97bc62'),)
+kwargs = {'max_bytes': 1000000, 'max_depth': 32}
+
+    def broken_decoder(*args, **kwargs):
+>       raise failure
+E       TypeError: decoder bug
+
+tests/contracts/test_w007_contracts.py:651: TypeError
+
+The above exception was the direct cause of the following exception:
+
+accepted = NormalizationResult(status='success', value=NormalizationFacts(source=SemanticCircuitDraft(cells=(Cell(id=CellId(name=...o-parse-result/1'), readback=None, schema_version='layauto-normalization/1'), schema_version='layauto-normalization/1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f9cee64bdd0>
+via = 'wire', failure = TypeError('decoder bug')
+
+    @pytest.mark.parametrize('via', ['adapter', 'wire'])
+    @pytest.mark.parametrize('failure', [RuntimeError('decoder implementation bug'), TypeError('decoder bug'),
+                                         KeyError('decoder bug'), KeyboardInterrupt(), SystemExit(29)])
+    def test_captured_requests_decoder_unexpected_errors_propagate_unchanged(accepted, monkeypatch, via, failure):
+        from layauto_v2.normalization import _validation
+        encoded = encode_record(accepted.input)
+    
+        def broken_decoder(*args, **kwargs):
+            raise failure
+    
+        monkeypatch.setattr(_validation, 'load_document', broken_decoder)
+        with pytest.raises(type(failure)) as raised:
+            if via == 'adapter':
+                from_parse_result(accepted.input.parse)
+            else:
+>               decode_record(encoded)
+
+tests/contracts/test_w007_contracts.py:658: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+layauto_v2/normalization/codec.py:113: in decode_record
+    result = _unpack(value['record'])
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = FrozenMap(_entries=(('fields', FrozenMap(_entries=(('parse', FrozenMap(_entries=(('captured_record', b'{"$map":{"value...('schema_version', FrozenMap(_entries=(('scalar', 'layauto-normalization/1'),)))))), ('record', 'NormalizationInput')))
+
+    def _unpack(value: Value) -> object:
+        if not isinstance(value, FrozenMap):
+            raise ValueError('expected tagged normalization wire value')
+        if set(value) == {'map'}:
+            if not isinstance(value['map'], FrozenMap):
+                raise ValueError('expected frozen payload map')
+            return value['map']
+        if set(value) == {'scalar'}:
+            if isinstance(value['scalar'], (FrozenMap, tuple)):
+                raise ValueError('scalar tag cannot contain a collection')
+            return value['scalar']
+        if set(value) == {'tuple'}:
+            values = value['tuple']
+            if not isinstance(values, tuple):
+                raise ValueError('expected wire tuple')
+            return tuple(_unpack(item) for item in values)
+        if set(value) == {'captured_record'}:
+            data = value['captured_record']
+            if type(data) is not bytes:
+                raise ValueError('captured record must contain canonical wire bytes')
+            captured = publication_codec.decode_record(data)
+            if type(captured) not in _EXTERNAL:
+                raise ValueError('unsupported captured record type')
+            return captured
+        if set(value) != {'record', 'fields'} or not isinstance(value['record'], str) or not isinstance(value['fields'], FrozenMap):
+            raise ValueError('invalid normalization wire discriminator')
+        spec = _SPEC.get(value['record'])
+        if spec is None:
+            raise ValueError('unknown normalization wire record')
+        constructor, fields = spec
+        if set(value['fields']) != set(fields):
+            raise ValueError('unknown/missing normalization record fields')
+        try:
+            result = constructor(**{field: _unpack(value['fields'][field]) for field in fields})
+        except (TypeError, KeyError, AttributeError, UnicodeError) as exc:
+>           raise ValueError('invalid normalization record fields') from exc
+E           ValueError: invalid normalization record fields
+
+layauto_v2/normalization/codec.py:96: ValueError
+_ test_captured_requests_decoder_unexpected_errors_propagate_unchanged[failure2-wire] _
+
+accepted = NormalizationResult(status='success', value=NormalizationFacts(source=SemanticCircuitDraft(cells=(Cell(id=CellId(name=...o-parse-result/1'), readback=None, schema_version='layauto-normalization/1'), schema_version='layauto-normalization/1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f9cee2049e0>
+via = 'adapter', failure = KeyError('decoder bug')
+
+    @pytest.mark.parametrize('via', ['adapter', 'wire'])
+    @pytest.mark.parametrize('failure', [RuntimeError('decoder implementation bug'), TypeError('decoder bug'),
+                                         KeyError('decoder bug'), KeyboardInterrupt(), SystemExit(29)])
+    def test_captured_requests_decoder_unexpected_errors_propagate_unchanged(accepted, monkeypatch, via, failure):
+        from layauto_v2.normalization import _validation
+        encoded = encode_record(accepted.input)
+    
+        def broken_decoder(*args, **kwargs):
+            raise failure
+    
+        monkeypatch.setattr(_validation, 'load_document', broken_decoder)
+        with pytest.raises(type(failure)) as raised:
+            if via == 'adapter':
+>               from_parse_result(accepted.input.parse)
+
+tests/contracts/test_w007_contracts.py:656: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+layauto_v2/normalization/input.py:10: in from_parse_result
+    return NormalizationInput(result)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+<string>:6: in __init__
+    ???
+layauto_v2/normalization/contracts.py:84: in __post_init__
+    request_document = decode_captured_requests(source, max_bytes, max_depth)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+layauto_v2/normalization/_validation.py:460: in decode_captured_requests
+    document = load_document(source, max_bytes=max_bytes, max_depth=max_depth)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (SourceFile(uri='query/requests.json', data=b'{\n  "schema_version": "w004-query-requests/2",\n  "source": "synthetic ...n        "R07"\n      ]\n    }\n  ]\n}\n', sha256='57f5f38cb3ec450fd1815ef88c618c03a9703690672348b313fa35fbce97bc62'),)
+kwargs = {'max_bytes': 1000000, 'max_depth': 32}
+
+    def broken_decoder(*args, **kwargs):
+>       raise failure
+E       KeyError: 'decoder bug'
+
+tests/contracts/test_w007_contracts.py:651: KeyError
+
+The above exception was the direct cause of the following exception:
+
+accepted = NormalizationResult(status='success', value=NormalizationFacts(source=SemanticCircuitDraft(cells=(Cell(id=CellId(name=...o-parse-result/1'), readback=None, schema_version='layauto-normalization/1'), schema_version='layauto-normalization/1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f9cee45aae0>
+via = 'wire', failure = KeyError('decoder bug')
+
+    @pytest.mark.parametrize('via', ['adapter', 'wire'])
+    @pytest.mark.parametrize('failure', [RuntimeError('decoder implementation bug'), TypeError('decoder bug'),
+                                         KeyError('decoder bug'), KeyboardInterrupt(), SystemExit(29)])
+    def test_captured_requests_decoder_unexpected_errors_propagate_unchanged(accepted, monkeypatch, via, failure):
+        from layauto_v2.normalization import _validation
+        encoded = encode_record(accepted.input)
+    
+        def broken_decoder(*args, **kwargs):
+            raise failure
+    
+        monkeypatch.setattr(_validation, 'load_document', broken_decoder)
+        with pytest.raises(type(failure)) as raised:
+            if via == 'adapter':
+                from_parse_result(accepted.input.parse)
+            else:
+>               decode_record(encoded)
+
+tests/contracts/test_w007_contracts.py:658: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+layauto_v2/normalization/codec.py:113: in decode_record
+    result = _unpack(value['record'])
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = FrozenMap(_entries=(('fields', FrozenMap(_entries=(('parse', FrozenMap(_entries=(('captured_record', b'{"$map":{"value...('schema_version', FrozenMap(_entries=(('scalar', 'layauto-normalization/1'),)))))), ('record', 'NormalizationInput')))
+
+    def _unpack(value: Value) -> object:
+        if not isinstance(value, FrozenMap):
+            raise ValueError('expected tagged normalization wire value')
+        if set(value) == {'map'}:
+            if not isinstance(value['map'], FrozenMap):
+                raise ValueError('expected frozen payload map')
+            return value['map']
+        if set(value) == {'scalar'}:
+            if isinstance(value['scalar'], (FrozenMap, tuple)):
+                raise ValueError('scalar tag cannot contain a collection')
+            return value['scalar']
+        if set(value) == {'tuple'}:
+            values = value['tuple']
+            if not isinstance(values, tuple):
+                raise ValueError('expected wire tuple')
+            return tuple(_unpack(item) for item in values)
+        if set(value) == {'captured_record'}:
+            data = value['captured_record']
+            if type(data) is not bytes:
+                raise ValueError('captured record must contain canonical wire bytes')
+            captured = publication_codec.decode_record(data)
+            if type(captured) not in _EXTERNAL:
+                raise ValueError('unsupported captured record type')
+            return captured
+        if set(value) != {'record', 'fields'} or not isinstance(value['record'], str) or not isinstance(value['fields'], FrozenMap):
+            raise ValueError('invalid normalization wire discriminator')
+        spec = _SPEC.get(value['record'])
+        if spec is None:
+            raise ValueError('unknown normalization wire record')
+        constructor, fields = spec
+        if set(value['fields']) != set(fields):
+            raise ValueError('unknown/missing normalization record fields')
+        try:
+            result = constructor(**{field: _unpack(value['fields'][field]) for field in fields})
+        except (TypeError, KeyError, AttributeError, UnicodeError) as exc:
+>           raise ValueError('invalid normalization record fields') from exc
+E           ValueError: invalid normalization record fields
+
+layauto_v2/normalization/codec.py:96: ValueError
+=========================== short test summary info ============================
+FAILED tests/contracts/test_w007_contracts.py::test_captured_requests_decoder_unexpected_errors_propagate_unchanged[failure1-wire]
+FAILED tests/contracts/test_w007_contracts.py::test_captured_requests_decoder_unexpected_errors_propagate_unchanged[failure2-wire]
+2 failed, 8 passed, 96 deselected in 5.78s
+

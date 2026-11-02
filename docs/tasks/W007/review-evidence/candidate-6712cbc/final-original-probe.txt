@@ -1,0 +1,15 @@
+Traceback (most recent call last):
+  File "/workspace/Layauto/docs/tasks/W007/review-evidence/probe.py", line 22, in <module>
+    n=normalize(from_parse_result(changed))
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/Layauto/layauto_v2/normalization/input.py", line 10, in from_parse_result
+    return NormalizationInput(result)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<string>", line 6, in __init__
+  File "/workspace/Layauto/layauto_v2/domain/normalization.py", line 78, in __post_init__
+    validate_parse(self.parse)
+  File "/workspace/Layauto/layauto_v2/domain/_normalization_input.py", line 452, in validate_parse
+    _validate_cdl(doc, mapping(value['tech']))
+  File "/workspace/Layauto/layauto_v2/domain/_normalization_input.py", line 199, in _validate_cdl
+    raise ValueError('CDL device fields do not completely cover their captured record')
+ValueError: CDL device fields do not completely cover their captured record

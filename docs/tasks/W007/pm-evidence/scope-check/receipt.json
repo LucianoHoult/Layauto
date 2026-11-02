@@ -1,0 +1,32 @@
+{
+  "kind": "bounded_pm_semantic_acceptance_probe",
+  "reviewer": "/root/w007_accept_scope",
+  "delivery_commit": "5e874e5e60bb74f58903080bf079796061454962",
+  "product_commit": "0f879f01acbeac033173d0b6c6257c376bb9272a",
+  "cwd": "/workspace/Layauto",
+  "interpreter": "/workspace/work/w005-pm-check-env/bin/python",
+  "python_version": "3.12.14",
+  "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=/workspace/Layauto:/workspace/Layauto/tests/contracts /workspace/work/w005-pm-check-env/bin/python -B - <<'PY'\nfrom pathlib import Path\nfrom tempfile import TemporaryDirectory\nfrom dataclasses import replace\nfrom fractions import Fraction\nfrom w007_cases import ready_copy, edit, normal, read\nfrom w005_cases import rebind\nfrom layauto_v2.normalization import normalize, from_parse_result\n\nwith TemporaryDirectory(prefix='w007-pm-scope-', dir='/workspace/work') as temporary:\n    parent = Path(temporary)\n    base = ready_copy(parent / 'base')\n    baseline = normal(base)\n    assert baseline.value.semantic_equal\n    assert not any(hasattr(baseline, name) for name in ('no_change', 'terminal', 'baseline', 'body_complete'))\n    target = ready_copy(parent / 'target')\n    edit(target, 'target.cdl', 'VT=toy W=2n L=4n M=1 NF=1 NFIN=5', 'VT=toy W=3n L=5n M=2 NF=2 NFIN=5')\n    rebind(target)\n    result = normal(target)\n    changed = {delta.axis: (delta.semantic_before.exact, delta.semantic_after.exact) for delta in result.value.differences}\n    assert changed == {'fin_width': (Fraction(2, 10**9), Fraction(3, 10**9)), 'channel_length': (Fraction(4, 10**9), Fraction(5, 10**9)), 'multiplicity': (Fraction(1), Fraction(2)), 'finger_count': (Fraction(1), Fraction(2))}, changed\n    assert not result.value.semantic_equal\n    assert all('planner_admission_required' in delta.obligations for delta in result.value.differences)\n    try:\n        replace(result.value, differences=result.value.differences[:-1])\n    except ValueError:\n        pass\n    else:\n        raise AssertionError('incomplete public differences accepted')\n    source = ready_copy(parent / 'source')\n    edit(source, 'source.cdl', 'NF=1', 'NF=2')\n    rebind(source)\n    rejected = normalize(from_parse_result(read(source)))\n    assert rejected.status == 'error' and rejected.issues[0].code == 'UnsupportedFingerCount'\n    try:\n        replace(rejected, status='success', value=rejected.completed, issues=())\n    except ValueError:\n        pass\n    else:\n        raise AssertionError('public success relabel accepted')\n    print('PASS: baseline semantic equality makes no run-state claim; same NFIN retains exact L/W/M/NF target changes and planner obligations; incomplete public delta set rejected; source NF=2 yields located UnsupportedFingerCount and cannot be relabeled success.')\nPY",
+  "exit_code": 0,
+  "reported_wall_time_seconds": 0.939238079,
+  "tool_chunk_id": "b7d25c",
+  "output": "PASS: baseline semantic equality makes no run-state claim; same NFIN retains exact L/W/M/NF target changes and planner obligations; incomplete public delta set rejected; source NF=2 yields located UnsupportedFingerCount and cannot be relabeled success.\n",
+  "output_capture": "exec_command tool returned merged stdout/stderr; no separate stderr channel was captured. The sole output line is the script final stdout print.",
+  "stdout": "PASS: baseline semantic equality makes no run-state claim; same NFIN retains exact L/W/M/NF target changes and planner obligations; incomplete public delta set rejected; source NF=2 yields located UnsupportedFingerCount and cannot be relabeled success.\n",
+  "stderr": null,
+  "stderr_separately_captured": false,
+  "execution_timestamp": null,
+  "evidence_note": "Files saved after the already completed execution from the exact submitted stdin script and tool result. Probe was not rerun. Temporary fixture copies auto-cleaned. No repository files changed.",
+  "checks": [
+    "baseline equal semantics makes no run-state claim",
+    "same NFIN retains exact target L/W/M/NF deltas and planner obligations",
+    "public Facts rejects missing delta",
+    "source NF=2 returns UnsupportedFingerCount",
+    "public Result rejects success relabel"
+  ],
+  "sha256": {
+    "probe.py": "e5573709a7c52c8205ca42a1f84f670a336d87cb2ad78148542dafc0904bb63d",
+    "command.sh": "d6929c37957911a024e53ffdf62386e44819f1874fb1541e10f6e093d5f9b8de",
+    "output.txt": "27cd78a571ba0ea5e724c9135334b46c756d6b9d2a82f502bbf7d6f17a9c33bc"
+  }
+}

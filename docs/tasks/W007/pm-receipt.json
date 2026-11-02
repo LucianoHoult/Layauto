@@ -1,0 +1,198 @@
+{
+  "date": "2026-11-02",
+  "role": "PM",
+  "branch": "codex/w007-semantic-identity-normalization",
+  "base": "64b4ad2f77c017affade69374510dc12e534bc07",
+  "delivery": "5e874e5e60bb74f58903080bf079796061454962",
+  "product_commit": "0f879f01acbeac033173d0b6c6257c376bb9272a",
+  "disposition": "A1-A7 branch technical receipt accepted; remaining must-fix 0; main integration, combined verification and final W007 acceptance pending",
+  "environment": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "executable": "/workspace/work/w005-pm-check-env/bin/python",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "cwd": "/workspace/Layauto",
+    "import_source": "/workspace/Layauto/layauto_v2/normalization/__init__.py",
+    "tools": {
+      "pytest": "9.2.0",
+      "mypy": "2.4.1",
+      "PyYAML": "6.0.3"
+    },
+    "clean_install": false,
+    "note": "Existing PM environment reused for source tests, not clean installation evidence. pytest and probes set PYTHONDONTWRITEBYTECODE=1; pytest sets PYTHONPATH to checkout; mypy uses inherited environment."
+  },
+  "fixture": "tests/fixtures/w003_m1",
+  "profile": "synthetic_static_fin_context_no_change_v2",
+  "direct_checks": [
+    {
+      "command": [
+        "/workspace/work/w005-pm-check-env/bin/python",
+        "-B",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "tests/unit",
+        "tests/contracts",
+        "-q"
+      ],
+      "cwd": "/workspace/Layauto",
+      "exit_code": 0,
+      "stdout": "........................................................................ [ 13%]\n........................................................................ [ 26%]\n........................................................................ [ 39%]\n........................................................................ [ 52%]\n........................................................................ [ 65%]\n........................................................................ [ 78%]\n........................................................................ [ 91%]\n.................................................                        [100%]\n=============================== warnings summary ===============================\n../../opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/anyio/pytest_plugin.py:14\n  /opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/anyio/pytest_plugin.py:14: PytestRemovedIn10Warning: _pytest.python.CallSpec2 has been renamed to CallSpec.\n  The CallSpec2 alias will be removed in pytest 10.\n  Update imports to use CallSpec instead.\n  See https://docs.pytest.org/en/stable/deprecations.html#callspec2-renamed\n    from _pytest.python import CallSpec2\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n553 passed, 1 warning in 178.49s (0:02:58)\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/workspace/work/w005-pm-check-env/bin/python",
+        "-B",
+        "-m",
+        "mypy",
+        "--cache-dir",
+        "/workspace/work/w007-pm/mypy-cache"
+      ],
+      "cwd": "/workspace/Layauto",
+      "exit_code": 0,
+      "stdout": "Success: no issues found in 33 source files\n",
+      "stderr": ""
+    },
+    {
+      "name": "seed_capture_metadata",
+      "command": [
+        "/workspace/work/w005-pm-check-env/bin/python",
+        "-B",
+        "docs/tasks/W007/review-evidence/final-probes/seed_capture_metadata.py"
+      ],
+      "cwd": "/workspace/Layauto",
+      "exit_code": 0,
+      "stdout": "captured_sources_unchanged True\nrequest_object_pointers_unchanged ['/requests/0/object', '/requests/1/object']\nREJECT request-ordered response metadata differs from captured requests bytes\n",
+      "stderr": "",
+      "required_output": [
+        "captured_sources_unchanged True",
+        "REJECT request-ordered response metadata differs from captured requests bytes"
+      ],
+      "pass": true
+    },
+    {
+      "name": "readback",
+      "command": [
+        "/workspace/work/w005-pm-check-env/bin/python",
+        "-B",
+        "docs/tasks/W007/review-evidence/final-probes/readback.py"
+      ],
+      "cwd": "/workspace/Layauto",
+      "exit_code": 0,
+      "stdout": "W006 alias readback success\nreadback wire roundtrip True True\nattempt unchanged True None\ninvalid readback field ready ValueError\ninvalid readback field checkpoint ValueError\ninvalid readback field parse_audit ValueError\ninvalid readback field tool_run ValueError\ninvalid readback field evidence_audits ValueError\n",
+      "stderr": "",
+      "required_output": [
+        "W006 alias readback success",
+        "readback wire roundtrip True True",
+        "attempt unchanged True None",
+        "invalid readback field ready ValueError",
+        "invalid readback field checkpoint ValueError",
+        "invalid readback field parse_audit ValueError",
+        "invalid readback field tool_run ValueError",
+        "invalid readback field evidence_audits ValueError"
+      ],
+      "pass": true
+    }
+  ],
+  "delegated_checks": [
+    {
+      "agent": "/root/w007_accept_scope",
+      "scope": "Read-only semantic/identity/difference/admission/DTO code review and one independently specified multi-axis target/source-admission probe",
+      "must_fix_findings": 0,
+      "receipt": "pm-evidence/scope-check/receipt.json",
+      "probe": "pm-evidence/scope-check/probe.py",
+      "capture_note": "Original probe ran before its command/output were saved. Tool combined stdout/stderr; no separate stderr or execution timestamp captured. Not rerun."
+    },
+    {
+      "agent": "/root/w007_accept_evidence",
+      "scope": "Read-only Git, manifests, logs, review probes, actual wheel/sdist bytes and protected path comparison",
+      "must_fix_findings": 0,
+      "receipt": "pm-evidence/evidence-audit/receipt.json",
+      "details": "pm-evidence/evidence-audit/checks.json",
+      "checks": 149,
+      "note": "Identity/evidence checks, not product tests. Protected current-work and historical docs comparisons refer to delivery before PM maintenance."
+    }
+  ],
+  "independent_review_adopted": {
+    "report": "code-review.md",
+    "interface_report": "interface-review.md",
+    "closed_findings": [
+      "CR-01",
+      "CR-02",
+      "CR-03",
+      "CR-04",
+      "CR-05",
+      "FR1",
+      "FR2",
+      "FR3",
+      "ER-01"
+    ],
+    "final_review_receipt": "review-evidence/final-review.json",
+    "delivery_audit": "review-evidence/delivery-audit.json",
+    "final_test_count": 148,
+    "must_fix_remaining": 0
+  },
+  "engineering_evidence_adopted": {
+    "receipt": "verification/receipt.json",
+    "source_manifest": "verification/source-manifest.json",
+    "source_manifest_file_sha256": "5fd13ce5fc1cfb6d9238bb4360027c0054e02e2487cfa8c5e0dd0b36736f2ae7",
+    "source_manifest_content_sha256": "f051ae0fecab66a1104e0aa609cc8450c1cf480a99384113027dc5a6f40976a9",
+    "runtime_test_config_files": 101,
+    "matrix": "Python3.12.14 and 3.10.22 each 553 full tests and strict mypy 33 files; final-source build; two fresh venv wheel installations and outside-source smoke; four pip checks",
+    "installed_smoke_scope": "Normal, C08, C13, W006 readback, wire and normalization no IO. -B invocation, not -I; imported paths asserted and logged in corresponding venv site-packages.",
+    "actual_packages_checked": {
+      "verification/packages/layauto-0.2.0-py3-none-any.whl": "626fcf795a3bc00f672eee0e5f869e10e4957a6f1e02145e6c9657eb0c8ff7e9",
+      "verification/packages/layauto-0.2.0.tar.gz": "47669e27dc044d3e5e9ec76759a2118479bba796f422cedc5e1f5ca4f471b7ea"
+    },
+    "package_verification": "Actual Git-delivered packages each contain exact 83-runtime-file set and bytes matching final source; wheel RECORD 87 entries valid.",
+    "historical_candidate": "candidate-6712cbc retained, not used as final test/build evidence"
+  },
+  "internal_design_adjustment_received": "FR3 source anchoring reuses existing safe config decoder over already captured requests bytes with selected limits. No filesystem acquisition or changed external input; normalization-specific contracts/codec moved out of domain. Independently reviewed.",
+  "not_run_by_pm": [
+    "Python3.10 tests or typing",
+    "new build, fresh wheel installation or installed smoke",
+    "fixture regeneration or legacy tests"
+  ],
+  "not_validated_by_w007": [
+    "other platforms/interpreters",
+    "real EDA/PDK/production or matched/live admission",
+    "complete geometry, coordinates, occupancy, connectivity, body and extraction state",
+    "atomic baseline/seal and complete no_change/terminal",
+    "ECO, Stage6 exports and complete M1"
+  ],
+  "remote_at_receipt": {
+    "command": "git ls-remote origin refs/heads/main refs/heads/codex/w007-semantic-identity-normalization",
+    "main": "221492eb72e10cf2e46f1d9c76cb992087806a97",
+    "delivery": "5e874e5e60bb74f58903080bf079796061454962",
+    "merge_performed": false
+  },
+  "pm_change_scope": "PM status/current-work/navigation and this receipt with evidence only; no product, test, accepted fixture/answer, architecture or execution/reviewer text changes.",
+  "warning": "PM full regression emitted one third-party anyio pytest deprecation warning; no failures.",
+  "evidence_file_sha256": {
+    "pm-evidence/evidence-audit/check_evidence.py": "df6344e4298a080ff0effedab0473ba9965facaffc4b7f1479784cde8635b183",
+    "pm-evidence/evidence-audit/checks.json": "75949b02c6f54434987a1f4ea29621f6e0bc7a3148f304a97e1ab63dc6211dbb",
+    "pm-evidence/evidence-audit/receipt.json": "b95977b39835aae9cb6cff3187a5c4d40fcbac2331e0184e295f7b4075910299",
+    "pm-evidence/evidence-audit/summary.md": "39881dde8df8b45eb238d03568d795d5829a8c57e57a08f8e98da537f1ce3dc5",
+    "pm-evidence/scope-check/command.sh": "d6929c37957911a024e53ffdf62386e44819f1874fb1541e10f6e093d5f9b8de",
+    "pm-evidence/scope-check/output.txt": "27cd78a571ba0ea5e724c9135334b46c756d6b9d2a82f502bbf7d6f17a9c33bc",
+    "pm-evidence/scope-check/probe.py": "e5573709a7c52c8205ca42a1f84f670a336d87cb2ad78148542dafc0904bb63d",
+    "pm-evidence/scope-check/receipt.json": "0a61cba7a28fba0446561ee125de211ff81df96233e4247236de56429c17e75a"
+  },
+  "pm_document_validation": {
+    "exit_code": 0,
+    "markdown_files": [
+      "docs/tasks/W007-semantic-identity-normalization.md",
+      "docs/current-work.md",
+      "docs/README.md",
+      "docs/roadmap.md"
+    ],
+    "local_link_occurrences_checked": 91,
+    "new_pm1_anchor_checked": true,
+    "pm_evidence_hashes_checked": 8,
+    "task_requirements_execution_review_and_original_prompt_unchanged": true,
+    "git_diff_check": "pass",
+    "readonly_reviewer": "/root/w007_accept_scope",
+    "review_result": "No must-fix or evident factual errors; original execution/reviewer blocks unchanged; actual and adopted checks and pending integration/final acceptance stated distinctly."
+  }
+}

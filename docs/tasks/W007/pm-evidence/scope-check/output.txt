@@ -1,0 +1,1 @@
+PASS: baseline semantic equality makes no run-state claim; same NFIN retains exact L/W/M/NF target changes and planner obligations; incomplete public delta set rejected; source NF=2 yields located UnsupportedFingerCount and cannot be relabeled success.

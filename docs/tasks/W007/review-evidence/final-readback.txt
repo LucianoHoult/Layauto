@@ -1,0 +1,8 @@
+W006 alias readback success
+readback wire roundtrip True True
+attempt unchanged True None
+invalid readback field ready ValueError
+invalid readback field checkpoint ValueError
+invalid readback field parse_audit ValueError
+invalid readback field tool_run ValueError
+invalid readback field evidence_audits ValueError

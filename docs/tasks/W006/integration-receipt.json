@@ -1,0 +1,87 @@
+{
+  "date": "2026-11-02",
+  "role": "PM",
+  "authorization": "User agreed to continue W006 merge/integration and prepare the next independent execution task",
+  "pr_url": "https://github.com/LucianoHoult/Layauto/pull/60",
+  "merge_method": "merge",
+  "base_before_merge": "4db3aa81d6f01496a680bdcb264afe99cd80f3f3",
+  "reviewed_head": "2bdf5fa0b0a1004623ab90cf31ba04eca3c6abf5",
+  "merge_commit": "221492eb72e10cf2e46f1d9c76cb992087806a97",
+  "product_commit": "f19ac0448a5d0111f799660bd7be043ebfd16e41",
+  "merge_parents": [
+    "4db3aa81d6f01496a680bdcb264afe99cd80f3f3",
+    "2bdf5fa0b0a1004623ab90cf31ba04eca3c6abf5"
+  ],
+  "reviewed_tree": "6feb1599c00802d87beb61a003f762cc7e147e2e",
+  "merged_tree": "6feb1599c00802d87beb61a003f762cc7e147e2e",
+  "trees_equal": true,
+  "disposition": "W006 accepted and integrated in its synthetic/process-local/pre-context scope; complete M1 remains pending",
+  "environment": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "executable": "/workspace/work/w005-pm-check-env/bin/python",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "source": "/workspace/Layauto/layauto_v2/pipeline.py",
+    "env_overrides": {
+      "PYTHONPATH": "/workspace/Layauto",
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "clean_install": false
+  },
+  "postmerge_check": {
+    "head": "221492eb72e10cf2e46f1d9c76cb992087806a97",
+    "command": [
+      "/workspace/work/w005-pm-check-env/bin/python",
+      "-B",
+      "-m",
+      "pytest",
+      "-p",
+      "no:cacheprovider",
+      "tests/contracts/test_w006_ipmr01.py",
+      "tests/contracts/test_w006_pipeline.py::test_f1_full_caller_request_ready_is_unsealed_and_all_refs_resolve",
+      "tests/contracts/test_w006_pipeline.py::test_f2_real_missing_terminator_has_same_run_bytes_and_failure_chain",
+      "tests/contracts/test_w006_pipeline.py::test_attempt_is_created_before_any_actual_read_or_parse",
+      "tests/contracts/test_w006_pipeline.py::test_same_captured_bytes_feed_tool_and_parser_despite_disk_replacement",
+      "tests/contracts/test_w006_pipeline.py::test_failed_terminal_publication_resumes_checkpoint_without_reading_changed_files",
+      "tests/contracts/test_w006_pipeline.py::test_concurrent_same_request_uses_one_acquisition_and_one_checkpoint",
+      "tests/contracts/test_w006_pipeline.py::test_run_record_freeze_failure_uses_only_special_closure",
+      "-q"
+    ],
+    "cwd": "/workspace/Layauto",
+    "exit_code": 0,
+    "stdout": ".........................                                                [100%]\n=============================== warnings summary ===============================\n../../opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/anyio/pytest_plugin.py:14\n  /opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/anyio/pytest_plugin.py:14: PytestRemovedIn10Warning: _pytest.python.CallSpec2 has been renamed to CallSpec.\n  The CallSpec2 alias will be removed in pytest 10.\n  Update imports to use CallSpec instead.\n  See https://docs.pytest.org/en/stable/deprecations.html#callspec2-renamed\n    from _pytest.python import CallSpec2\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n25 passed, 1 warning in 28.07s\n",
+    "stderr": ""
+  },
+  "adopted_validation": {
+    "receipt": "ipmr01-pm-receipt.json",
+    "review": "ipmr01-fix-review.md",
+    "reason": "Merged tree is exactly the reviewed and tested head; no new product changes",
+    "python312": "405 full tests and strict typing21; original defect and diagnostic probes passed in PM3",
+    "python310": "121 distinct affected cases passed across initial and missing-sample retest, not full suite",
+    "package": "New-source build/clean Python3.12 installation/normal-F2-double-exception smoke in reviewed delivery evidence"
+  },
+  "github_checks": {
+    "combined_statuses_returned": [],
+    "pr_workflow_runs_returned": [],
+    "note": "No CI result is claimed; API checks before merge returned empty lists. Merge API enforced normal repository rules with the expected head SHA."
+  },
+  "diff_whitespace_check": {
+    "whole_diff_exit_code": 2,
+    "only_findings_in_verbatim_logs": [
+      "docs/tasks/W006/ipmr01-verification/engineering/pytest310.txt",
+      "docs/tasks/W006/ipmr01-verification/regression-before.txt"
+    ],
+    "remaining_diff_exit_code": 0,
+    "decision": "Retain raw failing-output bytes and their published hashes; trailing whitespace in these logs is not a product defect"
+  },
+  "branches": {
+    "merged_branch_retained": "codex/w006-precontext-run-audit",
+    "next_task_branch": "codex/w007-semantic-identity-normalization"
+  },
+  "not_claimed": [
+    "complete Stage2/baseline/no_change/Stage6 or complete M1",
+    "real EDA/production/PDK admission",
+    "durability or cross-process recovery",
+    "new full Python3.10 or clean-install verification during integration"
+  ],
+  "record_location": "Post-merge PM acceptance and W007 preparation are carried on the new W007 branch; main merge commit itself contains premerge PM3 records"
+}

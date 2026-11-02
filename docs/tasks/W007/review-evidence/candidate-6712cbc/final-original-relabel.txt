@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/workspace/Layauto/docs/tasks/W007/review-evidence/relabel.py", line 47, in <module>
+    make_full(parsed)
+  File "/workspace/Layauto/docs/tasks/W007/review-evidence/relabel.py", line 34, in make_full
+    success=NormalizationResult('success',full,(),full,outcome.input)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<string>", line 9, in __init__
+  File "/workspace/Layauto/layauto_v2/domain/normalization.py", line 329, in __post_init__
+    raise ValueError('successful normalization must cover every xref record without reduction')
+ValueError: successful normalization must cover every xref record without reduction

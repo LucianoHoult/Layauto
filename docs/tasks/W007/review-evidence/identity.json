@@ -1,0 +1,79 @@
+{
+  "reviewed_product_commit": "18546982984cbbbf1c29713c5b00193766fa9cd5",
+  "python": "3.12.14",
+  "executable": "/workspace/.venvs/layauto/bin/python",
+  "platform": "Linux",
+  "records": [
+    {
+      "path": "probe.py",
+      "original_executed_sha256": "2025b98fe3cde895348b33cdbc1d5a79ab876ac4c63af4a83da7aed8252ec6b1",
+      "published_sha256": "39eb733bb612217644851075be23e38c4950e74a806b5fa582b1e6d5e9e8aa9c",
+      "publication_change": "repository-relative path bootstrap only"
+    },
+    {
+      "path": "relabel.py",
+      "original_executed_sha256": "39ea2dd4075eccc16044697a6b649b59878eb525b7a48d7cc33223fe9cf64eef",
+      "published_sha256": "0fe743e012e99961b2b81fbc71c53eca250bd5edca221f0bc7de9a91b5e513d4",
+      "publication_change": "repository-relative path bootstrap only"
+    },
+    {
+      "path": "readback.py",
+      "original_executed_sha256": "5d118e864cf939755de64656ee6ea61d52430d745f246f3075e21eb75f4adca8",
+      "published_sha256": "9b27cef48043474f69f72f990d4be0c2e171c2a7371135f5ff8f57a0ab2ad78d",
+      "publication_change": "repository-relative path bootstrap only"
+    },
+    {
+      "path": "probe-output-initial.txt",
+      "original_executed_sha256": "aff9cea7c7bdd79c8b767263e5c25c4f64a7593d6ecc7ff0f24ccb6444a26c8c",
+      "published_sha256": "aff9cea7c7bdd79c8b767263e5c25c4f64a7593d6ecc7ff0f24ccb6444a26c8c",
+      "publication_change": "none; original execution output"
+    },
+    {
+      "path": "relabel-output-initial.txt",
+      "original_executed_sha256": "588c8d3d79ae2dcc799d85b867951d04af7b9f08832eec5edd8b4d39b4d4d581",
+      "published_sha256": "588c8d3d79ae2dcc799d85b867951d04af7b9f08832eec5edd8b4d39b4d4d581",
+      "publication_change": "none; original execution output"
+    },
+    {
+      "path": "readback-output.txt",
+      "original_executed_sha256": "8db3623e1891b344af06e15def0a2fe42efc4a6380e3dc666c6afc0e1e135654",
+      "published_sha256": "8db3623e1891b344af06e15def0a2fe42efc4a6380e3dc666c6afc0e1e135654",
+      "publication_change": "none; original execution output"
+    },
+    {
+      "path": "whitespace.py",
+      "reviewed_product_commit": "df977ff3da1c10ed53bfe52998dd6f4c8e148936",
+      "original_executed_sha256": "da0c2e75091bef2080ecaa1d82a44fc501f42cd792802b839b7ee1d2b0a86e6d",
+      "published_sha256": "da0c2e75091bef2080ecaa1d82a44fc501f42cd792802b839b7ee1d2b0a86e6d",
+      "publication_change": "none"
+    },
+    {
+      "path": "whitespace-output-initial.txt",
+      "reviewed_product_commit": "df977ff3da1c10ed53bfe52998dd6f4c8e148936",
+      "original_executed_sha256": "ac94d7342ddf3371c47fc5a427661244da1b343a9126ac04278f8c5e15b6156b",
+      "published_sha256": "ac94d7342ddf3371c47fc5a427661244da1b343a9126ac04278f8c5e15b6156b",
+      "publication_change": "none"
+    },
+    {
+      "path": "seed_capture.py",
+      "reviewed_product_commit": "2f8a2d290927a21cf722cefd036e88967624be04",
+      "original_executed_sha256": "0ae8c48d949d3c2f2624b4d6bce8d643eb23149f41ebd740e8beef7f9f05df29",
+      "published_sha256": "0ae8c48d949d3c2f2624b4d6bce8d643eb23149f41ebd740e8beef7f9f05df29",
+      "publication_change": "none"
+    },
+    {
+      "path": "seed-capture-output-initial.txt",
+      "reviewed_product_commit": "2f8a2d290927a21cf722cefd036e88967624be04",
+      "original_executed_sha256": "21a426821c8d90ea2b64a9f8f4a5c509aa7f123726bd63748a13c1ba966d192f",
+      "published_sha256": "21a426821c8d90ea2b64a9f8f4a5c509aa7f123726bd63748a13c1ba966d192f",
+      "publication_change": "none"
+    }
+  ],
+  "CR-01-FR3": {
+    "tested_commit": "6712cbcf0e00395a32836122639c79a88c3813b6",
+    "original_script_sha256": "c2b548dfffced2fbf53f1a1c3573bcdcb602a10ed75a4446e768f8b81e4bcacf",
+    "published_script_sha256": "a56bdacc19f0a04781e70aa99148ec1b360161ed5c48075c8a09a71229e029d7",
+    "output_sha256": "e59e1539da9339a3553da86d462d35686da20ddaaffc9b8f93604aa8f6589b8a",
+    "command": "PYTHONPATH=/workspace/Layauto:/workspace/Layauto/tests/contracts /workspace/.venvs/layauto/bin/python -B /workspace/work/w007-review-probes-dto/seed_capture_metadata.py"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "tested_commit": "0f879f01acbeac033173d0b6c6257c376bb9272a",
+  "source_manifest_sha256": "5fd13ce5fc1cfb6d9238bb4360027c0054e02e2487cfa8c5e0dd0b36736f2ae7",
+  "runtime_files": 83,
+  "wheel_matches_runtime_manifest": true,
+  "sdist_matches_runtime_manifest": true,
+  "no_tests_or_legacy_in_wheel": true,
+  "obsolete_domain_normalization_modules_absent": true,
+  "artifacts": {
+    "layauto-0.2.0-py3-none-any.whl": {
+      "sha256": "626fcf795a3bc00f672eee0e5f869e10e4957a6f1e02145e6c9657eb0c8ff7e9",
+      "size_bytes": 107322,
+      "repository_path": "docs/tasks/W007/verification/packages/layauto-0.2.0-py3-none-any.whl"
+    },
+    "layauto-0.2.0.tar.gz": {
+      "sha256": "47669e27dc044d3e5e9ec76759a2118479bba796f422cedc5e1f5ca4f471b7ea",
+      "size_bytes": 84902,
+      "repository_path": "docs/tasks/W007/verification/packages/layauto-0.2.0.tar.gz"
+    }
+  }
+}

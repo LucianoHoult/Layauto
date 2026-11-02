@@ -1,0 +1,1 @@
+ValueError seed geometry belongs to another request capture or polygon ordinal

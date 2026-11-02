@@ -1,0 +1,91 @@
+{
+  "reviewer": "/root/code_review",
+  "tested_commit": "6712cbcf0e00395a32836122639c79a88c3813b6",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "cwd": "/workspace/Layauto",
+  "source_manifest_sha256": "c4df802dbdf8e6166b2dd6985536e796577e627481e44ec5c8054d9459ccacb9",
+  "source_manifest_files": 100,
+  "source_manifest_verified_before": true,
+  "checks": [
+    {
+      "name": "w007-tests",
+      "command": [
+        "/workspace/.venvs/layauto/bin/python",
+        "-B",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "tests/contracts/test_w007_inputs.py",
+        "tests/contracts/test_w007_contracts.py",
+        "-q"
+      ],
+      "returncode": 0,
+      "duration_seconds": 85.375,
+      "output": "final-w007-tests.txt",
+      "output_sha256": "fe287ff9ab660a7315dc0ebfd45f2caab16da19be474517bbef60a3c498d94bc"
+    },
+    {
+      "name": "original-probe",
+      "command": [
+        "/workspace/.venvs/layauto/bin/python",
+        "-B",
+        "docs/tasks/W007/review-evidence/probe.py"
+      ],
+      "returncode": 1,
+      "duration_seconds": 1.029,
+      "output": "final-original-probe.txt",
+      "output_sha256": "4c309344b7f96a5965ce35eee8191836d438295c6d41373cd6edbef13c2942df"
+    },
+    {
+      "name": "original-relabel",
+      "command": [
+        "/workspace/.venvs/layauto/bin/python",
+        "-B",
+        "docs/tasks/W007/review-evidence/relabel.py"
+      ],
+      "returncode": 1,
+      "duration_seconds": 0.495,
+      "output": "final-original-relabel.txt",
+      "output_sha256": "3d1dc49478ef54dd3c477282196a62b957c5e8c680a5f2fd62c5f1116b0fbbfd"
+    },
+    {
+      "name": "readback",
+      "command": [
+        "/workspace/.venvs/layauto/bin/python",
+        "-B",
+        "docs/tasks/W007/review-evidence/readback.py"
+      ],
+      "returncode": 0,
+      "duration_seconds": 14.677,
+      "output": "final-readback.txt",
+      "output_sha256": "8db3623e1891b344af06e15def0a2fe42efc4a6380e3dc666c6afc0e1e135654"
+    },
+    {
+      "name": "whitespace",
+      "command": [
+        "/workspace/.venvs/layauto/bin/python",
+        "-B",
+        "docs/tasks/W007/review-evidence/whitespace.py"
+      ],
+      "returncode": 0,
+      "duration_seconds": 0.42,
+      "output": "final-whitespace.txt",
+      "output_sha256": "263dce9e094d177863d3bd9dcad4daa6b755b104c7d01627c7e96c1553b9c2fa"
+    },
+    {
+      "name": "seed-capture",
+      "command": [
+        "/workspace/.venvs/layauto/bin/python",
+        "-B",
+        "docs/tasks/W007/review-evidence/seed_capture.py"
+      ],
+      "returncode": 0,
+      "duration_seconds": 0.973,
+      "output": "final-seed-capture.txt",
+      "output_sha256": "e1000d84de4f70c118d5e5b97f26187e882ae59236250e134c3421d512d02995"
+    }
+  ],
+  "source_manifest_verified_after": true
+}

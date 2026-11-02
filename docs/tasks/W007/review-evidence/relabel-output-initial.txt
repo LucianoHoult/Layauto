@@ -1,0 +1,2 @@
+real error UnsupportedDeviceReduction relabel: success xref_rows: 3 identity_count: 2 swap_flags: [False, False]
+real error UnsupportedTerminalSwap relabel: success xref_rows: 2 identity_count: 2 swap_flags: [True, False]

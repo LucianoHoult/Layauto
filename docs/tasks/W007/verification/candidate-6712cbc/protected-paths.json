@@ -1,0 +1,79 @@
+{
+  "baseline_commit": "64b4ad2f77c017affade69374510dc12e534bc07",
+  "tested_commit": "6712cbcf0e00395a32836122639c79a88c3813b6",
+  "source_manifest_still_matches": true,
+  "protected_paths": [
+    {
+      "path": "tests/fixtures",
+      "base_object": "5ba612454a6f3bd0cf456616e79770c93f3bc6a4",
+      "tested_object": "5ba612454a6f3bd0cf456616e79770c93f3bc6a4",
+      "worktree_diff_empty": true
+    },
+    {
+      "path": "tests/support",
+      "base_object": "97027e60688f9b938bc2b9094408c543c0efd980",
+      "tested_object": "97027e60688f9b938bc2b9094408c543c0efd980",
+      "worktree_diff_empty": true
+    },
+    {
+      "path": "legacy_mvp",
+      "base_object": "40d283bd20b13063c77dae3394d837b837d2320e",
+      "tested_object": "40d283bd20b13063c77dae3394d837b837d2320e",
+      "worktree_diff_empty": true
+    },
+    {
+      "path": "layauto_v2/importers",
+      "base_object": "17a44ba2eed90a2a94edbce96c780c3e04295773",
+      "tested_object": "17a44ba2eed90a2a94edbce96c780c3e04295773",
+      "worktree_diff_empty": true
+    },
+    {
+      "path": "layauto_v2/pipeline.py",
+      "base_object": "808c6f70bd96540144c2c48b9f30da6a6249735b",
+      "tested_object": "808c6f70bd96540144c2c48b9f30da6a6249735b",
+      "worktree_diff_empty": true
+    },
+    {
+      "path": "layauto_v2/repository",
+      "base_object": "287e15d66cc063a8c786b21bb0fe9d8eb4576ff9",
+      "tested_object": "287e15d66cc063a8c786b21bb0fe9d8eb4576ff9",
+      "worktree_diff_empty": true
+    },
+    {
+      "path": "layauto_v2/domain/publication.py",
+      "base_object": "44d429eba2a01ef415628d58b8c0cb8f26afc1ca",
+      "tested_object": "44d429eba2a01ef415628d58b8c0cb8f26afc1ca",
+      "worktree_diff_empty": true
+    },
+    {
+      "path": "layauto_v2/domain/publication_codec.py",
+      "base_object": "9dce51049d601ea7da3e90003ad853bf9e9fce9b",
+      "tested_object": "9dce51049d601ea7da3e90003ad853bf9e9fce9b",
+      "worktree_diff_empty": true
+    },
+    {
+      "path": "docs/tasks/W003",
+      "base_object": "a5d26da0db079fa9a327fb282da32b0e99a2272d",
+      "tested_object": "a5d26da0db079fa9a327fb282da32b0e99a2272d",
+      "worktree_diff_empty": true
+    },
+    {
+      "path": "docs/tasks/W005",
+      "base_object": "f138c8d59574c7ae27d0ac92e5334bf317767b8a",
+      "tested_object": "f138c8d59574c7ae27d0ac92e5334bf317767b8a",
+      "worktree_diff_empty": true
+    },
+    {
+      "path": "docs/tasks/W006",
+      "base_object": "fdd8255d99153999fac8d219d81b4e74ecab9113",
+      "tested_object": "fdd8255d99153999fac8d219d81b4e74ecab9113",
+      "worktree_diff_empty": true
+    }
+  ],
+  "commands": [
+    "git rev-parse <base>:<path>",
+    "git rev-parse HEAD:<path>",
+    "git diff --name-only HEAD -- <path>",
+    "SHA-256 of each source-manifest path"
+  ]
+}
