@@ -491,3 +491,15 @@ def test_source_and_target_preserve_unselected_subcircuits_without_query_aliases
         assert {(member.device_id.name, member.terminal) for member in by_name(auxiliary.nets)['Q'].memberships} == {('MAUX', 'D'), ('MAUX', 'S'), ('MAUX', 'B')}
     assert result.value.differences == ()
     assert {item.device_id.name for item in result.value.device_identities} == {'MN0', 'MP0'}
+
+
+def test_tab_separated_swap_token_keeps_w005_whitespace_semantics(tmp_path):
+    root = ready_copy(tmp_path)
+    edit(root, 'query/raw/iXref.temp', '0 Q17 0 MN0', '0 Q17 0 MN0\tX')
+    rebind(root)
+    parsed = read(root)
+    result = normalize(from_parse_result(parsed))
+    assert result.status == 'error' and result.issues[0].code == 'UnsupportedTerminalSwap'
+    assert result.issues[0].source.uri == 'query/raw/iXref.temp'
+    assert result.issues[0].source.line == 9
+    assert any(identity.sd_swap for identity in result.completed.device_identities)
