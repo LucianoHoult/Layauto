@@ -4,7 +4,7 @@
 
 ## 当前节点
 
-**当前任务为[W007 — 语义身份与目标归一化](tasks/W007-semantic-identity-normalization.md)，阶段可执行，等待独立执行session。** 本轮准备了要求、分支与prompt，尚未实施W007。目标是把读入证据变为可追溯的器件/网络语义、独立目标差异及query身份关联；它是Stage2第一个组件，尚不构造完整物理状态或baseline。
+**当前任务为[W007 — 语义身份与目标归一化](tasks/W007-semantic-identity-normalization.md)，分支技术接收通过，待main集成及最终验收。** 读入证据已能变为可追溯的器件/网络语义、独立目标差异及query身份关联。PM实际复跑553项和33模块typing通过，最终版本/实际包及独立review关闭已核对，剩余必须修正项0，见[PM1](tasks/W007-semantic-identity-normalization.md#pm1-technical-receipt-20261102)。这是Stage2第一个组件，尚不构造完整物理状态或baseline。
 
 **W006已验收并通过[PR #60](https://github.com/LucianoHoult/Layauto/pull/60)合入main `221492eb72e10cf2e46f1d9c76cb992087806a97`。** 合并tree与已审head一致，实际集成25项通过；IPMR-01已独立关闭，原PM3的405项/21模块及新包证据保持适用，见[W006 PM4](tasks/W006-precontext-run-audit.md#pm4-integration-20261102)。正常输入仍只交接unsealed attempt，未把读取成功变成整轮成功。
 
@@ -31,27 +31,27 @@
 | 当前补修交付 | `c69018dfd1b8eb67705753bb170ec3dcebb88e8f`；最终产品/回归提交`0a6de39e02947e3ae8af64a4dca9487ee8898ca3`，见[补修独立review](tasks/W005/ipmr01-fix-review.md)。原finding及复现保存在[原报告](tasks/W005/independent-premerge-review.md) |
 | W005当前集成 | main `4db3aa81d6f01496a680bdcb264afe99cd80f3f3`，合并head `ef31139465d01c170ccaf081484d3bd7cf5ff858`；[集成回执](tasks/W005/integration-receipt.json)与[PM4](tasks/W005-input-reading-binding.md#pm4-integration-20261102)记录最终验收，原[补修接收回执](tasks/W005/ipmr01-pm-receipt.json)保留实际复跑及采用边界 |
 | W006当前集成 | main `221492eb72e10cf2e46f1d9c76cb992087806a97`，已审head `2bdf5fa0b0a1004623ab90cf31ba04eca3c6abf5`，产品`f19ac0448a5d0111f799660bd7be043ebfd16e41`；[PM4](tasks/W006-precontext-run-audit.md#pm4-integration-20261102)及[集成回执](tasks/W006/integration-receipt.json)记录最终验收，原[补修接收](tasks/W006/ipmr01-pm-receipt.json)保留验证边界 |
-| W007恢复入口 | `codex/w007-semantic-identity-normalization`，从上述main建立；接手包含W006事后验收、本入口及[W007要求/prompt](tasks/W007-semantic-identity-normalization.md)的PM交接提交，完整SHA见Git/回复。该派发提交只含文档，尚无W007实现 |
+| W007恢复入口 | `codex/w007-semantic-identity-normalization`，实现交付 `5e874e5e60bb74f58903080bf079796061454962`，产品/测试 `0f879f01acbeac033173d0b6c6257c376bb9272a`；从包含[PM1](tasks/W007-semantic-identity-normalization.md#pm1-technical-receipt-20261102)及本入口的后续PM提交继续，完整SHA见Git/回复。[PM回执](tasks/W007/pm-receipt.json)区分实际复跑与采用的双解释器/安装证据；尚未合入main |
 | 历史材料 | 准备基线9f6735d，原技术实物0153505；MR-001–077、执行/review和旧PM记录保留各自历史事实。原包与既有受审实物不随PM状态整理改写 |
 
 本机PM复核材料原位于`/workspace/work/w004-pm-receipt-kryfgf84/`，关键结果与身份另汇入[PM接收摘要](tasks/W003/delivery/w004-pm-20261031/receipt.json)随Git交接；临时全量目录不自动跨实例共享。W004/W005/W006分支均已合入main并保留，当前从新的W007分支接手。
 
 ## 整体进度与下一步
 
-主线仍是M0准入准备→M1保真无变化闭环→M2首次实际shrink→M3多器件整轮覆盖→M4可复现首版验收。**当前在M1内部，完成了样本、读取、运行身份及输入失败记录，尚未完成第一个完整输入到产物闭环。** 不按任务编号或测试数量推算百分比。
+主线仍是M0准入准备→M1保真无变化闭环→M2首次实际shrink→M3多器件整轮覆盖→M4可复现首版验收。**当前在M1内部，样本、读取、运行身份及输入失败记录已集成；语义与目标差异组件已实现并通过分支技术接收，尚未完成第一个完整输入到产物闭环。** 不按任务编号或测试数量推算百分比。
 
 | M1内的能力 | 当前结果 / 后续归属 |
 | --- | --- |
 | 可信样本与独立判据 | W003/W004已在synthetic范围验收 |
 | 实际文件读取及来源绑定 | W005已集成 |
 | run身份、读取审计与输入失败终结 | W006已集成 |
-| 器件/网络语义、目标差异与query身份关联 | W007已派发，尚未实现 |
+| 器件/网络语义、目标差异与query身份关联 | W007分支技术接收通过，待main集成 |
 | 完整几何/坐标/占用/连通/body状态与原子baseline | 后续Stage2任务保留 |
 | 无变化的完整判定、只读GDS/CDL/JSON及报告/terminal | 后续Stage3–6组合；通过后才验收M1 |
 
-下一执行者按[W007 prompt](tasks/W007-semantic-identity-normalization.md#独立执行session-prompt)先细化内部组件方案并独立review，原范围内修正后直接实现。C08/09/10落实source准入；C13目标L变化必须完整保留给后续planner，不能提前terminal或误判no_change。完成后提交推送并交PM，不自行合并或启动下一任务。
+下一步按[W007 PM1](tasks/W007-semantic-identity-normalization.md#pm1-technical-receipt-20261102)完成main集成检查与针对性组合验证，再由PM记录最终验收并准备后续Stage2物理状态切片；尚未创建或启动下一任务。C08/09/10已有source组件准入；C13目标L变化已完整保留给后续planner，其正式终结阶段仍需后续组合验证。
 
-正常输入在W006仅交接unsealed attempt，不产生成功terminal。后续Stage2/baseline/no_change与Stage6完整文件闭环仍是M1硬门；真实工具与配置机制后置项保持，新增关键预期带实例交PM/用户。分支技术接收不等同main集成、W006最终验收或完整M1通过。
+正常输入在W006仅交接unsealed attempt，不产生成功terminal；W007组件也不推进attempt或宣称整轮成功。后续Stage2/baseline/no_change与Stage6完整文件闭环仍是M1硬门；真实工具与配置机制后置项保持，新增关键预期带实例交PM/用户。W007分支技术接收不等同main集成、W007最终验收或完整M1通过。
 
 ## 生产 parser 测试与真实缺项
 

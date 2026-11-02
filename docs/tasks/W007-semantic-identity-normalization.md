@@ -8,8 +8,8 @@
 | --- | --- |
 | ID / 目标 | W007；交付Stage2首个纯归一化组件：source semantic draft、独立immutable target/typed differences、query identity关联及annotation seeds |
 | 里程碑 / 依赖 | M1第三个产品切片；依赖W003/W004已验收synthetic输入、W005读取组件及W006运行审计。W006已通过[PR #60](https://github.com/LucianoHoult/Layauto/pull/60)合入main `221492eb72e10cf2e46f1d9c76cb992087806a97`，接收见[W006 PM4](W006-precontext-run-audit.md#pm4-integration-20261102)。本任务不是完整Stage2或M1 |
-| 授权依据 / 阶段 | 用户2026-11-02同意继续合并W006并准备下一独立执行任务。**可执行：先细化内部接口方案并独立review，原范围内修正后直接实现。** 本轮PM只派发，不声称W007已有产品实现或验证 |
-| 恢复位置 | `codex/w007-semantic-identity-normalization`，起点为上述main；使用包含本任务、W006 PM4和current-work的PM交接提交，完整SHA见Git/回复。临时环境不假定跨session存在 |
+| 授权依据 / 阶段 | 用户2026-11-02派发独立执行任务并交回实现与review结果。**待验收：分支技术接收通过，剩余必须修正项0；main集成及组合验证后再作最终验收。** 依据见[PM1](#pm1-technical-receipt-20261102) |
+| 恢复位置 | `codex/w007-semantic-identity-normalization`；实现交付 `5e874e5e60bb74f58903080bf079796061454962`，产品/测试 `0f879f01acbeac033173d0b6c6257c376bb9272a`。从包含PM1及current-work更新的本分支提交继续，完整SHA见Git/回复；main仍为上述W006集成版本。临时环境不假定跨session存在 |
 | 允许修改 | 新建职责明确的`layauto_v2/normalization/`；`domain/circuit.py`、`intent.py`、`identifiers.py`及必要中立DTO/codec；必要的纯identity/seed构建模块；相应unit/contracts/真实读取组合测试、typing/build配置、README与本任务附件。内部类型/文件组织留执行方案，不为目录名强造对象 |
 | 非目标 | 不实现geometry store、coordinate/occupancy、spatial overlay、physical connectivity/body/extraction/mandatory规则、完整ProposedInitialState、initialize/seal或state publication；不扩展W006正式pipeline/repository协议，不产生StageFailure终结链、baseline、no_change、ECO或导出；不扩外部输入格式、真实PDK/EDA或方言，不改已验收fixture/答案 |
 | 架构依据 | 上述main的[architecture](../architecture.md) §1.4、§2.2–2.3、§3.2–3.3、§5.3–5.4、§7.1/7.3/7.5、§11.2/11.5/11.10/11.13–11.15；读原文及[W002 E6/E7/R4](W002-first-input-admission.md)、[W003合同](W003/contracts.md)、[W005拆分](W005-input-reading-binding.md#pm已确定的任务拆分)、W006 InputsReady与其[接口方案](W006/interface-plan.md) |
@@ -108,11 +108,32 @@
 
 ## PM 验收与交接（PM）
 
-当前只准备任务和分支，未验收W007。完成实现、必要修正及独立review后，由执行者将代码、测试及可访问证据提交推送到本分支，沿用项目noreply身份，核对远端SHA交PM；不自行验收、合并main、删分支或启动后续任务。
+原派发阶段只准备任务和分支；实现交回后的当前接收状态见PM1。执行者的提交、review与后续PM接收分别保留，不把分支技术接收写成main集成或完整M1通过。
 
 **派发要求独立复核（2026-11-02，PM记录）：** 未参与草稿编写的`/root/w007_handoff_review`对照架构与W003–W006相邻合同检查，剩余必须修正项0；确认source/target及seed分工、C08/09/10与C13阶段边界、真实读取适配、后续完整状态/发布/导出义务和授权范围。受审W007全文SHA-256为`7ecfe9a6dfaaeec00fcbc4a80887284d330a1fb618db9ebb7f1545110745b54d`，对应追加本段前的内容；这不是未来接口方案或产品代码review。
 
+<a id="pm1-technical-receipt-20261102"></a>
+### PM1. 分支技术接收（2026-11-02，PM）
+
+**接收A1–A7范围内的交付，剩余必须修正项0；可进入main集成，W007最终验收待集成版本及组合验证。** 本次从干净的PM派发提交 `64b4ad2f77c017affade69374510dc12e534bc07` 快进至用户指定交付 `5e874e5e60bb74f58903080bf079796061454962`；实际远端同SHA，main仍为 `221492eb72e10cf2e46f1d9c76cb992087806a97`。最终产品/测试为 `0f879f01acbeac033173d0b6c6257c376bb9272a`，交付后续仅增加本任务文档/证据。可移植结果见[PM回执](W007/pm-receipt.json)。
+
+PM对照任务、架构和接口补审读取了实际实现及独立review。CR-01–CR-05、FR1–FR3、ER-01均有保留的反例、修正与reviewer关闭依据；没有以旧候选6712cbc的530项结果代替最终验证。`/root/w007_accept_scope`另核对source/target、全量差异、身份/seed及公开结果守卫；`/root/w007_accept_evidence`独立核对版本、清单、日志及实际发布包。两项只读专项未新增必须修正项，不替代原独立代码review。
+
+| 本次接收核验 | 结果与采用边界 |
+| --- | --- |
+| PM实际完整回归与strict typing | Python3.12.14：**553 passed / 178.49s**；**33 source files无问题**，包括W005/W006及IPMR-01。使用既有PM环境和当前源码，不作为干净安装证据；有一条第三方anyio/pytest弃用warning |
+| PM实际独立反例/组合 | FR3成组交换几何及response metadata被拒绝；W006合法alias、readback/wire往返通过，attempt保持不变且无terminal，五种缺失readback均拒绝 |
+| 专项实际多差异探针 | NFIN不变而目标L/W/M/NF同时变化时，四项exact差异及后续义务全部保留；漏差异被公开DTO拒绝；source NF=2得到UnsupportedFingerCount且不能重标success。脚本与原输出随[PM附件](W007/pm-evidence/)保存 |
+| 版本、验证与实际包 | 最终101项源码/测试/配置与Git和清单相符，13项工程回执及日志身份闭合；随Git提供的wheel/sdist各83项runtime逐字节匹配。执行阶段双解释器各553项、双typing、新构建、两套干净安装及源码外smoke按已核验回执采用，PM未再次运行3.10或重建/安装 |
+| 保护范围 | 实现交付的14处保护路径与PM派发基线相同；fixture/答案、W005/W006产品及历史证据未改。PM本次仅更新阶段、入口与接收材料，不改产品 |
+
+FR3所需的内部依赖调整在原范围内接收：只对已捕获的requests bytes复用现有安全decoder和所选limits，来源锚定不重新读盘；专属输入/codec留在normalization，domain保持纯合同。该调整已独立补审，没有新增输入、profile能力或失败阶段。
+
+目前得到的是可追溯的source语义、独立target、完整差异与query身份/seeds；无差异仅是语义相等，B端网名不证明body连通。完整几何/坐标/occupancy/connectivity/body/extraction、原子baseline/seal、整轮no_change/terminal、Stage6及真实EDA/PDK仍未由本任务实现或验收。本轮未合并main、删除分支或启动下一任务；建议下一步完成main集成及针对性组合验证，再准备后续Stage2物理状态切片。
+
 ### 独立执行session prompt
+
+以下为已执行的原派发prompt，仅作历史记录；当前从PM1接收结果继续，不重新实施本任务。
 
 ```text
 按Layauto项目规范，以执行角色完成W007语义身份与目标归一化。

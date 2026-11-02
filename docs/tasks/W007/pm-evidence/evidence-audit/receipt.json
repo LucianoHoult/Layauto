@@ -1,0 +1,15 @@
+{
+  "scope": "Read-only identity evidence audit, no product execution",
+  "baseline": "64b4ad2f77c017affade69374510dc12e534bc07",
+  "tested_product": "0f879f01acbeac033173d0b6c6257c376bb9272a",
+  "delivery": "5e874e5e60bb74f58903080bf079796061454962",
+  "completed_utc": "2026-11-02T11:03:32.254587+00:00",
+  "evidence_checks": 149,
+  "passed": 149,
+  "must_fix_findings": 0,
+  "files": {
+    "check_evidence.py": "df6344e4298a080ff0effedab0473ba9965facaffc4b7f1479784cde8635b183",
+    "checks.json": "75949b02c6f54434987a1f4ea29621f6e0bc7a3148f304a97e1ab63dc6211dbb",
+    "summary.md": "39881dde8df8b45eb238d03568d795d5829a8c57e57a08f8e98da537f1ce3dc5"
+  }
+}
