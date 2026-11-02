@@ -8,12 +8,12 @@
 | --- | --- |
 | ID / 目标 | W006；实现process-local的pre-context入口、审计与失败终结，成功读取交接仍为unsealed |
 | 里程碑 / 依赖 | M1的第二个产品切片；依赖已验收W003/W004输入与W005组件。W005经[PR #59](https://github.com/LucianoHoult/Layauto/pull/59)合入main `4db3aa81d6f01496a680bdcb264afe99cd80f3f3`，验收见[W005 PM4](W005-input-reading-binding.md#pm4-integration-20261102)；完整M1仍待后续组合 |
-| 授权依据 / 当前阶段 | 用户2026-11-02交回专门session的独立合并前review；沿用独立执行session。**可执行（局部补修）：W006 IPMR-01为P2必须修正项，阻止合并。** 原[PM1](#pm1-20261102)技术接收及合并建议因新反例暂停，当前处置与修复交接见[PM2](#pm2-ipmr01-20261102)；尚未验收或合并W006 |
-| 恢复位置 | `codex/w006-precontext-run-audit`；独立review交付`ccd157fe1a3dee4267d4f0b119a4eda53cfdcf9f`，产品/回归仍为`cc42ae62585755b0b914d4dbec43324941bfe7c6`，尚无IPMR-01产品补修。接手包含PM2的后续文档提交，准确SHA见Git/回复。先核对远端、HEAD及已有差异，不假定临时环境/未提交文件跨session存在 |
+| 授权依据 / 当前阶段 | 用户2026-11-02交回IPMR-01补修及独立关闭结论。**待验收：补修技术接收通过，剩余必须修正项0，待main集成与最终验收。** [PM3](#pm3-ipmr01-20261102)重新接收当前版本，解除[PM2](#pm2-ipmr01-20261102)的技术阻塞；尚未合并W006或启动下一任务 |
+| 恢复位置 | `codex/w006-precontext-run-audit`；补修交付`8d3c36ce4bbc4714765b4aa9ec4b77abae8c3164`，最终产品/回归`f19ac0448a5d0111f799660bd7be043ebfd16e41`。接手包含PM3的后续文档提交，准确SHA见Git/回复。先核对远端、HEAD及已有差异，不假定临时环境/未提交文件跨session存在 |
 | 允许修改 | `layauto_v2/pipeline.py`；新增职责明确的`repository/`、`tooling/`及必要中立`domain/` request/ids/results/publication合同；必要的W005读取/捕获接口重构；`tests/unit/`、`tests/contracts/`及真实文件组合测试；受影响typing/build配置、README及本任务执行/review附件 |
 | 非目标 | 不实现Stage 2语义/空间/body/extraction及baseline/seal，不判断no_change，不实现ECO/Stage 5修改、Stage 6 geometry导出/完整报告，不运行真实EDA或生产上传，不承诺持久化/跨进程恢复；不发布新稳定CLI或新增必需外部输入文件，不改已验收fixture/答案/合同来迁就实现 |
 | 架构依据 | 基线中的[architecture](../architecture.md) §2.1–2.2、§2.6–2.7、§9.2、§11.2/11.4/11.10/11.13/11.15、§12.1/12.6–12.7；以各段原文为准。另读[W002](W002-first-input-admission.md) E6/E7/R4、[W003合同](W003/contracts.md)共享记录/失败/F1–F2与[W005后续组合表](W005-input-reading-binding.md#pm已确定的任务拆分) |
-| 分工 / 阻塞 | 一名执行者完成IPMR-01局部修复，未参与该修复者独立复核关闭；PM维护阶段并重新核验。IPMR-01关闭前阻止合并及后续产品推进；本次修复属于既定A7，无新的用户预期待决 |
+| 分工 / 阻塞 | 执行者已完成IPMR-01补修，未参与实现者独立复核关闭，PM已重新核验；无当前必须修正项。PM继续负责集成与最终验收，本次修复未新增用户预期待决 |
 
 ### 行为要求与边界
 
@@ -156,7 +156,7 @@ Repository只提供本切片所需create、audit/checkpoint、pre-context finali
 
 ## PM 验收与交接（PM）
 
-**当前结论见[PM2](#pm2-ipmr01-20261102)：W006 IPMR-01开放，暂停原技术接收及合并建议。** 以下原派发、PM1及其回执保留历史事实，不代表新反例已关闭。
+**当前结论见[PM3](#pm3-ipmr01-20261102)：W006 IPMR-01独立关闭，补修技术接收通过，待main集成与最终验收。** 以下原派发、PM1/PM2及其回执保留各自历史事实，当前状态以PM3为准。
 
 **原派发记录（2026-11-02，已完成交回）：** 派发时只有任务要求和分支准备，未验收W006；执行者完成实现与独立review后，将本任务产物、证据及记录提交推送到`codex/w006-precontext-run-audit`，使用项目既有GitHub noreply身份，核对远端完整SHA并交回PM。远端变化先核对并安全集成，不force push；不自行验收、合并main、删除分支或扩展下一产品任务。该段保留原交接边界，当前接收结果见PM1。
 
@@ -205,9 +205,29 @@ PM1的389项通过及历史findings关闭记录保持原事实；它们没有覆
 提交推送代码、回归、必要证据与执行/review记录到当前W006分支，沿用项目noreply身份，核对远端完整SHA交PM。不自行验收、合并main、删除分支或启动下一任务。
 ```
 
+<a id="pm3-ipmr01-20261102"></a>
+### PM3 补修重新接收（2026-11-02）
+
+**接收IPMR-01独立关闭结论，剩余必须修正项0；当前版本具备合并的技术条件。** PM核对交付`8d3c36ce4bbc4714765b4aa9ec4b77abae8c3164`及最终产品`f19ac0448a5d0111f799660bd7be043ebfd16e41`，修复仅涉及pipeline已有failure的条件保护和16个新增回归；原[问题报告](W006/independent-premerge-review.md#ipmr-01)、失败复现及PM2保持，关闭依据见[独立补修review](W006/ipmr01-fix-review.md)。本轮没有合并main、删除分支或启动下一任务。
+
+PM直接核对异常控制流和新测试，并实际运行以下检查，完整命令、环境、输出及证据身份见[补修PM回执](W006/ipmr01-pm-receipt.json)：
+
+- Python3.12.14完整回归：**405 passed，91.32s**；含W005、正常/F2、旧W006及新增16项。仅有第三方anyio的pytest弃用warning。
+- strict mypy：**21 source files，无错误**。
+- 原`double_exception.py`退出**0**：原RuntimeError→LookupError与二次ValueError分开保留，27份来源、8份evidence保留，checkpoint/terminal仍无。
+- reviewer的诊断快照探针退出**0**：parser/read两处原始消息快照不受后续变更、坏格式化及诊断readback失败影响，无虚构发布。
+
+独立证据专项核对217项snapshot在产品、交付及工作区一致；47项工程、19项执行证据hash、29份命令日志、4项关键身份及119项smoke输入来源匹配。产品之后83个变化路径均为docs；fixture/答案、原报告/复现、架构及其他产品模块未改。
+
+**Python3.10采用边界：** 同版本首轮120 passed/1 failed，失败是独立测试snapshot漏带F1样张`records.json`；仅补入同提交原文件，其他216项均未变化，原失败节点补跑1 passed。接收为**121个不同受影响用例跨两次运行通过**，不记为单次全绿或3.10全套通过。该遗漏已闭合，无需重开fixture或产品修复。
+
+构建、Python3.12干净安装与`-I`源码外正常/F2/双异常smoke采用本次补修的工程及独立review证据；新wheel/sdist各74项产品文件由原独立reviewer直接核验。本PM环境没有该新包，未重建或亲自重验包字节，不沿用旧cc42包证明新修复。PM本轮未运行3.10；3.10全套/干净wheel安装、其他平台、真实EDA/生产、durability及Stage2–6完整组合仍未验证。
+
+下一步核对拟合并head与受审产品身份，合入main并完成受影响组合验证后记录W006最终验收；随后收敛Stage2独立执行任务。正常读取仍只交接unsealed attempt，当前技术接收不等于整轮成功或完整M1。main在本次接收时仍为`4db3aa81d6f01496a680bdcb264afe99cd80f3f3`。
+
 ### 独立执行session prompt
 
-以下为已完成派发的历史prompt，保留原授权与范围；当前恢复应从PM2的IPMR-01补修交接继续，不重新执行本段。
+以下为已完成派发的历史prompt；PM2的补修prompt也已执行交回。当前恢复应从PM3继续，不重新执行这些历史派发。
 
 ```text
 按Layauto项目规范，以执行角色完成W006运行入口与输入失败记录。
