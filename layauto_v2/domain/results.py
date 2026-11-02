@@ -48,6 +48,15 @@ class ParseResult:
             object.__setattr__(self, name, tuple(getattr(self, name)))
         if any(not isinstance(x, EvidenceIssue) for x in self.issues) or any(not isinstance(x, EvidenceRecord) for x in self.completed) or any(not isinstance(x, SourceFile) for x in self.sources):
             raise ValueError('invalid parse record fields')
+        by_uri = {source.uri: source.sha256 for source in self.sources}
+        if len(by_uri) != len(self.sources):
+            raise ValueError('duplicate source URI')
+        for record in self.completed:
+            if any(by_uri.get(ref.uri) != ref.sha256 for ref in record.sources):
+                raise ValueError('completed evidence references unread bytes')
+        for issue in self.issues:
+            if issue.source.sha256 is not None and by_uri.get(issue.source.uri) != issue.source.sha256:
+                raise ValueError('issue references unread bytes')
         if self.status == 'success':
             if self.value is None or self.issues:
                 raise ValueError('success requires value and no issues')

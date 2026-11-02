@@ -317,3 +317,137 @@ def test_legal_additional_unannotated_boundary_is_not_dropped(tmp_path):
     assert len(value['gds']['elements']) == 41
     added = [x for x in value['gds']['elements'] if x['canonical_layer'] == 'MARKER' and tuple(x['bbox']) == rectangle]
     assert len(added) == 1 and tuple(added[0]['xy']) == tuple(points)
+
+
+def test_cache_type_drift_is_not_hidden_by_python_bool_integer_equality(tmp_path):
+    root = copy_input(tmp_path)
+    path = root / 'query/normalized/instance_xref.yaml'
+    cache = read_json(path)
+    assert cache['records'][0]['sd_swap'] is False
+    cache['records'][0]['sd_swap'] = 0
+    write_json(path, cache)
+    result = load(root)
+    assert result.status == 'error'
+    assert result.issues[0].code == 'NormalizedCacheMismatch'
+
+
+def test_cache_key_order_is_not_semantic_drift(tmp_path):
+    root = copy_input(tmp_path)
+    path = root / 'query/normalized/instance_xref.yaml'
+    cache = read_json(path)
+    write_json(path, dict(reversed(list(cache.items()))))
+    success(load(root))
+
+
+def test_same_read_bytes_feed_hash_and_parsers_even_if_file_changes(tmp_path, monkeypatch):
+    root = copy_input(tmp_path)
+    original = Path.read_bytes
+    selected = (root / 'source.gds').resolve()
+    captured = original(selected)
+    reads = 0
+
+    def changing(path):
+        nonlocal reads
+        data = original(path)
+        if path.resolve() == selected:
+            reads += 1
+            path.write_bytes(b'changed after snapshot')
+        return data
+
+    monkeypatch.setattr(Path, 'read_bytes', changing)
+    result = load(root)
+    success(result)
+    assert reads == 1
+    source = next(x for x in result.sources if x.uri == 'source.gds')
+    assert source.data == captured and source.sha256 == hashlib.sha256(captured).hexdigest()
+
+
+def test_absolute_raw_and_selected_paths_are_supported(tmp_path):
+    root = copy_input(tmp_path)
+    without_cache(root)
+    site = read_json(root / 'site_config.yaml')
+    site['inputs'] = {k: str(root / v) for k, v in site['inputs'].items()}
+    write_json(root / 'site_config.yaml', site)
+    header_path = root / 'query/header.json'
+    header = read_json(header_path)
+    paths = {}
+    for entry in header['raw']:
+        old = entry['uri']
+        paths[old] = entry['uri'] = str(root / old)
+    requests_path = root / 'query/requests.json'
+    requests = read_json(requests_path)
+    for request in requests['requests']:
+        request['path'] = paths[request['path']]
+    write_json(requests_path, requests)
+    write_json(header_path, header)
+    rebind(root)
+    success(load(root))
+
+
+@pytest.mark.parametrize('selected', ['site', 'gds'])
+def test_embedded_nul_path_returns_typed_error(tmp_path, selected):
+    from layauto_v2.importers import read_inputs
+    if selected == 'site':
+        result = read_inputs(Path('bad\0site.yaml'))
+    else:
+        root = copy_input(tmp_path)
+        site = read_json(root / 'site_config.yaml')
+        site['inputs']['gds'] = 'bad\0source.gds'
+        write_json(root / 'site_config.yaml', site)
+        result = load(root)
+    assert result.status == 'error'
+    assert result.issues[0].code == 'InvalidInputPath'
+    assert result.issues[0].source.sha256 is None
+
+
+def test_same_profile_cannot_redefine_its_fixed_source_unit(tmp_path):
+    root = copy_input(tmp_path)
+    path = root / 'tech/formats.json'
+    formats = read_json(path)
+    units = formats['unit_scale_contract']
+    units['nominal_tick_m'] = {'numerator': '1', 'denominator': '500000000'}
+    units['gds_units_first_nominal'] = {'numerator': '1', 'denominator': '500'}
+    units['canonical_tick_nm'] = 2
+    write_json(path, formats)
+    rebind(root)
+    result = load(root)
+    assert result.status == 'error'
+    assert result.issues[0].code == 'UnitDeclarationConflict'
+    assert result.issues[0].source.uri == 'tech/formats.json'
+
+
+def test_unknown_lvs_status_is_preserved_without_promoting_assurance(tmp_path):
+    root = copy_input(tmp_path)
+    path = root / 'query/header.json'
+    header = read_json(path)
+    header['lvs_completion_status'] = header['lvs_match_status'] = 'unknown'
+    write_json(path, header)
+    value = success(load(root))
+    assert value['header']['lvs_match_status'] == 'unknown'
+    assert value['header']['assurance'] == 'synthetic'
+
+
+@pytest.mark.parametrize('field,wrong_id', [('local_body', 'MN'), ('external_body', 'MN.ext'), ('tap', 'MN.ext'), ('local_rail', 'BN')])
+def test_context_internal_reference_roles_are_checked_without_spatial_join(tmp_path, field, wrong_id):
+    root = copy_input(tmp_path)
+    path = root / 'body/context.json'
+    body = read_json(path)
+    body['associations'][0][field] = wrong_id
+    write_json(path, body)
+    rebind(root)
+    result = load(root)
+    assert result.status == 'error'
+    assert result.issues[0].code == 'BodyReferenceTypeMismatch'
+    assert result.issues[0].source.field == '/associations/0/' + field
+
+
+def test_closure_digest_encoding_declaration_must_match_supported_contract(tmp_path):
+    root = copy_input(tmp_path)
+    path = root / 'query/header.json'
+    header = read_json(path)
+    header['closure']['canonical_encoding'] = 'UTF-16 with numeric-key coercion'
+    write_json(path, header)
+    rebind(root)
+    result = load(root)
+    assert result.status == 'error'
+    assert result.issues[0].source.field == '/closure/canonical_encoding'

@@ -363,7 +363,7 @@ SCHEMAS['header'] = obj({
         'empty_closure_sha256': sha256, 'preprocess': literal('none'),
     }),
     'target': FILE_REF,
-    'closure': obj({'entries': array(FILE_REF), 'canonical_encoding': text, 'sha256': sha256}),
+    'closure': obj({'entries': array(FILE_REF), 'canonical_encoding': literal('UTF-8 sorted-key compact JSON, array sorted by uri, no LF'), 'sha256': sha256}),
     'tool': obj({'name': maybe(text), 'version': maybe(text), 'executed': boolean}),
     'query_dialect_version': text, 'parser_contract_version': text, 'product_parser_version': maybe(text),
     'query_unit': obj({'name': text, 'metres_per_unit': positive_exact, 'geometry_precision': positive,
@@ -480,6 +480,8 @@ def validate_payload(doc: FrozenMap, kind: str) -> None:
                 raise SchemaError(f'/limits/{field}', 'profile may tighten but not widen schema ceiling', 'InvalidLimit')
         unit = _map(doc['unit_scale_contract'])
         tick, user = rational(unit['nominal_tick_m']), rational(unit['nominal_user_unit_m'])
+        if tick != Fraction(1, 1_000_000_000) or user != Fraction(1, 1_000_000):
+            raise SchemaError('/unit_scale_contract/nominal_tick_m', 'toy_gds_real8_nm/1 fixes source nominal tick at 1 nm and user unit at 1 micrometre', 'UnitDeclarationConflict')
         if rational(unit['gds_units_first_nominal']) != tick / user:
             raise SchemaError('/unit_scale_contract/gds_units_first_nominal', 'tick/user unit declarations disagree', 'UnitDeclarationConflict')
         if tick * 1_000_000_000 != _int(unit['canonical_tick_nm']):

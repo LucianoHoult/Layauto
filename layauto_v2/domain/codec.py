@@ -12,7 +12,7 @@ from typing import TypeAlias
 Value: TypeAlias = 'None | bool | int | str | bytes | Fraction | FrozenMap | tuple[Value, ...]'
 
 
-@dataclass(frozen=True, init=False)
+@dataclass(frozen=True, init=False, eq=False)
 class FrozenMap(Mapping[str, Value]):
     """Tuple-backed map; never retains a writable caller alias."""
     _entries: tuple[tuple[str, Value], ...]
