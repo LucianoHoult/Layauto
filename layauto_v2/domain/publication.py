@@ -213,7 +213,7 @@ def safe_exception_message(exc: BaseException) -> str:
     """
     try:
         message = str(exc)
-        return str.encode(message, 'utf-8', errors='backslashreplace').decode('utf-8')
+        return str.encode(message, 'utf-8', errors='backslashreplace').decode('utf-8') or safe_exception_type(exc)
     except BaseException:
         return '<unprintable exception>'
 

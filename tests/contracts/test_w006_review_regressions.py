@@ -71,7 +71,8 @@ class BrokenMessage:
 
 
 @pytest.mark.parametrize('boundary', ['parse', 'read'])
-@pytest.mark.parametrize('interrupt', [SystemExit(BrokenMessage()), KeyboardInterrupt('\ud800')])
+@pytest.mark.parametrize('interrupt', [SystemExit(BrokenMessage()), KeyboardInterrupt('\ud800'),
+                                       SystemExit(), KeyboardInterrupt()])
 def test_diagnostic_formatting_never_replaces_original_interrupt(tmp_path, monkeypatch, boundary, interrupt):
     root = copy_input(tmp_path)
     request = caller_request(root)
@@ -94,6 +95,45 @@ def test_diagnostic_formatting_never_replaces_original_interrupt(tmp_path, monke
     assert failure.causes[0].exception_type == type(interrupt).__name__
     failure.message.encode('utf-8')
     assert repository.read_terminal(request.run_id).deployment_disposition == 'reject'
+
+
+@pytest.mark.parametrize('point', ['parse', 'read', 'create.before_switch',
+                                  'finalize.freeze', 'finalize.before_switch'])
+def test_empty_exception_message_keeps_typed_failure_or_unavailable(tmp_path, monkeypatch, point):
+    root = copy_input(tmp_path)
+    if point.startswith('finalize.'):
+        from w005_cases import apply_case
+        apply_case(root, 'missing_terminator')
+    request = caller_request(root)
+
+    def fail(*args, **kwargs):
+        raise RuntimeError()
+
+    def inject(actual):
+        if actual == point:
+            raise RuntimeError()
+
+    repository = PublicationRepository(fault_injector=inject)
+    if point == 'parse':
+        monkeypatch.setattr(reader, 'parse_query', fail)
+    elif point == 'read':
+        monkeypatch.setattr(Path, 'read_bytes', fail)
+    result = prepare_inputs(repository, request)
+    if point in ('create.before_switch', 'finalize.before_switch'):
+        assert isinstance(result, PublicationUnavailable)
+        assert result.message == 'RuntimeError'
+        return
+    assert result.deployment_disposition == 'reject'
+    checkpoint = repository.load_checkpoint(request.run_id)
+    if point == 'finalize.freeze':
+        closure = repository.read(result.closure_ref)
+        assert closure.closure_kind == 'run_record_freeze_failure'
+        failure = repository.read(closure.freeze_failure_ref)
+    else:
+        failure = repository.read(checkpoint.failure_ref)
+        assert failure.code == 'InternalStageFailure'
+    assert failure.message == 'RuntimeError'
+    assert failure.causes[0].exception_type == 'RuntimeError'
 
 
 def test_tool_record_construction_failure_keeps_pending_bytes_and_no_terminal(tmp_path, monkeypatch):
