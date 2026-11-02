@@ -8,12 +8,12 @@
 | --- | --- |
 | ID / 目标 | W006；实现process-local的pre-context入口、审计与失败终结，成功读取交接仍为unsealed |
 | 里程碑 / 依赖 | M1的第二个产品切片；依赖已验收W003/W004输入与W005组件。W005经[PR #59](https://github.com/LucianoHoult/Layauto/pull/59)合入main `4db3aa81d6f01496a680bdcb264afe99cd80f3f3`，验收见[W005 PM4](W005-input-reading-binding.md#pm4-integration-20261102)；完整M1仍待后续组合 |
-| 授权依据 / 当前阶段 | 用户2026-11-02交回IPMR-01补修及独立关闭结论。**待验收：补修技术接收通过，剩余必须修正项0，待main集成与最终验收。** [PM3](#pm3-ipmr01-20261102)重新接收当前版本，解除[PM2](#pm2-ipmr01-20261102)的技术阻塞；尚未合并W006或启动下一任务 |
-| 恢复位置 | `codex/w006-precontext-run-audit`；补修交付`8d3c36ce4bbc4714765b4aa9ec4b77abae8c3164`，最终产品/回归`f19ac0448a5d0111f799660bd7be043ebfd16e41`。接手包含PM3的后续文档提交，准确SHA见Git/回复。先核对远端、HEAD及已有差异，不假定临时环境/未提交文件跨session存在 |
+| 授权依据 / 当前阶段 | 用户2026-11-02同意继续合并并准备下一任务。**已验收并集成：** [PR #60](https://github.com/LucianoHoult/Layauto/pull/60)合入main `221492eb72e10cf2e46f1d9c76cb992087806a97`，IPMR-01独立关闭，剩余必须修正项0；最终接收见[PM4](#pm4-integration-20261102)，仅覆盖本任务范围 |
+| 恢复位置 | 产品恢复使用上述main集成版本；已审head `2bdf5fa0b0a1004623ab90cf31ba04eca3c6abf5`，补修产品`f19ac0448a5d0111f799660bd7be043ebfd16e41`。原W006分支保留；PM4及下一任务要求在`codex/w007-semantic-identity-normalization`交接，准确文档SHA见Git/回复 |
 | 允许修改 | `layauto_v2/pipeline.py`；新增职责明确的`repository/`、`tooling/`及必要中立`domain/` request/ids/results/publication合同；必要的W005读取/捕获接口重构；`tests/unit/`、`tests/contracts/`及真实文件组合测试；受影响typing/build配置、README及本任务执行/review附件 |
 | 非目标 | 不实现Stage 2语义/空间/body/extraction及baseline/seal，不判断no_change，不实现ECO/Stage 5修改、Stage 6 geometry导出/完整报告，不运行真实EDA或生产上传，不承诺持久化/跨进程恢复；不发布新稳定CLI或新增必需外部输入文件，不改已验收fixture/答案/合同来迁就实现 |
 | 架构依据 | 基线中的[architecture](../architecture.md) §2.1–2.2、§2.6–2.7、§9.2、§11.2/11.4/11.10/11.13/11.15、§12.1/12.6–12.7；以各段原文为准。另读[W002](W002-first-input-admission.md) E6/E7/R4、[W003合同](W003/contracts.md)共享记录/失败/F1–F2与[W005后续组合表](W005-input-reading-binding.md#pm已确定的任务拆分) |
-| 分工 / 阻塞 | 执行者已完成IPMR-01补修，未参与实现者独立复核关闭，PM已重新核验；无当前必须修正项。PM继续负责集成与最终验收，本次修复未新增用户预期待决 |
+| 分工 / 阻塞 | 执行、独立review与PM集成验收已完成；无本任务阻塞。后续W007仅准备派发，不改变本任务正常输入仍unsealed的边界 |
 
 ### 行为要求与边界
 
@@ -156,7 +156,7 @@ Repository只提供本切片所需create、audit/checkpoint、pre-context finali
 
 ## PM 验收与交接（PM）
 
-**当前结论见[PM3](#pm3-ipmr01-20261102)：W006 IPMR-01独立关闭，补修技术接收通过，待main集成与最终验收。** 以下原派发、PM1/PM2及其回执保留各自历史事实，当前状态以PM3为准。
+**当前结论见[PM4](#pm4-integration-20261102)：W006已验收并经PR #60合入main。** 以下原派发、PM1–PM3及其回执保留各自历史事实，完整M1仍待后续组合。
 
 **原派发记录（2026-11-02，已完成交回）：** 派发时只有任务要求和分支准备，未验收W006；执行者完成实现与独立review后，将本任务产物、证据及记录提交推送到`codex/w006-precontext-run-audit`，使用项目既有GitHub noreply身份，核对远端完整SHA并交回PM。远端变化先核对并安全集成，不force push；不自行验收、合并main、删除分支或扩展下一产品任务。该段保留原交接边界，当前接收结果见PM1。
 
@@ -225,9 +225,20 @@ PM直接核对异常控制流和新测试，并实际运行以下检查，完整
 
 下一步核对拟合并head与受审产品身份，合入main并完成受影响组合验证后记录W006最终验收；随后收敛Stage2独立执行任务。正常读取仍只交接unsealed attempt，当前技术接收不等于整轮成功或完整M1。main在本次接收时仍为`4db3aa81d6f01496a680bdcb264afe99cd80f3f3`。
 
+<a id="pm4-integration-20261102"></a>
+### PM4 集成与最终验收（2026-11-02）
+
+用户同意继续后，PM通过[PR #60](https://github.com/LucianoHoult/Layauto/pull/60)以merge方式合入main，保留原提交与review历史。合并前核对远端base为`4db3aa81d6f01496a680bdcb264afe99cd80f3f3`、head为`2bdf5fa0b0a1004623ab90cf31ba04eca3c6abf5`，PR可合并；merge调用绑定expected head，未绕过保护规则。返回main commit为 **`221492eb72e10cf2e46f1d9c76cb992087806a97`**，fetch后核验一致。
+
+合并tree与已审head完全相同：`6feb1599c00802d87beb61a003f762cc7e147e2e`。在实际集成代码上复跑正常F1、真实F2、parser前建attempt、同bytes捕获、失败checkpoint重试、并发同请求、RunRecord freeze特殊路径及全部16项IPMR-01回归，**25 passed，28.07s**；原PM3的405项/typing、独立关闭及新包验证在相同tree上继续适用。详细版本、命令、输出与采用边界见[集成回执](W006/integration-receipt.json)。本次未冒记GitHub CI通过：查询的status/workflow列表为空。全diff空白检查只在两份保留的原始失败日志发现尾空格，其他路径通过；不为格式整理改写日志及其hash。
+
+**W006在授权的synthetic、process-local、pre-context范围已验收并集成。** 正常只交接unsealed attempt；Stage2状态/基线、no_change与Stage6核心产物/报告/terminal仍未完成，真实EDA/生产及durability没有新增验证。原W006分支保留，未删除。
+
+下一项为[W007语义身份与目标归一化](W007-semantic-identity-normalization.md)，从集成main建立独立分支并先准备要求/内部接口review后实施。PM4、集成回执及W007派发记录随新W007分支交接；不是声称main合并提交已包含事后验收记录。
+
 ### 独立执行session prompt
 
-以下为已完成派发的历史prompt；PM2的补修prompt也已执行交回。当前恢复应从PM3继续，不重新执行这些历史派发。
+以下为已完成派发的历史prompt；PM2的补修prompt也已执行交回。W006已按PM4验收，当前工作从W007继续，不重新执行这些历史派发。
 
 ```text
 按Layauto项目规范，以执行角色完成W006运行入口与输入失败记录。
