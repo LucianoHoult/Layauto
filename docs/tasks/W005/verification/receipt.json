@@ -91,7 +91,8 @@
     "pytest-312.txt": "5d253b785f58927c6551436273fa407a530815f7aaad6afeedf2483c3c772dbb",
     "source-manifest.json": "3a67bd199f8ca6aabf34552852f55616e69ff81b0a388558f50d8dd91616af40",
     "wheel-smoke.txt": "99983455a8be30776af408da6e7ca8a62d21e71ec2224b80b7acf8ea546b25b8",
-    "wheel_smoke.py": "7d0e835d5b11c01e6c16b409adae15a0a59b4279b7476e49d789ba99e29e2f67"
+    "wheel_smoke.py": "7d0e835d5b11c01e6c16b409adae15a0a59b4279b7476e49d789ba99e29e2f67",
+    "publication-map.json": "2cd9e4d79e8561904d060f331d84c062b45a9d5f39b1e77a6d234b9d09a37baa"
   },
   "review": {
     "interface": "../interface-review.md",
@@ -105,5 +106,8 @@
     "No real Calibre/Virtuoso/PDK, matched/live or production validation",
     "No other interpreter/platform matrix; clean wheel install checked on 3.12, full component suite checked on 3.10 and 3.12",
     "No final PM acceptance or merge to main"
-  ]
+  ],
+  "published_equivalent_product_head": "cf35d97478cd78aa7ad707d18c9e37ceda10eafb",
+  "publication_identity_map": "publication-map.json",
+  "publication_note": "Original tested/reviewed local commit IDs remain historical evidence. Only unpushed private author/committer email metadata changed after GH007; every original/new tree is equal. Published equivalent commit and map make the exact reviewed content remotely recoverable."
 }

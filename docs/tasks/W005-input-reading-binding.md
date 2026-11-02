@@ -133,6 +133,12 @@ git diff --check 5b7205009b3ed7f8fe15e135e674654f2f544557
 未验证/不在本轮：真实Calibre/Virtuoso/PDK、matched/live assurance、生产准入、目标平台/macOS/Windows及除3.10/3.12外的解释器矩阵；3.10已实际执行完整组件测试，干净wheel安装本轮在3.12验证。没有宣称真实工具运行、完整M1或pipeline通过。现有fixture、答案、support、architecture与current-work相对起点无改动；legacy未运行或修改。待PM核对本分支实际SHA、证据、finding复核及任务范围后作最终接收决定。
 
 
+### E4. 发布身份更正（2026-11-02，执行）
+
+首次推送被 GitHub `GH007` 邮箱隐私保护拒绝，远端 W005 未改变。仅将本轮尚未发布的14个提交的author/committer邮箱改为仓库已有的 `LucianoHoult@users.noreply.github.com`；提交tree、message、日期及父链顺序保持不变，没有改动既有起点或使用force push。
+
+完整旧→发布身份及每个相同tree见 [publication-map.json](W005/verification/publication-map.json)。原受测/受审产品提交 `ab7feddff83749b54c1866b1ad95fbc99fd787f1` 对应可发布提交 **`cf35d97478cd78aa7ad707d18c9e37ceda10eafb`**，共同tree为 `70b905b98691ddcdf58726810ca875dc853069c2`。原始执行日志、manifest和review保留实际发生时的本地SHA；通过此映射可在远端分支恢复相同完整内容，不能将邮箱元数据变化写成重新运行产品测试。Reviewer另在代码review追加独立内容身份复核。最终推送tip及远端核验SHA见执行交接回复；它还包含本段和发布映射记录。
+
 ## Review 结论（reviewer）
 
 ### R1. 独立接口与最终代码复核（2026-11-02，reviewer）

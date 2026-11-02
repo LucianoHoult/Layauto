@@ -49,3 +49,11 @@ Reviewer 另直接检查最终 wheel 的产品文件与受审 manifest 相同，
 - A7：本 reviewer 已直接执行最终完整 3.12 测试、strict checker、3.10 定向修复回归，并独立核验 wheel 文件身份和源码目录外的安装后正常/失败读取。执行者完整 3.10/3.12、sdist/wheel 构建/干净安装证据已对照；未测试的 Python 版本/平台不可据此声称通过。
 
 C08/C09/C10 的跨证据 cardinality/finger/reduction 准入、C13 的目标差异、C14–C16 与 body 物理/连接/rail 检查、C19/C20 的输出坐标转换仍交后续 Stage 2/admission/constraints/export。读取成功只表示事实保留。本次不含 pipeline attempt/terminal/RunRecord、layout state、真正的 body 几何匹配、Stage 6 导出、真实 Calibre/Virtuoso/PDK 或生产服务器验证。
+
+## 发布身份补记（2026-11-02，reviewer）
+
+执行者报告 GitHub GH007 因新提交的 private-email metadata 拒绝推送，随后仅重建本 session 尚未发布提交的 author/committer email，改用项目已有 GitHub noreply identity。原 review/test 身份和上述 finding 历史保留，不改写成曾在另一 SHA 上执行。
+
+Reviewer 独立读取 [publication-map.json](verification/publication-map.json) 并核验全部 **14 对提交**：每对 tree 完全相同，提交消息、作者/提交者姓名、时间及父节点顺序在映射后相同；只存在声明的 email metadata 差异。原受审产品提交 `ab7feddff83749b54c1866b1ad95fbc99fd787f1` 对应可发布提交 **`cf35d97478cd78aa7ad707d18c9e37ceda10eafb`**，共同 tree 为 `70b905b98691ddcdf58726810ca875dc853069c2`。22 个 source-manifest 文件 hash 已再次对照可发布产品提交，全部相同，因此既有测试、wheel 内容身份和 review 结论仍适用于这些相同 bytes，无需重复产品测试。
+
+原文档交接提交 `8903ccd5f431f2bf73d84465cf44e3f10da2e26a` 对应 `8dd503a37e8b6c491ce06873f880e75f590c0de0`，共同 tree 为 `89cb4ed598df8758d2783fb57b60448bc1a6e896`；指定起点 `5b7205009b3ed7f8fe15e135e674654f2f544557` 仍为可发布链的祖先。本补记仅证明本地对象映射与内容等价，最终推送成功及远端 SHA 另由执行者核验记录。
