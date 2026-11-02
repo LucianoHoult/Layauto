@@ -1,0 +1,20 @@
+review_head=0a6de39e02947e3ae8af64a4dca9487ee8898ca3
+review_source=/workspace/work/w005-ipmr01/review/layauto_v2/importers/config.py
+command=['/workspace/work/w005-ipmr01/dev/bin/python', '-B', '-m', 'pytest', '-p', 'no:cacheprovider', 'tests/unit/test_w005_unicode.py', 'tests/contracts/test_w005_unicode_inputs.py', 'tests/contracts/test_w005_inputs.py::test_interrupts_and_unexpected_errors_preserve_root_cause', '-q']
+Python 3.12.14
+..................................................                       [100%]
+50 passed in 5.16s
+command=['/workspace/work/w005-ipmr01/venv310/bin/python', '-B', '-m', 'pytest', '-p', 'no:cacheprovider', 'tests/unit/test_w005_unicode.py', 'tests/contracts/test_w005_unicode_inputs.py', '-q']
+Python 3.10.22
+...............................................                          [100%]
+47 passed in 7.07s
+command=['/workspace/work/w005-ipmr01/dev/bin/python', '-B', 'docs/tasks/W005/ipmr01-verification/original_repro.py']
+Python 3.12.14
+cache status= error issues= ['InvalidUnicodeScalar']
+escaped_note status= success issues= []
+escaped_note note= 'example \U0001f600'
+escaped_note digest_ok
+literal_note status= success issues= []
+literal_note note= 'example \U0001f600'
+literal_note digest_ok
+all_direct_checks_passed

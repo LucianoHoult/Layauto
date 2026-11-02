@@ -180,6 +180,14 @@ Reviewer 直接运行最终 Python3.12 完整组件测试 **237 passed**、stric
 
 对 base `5b7205009b3ed7f8fe15e135e674654f2f544557` 至实际 head `787a09e269062dd5c31df8ced627a6ecb799df57` 完成新一轮独立代码与合同复核，见 [独立合并前报告](W005/independent-premerge-review.md)。本次新环境完整组件测试 **237 passed**、strict mypy **13 source files 通过**，发布身份与既有最低版本/构建证据已核验；另在仓库外副本复现 **1 项 P2 必须修正项 IPMR-01**：转义 surrogate 字符可导致缓存校验抛裸 `UnicodeEncodeError`，并使成功配置 evidence 无法 canonical 编码。**当前不具备合并条件，交 PM 安排修复及独立复核。** 保留 R1 和 PM 接收历史；本轮不改产品实现、不代写最终验收。
 
+### R3. IPMR-01 局部补修独立复核（2026-11-02，reviewer）
+
+未参与本轮实现或生产回归编写的 `ipmr01_review` 在独立 detached worktree 对交接 `4207e773f93111ba6bfd2c6b6ac9da1eacd87fbb` 至最终产品 `0a6de39e02947e3ae8af64a4dca9487ee8898ca3` 定向复核；执行证据提交 `9ff519c1e9f04f360b649b5e93a1e05ddd6ff9c2` 未再改产品/测试。详见 [补修独立报告](W005/ipmr01-fix-review.md)。首轮 reviewer 发现八位 Unicode escape 越界仍抛裸 ValueError/OverflowError，记作 IPMR01-FR1；原始事实、修正版本和关闭依据均在新报告保留，原 IPMR-01 报告未改写。
+
+**最终 IPMR-01 与 IPMR01-FR1 均可关闭，剩余必须修正项为 0，交 PM 核对集成/验收。** key/value 合法配对、解码后重复 key、非法 Unicode 的 typed 错误、实际 bytes/hash/定位及九份 completed evidence、成功 value/全部 payload 的 canonical digest 与异常/中断传播均已核查。Reviewer 直接执行 Python 3.12 定向 **50 passed**、Python 3.10 新增 **47 passed**、strict mypy **13 source files**、原三用例及独立 Unicode 探针；采用并核验执行者最终完整 **284 passed**、3.10 受影响 **120 passed** 和新构建/安装日志。
+
+独立核对 77 项 source manifest、23 项证据 hash，以及新 wheel/安装目录 67 项产品文件与受审提交一致，并在源码目录外以安装环境 `-I -B` 复跑正常及关键缺陷 smoke。旧 fixture、答案、support、原 review/verification 与 PM 状态保持；本轮未重跑 3.10 全量/干净安装、其它平台或真实工具，不扩展 pipeline、Stage 2、Stage 6 或完整 M1，也不代替 W005 最终验收。
+
 ## PM 验收与交接（PM）
 
 <a id="pm1-receipt-20261102"></a>

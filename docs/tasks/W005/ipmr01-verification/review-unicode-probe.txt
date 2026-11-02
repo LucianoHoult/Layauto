@@ -1,0 +1,8 @@
+review_head=0a6de39e02947e3ae8af64a4dca9487ee8898ca3
+valid_nested_key_value_scalar_pairs=256: independently constructed scalar and canonical bytes match
+single_surrogate_key_value_cases=4096: located InvalidUnicodeScalar with source hash
+decoded_duplicate_key_cases=64: DuplicateKey at second token
+out_of_range_key_value_cases=128: located InvalidDocumentSyntax
+literal_backslash_and_maximum_scalar: preserved
+public_cache_out_of_range_cases=4: actual bytes/hash, location, 9 completed payloads retained
+all_independent_probes_passed
