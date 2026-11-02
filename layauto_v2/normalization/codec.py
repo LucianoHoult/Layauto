@@ -90,10 +90,19 @@ def _unpack(value: Value) -> object:
     constructor, fields = spec
     if set(value['fields']) != set(fields):
         raise ValueError('unknown/missing normalization record fields')
-    try:
-        result = constructor(**{field: _unpack(value['fields'][field]) for field in fields})
-    except (TypeError, KeyError, AttributeError, UnicodeError) as exc:
-        raise ValueError('invalid normalization record fields') from exc
+    # Decode children before constructor shape translation. A child's captured
+    # decoder may raise an unexpected exception which must retain its identity
+    # through every enclosing record, including NormalizationResult.
+    decoded = {field: _unpack(value['fields'][field]) for field in fields}
+    if value['record'] == 'NormalizationInput':
+        # This constructor separates invalid DTO shapes from its pure decoder
+        # boundary itself; wrapping it would swallow unexpected decoder errors.
+        result = constructor(**decoded)
+    else:
+        try:
+            result = constructor(**decoded)
+        except (TypeError, KeyError, AttributeError, UnicodeError) as exc:
+            raise ValueError('invalid normalization record fields') from exc
     if _pack(result) != value:
         raise ValueError('noncanonical normalization record')
     return result
