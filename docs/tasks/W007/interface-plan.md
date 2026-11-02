@@ -35,3 +35,13 @@ iXref 全量关联 source top 的 device；先检查未知/缺失 source、layou
 实际 W005 与 W006 readback 链、禁IO、手写完整语义判据、合法重命名/重排、C08/09/10正确重绑、C13及多delta/结构变化、xref缺失/未知/冲突/swap、真实 W005 header symlink alias 成功与不同内容 source/target/query 拼装拒绝、DTO alias/invalid/wire/hashseed/异常边界覆盖 A1–A6。A7 跑全部 W005/W006（含两项IPMR-01）、新测试、strict mypy、Python3.10及开发3.12、新sdist/wheel、干净安装源码外正常/拒绝/目标差异 smoke。测试和review绑定实际最终源码SHA/提交，保存命令/环境/结果/未覆盖范围。已验收fixture/答案/历史报告不改，PM验收与main合并留PM。
 
 公共 API 拟定：`from_parse_result(ParseResult) -> NormalizationInput`；`from_inputs_ready(InputsReady, InputCheckpoint, ParseAudit, ToolRunResult, tuple[EvidenceAudit, ...]) -> NormalizationInput`；`normalize(NormalizationInput) -> NormalizationResult`。domain 内明确 CellId/DeviceId/NetId/DeltaId/QueryKey，及 Parameter/Terminal/Membership/Device/Net/Cell、SemanticCircuitDraft/TargetCircuit/TargetDifference；字段结构由实现保持封闭校验。内部按输入验证、语义构造、差异、identity分模块，公共codec独立于W006 wire。
+
+## 补充：FR3 捕获请求文档锚定方案（执行，待独立补审）
+
+独立代码review在6712cbc证明：成组互换两个region的几何及字段来源，再互换query._format_metadata.responses顺序，虽然完整raw/hash都保留，仍可错绑器件。仅把该metadata顺序当锚不足；需要核对已捕获requests文档本身。该修正不改变输入解释、profile能力、xref容错或失败阶段。
+
+将本轮专属`domain/normalization.py`、`_normalization_input.py`、`normalization_codec.py`分别移至`normalization/contracts.py`、`_validation.py`、`codec.py`。Device/Net/Cell/ID/TargetDifference及纯语义逻辑留domain；少量SourceRef location数据转换helper留domain.evidence。旧三个内部domain入口删除，不保留domain反向依赖normalization的re-export。W007未承诺稳定外部API，`normalization` facade的from_parse_result/from_inputs_ready/normalize签名不变，内部wire仍为显式版本化封闭合同。
+
+唯一放宽原方案的内部依赖选择：normalization._validation可复用`importers.config.load_document/validate_document`，对query evidence来源已明确绑定的requests SourceFile.data执行已有安全JSON/YAML decoder与requests schema核验；它不打开/resolve路径、不请求额外manifest、不调用reader重新获取文件。随后将requests[i]的object/path/capability/record_ids/command_intent与metadata及seed的request index、polygon ordinal、capture source逐项核对。仍禁止pipeline/repository/tooling/transactions/state/legacy依赖。domain保持stdlib/纯DTO，不引入YAML或反向parser依赖；W005/W006产品实现和原wire不修改，复用原decoder保留IPMR-01与合法YAML/Unicode行为。
+
+DTO constructors和wire decode运行相同验证，因此不能仅在factory检查而让公开构造绕过。原发生于非法拼装DTO的ValueError仍是同一边界；真实W005准入反例仍返回定位normalization issue。补真实JSON/YAML（含合法Unicode escape）的requests输入、合法重排、FR3完整反例、禁止任何归一化IO、依赖方向测试。独立接口补审后实施，最终代码仍由未参与设计/实现的code reviewer复核。6712cbc的已跑530项/双解释器/包证据保留为候选历史，修后按新准确版本重跑最终A7。
