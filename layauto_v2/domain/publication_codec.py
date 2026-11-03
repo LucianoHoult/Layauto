@@ -46,6 +46,16 @@ _SPEC: dict[str, tuple[Callable[..., object], tuple[str, ...]]] = {
     'PublicationUnavailable': (PublicationUnavailable, ('run_id', 'operation', 'message', 'causes', 'attempt', 'completed', 'pending_tool', 'pending_parse', 'pending_evidence', 'pending_failure', 'pending_sources', 'pending_events', 'status', 'schema_version')),
 }
 
+# These capture/readback DTOs are reconstructed by W009's complete input wire
+# chain. They validate malformed fields explicitly; their internal failures
+# (for example SourceFile hashing) must keep the original exception identity.
+# Unrelated pre-context terminal/failure codecs retain their historical boundary.
+_CAPTURED_INPUT_RECORDS = frozenset({
+    'Selection', 'ContentRef', 'AcquisitionEvent', 'SourceRef', 'SourceFile',
+    'EvidenceIssue', 'EvidenceRecord', 'ParseResult', 'RunRequest', 'RunAttempt',
+    'ToolRunResult', 'ParseAudit', 'EvidenceAudit', 'InputCheckpoint', 'InputsReady',
+})
+
 
 def _pack(value: object) -> Value:
     name = type(value).__name__
@@ -91,10 +101,13 @@ def _unpack(value: Value) -> object:
         'RunRequest', 'RunAttempt', 'ToolRunResult', 'ParseAudit', 'EvidenceAudit',
         'StageFailure', 'InputCheckpoint', 'RunRecord', 'WithRunRecordClosure',
         'RunRecordFreezeFailureClosure', 'PipelineResult'} else set())
-    try:
+    if name in _CAPTURED_INPUT_RECORDS:
         record = constructor(**{key: val for key, val in decoded.items() if key not in derived})
-    except (TypeError, AttributeError, UnicodeError) as exc:
-        raise ValueError(f'invalid {name} fields') from exc
+    else:
+        try:
+            record = constructor(**{key: val for key, val in decoded.items() if key not in derived})
+        except (TypeError, AttributeError, UnicodeError) as exc:
+            raise ValueError(f'invalid {name} fields') from exc
     if _pack(record) != value:
         raise ValueError('wire discriminator, derived hash, or canonical value mismatch')
     return record
