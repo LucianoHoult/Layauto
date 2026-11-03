@@ -1,0 +1,68 @@
+{
+  "installations": {
+    "310": {
+      "checks": {
+        "attempt_phase": "unsealed",
+        "base_fragments": 41,
+        "base_records": 40,
+        "body_shapes": 6,
+        "captured_w005_w006_w007_w008_w009_without_io": true,
+        "counts": {
+          "D": 2,
+          "S": 2,
+          "channel": 2,
+          "effective": 3
+        },
+        "direct_wire_sha256": "3faf646acea273807d743ded5f577f139b6ebaf3dc73467221a0d9d03daa1034",
+        "independent_exact_atoms": 9,
+        "readback_wire_sha256": "24ed7b0b4226bda8d79d6d3a58576f9430389763c63011b36ce2671dc85d01d3",
+        "status": "passed",
+        "terminal": null,
+        "unsupported_operator_error": {
+          "field": "/device_extraction_contract/sd_policy",
+          "issue": "UnsupportedRegionOperator",
+          "wire_sha256": "3f8d0ae69443bdce31c2ae50f4d4340c9f1e7f0d51cc973f3e34a3d1fde995bd"
+        }
+      },
+      "cwd": "/workspace/work/w009-env/installed-cwd",
+      "installed_package": "/workspace/work/w009-env/clean-32e60e783a7a-310/lib/python3.10/site-packages/layauto_v2/__init__.py",
+      "source_sha256": "2716df4fe382dfb64127ed9b46ee3c80aa53b071bab10175d7e4b65806c72c98"
+    },
+    "312": {
+      "checks": {
+        "attempt_phase": "unsealed",
+        "base_fragments": 41,
+        "base_records": 40,
+        "body_shapes": 6,
+        "captured_w005_w006_w007_w008_w009_without_io": true,
+        "counts": {
+          "D": 2,
+          "S": 2,
+          "channel": 2,
+          "effective": 3
+        },
+        "direct_wire_sha256": "3faf646acea273807d743ded5f577f139b6ebaf3dc73467221a0d9d03daa1034",
+        "independent_exact_atoms": 9,
+        "readback_wire_sha256": "24ed7b0b4226bda8d79d6d3a58576f9430389763c63011b36ce2671dc85d01d3",
+        "status": "passed",
+        "terminal": null,
+        "unsupported_operator_error": {
+          "field": "/device_extraction_contract/sd_policy",
+          "issue": "UnsupportedRegionOperator",
+          "wire_sha256": "3f8d0ae69443bdce31c2ae50f4d4340c9f1e7f0d51cc973f3e34a3d1fde995bd"
+        }
+      },
+      "cwd": "/workspace/work/w009-env/installed-cwd",
+      "installed_package": "/workspace/work/w009-env/clean-32e60e783a7a-312/lib/python3.12/site-packages/layauto_v2/__init__.py",
+      "source_sha256": "27e97b27f8e3a4f5e2ff804a32fe3bd3aa33d3a6ea1f3e9b96075ea5858aaf95"
+    }
+  },
+  "packages": {
+    "sdist": "2716df4fe382dfb64127ed9b46ee3c80aa53b071bab10175d7e4b65806c72c98",
+    "wheel": "27e97b27f8e3a4f5e2ff804a32fe3bd3aa33d3a6ea1f3e9b96075ea5858aaf95"
+  },
+  "runtime_files": 90,
+  "source_files": 240,
+  "source_manifest_sha256": "32e60e783a7a7e4172ee3916e3ceb4fade329585b87a7c7091a85c8a6418d1b6",
+  "status": "passed"
+}

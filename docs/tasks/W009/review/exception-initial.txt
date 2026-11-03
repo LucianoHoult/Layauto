@@ -1,0 +1,17 @@
+Independent initial CR-01 probe (2026-11-03, Python 3.12.14).
+
+The reviewer built the actual W005 -> W008 -> W009 normal draft, encoded its
+EffectiveDraft, patched state.regions.slab_difference to raise one TypeError
+instance, then called effective_codec.decode_record(wire).
+
+Observed raw output:
+ValueError invalid effective geometry wire fields
+same_object= False
+cause_same_object= True
+
+The original broad constructor-exception translation is preserved in
+effective_codec-before.py.txt (SHA-256
+77a2446cc924cdab31d328c9a1f78a7dfee4336154a0c9a02f0cc4711bcd5d18).
+This text preserves the initial tool observation; it is not a new execution
+against the corrected product. exception-after312.json is a later independent
+18-case corrected-product run using exception_probe.py, with source hashes.

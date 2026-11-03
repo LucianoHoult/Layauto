@@ -1,0 +1,58 @@
+{
+  "math-result.json": {
+    "all_match": true,
+    "source_sha256": {
+      "layauto_v2/domain/regions.py": "9fd1b2b98338c594533a39e2c0af4c28c1c0cc5c93f0a61481bc0f37be436cc5",
+      "layauto_v2/normalization/effective.py": "9e6cd99c7ba0a0d5c19f6299d879a8e7954b7ca49663755f18754b1c0cd9f8e5",
+      "layauto_v2/state/regions.py": "de35da051c4d2a0e35fa403affdf43fb6202f3bae3d7c4f45eea9b290c74b315"
+    }
+  },
+  "container-alias-after312.json": {
+    "all_match": true,
+    "source_sha256": {
+      "layauto_v2/domain/regions.py": "9fd1b2b98338c594533a39e2c0af4c28c1c0cc5c93f0a61481bc0f37be436cc5",
+      "layauto_v2/state/regions.py": "de35da051c4d2a0e35fa403affdf43fb6202f3bae3d7c4f45eea9b290c74b315",
+      "layauto_v2/normalization/effective.py": "9e6cd99c7ba0a0d5c19f6299d879a8e7954b7ca49663755f18754b1c0cd9f8e5"
+    }
+  },
+  "container-alias-after310.json": {
+    "all_match": true,
+    "source_sha256": {
+      "layauto_v2/domain/regions.py": "9fd1b2b98338c594533a39e2c0af4c28c1c0cc5c93f0a61481bc0f37be436cc5",
+      "layauto_v2/state/regions.py": "de35da051c4d2a0e35fa403affdf43fb6202f3bae3d7c4f45eea9b290c74b315",
+      "layauto_v2/normalization/effective.py": "9e6cd99c7ba0a0d5c19f6299d879a8e7954b7ca49663755f18754b1c0cd9f8e5"
+    }
+  },
+  "metaclass-after312.json": {
+    "all_match": true,
+    "source_sha256": {
+      "layauto_v2/domain/regions.py": "9fd1b2b98338c594533a39e2c0af4c28c1c0cc5c93f0a61481bc0f37be436cc5",
+      "layauto_v2/state/regions.py": "de35da051c4d2a0e35fa403affdf43fb6202f3bae3d7c4f45eea9b290c74b315",
+      "layauto_v2/normalization/effective.py": "9e6cd99c7ba0a0d5c19f6299d879a8e7954b7ca49663755f18754b1c0cd9f8e5"
+    }
+  },
+  "metaclass-after310.json": {
+    "all_match": true,
+    "source_sha256": {
+      "layauto_v2/domain/regions.py": "9fd1b2b98338c594533a39e2c0af4c28c1c0cc5c93f0a61481bc0f37be436cc5",
+      "layauto_v2/state/regions.py": "de35da051c4d2a0e35fa403affdf43fb6202f3bae3d7c4f45eea9b290c74b315",
+      "layauto_v2/normalization/effective.py": "9e6cd99c7ba0a0d5c19f6299d879a8e7954b7ca49663755f18754b1c0cd9f8e5"
+    }
+  },
+  "fraction-atom-after312.json": {
+    "all_match": true,
+    "source_sha256": {
+      "layauto_v2/domain/regions.py": "9fd1b2b98338c594533a39e2c0af4c28c1c0cc5c93f0a61481bc0f37be436cc5",
+      "layauto_v2/state/regions.py": "de35da051c4d2a0e35fa403affdf43fb6202f3bae3d7c4f45eea9b290c74b315",
+      "layauto_v2/normalization/effective.py": "9e6cd99c7ba0a0d5c19f6299d879a8e7954b7ca49663755f18754b1c0cd9f8e5"
+    }
+  },
+  "fraction-atom-after310.json": {
+    "all_match": true,
+    "source_sha256": {
+      "layauto_v2/domain/regions.py": "9fd1b2b98338c594533a39e2c0af4c28c1c0cc5c93f0a61481bc0f37be436cc5",
+      "layauto_v2/state/regions.py": "de35da051c4d2a0e35fa403affdf43fb6202f3bae3d7c4f45eea9b290c74b315",
+      "layauto_v2/normalization/effective.py": "9e6cd99c7ba0a0d5c19f6299d879a8e7954b7ca49663755f18754b1c0cd9f8e5"
+    }
+  }
+}

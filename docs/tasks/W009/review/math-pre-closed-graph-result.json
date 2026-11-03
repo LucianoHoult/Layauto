@@ -1,0 +1,14 @@
+{
+  "canonical_split_cases": 1515,
+  "cases": 1515,
+  "group_cases": 1505,
+  "membership_checks": 585511,
+  "seconds": 3.807,
+  "seed": 9072026,
+  "source_sha256": {
+    "layauto_v2/domain/regions.py": "4c1d749b291aaaf8f17fbe5e48a43e1f68d1392625642bbadf4727a40f520f5b",
+    "layauto_v2/normalization/effective.py": "41fdfa1e114c349da370e3d9edbd1396840418fbdfc7a2ec40e3b5813978088f",
+    "layauto_v2/state/regions.py": "129312e6f7654ea42e3f167f3cacaf2df6866ffddb55b5b10509da7cdc8aa658"
+  },
+  "status": "passed"
+}

@@ -62,13 +62,37 @@
 
 执行者先调查现有GeometryInput/GeometryResult、drawn与physical owner，以及legacy中与矩形集合运算相关的纯算法候选；不得依赖tests/support或legacy runtime。方案至少说明：捕获与算子绑定、集合/区域/record所有权、exact差集与分解的确定性、channel/端区适用条件、public DTO/codec及错误、原730项兼容、独立判据和资源复杂度。明确集合/边界表达与W008半开索引、后续接触判据的关系；正确性结合包含/交叠/点归属及边角反例，不能仅凭面积相等判断。未参与设计者review后，原范围内修正并实现。
 
+执行方案已落实，见[细化方案](W009/plan.md)及[独立方案review](W009/plan-review.md)。IR-01按实际owner纠正角色校验并独立关闭；方案review先于产品实现。执行者只选择既定范围内的算法、DTO和codec，不修改任务要求或PM验收。
+
 ## 执行结果（执行）
 
-未执行；后续由执行者记录版本、改动范围、逐项验证、未覆盖项、可访问证据和review交接。本次PM准备不提供产品通过结论。
+### E1 实现与验证交接（2026-11-03，执行）
+
+从用户指定的`4975e565a33d9594782645b6ad0f944b78ee6ae8`恢复，初始工作区干净，沿用`codex/w009-effective-geometry-terminals`。先完成细化方案与独立review，再实现认证W008→exact CUT/channel/左右S-D区域草稿、typed refs、不可变DTO/closed wire及聚合校验。raw drawn/base occupancy、W007语义/query及body独立证据保持。
+
+[执行交接](W009/execution.md)记录A1–A8判据、范围、算法复杂度和后续义务。独立代码review的CR-01涉及neutral aggregate decode意外异常被翻译，CR-02涉及literal/旧子值可变别名进入公有constructor；均已按原范围修复，新增同对象传播及closed-value反例，并按修后身份重跑最终矩阵；finding原文及独立复核由reviewer维护。最终双解释器、typing、新包/两套干净安装及源码外组合结果见[最终回执](W009/verification/receipt.json)；最终源码身份见[清单](W009/verification/source-manifest.json)。最终提交/远端完整SHA由Git与执行回复核对，PM接收后另行验收；本段不宣称PM验收、main集成或完整Stage2/M1通过。
+
+### E2 最终验证与交 PM（2026-11-03，执行）
+
+最终 Python 3.12.14 / 3.10.22 各 **914 passed**，保留原730项并新增184项；双 strict mypy 各44模块、依赖检查、新wheel/sdist、两套全新安装及真正checkout外`-I -B`实际W005/W006→W008→W009组合、codec和组件错误smoke全通过。两个包与两个安装目录各90个runtime文件逐字节匹配最终源码。
+
+[240项最终清单](W009/verification/source-manifest.json) SHA-256为`32e60e783a7a7e4172ee3916e3ceb4fade329585b87a7c7091a85c8a6418d1b6`；[完整快照](W009/verification/source-snapshot.tar.gz)为`5ed2228559ea6dcf7a1417e19b8f706f1e88283edfca0c01809489cb147ec727`。15项实际命令、原始输出、包与安装来源见[最终回执](W009/verification/receipt.json)及执行交接。修前/中止结果分别保存原版本身份，不混充最终通过。
+
+独立review修正项处置与剩余数量由下节及reviewer报告维护。执行交付提交推送沿用项目noreply身份，远端完整SHA在Git与执行回复核对；PM从当前W009分支接收并决定验收/集成。未合并main、未改current-work/PM要求段，未启动下一任务。
 
 ## Review 结论（reviewer）
 
-产品方案及代码尚未review。派发要求的独立复核另见PM交接记录，不代替后续方案/代码review。
+### R1 独立方案、代码及修正复核（2026-11-03）
+
+[方案review](W009/plan-review.md)由未参与设计的`/root/plan_review`完成，IR-01已关闭。代码review由未参与原方案/实现的`/root/code_review`完成，并包含独立数学及closed-value专项；[完整报告](W009/code-review.md)保留CR-01异常身份和CR-02原对象图/容器/数值别名的原finding、具体反例、执行修正和独立复核。**代码审查完成，两项finding均关闭，剩余必须修正项0。** 本结论不是PM验收或合并决定。
+
+Reviewer直接执行过W009新增117项、3.10定向8项、修正阶段双解释器各43项，并在最终源码重新执行双解释器各67项closed-value回归及独立1,515组集合/585,511点；异常身份与literal/borrowed/container/metaclass/Fraction反例按实际阶段保存，未把中间版本冒充最终交付。最终源码及工程证据核验见下段。
+
+### R2 最终身份及工程证据核验（2026-11-03）
+
+Reviewer对最终`32e60e783a7a7e4172ee3916e3ceb4fade329585b87a7c7091a85c8a6418d1b6`清单240项、完整源码tar240项、两包与两实际安装各90项runtime逐字节核对，均一致；最终数学/closed probe结果的源码SHA亦等于该清单。[最终独立审计](W009/review/final-evidence-audit.json)核验15项命令exit0及原始输出hash；[归档审计](W009/review/final-archive-evidence-audit.json)另核验117个证据文件hash。
+
+最终Python3.12.14/3.10.22各**914 passed**、strict mypy各44模块，以及build、pip check和两次真实checkout外`-I -B`源码包组合smoke，采用已独立核验的执行回执；reviewer未冒称重跑全部矩阵或重建安装。[包来源/安装树独立审计](W009/review/package-audit.json)确认直接artifact URL/hash、site-packages来源及源码外cwd。**最终代码与工程证据审查完成，剩余必须修正项0，建议交PM核验接收。** 这不是PM验收或合并决定；完整坐标、connectivity/body/extraction、baseline/terminal及生产义务仍按原范围后置。
 
 ## PM 验收与交接（PM）
 

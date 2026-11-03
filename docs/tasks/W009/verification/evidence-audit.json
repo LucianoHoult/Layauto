@@ -1,0 +1,20 @@
+{
+  "status": "passed",
+  "commands_verified": 15,
+  "source_files_verified": 240,
+  "runtime_files_each_package_and_install": 90,
+  "source_snapshot_paths_and_bytes_match": true,
+  "final_source_unchanged": true,
+  "install_report_sources": {
+    "310": {
+      "url": "file:///workspace/Layauto/docs/tasks/W009/verification/dist/layauto-0.2.0.tar.gz",
+      "archive_sha256": null,
+      "source_sha256": "2716df4fe382dfb64127ed9b46ee3c80aa53b071bab10175d7e4b65806c72c98"
+    },
+    "312": {
+      "url": "file:///workspace/Layauto/docs/tasks/W009/verification/dist/layauto-0.2.0-py3-none-any.whl",
+      "archive_sha256": "27e97b27f8e3a4f5e2ff804a32fe3bd3aa33d3a6ea1f3e9b96075ea5858aaf95",
+      "source_sha256": "27e97b27f8e3a4f5e2ff804a32fe3bd3aa33d3a6ea1f3e9b96075ea5858aaf95"
+    }
+  }
+}

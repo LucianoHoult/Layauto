@@ -1,0 +1,14 @@
+{
+  "command": [
+    "/workspace/work/w009-env/py312/bin/python",
+    "-m",
+    "build",
+    "--outdir",
+    "/workspace/Layauto/docs/tasks/W009/verification/dist"
+  ],
+  "cwd": "/workspace/Layauto",
+  "exit_code": 0,
+  "elapsed_seconds": 6.914,
+  "output": "build.txt",
+  "output_sha256": "10066c58a34c4a0d89c81927b78280078bbf43008bcaf65f5b75456836aabf26"
+}

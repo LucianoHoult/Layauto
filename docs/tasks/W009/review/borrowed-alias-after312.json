@@ -1,0 +1,106 @@
+{
+  "source_sha256": {
+    "layauto_v2/domain/regions.py": "4c1d749b291aaaf8f17fbe5e48a43e1f68d1392625642bbadf4727a40f520f5b",
+    "layauto_v2/state/regions.py": "129312e6f7654ea42e3f167f3cacaf2df6866ffddb55b5b10509da7cdc8aa658",
+    "layauto_v2/normalization/effective.py": "41fdfa1e114c349da370e3d9edbd1396840418fbdfc7a2ec40e3b5813978088f"
+  },
+  "observations": [
+    {
+      "case": "geometry_schema/builder",
+      "status": "rejected"
+    },
+    {
+      "case": "geometry_schema/result",
+      "status": "rejected"
+    },
+    {
+      "case": "geometry_status/builder",
+      "status": "rejected"
+    },
+    {
+      "case": "geometry_status/result",
+      "status": "rejected"
+    },
+    {
+      "case": "base_schema/builder",
+      "status": "rejected"
+    },
+    {
+      "case": "base_schema/result",
+      "status": "rejected"
+    },
+    {
+      "case": "base_schema/state_builder",
+      "status": "rejected"
+    },
+    {
+      "case": "base_schema/draft_constructor",
+      "status": "rejected"
+    },
+    {
+      "case": "fragment_schema/builder",
+      "status": "rejected"
+    },
+    {
+      "case": "fragment_schema/result",
+      "status": "rejected"
+    },
+    {
+      "case": "fragment_schema/state_builder",
+      "status": "rejected"
+    },
+    {
+      "case": "fragment_schema/draft_constructor",
+      "status": "rejected"
+    },
+    {
+      "case": "geometry_input_schema/builder",
+      "status": "rejected"
+    },
+    {
+      "case": "geometry_input_schema/result",
+      "status": "rejected"
+    },
+    {
+      "case": "semantic_input_schema/builder",
+      "status": "rejected"
+    },
+    {
+      "case": "semantic_input_schema/result",
+      "status": "rejected"
+    },
+    {
+      "case": "completed/kind",
+      "status": "rejected"
+    },
+    {
+      "case": "binding/kind",
+      "status": "rejected"
+    },
+    {
+      "case": "completed/parser_version",
+      "status": "rejected"
+    },
+    {
+      "case": "binding/parser_version",
+      "status": "rejected"
+    },
+    {
+      "case": "completed/schema_version",
+      "status": "rejected"
+    },
+    {
+      "case": "binding/schema_version",
+      "status": "rejected"
+    },
+    {
+      "case": "completed/source_uri",
+      "status": "rejected"
+    },
+    {
+      "case": "binding/source_uri",
+      "status": "rejected"
+    }
+  ],
+  "all_rejected": true
+}

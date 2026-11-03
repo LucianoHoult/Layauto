@@ -1,0 +1,13 @@
+{
+  "command": [
+    "/workspace/work/w009-env/py310/bin/python",
+    "-m",
+    "venv",
+    "/workspace/work/w009-env/clean-final-310"
+  ],
+  "cwd": "/workspace/Layauto",
+  "exit_code": 0,
+  "elapsed_seconds": 6.194,
+  "output": "create-install-310.txt",
+  "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

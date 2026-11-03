@@ -28,7 +28,7 @@ sections relevant to the task.
 
 | Path | Purpose |
 |------|---------|
-| [`layauto_v2/`](layauto_v2/) | v2 input reading, pre-context audit, semantic normalization and exact drawn-base geometry/occupancy; later physical stages remain skeletons. |
+| [`layauto_v2/`](layauto_v2/) | v2 input reading, pre-context audit, semantic normalization, exact drawn-base geometry/occupancy and effective-region drafts; later physical stages remain skeletons. |
 | [`docs/architecture.md`](docs/architecture.md) | Active v2 architecture source: stage boundaries, fact sources, state ownership, planning, constraints, transactions, export, validation, and module boundaries. |
 
 ## Input reading component
@@ -212,6 +212,46 @@ them to the authenticated captures. These are drafts, not committed snapshots,
 physical connectivity, annotation coverage, body/extraction assurance, baseline,
 no-change or run completion. Validation and independent review are linked from
 [W008](docs/tasks/W008-geometry-base-occupancy.md).
+
+## Effective geometry and spatial terminals
+
+W009 consumes a successful W008 result without file or repository IO:
+
+```python
+from layauto_v2.normalization import build_effective_geometry
+
+if geometry.status == "success":
+    effective = build_effective_geometry(geometry)
+    if effective.status == "success":
+        draft = effective.value
+        # Each LI record has a CUT result (possibly empty). Each OD record
+        # has channel, S and D regions under the selected toy profile.
+        record_results = draft.records
+```
+
+The component explicitly checks the captured physical/drawn operator versions
+and consumed semantics. CUT acts only on its declared LI target. Exact integer
+set subtraction preserves holes, disconnected results, duplicate drawn records
+and every contributing CUT source. Each region has canonical disjoint rectangle
+pieces and typed content references. Raw drawn records and base occupancy stay
+available through `draft.base`; effective pieces are derived regions.
+
+The selected profile recognizes one positive-area POLY stripe per OD active.
+The channel must span the active's height and leave complete left S and right D
+regions. Identical stripe records retain all sources; ambiguous stripes or an
+unsupported split return located issues and prior captured facts. These spatial
+roles do not establish canonical device/net identity or an S-to-D conductor edge.
+Other geometry, W007 semantic/query evidence and external body context remain
+available in the original receipt.
+
+`normalization.effective_codec` supplies closed, versioned canonical wire and
+digests for neutral region DTOs, drafts and capture-bound results. Neutral
+constructors validate representation and aggregate coverage; successful results
+also bind the complete W008 input and captured physical owner. A neutral value
+alone is not a captured-input receipt. No manufacturing lattice, region occupancy
+projection, contact graph, FIN/body extraction, annotation overlay, baseline or
+run terminal is produced. Requirements, reviews and engineering evidence are
+linked from [W009](docs/tasks/W009-effective-geometry-terminals.md).
 
 ## Legacy MVP archive
 

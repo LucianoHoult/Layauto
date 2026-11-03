@@ -1,0 +1,8 @@
+{
+  "status": "passed",
+  "snapshot_files": 240,
+  "snapshot_sha256": "5ed2228559ea6dcf7a1417e19b8f706f1e88283edfca0c01809489cb147ec727",
+  "evidence_files": 117,
+  "evidence_manifest_sha256": "e421a6be4e341ed3ddf907f1f5e9617db7ca2f517b94b14a6b226a89dc4072c7",
+  "receipt_sha256": "d16180c0dc13bc9ce15459ec8735857dda52e2379b99d8b5f1564dd02704cf66"
+}

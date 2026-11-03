@@ -1,0 +1,10 @@
+{
+  "source_sha256": {
+    "layauto_v2/domain/regions.py": "e355059a1888e8382452f124959c6302e2939e75e966ef15d1e34d2f683156f3",
+    "layauto_v2/normalization/effective.py": "eddaccea3795ce61b932fcacdfff6d7bf0fc75da677ddcaa18062433a7b94e4f"
+  },
+  "observations": {
+    "ref_kind": "accepted mutable alias",
+    "success_region_role": "success retains mutable caller alias"
+  }
+}

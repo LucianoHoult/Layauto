@@ -1,0 +1,22 @@
+{
+  "scope": "Pre-container-fix history only; not final product verification",
+  "source_manifest_sha256": "9899cec7b67f65071d472537aa5f6ca5a3ed69badda64184d7b5119b153bc703",
+  "source_snapshot_sha256": "5a6603dda240c4222aa0cc23bbc9465a8391a4c1360e95111fb0eeaa84853dc0",
+  "independent_source_zip": "../../review/pre-container-source.zip",
+  "independent_source_zip_sha256": "ddb83fde7605ed6991b5fadf86f029c547d1d8fbdd69fe08bab69cdd7b0f1a0b",
+  "crosscheck": "All 240 tar/independent zip source paths and bytes exactly equal frozen manifest.",
+  "python312": {
+    "passed_before_interrupt": 651,
+    "elapsed_seconds": 596.53
+  },
+  "python310": {
+    "passed_before_interrupt": 532,
+    "elapsed_seconds": 596.62
+  },
+  "matrix_completed": false,
+  "failures_observed": 0,
+  "runner_exit_code": 143,
+  "stop_reason": "Parent requested stop for same-root double-iteration mutable container constructor finding before final immutability review completed.",
+  "package_flow": "Build, two fresh installations, pip check, genuine source-external smokes and all 90 runtime byte comparisons passed for this historical source only.",
+  "relocations": "artifact-relocations.json"
+}

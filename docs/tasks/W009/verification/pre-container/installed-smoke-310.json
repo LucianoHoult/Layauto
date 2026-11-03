@@ -1,0 +1,14 @@
+{
+  "command": [
+    "/workspace/work/w009-env/clean-final-310/bin/python",
+    "-I",
+    "-B",
+    "/workspace/Layauto/docs/tasks/W009/verification/installed_smoke.py",
+    "/workspace/Layauto/tests/fixtures/w003_m1"
+  ],
+  "cwd": "/workspace/work/w009-env/installed-cwd",
+  "exit_code": 0,
+  "elapsed_seconds": 124.066,
+  "output": "installed-smoke-310.txt",
+  "output_sha256": "f91aa86bf9e5d3d88b48598c40c7c6cd4a07d4b6b5d8c94df2f845e434f69ac5"
+}
