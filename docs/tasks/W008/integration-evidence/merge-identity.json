@@ -1,0 +1,12 @@
+{
+  "merged_head": "16159c7edb2d085ab4987bff27ec11c5b5f53294",
+  "review_head": "eb15a666010cf7f5fa82c97880a4d0e8f023fa8f",
+  "merge_tree": "2bc961fd7fa618a3b183827d4de1868a6b3510e2",
+  "tree_equals_review_head": true,
+  "parents": [
+    "765ff864f4341b91996f70f25723411eebc0d6c2",
+    "eb15a666010cf7f5fa82c97880a4d0e8f023fa8f"
+  ],
+  "source_manifest_entries_matched": 235,
+  "initial_worktree_clean": true
+}

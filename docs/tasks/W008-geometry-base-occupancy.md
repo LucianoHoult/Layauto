@@ -8,8 +8,8 @@
 | --- | --- |
 | ID / 目标 | W008；交付immutable geometry draft、exact坐标换算及versioned base projection/occupancy draft，消费实际捕获输入，无IO或发布副作用 |
 | 里程碑 / 依赖 | M1第四个产品切片；W003/W004已验收synthetic输入、W005读取、W006运行审计、W007语义组件。W007经[PR #61](https://github.com/LucianoHoult/Layauto/pull/61)合入main `765ff864f4341b91996f70f25723411eebc0d6c2`，最终验收见[W007 PM2](W007-semantic-identity-normalization.md#pm2-integration-20261102) |
-| 授权依据 / 阶段 | 用户派发独立执行任务，并于2026-11-03交回实现/review，请PM继续。**待验收：A1–A8分支技术接收通过，剩余必须修正项0；最终验收待main集成版本及组合验证。** 依据见[PM1](#pm1-technical-receipt-20261103) |
-| 恢复位置 | `codex/w008-geometry-base-occupancy`；产品交付`aced62b0adda35fe7bcd8284a7354badc5b03649`，PM复核HEAD `baad5347627db194649430cf6b0f5ebf0aa1165e`仅多U06文档澄清。接手包含本次PM1记录的后续提交，完整SHA见Git/回复；临时环境不假定跨session可用 |
+| 授权依据 / 阶段 | 用户派发独立执行任务，要求合并前独立review，并于2026-11-03交回无阻塞结论；PM核验后完成main集成与组合验证。**已验收并集成main；剩余必须修正项0。** 最终依据见[PM2](#pm2-integration-20261103)，原PM1保留分支接收事实 |
+| 恢复位置 | main：W008经[PR #62](https://github.com/LucianoHoult/Layauto/pull/62)集成为`16159c7edb2d085ab4987bff27ec11c5b5f53294`；接手包含本次PM2补记的后续main提交。产品交付`aced62b0adda35fe7bcd8284a7354badc5b03649`，合并head `eb15a666010cf7f5fa82c97880a4d0e8f023fa8f`；原W008分支保留，临时环境不假定跨session可用 |
 | 允许修改 | `domain/geometry.py`及必要typed ids/中立DTO/codec；`state/layout_store.py`、`coordinate.py`、`occupancy.py`的纯草稿/数学组件；`normalization/`中的适配与构建；必要的tech中立合同、读取侧无IO校验复用；对应tests、typing/build配置、README和本任务附件。具体类型与文件划分留内部方案 |
 | 非目标 | 不实现完整Stage2CoordinateSystem/合法routing lattice、制造网格或移动能力；不做CUT Boolean、terminal split、spatial annotation、connectivity/body/extraction、mandatory rules、生命周期最终闭合、完整ProposedInitialState、initialize/seal、pipeline/repository扩展、ECO、no_change/terminal或Stage6；不改已验收fixture/答案及真实PDK/EDA边界，不落实MR-040配置机制 |
 | 架构依据 | 上述main的[architecture](../architecture.md) §1.4、§2.2–2.3、§3.1/3.3–3.5、§4.1–4.4/4.8、§5.4–5.9、§11.2–11.3/11.10/11.14–11.15、§12.3/12.5；[W003合同](W003/contracts.md)、[MR-051/052/054/056](W003/manual-verification.md)、[W005后续组合](W005-input-reading-binding.md#pm已确定的任务拆分)、W006 InputsReady/readback及W007输入/seed合同 |
@@ -111,7 +111,7 @@ A1–A8 的逐项依据、原 finding/反例、修正关闭和直接运行/采�
 
 ## PM 验收与交接（PM）
 
-原派发和本次PM1分支接收按各自版本保留；当前技术接收通过，尚未合并main或完成最终集成验收。W007的39项集成检查仅是历史依赖证据，本次W008实际验证见PM1。
+原派发、PM1分支接收及PM2最终集成按各自版本保留；当前状态见PM2。W008任务验收不代表完整Stage2/M1通过。
 
 **派发要求独立复核（2026-11-02，PM记录）：** 未参与草稿设计的`/root/w008_handoff_review`及其输入边界专项，对照上述架构原文、MR-051/052/054/056、实际GDS/tech声明和W005/W007接口检查，必须修正项0。确认内部base index没有冒充完整工艺坐标空间，保留来源闭合、多占据、独立body scope及后续物理/发布义务。受审基线为本次main，W008全文SHA-256为`611e5e83385771b193521e28917c980c72b9deb864303f42933c0798da87ce14`，对应追加本段前的草稿；这不是未来接口/代码review或W008产品验证。
 
@@ -137,9 +137,24 @@ PM对照任务、架构及接口核对实现和独立review；IR-01、CR-01均�
 
 U06“只输入待修改底层cell、外部tapcell/全局电源上下文缺失”的需求继续有效，由后续生产读取/body任务提出具体方案；本轮没有将body_context改为可选，也没有把未知外部连接视为已证明。建议下一步完成main集成及针对性组合验证，再准备后续Stage2切片。本次仅提交PM记录与证据，未合并main、删除分支或启动下一任务。
 
+<a id="pm2-integration-20261103"></a>
+### PM2. 独立复核接收、main集成与最终验收（2026-11-03，PM）
+
+用户要求合并前独立review，现交回`eb15a666010cf7f5fa82c97880a4d0e8f023fa8f`的无阻塞结论；PM核验后按既定main集成流程推进。已通过[PR #62](https://github.com/LucianoHoult/Layauto/pull/62)按merge方式合入main **`16159c7edb2d085ab4987bff27ec11c5b5f53294`**，保留历史提交，锁定合并head为上述`eb15a666`。GitHub与Git均核验；合并tree **`2bc961fd7fa618a3b183827d4de1868a6b3510e2`**与该head完全一致。**W008按A1–A8及本任务范围最终验收，剩余必须修正项0。**
+
+PM接收[独立合并前报告](W008/independent-premerge-review.md)：受审产品为`131f66d`，随后42路径仅新增review材料和任务R2；产品/测试/配置及原PM段未变。只读专项`/root/w008_merge_receipt_check`直接核对235项源码对当前/受审/交付版本、39项review附件、报告/任务hash和验证回执，**13/13通过**。独立review的730项/40模块及输入、几何探针按核验记录采用，本次不冒称重复运行这些专项。
+
+在实际合并版本上，PM运行W005/W006真实读取与readback→W007/W008组合、合法alias、CR-01及header/body嵌套wire拒绝、预期失败保留事实、F1/F2、C13、依赖边界和W006 IPMR-01回归：Linux Python3.12.14 **61 passed / 119.19s**。使用既有PM环境和当前合并源码，有一条第三方anyio/pytest弃用warning；不是干净安装验证。完整命令、原始输出、环境、Git/API身份及采用边界见[集成回执](W008/integration-receipt.json)和[附件说明](W008/integration-evidence/README.md)。
+
+最终235项源码清单仍一致；此前PM及独立review的730项全套/40模块typing、执行阶段3.10/3.11矩阵和新包/安装证据因产品字节一致继续适用，未重复全套、typing或构建安装。GitHub返回的status/workflow列表为空，不记为CI通过。历史任务文档hash按各自提交追溯，原清单、执行及reviewer文字保留，后续PM状态补记不重封历史身份。
+
+完整工艺坐标、有效几何/CUT/terminal split、annotation、物理连通/body/extraction、生命周期/原子baseline、整轮no_change及Stage6仍待后续；极端最大重叠输入的资源上界、真实EDA/PDK与生产准入未验证。U06底层cell缺外部tapcell/全局电源上下文需求继续保留，本轮没有改变body_context必填。
+
+原W008分支保留。下一步由PM收敛剩余Stage2的近期任务范围、依赖和验收，再交独立执行session；本轮未建立或启动下一实现任务。本段、集成回执及入口更新为合并后的main文档补记，不冒记为上述merge commit已含的内容。
+
 ### 独立执行session prompt
 
-以下为已执行的原派发prompt，仅作历史记录；当前从PM1及current-work继续，不重新实施本任务。
+以下为已执行的原派发prompt，仅作历史记录；当前从PM2及current-work继续，不重新实施本任务。
 
 ```text
 按Layauto项目规范，以执行角色完成W008“几何事实与基础占用”。

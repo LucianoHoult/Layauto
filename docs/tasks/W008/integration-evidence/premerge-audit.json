@@ -1,0 +1,130 @@
+{
+  "auditor": "/root/w008_merge_receipt_check",
+  "audited_utc": "2026-11-03T03:18:09.703947+00:00",
+  "scope": "PM read-only independent premerge-review receipt check",
+  "repository": "/workspace/Layauto",
+  "reviewed_head": "131f66dfadd77b5fb9073db999d6939051c3addf",
+  "review_delivery": "eb15a666010cf7f5fa82c97880a4d0e8f023fa8f",
+  "product_delivery": "aced62b0adda35fe7bcd8284a7354badc5b03649",
+  "observed_checkout_head": "eb15a666010cf7f5fa82c97880a4d0e8f023fa8f",
+  "checks_total": 13,
+  "checks_passed": 13,
+  "must_fix_findings": [],
+  "checks": [
+    {
+      "name": "review_only_scope",
+      "passed": true,
+      "changed_paths": 42
+    },
+    {
+      "name": "task_reviewer_insertion_only",
+      "passed": true,
+      "PM_section_unchanged": true
+    },
+    {
+      "name": "receipt_review_identity",
+      "passed": true
+    },
+    {
+      "name": "all_review_attachment_hashes",
+      "passed": true,
+      "count": 39,
+      "mismatches": []
+    },
+    {
+      "name": "report_and_task_hashes",
+      "passed": true
+    },
+    {
+      "name": "source_manifest_binding",
+      "passed": true,
+      "count": 235,
+      "current_mismatches": [],
+      "review_mismatches": [],
+      "delivery_mismatches": []
+    },
+    {
+      "name": "validation_command_output_bindings",
+      "passed": true,
+      "commands": [
+        {
+          "name": "pytest",
+          "exit_code": 0,
+          "output_hash_matches": true
+        },
+        {
+          "name": "mypy",
+          "exit_code": 0,
+          "output_hash_matches": true
+        },
+        {
+          "name": "pip-check",
+          "exit_code": 0,
+          "output_hash_matches": true
+        },
+        {
+          "name": "environment",
+          "exit_code": 0,
+          "output_hash_matches": true
+        },
+        {
+          "name": "scope",
+          "exit_code": 0,
+          "output_hash_matches": true
+        },
+        {
+          "name": "remote-before",
+          "exit_code": 0,
+          "output_hash_matches": true
+        },
+        {
+          "name": "remote-after-review",
+          "exit_code": 0,
+          "output_hash_matches": true
+        }
+      ]
+    },
+    {
+      "name": "recorded_full_suite_and_typing",
+      "passed": true,
+      "evidence_basis": "Adopted independent reviewer executions; not rerun in this receipt audit"
+    },
+    {
+      "name": "input_probe_receipt",
+      "passed": true,
+      "mismatches": []
+    },
+    {
+      "name": "geometry_probe_receipts",
+      "passed": true,
+      "commands": 2
+    },
+    {
+      "name": "evidence_audit_receipt",
+      "passed": true
+    },
+    {
+      "name": "report_closure_and_limitations_recorded",
+      "passed": true
+    },
+    {
+      "name": "report_relative_links",
+      "passed": true,
+      "count": 20,
+      "missing": []
+    }
+  ],
+  "adopted_not_rerun": [
+    "Independent reviewer Linux Python 3.12.14 full 730 tests/40-file typing/pip check",
+    "Independent input 24 checks and geometry 600 partitions/21314 points/4 derived builds",
+    "Independent reviewer archive/installation audits; no package-byte reaudit in this limited task"
+  ],
+  "preserved_limitations": [
+    "Extreme allowed record-count overlap resource upper bound unverified",
+    "Original Mac dual interpreter/build/install executions adopted, not rerun",
+    "Full technology coordinates/physical connectivity/body/extraction/baseline/Stage6 and real EDA/PDK/production remain outside W008",
+    "U06 missing external body/power context requirement remains future work"
+  ],
+  "verdict": "No receipt or scope mismatch found; supports PM integration with combined verification, not final acceptance by this audit.",
+  "script_sha256": "4595edfe84607ca5901e28134d153e64f02f96910897a6152a4cf9f3e0f58256"
+}

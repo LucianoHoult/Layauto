@@ -1,0 +1,91 @@
+{
+  "date": "2026-11-03",
+  "role": "PM",
+  "task": "W008",
+  "disposition": "Accepted within A1-A8 scope and integrated into main; remaining must-fix 0; Stage2/M1 and production not complete",
+  "pull_request": "https://github.com/LucianoHoult/Layauto/pull/62",
+  "merge_method": "merge",
+  "merged_head": "16159c7edb2d085ab4987bff27ec11c5b5f53294",
+  "review_head": "eb15a666010cf7f5fa82c97880a4d0e8f023fa8f",
+  "merge_tree": "2bc961fd7fa618a3b183827d4de1868a6b3510e2",
+  "tree_equals_review_head": true,
+  "parents": [
+    "765ff864f4341b91996f70f25723411eebc0d6c2",
+    "eb15a666010cf7f5fa82c97880a4d0e8f023fa8f"
+  ],
+  "source_manifest_entries_matched": 235,
+  "initial_worktree_clean": true,
+  "product_delivery": "aced62b0adda35fe7bcd8284a7354badc5b03649",
+  "independent_review_head": "131f66dfadd77b5fb9073db999d6939051c3addf",
+  "source_manifest": {
+    "path": "verification/source-manifest.json",
+    "sha256": "30b4e446ff6b38f8c06be92916576928b87abdf62d10bc58f1b22ffa34a5f881",
+    "entries": 235
+  },
+  "direct_checks": [
+    {
+      "check": "Independent premerge report scope and receipt audit",
+      "evidence": "integration-evidence/premerge-audit.json",
+      "result": "13/13; 39 attached hashes and report/task/command identities match; no product/test/config or original PM changes"
+    },
+    {
+      "check": "Actual merge identity",
+      "evidence": "integration-evidence/merge-identity.json",
+      "result": "Two-parent merge; exact tree equality with reviewed head and all 235 source/test/config hashes match"
+    },
+    {
+      "check": "Combined regression on actual main merge commit",
+      "evidence": "integration-evidence/combination-check.json",
+      "result": "61 passed, 1 third-party deprecation warning in 119.19 seconds",
+      "environment": {
+        "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+        "executable": "/workspace/work/w005-pm-check-env/bin/python",
+        "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+        "pytest": "9.2.0",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PYTHONPATH": "/workspace/Layauto",
+        "clean_install": false,
+        "note": "Existing PM environment; current merged checkout source. Full suite/typing/packages adopted from byte-identical reviewed tree."
+      }
+    }
+  ],
+  "adopted_evidence": [
+    {
+      "path": "independent-premerge-review.md",
+      "result": "Independent full 730 tests/40-file typing; 24 input checks, 600 partitions/21314 point probes, 4 derived builds and source/archive audit"
+    },
+    {
+      "path": "pm-receipt.json",
+      "result": "Prior PM full 730 tests/40-file typing and capture/math/evidence checks"
+    },
+    {
+      "path": "verification/receipt.json",
+      "result": "Final execution Mac Python 3.10/3.11 each 730 tests, typing, fresh wheel/sdist and clean installations/smoke"
+    }
+  ],
+  "adoption_basis": "Merged product tree equals reviewed head; no changed product/test/config requiring repeat full matrices, typing, build or installation. Original evidence remains at its recorded identity.",
+  "github_ci": {
+    "statuses": [],
+    "workflow_runs": [],
+    "note": "Empty API lists are not a CI pass; checked on reviewed head before merge."
+  },
+  "preserved_limits": [
+    "Extreme overlap at maximum permitted record count: resource upper bounds unverified",
+    "Full technology coordinates/effective geometry/annotation/connectivity/body/extraction/lifecycle/baseline/seal/no_change/Stage6 deferred",
+    "Real EDA/PDK/production admission not verified",
+    "U06 missing external tapcell/global power context remains future requirement; synthetic body_context still required"
+  ],
+  "branches": "Original W008 branch retained; no next implementation branch/task started.",
+  "postmerge_documentation": "Task PM2/status, current-work/navigation/roadmap and these receipts are follow-up documentation on main, not claimed as content of the product merge commit. Earlier task hashes refer to their historical commits; A1-A8, execution/reviewer and prior PM1 facts remain intact.",
+  "evidence_sha256": {
+    "integration-evidence/README.md": "2f09470328381e1a8e0f348a3fd489caf7478ef2a8ee6ecea1bc1fe717847f06",
+    "integration-evidence/combination-check.json": "29952ceeec15e0836b9ddf036279ef4cd3f25b685b835b97d9d5d7070fdcd43f",
+    "integration-evidence/github-checks.json": "9bb4e3fb856edf9b2ca37a85b13013942c089667e188bddf5dab8c5f7d9b23aa",
+    "integration-evidence/github-merge.json": "b285d7ab3ecb516de587b0e928b9be0f4d27ee11622c9180425582e1ac653a47",
+    "integration-evidence/github-pr.json": "4f1ab3fd7601f05c9108a92a27fcdff223580d50dfc83b7fbfc36402d74479b5",
+    "integration-evidence/merge-identity.json": "e4956f5b4b1740aaab38486e8a7fb371737bb04a63c9ac7dc588749995d6bfd6",
+    "integration-evidence/premerge-audit.json": "ef697365e513148ccecabfe8f221f59492fb65eb9f3d039b0e737cfc846ba3b7",
+    "integration-evidence/premerge_audit.py": "4595edfe84607ca5901e28134d153e64f02f96910897a6152a4cf9f3e0f58256",
+    "integration-evidence/run_combination.py": "c772cdf61f3c094ed4e6f08c77ebdd1837d0aaeb9002d91349822ad41929ae07"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "checked_head": "eb15a666010cf7f5fa82c97880a4d0e8f023fa8f",
+  "statuses": {
+    "statuses": []
+  },
+  "workflows": {
+    "workflow_runs": []
+  },
+  "note": "No reported status/workflow records; this is not CI success."
+}
