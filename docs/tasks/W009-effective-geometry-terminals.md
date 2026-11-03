@@ -1,0 +1,89 @@
+# W009 — 有效几何与沟道、端区草稿
+
+把W008保存的原始图形进一步解释为当前已声明toy算子作用后的精确区域：CUT实际扣掉了哪里，OD与POLY交叉的沟道在哪里，扣除沟道后哪些区域分别是几何意义上的S/D端区。保留原始drawn图形与全部来源，供后续物理连通、标注和提取使用。
+
+## 任务要求（PM）
+
+| 字段 | 内容 |
+| --- | --- |
+| ID / 目标 | W009；从认证的W008几何产物及同源physical/drawn/formats声明构造只读、精确、可重建的有效几何与channel/terminal区域草稿 |
+| 里程碑 / 依赖 | M1第五个产品切片；W003/W004样本、W005读取、W006审计、W007语义/身份和W008基础几何已验收集成。main起点`4df07e68b05df4c57a8b8d44bc41e7e073938d3a`，W008产品经[PR #62](https://github.com/LucianoHoult/Layauto/pull/62)集成，见[W008 PM2](W008-geometry-base-occupancy.md#pm2-integration-20261103) |
+| 授权依据 / 阶段 | 用户2026-11-03同意继续推进，沿用独立执行session。**可执行：派发要求已独立复核，必须修正项0；先细化方案并独立review，原范围内修正后实现A1–A8。** 本次PM只准备任务，尚无W009产品实现 |
+| 恢复位置 | `codex/w009-effective-geometry-terminals`，从上述main建立；接手包含本任务及current-work的PM交接提交，完整SHA见Git/回复 |
+| 允许修改 | `layauto_v2/domain/`必要中立区域/算子/来源DTO；`state/`内有效几何/区域草稿纯组件；`normalization/`适配、组合与codec；必要的同范围tech校验复用；对应tests、typing/build配置、README及本任务附件。模块/类型名由内部方案选择 |
+| 非目标 | 不实现完整工艺坐标/合法routing lattice、全层导通图/connector edges、电气ComponentId、body-to-rail证明、fin计数/完整器件提取、query spatial overlay、规则执行器/CSP、lifecycle最终闭合、baseline/seal/发布、ECO/no_change/terminal/Stage6；不改fixture/答案/历史证据，不新增生产格式或MR-040配置机制 |
+| 架构依据 | 本次main的[architecture](../architecture.md) §2.2–2.3、§3.1/3.4–3.6、§4.5–4.8、§5.6–5.9、§11.2–11.3/11.14–11.15、§12.3/12.5；[W003 contracts](W003/contracts.md)、[manual review](W003/manual-verification.md) MR-045/046（以W004修订后的body合同为准）、MR-052/054/056；W007/W008输入、身份、单位及公开结果合同 |
+| 负责人 / 分工 | 一名执行者集成；未参与方案/实现者分别复核方案和代码；PM维护任务要求、阶段、入口与验收。原范围内的算法/DTO选择自主处理 |
+
+### 已核对事实与本次拆分理由
+
+- 当前[physical owner](../../tests/fixtures/w003_m1/tech/physical.json)声明`identity_OD`、`positive_area_OD_intersect_POLY_with_exactly_one_gate_stripe_per_active`、`terminal_split/1`及“OD扣除channel后，左连通区域为S、右为D；不支持swap”。`POLY`导体穿过沟道连续，器件S/D关系不是导体边。
+- [drawn owner](../../tests/fixtures/w003_m1/tech/drawn.json)声明CUT的`cut_target=LI`和`rectangle_set_difference/1`。该算子要求精确集合相减、保留全部正面积结果并区分分离区域，不把差集外接bbox当有效几何。
+- W008的GeometryInput已重新解析同一捕获中的全部tech owner；GeometryResult保存认证输入、完整drawn layout及base occupancy。新增消费的physical字段仍须绑定该owner与捕获，不能从另一份可变配置接入。
+- [coordinate示例](../../tests/fixtures/w003_m1/tech/coordinate.json)仍是`example_only=true`、`is_complete_runtime_model=false`。本轮集合运算直接使用已验证的exact坐标，可独立交付；不能把内部边界分区或FIN pitch升级为完整合法工艺网格。完整坐标模型继续保留为Stage2后续义务。
+- W008逐层base partition只采用该层drawn边界，LI轴不保证包含CUT边界，OD轴也不保证包含channel边界。不能按整格删减或标注有效区域；raw occupancy可作候选索引，结果须按exact几何计算，并保持原raw覆盖合同。
+- 正常样本独立答案中的四个OD端区，以及[cut-islands答案](../../tests/fixtures/w003_m1/special/cut_islands/oracle.json)的两块LI差集已有明确几何依据。答案中的net、component、spacing、body和终态不属于本轮验收成功声明。
+
+### 行为要求
+
+1. **消费认证输入，保持纯组件组合。** 支持真实W005→W008及W006 readback→W008两条路径，不重新读文件或repository、不调用EDA。若需要同源W007结果，只能核验关联并保留source/target/differences/seeds；不得靠query名称或CDL端口决定几何。公开成功结果绑定完整W008输入身份、消费的owner/算子版本和exact单位；中立DTO自洽与最终捕获认证分层，domain/state不得反向依赖parser。
+2. **只执行明确支持的算子语义。** 从唯一owner取得CUT目标、差集、active/channel与terminal解释。显式检查所消费的operator/profile语义与版本，不能只看同名ref存在或capability=true就接受；不执行配置中的任意表达式。已有W005缺项/不支持错误继续保留；本轮组件不假称整个required_operator列表已经实现。需要改变输入解释或扩大支持子集时，先交具体实例与影响给PM。
+3. **精确差集保留所有区域及来源。** 对目标drawn record扣除适用CUT集合；多个/重复/重叠CUT按集合语义处理，结果与输入排列无关，未命中CUT不改变几何，全覆盖产生明确的空结果。保留每个原record及贡献CUT的来源/身份，重复原record不能被bbox去重而丢失追溯。可采用规范化的精确矩形集合表示多片、孔洞和非矩形结果；每个结果都能回到原drawn及operator。raw layout与W008 base occupancy不被改写，不把有效片段冒充新的drawn输入。
+4. **按选定profile识别channel和端区。** 先用正面积OD∩POLY识别每个active内唯一gate stripe；无gate、多gate或无法唯一确定时按该profile定位拒绝。点/边接触不能冒充正面积channel。OD扣除channel后的所有正面积残余都须解释；若不能形成该profile明确的左右S/D区域，拒绝而不丢片或猜方位。沟道与端区内部不重叠，其并集应还原适用active。POLY原图形保持；不得由此建立S↔D导体边。几何区域的内部连通分组仅为差集/端区计算服务，不是跨record电气连通图。
+5. **区域身份与消费边界明确。** 区域及其矩形分解具有稳定typed refs，绑定来源、单位、算子和exact几何；区分原record重数、集合覆盖和区域分解，不能因遍历顺序不同改变同一结果的语义。输出S/D只表示当前toy空间规则，尚未完成canonical DeviceId/net join或完整DeviceExtractionContract。非消费图形及外部body证据保持原独立引用；body、FIN、marker等不因本轮处理而被删除或宣称已经解释。
+6. **可验证的不可变结果及错误。** 区域/集合/结果使用closed/versioned合同、递归不可变、canonical wire/digest和公开constructor/decode聚合检查；拒绝漏片、多片、外来来源/单位/算子、bbox填洞和伪造success。预期问题定位到source/field并保留已完成事实；意外Exception及KeyboardInterrupt/SystemExit按纯组件边界传播。成功仅表示本次几何运算完成，不推进W006 attempt、不发布baseline或terminal。
+
+### 验收清单
+
+| ID | 输入/条件 → 可观察结果 | 正确性依据与验证 |
+| --- | --- | --- |
+| A1 真实组合与来源 | 实际W005/W006捕获→W008→新草稿等价；构建无IO、原语义/图形/base occupancy/attempt不变 | 禁用构建期间文件/repository IO；错误run/来源/owner与成组payload伪造反例；不加载expected/spec/oracle为运行输入 |
+| A2 算子与作用域 | 只消费声明CUT目标及active/channel/terminal操作，拒绝未知/矛盾的已消费算子或错policy/单位 | 从捕获owner逐字段核对；支持范围明确，保留旧读取/异常边界，不扩展生产profile |
+| A3 差集数学 | 单CUT、多CUT、重复/重叠CUT、孔洞/多片、边角接触、未命中及全覆盖 → 精确无漏无额外覆盖 | 独立手算/面积/点归属与集合等价判据，不仅拿另一个调用同算法的helper比较；负坐标、大整数及重排检查，不float/snap/截断 |
+| A4 沟道与端区 | 正常2个active/2个channel/4个OD端区与手工答案几何相符；无gate、多gate、点边相触、channel不能分开端区等拒绝 | 按实际OD/POLY构造；检查channel+残余的完整覆盖、S/D唯一性和来源，不使用ON/OP等展示名或输入record序号硬编码；不把正常数量当唯一oracle |
+| A5 既有特殊见证 | cut-islands中LB被切为`[130,20,139,24]`和`[141,20,150,24]` nm，面积合计72；独立A_REMOTE仍保留 | 从实际special GDS构造；可在临时目录重绑所需header/输入以隔离几何条件，原fixture不改。只取几何答案，不声称component_count、spacing/T06/T08/T10已通过 |
+| A6 公开合同与稳定性 | 递归mutation/alias、遗漏/重复/外来区域、改operator/unit/source、非法success与嵌套wire拒绝；重建/重排稳定 | typed refs、canonical roundtrip及跨hash-seed检查；验证边界与数学集合语义均独立检查，异常/中断同对象传播 |
+| A7 范围与后续接口 | 保留原drawn/occupancy/semantic/query/body证据；输出区域可被后续geometry/contact/overlay消费者引用 | 不新增全层physical edge、电气ComponentId、net stamp、fin/body完整证明或publish/no_change；完整坐标/有效region投影与所有后续义务有明确交接 |
+| A8 工程与交付 | 保留原730项能力，新增必要独立判据；Python3.10及开发解释器、strict typing、新包及两套干净安装/源码外真实组合smoke通过 | 记录最终源码/测试/配置、命令/环境/输出、包与安装来源；评价算法复杂度/片段增长并披露已测规模，不把有限样例当全规模性能保证，不静默新增外部限制 |
+
+新输入格式或使用预期：**当前无必需用户决定。** 算法分解、内部DTO、registry组织属于既定语义内的实现选择，先由执行者准备方案并独立review。若发现既有profile不足以解释具体输入，保留可处理范围并以实例上报，不扩大多gate/S-D规则或编造完整coordinate默认值。
+
+### 后续组合归属（不计作本轮完成）
+
+| 后续能力 | 保留义务 |
+| --- | --- |
+| 正式坐标与region投影 | 完整逐层axes/pitch/offset/方向及来源、合法空间/coordinate binding；有效region与occupancy/annotation目标的精确覆盖及身份。不得以本轮算子矩形分解替代 |
+| 局部物理连通 | same-layer contact、qualified via/contact、component identity/lineage；正面积/正长度边/点接触区别，connector不得via-as-wire双写，enclosure仍为独立必需检查 |
+| 器件提取与标注 | FIN/channel qualification、one-to-one semantic/device join、D/G/S/B/模型/参数核对、query spatial overlay/coverage/conflict及保守unknown分类 |
+| body及U06 | D1=A既有synthetic上下文证明；[U06](../roadmap.md#production-body-evidence)叶cell缺外部tapcell/全局电源上下文的最小输入、部分能力与完整准入方案。人工net标注不等于物理证明，scope外关联不在本地图添加物理边 |
+| M1运行闭合 | 全量mandatory rules、逐层lifecycle、完整ProposedInitialState、原子baseline/seal、semantic/extraction-aware no_change、Stage6读回/报告/terminal；真实G1–G4/G5及生产边界保持 |
+
+## 方案与决定（执行准备，PM 接收）
+
+执行者先调查现有GeometryInput/GeometryResult、drawn与physical owner，以及legacy中与矩形集合运算相关的纯算法候选；不得依赖tests/support或legacy runtime。方案至少说明：捕获与算子绑定、集合/区域/record所有权、exact差集与分解的确定性、channel/端区适用条件、public DTO/codec及错误、原730项兼容、独立判据和资源复杂度。明确集合/边界表达与W008半开索引、后续接触判据的关系；正确性结合包含/交叠/点归属及边角反例，不能仅凭面积相等判断。未参与设计者review后，原范围内修正并实现。
+
+## 执行结果（执行）
+
+未执行；后续由执行者记录版本、改动范围、逐项验证、未覆盖项、可访问证据和review交接。本次PM准备不提供产品通过结论。
+
+## Review 结论（reviewer）
+
+产品方案及代码尚未review。派发要求的独立复核另见PM交接记录，不代替后续方案/代码review。
+
+## PM 验收与交接（PM）
+
+当前仅准备W009范围与独立执行入口，未验收产品、未启动实现。既有W008及更早任务的验收事实保持。
+
+**派发要求独立复核（2026-11-03，PM记录）：** 未参与草稿设计的`/root/w009_handoff_review`对照架构、实际owner/样本、W008接口和U06边界检查，必须修正项0，见[独立记录](W009/handoff-review.md)。原受审草稿SHA-256为`858f3a6e06350e36dd1760cc37cf2a0d7ef890301d7178ce6380c6a4f54d15b7`；此后采纳两项非阻塞澄清：逐层raw轴不保证包含CUT/channel边界，以及集合正确性不能仅凭面积判断。本记录与阶段补记不代表未来方案/代码review或产品验证。
+
+### 独立执行session prompt
+
+```text
+按Layauto项目规范，以执行角色完成W009“有效几何与沟道、端区草稿”。
+从codex/w009-effective-geometry-terminals的PM交接提交恢复；main起点4df07e68b05df4c57a8b8d44bc41e7e073938d3a，W008已验收集成。先核对远端/HEAD/工作区，读AGENTS、README、协作/环境规则、current-work、W009及其引用的架构原文与W003–W008合同。
+先细化认证输入/physical算子绑定、exact集合差集、channel/端区识别、区域身份/来源、不可变DTO/codec/错误及独立判据方案，并由未参与设计者review；原范围内修正后直接实现A1–A8。
+从真实W005/W006→W008捕获产物构造CUT后的有效区域及OD/POLY channel、OD减channel后的toy左右S/D区域；保留全部来源、原drawn/base occupancy和W007语义/query。不得加载答案为运行输入、按展示名硬编码、float/snap、bbox填洞、漏掉差集片段或由S/D关系造导体边。
+本轮不实现完整工艺坐标、全层导通图/connector、电气component、body证明/FIN完整抽取/query overlay、DRC/CSP、baseline/seal/no_change/Stage6；U06继续由后续生产输入/body任务落实，不改body_context必填或fixture。新增关键输入解释先以具体实例交PM，普通算法与模块选择自主处理。
+保留既有730项能力，完成独立数学/真实组合/公共DTO反例、双解释器、typing、新包/两套干净安装/源码外smoke；保存最终身份、原输出和未验证范围。独立代码review后修正并复核必须修正项。
+将产品、测试、可访问证据及执行/reviewer记录提交推送当前W009分支，沿用项目noreply身份，核对远端完整SHA后交PM。不得自行验收、合并main、删除分支或启动下一任务。
+```

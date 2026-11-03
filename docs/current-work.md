@@ -4,7 +4,9 @@
 
 ## 当前节点
 
-**[W008 — 几何事实与基础占用](tasks/W008-geometry-base-occupancy.md)已验收，并通过[PR #62](https://github.com/LucianoHoult/Layauto/pull/62)合入main `16159c7edb2d085ab4987bff27ec11c5b5f53294`。** 合并tree与已审head一致，PM实际集成61项通过；原730项/40模块及包证据保持适用，见[W008 PM2](tasks/W008-geometry-base-occupancy.md#pm2-integration-20261103)。独立合并前review新增finding 0，剩余必须修正项0。当前进入后续Stage2任务收敛，尚未派发下一实现任务；内部索引不等于完整工艺坐标空间、物理连通或baseline。
+**当前任务为[W009 — 有效几何与沟道、端区草稿](tasks/W009-effective-geometry-terminals.md)，可执行，等待独立执行session。** 派发要求独立复核必须修正项0。从W008精确图形计算CUT差集、OD/POLY沟道及OD扣除沟道后的toy左右端区；具体算法/DTO先方案review，随后实现。当前尚无W009产品实现；完整坐标、连接图/body/FIN提取、标注、规则与发布继续后置。
+
+**[W008 — 几何事实与基础占用](tasks/W008-geometry-base-occupancy.md)已验收，并通过[PR #62](https://github.com/LucianoHoult/Layauto/pull/62)合入main `16159c7edb2d085ab4987bff27ec11c5b5f53294`。** 合并tree与已审head一致，PM实际集成61项通过；原730项/40模块及包证据保持适用，见[W008 PM2](tasks/W008-geometry-base-occupancy.md#pm2-integration-20261103)。独立合并前review新增finding 0，剩余必须修正项0。内部索引不等于完整工艺坐标空间、物理连通或baseline。
 
 **W007已验收并通过[PR #61](https://github.com/LucianoHoult/Layauto/pull/61)合入main `765ff864f4341b91996f70f25723411eebc0d6c2`。** 合并tree与已审head完全一致，PM实际集成39项通过；原553项/33模块、最终包及独立review证据保持适用，见[W007 PM2](tasks/W007-semantic-identity-normalization.md#pm2-integration-20261102)。已能形成器件/网络语义、独立目标差异与query身份/seeds，语义相同仍不代表整轮成功。
 
@@ -20,7 +22,7 @@
 
 ## 恢复与版本身份
 
-先读根[AGENTS](../AGENTS.md)、[README](../README.md)、[协作规则](collaboration/rules.md)及W008 PM2，回查W005/W006/W007组件合同、W003原判据和任务引用的架构原文。不要从已完成的W004–W008实施或补修prompt重新开始；W006 IPMR-01与W005同名finding已分别关闭。
+先读根[AGENTS](../AGENTS.md)、[README](../README.md)、[协作规则](collaboration/rules.md)及W009，回查W008 PM2、W005/W006/W007组件合同、W003原判据和任务引用的架构原文。不要从已完成的W004–W008实施或补修prompt重新开始；W006 IPMR-01与W005同名finding已分别关闭。
 
 | 用途 | 恢复依据 |
 | --- | --- |
@@ -35,9 +37,10 @@
 | W006当前集成 | main `221492eb72e10cf2e46f1d9c76cb992087806a97`，已审head `2bdf5fa0b0a1004623ab90cf31ba04eca3c6abf5`，产品`f19ac0448a5d0111f799660bd7be043ebfd16e41`；[PM4](tasks/W006-precontext-run-audit.md#pm4-integration-20261102)及[集成回执](tasks/W006/integration-receipt.json)记录最终验收，原[补修接收](tasks/W006/ipmr01-pm-receipt.json)保留验证边界 |
 | W007当前集成 | main `765ff864f4341b91996f70f25723411eebc0d6c2`，已审head `26dc70ce5dee76f275530f33ad585b459b2b8b5a`，产品/测试 `0f879f01acbeac033173d0b6c6257c376bb9272a`；[PM2](tasks/W007-semantic-identity-normalization.md#pm2-integration-20261102)与[集成回执](tasks/W007/integration-receipt.json)记录最终验收；原[PM接收回执](tasks/W007/pm-receipt.json)保留实际复跑与采用边界 |
 | W008当前集成 | main `16159c7edb2d085ab4987bff27ec11c5b5f53294`，合并head `eb15a666010cf7f5fa82c97880a4d0e8f023fa8f`，产品`aced62b0adda35fe7bcd8284a7354badc5b03649`；[PM2](tasks/W008-geometry-base-occupancy.md#pm2-integration-20261103)与[集成回执](tasks/W008/integration-receipt.json)记录最终验收。接手包含这些合并后补记的最新main；原[PM1接收](tasks/W008/pm-receipt.json)和独立review保留历史事实 |
+| W009恢复入口 | `codex/w009-effective-geometry-terminals`，从main `4df07e68b05df4c57a8b8d44bc41e7e073938d3a`建立；接手包含[W009要求/prompt](tasks/W009-effective-geometry-terminals.md)与本入口的PM交接提交，完整SHA见Git/回复。本次仅准备任务，无产品改动 |
 | 历史材料 | 准备基线9f6735d，原技术实物0153505；MR-001–077、执行/review和旧PM记录保留各自历史事实。原包与既有受审实物不随PM状态整理改写 |
 
-本机PM复核材料原位于`/workspace/work/w004-pm-receipt-kryfgf84/`，关键结果与身份另汇入[PM接收摘要](tasks/W003/delivery/w004-pm-20261031/receipt.json)随Git交接；临时全量目录不自动跨实例共享。W004–W008分支均已合入main并保留，下一任务从最新main准备。
+本机PM复核材料原位于`/workspace/work/w004-pm-receipt-kryfgf84/`，关键结果与身份另汇入[PM接收摘要](tasks/W003/delivery/w004-pm-20261031/receipt.json)随Git交接；临时全量目录不自动跨实例共享。W004–W008分支均已合入main并保留，当前使用新的W009准备分支。
 
 ## 整体进度与下一步
 
@@ -50,10 +53,11 @@
 | run身份、读取审计与输入失败终结 | W006已集成 |
 | 器件/网络语义、目标差异与query身份关联 | W007已集成 |
 | 几何事实与基础占用索引 | W008已验收并集成 |
-| 完整工艺坐标/有效几何/annotation/连通/body状态与原子baseline | 后续Stage2任务保留；W008索引不替代这些义务 |
+| CUT有效几何与channel/端区 | W009已准备，尚未实现；不是完整物理连通或器件提取 |
+| 完整工艺坐标/annotation/连通/body/提取状态与原子baseline | 后续Stage2任务保留；W008索引及W009区域草稿不替代这些义务 |
 | 无变化的完整判定、只读GDS/CDL/JSON及报告/terminal | 后续Stage3–6组合；通过后才验收M1 |
 
-下一步由PM核对完整工艺坐标、有效几何及物理解释的依赖，收敛后续Stage2任务范围和验收，再交独立执行session；当前未建立或启动下一实现任务。示例coordinate与32×16见证仍不能充当完整运行网格，外部body图形保持独立scope；生产输入/body任务派发前必须回查U06。
+W009从已有明确toy算子计算有效几何，不需要先补完合法工艺网格；示例coordinate与32×16见证仍不能充当完整运行网格。独立执行session按[W009 prompt](tasks/W009-effective-geometry-terminals.md#独立执行session-prompt)细化方案、独立review并实现；原drawn及W008 raw occupancy保持，外部body图形独立。生产输入/body任务派发前必须回查U06。
 
 正常输入在W006仅交接unsealed attempt，不产生成功terminal；W007组件也不推进attempt或宣称整轮成功。C08/09/10和C13的正式终结阶段仍需后续组合验证。完整Stage2/baseline/no_change与Stage6文件闭环仍是M1硬门；真实工具与配置机制后置项保持，新增关键预期带实例交PM/用户。W007验收不等同完整Stage2/M1通过。
 
