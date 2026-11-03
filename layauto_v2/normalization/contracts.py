@@ -74,18 +74,11 @@ class NormalizationInput:
 
     def __post_init__(self) -> None:
         _version(self.schema_version)
-        try:
-            source, max_bytes, max_depth = request_decoder_input(self.parse)
-        except (KeyError, TypeError, AttributeError, UnicodeError, IndexError) as exc:
-            raise ValueError('invalid captured normalization input fields') from exc
-        # Keep the decoder outside shape-error translation: programmer failures
-        # and process interrupts must propagate unchanged. Only its InputError
-        # is translated by decode_captured_requests into invalid-receipt ValueError.
+        # Shape checks live at each consumed field. This complete reconstruction
+        # boundary must preserve unexpected validator/decoder exceptions too.
+        source, max_bytes, max_depth = request_decoder_input(self.parse)
         request_document = decode_captured_requests(source, max_bytes, max_depth)
-        try:
-            validate_parse(self.parse, request_document)
-        except (KeyError, TypeError, AttributeError, UnicodeError, IndexError) as exc:
-            raise ValueError('invalid captured normalization input fields') from exc
+        validate_parse(self.parse, request_document)
         if self.readback is not None:
             if type(self.readback) is not ReadbackBinding or self.readback.parse_audit.result != self.parse:
                 raise ValueError('input parse is not the bound readback parse')

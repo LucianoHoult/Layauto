@@ -94,9 +94,9 @@ def _unpack(value: Value) -> object:
     # decoder may raise an unexpected exception which must retain its identity
     # through every enclosing record, including NormalizationResult.
     decoded = {field: _unpack(value['fields'][field]) for field in fields}
-    if value['record'] == 'NormalizationInput':
-        # This constructor separates invalid DTO shapes from its pure decoder
-        # boundary itself; wrapping it would swallow unexpected decoder errors.
+    if value['record'] in ('NormalizationInput', 'ReadbackBinding'):
+        # These receipt constructors validate their shapes before using their
+        # children. Their internal reconstruction failures retain identity.
         result = constructor(**decoded)
     else:
         try:
