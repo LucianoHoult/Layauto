@@ -1,0 +1,228 @@
+{
+  "actual_audit_python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "archived_commands": [
+    {
+      "exit_code": 0,
+      "output": "pytest-310.txt",
+      "sha256": "a9c219120884360f87bbf81261658f11cd8f1d44b50d8e84dd6c8686fcc019cb"
+    },
+    {
+      "exit_code": 0,
+      "output": "typing-310.txt",
+      "sha256": "522d7b3a15704213950b7053c882b6ddd0c41149631300ce6c1933d21b5971c3"
+    },
+    {
+      "exit_code": 0,
+      "output": "pip-check-310.txt",
+      "sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09"
+    },
+    {
+      "exit_code": 0,
+      "output": "pytest-312.txt",
+      "sha256": "22a0fd9262c55f7d5eff058f2eba238f6b3800c95b168cf0ba2e8a2b372b26aa"
+    },
+    {
+      "exit_code": 0,
+      "output": "typing-312.txt",
+      "sha256": "522d7b3a15704213950b7053c882b6ddd0c41149631300ce6c1933d21b5971c3"
+    },
+    {
+      "exit_code": 0,
+      "output": "pip-check-312.txt",
+      "sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09"
+    },
+    {
+      "exit_code": 0,
+      "output": "build.txt",
+      "sha256": "10066c58a34c4a0d89c81927b78280078bbf43008bcaf65f5b75456836aabf26"
+    },
+    {
+      "exit_code": 0,
+      "output": "create-install-312.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "exit_code": 0,
+      "output": "install-312.txt",
+      "sha256": "a68684d4c6df070af893c0f436c6026aef1b49e9108d2338248e7022f126d994"
+    },
+    {
+      "exit_code": 0,
+      "output": "installed-pip-check-312.txt",
+      "sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09"
+    },
+    {
+      "exit_code": 0,
+      "output": "installed-smoke-312.txt",
+      "sha256": "7038b016895cf6ec479e998c5f37b739504acf035591a05c3e9551cd622f981f"
+    },
+    {
+      "exit_code": 0,
+      "output": "create-install-310.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "exit_code": 0,
+      "output": "install-310.txt",
+      "sha256": "994ea5c1865c75d1aabf09c49fe73990c82b6d14913e841866e1c305de6551d8"
+    },
+    {
+      "exit_code": 0,
+      "output": "installed-pip-check-310.txt",
+      "sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09"
+    },
+    {
+      "exit_code": 0,
+      "output": "installed-smoke-310.txt",
+      "sha256": "284107532830f776a87281738206158a4fe109ef16a514ff2e4a4680394d5628"
+    }
+  ],
+  "audit_checkout_head": "88a7ae9d0330b7c7fddda0b07366c7a96552b65e",
+  "final_review_probe_identity_files": [
+    "math-result.json",
+    "container-alias-after312.json",
+    "container-alias-after310.json",
+    "metaclass-after312.json",
+    "metaclass-after310.json",
+    "fraction-atom-after312.json",
+    "fraction-atom-after310.json"
+  ],
+  "historical_snapshots_separately_verified": {
+    "pre-container": {
+      "complete_final_matrix": false,
+      "scope": "Pre-container-fix history only; not final product verification",
+      "source_files": 240,
+      "source_manifest_sha256": "9899cec7b67f65071d472537aa5f6ca5a3ed69badda64184d7b5119b153bc703"
+    },
+    "pre-cr02": {
+      "complete_final_matrix": false,
+      "scope": "Pre-CR02 history only; not final product verification",
+      "source_files": 240,
+      "source_manifest_sha256": "9e3fde92ea6919e70592a7b71d03c575e8e81471d7ca835829052277a8208957"
+    }
+  },
+  "installation_records": {
+    "310": {
+      "artifact_sha256": "2716df4fe382dfb64127ed9b46ee3c80aa53b071bab10175d7e4b65806c72c98",
+      "checks": {
+        "attempt_phase": "unsealed",
+        "base_fragments": 41,
+        "base_records": 40,
+        "body_shapes": 6,
+        "captured_w005_w006_w007_w008_w009_without_io": true,
+        "counts": {
+          "D": 2,
+          "S": 2,
+          "channel": 2,
+          "effective": 3
+        },
+        "direct_wire_sha256": "3faf646acea273807d743ded5f577f139b6ebaf3dc73467221a0d9d03daa1034",
+        "independent_exact_atoms": 9,
+        "readback_wire_sha256": "24ed7b0b4226bda8d79d6d3a58576f9430389763c63011b36ce2671dc85d01d3",
+        "status": "passed",
+        "terminal": null,
+        "unsupported_operator_error": {
+          "field": "/device_extraction_contract/sd_policy",
+          "issue": "UnsupportedRegionOperator",
+          "wire_sha256": "3f8d0ae69443bdce31c2ae50f4d4340c9f1e7f0d51cc973f3e34a3d1fde995bd"
+        }
+      },
+      "historical_tree_present": false,
+      "recorded_runtime_files": 90,
+      "recorded_smoke_cwd": "/workspace/work/w009-env/installed-cwd"
+    },
+    "312": {
+      "artifact_sha256": "27e97b27f8e3a4f5e2ff804a32fe3bd3aa33d3a6ea1f3e9b96075ea5858aaf95",
+      "checks": {
+        "attempt_phase": "unsealed",
+        "base_fragments": 41,
+        "base_records": 40,
+        "body_shapes": 6,
+        "captured_w005_w006_w007_w008_w009_without_io": true,
+        "counts": {
+          "D": 2,
+          "S": 2,
+          "channel": 2,
+          "effective": 3
+        },
+        "direct_wire_sha256": "3faf646acea273807d743ded5f577f139b6ebaf3dc73467221a0d9d03daa1034",
+        "independent_exact_atoms": 9,
+        "readback_wire_sha256": "24ed7b0b4226bda8d79d6d3a58576f9430389763c63011b36ce2671dc85d01d3",
+        "status": "passed",
+        "terminal": null,
+        "unsupported_operator_error": {
+          "field": "/device_extraction_contract/sd_policy",
+          "issue": "UnsupportedRegionOperator",
+          "wire_sha256": "3f8d0ae69443bdce31c2ae50f4d4340c9f1e7f0d51cc973f3e34a3d1fde995bd"
+        }
+      },
+      "historical_tree_present": false,
+      "recorded_runtime_files": 90,
+      "recorded_smoke_cwd": "/workspace/work/w009-env/installed-cwd"
+    }
+  },
+  "limitations": [
+    "No historical command was re-executed by this audit.",
+    "No build, installation, Python 3.10 regression, or historical installation-tree traversal was performed.",
+    "Artifact bytes and archived command/install records are mutually consistent; this is not an independent observation of historical execution.",
+    "Full Python 3.12 regression and typing for this review are recorded separately by the primary reviewer."
+  ],
+  "main_base": "4df07e68b05df4c57a8b8d44bc41e7e073938d3a",
+  "packages": {
+    "sdist": {
+      "runtime_files": 90,
+      "sha256": "2716df4fe382dfb64127ed9b46ee3c80aa53b071bab10175d7e4b65806c72c98"
+    },
+    "wheel": {
+      "runtime_files": 90,
+      "sha256": "27e97b27f8e3a4f5e2ff804a32fe3bd3aa33d3a6ea1f3e9b96075ea5858aaf95"
+    }
+  },
+  "performance_executions": 10,
+  "pm_actual_check_records": [
+    "pytest",
+    "typing",
+    "exception-probe",
+    "fraction-probe"
+  ],
+  "pm_evidence_files": 20,
+  "post_product_paths": [
+    "docs/README.md",
+    "docs/current-work.md",
+    "docs/tasks/W009-effective-geometry-terminals.md",
+    "docs/tasks/W009/pm-evidence/evidence/audit-result.json",
+    "docs/tasks/W009/pm-evidence/evidence/audit.py",
+    "docs/tasks/W009/pm-evidence/evidence/report.md",
+    "docs/tasks/W009/pm-evidence/exception-probe.json",
+    "docs/tasks/W009/pm-evidence/exception-probe.stderr.txt",
+    "docs/tasks/W009/pm-evidence/exception-probe.stdout.txt",
+    "docs/tasks/W009/pm-evidence/fraction-probe.json",
+    "docs/tasks/W009/pm-evidence/fraction-probe.stderr.txt",
+    "docs/tasks/W009/pm-evidence/fraction-probe.stdout.txt",
+    "docs/tasks/W009/pm-evidence/geometry/exhaustive_geometry_probe.py",
+    "docs/tasks/W009/pm-evidence/geometry/exhaustive_geometry_result.json",
+    "docs/tasks/W009/pm-evidence/geometry/exhaustive_geometry_stderr.txt",
+    "docs/tasks/W009/pm-evidence/geometry/geometry-review.md",
+    "docs/tasks/W009/pm-evidence/pytest.json",
+    "docs/tasks/W009/pm-evidence/pytest.stderr.txt",
+    "docs/tasks/W009/pm-evidence/pytest.stdout.txt",
+    "docs/tasks/W009/pm-evidence/run_check.py",
+    "docs/tasks/W009/pm-evidence/typing.json",
+    "docs/tasks/W009/pm-evidence/typing.stderr.txt",
+    "docs/tasks/W009/pm-evidence/typing.stdout.txt",
+    "docs/tasks/W009/pm-receipt.json",
+    "docs/tasks/W009/pm-receipt.md"
+  ],
+  "preparation_head": "4975e565a33d9594782645b6ad0f944b78ee6ae8",
+  "product_head": "5b1d9b5196a7c5181822c4dd0f1bd2f678475116",
+  "protected_paths_changed_since_preparation": [],
+  "required_tracked_source_files_covered": 116,
+  "reviewed_head": "88a7ae9d0330b7c7fddda0b07366c7a96552b65e",
+  "runtime_files": 90,
+  "source_archive_files": 240,
+  "source_files_current_product_head_all_equal": 240,
+  "source_manifest_baseline": "4975e565a33d9594782645b6ad0f944b78ee6ae8",
+  "source_manifest_sha256": "32e60e783a7a7e4172ee3916e3ceb4fade329585b87a7c7091a85c8a6418d1b6",
+  "status": "passed",
+  "verification_evidence_files": 117
+}

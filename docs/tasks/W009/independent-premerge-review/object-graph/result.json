@@ -1,0 +1,500 @@
+{
+  "reviewed_head": "88a7ae9d0330b7c7fddda0b07366c7a96552b65e",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "source_sha256": {
+    "layauto_v2/domain/regions.py": "9fd1b2b98338c594533a39e2c0af4c28c1c0cc5c93f0a61481bc0f37be436cc5",
+    "layauto_v2/state/regions.py": "de35da051c4d2a0e35fa403affdf43fb6202f3bae3d7c4f45eea9b290c74b315",
+    "layauto_v2/normalization/effective.py": "9e6cd99c7ba0a0d5c19f6299d879a8e7954b7ca49663755f18754b1c0cd9f8e5",
+    "layauto_v2/normalization/effective_codec.py": "58893a786683e41ae58cedabbe24d44c0b8517d219b5346e7b76ad178c7f8bf0"
+  },
+  "positive_constructor_and_decode": [
+    {
+      "type": "EffectiveGeometryResult",
+      "constructor": {
+        "distinct_nonatomic_objects": 5488,
+        "class_occurrences": {
+          "builtins.NoneType": 483,
+          "builtins.bool": 81,
+          "builtins.bytes": 47,
+          "builtins.int": 6180,
+          "builtins.str": 9507,
+          "builtins.tuple": 1998,
+          "fractions.Fraction": 64,
+          "layauto_v2.domain.codec.FrozenMap": 2914,
+          "layauto_v2.domain.evidence.EvidenceRecord": 14,
+          "layauto_v2.domain.evidence.SourceFile": 31,
+          "layauto_v2.domain.evidence.SourceRef": 88,
+          "layauto_v2.domain.geometry.DrawnRecord": 40,
+          "layauto_v2.domain.geometry.GeometryRecordId": 97,
+          "layauto_v2.domain.geometry.GeometryRef": 177,
+          "layauto_v2.domain.geometry.LayerPolicy": 15,
+          "layauto_v2.domain.geometry.OccupantFragmentId": 41,
+          "layauto_v2.domain.geometry.Rect": 90,
+          "layauto_v2.domain.geometry.StreamLayerKey": 40,
+          "layauto_v2.domain.geometry.UnitBinding": 1,
+          "layauto_v2.domain.regions.ExactRegion": 9,
+          "layauto_v2.domain.regions.OperatorBinding": 1,
+          "layauto_v2.domain.regions.RecordRegions": 5,
+          "layauto_v2.domain.regions.RegionRef": 14,
+          "layauto_v2.domain.results.ParseResult": 1,
+          "layauto_v2.normalization.contracts.NormalizationInput": 1,
+          "layauto_v2.normalization.effective.EffectiveGeometryResult": 1,
+          "layauto_v2.normalization.geometry.GeometryResult": 1,
+          "layauto_v2.normalization.geometry_input.GeometryInput": 1,
+          "layauto_v2.state.coordinate.BasePartition": 1,
+          "layauto_v2.state.coordinate.LayerPartition": 13,
+          "layauto_v2.state.layout_store.LayoutDraft": 1,
+          "layauto_v2.state.occupancy.BaseCellId": 41,
+          "layauto_v2.state.occupancy.BaseOccupancy": 2,
+          "layauto_v2.state.occupancy.OccupantFragment": 41,
+          "layauto_v2.state.regions.EffectiveDraft": 1
+        }
+      },
+      "decode": {
+        "distinct_nonatomic_objects": 11938,
+        "class_occurrences": {
+          "builtins.NoneType": 1149,
+          "builtins.bool": 154,
+          "builtins.bytes": 73,
+          "builtins.int": 14039,
+          "builtins.str": 19741,
+          "builtins.tuple": 4547,
+          "fractions.Fraction": 144,
+          "layauto_v2.domain.codec.FrozenMap": 5935,
+          "layauto_v2.domain.evidence.EvidenceRecord": 35,
+          "layauto_v2.domain.evidence.SourceFile": 31,
+          "layauto_v2.domain.evidence.SourceRef": 207,
+          "layauto_v2.domain.geometry.DrawnRecord": 80,
+          "layauto_v2.domain.geometry.GeometryRecordId": 184,
+          "layauto_v2.domain.geometry.GeometryRef": 339,
+          "layauto_v2.domain.geometry.LayerPolicy": 30,
+          "layauto_v2.domain.geometry.OccupantFragmentId": 82,
+          "layauto_v2.domain.geometry.Rect": 171,
+          "layauto_v2.domain.geometry.StreamLayerKey": 80,
+          "layauto_v2.domain.geometry.UnitBinding": 2,
+          "layauto_v2.domain.regions.ExactRegion": 9,
+          "layauto_v2.domain.regions.OperatorBinding": 1,
+          "layauto_v2.domain.regions.RecordRegions": 5,
+          "layauto_v2.domain.regions.RegionRef": 14,
+          "layauto_v2.domain.results.ParseResult": 1,
+          "layauto_v2.normalization.contracts.NormalizationInput": 1,
+          "layauto_v2.normalization.effective.EffectiveGeometryResult": 1,
+          "layauto_v2.normalization.geometry.GeometryResult": 1,
+          "layauto_v2.normalization.geometry_input.GeometryInput": 1,
+          "layauto_v2.state.coordinate.BasePartition": 2,
+          "layauto_v2.state.coordinate.LayerPartition": 26,
+          "layauto_v2.state.layout_store.LayoutDraft": 2,
+          "layauto_v2.state.occupancy.BaseCellId": 82,
+          "layauto_v2.state.occupancy.BaseOccupancy": 2,
+          "layauto_v2.state.occupancy.OccupantFragment": 82,
+          "layauto_v2.state.regions.EffectiveDraft": 1
+        }
+      }
+    },
+    {
+      "type": "EffectiveDraft",
+      "constructor": {
+        "distinct_nonatomic_objects": 1601,
+        "class_occurrences": {
+          "builtins.NoneType": 204,
+          "builtins.bool": 9,
+          "builtins.bytes": 7,
+          "builtins.int": 2865,
+          "builtins.str": 1373,
+          "builtins.tuple": 918,
+          "fractions.Fraction": 16,
+          "layauto_v2.domain.codec.FrozenMap": 179,
+          "layauto_v2.domain.evidence.EvidenceRecord": 5,
+          "layauto_v2.domain.evidence.SourceRef": 60,
+          "layauto_v2.domain.geometry.DrawnRecord": 40,
+          "layauto_v2.domain.geometry.GeometryRecordId": 97,
+          "layauto_v2.domain.geometry.GeometryRef": 177,
+          "layauto_v2.domain.geometry.LayerPolicy": 15,
+          "layauto_v2.domain.geometry.OccupantFragmentId": 41,
+          "layauto_v2.domain.geometry.Rect": 90,
+          "layauto_v2.domain.geometry.StreamLayerKey": 40,
+          "layauto_v2.domain.geometry.UnitBinding": 1,
+          "layauto_v2.domain.regions.ExactRegion": 9,
+          "layauto_v2.domain.regions.OperatorBinding": 1,
+          "layauto_v2.domain.regions.RecordRegions": 5,
+          "layauto_v2.domain.regions.RegionRef": 14,
+          "layauto_v2.state.coordinate.BasePartition": 1,
+          "layauto_v2.state.coordinate.LayerPartition": 13,
+          "layauto_v2.state.layout_store.LayoutDraft": 1,
+          "layauto_v2.state.occupancy.BaseCellId": 41,
+          "layauto_v2.state.occupancy.BaseOccupancy": 1,
+          "layauto_v2.state.occupancy.OccupantFragment": 41,
+          "layauto_v2.state.regions.EffectiveDraft": 1
+        }
+      },
+      "decode": {
+        "distinct_nonatomic_objects": 1820,
+        "class_occurrences": {
+          "builtins.NoneType": 209,
+          "builtins.bool": 9,
+          "builtins.bytes": 7,
+          "builtins.int": 2895,
+          "builtins.str": 1803,
+          "builtins.tuple": 940,
+          "fractions.Fraction": 16,
+          "layauto_v2.domain.codec.FrozenMap": 210,
+          "layauto_v2.domain.evidence.EvidenceRecord": 5,
+          "layauto_v2.domain.evidence.SourceRef": 61,
+          "layauto_v2.domain.geometry.DrawnRecord": 40,
+          "layauto_v2.domain.geometry.GeometryRecordId": 103,
+          "layauto_v2.domain.geometry.GeometryRef": 177,
+          "layauto_v2.domain.geometry.LayerPolicy": 15,
+          "layauto_v2.domain.geometry.OccupantFragmentId": 41,
+          "layauto_v2.domain.geometry.Rect": 90,
+          "layauto_v2.domain.geometry.StreamLayerKey": 40,
+          "layauto_v2.domain.geometry.UnitBinding": 1,
+          "layauto_v2.domain.regions.ExactRegion": 9,
+          "layauto_v2.domain.regions.OperatorBinding": 1,
+          "layauto_v2.domain.regions.RecordRegions": 5,
+          "layauto_v2.domain.regions.RegionRef": 14,
+          "layauto_v2.state.coordinate.BasePartition": 1,
+          "layauto_v2.state.coordinate.LayerPartition": 13,
+          "layauto_v2.state.layout_store.LayoutDraft": 1,
+          "layauto_v2.state.occupancy.BaseCellId": 41,
+          "layauto_v2.state.occupancy.BaseOccupancy": 1,
+          "layauto_v2.state.occupancy.OccupantFragment": 41,
+          "layauto_v2.state.regions.EffectiveDraft": 1
+        }
+      }
+    },
+    {
+      "type": "OperatorBinding",
+      "constructor": {
+        "distinct_nonatomic_objects": 70,
+        "class_occurrences": {
+          "builtins.NoneType": 10,
+          "builtins.bool": 8,
+          "builtins.int": 35,
+          "builtins.str": 235,
+          "builtins.tuple": 30,
+          "layauto_v2.domain.codec.FrozenMap": 45,
+          "layauto_v2.domain.evidence.EvidenceRecord": 2,
+          "layauto_v2.domain.evidence.SourceRef": 2,
+          "layauto_v2.domain.geometry.GeometryRef": 1,
+          "layauto_v2.domain.regions.OperatorBinding": 1
+        }
+      },
+      "decode": {
+        "distinct_nonatomic_objects": 70,
+        "class_occurrences": {
+          "builtins.NoneType": 10,
+          "builtins.bool": 8,
+          "builtins.int": 35,
+          "builtins.str": 235,
+          "builtins.tuple": 30,
+          "layauto_v2.domain.codec.FrozenMap": 45,
+          "layauto_v2.domain.evidence.EvidenceRecord": 2,
+          "layauto_v2.domain.evidence.SourceRef": 2,
+          "layauto_v2.domain.geometry.GeometryRef": 1,
+          "layauto_v2.domain.regions.OperatorBinding": 1
+        }
+      }
+    },
+    {
+      "type": "RecordRegions",
+      "constructor": {
+        "distinct_nonatomic_objects": 16,
+        "class_occurrences": {
+          "builtins.int": 12,
+          "builtins.str": 14,
+          "builtins.tuple": 8,
+          "layauto_v2.domain.geometry.GeometryRecordId": 5,
+          "layauto_v2.domain.geometry.GeometryRef": 4,
+          "layauto_v2.domain.geometry.Rect": 3,
+          "layauto_v2.domain.regions.ExactRegion": 3,
+          "layauto_v2.domain.regions.RecordRegions": 1,
+          "layauto_v2.domain.regions.RegionRef": 4
+        }
+      },
+      "decode": {
+        "distinct_nonatomic_objects": 31,
+        "class_occurrences": {
+          "builtins.int": 12,
+          "builtins.str": 32,
+          "builtins.tuple": 8,
+          "layauto_v2.domain.geometry.GeometryRecordId": 8,
+          "layauto_v2.domain.geometry.GeometryRef": 4,
+          "layauto_v2.domain.geometry.Rect": 3,
+          "layauto_v2.domain.regions.ExactRegion": 3,
+          "layauto_v2.domain.regions.RecordRegions": 1,
+          "layauto_v2.domain.regions.RegionRef": 4
+        }
+      }
+    },
+    {
+      "type": "ExactRegion",
+      "constructor": {
+        "distinct_nonatomic_objects": 8,
+        "class_occurrences": {
+          "builtins.int": 4,
+          "builtins.str": 8,
+          "builtins.tuple": 2,
+          "layauto_v2.domain.geometry.GeometryRecordId": 2,
+          "layauto_v2.domain.geometry.GeometryRef": 1,
+          "layauto_v2.domain.geometry.Rect": 1,
+          "layauto_v2.domain.regions.ExactRegion": 1,
+          "layauto_v2.domain.regions.RegionRef": 1
+        }
+      },
+      "decode": {
+        "distinct_nonatomic_objects": 8,
+        "class_occurrences": {
+          "builtins.int": 4,
+          "builtins.str": 8,
+          "builtins.tuple": 2,
+          "layauto_v2.domain.geometry.GeometryRecordId": 2,
+          "layauto_v2.domain.geometry.GeometryRef": 1,
+          "layauto_v2.domain.geometry.Rect": 1,
+          "layauto_v2.domain.regions.ExactRegion": 1,
+          "layauto_v2.domain.regions.RegionRef": 1
+        }
+      }
+    },
+    {
+      "type": "RegionPiece",
+      "constructor": {
+        "distinct_nonatomic_objects": 3,
+        "class_occurrences": {
+          "builtins.int": 4,
+          "builtins.str": 3,
+          "layauto_v2.domain.geometry.Rect": 1,
+          "layauto_v2.domain.regions.RegionPiece": 1,
+          "layauto_v2.domain.regions.RegionRef": 1
+        }
+      },
+      "decode": {
+        "distinct_nonatomic_objects": 3,
+        "class_occurrences": {
+          "builtins.int": 4,
+          "builtins.str": 3,
+          "layauto_v2.domain.geometry.Rect": 1,
+          "layauto_v2.domain.regions.RegionPiece": 1,
+          "layauto_v2.domain.regions.RegionRef": 1
+        }
+      }
+    },
+    {
+      "type": "RegionRef",
+      "constructor": {
+        "distinct_nonatomic_objects": 1,
+        "class_occurrences": {
+          "builtins.str": 2,
+          "layauto_v2.domain.regions.RegionRef": 1
+        }
+      },
+      "decode": {
+        "distinct_nonatomic_objects": 1,
+        "class_occurrences": {
+          "builtins.str": 2,
+          "layauto_v2.domain.regions.RegionRef": 1
+        }
+      }
+    }
+  ],
+  "independent_success_graph_census": {
+    "distinct_nonatomic_objects": 5488,
+    "class_occurrences": {
+      "builtins.NoneType": 483,
+      "builtins.bool": 81,
+      "builtins.bytes": 47,
+      "builtins.int": 6180,
+      "builtins.str": 9507,
+      "builtins.tuple": 1998,
+      "fractions.Fraction": 64,
+      "layauto_v2.domain.codec.FrozenMap": 2914,
+      "layauto_v2.domain.evidence.EvidenceRecord": 14,
+      "layauto_v2.domain.evidence.SourceFile": 31,
+      "layauto_v2.domain.evidence.SourceRef": 88,
+      "layauto_v2.domain.geometry.DrawnRecord": 40,
+      "layauto_v2.domain.geometry.GeometryRecordId": 97,
+      "layauto_v2.domain.geometry.GeometryRef": 177,
+      "layauto_v2.domain.geometry.LayerPolicy": 15,
+      "layauto_v2.domain.geometry.OccupantFragmentId": 41,
+      "layauto_v2.domain.geometry.Rect": 90,
+      "layauto_v2.domain.geometry.StreamLayerKey": 40,
+      "layauto_v2.domain.geometry.UnitBinding": 1,
+      "layauto_v2.domain.regions.ExactRegion": 9,
+      "layauto_v2.domain.regions.OperatorBinding": 1,
+      "layauto_v2.domain.regions.RecordRegions": 5,
+      "layauto_v2.domain.regions.RegionRef": 14,
+      "layauto_v2.domain.results.ParseResult": 1,
+      "layauto_v2.normalization.contracts.NormalizationInput": 1,
+      "layauto_v2.normalization.effective.EffectiveGeometryResult": 1,
+      "layauto_v2.normalization.geometry.GeometryResult": 1,
+      "layauto_v2.normalization.geometry_input.GeometryInput": 1,
+      "layauto_v2.state.coordinate.BasePartition": 1,
+      "layauto_v2.state.coordinate.LayerPartition": 13,
+      "layauto_v2.state.layout_store.LayoutDraft": 1,
+      "layauto_v2.state.occupancy.BaseCellId": 41,
+      "layauto_v2.state.occupancy.BaseOccupancy": 2,
+      "layauto_v2.state.occupancy.OccupantFragment": 41,
+      "layauto_v2.state.regions.EffectiveDraft": 1
+    }
+  },
+  "rejected_cases": [
+    {
+      "case": "RegionRef.kind/trap-equality",
+      "result": "ValueError",
+      "message": "unknown region reference kind"
+    },
+    {
+      "case": "ExactRegion.role/trap-equality",
+      "result": "ValueError",
+      "message": "invalid exact region owner/role"
+    },
+    {
+      "case": "RecordRegions.operation/trap-equality",
+      "result": "ValueError",
+      "message": "invalid record-region owner/operation"
+    },
+    {
+      "case": "OperatorBinding.schema_version/trap-equality",
+      "result": "ValueError",
+      "message": "unsupported effective-region schema"
+    },
+    {
+      "case": "RegionPiece.schema_version/trap-equality",
+      "result": "ValueError",
+      "message": "unsupported effective-region schema"
+    },
+    {
+      "case": "ExactRegion.schema_version/trap-equality",
+      "result": "ValueError",
+      "message": "unsupported effective-region schema"
+    },
+    {
+      "case": "RecordRegions.schema_version/trap-equality",
+      "result": "ValueError",
+      "message": "unsupported effective-region schema"
+    },
+    {
+      "case": "EffectiveDraft.schema_version/trap-equality",
+      "result": "ValueError",
+      "message": "unsupported effective draft version"
+    },
+    {
+      "case": "EffectiveGeometryResult.schema_version/trap-equality",
+      "result": "ValueError",
+      "message": "unsupported effective geometry result schema"
+    },
+    {
+      "case": "EffectiveGeometryResult.status/trap-equality",
+      "result": "ValueError",
+      "message": "effective geometry status requires exact text"
+    },
+    {
+      "case": "ExactRegion.contributors/TrapList",
+      "result": "ValueError",
+      "message": "invalid effective-region contributors"
+    },
+    {
+      "case": "ExactRegion.contributors/TrapTuple",
+      "result": "ValueError",
+      "message": "invalid effective-region contributors"
+    },
+    {
+      "case": "ExactRegion.rectangles/TrapList",
+      "result": "ValueError",
+      "message": "invalid effective-region rectangles"
+    },
+    {
+      "case": "ExactRegion.rectangles/TrapTuple",
+      "result": "ValueError",
+      "message": "invalid effective-region rectangles"
+    },
+    {
+      "case": "RecordRegions.contributors/TrapList",
+      "result": "ValueError",
+      "message": "invalid effective-region contributors"
+    },
+    {
+      "case": "RecordRegions.contributors/TrapTuple",
+      "result": "ValueError",
+      "message": "invalid effective-region contributors"
+    },
+    {
+      "case": "RecordRegions.regions/TrapList",
+      "result": "ValueError",
+      "message": "invalid effective-region regions"
+    },
+    {
+      "case": "RecordRegions.regions/TrapTuple",
+      "result": "ValueError",
+      "message": "invalid effective-region regions"
+    },
+    {
+      "case": "EffectiveDraft.records/TrapList",
+      "result": "ValueError",
+      "message": "effective draft requires typed record regions"
+    },
+    {
+      "case": "EffectiveDraft.records/TrapTuple",
+      "result": "ValueError",
+      "message": "effective draft requires typed record regions"
+    },
+    {
+      "case": "EffectiveGeometryResult.completed/TrapList",
+      "result": "ValueError",
+      "message": "invalid effective result completed"
+    },
+    {
+      "case": "EffectiveGeometryResult.completed/TrapTuple",
+      "result": "ValueError",
+      "message": "invalid effective result completed"
+    },
+    {
+      "case": "EffectiveGeometryResult.issues/TrapList",
+      "result": "ValueError",
+      "message": "invalid effective result issues"
+    },
+    {
+      "case": "EffectiveGeometryResult.issues/TrapTuple",
+      "result": "ValueError",
+      "message": "invalid effective result issues"
+    },
+    {
+      "case": "owner/source-__class__-impersonation/binding",
+      "result": "ValueError",
+      "message": "geometry requires a captured source reference"
+    },
+    {
+      "case": "owner/source-__class__-impersonation/state-builder",
+      "result": "ValueError",
+      "message": "geometry requires a captured source reference"
+    },
+    {
+      "case": "completed/source-__class__-impersonation/result",
+      "result": "ValueError",
+      "message": "foreign or mutable value in effective geometry graph"
+    },
+    {
+      "case": "owner/nested-source-uri/binding",
+      "result": "ValueError",
+      "message": "unsupported exact value type: MutableText"
+    },
+    {
+      "case": "error/nested-source-uri/result",
+      "result": "ValueError",
+      "message": "foreign or mutable value in effective geometry graph"
+    },
+    {
+      "case": "error/issues/TrapList",
+      "result": "ValueError",
+      "message": "invalid effective result issues"
+    },
+    {
+      "case": "error/issues/TrapTuple",
+      "result": "ValueError",
+      "message": "invalid effective result issues"
+    }
+  ],
+  "rejection_count": 31,
+  "native_list_defensive_copies": 7,
+  "conclusion": "No retained mutable or foreign object found; all targeted adversarial inputs rejected."
+}

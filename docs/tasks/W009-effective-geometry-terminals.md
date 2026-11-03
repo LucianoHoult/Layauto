@@ -94,6 +94,14 @@ Reviewer对最终`32e60e783a7a7e4172ee3916e3ceb4fade329585b87a7c7091a85c8a6418d1
 
 最终Python3.12.14/3.10.22各**914 passed**、strict mypy各44模块，以及build、pip check和两次真实checkout外`-I -B`源码包组合smoke，采用已独立核验的执行回执；reviewer未冒称重跑全部矩阵或重建安装。[包来源/安装树独立审计](W009/review/package-audit.json)确认直接artifact URL/hash、site-packages来源及源码外cwd。**最终代码与工程证据审查完成，剩余必须修正项0，建议交PM核验接收。** 这不是PM验收或合并决定；完整坐标、connectivity/body/extraction、baseline/terminal及生产义务仍按原范围后置。
 
+### R3 独立合并前复核（2026-11-03）
+
+本次独立 reviewer session 对 `main@4df07e68b05df4c57a8b8d44bc41e7e073938d3a` 至待审 `88a7ae9d0330b7c7fddda0b07366c7a96552b65e` 的完整交付复核，并以准备 `4975e565…` 至产品 `5b1d9b51…` 定位实现，按 PM1 恢复；未只审最后一个 PM 提交。详见[独立合并前报告](W009/independent-premerge-review.md)与[可复验材料](W009/independent-premerge-review/)。
+
+**剩余必须修正项 1（IPMR-01，P2），暂不建议 PM 进入集成。** 合法 W009 draft/result wire 的嵌套 W008 base 重建仍经旧 geometry codec broad catch，将内部 TypeError/KeyError/AttributeError/IndexError/UnicodeError 改写为新 ValueError；99项独立矩阵中30项失去原对象，主 reviewer 另行最小复现。原 CR-01 对 W009 自身算法路径的修正确实生效，但完整嵌套链关闭不充分；原 IR-01、CR-02 的关闭仍有独立依据。保留原 finding/报告和 PM1，不由本节改写历史结论、验收标准或 PM 阶段。
+
+本次 Python3.12完整 v2 **914 passed / 1010.02s**、strict typing **44模块**通过；新独立几何4418组/521222点、原对象图31反例/7快照及来源/畸形wire26项已实跑。240项源码/快照、117证据、15命令输出、两包各90项runtime和最终修正身份匹配；旧安装树不在本机，原双解释器/构建/干净安装按身份采信，未冒称重装或重新观察历史执行。详细结果见本次报告和原始回执。修正后须独立复核受影响路径和最终交付身份，再交 PM 决定集成；本轮未改产品、正式测试、fixture/答案、历史证据、PM 段或 current-work，未自行验收、合并或启动后续任务。
+
 ## PM 验收与交接（PM）
 
 当前仅准备W009范围与独立执行入口，未验收产品、未启动实现。既有W008及更早任务的验收事实保持。

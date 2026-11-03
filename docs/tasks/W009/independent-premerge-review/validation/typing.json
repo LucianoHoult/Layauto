@@ -1,0 +1,43 @@
+{
+  "command": [
+    "/workspace/.venvs/layauto/bin/python",
+    "-B",
+    "-m",
+    "mypy",
+    "--cache-dir",
+    "/workspace/work/w009-premerge-cache/mypy"
+  ],
+  "cwd": "/workspace/work/w009-review",
+  "head": "88a7ae9d0330b7c7fddda0b07366c7a96552b65e",
+  "finished_head": "88a7ae9d0330b7c7fddda0b07366c7a96552b65e",
+  "started_utc": "2026-11-03T09:05:34.220709+00:00",
+  "elapsed_seconds": 3.874,
+  "returncode": 0,
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "executable": "/workspace/.venvs/layauto/bin/python",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "environment_scope": "existing cloud development venv; mypy and stubs in isolated task target; not a clean install",
+  "env_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONPATH": "/workspace/work/w009-review:/workspace/work/w009-premerge-deps",
+    "XDG_CACHE_HOME": "/workspace/work/w009-premerge-cache",
+    "MPLCONFIGDIR": "/workspace/work/w009-premerge-cache/mpl",
+    "MPLBACKEND": "Agg"
+  },
+  "packages": {
+    "pytest": "9.2.0",
+    "mypy": "2.4.1",
+    "PyYAML": "6.0.3",
+    "types-PyYAML": "6.0.12.20261103"
+  },
+  "outputs": {
+    "stdout": {
+      "path": "typing.stdout.txt",
+      "sha256": "522d7b3a15704213950b7053c882b6ddd0c41149631300ce6c1933d21b5971c3"
+    },
+    "stderr": {
+      "path": "typing.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  }
+}
