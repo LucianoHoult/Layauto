@@ -1,0 +1,17 @@
+{
+  "purpose": "PM confirmation of IPMR-01; script exit 0 confirms defect, not successful contract",
+  "head": "386a139c38e815086fafc183ea73ea650e72cc5b",
+  "command": [
+    "/workspace/work/w005-pm-check-env/bin/python",
+    "-B",
+    "docs/tasks/W009/independent-premerge-review/validation/nested_base_confirmation.py"
+  ],
+  "cwd": "/workspace/Layauto",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "elapsed_seconds": 2.488,
+  "returncode": 0,
+  "finding_confirmed": true,
+  "contract": "failed",
+  "stdout_sha256": "3176ac7974427377305f6a1c4c20518d44ac76029d11eb71b5d07a8b849dd0ae",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}
