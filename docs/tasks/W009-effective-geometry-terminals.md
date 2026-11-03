@@ -8,8 +8,8 @@
 | --- | --- |
 | ID / 目标 | W009；从认证的W008几何产物及同源physical/drawn/formats声明构造只读、精确、可重建的有效几何与channel/terminal区域草稿 |
 | 里程碑 / 依赖 | M1第五个产品切片；W003/W004样本、W005读取、W006审计、W007语义/身份和W008基础几何已验收集成。main起点`4df07e68b05df4c57a8b8d44bc41e7e073938d3a`，W008产品经[PR #62](https://github.com/LucianoHoult/Layauto/pull/62)集成，见[W008 PM2](W008-geometry-base-occupancy.md#pm2-integration-20261103) |
-| 授权依据 / 阶段 | 用户2026-11-03同意继续推进，沿用独立执行session。**可执行：派发要求已独立复核，必须修正项0；先细化方案并独立review，原范围内修正后实现A1–A8。** 本次PM只准备任务，尚无W009产品实现 |
-| 恢复位置 | `codex/w009-effective-geometry-terminals`，从上述main建立；接手包含本任务及current-work的PM交接提交，完整SHA见Git/回复 |
+| 授权依据 / 阶段 | 用户2026-11-03交回执行结果，沿用独立session分工。**待验收：实现及方案/代码review已交付，PM分支技术接收通过，本次新增必须修正项0。** 下一步独立合并前复核；尚未合入main或完成最终验收，见[PM1](#pm1-receipt-20261103) |
+| 恢复位置 | `codex/w009-effective-geometry-terminals`，产品交付`5b1d9b5196a7c5181822c4dd0f1bd2f678475116`；接手包含PM1及current-work补记的最新提交，完整SHA见Git/回复。main仍为上述起点 |
 | 允许修改 | `layauto_v2/domain/`必要中立区域/算子/来源DTO；`state/`内有效几何/区域草稿纯组件；`normalization/`适配、组合与codec；必要的同范围tech校验复用；对应tests、typing/build配置、README及本任务附件。模块/类型名由内部方案选择 |
 | 非目标 | 不实现完整工艺坐标/合法routing lattice、全层导通图/connector edges、电气ComponentId、body-to-rail证明、fin计数/完整器件提取、query spatial overlay、规则执行器/CSP、lifecycle最终闭合、baseline/seal/发布、ECO/no_change/terminal/Stage6；不改fixture/答案/历史证据，不新增生产格式或MR-040配置机制 |
 | 架构依据 | 本次main的[architecture](../architecture.md) §2.2–2.3、§3.1/3.4–3.6、§4.5–4.8、§5.6–5.9、§11.2–11.3/11.14–11.15、§12.3/12.5；[W003 contracts](W003/contracts.md)、[manual review](W003/manual-verification.md) MR-045/046（以W004修订后的body合同为准）、MR-052/054/056；W007/W008输入、身份、单位及公开结果合同 |
@@ -100,7 +100,17 @@ Reviewer对最终`32e60e783a7a7e4172ee3916e3ceb4fade329585b87a7c7091a85c8a6418d1
 
 **派发要求独立复核（2026-11-03，PM记录）：** 未参与草稿设计的`/root/w009_handoff_review`对照架构、实际owner/样本、W008接口和U06边界检查，必须修正项0，见[独立记录](W009/handoff-review.md)。原受审草稿SHA-256为`858f3a6e06350e36dd1760cc37cf2a0d7ef890301d7178ce6380c6a4f54d15b7`；此后采纳两项非阻塞澄清：逐层raw轴不保证包含CUT/channel边界，以及集合正确性不能仅凭面积判断。本记录与阶段补记不代表未来方案/代码review或产品验证。
 
-### 独立执行session prompt
+<a id="pm1-receipt-20261103"></a>
+
+### PM1 分支技术接收（2026-11-03）
+
+已核对远端交付`5b1d9b5196a7c5181822c4dd0f1bd2f678475116`、A1–A8覆盖、IR-01/CR-01/CR-02独立关闭及最终源码/证据身份。PM实际Python3.12完整**914 passed / 599.29s**、strict typing **44模块**通过；18项异常同对象、Fraction别名拒绝及独立512组几何穷举通过。源码/归档240项、证据117项、两包各90项runtime与交付一致，fixture及历史材料未改。**分支技术接收通过，本次新增必须修正项0；待最终验收。**
+
+详见[PM接收说明](W009/pm-receipt.md)和[机器回执](W009/pm-receipt.json)。原双解释器/干净安装证据按最终身份采信；本机未重建/重装或重跑3.10，原安装树不在本机。PM专项不冒称新的独立premerge session已完成。下一步单独session合并前复核，再做main集成及组合验证；本轮未合并、未启动W010。完整Stage2/M1、真实EDA与U06生产缺外部body上下文义务继续保留。
+
+<a id="独立执行session-prompt"></a>
+
+### 独立执行session prompt（原派发，保留）
 
 ```text
 按Layauto项目规范，以执行角色完成W009“有效几何与沟道、端区草稿”。

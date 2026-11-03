@@ -1,0 +1,137 @@
+{
+  "all_same_object": true,
+  "observations": [
+    {
+      "cause_same_object": false,
+      "enclosing": "draft",
+      "injected": "RuntimeError",
+      "observed": "RuntimeError",
+      "same_object": true
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "draft",
+      "injected": "ValueError",
+      "observed": "ValueError",
+      "same_object": true
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "draft",
+      "injected": "TypeError",
+      "observed": "TypeError",
+      "same_object": true
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "draft",
+      "injected": "KeyError",
+      "observed": "KeyError",
+      "same_object": true
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "draft",
+      "injected": "AttributeError",
+      "observed": "AttributeError",
+      "same_object": true
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "draft",
+      "injected": "IndexError",
+      "observed": "IndexError",
+      "same_object": true
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "draft",
+      "injected": "UnicodeError",
+      "observed": "UnicodeError",
+      "same_object": true
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "draft",
+      "injected": "KeyboardInterrupt",
+      "observed": "KeyboardInterrupt",
+      "same_object": true
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "draft",
+      "injected": "SystemExit",
+      "observed": "SystemExit",
+      "same_object": true
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "result",
+      "injected": "RuntimeError",
+      "observed": "RuntimeError",
+      "same_object": true
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "result",
+      "injected": "ValueError",
+      "observed": "ValueError",
+      "same_object": true
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "result",
+      "injected": "TypeError",
+      "observed": "TypeError",
+      "same_object": true
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "result",
+      "injected": "KeyError",
+      "observed": "KeyError",
+      "same_object": true
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "result",
+      "injected": "AttributeError",
+      "observed": "AttributeError",
+      "same_object": true
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "result",
+      "injected": "IndexError",
+      "observed": "IndexError",
+      "same_object": true
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "result",
+      "injected": "UnicodeError",
+      "observed": "UnicodeError",
+      "same_object": true
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "result",
+      "injected": "KeyboardInterrupt",
+      "observed": "KeyboardInterrupt",
+      "same_object": true
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "result",
+      "injected": "SystemExit",
+      "observed": "SystemExit",
+      "same_object": true
+    }
+  ],
+  "sources": {
+    "layauto_v2/domain/regions.py": "9fd1b2b98338c594533a39e2c0af4c28c1c0cc5c93f0a61481bc0f37be436cc5",
+    "layauto_v2/normalization/effective.py": "9e6cd99c7ba0a0d5c19f6299d879a8e7954b7ca49663755f18754b1c0cd9f8e5",
+    "layauto_v2/normalization/effective_codec.py": "58893a786683e41ae58cedabbe24d44c0b8517d219b5346e7b76ad178c7f8bf0",
+    "layauto_v2/state/regions.py": "de35da051c4d2a0e35fa403affdf43fb6202f3bae3d7c4f45eea9b290c74b315"
+  }
+}

@@ -1,0 +1,194 @@
+{
+  "schema": "layauto-w009-pm-receipt/1",
+  "date": "2026-11-03",
+  "reviewed_head": "5b1d9b5196a7c5181822c4dd0f1bd2f678475116",
+  "preparation_head": "4975e565a33d9594782645b6ad0f944b78ee6ae8",
+  "main_observed": "4df07e68b05df4c57a8b8d44bc41e7e073938d3a",
+  "status": "branch_technical_receipt_passed_pending_final_acceptance",
+  "new_must_fix": 0,
+  "source_manifest_sha256": "32e60e783a7a7e4172ee3916e3ceb4fade329585b87a7c7091a85c8a6418d1b6",
+  "actual_checks": {
+    "pytest": {
+      "head": "5b1d9b5196a7c5181822c4dd0f1bd2f678475116",
+      "cwd": "/workspace/Layauto",
+      "command": [
+        "/workspace/work/w005-pm-check-env/bin/python",
+        "-B",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "tests/unit",
+        "tests/contracts",
+        "-q"
+      ],
+      "env_overrides": {
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PYTHONPATH": "/workspace/Layauto"
+      },
+      "started_utc": "2026-11-03T08:04:18.740558+00:00",
+      "elapsed_seconds": 602.071,
+      "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+      "executable": "/workspace/work/w005-pm-check-env/bin/python",
+      "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+      "packages": {
+        "pytest": "9.2.0",
+        "mypy": "2.4.1",
+        "PyYAML": "6.0.3"
+      },
+      "environment_scope": "existing PM venv; not a clean install validation",
+      "returncode": 0,
+      "outputs": {
+        "stdout": {
+          "path": "pytest.stdout.txt",
+          "sha256": "2e1a8fd3dd6c85541727f0a306aea5b0d2d52be09a6d1916d04c199ced4fd187"
+        },
+        "stderr": {
+          "path": "pytest.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    "typing": {
+      "head": "5b1d9b5196a7c5181822c4dd0f1bd2f678475116",
+      "cwd": "/workspace/Layauto",
+      "command": [
+        "/workspace/work/w005-pm-check-env/bin/python",
+        "-B",
+        "-m",
+        "mypy",
+        "--cache-dir",
+        "/workspace/work/w009-pm/mypy-cache"
+      ],
+      "env_overrides": {
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PYTHONPATH": "/workspace/Layauto"
+      },
+      "started_utc": "2026-11-03T08:04:18.739043+00:00",
+      "elapsed_seconds": 1.87,
+      "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+      "executable": "/workspace/work/w005-pm-check-env/bin/python",
+      "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+      "packages": {
+        "pytest": "9.2.0",
+        "mypy": "2.4.1",
+        "PyYAML": "6.0.3"
+      },
+      "environment_scope": "existing PM venv; not a clean install validation",
+      "returncode": 0,
+      "outputs": {
+        "stdout": {
+          "path": "typing.stdout.txt",
+          "sha256": "522d7b3a15704213950b7053c882b6ddd0c41149631300ce6c1933d21b5971c3"
+        },
+        "stderr": {
+          "path": "typing.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    "exception-probe": {
+      "head": "5b1d9b5196a7c5181822c4dd0f1bd2f678475116",
+      "cwd": "/workspace/Layauto",
+      "command": [
+        "/workspace/work/w005-pm-check-env/bin/python",
+        "-B",
+        "docs/tasks/W009/review/exception_probe.py"
+      ],
+      "env_overrides": {
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PYTHONPATH": "/workspace/Layauto"
+      },
+      "started_utc": "2026-11-03T08:05:12.532501+00:00",
+      "elapsed_seconds": 21.247,
+      "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+      "executable": "/workspace/work/w005-pm-check-env/bin/python",
+      "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+      "packages": {
+        "pytest": "9.2.0",
+        "mypy": "2.4.1",
+        "PyYAML": "6.0.3"
+      },
+      "environment_scope": "existing PM venv; not a clean install validation",
+      "returncode": 0,
+      "outputs": {
+        "stdout": {
+          "path": "exception-probe.stdout.txt",
+          "sha256": "68738a65eee3850af50fabfb63b147948ccdaedc01a4caffff277671c621725f"
+        },
+        "stderr": {
+          "path": "exception-probe.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    "fraction-probe": {
+      "head": "5b1d9b5196a7c5181822c4dd0f1bd2f678475116",
+      "cwd": "/workspace/Layauto",
+      "command": [
+        "/workspace/work/w005-pm-check-env/bin/python",
+        "-B",
+        "docs/tasks/W009/review/fraction_atom_probe.py"
+      ],
+      "env_overrides": {
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PYTHONPATH": "/workspace/Layauto"
+      },
+      "started_utc": "2026-11-03T08:05:12.532886+00:00",
+      "elapsed_seconds": 1.742,
+      "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+      "executable": "/workspace/work/w005-pm-check-env/bin/python",
+      "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+      "packages": {
+        "pytest": "9.2.0",
+        "mypy": "2.4.1",
+        "PyYAML": "6.0.3"
+      },
+      "environment_scope": "existing PM venv; not a clean install validation",
+      "returncode": 0,
+      "outputs": {
+        "stdout": {
+          "path": "fraction-probe.stdout.txt",
+          "sha256": "4397b9b993c7486d6c5cfe65bd0a50bcf156f98b810651a3d81879aaa85a9fce"
+        },
+        "stderr": {
+          "path": "fraction-probe.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    }
+  },
+  "pytest_summary": "914 passed, 1 warning in 599.29s (0:09:59)",
+  "typing_summary": "Success: no issues found in 44 source files",
+  "pm_specialists": {
+    "geometry": "pm-evidence/geometry/geometry-review.md",
+    "evidence": "pm-evidence/evidence/report.md"
+  },
+  "adopted_evidence": {
+    "source": "verification/receipt.json and code-review.md",
+    "scope": "Original Python 3.10/3.12 full matrices, two builds/installations and outside-source smoke; current source/archive/package bytes and archived output/install records rechecked. Historical install trees absent on PM host; no new build/install/3.10 execution."
+  },
+  "next": "Dedicated independent premerge session; then main integration and combined verification before final acceptance. W010 not started.",
+  "pm_evidence_sha256": {
+    "evidence/audit-result.json": "87dd7a86dfaa1620dcd480f79a21e45eb8ba478695e37e520e87e7f8d7debe37",
+    "evidence/audit.py": "7649a18d67ed5f79744e10528c8e788e26dd30b12690047fbeddd4afcf23fc28",
+    "evidence/report.md": "4921243d8ea94cf95cec25b9d70c2763202116bbae937c99d3edb6fbba44b4f5",
+    "exception-probe.json": "bde4505896fcad550eef7be3250f98fa81eef984373a4ec96c035dfa5691e6da",
+    "exception-probe.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "exception-probe.stdout.txt": "68738a65eee3850af50fabfb63b147948ccdaedc01a4caffff277671c621725f",
+    "fraction-probe.json": "6e2c31172c764920650373a49e914ffe8c4c3c660b911838e1093c3a0f2a3a72",
+    "fraction-probe.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "fraction-probe.stdout.txt": "4397b9b993c7486d6c5cfe65bd0a50bcf156f98b810651a3d81879aaa85a9fce",
+    "geometry/exhaustive_geometry_probe.py": "9e3e300951328a299a12910b69fca15b607440218a36fe57bc3c2aa3e89fb233",
+    "geometry/exhaustive_geometry_result.json": "f23989e451e7ec1bca05c3a7a86901c082cb0b4cc770a0fa7dd136de4dc5325e",
+    "geometry/exhaustive_geometry_stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "geometry/geometry-review.md": "1d3148329a8b19a90f7d90a9152756588cb4679172d6c337b9dae27c7aedc466",
+    "pytest.json": "74a05a83438b5ab7482e210bfa8e8e804dbd8e0a9f934047f8ba65fd5677f0d3",
+    "pytest.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "pytest.stdout.txt": "2e1a8fd3dd6c85541727f0a306aea5b0d2d52be09a6d1916d04c199ced4fd187",
+    "run_check.py": "7781c56a7fb56ddaafdca5cf5f3be24cdb9ea455209cff8633c67dc37d99dd07",
+    "typing.json": "ae02bbcce1d90d15ddfe286ea061712569715d299a6b925410a41eafca76bf8b",
+    "typing.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "typing.stdout.txt": "522d7b3a15704213950b7053c882b6ddd0c41149631300ce6c1933d21b5971c3"
+  }
+}
