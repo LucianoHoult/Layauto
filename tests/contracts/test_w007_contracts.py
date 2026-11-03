@@ -324,7 +324,20 @@ def test_normalization_and_new_domain_keep_pure_dependency_boundaries():
                                and isinstance(node, ast.ImportFrom)
                                and node.module == 'layauto_v2.importers.config'
                                and {alias.name for alias in node.names} <= {'load_document', 'validate_document'})
-            if not allowed_decoder:
+            # W008 adds an explicitly bounded captured-byte adapter and pure
+            # state construction. Preserve W007's restriction everywhere else.
+            allowed_geometry_decoder = (path.parent.name == 'normalization' and path.name == 'geometry_input.py'
+                                        and isinstance(node, ast.ImportFrom)
+                                        and ((node.module == 'layauto_v2.importers.config'
+                                              and {alias.name for alias in node.names} <= {'load_document', 'validate_document', 'validate_tech'})
+                                             or (node.module == 'layauto_v2.importers.gds'
+                                                 and {alias.name for alias in node.names} == {'parse_gds'})))
+            allowed_geometry_state = (path.parent.name == 'normalization'
+                                      and path.name in ('geometry.py', 'geometry_codec.py')
+                                      and isinstance(node, ast.ImportFrom)
+                                      and node.module in ('layauto_v2.state.layout_store',
+                                                          'layauto_v2.state.coordinate', 'layauto_v2.state.occupancy'))
+            if not (allowed_decoder or allowed_geometry_decoder or allowed_geometry_state):
                 violations.extend((str(path), module) for module in modules if module.startswith(forbidden))
         for node in ast.walk(tree):
             if isinstance(node, ast.Call) and isinstance(node.func, ast.Name):

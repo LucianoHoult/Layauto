@@ -1,0 +1,17 @@
+{
+  "source_manifest_sha256": "0985598fc7b1598827a1741e1500c8d1ceac5700a1706d0e91c1f05b52ff2e7d",
+  "packages": {
+    "layauto-0.2.0-py3-none-any.whl": {
+      "sha256": "e40f9e5cff8f0750a20cf1780c76f7c65e02bc6c5d20ad2dc91ab7da2d5085c7",
+      "size_bytes": 124505,
+      "runtime_file_count": 86,
+      "all_runtime_files_equal_source_manifest": true
+    },
+    "layauto-0.2.0.tar.gz": {
+      "sha256": "fb11e2ab05d17b0a58640ae56e2798b9cff0a728c8b8986ed82212c94a05b0a2",
+      "size_bytes": 100157,
+      "runtime_file_count": 86,
+      "all_runtime_files_equal_source_manifest": true
+    }
+  }
+}

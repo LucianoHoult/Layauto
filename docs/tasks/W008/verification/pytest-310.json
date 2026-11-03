@@ -1,0 +1,18 @@
+{
+  "command": [
+    "/private/tmp/layauto-w008-py310/bin/python",
+    "-m",
+    "pytest",
+    "tests/unit",
+    "tests/contracts",
+    "-q",
+    "-p",
+    "no:cacheprovider"
+  ],
+  "cwd": "/private/tmp/layauto-w008",
+  "started_utc": "2026-11-02T14:25:07.919860+00:00",
+  "elapsed_seconds": 306.961,
+  "returncode": 0,
+  "output_sha256": "2767b38229fa0ae5e952b827ff1bcd80eb3a487d21e178f3579d0ade7fc80f78",
+  "source_manifest_sha256": "30b4e446ff6b38f8c06be92916576928b87abdf62d10bc58f1b22ffa34a5f881"
+}

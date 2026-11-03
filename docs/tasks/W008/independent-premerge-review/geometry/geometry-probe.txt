@@ -1,0 +1,12 @@
+{
+  "status": "pass",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "checkout": "/workspace/work/w008-review",
+  "math_partitions": 600,
+  "point_membership_checks": 21314,
+  "actual_binary_records": 40,
+  "actual_projected_records": 38,
+  "actual_fragments": 41,
+  "derived_builds": 4,
+  "oracle": "independent binary record unpack + containment/disjointness/area + exhaustive cell membership"
+}

@@ -1,0 +1,15 @@
+{
+  "command": [
+    "/private/tmp/layauto-w008-dev/bin/python",
+    "-m",
+    "build",
+    "--outdir",
+    "docs/tasks/W008/verification/packages"
+  ],
+  "cwd": "/private/tmp/layauto-w008",
+  "started_utc": "2026-11-02T14:25:07.914406+00:00",
+  "elapsed_seconds": 3.92,
+  "returncode": 0,
+  "output_sha256": "e49ea1269703281fba3e032e18627eb68f240b21a854f745768852e33245b98e",
+  "source_manifest_sha256": "30b4e446ff6b38f8c06be92916576928b87abdf62d10bc58f1b22ffa34a5f881"
+}

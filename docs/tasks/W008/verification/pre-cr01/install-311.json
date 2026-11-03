@@ -1,0 +1,17 @@
+{
+  "command": [
+    "/private/tmp/layauto-w008-installed-311/bin/python",
+    "-m",
+    "pip",
+    "--cache-dir",
+    "/private/tmp/layauto-w008-pip-cache",
+    "install",
+    "/private/tmp/layauto-w008/docs/tasks/W008/verification/packages/layauto-0.2.0-py3-none-any.whl"
+  ],
+  "cwd": "/private/tmp",
+  "started_utc": "2026-11-02T14:15:53.051002+00:00",
+  "elapsed_seconds": 5.876,
+  "returncode": 0,
+  "output_sha256": "f60298fbdc69e873e9c5389b798ae948ba2ebc16f8797254ceda3cb5b54775c8",
+  "source_manifest_sha256": "0985598fc7b1598827a1741e1500c8d1ceac5700a1706d0e91c1f05b52ff2e7d"
+}

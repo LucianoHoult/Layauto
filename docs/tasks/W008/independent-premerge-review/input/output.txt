@@ -1,0 +1,60 @@
+PASS real W005 -> authenticated input/build/canonical wire without IO/tools/repository
+site selected: source.gds
+captured GDS role: another-role.gds
+original URI present: False
+semantic accepts: NormalizationInput
+PASS preserved CR-01 reproducer now rejects with location and completed facts
+PASS same SHA source/target role swap rejects although semantic receipt accepts
+PASS body second source rejects foreign URI even with identical GDS bytes/hash
+PASS header declaration rejects an already captured foreign same-byte role
+PASS body declaration rejects an already captured foreign same-byte role
+PASS coherent middle-record xy_record_index forgery rejects unchanged capture
+PASS coherent middle-record record_index forgery rejects unchanged capture
+PASS coherent middle-record byte_offset forgery rejects unchanged capture
+PASS nested successful-result wire reauthenticates same-hash wrong body backlink
+PASS simultaneous owner/policy/GDS/source/header/body aliases + target source reuse preserve geometry
+PASS real W006 readback with all aliases builds without IO/tools/readback and leaves attempt unsealed
+PASS load_document nested decoder propagates identical ValueError
+PASS load_document nested decoder propagates identical KeyboardInterrupt
+PASS load_document nested decoder propagates identical SystemExit
+PASS validate_document nested decoder propagates identical ValueError
+PASS validate_document nested decoder propagates identical KeyboardInterrupt
+PASS validate_document nested decoder propagates identical SystemExit
+PASS validate_tech nested decoder propagates identical ValueError
+PASS validate_tech nested decoder propagates identical KeyboardInterrupt
+PASS validate_tech nested decoder propagates identical SystemExit
+PASS parse_gds nested decoder propagates identical ValueError
+PASS parse_gds nested decoder propagates identical KeyboardInterrupt
+PASS parse_gds nested decoder propagates identical SystemExit
+{
+  "result": "pass",
+  "checks": 24,
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "module": "/workspace/work/w008-review/layauto_v2/normalization/geometry_input.py",
+  "check_names": [
+    "real W005 -> authenticated input/build/canonical wire without IO/tools/repository",
+    "preserved CR-01 reproducer now rejects with location and completed facts",
+    "same SHA source/target role swap rejects although semantic receipt accepts",
+    "body second source rejects foreign URI even with identical GDS bytes/hash",
+    "header declaration rejects an already captured foreign same-byte role",
+    "body declaration rejects an already captured foreign same-byte role",
+    "coherent middle-record xy_record_index forgery rejects unchanged capture",
+    "coherent middle-record record_index forgery rejects unchanged capture",
+    "coherent middle-record byte_offset forgery rejects unchanged capture",
+    "nested successful-result wire reauthenticates same-hash wrong body backlink",
+    "simultaneous owner/policy/GDS/source/header/body aliases + target source reuse preserve geometry",
+    "real W006 readback with all aliases builds without IO/tools/readback and leaves attempt unsealed",
+    "load_document nested decoder propagates identical ValueError",
+    "load_document nested decoder propagates identical KeyboardInterrupt",
+    "load_document nested decoder propagates identical SystemExit",
+    "validate_document nested decoder propagates identical ValueError",
+    "validate_document nested decoder propagates identical KeyboardInterrupt",
+    "validate_document nested decoder propagates identical SystemExit",
+    "validate_tech nested decoder propagates identical ValueError",
+    "validate_tech nested decoder propagates identical KeyboardInterrupt",
+    "validate_tech nested decoder propagates identical SystemExit",
+    "parse_gds nested decoder propagates identical ValueError",
+    "parse_gds nested decoder propagates identical KeyboardInterrupt",
+    "parse_gds nested decoder propagates identical SystemExit"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "started_utc": "2026-11-03T02:46:01.544054+00:00",
+  "elapsed_seconds": 0.43713353700002244,
+  "command": [
+    "/workspace/work/premerge-env/venv/bin/python",
+    "-B",
+    "-m",
+    "pip",
+    "check"
+  ],
+  "cwd": "/workspace/work/w008-review",
+  "environment_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "exit_code": 0,
+  "output": "pip-check.txt",
+  "output_sha256": "35bb3d1e4d1d0091788acae77c6d707f1dfb81d2384e34fd54a205f9497ce313"
+}

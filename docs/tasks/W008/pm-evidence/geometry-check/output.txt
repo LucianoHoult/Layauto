@@ -1,0 +1,17 @@
+PASS: 16 bounded checks
+- 12 huge-integer fragments: exact hand intervals, area, disjointness and 8 boundary/midpoint lookups
+- outer max boundary is excluded
+- bool coordinate rejected
+- fractional rectangle tick rejected
+- actual capture: 40 distinct local records / 38 projected / 41 fragments with independent per-record coverage
+- six external body shapes remain separate from local geometry
+- omitted drawn record rejected
+- duplicate drawn record rejected
+- omitted fragment rejected
+- duplicate fragment rejected
+- omitted partition layer rejected
+- invented algorithm rejected
+- success missing value rejected
+- nonintegral canonical nm rejected
+- selected scale: signed-int32 endpoints and exact inverse, no 45.05-to-45 truncation
+- base draft exposes no full-physical, body-proof or terminal field

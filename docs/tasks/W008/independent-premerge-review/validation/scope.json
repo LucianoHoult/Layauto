@@ -1,0 +1,16 @@
+{
+  "started_utc": "2026-11-03T02:47:12.021559+00:00",
+  "elapsed_seconds": 0.11096633099998598,
+  "command": [
+    "/workspace/work/premerge-env/venv/bin/python",
+    "-B",
+    "/workspace/work/premerge-validation/scope_probe.py"
+  ],
+  "cwd": "/workspace/work/w008-review",
+  "environment_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "exit_code": 0,
+  "output": "scope.txt",
+  "output_sha256": "b1ba97416c0cb9b090749fe02b12a0a5e0c5f9ba38b26abe74c4a96e93e285b7"
+}

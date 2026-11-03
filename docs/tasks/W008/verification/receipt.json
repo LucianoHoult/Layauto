@@ -1,0 +1,221 @@
+{
+  "base_requested": "2d5f42258b5a2cf09f686a06c483e2a6915bc48c",
+  "pm_documentation_integrated": "2560999021f2551793346187e3c4825276cba2ff",
+  "branch": "codex/w008-geometry-base-occupancy",
+  "source_manifest_sha256": "30b4e446ff6b38f8c06be92916576928b87abdf62d10bc58f1b22ffa34a5f881",
+  "source_file_count": 235,
+  "tests_per_interpreter": 730,
+  "prior_tests_retained": 553,
+  "added_tests": 177,
+  "strict_modules": 40,
+  "checks": {
+    "pytest-311": {
+      "command": [
+        "/private/tmp/layauto-w008-dev/bin/python",
+        "-m",
+        "pytest",
+        "tests/unit",
+        "tests/contracts",
+        "-q",
+        "-p",
+        "no:cacheprovider"
+      ],
+      "cwd": "/private/tmp/layauto-w008",
+      "started_utc": "2026-11-02T14:25:07.914962+00:00",
+      "elapsed_seconds": 243.718,
+      "returncode": 0,
+      "output_sha256": "73a7ba48a936f1166da9c0a6bfe882656b028a6cddc36ccf28010fee882e2c46",
+      "source_manifest_sha256": "30b4e446ff6b38f8c06be92916576928b87abdf62d10bc58f1b22ffa34a5f881"
+    },
+    "pytest-310": {
+      "command": [
+        "/private/tmp/layauto-w008-py310/bin/python",
+        "-m",
+        "pytest",
+        "tests/unit",
+        "tests/contracts",
+        "-q",
+        "-p",
+        "no:cacheprovider"
+      ],
+      "cwd": "/private/tmp/layauto-w008",
+      "started_utc": "2026-11-02T14:25:07.919860+00:00",
+      "elapsed_seconds": 306.961,
+      "returncode": 0,
+      "output_sha256": "2767b38229fa0ae5e952b827ff1bcd80eb3a487d21e178f3579d0ade7fc80f78",
+      "source_manifest_sha256": "30b4e446ff6b38f8c06be92916576928b87abdf62d10bc58f1b22ffa34a5f881"
+    },
+    "mypy-311": {
+      "command": [
+        "/private/tmp/layauto-w008-dev/bin/python",
+        "-m",
+        "mypy",
+        "--cache-dir",
+        "/private/tmp/layauto-w008-mypy-311-final"
+      ],
+      "cwd": "/private/tmp/layauto-w008",
+      "started_utc": "2026-11-02T14:25:39.912542+00:00",
+      "elapsed_seconds": 0.162,
+      "returncode": 0,
+      "output_sha256": "ecc16c0564b42e826048bd3cc3026ed6f52b5dc94d3419716c4a1f1ab458ac8d",
+      "source_manifest_sha256": "30b4e446ff6b38f8c06be92916576928b87abdf62d10bc58f1b22ffa34a5f881"
+    },
+    "mypy-310": {
+      "command": [
+        "/private/tmp/layauto-w008-py310/bin/python",
+        "-m",
+        "mypy",
+        "--cache-dir",
+        "/private/tmp/layauto-w008-mypy-310-final"
+      ],
+      "cwd": "/private/tmp/layauto-w008",
+      "started_utc": "2026-11-02T14:25:39.912150+00:00",
+      "elapsed_seconds": 0.229,
+      "returncode": 0,
+      "output_sha256": "ecc16c0564b42e826048bd3cc3026ed6f52b5dc94d3419716c4a1f1ab458ac8d",
+      "source_manifest_sha256": "30b4e446ff6b38f8c06be92916576928b87abdf62d10bc58f1b22ffa34a5f881"
+    },
+    "build": {
+      "command": [
+        "/private/tmp/layauto-w008-dev/bin/python",
+        "-m",
+        "build",
+        "--outdir",
+        "docs/tasks/W008/verification/packages"
+      ],
+      "cwd": "/private/tmp/layauto-w008",
+      "started_utc": "2026-11-02T14:25:07.914406+00:00",
+      "elapsed_seconds": 3.92,
+      "returncode": 0,
+      "output_sha256": "e49ea1269703281fba3e032e18627eb68f240b21a854f745768852e33245b98e",
+      "source_manifest_sha256": "30b4e446ff6b38f8c06be92916576928b87abdf62d10bc58f1b22ffa34a5f881"
+    },
+    "create-install-311": {
+      "command": [
+        "/Users/luciano/.virtualenvs/layauto/bin/python",
+        "-m",
+        "venv",
+        "/private/tmp/layauto-w008-final-installed-311"
+      ],
+      "cwd": "/private/tmp",
+      "started_utc": "2026-11-02T14:25:39.916578+00:00",
+      "elapsed_seconds": 1.917,
+      "returncode": 0,
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source_manifest_sha256": "30b4e446ff6b38f8c06be92916576928b87abdf62d10bc58f1b22ffa34a5f881"
+    },
+    "create-install-310": {
+      "command": [
+        "/private/tmp/layauto-w008-python/cpython-3.10.22-macos-aarch64-none/bin/python3.10",
+        "-m",
+        "venv",
+        "/private/tmp/layauto-w008-final-installed-310"
+      ],
+      "cwd": "/private/tmp",
+      "started_utc": "2026-11-02T14:25:39.919899+00:00",
+      "elapsed_seconds": 1.884,
+      "returncode": 0,
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source_manifest_sha256": "30b4e446ff6b38f8c06be92916576928b87abdf62d10bc58f1b22ffa34a5f881"
+    },
+    "install-311": {
+      "command": [
+        "/private/tmp/layauto-w008-final-installed-311/bin/python",
+        "-m",
+        "pip",
+        "--cache-dir",
+        "/private/tmp/layauto-w008-pip-cache",
+        "install",
+        "/private/tmp/layauto-w008/docs/tasks/W008/verification/packages/layauto-0.2.0-py3-none-any.whl"
+      ],
+      "cwd": "/private/tmp",
+      "started_utc": "2026-11-02T14:26:36.273500+00:00",
+      "elapsed_seconds": 6.23,
+      "returncode": 0,
+      "output_sha256": "f60298fbdc69e873e9c5389b798ae948ba2ebc16f8797254ceda3cb5b54775c8",
+      "source_manifest_sha256": "30b4e446ff6b38f8c06be92916576928b87abdf62d10bc58f1b22ffa34a5f881"
+    },
+    "install-310": {
+      "command": [
+        "/private/tmp/layauto-w008-final-installed-310/bin/python",
+        "-m",
+        "pip",
+        "--cache-dir",
+        "/private/tmp/layauto-w008-pip-cache",
+        "install",
+        "/private/tmp/layauto-w008/docs/tasks/W008/verification/packages/layauto-0.2.0.tar.gz"
+      ],
+      "cwd": "/private/tmp",
+      "started_utc": "2026-11-02T14:26:36.273862+00:00",
+      "elapsed_seconds": 7.708,
+      "returncode": 0,
+      "output_sha256": "6fb595ca60530f15a9c7a8e4a7cc008bd4683f215405689b5a1993f38b6d2271",
+      "source_manifest_sha256": "30b4e446ff6b38f8c06be92916576928b87abdf62d10bc58f1b22ffa34a5f881"
+    },
+    "pip-check-311": {
+      "command": [
+        "/private/tmp/layauto-w008-final-installed-311/bin/python",
+        "-m",
+        "pip",
+        "--cache-dir",
+        "/private/tmp/layauto-w008-pip-cache",
+        "check"
+      ],
+      "cwd": "/private/tmp",
+      "started_utc": "2026-11-02T14:28:55.968812+00:00",
+      "elapsed_seconds": 0.28,
+      "returncode": 0,
+      "output_sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09",
+      "source_manifest_sha256": "30b4e446ff6b38f8c06be92916576928b87abdf62d10bc58f1b22ffa34a5f881"
+    },
+    "pip-check-310": {
+      "command": [
+        "/private/tmp/layauto-w008-final-installed-310/bin/python",
+        "-m",
+        "pip",
+        "--cache-dir",
+        "/private/tmp/layauto-w008-pip-cache",
+        "check"
+      ],
+      "cwd": "/private/tmp",
+      "started_utc": "2026-11-02T14:28:55.973172+00:00",
+      "elapsed_seconds": 0.24,
+      "returncode": 0,
+      "output_sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09",
+      "source_manifest_sha256": "30b4e446ff6b38f8c06be92916576928b87abdf62d10bc58f1b22ffa34a5f881"
+    },
+    "smoke-311": {
+      "command": [
+        "/private/tmp/layauto-w008-final-installed-311/bin/python",
+        "-I",
+        "-B",
+        "/private/tmp/layauto-w008/docs/tasks/W008/verification/wheel_smoke.py",
+        "/private/tmp/layauto-w008/tests/fixtures/w003_m1"
+      ],
+      "cwd": "/private/tmp",
+      "started_utc": "2026-11-02T14:28:55.966256+00:00",
+      "elapsed_seconds": 12.816,
+      "returncode": 0,
+      "output_sha256": "5371a4a03df34a49b7d6cecdc7bf11df07b2acc9d782080767c6378180150dc6",
+      "source_manifest_sha256": "30b4e446ff6b38f8c06be92916576928b87abdf62d10bc58f1b22ffa34a5f881"
+    },
+    "smoke-310": {
+      "command": [
+        "/private/tmp/layauto-w008-final-installed-310/bin/python",
+        "-I",
+        "-B",
+        "/private/tmp/layauto-w008/docs/tasks/W008/verification/wheel_smoke.py",
+        "/private/tmp/layauto-w008/tests/fixtures/w003_m1"
+      ],
+      "cwd": "/private/tmp",
+      "started_utc": "2026-11-02T14:28:55.964775+00:00",
+      "elapsed_seconds": 15.425,
+      "returncode": 0,
+      "output_sha256": "68b40a7cfa4b46a5e3fe57071a12ae4e1c9021b8051c9424a56eb65fffdb900a",
+      "source_manifest_sha256": "30b4e446ff6b38f8c06be92916576928b87abdf62d10bc58f1b22ffa34a5f881"
+    }
+  },
+  "package_identity": "package-identity.json",
+  "installation_identity": "installation-identity.json",
+  "old_evidence": "pre-cr01/ is pre-fix evidence only; it does not validate the corrected implementation."
+}

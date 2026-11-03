@@ -1,0 +1,2 @@
+1000 independent arbitrary-boundary/negative-coordinate partition cases: passed
+Actual W005 empty drawn stream -> empty immutable layout/partition/occupancy + wire: passed

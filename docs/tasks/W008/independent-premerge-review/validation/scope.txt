@@ -1,0 +1,102 @@
+{
+  "changed_product_modules": [
+    "layauto_v2/domain/geometry.py",
+    "layauto_v2/normalization/__init__.py",
+    "layauto_v2/normalization/geometry.py",
+    "layauto_v2/normalization/geometry_codec.py",
+    "layauto_v2/normalization/geometry_input.py",
+    "layauto_v2/state/coordinate.py",
+    "layauto_v2/state/layout_store.py",
+    "layauto_v2/state/occupancy.py"
+  ],
+  "post_delivery_product_test_config_changes": [],
+  "fixture_support_unit_architecture_legacy_reader_pipeline_repository_tooling_unchanged": true,
+  "imports": {
+    "layauto_v2/domain/geometry.py": [
+      "__future__",
+      "re",
+      "dataclasses",
+      "fractions",
+      "typing",
+      ".codec",
+      ".evidence"
+    ],
+    "layauto_v2/normalization/__init__.py": [
+      ".component",
+      ".input",
+      ".contracts",
+      ".geometry_input",
+      ".geometry"
+    ],
+    "layauto_v2/normalization/geometry.py": [
+      "__future__",
+      "dataclasses",
+      "typing",
+      "layauto_v2.domain.codec",
+      "layauto_v2.domain.evidence",
+      "layauto_v2.domain.geometry",
+      "layauto_v2.domain.results",
+      "layauto_v2.state.layout_store",
+      "layauto_v2.state.coordinate",
+      "layauto_v2.state.occupancy",
+      ".geometry_input"
+    ],
+    "layauto_v2/normalization/geometry_codec.py": [
+      "__future__",
+      "hashlib",
+      "collections.abc",
+      "layauto_v2.domain.codec",
+      "layauto_v2.domain",
+      "layauto_v2.domain.evidence",
+      "layauto_v2.domain.results",
+      "layauto_v2.domain.geometry",
+      "layauto_v2.state.layout_store",
+      "layauto_v2.state.coordinate",
+      "layauto_v2.state.occupancy",
+      ".",
+      ".contracts",
+      ".geometry_input",
+      ".geometry"
+    ],
+    "layauto_v2/normalization/geometry_input.py": [
+      "__future__",
+      "dataclasses",
+      "typing",
+      "layauto_v2.domain.codec",
+      "layauto_v2.domain.evidence",
+      "layauto_v2.domain.publication",
+      "layauto_v2.domain.results",
+      "layauto_v2.importers.config",
+      "layauto_v2.importers.gds",
+      ".contracts",
+      ".input"
+    ],
+    "layauto_v2/state/coordinate.py": [
+      "__future__",
+      "bisect",
+      "dataclasses",
+      "fractions",
+      "layauto_v2.domain.codec",
+      "layauto_v2.domain.geometry",
+      ".layout_store"
+    ],
+    "layauto_v2/state/layout_store.py": [
+      "__future__",
+      "hashlib",
+      "dataclasses",
+      "layauto_v2.domain.codec",
+      "layauto_v2.domain.evidence",
+      "layauto_v2.domain.geometry",
+      "layauto_v2.tech.schema"
+    ],
+    "layauto_v2/state/occupancy.py": [
+      "__future__",
+      "dataclasses",
+      "layauto_v2.domain.codec",
+      "layauto_v2.domain.geometry",
+      ".coordinate",
+      ".layout_store"
+    ]
+  },
+  "result": "pass; no IO/publication/legacy dependency in changed product modules"
+}

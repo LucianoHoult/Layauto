@@ -1,0 +1,15 @@
+{
+  "command": [
+    "/private/tmp/layauto-w008-py310/bin/python",
+    "-m",
+    "mypy",
+    "--cache-dir",
+    "/private/tmp/layauto-w008-mypy-310-final"
+  ],
+  "cwd": "/private/tmp/layauto-w008",
+  "started_utc": "2026-11-02T14:25:39.912150+00:00",
+  "elapsed_seconds": 0.229,
+  "returncode": 0,
+  "output_sha256": "ecc16c0564b42e826048bd3cc3026ed6f52b5dc94d3419716c4a1f1ab458ac8d",
+  "source_manifest_sha256": "30b4e446ff6b38f8c06be92916576928b87abdf62d10bc58f1b22ffa34a5f881"
+}

@@ -1,0 +1,38 @@
+{
+  "review_head": "131f66dfadd77b5fb9073db999d6939051c3addf",
+  "cwd": "/workspace/work/w008-review",
+  "environment": {
+    "python": "/workspace/work/premerge-env/venv/bin/python",
+    "host": "Linux-6.18.57-x86_64-with-glibc2.41"
+  },
+  "commands": [
+    {
+      "argv": [
+        "/workspace/work/premerge-env/venv/bin/python",
+        "-B",
+        "/workspace/work/geometry-independent/geometry_probe.py",
+        "/workspace/work/w008-review"
+      ],
+      "started_utc": "2026-11-03T02:46:41.860093+00:00",
+      "seconds": 35.76777927300003,
+      "exit_code": 0,
+      "script_sha256": "e664a54fb6801b626980c46fcf69610669160f67979df449c7632e34fa1bf5ac",
+      "output": "geometry-probe.txt",
+      "output_sha256": "77de2a0723a6b81d8db2fb7adcbd201fcd93d351f74c225f0e48b4b29d5efa45"
+    },
+    {
+      "argv": [
+        "/workspace/work/premerge-env/venv/bin/python",
+        "-B",
+        "/workspace/work/geometry-independent/unit_neutral_probe.py",
+        "/workspace/work/w008-review"
+      ],
+      "started_utc": "2026-11-03T02:47:17.628090+00:00",
+      "seconds": 2.9458162240000547,
+      "exit_code": 0,
+      "script_sha256": "70ffb18c0089d8b477d11de753c9375414facc739689756a5afb26c7b5055cfd",
+      "output": "unit-neutral-probe.txt",
+      "output_sha256": "643cad81bd2a82965ed70e75d1cc2c77603cba185b402a45c8cb05eceeab0ac0"
+    }
+  ]
+}

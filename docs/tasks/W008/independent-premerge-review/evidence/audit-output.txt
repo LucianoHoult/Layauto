@@ -1,0 +1,7 @@
+{
+  "head": "131f66dfadd77b5fb9073db999d6939051c3addf",
+  "delivery": "aced62b0adda35fe7bcd8284a7354badc5b03649",
+  "checks_passed": 29,
+  "checks_total": 29,
+  "must_fix_findings": []
+}

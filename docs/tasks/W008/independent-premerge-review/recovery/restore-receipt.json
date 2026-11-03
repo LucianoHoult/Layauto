@@ -1,0 +1,94 @@
+{
+  "created_utc": "2026-11-03T02:43:45.411906+00:00",
+  "path": "/workspace/work/w008-review",
+  "original_checkout": "/workspace/Layauto",
+  "original_checkout_preserved": true,
+  "recovery": "Initial git requests without per-command network permission failed to connect to proxy. GitHub fetch_file(base64) recovered changed files and verified blob hashes. Final git fetch with sandbox network permission acquired real remote objects; missing empty files restored from HEAD. No Git object synthesis used.",
+  "network_permission": {
+    "sandbox_permissions": "with_additional_permissions",
+    "additional_permissions": {
+      "network": {
+        "enabled": true
+      }
+    }
+  },
+  "checks": [
+    {
+      "command": [
+        "git",
+        "remote",
+        "-v"
+      ],
+      "exit_code": 0,
+      "stdout": "origin\thttps://github.com/LucianoHoult/Layauto.git (fetch)\norigin\thttps://github.com/LucianoHoult/Layauto.git (push)\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "status",
+        "--short",
+        "--branch"
+      ],
+      "exit_code": 0,
+      "stdout": "## codex/w008-geometry-base-occupancy...origin/codex/w008-geometry-base-occupancy\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "rev-parse",
+        "HEAD",
+        "HEAD^{tree}",
+        "origin/main",
+        "aced62b0adda35fe7bcd8284a7354badc5b03649"
+      ],
+      "exit_code": 0,
+      "stdout": "131f66dfadd77b5fb9073db999d6939051c3addf\nf9452ae27842f82ee9ddd658477496ffced83c95\n765ff864f4341b91996f70f25723411eebc0d6c2\naced62b0adda35fe7bcd8284a7354badc5b03649\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--exit-code"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--cached",
+        "--exit-code"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "fsck",
+        "--connectivity-only",
+        "--no-dangling"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "log",
+        "--format=%H %s",
+        "765ff864..HEAD"
+      ],
+      "exit_code": 0,
+      "stdout": "131f66dfadd77b5fb9073db999d6939051c3addf docs: record W008 PM technical receipt\nbaad5347627db194649430cf6b0f5ebf0aa1165e docs: clarify leaf cell and external power context requirement\naced62b0adda35fe7bcd8284a7354badc5b03649 feat: add capture-bound geometry and base occupancy\n2560999021f2551793346187e3c4825276cba2ff docs: track production inputs without body tapcell evidence\n2d5f42258b5a2cf09f686a06c483e2a6915bc48c docs: accept W007 integration and prepare W008 geometry task\n",
+      "stderr": ""
+    }
+  ]
+}

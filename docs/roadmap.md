@@ -27,7 +27,7 @@
 
 主线：**M0 准入准备 → M1 保真无变更闭环 → M2 首个 shrink 闭环 → M3 首版范围覆盖 → M4 可复现首版验收**。
 
-M1样本准备[W003](tasks/W003-m1-fixture-contracts.md#p10-w003-accepted)及[W004](tasks/W004-fixture-revision.md#pm3-20261031)已在synthetic范围收口；[W005输入读取与绑定](tasks/W005-input-reading-binding.md#pm4-integration-20261102)和[W006运行入口与输入失败记录](tasks/W006-precontext-run-audit.md#pm4-integration-20261102)已验收并合入main。[W007语义身份与目标归一化](tasks/W007-semantic-identity-normalization.md)承担Stage2的语义组件；geometry/occupancy/connectivity/body等完整状态、baseline/no_change及Stage6文件闭环继续保留。W002 E7/R4首交义务按实际触及接口落实，未完成组合前不宣称M1完成；具体阶段与证据归任务文件。
+M1样本准备[W003](tasks/W003-m1-fixture-contracts.md#p10-w003-accepted)及[W004](tasks/W004-fixture-revision.md#pm3-20261031)已在synthetic范围收口；[W005输入读取与绑定](tasks/W005-input-reading-binding.md#pm4-integration-20261102)、[W006运行入口与输入失败记录](tasks/W006-precontext-run-audit.md#pm4-integration-20261102)及[W007语义身份与目标归一化](tasks/W007-semantic-identity-normalization.md#pm2-integration-20261102)已验收并合入main。[W008几何事实与基础占用](tasks/W008-geometry-base-occupancy.md)承担本地geometry/base index组件；完整工艺坐标、effective geometry/annotation/connectivity/body等状态、baseline/no_change及Stage6文件闭环继续保留。W002 E7/R4首交义务按实际触及接口落实，未完成组合前不宣称M1完成；具体阶段与证据归任务文件。
 
 M0 分开交付“工程输入/合同准备”和“真实 profile 证据准入”。前者足以让 M1 在明确 synthetic profile 内开发；后者可以并行补证，但必须在 M2 接纳真实 profile 前完成。若真实材料不可得，M1 和相应合成测试可以继续，M2 保持有依据的阻塞，不通过把验收改成 dummy 成功消除阻塞。
 
@@ -136,14 +136,38 @@ M0 分开交付“工程输入/合同准备”和“真实 profile 证据准入�
 | U03 repair、rule、marking/body/halo 可闭合性 | 列所有触及局部 rules/extractors/derivators/dependencies 与来源，验证 fixed-frame/不触 halo 的证明或完整 abutment contract；缺项使用 full-check 或拒绝 | 阻塞对应 M2 candidate，不阻塞独立 codec、repository、baseline/export 工作；不能用“后续 signoff”替代 |
 | U04 报告/CDL/fixture 的关键使用预期与独立 oracle | 先看现有代表材料，形成最小报告字段/样张提纲、CDL preserve 差异、fixture 生成与独立期望来源。技术保真由 agent 核验；若关键用户预期未定义，再提交具体选项 | 不把选图风格当全部主线前置；影响验收解释的选择必须在对应产物实现前解决。Golden 不能由同一实现自造并独自证明正确 |
 | U05 可复现环境与 CI 矩阵 | 保持 Python 3.10+；调查现有依赖、strict checker、支持解释器和 CI 落点，落实构建缺 `wheel` 等实际问题；下游独立 tool open/syntax gate 随所选 production profile 验证 | M1 开始补齐工程条件，M4 收口；本机已安装依赖不等于新机可用，真实工具开通不由本轮规划自动授权 |
+| U06 生产输入未提供body tapcell | 用户2026-11-02明确要求考虑；PM在生产输入适配和body能力任务中落实[场景与验收方向](#production-body-evidence)，关联R05/R08/R12/R16/R17/R22/R25及U01/U03 | 首次生产读取测试入口交付时明确缺资料处理及测试范围；完整生产运行前落实body证据准入。不阻塞W008既定synthetic几何组件，也不把登记需求视为已有可选输入开关 |
 
 **目前没有需要用户立即重新决定的产品范围。** 尚未有足够真实材料把 U01–U04 化成具体选择；下一项先调查并上报实际缺项/分叉，不要求用户凭空选 PDK、方言或图表，也不把未答复当同意。
+
+<a id="production-body-evidence"></a>
+### U06：生产环境未提供body tapcell的处理需求
+
+**需求来源与状态：** 2026-11-02用户要求“把生产环境不提供body tapcell的情景正确处理作为一个需求考虑”。已登记为生产输入适配与body能力的后续必查项；具体生产profile、输入格式、入口及状态编码待方案收敛和独立review，尚未实现。本节保存规划与验收方向，现行产品合同仍归[架构§3.6](architecture.md#36-connectivity-state-作为拓扑解释层)等原文；如方案改变对外行为或上层合同，在实施前同步相应正文与任务。
+
+**需求目标：** 对生产环境未提供本地tap图形或独立外部body上下文的情况，按选定profile、运行目的和实际证据明确可继续范围、缺失材料与受限能力。不能把缺tapcell一律视为版图错误，也不能把body尚未证明记成通过。现有synthetic外部tapcell JSON不是所有生产profile预先确定的必需格式。
+
+**用户场景澄清（2026-11-03）：** 待修改的底层cell很可能与tapcell、power rail全局定义相互独立，用户可能只提供待修改的cell。后续设计应把它作为明确的单cell使用场景，不能把需求只收窄为读取smoke。若已有该cell的CDL/端口声明，本地器件端子、端口名及内部net连接可保持已知；该cell实例的pin→父级net/全局电源/电压域关联，以及范围外的body/tap/rail物理路径，可能仍未提供。缺上层信息不应把已知本地事实清空，也不能凭端口名或同名net补出外部关系。
+
+**方案责任与最小上下文：** 本节场景是后续开发给出处理方案、输出及反例的依据，目前无需用户逐项决策。方案应说明哪些读取、分析及受限修改能在已证明的本地/边界合同下完成，哪些操作确实依赖上层关系；需要补充资料时列出最小范围，不预设必须提交完整父级版图或所有相关cell。可研究绑定具体cell/实例/版本的端口映射、必要的局部几何及坐标变换，或可信工具/LVS取得的关联证据。人工标注可表达预期连接、角色和约束，其来源及证明强度需明确；单独的网名标注不能证明实际body/rail导通。body冻结路径仍须baseline LVS＋body/boundary invariant，不能仅以“没有直接改tap”代替证明。若资料提供方式或支持范围存在实质取舍，再由PM带具体最小样例、影响和推荐方案交用户决定；这些候选方式尚未实现或选定为新生产格式。
+
+| 待覆盖场景 | PM拟定验收方向 |
+| --- | --- |
+| 仅提供待修改底层cell，上层实例连接和全局供电关系未提供 | 保留已知本地语义/几何，显式记录缺失的外部关系；按影响范围和所需证据判断可继续的分析/修改。依赖未知关系的操作须取得最小上下文或定位拒绝，不一律判cell错误，也不无条件允许全部修改 |
+| 本地cell无tap，但有符合profile的外部body证据 | 按实际source/top/坐标/作用域等验证绑定和关系；不因本地缺tap直接拒绝，外部图形保持独立scope |
+| 没有独立外部tapcell文件，但有profile认可的其它证据 | 可研究本地完整body几何，或架构§3.6允许的baseline LVS＋body/boundary invariant冻结方案；逐项证明适用范围，不能仅靠B端网名或“LVS通过”文字放行 |
+| 没有body证明，只做明确限定的读取/几何测试 | 设计可独立运行的测试入口或明确测试模式，允许不依赖body的检查继续并报告其实际结果；明确body未验证及能力限制，不产生完整run成功、body_complete或生产准入结论。其它输入错误仍按实际错误处理 |
+| 完整运行所需body证据缺失 | 在相应准入/检查阶段定位拒绝，列出所需证据与受阻能力；不能将已启用的mandatory要求改记deferred来放行 |
+| 显式未选择body资料，或已选择但文件缺失/格式错误/绑定错误/连接违例 | 区分“未提供”与“提供了不可用或错误的资料”；后者报告实际错误及来源，不静默按可选缺省处理，也不把已发现违例改写为未知 |
+| 修改超出body/boundary冻结证明范围 | 旧证明失效，重验或拒绝；不继续沿用旧assurance |
+
+**落实位置与现状：** 生产读取适配首交应覆盖缺资料及部分测试结果；正式body/extraction、mandatory checks与运行接入任务应覆盖替代证据、完整运行拒绝和证明失效。接口及状态应与R22/R25现有错误/验证合同衔接，并保持G1–G4/G5真实准入门。当前W005统一入口仅支持声明的synthetic范围，`body_context`仍必填，缺文件返回`RequiredBodyContextUnavailable`；本次需求登记不修改W003/W004样本、W005–W007实现或W008 A1–A8。准备后续任务时必须回查本项，不能直接把toy必填字段推广为全部生产格式要求。
 
 ## 7. 近期工作与完成前核对
 
 - **W001 规划已验收：**独立 review 为 0 项实质 findings，PM 已核对被审身份、要求覆盖与限制；已验收文档原稿 `8482b68` 及集成记录 `156e62d` 已推送 GitHub main。详细状态和证据归任务文件，规划验收不等于产品实现授权。
 - **W002工程准备已验收：**真实准入出口仍缺E3所列材料；后续W003/W004已完成synthetic样本/profile/独立判据准备，W005/W006已有产品实现并集成。真实缺项不因这些工程进展自动关闭。
-- **当前近期任务为W007：**从已读取证据建立语义身份、独立目标和完整差异；后续仍须完整Stage2状态与原子基线发布、semantic/extraction-aware无变化判断和Stage6保真交付。任务要求及恢复位置见W007/current-work。
+- **当前近期任务为W008：**从捕获GDS建立完整本地图形及精确base occupancy索引；后续仍须完整工艺坐标、有效几何及物理状态、原子基线发布、semantic/extraction-aware无变化判断和Stage6保真交付。任务要求及恢复位置见W008/current-work。
 - W002 接收后只展开 M1 的近期实现包；共享状态/publication/物理解释方案先独立 review。M2–M4 保留能力目标、依赖和验收，不预写全部 helper/模块任务或承诺日历排期。
 
 | PM 核对 | 本规划的处理 | 尚不代表 |

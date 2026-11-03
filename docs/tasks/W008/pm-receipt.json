@@ -1,0 +1,115 @@
+{
+  "date": "2026-11-03",
+  "role": "PM",
+  "branch": "codex/w008-geometry-base-occupancy",
+  "delivery": "aced62b0adda35fe7bcd8284a7354badc5b03649",
+  "tested_head": "baad5347627db194649430cf6b0f5ebf0aa1165e",
+  "observed_remote_branch": "baad5347627db194649430cf6b0f5ebf0aa1165e",
+  "observed_main": "765ff864f4341b91996f70f25723411eebc0d6c2",
+  "post_delivery_changes": [
+    "docs/current-work.md",
+    "docs/roadmap.md"
+  ],
+  "disposition": "A1-A8 branch technical receipt accepted; remaining must-fix 0; main integration, combined verification and final W008 acceptance pending",
+  "environment": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "executable": "/workspace/work/w005-pm-check-env/bin/python",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "cwd": "/workspace/Layauto",
+    "import_source": "/workspace/Layauto/layauto_v2/normalization/__init__.py",
+    "tools": {
+      "pytest": "9.2.0",
+      "mypy": "2.4.1",
+      "PyYAML": "6.0.3"
+    },
+    "clean_install": false,
+    "note": "Existing PM environment reused for current-source checks; not clean installation evidence."
+  },
+  "fixture": "tests/fixtures/w003_m1",
+  "profile": "synthetic_static_fin_context_no_change_v2",
+  "source_manifest": {
+    "path": "verification/source-manifest.json",
+    "count": 235,
+    "sha256": "30b4e446ff6b38f8c06be92916576928b87abdf62d10bc58f1b22ffa34a5f881"
+  },
+  "direct_checks": [
+    {
+      "check": "Full current-source suite",
+      "evidence": "pm-evidence/pytest.json",
+      "result": "730 passed, 1 third-party deprecation warning, 421.70 seconds"
+    },
+    {
+      "check": "Strict mypy",
+      "evidence": "pm-evidence/mypy.json",
+      "result": "Success: no issues found in 40 source files"
+    },
+    {
+      "check": "Unchanged original CR-01 reproducer under repaired-rejection wrapper",
+      "evidence": "pm-evidence/cr01-check.json",
+      "result": "GeometryCaptureBindingMismatch at site_config.yaml#/inputs/gds; nine completed facts retained"
+    },
+    {
+      "check": "Delegated geometry/math and aggregate probe",
+      "reviewer": "/root/w008_accept_geometry",
+      "evidence": "pm-evidence/geometry-check/receipt.json",
+      "result": "16 bounded checks, exit 0; no must-fix"
+    },
+    {
+      "check": "Delegated Git/manifest/log/archive-byte audit",
+      "reviewer": "/root/w008_accept_evidence",
+      "evidence": "pm-evidence/evidence-audit/checks.json",
+      "result": "32/32 checks; 235 source entries, 84 evidence entries, 13 command receipts, actual wheel/sdist each 86 runtime files match; no must-fix"
+    }
+  ],
+  "independent_review_adopted": {
+    "plan": "plan-review.md",
+    "code": "code-review.md",
+    "closed_findings": [
+      "IR-01",
+      "CR-01"
+    ],
+    "remaining_must_fix": 0,
+    "note": "Original reviewer preserved findings, performed corrected focused tests and installed smokes; original full two-interpreter matrices adopted from audited execution receipts."
+  },
+  "adopted_execution_evidence": [
+    {
+      "path": "verification/receipt.json",
+      "facts": "Mac Python 3.10.22 and 3.11.5 each 730 passed; strict mypy each 40 modules; fresh build and clean installations with source-external composition smoke"
+    },
+    {
+      "path": "verification/package-identity.json",
+      "facts": "Actual wheel and sdist independently rehashed and runtime bytes directly compared to final manifest in this PM audit"
+    },
+    {
+      "path": "verification/installation-identity.json",
+      "facts": "3.11 installation from wheel, 3.10 from sdist; recorded installed 86-file manifests/origins and execution/reviewer smoke outputs agree. Original Mac installation trees were not accessed; absent pip sdist archive_info hash is not claimed."
+    }
+  ],
+  "protected_scope": "W008 delivery retains fixture/expected/support and prior implementation/reports; specific W007 dependency guard exceptions reviewed. PM changes only task status/current entry/navigation and receipt attachments.",
+  "not_performed": [
+    "No PM rerun of original Mac 3.10/3.11 matrices",
+    "No PM package rebuild or clean installation",
+    "No main merge, branch deletion or next task",
+    "No complete technology coordinate model, physical connectivity, body proof, extraction, baseline/seal, no_change/terminal or Stage6",
+    "No real EDA/PDK/production validation",
+    "U06 optional production context not implemented; current synthetic body_context still required"
+  ],
+  "saved_evidence_sha256": {
+    "pm-evidence/README.md": "987f98714e2a50e24678e674f509958838a3e35aac602451a476d5e2076623ff",
+    "pm-evidence/cr01-check.json": "c25579576bf3eb920aa2cbbecf76d06d0a213e23aed8982278dd65a7d08411b9",
+    "pm-evidence/environment.json": "c7b38f7a48d09fe446dd149827d96b58bbdd6b76a7477f181da0e8293e26ab14",
+    "pm-evidence/evidence-audit/audit-output.txt": "ff208b6241dd7cf63e6cf06a0bb40418a3e138defef59a9df1821bfb853b74f2",
+    "pm-evidence/evidence-audit/audit-receipt.json": "dab3a9cc5648edcc4748d82722e5b8f8c4c6faf88e20fb328e6c93648953ab19",
+    "pm-evidence/evidence-audit/check_evidence.py": "32c17a7c168512eadfaf1750e49eb18be34583a3a9e1aed785a82796311e9b18",
+    "pm-evidence/evidence-audit/checks.json": "5b88ad5e7a5702b574d50f78000d5d7ebe86043fe3682f2373e17e0b334d3614",
+    "pm-evidence/evidence-audit/summary.md": "4ccc5871de1222c06560a515b812554919393846f1177f96eebf181ad6e7ed3c",
+    "pm-evidence/geometry-check/output.txt": "9b56a6909a4360444097dab85bfa1ef182ff705f7a8b939368747908a072bc10",
+    "pm-evidence/geometry-check/probe.py": "26d22e306eed7b1e9896319ed741edf61b36f95195f14623dbabe3a11680ec34",
+    "pm-evidence/geometry-check/receipt.json": "f80b07f549c55617a8af360163a7177173d878073544ccad1993ff27b9fc3737",
+    "pm-evidence/geometry-check/run.py": "9e36eb3968e3cd6e26cccdbf8bda621942927bbcfccc3d2fa5dbc6e65b8e35ef",
+    "pm-evidence/input-check/cr01_check.py": "9191ef3cdb92923b23e4ae7b1d8be386db8d33bf004100e674c7960e22d32cd8",
+    "pm-evidence/mypy.json": "686ff58571cfe7ce9742e6f6fca08df099893022a9a28c203bb540ffc02a0007",
+    "pm-evidence/pytest.json": "eb2869281872ff3552405878539203279fe1933561112a4f48b4697a76965c28"
+  },
+  "identity_note": "Receipt and PM-only documentation are subsequent additions. All 235 source/test/config entries remain unchanged. The original 84-entry evidence manifest includes the W008 task document: its pre-PM hash is retained at aced62b; subsequent status/PM receipt/history-marker changes preserve A1-A8 and execution/reviewer text. The other 83 evidence entries still match. Do not rewrite the historical manifest. Original audit scripts bind their historical head; replay instructions are in pm-evidence/README.md."
+}

@@ -28,7 +28,7 @@ sections relevant to the task.
 
 | Path | Purpose |
 |------|---------|
-| [`layauto_v2/`](layauto_v2/) | v2 input reading, pre-context run audit and pure semantic normalization; later physical stages remain skeletons. |
+| [`layauto_v2/`](layauto_v2/) | v2 input reading, pre-context audit, semantic normalization and exact drawn-base geometry/occupancy; later physical stages remain skeletons. |
 | [`docs/architecture.md`](docs/architecture.md) | Active v2 architecture source: stage boundaries, fact sources, state ownership, planning, constraints, transactions, export, validation, and module boundaries. |
 
 ## Input reading component
@@ -78,7 +78,7 @@ python -m build
 ```
 
 The strict checker targets input reading, pre-context audit, semantic normalization
-and their neutral contracts with Python 3.10 syntax. Execution, independent reviews and supported
+and drawn-base geometry/occupancy with their neutral contracts and Python 3.10 syntax. Execution, independent reviews and supported
 interpreter/build evidence are linked from [W005](docs/tasks/W005-input-reading-binding.md).
 
 ## Pre-context run entry
@@ -162,6 +162,56 @@ The internal DTO/wire contracts are versioned and immutable. Validation and
 independent reviews are recorded in
 [W007](docs/tasks/W007-semantic-identity-normalization.md). This slice does not
 construct or publish a baseline, invoke EDA tools or implement Stage 6.
+
+## Drawn geometry and base occupancy component
+
+W008 authenticates geometry and selected policy fields against the same captured
+bytes, then retains every local GDS record and constructs exact base occupancy:
+
+```python
+from layauto_v2.normalization import geometry_from_parse_result, build_geometry
+
+if parsed.status == "success":
+    geometry = build_geometry(geometry_from_parse_result(parsed))
+    if geometry.status == "success":
+        layout = geometry.value.layout
+        partition = geometry.value.partition
+        fragments = geometry.value.fragments
+```
+
+`geometry_from_inputs_ready` takes the same five caller-read arguments as the
+semantic adapter. `geometry_from_normalization_input` composes with an existing
+W007 input. All three adapters revalidate captured GDS, owner documents and
+header/body associations without file IO or repository access. First acquisitions
+retain the selected URI spelling; later header/body references may retain
+W005's historical alias resolution. Invalid
+receipts raise `GeometryInputError` (a `ValueError`) with a located issue and
+prior parse facts; prior W005/W006/W007 receipt errors keep their boundaries.
+The builder returns a located component error for an unsupported geometry
+comparator; unexpected exceptions and process interrupts propagate unchanged.
+
+The immutable `BaseOccupancy -> BasePartition -> LayoutDraft` chain has one
+drawn owner. Every source BOUNDARY remains distinct, including duplicate or
+unannotated records and C1/C2. Original XY, stream positions, source bytes,
+REAL8 scale evidence and layer policy are retained. Exact nominal physical
+coordinates convert reversibly to canonical integer DBU. The layout's
+`semantic_digest` compares top plus the physical rectangle multiset, while
+content refs also bind provenance, units, policies and record identity.
+
+`drawn-layer-edges/1` sorts each projected layer's drawn rectangle bounds into
+finite half-open cells. Each occupied cell retains all exact record fragments;
+coverage reconstructs every projected rectangle. Coordinate services own no
+occupancy. This internal partition specifies indexing only: it supplies no
+manufacturing grid, legal routing/movement space or full Stage 2 coordinate
+binding. VIA/CONTACT/CUT keep only their own drawn occupancy. External body
+context stays separate, and semantic targets/query seeds are unchanged.
+
+The geometry wire codec is closed, versioned and exact. Neutral state DTOs
+validate evidence consistency; a successful `GeometryResult` additionally binds
+them to the authenticated captures. These are drafts, not committed snapshots,
+physical connectivity, annotation coverage, body/extraction assurance, baseline,
+no-change or run completion. Validation and independent review are linked from
+[W008](docs/tasks/W008-geometry-base-occupancy.md).
 
 ## Legacy MVP archive
 

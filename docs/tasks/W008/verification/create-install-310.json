@@ -1,0 +1,14 @@
+{
+  "command": [
+    "/private/tmp/layauto-w008-python/cpython-3.10.22-macos-aarch64-none/bin/python3.10",
+    "-m",
+    "venv",
+    "/private/tmp/layauto-w008-final-installed-310"
+  ],
+  "cwd": "/private/tmp",
+  "started_utc": "2026-11-02T14:25:39.919899+00:00",
+  "elapsed_seconds": 1.884,
+  "returncode": 0,
+  "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "source_manifest_sha256": "30b4e446ff6b38f8c06be92916576928b87abdf62d10bc58f1b22ffa34a5f881"
+}
