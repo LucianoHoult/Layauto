@@ -300,8 +300,9 @@ def _validate_query(query: FrozenMap, tech: FrozenMap, sources: Mapping[str, Sou
         reference = mapping(_required(response, 'source'))
         count_header = mapping(_required(response, 'count_header'))
         pair = (string(_required(reference, 'path')), string(_required(reference, 'sha256')))
+        count_tokens = string(_required(count_header, 'lexeme')).split(maxsplit=3)
         if (pair != (_required(count_header, 'path'), _required(count_header, 'sha256')) or count_header.get('line_1based') != 3
-                or string(_required(count_header, 'lexeme')).split(maxsplit=3)[-1] != _required(response, 'timestamp')):
+                or not count_tokens or count_tokens[-1] != _required(response, 'timestamp')):
             raise ValueError('response metadata differs from its captured response')
         response_sources.append(pair)
     expected_response_sources = [(string(_required(mapping(item), 'uri')), string(_required(mapping(item), 'sha256'))) for item in sequence(_required(header, 'raw'))

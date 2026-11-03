@@ -111,6 +111,11 @@ def forged_parse(parsed, change):
     elif change == 'collection_raw_ref': value['query']['device_regions']['raw_refs'][0]['path'] = {}
     elif change == 'missing_records': value['query']['device_regions'].pop('records')
     elif change == 'missing_responses': value['query']['_format_metadata'].pop('responses')
+    elif change == 'blank_count_header':
+        header = value['query']['_format_metadata']['responses'][0]['count_header']
+        header['lexeme'] = ' '
+        header.pop('token_0based', None)
+        header.pop('column', None)
     else: raise AssertionError(change)
     completed = tuple(replace(record, payload=(
         {'bundle': value['tech_bundle'], 'owners': value['tech']} if record.kind == 'tech'
@@ -122,7 +127,7 @@ def forged_parse(parsed, change):
     'missing_formats', 'missing_limits', 'scalar_limits', 'collection_limit',
     'missing_model', 'nested_required_parameter', 'missing_top_field', 'extra_top_field',
     'nested_pin', 'unknown_model', 'missing_lexeme', 'missing_layout',
-    'collection_raw_ref', 'missing_records', 'missing_responses',
+    'collection_raw_ref', 'missing_records', 'missing_responses', 'blank_count_header',
 ])
 def test_malformed_receipt_fields_still_raise_explicit_value_error(receipts, change):
     values, _ = receipts
