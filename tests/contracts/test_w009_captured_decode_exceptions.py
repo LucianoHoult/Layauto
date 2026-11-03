@@ -119,3 +119,48 @@ def test_all_nested_captured_dtos_still_roundtrip_and_reject_malformed_fields(ca
                     # Some values are valid alternatives (e.g. optional None or
                     # empty collections). Their canonical form must still bind.
                     assert publication_codec.encode_record(rebuilt) == canonical_bytes(malformed)
+
+
+class ChangingList(list):
+    """A supported container subclass whose second iteration changes content."""
+    def __init__(self, first, second):
+        super().__init__(first)
+        self.second = second
+        self.iterations = 0
+
+    def __iter__(self):
+        self.iterations += 1
+        return super().__iter__() if self.iterations == 1 else iter(self.second)
+
+
+@pytest.mark.parametrize('field', ('evidence_sources', 'issues', 'completed', 'sources'))
+@pytest.mark.parametrize('valid_first', (True, False))
+def test_public_collections_validate_and_store_one_snapshot(field, valid_first):
+    from layauto_v2.domain.evidence import SourceFile
+    from layauto_v2.domain.results import ParseResult
+
+    source = SourceFile('snapshot-source', b'x')
+    evidence = EvidenceRecord('snapshot-example', {}, (source.ref(),))
+    issue = EvidenceIssue('binding', 'SnapshotExample', 'located failure', source.ref())
+    item = {'evidence_sources': source.ref(), 'issues': issue,
+            'completed': evidence, 'sources': source}[field]
+    values = ChangingList((item,) if valid_first else (None,),
+                          (None,) if valid_first else (item,))
+
+    def construct():
+        if field == 'evidence_sources':
+            return EvidenceRecord('snapshot-example', {}, values).sources
+        if field == 'issues':
+            return ParseResult('error', None, values, (), (source,)).issues
+        if field == 'completed':
+            return ParseResult('success', {}, (), values, (source,)).completed
+        return ParseResult('success', {}, (), (), values).sources
+
+    if valid_first:
+        snapshot = construct()
+        values.clear()
+        assert type(snapshot) is tuple and snapshot == (item,)
+    else:
+        with pytest.raises(ValueError):
+            construct()
+    assert values.iterations == 1

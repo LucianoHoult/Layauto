@@ -46,9 +46,12 @@ class ParseResult:
             raise ValueError('invalid parse discriminator/version')
         for name, cls in (('issues', EvidenceIssue), ('completed', EvidenceRecord), ('sources', SourceFile)):
             values = getattr(self, name)
-            if not isinstance(values, (tuple, list)) or any(not isinstance(value, cls) for value in values):
+            if not isinstance(values, (tuple, list)):
                 raise ValueError('invalid parse record fields')
-            object.__setattr__(self, name, tuple(values))
+            snapshot = tuple(values)
+            if any(not isinstance(value, cls) for value in snapshot):
+                raise ValueError('invalid parse record fields')
+            object.__setattr__(self, name, snapshot)
         by_uri = {source.uri: source.sha256 for source in self.sources}
         if len(by_uri) != len(self.sources):
             raise ValueError('duplicate source URI')
