@@ -1,0 +1,16 @@
+{
+  "started_utc": "2026-11-03T02:46:01.553059+00:00",
+  "elapsed_seconds": 0.1974395549999599,
+  "command": [
+    "/workspace/work/premerge-env/venv/bin/python",
+    "-B",
+    "/workspace/work/premerge-validation/environment.py"
+  ],
+  "cwd": "/workspace/work/w008-review",
+  "environment_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "exit_code": 0,
+  "output": "environment.txt",
+  "output_sha256": "901fab9a71392d0adb7041e8b43b1a4700df4559cdf88e733066ee94e886c790"
+}

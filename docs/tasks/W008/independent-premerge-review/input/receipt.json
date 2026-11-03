@@ -1,0 +1,13 @@
+{
+  "reviewed_head": "131f66dfadd77b5fb9073db999d6939051c3addf",
+  "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=.:tests/contracts /workspace/work/premerge-env/venv/bin/python -B /workspace/work/input-independent/probe.py > /workspace/work/input-independent/output.txt 2>&1",
+  "cwd": "/workspace/work/w008-review",
+  "exit_code": 0,
+  "checks": 24,
+  "interpreter": "Python 3.12.14",
+  "sha256": {
+    "probe.py": "ba2afde0a48e7c08b8842df7ca04c16fcd75dc81853ab5c45f306ceafe4d7f65",
+    "output.txt": "6fe7381870981e7e46cef0243dca4c71f02c02eedecadc35d391a832d6126e37"
+  },
+  "fixture": "tests/fixtures/w003_m1 (temporary copies only; no expected/spec/oracle used as runtime or expected answers)"
+}

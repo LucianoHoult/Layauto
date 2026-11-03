@@ -1,0 +1,10 @@
+{
+  "commands_executed": [
+    "mkdir -p /workspace/work/premerge-env",
+    "python3 -m venv /workspace/work/premerge-env/venv",
+    "/workspace/work/premerge-env/venv/bin/python -m pip install -e '/workspace/work/w008-review[dev]' --log /workspace/work/premerge-env/pip-install.log > /workspace/work/premerge-env/install.txt 2>&1"
+  ],
+  "command_session_exit_code": 0,
+  "note": "Setup metadata recorded after the successful command; elapsed time was not captured. Raw install stdout/stderr is install.txt.",
+  "install_output_sha256": "a615970d772954742ee57c7a5ed619809172921bf0e905cea5690357a779de4e"
+}

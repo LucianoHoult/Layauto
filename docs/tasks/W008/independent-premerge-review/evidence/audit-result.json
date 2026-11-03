@@ -1,0 +1,402 @@
+{
+  "audit": "Independent W008 premerge evidence audit",
+  "utc": "2026-11-03T02:45:16.879600+00:00",
+  "repository": "/workspace/work/w008-review",
+  "head": "131f66dfadd77b5fb9073db999d6939051c3addf",
+  "delivery": "aced62b0adda35fe7bcd8284a7354badc5b03649",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "script_sha256": "7477513b2ab382f3d953eca1e921c9b09c76ebe73ba673137626db717b1fb22d",
+  "checks_passed": 29,
+  "checks_total": 29,
+  "must_fix_findings": [],
+  "checks": [
+    {
+      "check": "review_head",
+      "passed": true,
+      "head": "131f66dfadd77b5fb9073db999d6939051c3addf",
+      "tree": "f9452ae27842f82ee9ddd658477496ffced83c95"
+    },
+    {
+      "check": "source_manifest_coverage_and_bytes",
+      "passed": true,
+      "entries": 235,
+      "sha256": "30b4e446ff6b38f8c06be92916576928b87abdf62d10bc58f1b22ffa34a5f881",
+      "current_mismatches": [],
+      "delivery_mismatches": [],
+      "missing": [],
+      "extra": []
+    },
+    {
+      "check": "historical_evidence_manifest",
+      "passed": true,
+      "entries": 84,
+      "sha256": "630c8094d3435aed58bcdb75ce0e56e688c7e827c535a581b7e5ad6f586df919",
+      "historical_task_digest": "9f281a9f041d044b009f90941e9f535cfab5e12c0f0988741c2278c20f3ac88e",
+      "historical_task_git": "9f281a9f041d044b009f90941e9f535cfab5e12c0f0988741c2278c20f3ac88e",
+      "current_task_digest": "c82c1850862429901e74b59032ffee9050f3d76dda9c03b573e1826d0903faa3",
+      "task_historical_difference_expected": true,
+      "current_other_entries": 83,
+      "mismatches": [],
+      "delivery_mismatches": []
+    },
+    {
+      "check": "pre_fix_and_final_separated",
+      "passed": true,
+      "pre_fix_manifest_digest": "0985598fc7b1598827a1741e1500c8d1ceac5700a1706d0e91c1f05b52ff2e7d",
+      "changed": [
+        "README.md",
+        "docs/tasks/W008/verification/wheel_smoke.py",
+        "layauto_v2/normalization/geometry_input.py",
+        "tests/contracts/test_w008_capture_binding.py",
+        "tests/contracts/test_w008_geometry_wire.py"
+      ],
+      "pre_fix_adapter_matches_snapshot": true
+    },
+    {
+      "check": "receipt_manifest_and_count",
+      "passed": true,
+      "receipt_sha256": "3310f8f8ec5df806dec9f22377124e165fecd47672c3c8c232f1398d5302cb21",
+      "commands": 13
+    },
+    {
+      "check": "command_binding_pytest-311",
+      "passed": true,
+      "command": [
+        "/private/tmp/layauto-w008-dev/bin/python",
+        "-m",
+        "pytest",
+        "tests/unit",
+        "tests/contracts",
+        "-q",
+        "-p",
+        "no:cacheprovider"
+      ],
+      "cwd": "/private/tmp/layauto-w008",
+      "returncode": 0,
+      "output_sha256": "73a7ba48a936f1166da9c0a6bfe882656b028a6cddc36ccf28010fee882e2c46",
+      "elapsed_seconds": 243.718
+    },
+    {
+      "check": "command_binding_pytest-310",
+      "passed": true,
+      "command": [
+        "/private/tmp/layauto-w008-py310/bin/python",
+        "-m",
+        "pytest",
+        "tests/unit",
+        "tests/contracts",
+        "-q",
+        "-p",
+        "no:cacheprovider"
+      ],
+      "cwd": "/private/tmp/layauto-w008",
+      "returncode": 0,
+      "output_sha256": "2767b38229fa0ae5e952b827ff1bcd80eb3a487d21e178f3579d0ade7fc80f78",
+      "elapsed_seconds": 306.961
+    },
+    {
+      "check": "command_binding_mypy-311",
+      "passed": true,
+      "command": [
+        "/private/tmp/layauto-w008-dev/bin/python",
+        "-m",
+        "mypy",
+        "--cache-dir",
+        "/private/tmp/layauto-w008-mypy-311-final"
+      ],
+      "cwd": "/private/tmp/layauto-w008",
+      "returncode": 0,
+      "output_sha256": "ecc16c0564b42e826048bd3cc3026ed6f52b5dc94d3419716c4a1f1ab458ac8d",
+      "elapsed_seconds": 0.162
+    },
+    {
+      "check": "command_binding_mypy-310",
+      "passed": true,
+      "command": [
+        "/private/tmp/layauto-w008-py310/bin/python",
+        "-m",
+        "mypy",
+        "--cache-dir",
+        "/private/tmp/layauto-w008-mypy-310-final"
+      ],
+      "cwd": "/private/tmp/layauto-w008",
+      "returncode": 0,
+      "output_sha256": "ecc16c0564b42e826048bd3cc3026ed6f52b5dc94d3419716c4a1f1ab458ac8d",
+      "elapsed_seconds": 0.229
+    },
+    {
+      "check": "command_binding_build",
+      "passed": true,
+      "command": [
+        "/private/tmp/layauto-w008-dev/bin/python",
+        "-m",
+        "build",
+        "--outdir",
+        "docs/tasks/W008/verification/packages"
+      ],
+      "cwd": "/private/tmp/layauto-w008",
+      "returncode": 0,
+      "output_sha256": "e49ea1269703281fba3e032e18627eb68f240b21a854f745768852e33245b98e",
+      "elapsed_seconds": 3.92
+    },
+    {
+      "check": "command_binding_create-install-311",
+      "passed": true,
+      "command": [
+        "/Users/luciano/.virtualenvs/layauto/bin/python",
+        "-m",
+        "venv",
+        "/private/tmp/layauto-w008-final-installed-311"
+      ],
+      "cwd": "/private/tmp",
+      "returncode": 0,
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "elapsed_seconds": 1.917
+    },
+    {
+      "check": "command_binding_create-install-310",
+      "passed": true,
+      "command": [
+        "/private/tmp/layauto-w008-python/cpython-3.10.22-macos-aarch64-none/bin/python3.10",
+        "-m",
+        "venv",
+        "/private/tmp/layauto-w008-final-installed-310"
+      ],
+      "cwd": "/private/tmp",
+      "returncode": 0,
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "elapsed_seconds": 1.884
+    },
+    {
+      "check": "command_binding_install-311",
+      "passed": true,
+      "command": [
+        "/private/tmp/layauto-w008-final-installed-311/bin/python",
+        "-m",
+        "pip",
+        "--cache-dir",
+        "/private/tmp/layauto-w008-pip-cache",
+        "install",
+        "/private/tmp/layauto-w008/docs/tasks/W008/verification/packages/layauto-0.2.0-py3-none-any.whl"
+      ],
+      "cwd": "/private/tmp",
+      "returncode": 0,
+      "output_sha256": "f60298fbdc69e873e9c5389b798ae948ba2ebc16f8797254ceda3cb5b54775c8",
+      "elapsed_seconds": 6.23
+    },
+    {
+      "check": "command_binding_install-310",
+      "passed": true,
+      "command": [
+        "/private/tmp/layauto-w008-final-installed-310/bin/python",
+        "-m",
+        "pip",
+        "--cache-dir",
+        "/private/tmp/layauto-w008-pip-cache",
+        "install",
+        "/private/tmp/layauto-w008/docs/tasks/W008/verification/packages/layauto-0.2.0.tar.gz"
+      ],
+      "cwd": "/private/tmp",
+      "returncode": 0,
+      "output_sha256": "6fb595ca60530f15a9c7a8e4a7cc008bd4683f215405689b5a1993f38b6d2271",
+      "elapsed_seconds": 7.708
+    },
+    {
+      "check": "command_binding_pip-check-311",
+      "passed": true,
+      "command": [
+        "/private/tmp/layauto-w008-final-installed-311/bin/python",
+        "-m",
+        "pip",
+        "--cache-dir",
+        "/private/tmp/layauto-w008-pip-cache",
+        "check"
+      ],
+      "cwd": "/private/tmp",
+      "returncode": 0,
+      "output_sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09",
+      "elapsed_seconds": 0.28
+    },
+    {
+      "check": "command_binding_pip-check-310",
+      "passed": true,
+      "command": [
+        "/private/tmp/layauto-w008-final-installed-310/bin/python",
+        "-m",
+        "pip",
+        "--cache-dir",
+        "/private/tmp/layauto-w008-pip-cache",
+        "check"
+      ],
+      "cwd": "/private/tmp",
+      "returncode": 0,
+      "output_sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09",
+      "elapsed_seconds": 0.24
+    },
+    {
+      "check": "command_binding_smoke-311",
+      "passed": true,
+      "command": [
+        "/private/tmp/layauto-w008-final-installed-311/bin/python",
+        "-I",
+        "-B",
+        "/private/tmp/layauto-w008/docs/tasks/W008/verification/wheel_smoke.py",
+        "/private/tmp/layauto-w008/tests/fixtures/w003_m1"
+      ],
+      "cwd": "/private/tmp",
+      "returncode": 0,
+      "output_sha256": "5371a4a03df34a49b7d6cecdc7bf11df07b2acc9d782080767c6378180150dc6",
+      "elapsed_seconds": 12.816
+    },
+    {
+      "check": "command_binding_smoke-310",
+      "passed": true,
+      "command": [
+        "/private/tmp/layauto-w008-final-installed-310/bin/python",
+        "-I",
+        "-B",
+        "/private/tmp/layauto-w008/docs/tasks/W008/verification/wheel_smoke.py",
+        "/private/tmp/layauto-w008/tests/fixtures/w003_m1"
+      ],
+      "cwd": "/private/tmp",
+      "returncode": 0,
+      "output_sha256": "68b40a7cfa4b46a5e3fe57071a12ae4e1c9021b8051c9424a56eb65fffdb900a",
+      "elapsed_seconds": 15.425
+    },
+    {
+      "check": "adopted_matrix_310",
+      "passed": true,
+      "version": "3.10.22 (main, Oct  9 2026, 15:10:41) [Clang 22.1.3 ]",
+      "platform": "macOS-27.2-arm64-arm-64bit",
+      "final_summary": [
+        [
+          "730",
+          "306.09"
+        ]
+      ],
+      "old_summary": [
+        [
+          "713",
+          "314.25"
+        ]
+      ],
+      "basis": "Adopted captured execution, not rerun by this audit"
+    },
+    {
+      "check": "adopted_matrix_311",
+      "passed": true,
+      "version": "3.11.5 (main, Sep 11 2023, 08:31:25) [Clang 14.0.6 ]",
+      "platform": "macOS-27.2-arm64-arm-64bit",
+      "final_summary": [
+        [
+          "730",
+          "242.92"
+        ]
+      ],
+      "old_summary": [
+        [
+          "713",
+          "245.13"
+        ]
+      ],
+      "basis": "Adopted captured execution, not rerun by this audit"
+    },
+    {
+      "check": "package_manifest_binding",
+      "passed": true,
+      "runtime_files": 86
+    },
+    {
+      "check": "wheel_RECORD_integrity",
+      "passed": true,
+      "errors": [],
+      "member_count": 90
+    },
+    {
+      "check": "archive_bytes_layauto-0.2.0-py3-none-any.whl",
+      "passed": true,
+      "sha256": "64526a5b675048c55505fe4d81fa95408ca74c7c91176c1a4a098cafbca5740f",
+      "size_bytes": 124700,
+      "runtime_files": 86,
+      "mismatches": [],
+      "basis": "Direct archive reads and full runtime byte hash equality; no build/install"
+    },
+    {
+      "check": "archive_bytes_layauto-0.2.0.tar.gz",
+      "passed": true,
+      "sha256": "e600e0735dadae75248675fcc4ec18355b48a29847e4af4424714bc5ec5345b4",
+      "size_bytes": 100398,
+      "runtime_files": 86,
+      "mismatches": [],
+      "basis": "Direct archive reads and full runtime byte hash equality; no build/install"
+    },
+    {
+      "check": "adopted_installed_origin_310",
+      "passed": true,
+      "installed_origin": "/private/tmp/layauto-w008-final-installed-310/lib/python3.10/site-packages/layauto_v2/__init__.py",
+      "runtime_hash_count": 86,
+      "pip_archive_info": {},
+      "exact_reviewer_execution_output_match": true,
+      "basis": "Adopted installation/smoke execution; recorded hashes independently compared, original installation tree unavailable"
+    },
+    {
+      "check": "adopted_installed_origin_311",
+      "passed": true,
+      "installed_origin": "/private/tmp/layauto-w008-final-installed-311/lib/python3.11/site-packages/layauto_v2/__init__.py",
+      "runtime_hash_count": 86,
+      "pip_archive_info": {
+        "hash": "sha256=64526a5b675048c55505fe4d81fa95408ca74c7c91176c1a4a098cafbca5740f",
+        "hashes": {
+          "sha256": "64526a5b675048c55505fe4d81fa95408ca74c7c91176c1a4a098cafbca5740f"
+        }
+      },
+      "exact_reviewer_execution_output_match": true,
+      "basis": "Adopted installation/smoke execution; recorded hashes independently compared, original installation tree unavailable"
+    },
+    {
+      "check": "post_delivery_and_protected_scope",
+      "passed": true,
+      "post_delivery_paths": [
+        "docs/README.md",
+        "docs/current-work.md",
+        "docs/roadmap.md",
+        "docs/tasks/W008-geometry-base-occupancy.md",
+        "docs/tasks/W008/pm-evidence/README.md",
+        "docs/tasks/W008/pm-evidence/cr01-check.json",
+        "docs/tasks/W008/pm-evidence/environment.json",
+        "docs/tasks/W008/pm-evidence/evidence-audit/audit-output.txt",
+        "docs/tasks/W008/pm-evidence/evidence-audit/audit-receipt.json",
+        "docs/tasks/W008/pm-evidence/evidence-audit/check_evidence.py",
+        "docs/tasks/W008/pm-evidence/evidence-audit/checks.json",
+        "docs/tasks/W008/pm-evidence/evidence-audit/summary.md",
+        "docs/tasks/W008/pm-evidence/geometry-check/output.txt",
+        "docs/tasks/W008/pm-evidence/geometry-check/probe.py",
+        "docs/tasks/W008/pm-evidence/geometry-check/receipt.json",
+        "docs/tasks/W008/pm-evidence/geometry-check/run.py",
+        "docs/tasks/W008/pm-evidence/input-check/cr01_check.py",
+        "docs/tasks/W008/pm-evidence/mypy.json",
+        "docs/tasks/W008/pm-evidence/pytest.json",
+        "docs/tasks/W008/pm-receipt.json"
+      ],
+      "product_changes": [],
+      "protected_changes": []
+    },
+    {
+      "check": "prior_reviewer_audit_identity",
+      "passed": true
+    },
+    {
+      "check": "PM_saved_evidence",
+      "passed": true,
+      "saved_entries": 15,
+      "mismatches": []
+    }
+  ],
+  "not_executed": [
+    "Product tests/typing",
+    "Build/install/smoke rerun",
+    "Original Mac installed trees"
+  ],
+  "note": "No historical manifest/script/report modified. Historical task hash checked only at aced62b; other 83 current."
+}

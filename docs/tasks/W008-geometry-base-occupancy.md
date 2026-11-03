@@ -98,6 +98,17 @@ Reviewer 实跑修后输入/codec **127 项**（3.11）及 CR-01/alias/wire **19
 
 A1–A8 的逐项依据、原 finding/反例、修正关闭和直接运行/采用证据区别见代码报告。当前交付严格限于捕获绑定的全部 drawn geometry 与内部精确 base occupancy；完整工艺坐标、合法移动、物理连通、body/extraction、发布与完整 M1/生产验证仍按原任务后置。
 
+
+### R2 独立合并前复核（2026-11-03）
+
+本轮独立 reviewer `/root` 及输入/几何/证据专项未参与 W008 实现、设计或原 review。受审 HEAD 为 `131f66dfadd77b5fb9073db999d6939051c3addf`，产品交付 `aced62b0adda35fe7bcd8284a7354badc5b03649`，main 基线 `765ff864f4341b91996f70f25723411eebc0d6c2`；开始及实跑前远端一致、无分支前进，独立 checkout 初始干净。交付后的变更仅文档/PM 证据，产品身份未变。
+
+**新增 finding 0，剩余必须修正项 0；未发现阻止所审版本合并的问题，建议 PM 进入 main 集成及组合验证。** IR-01/CR-01 对照实际代码和新反例复核成立；本节不代替 PM 最终验收。完整逐项结论、版本、命令、原始输出和限制见[独立合并前报告](W008/independent-premerge-review.md)及[新附件](W008/independent-premerge-review/README.md)。
+
+本次新建独立 Linux Python3.12.14 环境实跑完整 v2 **730 passed / 550.32s**，strict mypy **40 source files**、pip check 均通过；独立输入探针 **24 项**，数学/几何探针 **600 分区、21,314 点**、全部40原始records及4次真实派生构建通过。证据专项 **29/29**：235项完整源码清单当前/交付均匹配；84历史附件的任务文档只对`aced62b`、其余83项对当前核对；13命令/日志及wheel/sdist各86 runtime字节匹配。原Mac 3.10/3.11完整矩阵、构建/两套干净安装及源码外smoke按已核验证据采信，本轮未重跑或访问原安装树。
+
+本轮只新增review报告/脚本/输出及本段；保留原报告、PM段、fixture/答案和产品实现。完整工艺坐标、CUT/terminal split、annotation/connectivity/body/extraction、baseline/seal、no_change/terminal、Stage6及真实EDA/PDK继续后置；U06缺外部tapcell/全局电源上下文不扩展本轮，不改body_context必填。尚未验证极端最大重叠集资源上界；没有形成必须阻塞合并的证据缺口。提交推送仅限本轮review材料，不合并main、不删除分支或启动下一任务。
+
 ## PM 验收与交接（PM）
 
 原派发和本次PM1分支接收按各自版本保留；当前技术接收通过，尚未合并main或完成最终集成验收。W007的39项集成检查仅是历史依赖证据，本次W008实际验证见PM1。

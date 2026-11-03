@@ -1,0 +1,22 @@
+{
+  "started_utc": "2026-11-03T02:44:05.873938+00:00",
+  "elapsed_seconds": 552.387903458,
+  "command": [
+    "/workspace/work/premerge-env/venv/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "tests/unit",
+    "tests/contracts",
+    "-q",
+    "-p",
+    "no:cacheprovider"
+  ],
+  "cwd": "/workspace/work/w008-review",
+  "environment_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "exit_code": 0,
+  "output": "pytest.txt",
+  "output_sha256": "a1a297aed81d32921ff429e2fdae9cb2c2888f190d132cb211612894e5db29a8"
+}

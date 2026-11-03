@@ -1,0 +1,7 @@
+{
+  "standalone_neutral_accepts_zero_real8_with_positive_exact": true,
+  "standalone_codec_roundtrip": true,
+  "bound_layout_rejects_unit_substitution": true,
+  "exact_claim": "19342813113834067/19342813113834066795298816",
+  "scope": "neutral DTO only; does not demonstrate false successful aggregate"
+}
