@@ -8,8 +8,8 @@
 | --- | --- |
 | ID / 目标 | W008；交付immutable geometry draft、exact坐标换算及versioned base projection/occupancy draft，消费实际捕获输入，无IO或发布副作用 |
 | 里程碑 / 依赖 | M1第四个产品切片；W003/W004已验收synthetic输入、W005读取、W006运行审计、W007语义组件。W007经[PR #61](https://github.com/LucianoHoult/Layauto/pull/61)合入main `765ff864f4341b91996f70f25723411eebc0d6c2`，最终验收见[W007 PM2](W007-semantic-identity-normalization.md#pm2-integration-20261102) |
-| 授权依据 / 阶段 | 用户2026-11-02同意继续合并W007并准备下一独立执行任务。**可执行：先细化内部方案并独立review，原范围内修正后直接实现A1–A8。** 本次PM只准备任务，尚无W008实现或产品验证 |
-| 恢复位置 | `codex/w008-geometry-base-occupancy`，从上述main建立；使用包含本任务、W007 PM2与current-work的PM交接提交，完整SHA见Git/回复。临时环境不假定跨session可用 |
+| 授权依据 / 阶段 | 用户派发独立执行任务，并于2026-11-03交回实现/review，请PM继续。**待验收：A1–A8分支技术接收通过，剩余必须修正项0；最终验收待main集成版本及组合验证。** 依据见[PM1](#pm1-technical-receipt-20261103) |
+| 恢复位置 | `codex/w008-geometry-base-occupancy`；产品交付`aced62b0adda35fe7bcd8284a7354badc5b03649`，PM复核HEAD `baad5347627db194649430cf6b0f5ebf0aa1165e`仅多U06文档澄清。接手包含本次PM1记录的后续提交，完整SHA见Git/回复；临时环境不假定跨session可用 |
 | 允许修改 | `domain/geometry.py`及必要typed ids/中立DTO/codec；`state/layout_store.py`、`coordinate.py`、`occupancy.py`的纯草稿/数学组件；`normalization/`中的适配与构建；必要的tech中立合同、读取侧无IO校验复用；对应tests、typing/build配置、README和本任务附件。具体类型与文件划分留内部方案 |
 | 非目标 | 不实现完整Stage2CoordinateSystem/合法routing lattice、制造网格或移动能力；不做CUT Boolean、terminal split、spatial annotation、connectivity/body/extraction、mandatory rules、生命周期最终闭合、完整ProposedInitialState、initialize/seal、pipeline/repository扩展、ECO、no_change/terminal或Stage6；不改已验收fixture/答案及真实PDK/EDA边界，不落实MR-040配置机制 |
 | 架构依据 | 上述main的[architecture](../architecture.md) §1.4、§2.2–2.3、§3.1/3.3–3.5、§4.1–4.4/4.8、§5.4–5.9、§11.2–11.3/11.10/11.14–11.15、§12.3/12.5；[W003合同](W003/contracts.md)、[MR-051/052/054/056](W003/manual-verification.md)、[W005后续组合](W005-input-reading-binding.md#pm已确定的任务拆分)、W006 InputsReady/readback及W007输入/seed合同 |
@@ -100,11 +100,35 @@ A1–A8 的逐项依据、原 finding/反例、修正关闭和直接运行/采�
 
 ## PM 验收与交接（PM）
 
-当前仅准备任务与分支，未验收W008。W007合并后实际39项组合检查通过，合并tree等于已审head，详见W007 PM2；不能把这些结果当作W008验证。本任务完成后交PM接收，不自行合并main、删除分支或启动下一任务。
+原派发和本次PM1分支接收按各自版本保留；当前技术接收通过，尚未合并main或完成最终集成验收。W007的39项集成检查仅是历史依赖证据，本次W008实际验证见PM1。
 
 **派发要求独立复核（2026-11-02，PM记录）：** 未参与草稿设计的`/root/w008_handoff_review`及其输入边界专项，对照上述架构原文、MR-051/052/054/056、实际GDS/tech声明和W005/W007接口检查，必须修正项0。确认内部base index没有冒充完整工艺坐标空间，保留来源闭合、多占据、独立body scope及后续物理/发布义务。受审基线为本次main，W008全文SHA-256为`611e5e83385771b193521e28917c980c72b9deb864303f42933c0798da87ce14`，对应追加本段前的草稿；这不是未来接口/代码review或W008产品验证。
 
+<a id="pm1-technical-receipt-20261103"></a>
+### PM1. 分支技术接收（2026-11-03，PM）
+
+**接收A1–A8范围内的交付，剩余必须修正项0；可进入main集成，W008最终验收待集成版本及组合验证。** 用户交付为`aced62b0adda35fe7bcd8284a7354badc5b03649`；本次复核HEAD为`baad5347627db194649430cf6b0f5ebf0aa1165e`，远端一致。后者仅在current-work/roadmap补充U06，产品、测试及执行证据未变；main仍为`765ff864f4341b91996f70f25723411eebc0d6c2`。完整命令、环境、原始输出、身份及采用边界见[PM回执](W008/pm-receipt.json)和[PM附件说明](W008/pm-evidence/README.md)。
+
+PM对照任务、架构及接口核对实现和独立review；IR-01、CR-01均有原问题、修正和reviewer关闭依据。`/root/w008_accept_geometry`只读检查几何/分区/occupancy/聚合边界并运行限定探针；`/root/w008_accept_evidence`独立核对Git、清单、日志和实际包字节。两项专项未新增必须修正项，不替代原独立方案/代码review。
+
+| 本次接收核验 | 结果与采用边界 |
+| --- | --- |
+| PM实际完整回归与strict typing（A1–A8） | Linux Python3.12.14：**730 passed / 421.70s**；**40 source files无问题**。使用既有PM环境和当前源码，不作为干净安装证据；一条第三方anyio/pytest弃用warning保留在原输出 |
+| PM实际CR-01原反例（A2/A6） | 未改变原复现材料；同bytes但错误首次获取URI被拒绝为`GeometryCaptureBindingMismatch`，定位`site_config.yaml#/inputs/gds`，9项已完成事实保留 |
+| 专项实际几何探针（A3–A7） | **16项限定检查通过**：大整数精确分区/边界、真实40个本地records与38个投影records的41片段逐record面积及无内部重叠、6个外部body shapes隔离、漏项/重复构造器拒绝、单位逆变换与非整数拒绝。大整数是数学DTO检查，不扩展GDS输入范围 |
+| 来源与版本（A2/A8） | **235项**源码/测试/配置清单与当前及交付Git字节一致；**84项**证据附件与**13条**命令回执/日志身份一致；最终730项记录与修前713项分开，证据审计32/32通过 |
+| 实际包与采用的安装验证（A8） | 随Git的wheel/sdist各**86个runtime文件**直接逐字节匹配最终源码。原Mac Python3.10.22/3.11.5各730项、各40模块typing、新包/两套干净安装/源码外smoke按已核验回执采用；本次未重建安装或访问原Mac安装目录。3.10安装来自sdist，缺失的pip archive hash不补写为已存在 |
+| 原能力及范围（A1/A7/A8） | 已验收fixture/答案、support、W005/W006实现、W007核心组件和历史报告未改；W007唯一旧测试调整是具名W008纯适配/状态依赖放行。真实组合不推进attempt，不产生baseline/no_change/terminal |
+
+上述84项附件核验发生在PM追加记录前；原清单包含本任务文件的交付版本。当前只更新其阶段/恢复位置和PM段，并标明旧prompt已执行，A1–A8、执行及reviewer原文不变。该历史任务文件hash按`aced62b`追溯，其余83项及235项源码清单仍与当前一致；不重写原清单来覆盖历史身份。
+
+完整本地图形、精确单位和多occupant索引在本任务范围接收。`drawn-layer-edges/1`只表示内部索引；完整工艺坐标、CUT/terminal split、annotation、物理连通/body/extraction、生命周期/原子baseline、整轮no_change及Stage6仍留后续。捕获bytes的纯decoder复用和依赖检查调整符合原授权，没有新增外部输入或能力承诺。
+
+U06“只输入待修改底层cell、外部tapcell/全局电源上下文缺失”的需求继续有效，由后续生产读取/body任务提出具体方案；本轮没有将body_context改为可选，也没有把未知外部连接视为已证明。建议下一步完成main集成及针对性组合验证，再准备后续Stage2切片。本次仅提交PM记录与证据，未合并main、删除分支或启动下一任务。
+
 ### 独立执行session prompt
+
+以下为已执行的原派发prompt，仅作历史记录；当前从PM1及current-work继续，不重新实施本任务。
 
 ```text
 按Layauto项目规范，以执行角色完成W008“几何事实与基础占用”。

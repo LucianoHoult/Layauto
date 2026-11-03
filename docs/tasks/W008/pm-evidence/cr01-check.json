@@ -1,0 +1,13 @@
+{
+  "command": [
+    "/workspace/work/w005-pm-check-env/bin/python",
+    "-B",
+    "/workspace/work/w008-pm/input-check/cr01_check.py",
+    "/workspace/Layauto"
+  ],
+  "cwd": "/workspace/Layauto",
+  "started_utc": "2026-11-03T01:39:40.714718+00:00",
+  "exit_code": 0,
+  "stdout": "site selected: source.gds\ncaptured GDS role: another-role.gds\noriginal URI present: False\nsemantic accepts: NormalizationInput\n{\n  \"result\": \"expected_rejection\",\n  \"code\": \"GeometryCaptureBindingMismatch\",\n  \"source\": \"site_config.yaml\",\n  \"field\": \"/inputs/gds\",\n  \"completed_count\": 9\n}\n",
+  "stderr": ""
+}

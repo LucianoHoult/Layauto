@@ -1,0 +1,15 @@
+{
+  "command": [
+    "/workspace/work/w005-pm-check-env/bin/python",
+    "-B",
+    "-m",
+    "mypy",
+    "--cache-dir",
+    "/workspace/work/w008-pm/mypy-cache"
+  ],
+  "cwd": "/workspace/Layauto",
+  "started_utc": "2026-11-03T01:36:35.430316+00:00",
+  "exit_code": 0,
+  "stdout": "Success: no issues found in 40 source files\n",
+  "stderr": ""
+}

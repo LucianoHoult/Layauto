@@ -1,0 +1,6 @@
+{
+  "must_fix_findings": 0,
+  "checks_passed": 32,
+  "checks_total": 32,
+  "script_sha256": "32c17a7c168512eadfaf1750e49eb18be34583a3a9e1aed785a82796311e9b18"
+}

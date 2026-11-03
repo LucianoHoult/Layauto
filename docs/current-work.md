@@ -1,10 +1,10 @@
 # 当前工作入口
 
-更新：2026-11-02。详细决定、证据与review结论归任务文件。
+更新：2026-11-03。详细决定、证据与review结论归任务文件。
 
 ## 当前节点
 
-**当前任务为[W008 — 几何事实与基础占用](tasks/W008-geometry-base-occupancy.md)，可执行，等待独立执行session。** 从捕获GDS构造完整本地图形草稿和可重建的精确base occupancy索引；先细化接口/坐标分区方案并独立review，再实现。尚无W008产品实现；内部索引不等于完整工艺坐标空间、物理连通或baseline。
+**当前任务为[W008 — 几何事实与基础占用](tasks/W008-geometry-base-occupancy.md)，分支技术接收通过，待main集成及最终验收。** 已从捕获GDS构造完整本地图形草稿和可重建的精确base occupancy索引；IR-01/CR-01已独立关闭，PM实际Python3.12的730项与40模块typing通过，剩余必须修正项0，见[W008 PM1](tasks/W008-geometry-base-occupancy.md#pm1-technical-receipt-20261103)。内部索引不等于完整工艺坐标空间、物理连通或baseline。
 
 **W007已验收并通过[PR #61](https://github.com/LucianoHoult/Layauto/pull/61)合入main `765ff864f4341b91996f70f25723411eebc0d6c2`。** 合并tree与已审head完全一致，PM实际集成39项通过；原553项/33模块、最终包及独立review证据保持适用，见[W007 PM2](tasks/W007-semantic-identity-normalization.md#pm2-integration-20261102)。已能形成器件/网络语义、独立目标差异与query身份/seeds，语义相同仍不代表整轮成功。
 
@@ -20,7 +20,7 @@
 
 ## 恢复与版本身份
 
-先读根[AGENTS](../AGENTS.md)、[README](../README.md)、[协作规则](collaboration/rules.md)及W008，回查W005/W006/W007组件合同、W003原判据和任务引用的架构原文。不要从已完成的W004–W007实施或补修prompt重新开始；W006 IPMR-01与W005同名finding已分别关闭。
+先读根[AGENTS](../AGENTS.md)、[README](../README.md)、[协作规则](collaboration/rules.md)及W008 PM1，回查W005/W006/W007组件合同、W003原判据和任务引用的架构原文。不要从已完成的W004–W008实施或补修prompt重新开始；W006 IPMR-01与W005同名finding已分别关闭。
 
 | 用途 | 恢复依据 |
 | --- | --- |
@@ -34,14 +34,14 @@
 | W005当前集成 | main `4db3aa81d6f01496a680bdcb264afe99cd80f3f3`，合并head `ef31139465d01c170ccaf081484d3bd7cf5ff858`；[集成回执](tasks/W005/integration-receipt.json)与[PM4](tasks/W005-input-reading-binding.md#pm4-integration-20261102)记录最终验收，原[补修接收回执](tasks/W005/ipmr01-pm-receipt.json)保留实际复跑及采用边界 |
 | W006当前集成 | main `221492eb72e10cf2e46f1d9c76cb992087806a97`，已审head `2bdf5fa0b0a1004623ab90cf31ba04eca3c6abf5`，产品`f19ac0448a5d0111f799660bd7be043ebfd16e41`；[PM4](tasks/W006-precontext-run-audit.md#pm4-integration-20261102)及[集成回执](tasks/W006/integration-receipt.json)记录最终验收，原[补修接收](tasks/W006/ipmr01-pm-receipt.json)保留验证边界 |
 | W007当前集成 | main `765ff864f4341b91996f70f25723411eebc0d6c2`，已审head `26dc70ce5dee76f275530f33ad585b459b2b8b5a`，产品/测试 `0f879f01acbeac033173d0b6c6257c376bb9272a`；[PM2](tasks/W007-semantic-identity-normalization.md#pm2-integration-20261102)与[集成回执](tasks/W007/integration-receipt.json)记录最终验收；原[PM接收回执](tasks/W007/pm-receipt.json)保留实际复跑与采用边界 |
-| W008恢复入口 | `codex/w008-geometry-base-occupancy`，从上述main建立；接手包含W007事后验收、本入口和[W008要求/prompt](tasks/W008-geometry-base-occupancy.md)的PM交接提交，完整SHA见Git/回复。本次准备只含文档，尚无W008实现 |
+| W008恢复入口 | `codex/w008-geometry-base-occupancy`；产品交付`aced62b0adda35fe7bcd8284a7354badc5b03649`，PM受检HEAD `baad5347627db194649430cf6b0f5ebf0aa1165e`仅追加U06文档。接手包含[PM1](tasks/W008-geometry-base-occupancy.md#pm1-technical-receipt-20261103)及[接收回执](tasks/W008/pm-receipt.json)的后续PM记录提交，完整SHA见Git/回复；尚未合并main |
 | 历史材料 | 准备基线9f6735d，原技术实物0153505；MR-001–077、执行/review和旧PM记录保留各自历史事实。原包与既有受审实物不随PM状态整理改写 |
 
-本机PM复核材料原位于`/workspace/work/w004-pm-receipt-kryfgf84/`，关键结果与身份另汇入[PM接收摘要](tasks/W003/delivery/w004-pm-20261031/receipt.json)随Git交接；临时全量目录不自动跨实例共享。W004–W007分支均已合入main并保留，当前从新的W008准备分支接手。
+本机PM复核材料原位于`/workspace/work/w004-pm-receipt-kryfgf84/`，关键结果与身份另汇入[PM接收摘要](tasks/W003/delivery/w004-pm-20261031/receipt.json)随Git交接；临时全量目录不自动跨实例共享。W004–W007分支均已合入main并保留，当前从W008交付及PM接收分支继续。
 
 ## 整体进度与下一步
 
-主线仍是M0准入准备→M1保真无变化闭环→M2首次实际shrink→M3多器件整轮覆盖→M4可复现首版验收。**当前在M1内部，样本、读取、运行身份、输入失败记录及语义/目标差异组件已集成；下一步建立几何事实和基础占用，尚未完成第一个完整输入到产物闭环。** 不按任务编号或测试数量推算百分比。
+主线仍是M0准入准备→M1保真无变化闭环→M2首次实际shrink→M3多器件整轮覆盖→M4可复现首版验收。**当前在M1内部，样本、读取、运行身份、输入失败记录及语义/目标差异组件已集成；几何事实和基础占用已在W008分支实现并技术接收，尚未完成第一个完整输入到产物闭环。** 不按任务编号或测试数量推算百分比。
 
 | M1内的能力 | 当前结果 / 后续归属 |
 | --- | --- |
@@ -49,11 +49,11 @@
 | 实际文件读取及来源绑定 | W005已集成 |
 | run身份、读取审计与输入失败终结 | W006已集成 |
 | 器件/网络语义、目标差异与query身份关联 | W007已集成 |
-| 几何事实与基础占用索引 | W008已准备，尚未实现 |
+| 几何事实与基础占用索引 | W008分支技术接收通过，待main集成及最终验收 |
 | 完整工艺坐标/有效几何/annotation/连通/body状态与原子baseline | 后续Stage2任务保留；W008索引不替代这些义务 |
 | 无变化的完整判定、只读GDS/CDL/JSON及报告/terminal | 后续Stage3–6组合；通过后才验收M1 |
 
-下一执行者按[W008 prompt](tasks/W008-geometry-base-occupancy.md#独立执行session-prompt)先收敛内部几何/分区/occupancy方案并独立review，原范围内修正后直接实现。示例coordinate与32×16见证不能充当完整运行网格；保留全部本地图形和多个occupants，外部body图形不混入本地store。完成验证及独立代码review后提交推送交PM，不自行合并或启动下一任务。
+建议下一步完成W008的main集成及针对性组合验证，再由PM准备后续Stage2任务；当前未启动下一任务。合并时锁定实际已审head并核对tree/证据身份；若用户安排独立新session复核，按该范围先完成复核。示例coordinate与32×16见证仍不能充当完整运行网格，外部body图形保持独立scope。
 
 正常输入在W006仅交接unsealed attempt，不产生成功terminal；W007组件也不推进attempt或宣称整轮成功。C08/09/10和C13的正式终结阶段仍需后续组合验证。完整Stage2/baseline/no_change与Stage6文件闭环仍是M1硬门；真实工具与配置机制后置项保持，新增关键预期带实例交PM/用户。W007验收不等同完整Stage2/M1通过。
 
