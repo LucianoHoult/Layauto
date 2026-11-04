@@ -17,6 +17,7 @@
 | 器件、网络和目标整理做到哪里？ | [W007](tasks/W007-semantic-identity-normalization.md)：已读取证据→source语义草稿、独立target/完整差异、query身份/seed；[PM最终验收与集成](tasks/W007-semantic-identity-normalization.md#pm2-integration-20261102)已完成，尚非完整Stage2状态或baseline |
 | 几何与占用做到哪里？ | [W008](tasks/W008-geometry-base-occupancy.md)：已形成全部本地图形及精确base occupancy；[PM最终验收与集成](tasks/W008-geometry-base-occupancy.md#pm2-integration-20261103)已完成。内部索引不代表完整工艺坐标或physical connectivity |
 | 有效图形解释做到哪里？ | [W009](tasks/W009-effective-geometry-terminals.md#pm4-integration-20261104)：CUT差集、channel与OD端区草稿已验收集成，63项组合验证通过；局部连接图、body、标注、提取及规则执行后续完成 |
+| 下一步怎样解释物理连通？ | [W010](tasks/W010-local-contact-connectivity.md)：准备从认证有效区域建立本地contact/connector/component草稿，分开导通与局部T05包围；派发要求已独立复核，可执行，产品尚未实现 |
 | 整体开发顺序怎样安排？ | [roadmap.md](roadmap.md)：首版里程碑、依赖、架构要求到验收的覆盖；规划已 review 并由 PM 接收，产品能力未验收 |
 | 如何准备与运行环境？ | [environment/local-setup.md](environment/local-setup.md)：Python、安装、测试及历史环境记录 |
 | 如何跨机器工作？ | [environment/remote-development.md](environment/remote-development.md)：运行位置、环境准备与代码交接 |

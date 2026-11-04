@@ -167,7 +167,7 @@ M0 分开交付“工程输入/合同准备”和“真实 profile 证据准入�
 
 - **W001 规划已验收：**独立 review 为 0 项实质 findings，PM 已核对被审身份、要求覆盖与限制；已验收文档原稿 `8482b68` 及集成记录 `156e62d` 已推送 GitHub main。详细状态和证据归任务文件，规划验收不等于产品实现授权。
 - **W002工程准备已验收：**真实准入出口仍缺E3所列材料；后续W003/W004已完成synthetic样本/profile/独立判据准备，W005/W006已有产品实现并集成。真实缺项不因这些工程进展自动关闭。
-- **W009已验收集成，近期准备局部接触与物理连通切片：**已从认证drawn几何完成CUT差集及channel/OD端区草稿，接下来依明确toy接触算子构建局部关系，不以示例网格补完整合法坐标。完整坐标、有效region投影、body、标注/提取/规则、原子基线发布、semantic/extraction-aware无变化判断和Stage6保真交付仍须后续完成。详细阶段和恢复位置见current-work。
+- **W009已验收集成，近期任务为[W010](tasks/W010-local-contact-connectivity.md)：**已从认证drawn几何完成CUT差集及channel/OD端区草稿，接下来依明确toy接触算子构建局部关系与独立T05包围事实；外部body/完整规则仍后置，不以示例网格补完整合法坐标。完整坐标、有效region投影、body、标注/提取/规则、原子基线发布、semantic/extraction-aware无变化判断和Stage6保真交付仍须后续完成。详细阶段和恢复位置见current-work。
 - W002 接收后只展开 M1 的近期实现包；共享状态/publication/物理解释方案先独立 review。M2–M4 保留能力目标、依赖和验收，不预写全部 helper/模块任务或承诺日历排期。
 
 | PM 核对 | 本规划的处理 | 尚不代表 |
