@@ -8,8 +8,8 @@
 | --- | --- |
 | ID / 目标 | W009；从认证的W008几何产物及同源physical/drawn/formats声明构造只读、精确、可重建的有效几何与channel/terminal区域草稿 |
 | 里程碑 / 依赖 | M1第五个产品切片；W003/W004样本、W005读取、W006审计、W007语义/身份和W008基础几何已验收集成。main起点`4df07e68b05df4c57a8b8d44bc41e7e073938d3a`，W008产品经[PR #62](https://github.com/LucianoHoult/Layauto/pull/62)集成，见[W008 PM2](W008-geometry-base-occupancy.md#pm2-integration-20261103) |
-| 授权依据 / 阶段 | 用户2026-11-03交回独立合并前复核，沿用独立session分工。**可执行（局部补修）：IPMR-01为P2必须修正，剩余1项，阻止集成。** PM已复现并准备[补修交接](W009/ipmr01-fix-task.md)，尚未开始补修或合入main；见[PM2](#pm2-ipmr01-20261103) |
-| 恢复位置 | `codex/w009-effective-geometry-terminals`，review交付`386a139c38e815086fafc183ea73ea650e72cc5b`，产品仍为`5b1d9b5196a7c5181822c4dd0f1bd2f678475116`；接手包含PM2及补修交接的最新提交，完整SHA见Git/回复。main仍为上述起点 |
+| 授权依据 / 阶段 | 用户2026-11-04交回补修及独立复核，沿用独立session分工。**待验收：IPMR-01、FXR-01已独立关闭并经PM重新接收，剩余必须修正项0，可进入main集成与组合验证。** 当前尚未集成或最终验收，见[PM3](#pm3-ipmr01-receipt-20261104) |
+| 恢复位置 | `codex/w009-effective-geometry-terminals`，补修交付`6cb4ecc2ecaa8bd6e5236b28b70149d9a4917534`，产品/正式测试`73e38df8f932bbb5bd9caf074b442ad2f5c286e9`；接手包含PM3及current-work补记的最新提交，完整SHA见Git/回复。main仍为上述起点 |
 | 允许修改 | `layauto_v2/domain/`必要中立区域/算子/来源DTO；`state/`内有效几何/区域草稿纯组件；`normalization/`适配、组合与codec；必要的同范围tech校验复用；对应tests、typing/build配置、README及本任务附件。模块/类型名由内部方案选择 |
 | 非目标 | 不实现完整工艺坐标/合法routing lattice、全层导通图/connector edges、电气ComponentId、body-to-rail证明、fin计数/完整器件提取、query spatial overlay、规则执行器/CSP、lifecycle最终闭合、baseline/seal/发布、ECO/no_change/terminal/Stage6；不改fixture/答案/历史证据，不新增生产格式或MR-040配置机制 |
 | 架构依据 | 本次main的[architecture](../architecture.md) §2.2–2.3、§3.1/3.4–3.6、§4.5–4.8、§5.6–5.9、§11.2–11.3/11.14–11.15、§12.3/12.5；[W003 contracts](W003/contracts.md)、[manual review](W003/manual-verification.md) MR-045/046（以W004修订后的body合同为准）、MR-052/054/056；W007/W008输入、身份、单位及公开结果合同 |
@@ -140,6 +140,16 @@ Reviewer对最终`32e60e783a7a7e4172ee3916e3ceb4fade329585b87a7c7091a85c8a6418d1
 原PM1和CR-01所测W009自有算法路径保持异常对象，但未覆盖复用的layout/partition/occupancy完整嵌套链；原“0项”是当时覆盖下的历史结论，当前A6不满足，以本PM2为准。正常几何、来源、原对象图和914项/44模块记录不被改写，也不能替代缺失错误路径的修正。
 
 已建立[IPMR-01局部补修交接及执行prompt](W009/ipmr01-fix-task.md)，允许在直接复用的W008 decoder及必要DTO边界作最窄且完整修复；必须同时验证99项异常同对象矩阵和畸形输入拒绝，并更新受影响最终源码/包/测试证据。修后由未承担实现者独立复核，再交PM重新接收。当前未修产品，未合main或启动W010。
+
+<a id="pm3-ipmr01-receipt-20261104"></a>
+
+### PM3 补修重新接收（2026-11-04）
+
+核对补修交付`6cb4ecc2ecaa8bd6e5236b28b70149d9a4917534`、产品`73e38df8f932bbb5bd9caf074b442ad2f5c286e9`及完整11文件产品/正式测试diff。[独立修后复核](W009/ipmr01-fix-review.md)确认IPMR-01与追加FXR-01关闭；PM再次实跑全部新增正式回归**235 passed / 316.54s**、原异常矩阵**99/99同对象、identity_failures=[]**和strict typing **44模块通过**，代码专项另41例通过，未发现新增必须修正。
+
+245项源/完整tar、两包各90项runtime、24命令原输出及16沿用/8恢复重跑/14中断归档身份已实核一致。采用原最终3.12完整**1149项**、3.10受影响**988项**及新包/双干净安装证据；本机未重跑完整1149/3.10或重建/安装，原实际安装树不在本机，未冒称重新遍历。详见[PM重新接收说明](W009/ipmr01-pm-receipt.md)及[机器回执](W009/ipmr01-pm-receipt.json)。原失败与历史通过记录各保留原身份。
+
+**补修分支接收通过，当前剩余必须修正项0，解除IPMR-01集成阻塞；阶段待验收。** 原独立合并前复核加本次独立修后复核已有完整交接，下一步main集成及组合验证后记录最终验收。本轮未合main或启动W010；完整M1/真实EDA与U06后续义务保持。
 
 <a id="独立执行session-prompt"></a>
 

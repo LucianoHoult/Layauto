@@ -1,0 +1,75 @@
+{
+  "status": "passed",
+  "checked_utc": "2026-11-04T02:18:43.879676+00:00",
+  "head": "6cb4ecc2ecaa8bd6e5236b28b70149d9a4917534",
+  "product": "73e38df8f932bbb5bd9caf074b442ad2f5c286e9",
+  "base": "cdf3d2d5d2aeb0c441221c8bb0b41d0b302d8afa",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "source_manifest_sha256": "40a60ada56e2b560d1af88fec9c16e4d60a6b1384fb042f39202edfcaefefc2c",
+  "source_files": 245,
+  "runtime_files": 90,
+  "source_snapshot_sha256": "09004b55b07f7a1398a797cf110c27cd6c3d703992dfffa89b1e7126b24fc8de",
+  "source_archive_matches_manifest": true,
+  "commands_checked": [
+    "build-environment-312.json",
+    "build.json",
+    "clean-environment-before-install-310.json",
+    "clean-environment-before-install-312.json",
+    "clean-environment-installed-310.json",
+    "clean-environment-installed-312.json",
+    "create-install-310.json",
+    "create-install-312.json",
+    "install-310.json",
+    "install-312.json",
+    "installed-identity-310.json",
+    "installed-identity-312.json",
+    "installed-pip-check-310.json",
+    "installed-pip-check-312.json",
+    "installed-smoke-310.json",
+    "installed-smoke-312.json",
+    "environment-312.json",
+    "environment-310.json",
+    "pytest-312.json",
+    "typing-312.json",
+    "pip-check-312.json",
+    "pytest-310.json",
+    "typing-310.json",
+    "pip-check-310.json"
+  ],
+  "command_count": 24,
+  "adopted_command_count": 16,
+  "rerun_command_count": 8,
+  "archived_partial_outputs": 14,
+  "test_counts": {
+    "310": 988,
+    "312": 1149
+  },
+  "python310_complete_v2_rerun": false,
+  "packages": {
+    "wheel": "30f7c04cbb310c68e0bc1af23277fa7b971b00fecdbd9c922501b66d1a7b2926",
+    "sdist": "5a899b664136781237d02d020a9697e7a1d57ccededc03ceee09a2ca9ce16217"
+  },
+  "installation_records": {
+    "310": {
+      "record_runtime_and_report_match": true,
+      "original_install_tree_present": false,
+      "source_artifact_sha256": "5a899b664136781237d02d020a9697e7a1d57ccededc03ceee09a2ca9ce16217"
+    },
+    "312": {
+      "record_runtime_and_report_match": true,
+      "original_install_tree_present": false,
+      "source_artifact_sha256": "30f7c04cbb310c68e0bc1af23277fa7b971b00fecdbd9c922501b66d1a7b2926"
+    }
+  },
+  "review_exception_matrix": "99/99; no identity failures",
+  "captured_variants": 1184,
+  "malformed_receipt_controls": 33,
+  "compatibility_records_match": true,
+  "protected_changed_paths": [],
+  "must_fix": 0,
+  "limitations": [
+    "This audit rehashed current source/archive/package bytes and archived receipts; no pytest, typing, build, install or dynamic smoke was rerun.",
+    "Original installation trees are absent on this host; historical actual-tree verification is adopted from the version-bound independent review.",
+    "Historical command execution is supported by original receipts/review; byte consistency alone is not a new observation of those executions."
+  ]
+}

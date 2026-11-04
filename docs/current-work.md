@@ -1,10 +1,10 @@
 # 当前工作入口
 
-更新：2026-11-03。详细决定、证据与review结论归任务文件。
+更新：2026-11-04。详细决定、证据与review结论归任务文件。
 
 ## 当前节点
 
-**当前任务为[W009 — 有效几何与沟道、端区草稿](tasks/W009-effective-geometry-terminals.md)，局部补修可执行，集成阻塞。** 独立合并前复核交付`386a139c38e815086fafc183ea73ea650e72cc5b`发现IPMR-01：嵌套base decoder仍改写内部异常，剩余P2必须修正项1。PM已复现并准备[补修交接/prompt](tasks/W009/ipmr01-fix-task.md)，见[PM2](tasks/W009-effective-geometry-terminals.md#pm2-ipmr01-20261103)；下一步独立执行session局部修复及独立复核，之后交PM重新接收。正常几何及原914项/44模块记录保留历史适用范围，不能关闭此项。尚未补修、集成或最终验收；完整坐标、连接图/body/FIN提取、标注、规则与发布继续后置。
+**当前任务为[W009 — 有效几何与沟道、端区草稿](tasks/W009-effective-geometry-terminals.md)，待验收，补修分支已重新接收，可进入main集成与组合验证。** 补修交付`6cb4ecc2ecaa8bd6e5236b28b70149d9a4917534`，产品/正式测试`73e38df8f932bbb5bd9caf074b442ad2f5c286e9`。IPMR-01、FXR-01已独立关闭，PM实际235项新增回归、99/99异常矩阵和44模块typing通过，剩余必须修正项0，见[PM3](tasks/W009-effective-geometry-terminals.md#pm3-ipmr01-receipt-20261104)。原最终1149项/3.10受影响988项及新包/双安装证据按身份采信；3.10全套unit未重跑。尚未集成或最终验收；完整坐标、连接图/body/FIN提取、标注、规则与发布继续后置。
 
 **[W008 — 几何事实与基础占用](tasks/W008-geometry-base-occupancy.md)已验收，并通过[PR #62](https://github.com/LucianoHoult/Layauto/pull/62)合入main `16159c7edb2d085ab4987bff27ec11c5b5f53294`。** 合并tree与已审head一致，PM实际集成61项通过；原730项/40模块及包证据保持适用，见[W008 PM2](tasks/W008-geometry-base-occupancy.md#pm2-integration-20261103)。独立合并前review新增finding 0，剩余必须修正项0。内部索引不等于完整工艺坐标空间、物理连通或baseline。
 
@@ -37,10 +37,10 @@
 | W006当前集成 | main `221492eb72e10cf2e46f1d9c76cb992087806a97`，已审head `2bdf5fa0b0a1004623ab90cf31ba04eca3c6abf5`，产品`f19ac0448a5d0111f799660bd7be043ebfd16e41`；[PM4](tasks/W006-precontext-run-audit.md#pm4-integration-20261102)及[集成回执](tasks/W006/integration-receipt.json)记录最终验收，原[补修接收](tasks/W006/ipmr01-pm-receipt.json)保留验证边界 |
 | W007当前集成 | main `765ff864f4341b91996f70f25723411eebc0d6c2`，已审head `26dc70ce5dee76f275530f33ad585b459b2b8b5a`，产品/测试 `0f879f01acbeac033173d0b6c6257c376bb9272a`；[PM2](tasks/W007-semantic-identity-normalization.md#pm2-integration-20261102)与[集成回执](tasks/W007/integration-receipt.json)记录最终验收；原[PM接收回执](tasks/W007/pm-receipt.json)保留实际复跑与采用边界 |
 | W008当前集成 | main `16159c7edb2d085ab4987bff27ec11c5b5f53294`，合并head `eb15a666010cf7f5fa82c97880a4d0e8f023fa8f`，产品`aced62b0adda35fe7bcd8284a7354badc5b03649`；[PM2](tasks/W008-geometry-base-occupancy.md#pm2-integration-20261103)与[集成回执](tasks/W008/integration-receipt.json)记录最终验收。接手包含这些合并后补记的最新main；原[PM1接收](tasks/W008/pm-receipt.json)和独立review保留历史事实 |
-| W009恢复入口 | `codex/w009-effective-geometry-terminals`，review交付`386a139c38e815086fafc183ea73ea650e72cc5b`，产品仍为`5b1d9b5196a7c5181822c4dd0f1bd2f678475116`；接手包含[PM2](tasks/W009-effective-geometry-terminals.md#pm2-ipmr01-20261103)和[补修交接](tasks/W009/ipmr01-fix-task.md)的最新提交。原[PM回执](tasks/W009/pm-receipt.json)保留历史事实；尚未合入main，main仍为`4df07e68b05df4c57a8b8d44bc41e7e073938d3a` |
+| W009恢复入口 | `codex/w009-effective-geometry-terminals`，补修交付`6cb4ecc2ecaa8bd6e5236b28b70149d9a4917534`，产品`73e38df8f932bbb5bd9caf074b442ad2f5c286e9`；接手包含[PM3](tasks/W009-effective-geometry-terminals.md#pm3-ipmr01-receipt-20261104)与本入口的最新提交。[补修PM回执](tasks/W009/ipmr01-pm-receipt.json)记录实跑/采信边界；尚未合入main，main仍为`4df07e68b05df4c57a8b8d44bc41e7e073938d3a` |
 | 历史材料 | 准备基线9f6735d，原技术实物0153505；MR-001–077、执行/review和旧PM记录保留各自历史事实。原包与既有受审实物不随PM状态整理改写 |
 
-本机PM复核材料原位于`/workspace/work/w004-pm-receipt-kryfgf84/`，关键结果与身份另汇入[PM接收摘要](tasks/W003/delivery/w004-pm-20261031/receipt.json)随Git交接；临时全量目录不自动跨实例共享。W004–W008分支均已合入main并保留，当前W009交付分支因IPMR-01待补修和独立复核。
+本机PM复核材料原位于`/workspace/work/w004-pm-receipt-kryfgf84/`，关键结果与身份另汇入[PM接收摘要](tasks/W003/delivery/w004-pm-20261031/receipt.json)随Git交接；临时全量目录不自动跨实例共享。W004–W008分支均已合入main并保留，当前W009补修已接收，待集成与组合验证。
 
 ## 整体进度与下一步
 
@@ -53,11 +53,11 @@
 | run身份、读取审计与输入失败终结 | W006已集成 |
 | 器件/网络语义、目标差异与query身份关联 | W007已集成 |
 | 几何事实与基础占用索引 | W008已验收并集成 |
-| CUT有效几何与channel/端区 | W009分支已实现，独立合并前复核发现1项P2异常边界问题，待补修/独立复核；尚未集成 |
+| CUT有效几何与channel/端区 | W009分支已实现，独立合并前review及修后复核均已交付，补修PM接收通过，剩余必须修正项0；待集成 |
 | 完整工艺坐标/annotation/连通/body/提取状态与原子baseline | 后续Stage2任务保留；W008索引及W009区域草稿不替代这些义务 |
 | 无变化的完整判定、只读GDS/CDL/JSON及报告/terminal | 后续Stage3–6组合；通过后才验收M1 |
 
-W009已按明确toy算子计算有效几何；示例coordinate与32×16见证仍不能充当完整运行网格。下一步按[IPMR-01交接](tasks/W009/ipmr01-fix-task.md)修正完整嵌套decode异常传播，同时保持畸形wire拒绝；独立复核关闭后交PM重新接收，再决定集成。原drawn及W008 raw occupancy保持，外部body图形独立。生产输入/body任务派发前必须回查U06。
+W009已按明确toy算子计算有效几何；示例coordinate与32×16见证仍不能充当完整运行网格。IPMR-01/FXR-01已关闭，下一步按[PM3](tasks/W009-effective-geometry-terminals.md#pm3-ipmr01-receipt-20261104)进入main集成与组合验证，之后记录最终验收。原drawn及W008 raw occupancy保持，外部body图形独立。生产输入/body任务派发前必须回查U06。
 
 正常输入在W006仅交接unsealed attempt，不产生成功terminal；W007组件也不推进attempt或宣称整轮成功。C08/09/10和C13的正式终结阶段仍需后续组合验证。完整Stage2/baseline/no_change与Stage6文件闭环仍是M1硬门；真实工具与配置机制后置项保持，新增关键预期带实例交PM/用户。W007验收不等同完整Stage2/M1通过。
 
