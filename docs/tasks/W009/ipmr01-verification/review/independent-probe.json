@@ -1,0 +1,27 @@
+{
+  "command": [
+    "/workspace/work/w009-ipmr01-env/py312/bin/python",
+    "-B",
+    "/workspace/work/w009-ipmr01-review/docs/tasks/W009/ipmr01-verification/review/probe.py"
+  ],
+  "cwd": "/workspace/work/w009-ipmr01-review",
+  "head": "73e38df8f932bbb5bd9caf074b442ad2f5c286e9",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "executable": "/workspace/work/w009-ipmr01-env/py312/bin/python",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "started_utc": "2026-11-03T11:53:45.862772+00:00",
+  "elapsed_seconds": 437.233,
+  "returncode": 0,
+  "outputs": {
+    "stdout": {
+      "path": "independent-probe.stdout.txt",
+      "sha256": "7e7f50144141c047bdf8e2980c4260711fbab1df89749d3e19361623c17e1bd6",
+      "size": 40122
+    },
+    "stderr": {
+      "path": "independent-probe.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    }
+  }
+}

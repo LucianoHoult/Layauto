@@ -1,0 +1,127 @@
+{
+  "actual_installations": {
+    "310": {
+      "command": [
+        "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-310/bin/python",
+        "-I",
+        "-B",
+        "-c",
+        "import hashlib,importlib.metadata,json,pathlib,sys,layauto_v2\np=pathlib.Path(layauto_v2.__file__).resolve().parent\nd=importlib.metadata.distribution(\"layauto\")\nprint(json.dumps({\"python\":sys.version,\"executable\":sys.executable,\"package\":str(p),\"sys_path\":sys.path,\"direct_url\":json.loads(d.read_text(\"direct_url.json\")),\"runtime\":{str(f.relative_to(p)):hashlib.sha256(f.read_bytes()).hexdigest() for f in p.rglob(\"*\") if f.is_file() and (f.suffix==\".py\" or f.name==\"py.typed\")}},sort_keys=True,indent=2))"
+      ],
+      "cwd": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/installed-cwd",
+      "direct_url": {
+        "archive_info": {},
+        "url": "file:///workspace/work/w009-ipmr01/docs/tasks/W009/ipmr01-verification/dist/layauto-0.2.0.tar.gz"
+      },
+      "installed_metadata_archive_hash_present": false,
+      "package": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-310/lib/python3.10/site-packages/layauto_v2",
+      "python": "3.10.22 (main, Oct  3 2026, 01:32:06) [Clang 22.1.3 ]",
+      "runtime_files": 90,
+      "source_artifact_sha256": "5a899b664136781237d02d020a9697e7a1d57ccededc03ceee09a2ca9ce16217"
+    },
+    "312": {
+      "command": [
+        "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-312/bin/python",
+        "-I",
+        "-B",
+        "-c",
+        "import hashlib,importlib.metadata,json,pathlib,sys,layauto_v2\np=pathlib.Path(layauto_v2.__file__).resolve().parent\nd=importlib.metadata.distribution(\"layauto\")\nprint(json.dumps({\"python\":sys.version,\"executable\":sys.executable,\"package\":str(p),\"sys_path\":sys.path,\"direct_url\":json.loads(d.read_text(\"direct_url.json\")),\"runtime\":{str(f.relative_to(p)):hashlib.sha256(f.read_bytes()).hexdigest() for f in p.rglob(\"*\") if f.is_file() and (f.suffix==\".py\" or f.name==\"py.typed\")}},sort_keys=True,indent=2))"
+      ],
+      "cwd": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/installed-cwd",
+      "direct_url": {
+        "archive_info": {
+          "hash": "sha256=30f7c04cbb310c68e0bc1af23277fa7b971b00fecdbd9c922501b66d1a7b2926",
+          "hashes": {
+            "sha256": "30f7c04cbb310c68e0bc1af23277fa7b971b00fecdbd9c922501b66d1a7b2926"
+          }
+        },
+        "url": "file:///workspace/work/w009-ipmr01/docs/tasks/W009/ipmr01-verification/dist/layauto-0.2.0-py3-none-any.whl"
+      },
+      "installed_metadata_archive_hash_present": true,
+      "package": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-312/lib/python3.12/site-packages/layauto_v2",
+      "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+      "runtime_files": 90,
+      "source_artifact_sha256": "30f7c04cbb310c68e0bc1af23277fa7b971b00fecdbd9c922501b66d1a7b2926"
+    }
+  },
+  "all_command_outputs_match": true,
+  "command_count": 24,
+  "head": "73e38df8f932bbb5bd9caf074b442ad2f5c286e9",
+  "packages": {
+    "sdist": {
+      "path": "/workspace/work/w009-ipmr01/docs/tasks/W009/ipmr01-verification/dist/layauto-0.2.0.tar.gz",
+      "runtime_files": 90,
+      "sha256": "5a899b664136781237d02d020a9697e7a1d57ccededc03ceee09a2ca9ce16217"
+    },
+    "wheel": {
+      "path": "/workspace/work/w009-ipmr01/docs/tasks/W009/ipmr01-verification/dist/layauto-0.2.0-py3-none-any.whl",
+      "runtime_files": 90,
+      "sha256": "30f7c04cbb310c68e0bc1af23277fa7b971b00fecdbd9c922501b66d1a7b2926"
+    }
+  },
+  "python310_complete_v2_rerun": false,
+  "resumption_audit": {
+    "adopted_completed_commands": [
+      "build-environment-312.json",
+      "build.json",
+      "clean-environment-before-install-310.json",
+      "clean-environment-before-install-312.json",
+      "clean-environment-installed-310.json",
+      "clean-environment-installed-312.json",
+      "create-install-310.json",
+      "create-install-312.json",
+      "install-310.json",
+      "install-312.json",
+      "installed-identity-310.json",
+      "installed-identity-312.json",
+      "installed-pip-check-310.json",
+      "installed-pip-check-312.json",
+      "installed-smoke-310.json",
+      "installed-smoke-312.json"
+    ],
+    "archived_partial_outputs_count": 14,
+    "archived_partial_outputs_rehashed": true,
+    "partial_pytest_not_counted_as_pass": true,
+    "rerun_commands": [
+      "environment-310.json",
+      "environment-312.json",
+      "pip-check-310.json",
+      "pip-check-312.json",
+      "pytest-310.json",
+      "pytest-312.json",
+      "typing-310.json",
+      "typing-312.json"
+    ],
+    "resume_script_sha256": "91b77100e97d7ff253e64af990b7206cf71957c0b6b789b02d6405fde7701b9c",
+    "resumed_utc": "2026-11-04T01:31:37.348537+00:00"
+  },
+  "runtime_files": 90,
+  "scope": "Reviewer read archive/package bytes and actual installed trees/direct_url metadata; build/install and full test runs are independently audited executor receipts, not reviewer reruns. Completed November 3 build/install/smoke commands were adopted only for identical frozen source; missing pytest/typing/development pip checks were rerun November 4, and interrupted partial output is archived without a regression pass claim.",
+  "snapshot_sha256": "09004b55b07f7a1398a797cf110c27cd6c3d703992dfffa89b1e7126b24fc8de",
+  "source_files": 245,
+  "source_manifest_sha256": "40a60ada56e2b560d1af88fec9c16e4d60a6b1384fb042f39202edfcaefefc2c",
+  "test_counts": {
+    "310": 988,
+    "312": 1149
+  },
+  "test_scopes": {
+    "310": {
+      "complete_v2": false,
+      "paths": [
+        "tests/contracts",
+        "tests/unit/test_w006_publication.py"
+      ]
+    },
+    "312": {
+      "complete_v2": true,
+      "paths": [
+        "tests/contracts",
+        "tests/unit"
+      ]
+    }
+  },
+  "typing_counts": {
+    "310": 44,
+    "312": 44
+  }
+}

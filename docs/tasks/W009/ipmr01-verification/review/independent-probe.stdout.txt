@@ -1,0 +1,1803 @@
+{
+  "head": "73e38df8f932bbb5bd9caf074b442ad2f5c286e9",
+  "history": [
+    {
+      "failure": "RuntimeError",
+      "same_object_and_history": true,
+      "target": "layauto_v2.normalization.contracts.request_decoder_input"
+    },
+    {
+      "failure": "ValueError",
+      "same_object_and_history": true,
+      "target": "layauto_v2.normalization.contracts.request_decoder_input"
+    },
+    {
+      "failure": "TypeError",
+      "same_object_and_history": true,
+      "target": "layauto_v2.normalization.contracts.request_decoder_input"
+    },
+    {
+      "failure": "KeyError",
+      "same_object_and_history": true,
+      "target": "layauto_v2.normalization.contracts.request_decoder_input"
+    },
+    {
+      "failure": "AttributeError",
+      "same_object_and_history": true,
+      "target": "layauto_v2.normalization.contracts.request_decoder_input"
+    },
+    {
+      "failure": "IndexError",
+      "same_object_and_history": true,
+      "target": "layauto_v2.normalization.contracts.request_decoder_input"
+    },
+    {
+      "failure": "UnicodeError",
+      "same_object_and_history": true,
+      "target": "layauto_v2.normalization.contracts.request_decoder_input"
+    },
+    {
+      "failure": "KeyboardInterrupt",
+      "same_object_and_history": true,
+      "target": "layauto_v2.normalization.contracts.request_decoder_input"
+    },
+    {
+      "failure": "SystemExit",
+      "same_object_and_history": true,
+      "target": "layauto_v2.normalization.contracts.request_decoder_input"
+    },
+    {
+      "failure": "RuntimeError",
+      "same_object_and_history": true,
+      "target": "layauto_v2.normalization._validation._validate_cdl"
+    },
+    {
+      "failure": "ValueError",
+      "same_object_and_history": true,
+      "target": "layauto_v2.normalization._validation._validate_cdl"
+    },
+    {
+      "failure": "TypeError",
+      "same_object_and_history": true,
+      "target": "layauto_v2.normalization._validation._validate_cdl"
+    },
+    {
+      "failure": "KeyError",
+      "same_object_and_history": true,
+      "target": "layauto_v2.normalization._validation._validate_cdl"
+    },
+    {
+      "failure": "AttributeError",
+      "same_object_and_history": true,
+      "target": "layauto_v2.normalization._validation._validate_cdl"
+    },
+    {
+      "failure": "IndexError",
+      "same_object_and_history": true,
+      "target": "layauto_v2.normalization._validation._validate_cdl"
+    },
+    {
+      "failure": "UnicodeError",
+      "same_object_and_history": true,
+      "target": "layauto_v2.normalization._validation._validate_cdl"
+    },
+    {
+      "failure": "KeyboardInterrupt",
+      "same_object_and_history": true,
+      "target": "layauto_v2.normalization._validation._validate_cdl"
+    },
+    {
+      "failure": "SystemExit",
+      "same_object_and_history": true,
+      "target": "layauto_v2.normalization._validation._validate_cdl"
+    },
+    {
+      "failure": "RuntimeError",
+      "same_object_and_history": true,
+      "target": "layauto_v2.normalization._validation._validate_query"
+    },
+    {
+      "failure": "ValueError",
+      "same_object_and_history": true,
+      "target": "layauto_v2.normalization._validation._validate_query"
+    },
+    {
+      "failure": "TypeError",
+      "same_object_and_history": true,
+      "target": "layauto_v2.normalization._validation._validate_query"
+    },
+    {
+      "failure": "KeyError",
+      "same_object_and_history": true,
+      "target": "layauto_v2.normalization._validation._validate_query"
+    },
+    {
+      "failure": "AttributeError",
+      "same_object_and_history": true,
+      "target": "layauto_v2.normalization._validation._validate_query"
+    },
+    {
+      "failure": "IndexError",
+      "same_object_and_history": true,
+      "target": "layauto_v2.normalization._validation._validate_query"
+    },
+    {
+      "failure": "UnicodeError",
+      "same_object_and_history": true,
+      "target": "layauto_v2.normalization._validation._validate_query"
+    },
+    {
+      "failure": "KeyboardInterrupt",
+      "same_object_and_history": true,
+      "target": "layauto_v2.normalization._validation._validate_query"
+    },
+    {
+      "failure": "SystemExit",
+      "same_object_and_history": true,
+      "target": "layauto_v2.normalization._validation._validate_query"
+    },
+    {
+      "failure": "RuntimeError",
+      "same_object_and_history": true,
+      "target": "layauto_v2.normalization.contracts.content_ref"
+    },
+    {
+      "failure": "ValueError",
+      "same_object_and_history": true,
+      "target": "layauto_v2.normalization.contracts.content_ref"
+    },
+    {
+      "failure": "TypeError",
+      "same_object_and_history": true,
+      "target": "layauto_v2.normalization.contracts.content_ref"
+    },
+    {
+      "failure": "KeyError",
+      "same_object_and_history": true,
+      "target": "layauto_v2.normalization.contracts.content_ref"
+    },
+    {
+      "failure": "AttributeError",
+      "same_object_and_history": true,
+      "target": "layauto_v2.normalization.contracts.content_ref"
+    },
+    {
+      "failure": "IndexError",
+      "same_object_and_history": true,
+      "target": "layauto_v2.normalization.contracts.content_ref"
+    },
+    {
+      "failure": "UnicodeError",
+      "same_object_and_history": true,
+      "target": "layauto_v2.normalization.contracts.content_ref"
+    },
+    {
+      "failure": "KeyboardInterrupt",
+      "same_object_and_history": true,
+      "target": "layauto_v2.normalization.contracts.content_ref"
+    },
+    {
+      "failure": "SystemExit",
+      "same_object_and_history": true,
+      "target": "layauto_v2.normalization.contracts.content_ref"
+    }
+  ],
+  "history_count": 36,
+  "malformed": [
+    {
+      "change": "missing",
+      "field": "kind",
+      "observed": "ValueError",
+      "record": "GeometryRef"
+    },
+    {
+      "change": "scalar",
+      "field": "kind",
+      "observed": "ValueError",
+      "record": "GeometryRef"
+    },
+    {
+      "change": "tuple",
+      "field": "kind",
+      "observed": "ValueError",
+      "record": "GeometryRef"
+    },
+    {
+      "change": "map",
+      "field": "kind",
+      "observed": "ValueError",
+      "record": "GeometryRef"
+    },
+    {
+      "change": "missing",
+      "field": "sha256",
+      "observed": "ValueError",
+      "record": "GeometryRef"
+    },
+    {
+      "change": "scalar",
+      "field": "sha256",
+      "observed": "ValueError",
+      "record": "GeometryRef"
+    },
+    {
+      "change": "tuple",
+      "field": "sha256",
+      "observed": "ValueError",
+      "record": "GeometryRef"
+    },
+    {
+      "change": "map",
+      "field": "sha256",
+      "observed": "ValueError",
+      "record": "GeometryRef"
+    },
+    {
+      "change": "missing",
+      "field": "sha256",
+      "observed": "ValueError",
+      "record": "GeometryRecordId"
+    },
+    {
+      "change": "scalar",
+      "field": "sha256",
+      "observed": "ValueError",
+      "record": "GeometryRecordId"
+    },
+    {
+      "change": "tuple",
+      "field": "sha256",
+      "observed": "ValueError",
+      "record": "GeometryRecordId"
+    },
+    {
+      "change": "map",
+      "field": "sha256",
+      "observed": "ValueError",
+      "record": "GeometryRecordId"
+    },
+    {
+      "change": "missing",
+      "field": "sha256",
+      "observed": "ValueError",
+      "record": "OccupantFragmentId"
+    },
+    {
+      "change": "scalar",
+      "field": "sha256",
+      "observed": "ValueError",
+      "record": "OccupantFragmentId"
+    },
+    {
+      "change": "tuple",
+      "field": "sha256",
+      "observed": "ValueError",
+      "record": "OccupantFragmentId"
+    },
+    {
+      "change": "map",
+      "field": "sha256",
+      "observed": "ValueError",
+      "record": "OccupantFragmentId"
+    },
+    {
+      "change": "missing",
+      "field": "x0",
+      "observed": "ValueError",
+      "record": "Rect"
+    },
+    {
+      "change": "scalar",
+      "field": "x0",
+      "observed": "ValueError",
+      "record": "Rect"
+    },
+    {
+      "change": "tuple",
+      "field": "x0",
+      "observed": "ValueError",
+      "record": "Rect"
+    },
+    {
+      "change": "map",
+      "field": "x0",
+      "observed": "ValueError",
+      "record": "Rect"
+    },
+    {
+      "change": "missing",
+      "field": "x1",
+      "observed": "ValueError",
+      "record": "Rect"
+    },
+    {
+      "change": "scalar",
+      "field": "x1",
+      "observed": "ValueError",
+      "record": "Rect"
+    },
+    {
+      "change": "tuple",
+      "field": "x1",
+      "observed": "ValueError",
+      "record": "Rect"
+    },
+    {
+      "change": "map",
+      "field": "x1",
+      "observed": "ValueError",
+      "record": "Rect"
+    },
+    {
+      "change": "missing",
+      "field": "y0",
+      "observed": "ValueError",
+      "record": "Rect"
+    },
+    {
+      "change": "scalar",
+      "field": "y0",
+      "observed": "ValueError",
+      "record": "Rect"
+    },
+    {
+      "change": "tuple",
+      "field": "y0",
+      "observed": "ValueError",
+      "record": "Rect"
+    },
+    {
+      "change": "map",
+      "field": "y0",
+      "observed": "ValueError",
+      "record": "Rect"
+    },
+    {
+      "change": "missing",
+      "field": "y1",
+      "observed": "ValueError",
+      "record": "Rect"
+    },
+    {
+      "change": "scalar",
+      "field": "y1",
+      "observed": "ValueError",
+      "record": "Rect"
+    },
+    {
+      "change": "tuple",
+      "field": "y1",
+      "observed": "ValueError",
+      "record": "Rect"
+    },
+    {
+      "change": "map",
+      "field": "y1",
+      "observed": "ValueError",
+      "record": "Rect"
+    },
+    {
+      "change": "missing",
+      "field": "datatype",
+      "observed": "ValueError",
+      "record": "StreamLayerKey"
+    },
+    {
+      "change": "scalar",
+      "field": "datatype",
+      "observed": "ValueError",
+      "record": "StreamLayerKey"
+    },
+    {
+      "change": "tuple",
+      "field": "datatype",
+      "observed": "ValueError",
+      "record": "StreamLayerKey"
+    },
+    {
+      "change": "map",
+      "field": "datatype",
+      "observed": "ValueError",
+      "record": "StreamLayerKey"
+    },
+    {
+      "change": "missing",
+      "field": "element",
+      "observed": "ValueError",
+      "record": "StreamLayerKey"
+    },
+    {
+      "change": "scalar",
+      "field": "element",
+      "observed": "ValueError",
+      "record": "StreamLayerKey"
+    },
+    {
+      "change": "tuple",
+      "field": "element",
+      "observed": "ValueError",
+      "record": "StreamLayerKey"
+    },
+    {
+      "change": "map",
+      "field": "element",
+      "observed": "ValueError",
+      "record": "StreamLayerKey"
+    },
+    {
+      "change": "missing",
+      "field": "layer",
+      "observed": "ValueError",
+      "record": "StreamLayerKey"
+    },
+    {
+      "change": "scalar",
+      "field": "layer",
+      "observed": "ValueError",
+      "record": "StreamLayerKey"
+    },
+    {
+      "change": "tuple",
+      "field": "layer",
+      "observed": "ValueError",
+      "record": "StreamLayerKey"
+    },
+    {
+      "change": "map",
+      "field": "layer",
+      "observed": "ValueError",
+      "record": "StreamLayerKey"
+    },
+    {
+      "change": "missing",
+      "field": "contract",
+      "observed": "ValueError",
+      "record": "UnitBinding"
+    },
+    {
+      "change": "scalar",
+      "field": "contract",
+      "observed": "ValueError",
+      "record": "UnitBinding"
+    },
+    {
+      "change": "tuple",
+      "field": "contract",
+      "observed": "ValueError",
+      "record": "UnitBinding"
+    },
+    {
+      "change": "map",
+      "field": "contract",
+      "observed": "ValueError",
+      "record": "UnitBinding"
+    },
+    {
+      "change": "missing",
+      "field": "encoded",
+      "observed": "ValueError",
+      "record": "UnitBinding"
+    },
+    {
+      "change": "scalar",
+      "field": "encoded",
+      "observed": "ValueError",
+      "record": "UnitBinding"
+    },
+    {
+      "change": "tuple",
+      "field": "encoded",
+      "observed": "ValueError",
+      "record": "UnitBinding"
+    },
+    {
+      "change": "map",
+      "field": "encoded",
+      "observed": "ValueError",
+      "record": "UnitBinding"
+    },
+    {
+      "change": "missing",
+      "field": "schema_version",
+      "observed": "ValueError",
+      "record": "UnitBinding"
+    },
+    {
+      "change": "scalar",
+      "field": "schema_version",
+      "observed": "ValueError",
+      "record": "UnitBinding"
+    },
+    {
+      "change": "tuple",
+      "field": "schema_version",
+      "observed": "ValueError",
+      "record": "UnitBinding"
+    },
+    {
+      "change": "map",
+      "field": "schema_version",
+      "observed": "ValueError",
+      "record": "UnitBinding"
+    },
+    {
+      "change": "missing",
+      "field": "source",
+      "observed": "ValueError",
+      "record": "UnitBinding"
+    },
+    {
+      "change": "scalar",
+      "field": "source",
+      "observed": "ValueError",
+      "record": "UnitBinding"
+    },
+    {
+      "change": "tuple",
+      "field": "source",
+      "observed": "ValueError",
+      "record": "UnitBinding"
+    },
+    {
+      "change": "map",
+      "field": "source",
+      "observed": "ValueError",
+      "record": "UnitBinding"
+    },
+    {
+      "change": "missing",
+      "field": "declaration",
+      "observed": "ValueError",
+      "record": "LayerPolicy"
+    },
+    {
+      "change": "scalar",
+      "field": "declaration",
+      "observed": "ValueError",
+      "record": "LayerPolicy"
+    },
+    {
+      "change": "tuple",
+      "field": "declaration",
+      "observed": "ValueError",
+      "record": "LayerPolicy"
+    },
+    {
+      "change": "map",
+      "field": "declaration",
+      "observed": "ValueError",
+      "record": "LayerPolicy"
+    },
+    {
+      "change": "missing",
+      "field": "schema_version",
+      "observed": "ValueError",
+      "record": "LayerPolicy"
+    },
+    {
+      "change": "scalar",
+      "field": "schema_version",
+      "observed": "ValueError",
+      "record": "LayerPolicy"
+    },
+    {
+      "change": "tuple",
+      "field": "schema_version",
+      "observed": "ValueError",
+      "record": "LayerPolicy"
+    },
+    {
+      "change": "map",
+      "field": "schema_version",
+      "observed": "ValueError",
+      "record": "LayerPolicy"
+    },
+    {
+      "change": "missing",
+      "field": "source",
+      "observed": "ValueError",
+      "record": "LayerPolicy"
+    },
+    {
+      "change": "scalar",
+      "field": "source",
+      "observed": "ValueError",
+      "record": "LayerPolicy"
+    },
+    {
+      "change": "tuple",
+      "field": "source",
+      "observed": "ValueError",
+      "record": "LayerPolicy"
+    },
+    {
+      "change": "map",
+      "field": "source",
+      "observed": "ValueError",
+      "record": "LayerPolicy"
+    },
+    {
+      "change": "missing",
+      "field": "id",
+      "observed": "ValueError",
+      "record": "DrawnRecord"
+    },
+    {
+      "change": "scalar",
+      "field": "id",
+      "observed": "ValueError",
+      "record": "DrawnRecord"
+    },
+    {
+      "change": "tuple",
+      "field": "id",
+      "observed": "ValueError",
+      "record": "DrawnRecord"
+    },
+    {
+      "change": "map",
+      "field": "id",
+      "observed": "ValueError",
+      "record": "DrawnRecord"
+    },
+    {
+      "change": "missing",
+      "field": "layer",
+      "observed": "ValueError",
+      "record": "DrawnRecord"
+    },
+    {
+      "change": "scalar",
+      "field": "layer",
+      "observed": "ValueError",
+      "record": "DrawnRecord"
+    },
+    {
+      "change": "tuple",
+      "field": "layer",
+      "observed": "ValueError",
+      "record": "DrawnRecord"
+    },
+    {
+      "change": "map",
+      "field": "layer",
+      "observed": "ValueError",
+      "record": "DrawnRecord"
+    },
+    {
+      "change": "missing",
+      "field": "policy_ref",
+      "observed": "ValueError",
+      "record": "DrawnRecord"
+    },
+    {
+      "change": "scalar",
+      "field": "policy_ref",
+      "observed": "ValueError",
+      "record": "DrawnRecord"
+    },
+    {
+      "change": "tuple",
+      "field": "policy_ref",
+      "observed": "ValueError",
+      "record": "DrawnRecord"
+    },
+    {
+      "change": "map",
+      "field": "policy_ref",
+      "observed": "ValueError",
+      "record": "DrawnRecord"
+    },
+    {
+      "change": "missing",
+      "field": "preservation",
+      "observed": "ValueError",
+      "record": "DrawnRecord"
+    },
+    {
+      "change": "scalar",
+      "field": "preservation",
+      "observed": "ValueError",
+      "record": "DrawnRecord"
+    },
+    {
+      "change": "tuple",
+      "field": "preservation",
+      "observed": "ValueError",
+      "record": "DrawnRecord"
+    },
+    {
+      "change": "map",
+      "field": "preservation",
+      "observed": "ValueError",
+      "record": "DrawnRecord"
+    },
+    {
+      "change": "missing",
+      "field": "purpose",
+      "observed": "ValueError",
+      "record": "DrawnRecord"
+    },
+    {
+      "change": "scalar",
+      "field": "purpose",
+      "observed": "ValueError",
+      "record": "DrawnRecord"
+    },
+    {
+      "change": "tuple",
+      "field": "purpose",
+      "observed": "ValueError",
+      "record": "DrawnRecord"
+    },
+    {
+      "change": "map",
+      "field": "purpose",
+      "observed": "ValueError",
+      "record": "DrawnRecord"
+    },
+    {
+      "change": "missing",
+      "field": "raw_xy",
+      "observed": "ValueError",
+      "record": "DrawnRecord"
+    },
+    {
+      "change": "scalar",
+      "field": "raw_xy",
+      "observed": "ValueError",
+      "record": "DrawnRecord"
+    },
+    {
+      "change": "tuple",
+      "field": "raw_xy",
+      "observed": "ValueError",
+      "record": "DrawnRecord"
+    },
+    {
+      "change": "map",
+      "field": "raw_xy",
+      "observed": "ValueError",
+      "record": "DrawnRecord"
+    },
+    {
+      "change": "missing",
+      "field": "rect",
+      "observed": "ValueError",
+      "record": "DrawnRecord"
+    },
+    {
+      "change": "scalar",
+      "field": "rect",
+      "observed": "ValueError",
+      "record": "DrawnRecord"
+    },
+    {
+      "change": "tuple",
+      "field": "rect",
+      "observed": "ValueError",
+      "record": "DrawnRecord"
+    },
+    {
+      "change": "map",
+      "field": "rect",
+      "observed": "ValueError",
+      "record": "DrawnRecord"
+    },
+    {
+      "change": "missing",
+      "field": "schema_version",
+      "observed": "ValueError",
+      "record": "DrawnRecord"
+    },
+    {
+      "change": "scalar",
+      "field": "schema_version",
+      "observed": "ValueError",
+      "record": "DrawnRecord"
+    },
+    {
+      "change": "tuple",
+      "field": "schema_version",
+      "observed": "ValueError",
+      "record": "DrawnRecord"
+    },
+    {
+      "change": "map",
+      "field": "schema_version",
+      "observed": "ValueError",
+      "record": "DrawnRecord"
+    },
+    {
+      "change": "missing",
+      "field": "source",
+      "observed": "ValueError",
+      "record": "DrawnRecord"
+    },
+    {
+      "change": "scalar",
+      "field": "source",
+      "observed": "ValueError",
+      "record": "DrawnRecord"
+    },
+    {
+      "change": "tuple",
+      "field": "source",
+      "observed": "ValueError",
+      "record": "DrawnRecord"
+    },
+    {
+      "change": "map",
+      "field": "source",
+      "observed": "ValueError",
+      "record": "DrawnRecord"
+    },
+    {
+      "change": "missing",
+      "field": "stream_key",
+      "observed": "ValueError",
+      "record": "DrawnRecord"
+    },
+    {
+      "change": "scalar",
+      "field": "stream_key",
+      "observed": "ValueError",
+      "record": "DrawnRecord"
+    },
+    {
+      "change": "tuple",
+      "field": "stream_key",
+      "observed": "ValueError",
+      "record": "DrawnRecord"
+    },
+    {
+      "change": "map",
+      "field": "stream_key",
+      "observed": "ValueError",
+      "record": "DrawnRecord"
+    },
+    {
+      "change": "missing",
+      "field": "top",
+      "observed": "ValueError",
+      "record": "DrawnRecord"
+    },
+    {
+      "change": "scalar",
+      "field": "top",
+      "observed": "ValueError",
+      "record": "DrawnRecord"
+    },
+    {
+      "change": "tuple",
+      "field": "top",
+      "observed": "ValueError",
+      "record": "DrawnRecord"
+    },
+    {
+      "change": "map",
+      "field": "top",
+      "observed": "ValueError",
+      "record": "DrawnRecord"
+    },
+    {
+      "change": "missing",
+      "field": "unit_ref",
+      "observed": "ValueError",
+      "record": "DrawnRecord"
+    },
+    {
+      "change": "scalar",
+      "field": "unit_ref",
+      "observed": "ValueError",
+      "record": "DrawnRecord"
+    },
+    {
+      "change": "tuple",
+      "field": "unit_ref",
+      "observed": "ValueError",
+      "record": "DrawnRecord"
+    },
+    {
+      "change": "map",
+      "field": "unit_ref",
+      "observed": "ValueError",
+      "record": "DrawnRecord"
+    },
+    {
+      "change": "missing",
+      "field": "drawn",
+      "observed": "ValueError",
+      "record": "LayoutDraft"
+    },
+    {
+      "change": "scalar",
+      "field": "drawn",
+      "observed": "ValueError",
+      "record": "LayoutDraft"
+    },
+    {
+      "change": "tuple",
+      "field": "drawn",
+      "observed": "ValueError",
+      "record": "LayoutDraft"
+    },
+    {
+      "change": "map",
+      "field": "drawn",
+      "observed": "ValueError",
+      "record": "LayoutDraft"
+    },
+    {
+      "change": "missing",
+      "field": "formats",
+      "observed": "ValueError",
+      "record": "LayoutDraft"
+    },
+    {
+      "change": "scalar",
+      "field": "formats",
+      "observed": "ValueError",
+      "record": "LayoutDraft"
+    },
+    {
+      "change": "tuple",
+      "field": "formats",
+      "observed": "ValueError",
+      "record": "LayoutDraft"
+    },
+    {
+      "change": "map",
+      "field": "formats",
+      "observed": "ValueError",
+      "record": "LayoutDraft"
+    },
+    {
+      "change": "missing",
+      "field": "gds",
+      "observed": "ValueError",
+      "record": "LayoutDraft"
+    },
+    {
+      "change": "scalar",
+      "field": "gds",
+      "observed": "ValueError",
+      "record": "LayoutDraft"
+    },
+    {
+      "change": "tuple",
+      "field": "gds",
+      "observed": "ValueError",
+      "record": "LayoutDraft"
+    },
+    {
+      "change": "map",
+      "field": "gds",
+      "observed": "ValueError",
+      "record": "LayoutDraft"
+    },
+    {
+      "change": "missing",
+      "field": "policies",
+      "observed": "ValueError",
+      "record": "LayoutDraft"
+    },
+    {
+      "change": "scalar",
+      "field": "policies",
+      "observed": "ValueError",
+      "record": "LayoutDraft"
+    },
+    {
+      "change": "tuple",
+      "field": "policies",
+      "observed": "ValueError",
+      "record": "LayoutDraft"
+    },
+    {
+      "change": "map",
+      "field": "policies",
+      "observed": "ValueError",
+      "record": "LayoutDraft"
+    },
+    {
+      "change": "missing",
+      "field": "records",
+      "observed": "ValueError",
+      "record": "LayoutDraft"
+    },
+    {
+      "change": "scalar",
+      "field": "records",
+      "observed": "ValueError",
+      "record": "LayoutDraft"
+    },
+    {
+      "change": "tuple",
+      "field": "records",
+      "observed": "ValueError",
+      "record": "LayoutDraft"
+    },
+    {
+      "change": "map",
+      "field": "records",
+      "observed": "ValueError",
+      "record": "LayoutDraft"
+    },
+    {
+      "change": "missing",
+      "field": "schema_version",
+      "observed": "ValueError",
+      "record": "LayoutDraft"
+    },
+    {
+      "change": "scalar",
+      "field": "schema_version",
+      "observed": "ValueError",
+      "record": "LayoutDraft"
+    },
+    {
+      "change": "tuple",
+      "field": "schema_version",
+      "observed": "ValueError",
+      "record": "LayoutDraft"
+    },
+    {
+      "change": "map",
+      "field": "schema_version",
+      "observed": "ValueError",
+      "record": "LayoutDraft"
+    },
+    {
+      "change": "missing",
+      "field": "units",
+      "observed": "ValueError",
+      "record": "LayoutDraft"
+    },
+    {
+      "change": "scalar",
+      "field": "units",
+      "observed": "ValueError",
+      "record": "LayoutDraft"
+    },
+    {
+      "change": "tuple",
+      "field": "units",
+      "observed": "ValueError",
+      "record": "LayoutDraft"
+    },
+    {
+      "change": "map",
+      "field": "units",
+      "observed": "ValueError",
+      "record": "LayoutDraft"
+    },
+    {
+      "change": "missing",
+      "field": "layer",
+      "observed": "ValueError",
+      "record": "LayerPartition"
+    },
+    {
+      "change": "scalar",
+      "field": "layer",
+      "observed": "ValueError",
+      "record": "LayerPartition"
+    },
+    {
+      "change": "tuple",
+      "field": "layer",
+      "observed": "ValueError",
+      "record": "LayerPartition"
+    },
+    {
+      "change": "map",
+      "field": "layer",
+      "observed": "ValueError",
+      "record": "LayerPartition"
+    },
+    {
+      "change": "missing",
+      "field": "schema_version",
+      "observed": "ValueError",
+      "record": "LayerPartition"
+    },
+    {
+      "change": "scalar",
+      "field": "schema_version",
+      "observed": "ValueError",
+      "record": "LayerPartition"
+    },
+    {
+      "change": "tuple",
+      "field": "schema_version",
+      "observed": "ValueError",
+      "record": "LayerPartition"
+    },
+    {
+      "change": "map",
+      "field": "schema_version",
+      "observed": "ValueError",
+      "record": "LayerPartition"
+    },
+    {
+      "change": "missing",
+      "field": "xs",
+      "observed": "ValueError",
+      "record": "LayerPartition"
+    },
+    {
+      "change": "scalar",
+      "field": "xs",
+      "observed": "ValueError",
+      "record": "LayerPartition"
+    },
+    {
+      "change": "tuple",
+      "field": "xs",
+      "observed": "ValueError",
+      "record": "LayerPartition"
+    },
+    {
+      "change": "map",
+      "field": "xs",
+      "observed": "ValueError",
+      "record": "LayerPartition"
+    },
+    {
+      "change": "missing",
+      "field": "ys",
+      "observed": "ValueError",
+      "record": "LayerPartition"
+    },
+    {
+      "change": "scalar",
+      "field": "ys",
+      "observed": "ValueError",
+      "record": "LayerPartition"
+    },
+    {
+      "change": "tuple",
+      "field": "ys",
+      "observed": "ValueError",
+      "record": "LayerPartition"
+    },
+    {
+      "change": "map",
+      "field": "ys",
+      "observed": "ValueError",
+      "record": "LayerPartition"
+    },
+    {
+      "change": "missing",
+      "field": "algorithm",
+      "observed": "ValueError",
+      "record": "BasePartition"
+    },
+    {
+      "change": "scalar",
+      "field": "algorithm",
+      "observed": "ValueError",
+      "record": "BasePartition"
+    },
+    {
+      "change": "tuple",
+      "field": "algorithm",
+      "observed": "ValueError",
+      "record": "BasePartition"
+    },
+    {
+      "change": "map",
+      "field": "algorithm",
+      "observed": "ValueError",
+      "record": "BasePartition"
+    },
+    {
+      "change": "missing",
+      "field": "boundary",
+      "observed": "ValueError",
+      "record": "BasePartition"
+    },
+    {
+      "change": "scalar",
+      "field": "boundary",
+      "observed": "ValueError",
+      "record": "BasePartition"
+    },
+    {
+      "change": "tuple",
+      "field": "boundary",
+      "observed": "ValueError",
+      "record": "BasePartition"
+    },
+    {
+      "change": "map",
+      "field": "boundary",
+      "observed": "ValueError",
+      "record": "BasePartition"
+    },
+    {
+      "change": "missing",
+      "field": "layers",
+      "observed": "ValueError",
+      "record": "BasePartition"
+    },
+    {
+      "change": "scalar",
+      "field": "layers",
+      "observed": "ValueError",
+      "record": "BasePartition"
+    },
+    {
+      "change": "tuple",
+      "field": "layers",
+      "observed": "ValueError",
+      "record": "BasePartition"
+    },
+    {
+      "change": "map",
+      "field": "layers",
+      "observed": "ValueError",
+      "record": "BasePartition"
+    },
+    {
+      "change": "missing",
+      "field": "layout",
+      "observed": "ValueError",
+      "record": "BasePartition"
+    },
+    {
+      "change": "scalar",
+      "field": "layout",
+      "observed": "ValueError",
+      "record": "BasePartition"
+    },
+    {
+      "change": "tuple",
+      "field": "layout",
+      "observed": "ValueError",
+      "record": "BasePartition"
+    },
+    {
+      "change": "map",
+      "field": "layout",
+      "observed": "ValueError",
+      "record": "BasePartition"
+    },
+    {
+      "change": "missing",
+      "field": "schema_version",
+      "observed": "ValueError",
+      "record": "BasePartition"
+    },
+    {
+      "change": "scalar",
+      "field": "schema_version",
+      "observed": "ValueError",
+      "record": "BasePartition"
+    },
+    {
+      "change": "tuple",
+      "field": "schema_version",
+      "observed": "ValueError",
+      "record": "BasePartition"
+    },
+    {
+      "change": "map",
+      "field": "schema_version",
+      "observed": "ValueError",
+      "record": "BasePartition"
+    },
+    {
+      "change": "missing",
+      "field": "layer",
+      "observed": "ValueError",
+      "record": "BaseCellId"
+    },
+    {
+      "change": "scalar",
+      "field": "layer",
+      "observed": "ValueError",
+      "record": "BaseCellId"
+    },
+    {
+      "change": "tuple",
+      "field": "layer",
+      "observed": "ValueError",
+      "record": "BaseCellId"
+    },
+    {
+      "change": "map",
+      "field": "layer",
+      "observed": "ValueError",
+      "record": "BaseCellId"
+    },
+    {
+      "change": "missing",
+      "field": "partition_ref",
+      "observed": "ValueError",
+      "record": "BaseCellId"
+    },
+    {
+      "change": "scalar",
+      "field": "partition_ref",
+      "observed": "ValueError",
+      "record": "BaseCellId"
+    },
+    {
+      "change": "tuple",
+      "field": "partition_ref",
+      "observed": "ValueError",
+      "record": "BaseCellId"
+    },
+    {
+      "change": "map",
+      "field": "partition_ref",
+      "observed": "ValueError",
+      "record": "BaseCellId"
+    },
+    {
+      "change": "missing",
+      "field": "x",
+      "observed": "ValueError",
+      "record": "BaseCellId"
+    },
+    {
+      "change": "scalar",
+      "field": "x",
+      "observed": "ValueError",
+      "record": "BaseCellId"
+    },
+    {
+      "change": "tuple",
+      "field": "x",
+      "observed": "ValueError",
+      "record": "BaseCellId"
+    },
+    {
+      "change": "map",
+      "field": "x",
+      "observed": "ValueError",
+      "record": "BaseCellId"
+    },
+    {
+      "change": "missing",
+      "field": "y",
+      "observed": "ValueError",
+      "record": "BaseCellId"
+    },
+    {
+      "change": "scalar",
+      "field": "y",
+      "observed": "ValueError",
+      "record": "BaseCellId"
+    },
+    {
+      "change": "tuple",
+      "field": "y",
+      "observed": "ValueError",
+      "record": "BaseCellId"
+    },
+    {
+      "change": "map",
+      "field": "y",
+      "observed": "ValueError",
+      "record": "BaseCellId"
+    },
+    {
+      "change": "missing",
+      "field": "cell",
+      "observed": "ValueError",
+      "record": "OccupantFragment"
+    },
+    {
+      "change": "scalar",
+      "field": "cell",
+      "observed": "ValueError",
+      "record": "OccupantFragment"
+    },
+    {
+      "change": "tuple",
+      "field": "cell",
+      "observed": "ValueError",
+      "record": "OccupantFragment"
+    },
+    {
+      "change": "map",
+      "field": "cell",
+      "observed": "ValueError",
+      "record": "OccupantFragment"
+    },
+    {
+      "change": "missing",
+      "field": "id",
+      "observed": "ValueError",
+      "record": "OccupantFragment"
+    },
+    {
+      "change": "scalar",
+      "field": "id",
+      "observed": "ValueError",
+      "record": "OccupantFragment"
+    },
+    {
+      "change": "tuple",
+      "field": "id",
+      "observed": "ValueError",
+      "record": "OccupantFragment"
+    },
+    {
+      "change": "map",
+      "field": "id",
+      "observed": "ValueError",
+      "record": "OccupantFragment"
+    },
+    {
+      "change": "missing",
+      "field": "record_id",
+      "observed": "ValueError",
+      "record": "OccupantFragment"
+    },
+    {
+      "change": "scalar",
+      "field": "record_id",
+      "observed": "ValueError",
+      "record": "OccupantFragment"
+    },
+    {
+      "change": "tuple",
+      "field": "record_id",
+      "observed": "ValueError",
+      "record": "OccupantFragment"
+    },
+    {
+      "change": "map",
+      "field": "record_id",
+      "observed": "ValueError",
+      "record": "OccupantFragment"
+    },
+    {
+      "change": "missing",
+      "field": "rect",
+      "observed": "ValueError",
+      "record": "OccupantFragment"
+    },
+    {
+      "change": "scalar",
+      "field": "rect",
+      "observed": "ValueError",
+      "record": "OccupantFragment"
+    },
+    {
+      "change": "tuple",
+      "field": "rect",
+      "observed": "ValueError",
+      "record": "OccupantFragment"
+    },
+    {
+      "change": "map",
+      "field": "rect",
+      "observed": "ValueError",
+      "record": "OccupantFragment"
+    },
+    {
+      "change": "missing",
+      "field": "schema_version",
+      "observed": "ValueError",
+      "record": "OccupantFragment"
+    },
+    {
+      "change": "scalar",
+      "field": "schema_version",
+      "observed": "ValueError",
+      "record": "OccupantFragment"
+    },
+    {
+      "change": "tuple",
+      "field": "schema_version",
+      "observed": "ValueError",
+      "record": "OccupantFragment"
+    },
+    {
+      "change": "map",
+      "field": "schema_version",
+      "observed": "ValueError",
+      "record": "OccupantFragment"
+    },
+    {
+      "change": "missing",
+      "field": "unit_ref",
+      "observed": "ValueError",
+      "record": "OccupantFragment"
+    },
+    {
+      "change": "scalar",
+      "field": "unit_ref",
+      "observed": "ValueError",
+      "record": "OccupantFragment"
+    },
+    {
+      "change": "tuple",
+      "field": "unit_ref",
+      "observed": "ValueError",
+      "record": "OccupantFragment"
+    },
+    {
+      "change": "map",
+      "field": "unit_ref",
+      "observed": "ValueError",
+      "record": "OccupantFragment"
+    },
+    {
+      "change": "missing",
+      "field": "fragments",
+      "observed": "ValueError",
+      "record": "BaseOccupancy"
+    },
+    {
+      "change": "scalar",
+      "field": "fragments",
+      "observed": "ValueError",
+      "record": "BaseOccupancy"
+    },
+    {
+      "change": "tuple",
+      "field": "fragments",
+      "observed": "ValueError",
+      "record": "BaseOccupancy"
+    },
+    {
+      "change": "map",
+      "field": "fragments",
+      "observed": "ValueError",
+      "record": "BaseOccupancy"
+    },
+    {
+      "change": "missing",
+      "field": "partition",
+      "observed": "ValueError",
+      "record": "BaseOccupancy"
+    },
+    {
+      "change": "scalar",
+      "field": "partition",
+      "observed": "ValueError",
+      "record": "BaseOccupancy"
+    },
+    {
+      "change": "tuple",
+      "field": "partition",
+      "observed": "ValueError",
+      "record": "BaseOccupancy"
+    },
+    {
+      "change": "map",
+      "field": "partition",
+      "observed": "ValueError",
+      "record": "BaseOccupancy"
+    },
+    {
+      "change": "missing",
+      "field": "schema_version",
+      "observed": "ValueError",
+      "record": "BaseOccupancy"
+    },
+    {
+      "change": "scalar",
+      "field": "schema_version",
+      "observed": "ValueError",
+      "record": "BaseOccupancy"
+    },
+    {
+      "change": "tuple",
+      "field": "schema_version",
+      "observed": "ValueError",
+      "record": "BaseOccupancy"
+    },
+    {
+      "change": "map",
+      "field": "schema_version",
+      "observed": "ValueError",
+      "record": "BaseOccupancy"
+    },
+    {
+      "change": "missing",
+      "field": "schema_version",
+      "observed": "ValueError",
+      "record": "GeometryInput"
+    },
+    {
+      "change": "scalar",
+      "field": "schema_version",
+      "observed": "ValueError",
+      "record": "GeometryInput"
+    },
+    {
+      "change": "tuple",
+      "field": "schema_version",
+      "observed": "ValueError",
+      "record": "GeometryInput"
+    },
+    {
+      "change": "map",
+      "field": "schema_version",
+      "observed": "ValueError",
+      "record": "GeometryInput"
+    },
+    {
+      "change": "missing",
+      "field": "semantic_input",
+      "observed": "ValueError",
+      "record": "GeometryInput"
+    },
+    {
+      "change": "scalar",
+      "field": "semantic_input",
+      "observed": "ValueError",
+      "record": "GeometryInput"
+    },
+    {
+      "change": "tuple",
+      "field": "semantic_input",
+      "observed": "ValueError",
+      "record": "GeometryInput"
+    },
+    {
+      "change": "map",
+      "field": "semantic_input",
+      "observed": "ValueError",
+      "record": "GeometryInput"
+    },
+    {
+      "change": "missing",
+      "field": "completed",
+      "observed": "ValueError",
+      "record": "GeometryResult"
+    },
+    {
+      "change": "scalar",
+      "field": "completed",
+      "observed": "ValueError",
+      "record": "GeometryResult"
+    },
+    {
+      "change": "tuple",
+      "field": "completed",
+      "observed": "ValueError",
+      "record": "GeometryResult"
+    },
+    {
+      "change": "map",
+      "field": "completed",
+      "observed": "ValueError",
+      "record": "GeometryResult"
+    },
+    {
+      "change": "missing",
+      "field": "input",
+      "observed": "ValueError",
+      "record": "GeometryResult"
+    },
+    {
+      "change": "scalar",
+      "field": "input",
+      "observed": "ValueError",
+      "record": "GeometryResult"
+    },
+    {
+      "change": "tuple",
+      "field": "input",
+      "observed": "ValueError",
+      "record": "GeometryResult"
+    },
+    {
+      "change": "map",
+      "field": "input",
+      "observed": "ValueError",
+      "record": "GeometryResult"
+    },
+    {
+      "change": "missing",
+      "field": "issues",
+      "observed": "ValueError",
+      "record": "GeometryResult"
+    },
+    {
+      "change": "scalar",
+      "field": "issues",
+      "observed": "ValueError",
+      "record": "GeometryResult"
+    },
+    {
+      "change": "map",
+      "field": "issues",
+      "observed": "ValueError",
+      "record": "GeometryResult"
+    },
+    {
+      "change": "missing",
+      "field": "schema_version",
+      "observed": "ValueError",
+      "record": "GeometryResult"
+    },
+    {
+      "change": "scalar",
+      "field": "schema_version",
+      "observed": "ValueError",
+      "record": "GeometryResult"
+    },
+    {
+      "change": "tuple",
+      "field": "schema_version",
+      "observed": "ValueError",
+      "record": "GeometryResult"
+    },
+    {
+      "change": "map",
+      "field": "schema_version",
+      "observed": "ValueError",
+      "record": "GeometryResult"
+    },
+    {
+      "change": "missing",
+      "field": "status",
+      "observed": "ValueError",
+      "record": "GeometryResult"
+    },
+    {
+      "change": "scalar",
+      "field": "status",
+      "observed": "ValueError",
+      "record": "GeometryResult"
+    },
+    {
+      "change": "tuple",
+      "field": "status",
+      "observed": "ValueError",
+      "record": "GeometryResult"
+    },
+    {
+      "change": "map",
+      "field": "status",
+      "observed": "ValueError",
+      "record": "GeometryResult"
+    },
+    {
+      "change": "missing",
+      "field": "value",
+      "observed": "ValueError",
+      "record": "GeometryResult"
+    },
+    {
+      "change": "scalar",
+      "field": "value",
+      "observed": "ValueError",
+      "record": "GeometryResult"
+    },
+    {
+      "change": "tuple",
+      "field": "value",
+      "observed": "ValueError",
+      "record": "GeometryResult"
+    },
+    {
+      "change": "map",
+      "field": "value",
+      "observed": "ValueError",
+      "record": "GeometryResult"
+    }
+  ],
+  "malformed_count": 267,
+  "normal": {
+    "attempt_unchanged": true,
+    "base_records": 40,
+    "direct_and_readback_equal": true,
+    "fragments": 41,
+    "no_builder_io": true,
+    "roundtrip_entries": 3
+  },
+  "wire_sha256": {
+    "direct": "5627b72d26e9ee70fb9a110a4ba63b98ba38963ce85bec040dbfb3259b653597",
+    "readback": "fe551904e81016265e454fa4049ffcb2ec6a3441361527cb52c043499b874bc9"
+  }
+}

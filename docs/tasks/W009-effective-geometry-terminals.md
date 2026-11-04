@@ -109,6 +109,14 @@ Reviewer对最终`32e60e783a7a7e4172ee3916e3ceb4fade329585b87a7c7091a85c8a6418d1
 
 本次 Python3.12完整 v2 **914 passed / 1010.02s**、strict typing **44模块**通过；新独立几何4418组/521222点、原对象图31反例/7快照及来源/畸形wire26项已实跑。240项源码/快照、117证据、15命令输出、两包各90项runtime和最终修正身份匹配；旧安装树不在本机，原双解释器/构建/干净安装按身份采信，未冒称重装或重新观察历史执行。详细结果见本次报告和原始回执。修正后须独立复核受影响路径和最终交付身份，再交 PM 决定集成；本轮未改产品、正式测试、fixture/答案、历史证据、PM 段或 current-work，未自行验收、合并或启动后续任务。
 
+### R4 IPMR-01 局部修后独立复核（2026-11-03，11-04恢复工程审计）
+
+未参与补修实现的 `/root/ipmr01_independent_review` 在独立 worktree 审查恢复 `cdf3d2d5d2aeb0c441221c8bb0b41d0b302d8afa` → 最终产品/正式测试 `73e38df8f932bbb5bd9caf074b442ad2f5c286e9` 的完整11文件diff（8 runtime、3正式测试），见[修后独立报告](W009/ipmr01-fix-review.md)。原 IPMR-01、CR-01/CR-02、R1–R3 及 PM1/PM2 原文和历史失败材料保持。
+
+最终源码独立实跑原99项异常矩阵，明确核对 **99/99/identity_failures=[]**；另有267项W008公有wire畸形拒绝、33项constructor/完整W009 result receipt对照、1184项捕获wire变异、真实W005/W006无IO组合及36项完整readback既有cause/context保真。独立新增FXR-01指出本轮集合校验/保存两次迭代导致非法快照或裸AttributeError；执行者已修为一次快照，原反例和双向8项正式回归由未参与修复者独立关闭。**IPMR-01与FXR-01已关闭，剩余必须修正项0。**
+
+11月4日恢复后独立核对245项最终源/快照、两包与两实际安装各90 runtime、24份总回执命令及全部原始输出hash一致，见[工程审计](W009/ipmr01-verification/review/engineering-audit.json)。16份已完成R3构建/安装/smoke保留11月3日身份，断连partial归档不计通过，8份缺失环境/pytest/typing/pip回执从头补跑；原产品probe输出身份未变。最终Python3.12完整**1149 passed / 1069.07s**、Python3.10全部contracts加W006 publication unit **988 passed / 1465.64s**、双typing各44模块和依赖检查通过；3.10其余parser unit未重跑。Reviewer实际读包/安装树但未冒称重建或重装，新增认证检查后的绝对性能未重测。**独立产品及工程复核完成，建议交PM核验接收；本段不代写PM验收或集成决定。**
+
 ## PM 验收与交接（PM）
 
 最初派发时仅准备W009范围与独立执行入口；当前阶段以下文最新PM记录为准。既有W008及更早任务的验收事实保持。
