@@ -8,8 +8,8 @@
 | --- | --- |
 | ID / 目标 | W009；从认证的W008几何产物及同源physical/drawn/formats声明构造只读、精确、可重建的有效几何与channel/terminal区域草稿 |
 | 里程碑 / 依赖 | M1第五个产品切片；W003/W004样本、W005读取、W006审计、W007语义/身份和W008基础几何已验收集成。main起点`4df07e68b05df4c57a8b8d44bc41e7e073938d3a`，W008产品经[PR #62](https://github.com/LucianoHoult/Layauto/pull/62)集成，见[W008 PM2](W008-geometry-base-occupancy.md#pm2-integration-20261103) |
-| 授权依据 / 阶段 | 用户2026-11-04交回补修及独立复核，沿用独立session分工。**待验收：IPMR-01、FXR-01已独立关闭并经PM重新接收，剩余必须修正项0，可进入main集成与组合验证。** 当前尚未集成或最终验收，见[PM3](#pm3-ipmr01-receipt-20261104) |
-| 恢复位置 | `codex/w009-effective-geometry-terminals`，补修交付`6cb4ecc2ecaa8bd6e5236b28b70149d9a4917534`，产品/正式测试`73e38df8f932bbb5bd9caf074b442ad2f5c286e9`；接手包含PM3及current-work补记的最新提交，完整SHA见Git/回复。main仍为上述起点 |
+| 授权依据 / 阶段 | 用户2026-11-04授权继续推进，**已验收：IPMR-01、FXR-01已关闭，剩余必须修正项0；PR #63合入main，合并tree与已审head一致，63项组合验证通过。** 验收限本任务synthetic/toy范围，见[PM4](#pm4-integration-20261104) |
+| 恢复位置 | main合并`8c60f6c6183aed79a08ec8bb232a31f918837f68`，接手包含PM4的最新main；已审分支head`218a1b833451d34a5db6cd8b3c6f3089cc9c3dd0`及产品`73e38df8f932bbb5bd9caf074b442ad2f5c286e9`保留。分支未删除，下一任务使用独立分支 |
 | 允许修改 | `layauto_v2/domain/`必要中立区域/算子/来源DTO；`state/`内有效几何/区域草稿纯组件；`normalization/`适配、组合与codec；必要的同范围tech校验复用；对应tests、typing/build配置、README及本任务附件。模块/类型名由内部方案选择 |
 | 非目标 | 不实现完整工艺坐标/合法routing lattice、全层导通图/connector edges、电气ComponentId、body-to-rail证明、fin计数/完整器件提取、query spatial overlay、规则执行器/CSP、lifecycle最终闭合、baseline/seal/发布、ECO/no_change/terminal/Stage6；不改fixture/答案/历史证据，不新增生产格式或MR-040配置机制 |
 | 架构依据 | 本次main的[architecture](../architecture.md) §2.2–2.3、§3.1/3.4–3.6、§4.5–4.8、§5.6–5.9、§11.2–11.3/11.14–11.15、§12.3/12.5；[W003 contracts](W003/contracts.md)、[manual review](W003/manual-verification.md) MR-045/046（以W004修订后的body合同为准）、MR-052/054/056；W007/W008输入、身份、单位及公开结果合同 |
@@ -150,6 +150,16 @@ Reviewer对最终`32e60e783a7a7e4172ee3916e3ceb4fade329585b87a7c7091a85c8a6418d1
 245项源/完整tar、两包各90项runtime、24命令原输出及16沿用/8恢复重跑/14中断归档身份已实核一致。采用原最终3.12完整**1149项**、3.10受影响**988项**及新包/双干净安装证据；本机未重跑完整1149/3.10或重建/安装，原实际安装树不在本机，未冒称重新遍历。详见[PM重新接收说明](W009/ipmr01-pm-receipt.md)及[机器回执](W009/ipmr01-pm-receipt.json)。原失败与历史通过记录各保留原身份。
 
 **补修分支接收通过，当前剩余必须修正项0，解除IPMR-01集成阻塞；阶段待验收。** 原独立合并前复核加本次独立修后复核已有完整交接，下一步main集成及组合验证后记录最终验收。本轮未合main或启动W010；完整M1/真实EDA与U06后续义务保持。
+
+<a id="pm4-integration-20261104"></a>
+
+### PM4 最终验收与main集成（2026-11-04）
+
+用户授权推进后，通过[PR #63](https://github.com/LucianoHoult/Layauto/pull/63)将已审head`218a1b833451d34a5db6cd8b3c6f3089cc9c3dd0`合入main `8c60f6c6183aed79a08ec8bb232a31f918837f68`。合并两parent为原main `4df07e68b05df4c57a8b8d44bc41e7e073938d3a`及上述head；双方tree均为`1ad6dd978b8beaf109b428f2b6f3e86ce4f833d4`，245项最终源码hash全匹配，没有未审产品改动。
+
+在实际合并版本/Linux Python3.12.14上完成**63 passed / 156.52s**组合验证（另227项未选）：真实W005和W006 readback→W008→W009、cut-islands/gate拒绝、来源伪造/嵌套wire遗漏、算法异常、捕获hash异常及FXR单快照均覆盖。原1149/988项、双typing44、新包/双安装、独立review及PM235/99/41证据按完全相同tree继续适用；未重复完整矩阵或构建/安装。3.10全套unit未重跑等原限制保留。GitHub未返回commit status或PR workflow run，不把空列表称作CI通过。
+
+见[集成回执](W009/integration-receipt.json)及[原输出/API观察](W009/integration-evidence/combined.stdout.txt)。**W009在原声明synthetic/toy范围最终验收，集成完成，剩余必须修正项0。** 已有可信CUT有效区域及沟道/空间S-D端区，不等于完整Stage2/M1、物理连通/body/FIN提取、baseline/no_change或真实生产准入。下一步PM准备局部精确接触与物理连通草稿切片；本记录未启动后续产品实现。
 
 <a id="独立执行session-prompt"></a>
 

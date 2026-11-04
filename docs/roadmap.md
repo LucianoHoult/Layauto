@@ -27,7 +27,7 @@
 
 主线：**M0 准入准备 → M1 保真无变更闭环 → M2 首个 shrink 闭环 → M3 首版范围覆盖 → M4 可复现首版验收**。
 
-M1样本准备[W003](tasks/W003-m1-fixture-contracts.md#p10-w003-accepted)及[W004](tasks/W004-fixture-revision.md#pm3-20261031)已在synthetic范围收口；[W005输入读取与绑定](tasks/W005-input-reading-binding.md#pm4-integration-20261102)、[W006运行入口与输入失败记录](tasks/W006-precontext-run-audit.md#pm4-integration-20261102)及[W007语义身份与目标归一化](tasks/W007-semantic-identity-normalization.md#pm2-integration-20261102)已验收并合入main。[W008几何事实与基础占用](tasks/W008-geometry-base-occupancy.md#pm2-integration-20261103)的本地geometry/base index组件也已验收集成；完整工艺坐标、effective geometry/annotation/connectivity/body等状态、baseline/no_change及Stage6文件闭环继续保留。W002 E7/R4首交义务按实际触及接口落实，未完成组合前不宣称M1完成；具体阶段与证据归任务文件。
+M1样本准备[W003](tasks/W003-m1-fixture-contracts.md#p10-w003-accepted)及[W004](tasks/W004-fixture-revision.md#pm3-20261031)已在synthetic范围收口；[W005输入读取与绑定](tasks/W005-input-reading-binding.md#pm4-integration-20261102)、[W006运行入口与输入失败记录](tasks/W006-precontext-run-audit.md#pm4-integration-20261102)及[W007语义身份与目标归一化](tasks/W007-semantic-identity-normalization.md#pm2-integration-20261102)已验收并合入main。[W008几何事实与基础占用](tasks/W008-geometry-base-occupancy.md#pm2-integration-20261103)的本地geometry/base index组件也已验收集成；[W009有效几何与沟道/端区](tasks/W009-effective-geometry-terminals.md#pm4-integration-20261104)经PR #63验收集成。完整工艺坐标、有效region投影/annotation/connectivity/body等状态、baseline/no_change及Stage6文件闭环继续保留。W002 E7/R4首交义务按实际触及接口落实，未完成组合前不宣称M1完成；具体阶段与证据归任务文件。
 
 M0 分开交付“工程输入/合同准备”和“真实 profile 证据准入”。前者足以让 M1 在明确 synthetic profile 内开发；后者可以并行补证，但必须在 M2 接纳真实 profile 前完成。若真实材料不可得，M1 和相应合成测试可以继续，M2 保持有依据的阻塞，不通过把验收改成 dummy 成功消除阻塞。
 
@@ -167,7 +167,7 @@ M0 分开交付“工程输入/合同准备”和“真实 profile 证据准入�
 
 - **W001 规划已验收：**独立 review 为 0 项实质 findings，PM 已核对被审身份、要求覆盖与限制；已验收文档原稿 `8482b68` 及集成记录 `156e62d` 已推送 GitHub main。详细状态和证据归任务文件，规划验收不等于产品实现授权。
 - **W002工程准备已验收：**真实准入出口仍缺E3所列材料；后续W003/W004已完成synthetic样本/profile/独立判据准备，W005/W006已有产品实现并集成。真实缺项不因这些工程进展自动关闭。
-- **W008已验收集成，近期任务为[W009](tasks/W009-effective-geometry-terminals.md)：**从认证drawn几何计算已声明CUT差集及channel/OD端区草稿；以exact几何完成本地算子，不依赖尚缺的合法工艺网格。完整坐标、连接图/body、标注/提取/规则、原子基线发布、semantic/extraction-aware无变化判断和Stage6保真交付仍须后续完成。详细阶段和恢复位置见W009/current-work。
+- **W009已验收集成，近期准备局部接触与物理连通切片：**已从认证drawn几何完成CUT差集及channel/OD端区草稿，接下来依明确toy接触算子构建局部关系，不以示例网格补完整合法坐标。完整坐标、有效region投影、body、标注/提取/规则、原子基线发布、semantic/extraction-aware无变化判断和Stage6保真交付仍须后续完成。详细阶段和恢复位置见current-work。
 - W002 接收后只展开 M1 的近期实现包；共享状态/publication/物理解释方案先独立 review。M2–M4 保留能力目标、依赖和验收，不预写全部 helper/模块任务或承诺日历排期。
 
 | PM 核对 | 本规划的处理 | 尚不代表 |

@@ -1,0 +1,72 @@
+{
+  "schema": "layauto-w009-integration/1",
+  "date": "2026-11-04",
+  "pr": 63,
+  "pr_url": "https://github.com/LucianoHoult/Layauto/pull/63",
+  "merge_commit": "8c60f6c6183aed79a08ec8bb232a31f918837f68",
+  "base": "4df07e68b05df4c57a8b8d44bc41e7e073938d3a",
+  "reviewed_head": "218a1b833451d34a5db6cd8b3c6f3089cc9c3dd0",
+  "product": "73e38df8f932bbb5bd9caf074b442ad2f5c286e9",
+  "merge_tree": "1ad6dd978b8beaf109b428f2b6f3e86ce4f833d4",
+  "reviewed_head_tree": "1ad6dd978b8beaf109b428f2b6f3e86ce4f833d4",
+  "source_manifest_sha256": "40a60ada56e2b560d1af88fec9c16e4d60a6b1384fb042f39202edfcaefefc2c",
+  "source_file_count": 245,
+  "source_audit": "all current source file hashes match final product manifest",
+  "combined_check": {
+    "head": "8c60f6c6183aed79a08ec8bb232a31f918837f68",
+    "cwd": "/workspace/Layauto",
+    "command": [
+      "/workspace/work/w005-pm-check-env/bin/python",
+      "-B",
+      "-m",
+      "pytest",
+      "-p",
+      "no:cacheprovider",
+      "-q",
+      "tests/contracts/test_w009_effective.py",
+      "tests/contracts/test_w009_contracts.py",
+      "tests/contracts/test_w009_nested_receipt_exceptions.py",
+      "tests/contracts/test_w009_captured_decode_exceptions.py",
+      "-k",
+      "actual_w005_chain or real_w006_readback or existing_cut_islands or actual_gate_profile or grouped_physical_payload or nested_result_wire or neutral_aggregate_decode or public_collections_validate or w009_result_wire_reaches or captured_source_hash_failure"
+    ],
+    "env_overrides": {
+      "PYTHONDONTWRITEBYTECODE": "1",
+      "PYTHONPATH": "/workspace/Layauto"
+    },
+    "started_utc": "2026-11-04T06:52:19.523577+00:00",
+    "elapsed_seconds": 157.046,
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "executable": "/workspace/work/w005-pm-check-env/bin/python",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "packages": {
+      "pytest": "9.2.0",
+      "mypy": "2.4.1",
+      "PyYAML": "6.0.3"
+    },
+    "environment_scope": "existing PM venv; not a clean install validation",
+    "returncode": 0,
+    "outputs": {
+      "stdout": {
+        "path": "combined.stdout.txt",
+        "sha256": "945f0c0eaa3fbdc3e01af6ab0099df4e3e396bd56e97b5d5d4e8ad194773a8d8"
+      },
+      "stderr": {
+        "path": "combined.stderr.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  },
+  "combined_summary": "63 passed, 227 deselected, 1 warning in 156.52s",
+  "adopted_validation": "Identical merge tree: final 3.12 full1149,3.10 affected988,typing44,package/clean install,independent reviews and PM235/99/41 remain applicable; no duplicate full matrix/build/install performed. 3.10 complete units not rerun.",
+  "github_ci": "No commit statuses or PR workflow runs returned; absence is not a pass.",
+  "remaining_must_fix": 0,
+  "task_acceptance": "W009 accepted in declared synthetic/toy scope; not complete Stage2/M1 or production admission",
+  "evidence_sha256": {
+    "combined.json": "0bcc700a5bf79ede580a5d73c90b632ec2b1678f1d72bee639d9193091580449",
+    "combined.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "combined.stdout.txt": "945f0c0eaa3fbdc3e01af6ab0099df4e3e396bd56e97b5d5d4e8ad194773a8d8",
+    "github-evidence.json": "39ddb79e103ee205c061186195a05b7ed0f2a52123ca3cea5736d92074b2463e",
+    "run_check.py": "11357b4f8326b4f2141797d71a73474c419c7f8febad083ccba3069f5291ded3"
+  }
+}

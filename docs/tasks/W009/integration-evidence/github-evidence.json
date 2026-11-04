@@ -1,0 +1,106 @@
+{
+  "pr_number": 63,
+  "pr_url": "https://github.com/LucianoHoult/Layauto/pull/63",
+  "initial_gates": [
+    {
+      "kind": "open_prs",
+      "result": {
+        "issues": []
+      }
+    },
+    {
+      "kind": "commit_statuses",
+      "result": {
+        "statuses": []
+      }
+    },
+    {
+      "kind": "pull_request_workflow_runs",
+      "result": {
+        "workflow_runs": []
+      }
+    }
+  ],
+  "premerge_pr": {
+    "url": "https://github.com/LucianoHoult/Layauto/pull/63",
+    "number": 63,
+    "state": "open",
+    "merged": false,
+    "mergeable": true,
+    "draft": false,
+    "body": "W009 derives exact CUT differences, OD/POLY channels and spatial S/D terminal regions from authenticated W008 input. It preserves drawn records, raw occupancy and provenance, with immutable region contracts and canonical wire validation.\n\nIncludes the reviewed IPMR-01/FXR-01 repairs: unexpected failures retain their original exception identity across the complete nested geometry/capture/readback decode chain, while malformed values are explicitly rejected and collections are validated and stored from one snapshot. Independent premerge and repair review findings are closed.\n\nValidation: Python 3.12 complete v2 1149 passed; Python 3.10 affected scope 988 passed (remaining parser units not rerun); both strict typing runs cover 44 modules; new wheel/sdist and two clean outside-source installations pass. PM additionally reran 235 repair regressions, the 99/99 exception matrix, typing and 41 independent boundary checks; final source/package/evidence identities match. Details: docs/tasks/W009/ipmr01-pm-receipt.md.\n\nComplete technology coordinates, physical connectivity/body/device extraction, annotation, baseline/no_change and Stage 6 remain subsequent work. PM will record final task acceptance after main integration and combination verification.",
+    "title": "feat: derive exact effective geometry and terminal regions (W009)",
+    "base": "main",
+    "base_sha": "4df07e68b05df4c57a8b8d44bc41e7e073938d3a",
+    "head": "codex/w009-effective-geometry-terminals",
+    "head_sha": "218a1b833451d34a5db6cd8b3c6f3089cc9c3dd0",
+    "head_repo_id": 1144936784,
+    "head_repo_full_name": "LucianoHoult/Layauto",
+    "merge_commit_sha": "da816d1ebb150ea0277f3c3de1894cd218937041",
+    "user": {
+      "login": "LucianoHoult",
+      "name": "LucianoHoult",
+      "email": null,
+      "avatar_url": "https://avatars.githubusercontent.com/u/29163839?v=4",
+      "id": 29163839
+    },
+    "requested_reviewers": null,
+    "requested_team_reviewers": null,
+    "diff": null,
+    "comments": null,
+    "created_at": "2026-11-04T06:51:17Z",
+    "updated_at": "2026-11-04T06:51:17Z",
+    "closed_at": null,
+    "merged_at": null,
+    "commits": 14,
+    "changed_files": 734,
+    "additions": 99001,
+    "deletions": 198,
+    "display_url": "https://github.com/LucianoHoult/Layauto/pull/63",
+    "display_title": "feat: derive exact effective geometry and terminal regions (W009)"
+  },
+  "merge_result": {
+    "sha": "8c60f6c6183aed79a08ec8bb232a31f918837f68",
+    "merged": true,
+    "message": "Pull Request successfully merged"
+  },
+  "after_merge": {
+    "url": "https://github.com/LucianoHoult/Layauto/pull/63",
+    "number": 63,
+    "state": "closed",
+    "merged": true,
+    "mergeable": false,
+    "draft": false,
+    "body": "W009 derives exact CUT differences, OD/POLY channels and spatial S/D terminal regions from authenticated W008 input. It preserves drawn records, raw occupancy and provenance, with immutable region contracts and canonical wire validation.\n\nIncludes the reviewed IPMR-01/FXR-01 repairs: unexpected failures retain their original exception identity across the complete nested geometry/capture/readback decode chain, while malformed values are explicitly rejected and collections are validated and stored from one snapshot. Independent premerge and repair review findings are closed.\n\nValidation: Python 3.12 complete v2 1149 passed; Python 3.10 affected scope 988 passed (remaining parser units not rerun); both strict typing runs cover 44 modules; new wheel/sdist and two clean outside-source installations pass. PM additionally reran 235 repair regressions, the 99/99 exception matrix, typing and 41 independent boundary checks; final source/package/evidence identities match. Details: docs/tasks/W009/ipmr01-pm-receipt.md.\n\nComplete technology coordinates, physical connectivity/body/device extraction, annotation, baseline/no_change and Stage 6 remain subsequent work. PM will record final task acceptance after main integration and combination verification.",
+    "title": "feat: derive exact effective geometry and terminal regions (W009)",
+    "base": "main",
+    "base_sha": "4df07e68b05df4c57a8b8d44bc41e7e073938d3a",
+    "head": "codex/w009-effective-geometry-terminals",
+    "head_sha": "218a1b833451d34a5db6cd8b3c6f3089cc9c3dd0",
+    "head_repo_id": 1144936784,
+    "head_repo_full_name": "LucianoHoult/Layauto",
+    "merge_commit_sha": "8c60f6c6183aed79a08ec8bb232a31f918837f68",
+    "user": {
+      "login": "LucianoHoult",
+      "name": "LucianoHoult",
+      "email": null,
+      "avatar_url": "https://avatars.githubusercontent.com/u/29163839?v=4",
+      "id": 29163839
+    },
+    "requested_reviewers": null,
+    "requested_team_reviewers": null,
+    "diff": null,
+    "comments": null,
+    "created_at": "2026-11-04T06:51:17Z",
+    "updated_at": "2026-11-04T06:52:27Z",
+    "closed_at": "2026-11-04T06:51:42Z",
+    "merged_at": "2026-11-04T06:51:42Z",
+    "commits": 14,
+    "changed_files": 734,
+    "additions": 99001,
+    "deletions": 198,
+    "display_url": "https://github.com/LucianoHoult/Layauto/pull/63",
+    "display_title": "feat: derive exact effective geometry and terminal regions (W009)"
+  },
+  "ci_note": "No status or first-page PR workflow runs returned; absence is not a passing CI result."
+}
