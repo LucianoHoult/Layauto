@@ -337,7 +337,18 @@ def test_normalization_and_new_domain_keep_pure_dependency_boundaries():
                                       and isinstance(node, ast.ImportFrom)
                                       and node.module in ('layauto_v2.state.layout_store',
                                                           'layauto_v2.state.coordinate', 'layauto_v2.state.occupancy'))
-            if not (allowed_decoder or allowed_geometry_decoder or allowed_geometry_state):
+            # W009 only adds these pure draft/codec dependencies; it does not
+            # grant normalization access to mutable state or publication APIs.
+            allowed_effective_state = (path.parent.name == 'normalization'
+                                       and isinstance(node, ast.ImportFrom)
+                                       and ((path.name == 'effective.py' and node.module == 'layauto_v2.state.regions'
+                                             and {alias.name for alias in node.names} <= {'EffectiveDraft', 'build_effective_draft'})
+                                            or (path.name == 'effective_codec.py'
+                                                and ((node.module == 'layauto_v2.state.regions'
+                                                      and {alias.name for alias in node.names} == {'EffectiveDraft'})
+                                                     or (node.module == 'layauto_v2.state.occupancy'
+                                                         and {alias.name for alias in node.names} == {'BaseOccupancy'})))))
+            if not (allowed_decoder or allowed_geometry_decoder or allowed_geometry_state or allowed_effective_state):
                 violations.extend((str(path), module) for module in modules if module.startswith(forbidden))
         for node in ast.walk(tree):
             if isinstance(node, ast.Call) and isinstance(node.func, ast.Name):

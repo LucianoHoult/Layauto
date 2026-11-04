@@ -1,0 +1,19 @@
+{
+  "head": "8aa11baebfea935933b18cae3f23ba8c1e9c6486",
+  "final_product_head": "5f9af59c3d70564568861e14d24ea49653d76d71",
+  "final_product_same_modules": true,
+  "source_files": {
+    "layauto_v2/domain/publication_codec.py": "a7df707d29f68748b28a9ee827cd4ee6448f30ff6a4d176400fa2588b221eb17",
+    "layauto_v2/domain/evidence.py": "1a672a010d5434659417805c17db9d35a8b87d2cbc31b47fb3ea45102b14342f",
+    "layauto_v2/domain/results.py": "e8df4422f86362b06d90df55e757260a41fb1d4c180fd44b41112e09e5c5fe35"
+  },
+  "command": "PYTHONDONTWRITEBYTECODE=1 /workspace/work/w009-ipmr01-env/py312/bin/python -B docs/tasks/W009/ipmr01-verification/review/captured/probe.py",
+  "cwd": "/workspace/work/w009-ipmr01-review",
+  "exit_code": 0,
+  "outputs": {
+    "probe.py": "02a3310627a2dc3a85e4ce7511bd3042d10d4d4203ac6feaa0a6a0c771d7527b",
+    "result.json": "569e9e1be6119f17811b0befc01ac40802ff6910ebfc9020c99eada8b1d77ac2",
+    "stdout.txt": "7489d38c8c90ca92287c3ee319c3cf4efdc5e83caeb33d4666df4518c8175f9d",
+    "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

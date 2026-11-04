@@ -1,0 +1,22 @@
+{
+  "scope": "Pre-CR02 history only; not final product verification",
+  "superseded_reason": "CR-02 strict exact-string guards for closed literal/schema fields and 20 new adversarial cases.",
+  "source_files": 240,
+  "runtime_files": 90,
+  "source_manifest_sha256": "9e3fde92ea6919e70592a7b71d03c575e8e81471d7ca835829052277a8208957",
+  "source_snapshot_sha256": "a4da3114a20cb754e5e6d640f24b51e228e2f2fc1d66bd4a506728e27a1cc3bf",
+  "snapshot_reconstruction": "Copied unchanged files; reviewer-preserved old domain/result; reversed one state schema guard and removed appended literal tests. All 240 byte hashes verified against original frozen manifest.",
+  "python312": {
+    "pytest": "847 passed in 984.29s",
+    "typing": "44 source files passed",
+    "pip_check": "passed"
+  },
+  "python310": {
+    "pytest": "821 passed in 1344.02s before KeyboardInterrupt",
+    "completed": false,
+    "failures_observed": 0
+  },
+  "runner_exit_code": 143,
+  "termination": "Parent requested stop on CR-02 finding; parent runner SIGTERM, remaining pytest SIGINT.",
+  "build_or_clean_install_ran": false
+}

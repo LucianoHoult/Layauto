@@ -1,0 +1,319 @@
+{
+  "case_count": 41,
+  "cwd": "/workspace/Layauto",
+  "executable": "/workspace/work/w005-pm-check-env/bin/python",
+  "head": "6cb4ecc2ecaa8bd6e5236b28b70149d9a4917534",
+  "observations": [
+    {
+      "container": "ChangingList",
+      "field": "evidence",
+      "iterations": 1,
+      "outcome": "safe_snapshot",
+      "probe": "single_snapshot",
+      "valid_first": true
+    },
+    {
+      "container": "ChangingList",
+      "field": "evidence",
+      "iterations": 1,
+      "outcome": "explicit_rejection",
+      "probe": "single_snapshot",
+      "valid_first": false
+    },
+    {
+      "container": "ChangingList",
+      "field": "sources",
+      "iterations": 1,
+      "outcome": "safe_snapshot",
+      "probe": "single_snapshot",
+      "valid_first": true
+    },
+    {
+      "container": "ChangingList",
+      "field": "sources",
+      "iterations": 1,
+      "outcome": "explicit_rejection",
+      "probe": "single_snapshot",
+      "valid_first": false
+    },
+    {
+      "container": "ChangingList",
+      "field": "completed",
+      "iterations": 1,
+      "outcome": "safe_snapshot",
+      "probe": "single_snapshot",
+      "valid_first": true
+    },
+    {
+      "container": "ChangingList",
+      "field": "completed",
+      "iterations": 1,
+      "outcome": "explicit_rejection",
+      "probe": "single_snapshot",
+      "valid_first": false
+    },
+    {
+      "container": "ChangingList",
+      "field": "issues",
+      "iterations": 1,
+      "outcome": "safe_snapshot",
+      "probe": "single_snapshot",
+      "valid_first": true
+    },
+    {
+      "container": "ChangingList",
+      "field": "issues",
+      "iterations": 1,
+      "outcome": "explicit_rejection",
+      "probe": "single_snapshot",
+      "valid_first": false
+    },
+    {
+      "container": "ChangingTuple",
+      "field": "evidence",
+      "iterations": 1,
+      "outcome": "safe_snapshot",
+      "probe": "single_snapshot",
+      "valid_first": true
+    },
+    {
+      "container": "ChangingTuple",
+      "field": "evidence",
+      "iterations": 1,
+      "outcome": "explicit_rejection",
+      "probe": "single_snapshot",
+      "valid_first": false
+    },
+    {
+      "container": "ChangingTuple",
+      "field": "sources",
+      "iterations": 1,
+      "outcome": "safe_snapshot",
+      "probe": "single_snapshot",
+      "valid_first": true
+    },
+    {
+      "container": "ChangingTuple",
+      "field": "sources",
+      "iterations": 1,
+      "outcome": "explicit_rejection",
+      "probe": "single_snapshot",
+      "valid_first": false
+    },
+    {
+      "container": "ChangingTuple",
+      "field": "completed",
+      "iterations": 1,
+      "outcome": "safe_snapshot",
+      "probe": "single_snapshot",
+      "valid_first": true
+    },
+    {
+      "container": "ChangingTuple",
+      "field": "completed",
+      "iterations": 1,
+      "outcome": "explicit_rejection",
+      "probe": "single_snapshot",
+      "valid_first": false
+    },
+    {
+      "container": "ChangingTuple",
+      "field": "issues",
+      "iterations": 1,
+      "outcome": "safe_snapshot",
+      "probe": "single_snapshot",
+      "valid_first": true
+    },
+    {
+      "container": "ChangingTuple",
+      "field": "issues",
+      "iterations": 1,
+      "outcome": "explicit_rejection",
+      "probe": "single_snapshot",
+      "valid_first": false
+    },
+    {
+      "outcome": "roundtrip_identical",
+      "probe": "normal_actual_w009"
+    },
+    {
+      "entry": "SourceFile",
+      "exception": "RuntimeError",
+      "prior_history_preserved": true,
+      "probe": "source_hash",
+      "same_object": true
+    },
+    {
+      "entry": "SourceFile",
+      "exception": "ValueError",
+      "prior_history_preserved": true,
+      "probe": "source_hash",
+      "same_object": true
+    },
+    {
+      "entry": "SourceFile",
+      "exception": "TypeError",
+      "prior_history_preserved": true,
+      "probe": "source_hash",
+      "same_object": true
+    },
+    {
+      "entry": "SourceFile",
+      "exception": "KeyError",
+      "prior_history_preserved": true,
+      "probe": "source_hash",
+      "same_object": true
+    },
+    {
+      "entry": "SourceFile",
+      "exception": "AttributeError",
+      "prior_history_preserved": true,
+      "probe": "source_hash",
+      "same_object": true
+    },
+    {
+      "entry": "SourceFile",
+      "exception": "IndexError",
+      "prior_history_preserved": true,
+      "probe": "source_hash",
+      "same_object": true
+    },
+    {
+      "entry": "SourceFile",
+      "exception": "UnicodeError",
+      "prior_history_preserved": true,
+      "probe": "source_hash",
+      "same_object": true
+    },
+    {
+      "entry": "SourceFile",
+      "exception": "KeyboardInterrupt",
+      "prior_history_preserved": true,
+      "probe": "source_hash",
+      "same_object": true
+    },
+    {
+      "entry": "SourceFile",
+      "exception": "SystemExit",
+      "prior_history_preserved": true,
+      "probe": "source_hash",
+      "same_object": true
+    },
+    {
+      "entry": "W009_result",
+      "exception": "RuntimeError",
+      "prior_history_preserved": true,
+      "probe": "source_hash",
+      "same_object": true
+    },
+    {
+      "entry": "W009_result",
+      "exception": "ValueError",
+      "prior_history_preserved": true,
+      "probe": "source_hash",
+      "same_object": true
+    },
+    {
+      "entry": "W009_result",
+      "exception": "TypeError",
+      "prior_history_preserved": true,
+      "probe": "source_hash",
+      "same_object": true
+    },
+    {
+      "entry": "W009_result",
+      "exception": "KeyError",
+      "prior_history_preserved": true,
+      "probe": "source_hash",
+      "same_object": true
+    },
+    {
+      "entry": "W009_result",
+      "exception": "AttributeError",
+      "prior_history_preserved": true,
+      "probe": "source_hash",
+      "same_object": true
+    },
+    {
+      "entry": "W009_result",
+      "exception": "IndexError",
+      "prior_history_preserved": true,
+      "probe": "source_hash",
+      "same_object": true
+    },
+    {
+      "entry": "W009_result",
+      "exception": "UnicodeError",
+      "prior_history_preserved": true,
+      "probe": "source_hash",
+      "same_object": true
+    },
+    {
+      "entry": "W009_result",
+      "exception": "KeyboardInterrupt",
+      "prior_history_preserved": true,
+      "probe": "source_hash",
+      "same_object": true
+    },
+    {
+      "entry": "W009_result",
+      "exception": "SystemExit",
+      "prior_history_preserved": true,
+      "probe": "source_hash",
+      "same_object": true
+    },
+    {
+      "bad": null,
+      "field": "uri",
+      "outcome": "explicit_rejection",
+      "probe": "malformed_source_wire"
+    },
+    {
+      "bad": 7,
+      "field": "uri",
+      "outcome": "explicit_rejection",
+      "probe": "malformed_source_wire"
+    },
+    {
+      "bad": "",
+      "field": "uri",
+      "outcome": "explicit_rejection",
+      "probe": "malformed_source_wire"
+    },
+    {
+      "bad": null,
+      "field": "data",
+      "outcome": "explicit_rejection",
+      "probe": "malformed_source_wire"
+    },
+    {
+      "bad": 7,
+      "field": "data",
+      "outcome": "explicit_rejection",
+      "probe": "malformed_source_wire"
+    },
+    {
+      "bad": "text",
+      "field": "data",
+      "outcome": "explicit_rejection",
+      "probe": "malformed_source_wire"
+    }
+  ],
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "script_sha256": "12672a8f51ca9d671abc30c07160822b65d1179da48f0b8d81fcf95493ce5ee7",
+  "source_sha256": {
+    "layauto_v2/domain/evidence.py": "dfe57bca29500b70dda7ea514a528ac30241d7c67b379f4e020df3a6270b3614",
+    "layauto_v2/domain/publication_codec.py": "a7df707d29f68748b28a9ee827cd4ee6448f30ff6a4d176400fa2588b221eb17",
+    "layauto_v2/domain/results.py": "1c347aed20f3210b077bac555627a87f7ffb3eeeef5f887bdea3053b3a826f29",
+    "layauto_v2/normalization/_validation.py": "c2ad6ab3da324288a5651c4c93abe16e1c688d71f55dbcf73a13bad3552d974e",
+    "layauto_v2/normalization/codec.py": "23bee58336a8d76698e702e1d3da0d9af639d8744b6ca7ff05eb4fcd2c54d36f",
+    "layauto_v2/normalization/contracts.py": "f90e83acd1edce2576fca38257429a505eeb61c6fafc148c1850ea6f54c5c083",
+    "layauto_v2/normalization/geometry_codec.py": "e9d74eb17410c85efff28c6c5146376902d04402f531af1cf0bfc0e5cd58f2b8",
+    "layauto_v2/state/layout_store.py": "6e87c3a2a7ffac3ffdeca4fb3d7097971bcf0b4b02d4a799db6583732cae7bf5",
+    "tests/contracts/test_w009_captured_decode_exceptions.py": "2e6f7c912484537c4ea570bb0d71a5c2762159a1cb1e58a0257f293159b12ece",
+    "tests/contracts/test_w009_nested_base_decode.py": "a81f71f5e14b5baafd7e5165bd736e5888e10952d32606c54d20d7f0c534bf8f",
+    "tests/contracts/test_w009_nested_receipt_exceptions.py": "79fc285e64fd8807f4f83a0b6a93f1070256ef8141e102d2f8b704ad0d395783"
+  },
+  "status": "passed"
+}

@@ -1,0 +1,35 @@
+{
+  "head": "5b1d9b5196a7c5181822c4dd0f1bd2f678475116",
+  "cwd": "/workspace/Layauto",
+  "command": [
+    "/workspace/work/w005-pm-check-env/bin/python",
+    "-B",
+    "docs/tasks/W009/review/exception_probe.py"
+  ],
+  "env_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONPATH": "/workspace/Layauto"
+  },
+  "started_utc": "2026-11-03T08:05:12.532501+00:00",
+  "elapsed_seconds": 21.247,
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "executable": "/workspace/work/w005-pm-check-env/bin/python",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "packages": {
+    "pytest": "9.2.0",
+    "mypy": "2.4.1",
+    "PyYAML": "6.0.3"
+  },
+  "environment_scope": "existing PM venv; not a clean install validation",
+  "returncode": 0,
+  "outputs": {
+    "stdout": {
+      "path": "exception-probe.stdout.txt",
+      "sha256": "68738a65eee3850af50fabfb63b147948ccdaedc01a4caffff277671c621725f"
+    },
+    "stderr": {
+      "path": "exception-probe.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  }
+}

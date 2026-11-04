@@ -1,0 +1,35 @@
+{
+  "command": [
+    "/workspace/work/w009-ipmr01-env/py312/bin/python",
+    "-B",
+    "/workspace/work/w009-ipmr01/docs/tasks/W009/independent-premerge-review/provenance-exceptions/exception_paths.py"
+  ],
+  "cwd": "/workspace/work/w009-ipmr01",
+  "head": "8aa11baebfea935933b18cae3f23ba8c1e9c6486",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "executable": "/workspace/work/w009-ipmr01-env/py312/bin/python",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "script_sha256": "205c88d6c7093c7e67d1ff0b8ab1b2a6ba21870afc7703400668865f75e40d27",
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "elapsed_seconds": 152.759,
+  "finished_utc": "2026-11-03T11:43:32.636858+00:00",
+  "source_manifest_sha256": "54e26f0999f36ef75defe7d7ffd6f9e91fd146479798cfc853e9e44a44c2a5a2",
+  "outputs": {
+    "stdout": {
+      "path": "exception-paths.stdout.txt",
+      "sha256": "4af4e385405f6eb102071b31d1470f8dbbfd2e7cfd8affcad2633683ac1c29fe"
+    },
+    "stderr": {
+      "path": "exception-paths.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "observed": {
+    "case_count": 99,
+    "same_object_count": 99,
+    "identity_failures": []
+  },
+  "contract_passed": true,
+  "passed": true
+}

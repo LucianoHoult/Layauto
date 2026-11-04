@@ -98,16 +98,10 @@ def _unpack(value: Value) -> object:
     payload = value['fields']
     if set(payload) != set(fields):
         raise ValueError('unknown/missing geometry wire fields')
-    # Children are decoded before any malformed-neutral-value translation. The
-    # captured decoders' unexpected exceptions/interrupts retain their identity.
+    # Constructors reject malformed fields explicitly. Algorithm/capture
+    # reconstruction failures must keep their identity through the whole chain.
     decoded = {field: _unpack(payload[field]) for field in fields}
-    if value['record'] == 'GeometryInput':
-        result = constructor(**decoded)
-    else:
-        try:
-            result = constructor(**decoded)
-        except (TypeError, KeyError, AttributeError, IndexError, UnicodeError) as exc:
-            raise ValueError('invalid geometry wire fields') from exc
+    result = constructor(**decoded)
     if _pack(result) != value:
         raise ValueError('noncanonical geometry wire record')
     return result

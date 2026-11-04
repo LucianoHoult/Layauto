@@ -1,0 +1,15 @@
+{
+  "raw_observation_file": "reachable-catches.json",
+  "valid_case_count": 35,
+  "valid_same_object_count": 1,
+  "valid_identity_failure_count": 34,
+  "excluded_target": "layauto_v2.domain.evidence.hashlib.sha256",
+  "excluded_case_count": 10,
+  "exclusion_reason": "Patching hashlib.sha256 mutates the globally shared module and can fail earlier in base geometry digest reconstruction; those observations do not identify the publication SourceFile boundary. A separate audit isolates evidence.hashlib instead.",
+  "valid_targets": [
+    "layauto_v2.normalization.contracts.request_decoder_input",
+    "layauto_v2.normalization._validation._validate_cdl",
+    "layauto_v2.normalization._validation._validate_query",
+    "layauto_v2.normalization.contracts.content_ref"
+  ]
+}

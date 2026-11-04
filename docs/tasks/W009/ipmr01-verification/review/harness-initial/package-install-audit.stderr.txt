@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/workspace/work/w009-ipmr01-review/docs/tasks/W009/ipmr01-verification/review/engineering_audit.py", line 62, in <module>
+    assert digest==installation['source_sha256']==sha(Path(installation['source_artifact']).read_bytes())
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

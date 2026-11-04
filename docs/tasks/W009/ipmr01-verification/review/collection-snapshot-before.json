@@ -1,0 +1,17 @@
+{
+  "head": "8aa11baebfea935933b18cae3f23ba8c1e9c6486",
+  "observations": [
+    {
+      "entry": "EvidenceRecord.sources",
+      "outcome": "accepted",
+      "retained_sources_repr": "(None,)",
+      "retained_invalid_none": true
+    },
+    {
+      "entry": "ParseResult.sources",
+      "outcome": "raised",
+      "type": "AttributeError",
+      "message": "'NoneType' object has no attribute 'uri'"
+    }
+  ]
+}

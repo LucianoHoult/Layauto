@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/workspace/work/w009-ipmr01/docs/tasks/W009/ipmr01-verification/runner.py", line 369, in <module>
+    Runner(parse_args()).main()
+  File "/workspace/work/w009-ipmr01/docs/tasks/W009/ipmr01-verification/runner.py", line 354, in main
+    raise RuntimeError('Verification failed; read receipt.json: ' + '; '.join(self.errors))
+RuntimeError: Verification failed; read receipt.json: KeyError: 'hashes'; RuntimeError: pytest-310 failed; read /workspace/work/w009-ipmr01/docs/tasks/W009/ipmr01-verification/pytest-310.stdout.txt and /workspace/work/w009-ipmr01/docs/tasks/W009/ipmr01-verification/pytest-310.stderr.txt; RuntimeError: pytest-312 failed; read /workspace/work/w009-ipmr01/docs/tasks/W009/ipmr01-verification/pytest-312.stdout.txt and /workspace/work/w009-ipmr01/docs/tasks/W009/ipmr01-verification/pytest-312.stderr.txt

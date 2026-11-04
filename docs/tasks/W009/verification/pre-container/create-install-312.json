@@ -1,0 +1,13 @@
+{
+  "command": [
+    "/workspace/work/w009-env/py312/bin/python",
+    "-m",
+    "venv",
+    "/workspace/work/w009-env/clean-final-312"
+  ],
+  "cwd": "/workspace/Layauto",
+  "exit_code": 0,
+  "elapsed_seconds": 4.168,
+  "output": "create-install-312.txt",
+  "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

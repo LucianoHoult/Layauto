@@ -1,0 +1,11 @@
+{
+  "raw_observation_file": "malformed-receipt-probe.json",
+  "loaded_source_commit": "c68b818ff7ec68cb4f55956a36f64c6f53ed6a76",
+  "loaded_validation_sha256": "4f18916cef9c6c467ebbe948d4936b0ecc4a992ae562725a74c8267431d01fb5",
+  "case_count": 962,
+  "bare_exception_count": 0,
+  "explicit_rejection_count": 526,
+  "accepted_count": 436,
+  "scope": "Single deletion or map replacement of fields through depth 5 in captured semantic receipt tech, source_cdl, target_cdl, query, header. Acceptance only means semantic receipt does not consume or require that particular shape; it is not W009 or geometry input admission. This probe checks naked exception leakage, not acceptance completeness.",
+  "source_hash_note": "Raw output source hash was taken at completion from the then-current disk, after the blank-count-header fix. The process had imported c68b818 source at startup; the recorded loaded hash here identifies that code. Blank-count-header was a separate multiple-field malformed control and has its own fixed regression."
+}

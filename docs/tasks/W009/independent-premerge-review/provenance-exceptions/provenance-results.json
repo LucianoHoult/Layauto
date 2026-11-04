@@ -1,0 +1,180 @@
+{
+  "case_count": 26,
+  "cwd": "/workspace/work/w009-review",
+  "head": "88a7ae9d0330b7c7fddda0b07366c7a96552b65e",
+  "observations": [
+    {
+      "case": "direct-W005-W008-W009-no-IO-prior-facts-and-owner-roles",
+      "passed": true
+    },
+    {
+      "case": "real-W006-readback-W008-W009-no-IO-unchanged-attempt",
+      "passed": true
+    },
+    {
+      "case": "wrong-run-readback",
+      "message": "readback content does not match ready references",
+      "observed": "ValueError",
+      "passed": true
+    },
+    {
+      "case": "foreign-physical-owner-on-success",
+      "message": "effective draft differs from this captured W008 input/physical owner",
+      "observed": "ValueError",
+      "passed": true
+    },
+    {
+      "case": "grouped-payload-forgery-direct",
+      "message": "captured bytes differ from accepted /tech evidence",
+      "observed": "GeometryInputError",
+      "passed": true
+    },
+    {
+      "case": "grouped-payload-forgery-nested-result",
+      "message": "captured bytes differ from accepted /tech evidence",
+      "observed": "GeometryInputError",
+      "passed": true
+    },
+    {
+      "boundary": "W005",
+      "case": "captured-physical-fin_count_profile-effective_active_operator",
+      "code": "InvalidSchema",
+      "field": "/fin_count_profile/effective_active_operator",
+      "passed": true
+    },
+    {
+      "boundary": "W009",
+      "case": "captured-physical-fin_count_profile-recognized_channel_operator",
+      "code": "UnsupportedRegionOperator",
+      "field": "/fin_count_profile/recognized_channel_operator",
+      "passed": true
+    },
+    {
+      "boundary": "W009",
+      "case": "captured-physical-device_extraction_contract-sd_policy",
+      "code": "UnsupportedRegionOperator",
+      "field": "/device_extraction_contract/sd_policy",
+      "passed": true
+    },
+    {
+      "boundary": "W009",
+      "case": "captured-physical-device_extraction_contract-gate_operator",
+      "code": "UnsupportedRegionOperator",
+      "field": "/device_extraction_contract/gate_operator",
+      "passed": true
+    },
+    {
+      "boundary": "W009",
+      "case": "captured-physical-operators-rectangle_set_difference/1",
+      "code": "UnsupportedRegionOperator",
+      "field": "/operators/rectangle_set_difference~11",
+      "passed": true
+    },
+    {
+      "boundary": "W009",
+      "case": "captured-physical-operators-terminal_split/1",
+      "code": "UnsupportedRegionOperator",
+      "field": "/operators/terminal_split~11",
+      "passed": true
+    },
+    {
+      "boundary": "W009",
+      "case": "captured-drawn-OD-role",
+      "code": "UnsupportedRegionOperator",
+      "field": "/layers/3/role",
+      "passed": true
+    },
+    {
+      "boundary": "W009",
+      "case": "captured-drawn-POLY-role",
+      "code": "UnsupportedRegionOperator",
+      "field": "/layers/4/role",
+      "passed": true
+    },
+    {
+      "boundary": "W009",
+      "case": "captured-drawn-LI-role",
+      "code": "UnsupportedRegionOperator",
+      "field": "/layers/6/role",
+      "passed": true
+    },
+    {
+      "boundary": "W009",
+      "case": "captured-drawn-CUT-role",
+      "code": "UnsupportedRegionOperator",
+      "field": "/layers/7/role",
+      "passed": true
+    },
+    {
+      "boundary": "W009",
+      "case": "captured-drawn-CUT-cut_target",
+      "code": "UnsupportedRegionOperator",
+      "field": "/layers/7/cut_target",
+      "passed": true
+    },
+    {
+      "boundary": "W009",
+      "case": "captured-drawn-CUT-effective_geometry_operator",
+      "code": "UnsupportedRegionOperator",
+      "field": "/layers/7/effective_geometry_operator",
+      "passed": true
+    },
+    {
+      "case": "malformed-draft-unknown-field",
+      "message": "unknown/missing effective geometry wire fields",
+      "observed": "ValueError",
+      "passed": true
+    },
+    {
+      "case": "malformed-draft-missing-field",
+      "message": "unknown/missing effective geometry wire fields",
+      "observed": "ValueError",
+      "passed": true
+    },
+    {
+      "case": "malformed-draft-scalar-collection",
+      "message": "scalar tag cannot contain collections",
+      "observed": "ValueError",
+      "passed": true
+    },
+    {
+      "case": "malformed-draft-bad-nested-geometry",
+      "message": "Expecting value: line 1 column 1 (char 0)",
+      "observed": "JSONDecodeError",
+      "passed": true
+    },
+    {
+      "case": "malformed-result-unknown-field",
+      "message": "unknown/missing effective geometry wire fields",
+      "observed": "ValueError",
+      "passed": true
+    },
+    {
+      "case": "malformed-result-missing-field",
+      "message": "unknown/missing effective geometry wire fields",
+      "observed": "ValueError",
+      "passed": true
+    },
+    {
+      "case": "malformed-result-scalar-collection",
+      "message": "scalar tag cannot contain collections",
+      "observed": "ValueError",
+      "passed": true
+    },
+    {
+      "case": "malformed-result-bad-nested-geometry",
+      "message": "Expecting value: line 1 column 1 (char 0)",
+      "observed": "JSONDecodeError",
+      "passed": true
+    }
+  ],
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "sources": {
+    "layauto_v2/domain/regions.py": "9fd1b2b98338c594533a39e2c0af4c28c1c0cc5c93f0a61481bc0f37be436cc5",
+    "layauto_v2/normalization/effective.py": "9e6cd99c7ba0a0d5c19f6299d879a8e7954b7ca49663755f18754b1c0cd9f8e5",
+    "layauto_v2/normalization/effective_codec.py": "58893a786683e41ae58cedabbe24d44c0b8517d219b5346e7b76ad178c7f8bf0",
+    "layauto_v2/normalization/geometry_codec.py": "0c99e5aff74ea1fbe8500f03e89086667f80c856d77da535299fe9044dfc6d76",
+    "layauto_v2/normalization/geometry_input.py": "11d6ff6aff23eaa4e2aa4203c0a97ce2f596a56ba345c7614edf8f6e02bddf30",
+    "layauto_v2/state/regions.py": "de35da051c4d2a0e35fa403affdf43fb6202f3bae3d7c4f45eea9b290c74b315"
+  }
+}

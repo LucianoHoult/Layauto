@@ -44,10 +44,14 @@ class ParseResult:
     def __post_init__(self) -> None:
         if self.schema_version != 'layauto-parse-result/1' or self.status not in ('success', 'error'):
             raise ValueError('invalid parse discriminator/version')
-        for name in ('issues', 'completed', 'sources'):
-            object.__setattr__(self, name, tuple(getattr(self, name)))
-        if any(not isinstance(x, EvidenceIssue) for x in self.issues) or any(not isinstance(x, EvidenceRecord) for x in self.completed) or any(not isinstance(x, SourceFile) for x in self.sources):
-            raise ValueError('invalid parse record fields')
+        for name, cls in (('issues', EvidenceIssue), ('completed', EvidenceRecord), ('sources', SourceFile)):
+            values = getattr(self, name)
+            if not isinstance(values, (tuple, list)):
+                raise ValueError('invalid parse record fields')
+            snapshot = tuple(values)
+            if any(not isinstance(value, cls) for value in snapshot):
+                raise ValueError('invalid parse record fields')
+            object.__setattr__(self, name, snapshot)
         by_uri = {source.uri: source.sha256 for source in self.sources}
         if len(by_uri) != len(self.sources):
             raise ValueError('duplicate source URI')

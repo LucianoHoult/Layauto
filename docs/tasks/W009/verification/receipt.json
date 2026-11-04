@@ -1,0 +1,244 @@
+{
+  "status": "passed",
+  "commands": [
+    {
+      "command": [
+        "/workspace/work/w009-env/py310/bin/python",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "tests/unit",
+        "tests/contracts",
+        "-q"
+      ],
+      "cwd": "/workspace/Layauto",
+      "exit_code": 0,
+      "elapsed_seconds": 1508.198,
+      "output": "pytest-310.txt",
+      "output_sha256": "a9c219120884360f87bbf81261658f11cd8f1d44b50d8e84dd6c8686fcc019cb"
+    },
+    {
+      "command": [
+        "/workspace/work/w009-env/py310/bin/python",
+        "-m",
+        "mypy"
+      ],
+      "cwd": "/workspace/Layauto",
+      "exit_code": 0,
+      "elapsed_seconds": 5.825,
+      "output": "typing-310.txt",
+      "output_sha256": "522d7b3a15704213950b7053c882b6ddd0c41149631300ce6c1933d21b5971c3"
+    },
+    {
+      "command": [
+        "/workspace/work/w009-env/py310/bin/python",
+        "-m",
+        "pip",
+        "check"
+      ],
+      "cwd": "/workspace/Layauto",
+      "exit_code": 0,
+      "elapsed_seconds": 0.813,
+      "output": "pip-check-310.txt",
+      "output_sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09"
+    },
+    {
+      "command": [
+        "/workspace/work/w009-env/py312/bin/python",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "tests/unit",
+        "tests/contracts",
+        "-q"
+      ],
+      "cwd": "/workspace/Layauto",
+      "exit_code": 0,
+      "elapsed_seconds": 1056.125,
+      "output": "pytest-312.txt",
+      "output_sha256": "22a0fd9262c55f7d5eff058f2eba238f6b3800c95b168cf0ba2e8a2b372b26aa"
+    },
+    {
+      "command": [
+        "/workspace/work/w009-env/py312/bin/python",
+        "-m",
+        "mypy"
+      ],
+      "cwd": "/workspace/Layauto",
+      "exit_code": 0,
+      "elapsed_seconds": 0.693,
+      "output": "typing-312.txt",
+      "output_sha256": "522d7b3a15704213950b7053c882b6ddd0c41149631300ce6c1933d21b5971c3"
+    },
+    {
+      "command": [
+        "/workspace/work/w009-env/py312/bin/python",
+        "-m",
+        "pip",
+        "check"
+      ],
+      "cwd": "/workspace/Layauto",
+      "exit_code": 0,
+      "elapsed_seconds": 0.564,
+      "output": "pip-check-312.txt",
+      "output_sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09"
+    },
+    {
+      "command": [
+        "/workspace/work/w009-env/py312/bin/python",
+        "-m",
+        "build",
+        "--outdir",
+        "/workspace/Layauto/docs/tasks/W009/verification/dist"
+      ],
+      "cwd": "/workspace/Layauto",
+      "exit_code": 0,
+      "elapsed_seconds": 6.914,
+      "output": "build.txt",
+      "output_sha256": "10066c58a34c4a0d89c81927b78280078bbf43008bcaf65f5b75456836aabf26"
+    },
+    {
+      "command": [
+        "/workspace/work/w009-env/py312/bin/python",
+        "-m",
+        "venv",
+        "/workspace/work/w009-env/clean-32e60e783a7a-312"
+      ],
+      "cwd": "/workspace/Layauto",
+      "exit_code": 0,
+      "elapsed_seconds": 3.208,
+      "output": "create-install-312.txt",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "/workspace/work/w009-env/clean-32e60e783a7a-312/bin/python",
+        "-m",
+        "pip",
+        "install",
+        "--report",
+        "/workspace/Layauto/docs/tasks/W009/verification/install-312-report.json",
+        "/workspace/Layauto/docs/tasks/W009/verification/dist/layauto-0.2.0-py3-none-any.whl"
+      ],
+      "cwd": "/workspace/work/w009-env/installed-cwd",
+      "exit_code": 0,
+      "elapsed_seconds": 14.279,
+      "output": "install-312.txt",
+      "output_sha256": "a68684d4c6df070af893c0f436c6026aef1b49e9108d2338248e7022f126d994"
+    },
+    {
+      "command": [
+        "/workspace/work/w009-env/clean-32e60e783a7a-312/bin/python",
+        "-m",
+        "pip",
+        "check"
+      ],
+      "cwd": "/workspace/work/w009-env/installed-cwd",
+      "exit_code": 0,
+      "elapsed_seconds": 0.52,
+      "output": "installed-pip-check-312.txt",
+      "output_sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09"
+    },
+    {
+      "command": [
+        "/workspace/work/w009-env/clean-32e60e783a7a-312/bin/python",
+        "-I",
+        "-B",
+        "/workspace/Layauto/docs/tasks/W009/verification/installed_smoke.py",
+        "/workspace/Layauto/tests/fixtures/w003_m1"
+      ],
+      "cwd": "/workspace/work/w009-env/installed-cwd",
+      "exit_code": 0,
+      "elapsed_seconds": 103.239,
+      "output": "installed-smoke-312.txt",
+      "output_sha256": "7038b016895cf6ec479e998c5f37b739504acf035591a05c3e9551cd622f981f"
+    },
+    {
+      "command": [
+        "/workspace/work/w009-env/py310/bin/python",
+        "-m",
+        "venv",
+        "/workspace/work/w009-env/clean-32e60e783a7a-310"
+      ],
+      "cwd": "/workspace/Layauto",
+      "exit_code": 0,
+      "elapsed_seconds": 7.068,
+      "output": "create-install-310.txt",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "/workspace/work/w009-env/clean-32e60e783a7a-310/bin/python",
+        "-m",
+        "pip",
+        "install",
+        "--report",
+        "/workspace/Layauto/docs/tasks/W009/verification/install-310-report.json",
+        "/workspace/Layauto/docs/tasks/W009/verification/dist/layauto-0.2.0.tar.gz"
+      ],
+      "cwd": "/workspace/work/w009-env/installed-cwd",
+      "exit_code": 0,
+      "elapsed_seconds": 18.016,
+      "output": "install-310.txt",
+      "output_sha256": "994ea5c1865c75d1aabf09c49fe73990c82b6d14913e841866e1c305de6551d8"
+    },
+    {
+      "command": [
+        "/workspace/work/w009-env/clean-32e60e783a7a-310/bin/python",
+        "-m",
+        "pip",
+        "check"
+      ],
+      "cwd": "/workspace/work/w009-env/installed-cwd",
+      "exit_code": 0,
+      "elapsed_seconds": 0.639,
+      "output": "installed-pip-check-310.txt",
+      "output_sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09"
+    },
+    {
+      "command": [
+        "/workspace/work/w009-env/clean-32e60e783a7a-310/bin/python",
+        "-I",
+        "-B",
+        "/workspace/Layauto/docs/tasks/W009/verification/installed_smoke.py",
+        "/workspace/Layauto/tests/fixtures/w003_m1"
+      ],
+      "cwd": "/workspace/work/w009-env/installed-cwd",
+      "exit_code": 0,
+      "elapsed_seconds": 147.125,
+      "output": "installed-smoke-310.txt",
+      "output_sha256": "284107532830f776a87281738206158a4fe109ef16a514ff2e4a4680394d5628"
+    }
+  ],
+  "runner_command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "/workspace/work/w009-env/scripts/verify_final.py",
+    "/workspace/Layauto/docs/tasks/W009/verification",
+    "914"
+  ],
+  "runner_sha256": "7b188ea6c5739fc67843334602d8c2b42b6faa60c861c67fa49f8d16ad8fefd8",
+  "runtime_count": 90,
+  "source_file_count": 240,
+  "expected_test_count": 914,
+  "actual_test_counts": {
+    "312": 914,
+    "310": 914
+  },
+  "python_environments": {
+    "310": "/workspace/work/w009-env/py310/bin/python",
+    "312": "/workspace/work/w009-env/py312/bin/python"
+  },
+  "source_manifest_sha256": "32e60e783a7a7e4172ee3916e3ceb4fade329585b87a7c7091a85c8a6418d1b6",
+  "source_snapshot_sha256": "5ed2228559ea6dcf7a1417e19b8f706f1e88283edfca0c01809489cb147ec727",
+  "source_identity_rechecked_after_all_commands": true,
+  "adopted_source_external_smoke": {
+    "310": "installed-smoke-310.txt",
+    "312": "installed-smoke-312.txt"
+  },
+  "limitations": [
+    "Synthetic W003/W004 scope only; no EDA or production admission.",
+    "No complete coordinate model, physical edge graph, device/net join, body proof, baseline, no_change or terminal."
+  ]
+}

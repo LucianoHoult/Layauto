@@ -1,0 +1,121 @@
+{
+  "note": "Original absolute command/report paths are historical; resolve these saved artifacts here, not via future current verification/dist files.",
+  "relocations": {
+    "/workspace/Layauto/docs/tasks/W009/verification/build.json": {
+      "stored_path": "/workspace/Layauto/docs/tasks/W009/verification/pre-container/build.json",
+      "sha256": "f422fed446b96afacc2b22dd1b8be698dd29a2975563723ea6f5a88946baf245"
+    },
+    "/workspace/Layauto/docs/tasks/W009/verification/build.txt": {
+      "stored_path": "/workspace/Layauto/docs/tasks/W009/verification/pre-container/build.txt",
+      "sha256": "8798424857956aa77b15bf36a855fc258e360a11f7fcfae25cba18c1dbc5bebf"
+    },
+    "/workspace/Layauto/docs/tasks/W009/verification/clean-environment-preflight.json": {
+      "stored_path": "/workspace/Layauto/docs/tasks/W009/verification/pre-container/clean-environment-preflight.json",
+      "sha256": "ddbff5bf10ec8faed82b74e0cffcfc934d5334ac47719bff0e6e0331a49883d4"
+    },
+    "/workspace/Layauto/docs/tasks/W009/verification/create-install-310.json": {
+      "stored_path": "/workspace/Layauto/docs/tasks/W009/verification/pre-container/create-install-310.json",
+      "sha256": "2f9da1aa7a9779b965d7f5e0aff124e3aaa6d6f767daaa57b5b62aa1794c0394"
+    },
+    "/workspace/Layauto/docs/tasks/W009/verification/create-install-310.txt": {
+      "stored_path": "/workspace/Layauto/docs/tasks/W009/verification/pre-container/create-install-310.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/workspace/Layauto/docs/tasks/W009/verification/create-install-312.json": {
+      "stored_path": "/workspace/Layauto/docs/tasks/W009/verification/pre-container/create-install-312.json",
+      "sha256": "e0a785d3725d8ea3bd0c03e1b1189dccb7fa00e61d1b2dd1214dff04422823db"
+    },
+    "/workspace/Layauto/docs/tasks/W009/verification/create-install-312.txt": {
+      "stored_path": "/workspace/Layauto/docs/tasks/W009/verification/pre-container/create-install-312.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/workspace/Layauto/docs/tasks/W009/verification/dist/layauto-0.2.0.tar.gz": {
+      "stored_path": "/workspace/Layauto/docs/tasks/W009/verification/pre-container/dist/layauto-0.2.0.tar.gz",
+      "sha256": "2f4894322d1aec3631091beb32ca251efa89b1e3ca7f63095a6cd09a62f89eaf"
+    },
+    "/workspace/Layauto/docs/tasks/W009/verification/dist/layauto-0.2.0-py3-none-any.whl": {
+      "stored_path": "/workspace/Layauto/docs/tasks/W009/verification/pre-container/dist/layauto-0.2.0-py3-none-any.whl",
+      "sha256": "40f5b369e9dbfa3f632ae36c1d40e2a3c17f38c0c4779cfa9fe37a2de5f8dc42"
+    },
+    "/workspace/Layauto/docs/tasks/W009/verification/install-310-report.json": {
+      "stored_path": "/workspace/Layauto/docs/tasks/W009/verification/pre-container/install-310-report.json",
+      "sha256": "5f38a7ef46752350de2611f5f0d25dbfd1d02c851123c750f0e97e386d282c42"
+    },
+    "/workspace/Layauto/docs/tasks/W009/verification/install-310.json": {
+      "stored_path": "/workspace/Layauto/docs/tasks/W009/verification/pre-container/install-310.json",
+      "sha256": "4a66c2139de669594470315e8f22cde34ceb4d6508d533c953947e7eeac6dc09"
+    },
+    "/workspace/Layauto/docs/tasks/W009/verification/install-310.txt": {
+      "stored_path": "/workspace/Layauto/docs/tasks/W009/verification/pre-container/install-310.txt",
+      "sha256": "a76b4cca0682fbb5a05df70a1d57ee094581da2512bb52bd16926546734a6c94"
+    },
+    "/workspace/Layauto/docs/tasks/W009/verification/install-312-report.json": {
+      "stored_path": "/workspace/Layauto/docs/tasks/W009/verification/pre-container/install-312-report.json",
+      "sha256": "06e0d031438b61bffe96e5183cc6fde97d2032557b77149f5a3ffc3f364dcd4a"
+    },
+    "/workspace/Layauto/docs/tasks/W009/verification/install-312.json": {
+      "stored_path": "/workspace/Layauto/docs/tasks/W009/verification/pre-container/install-312.json",
+      "sha256": "c747921c51cda491cff7da938c927356998d42334170a550cb398c146491e343"
+    },
+    "/workspace/Layauto/docs/tasks/W009/verification/install-312.txt": {
+      "stored_path": "/workspace/Layauto/docs/tasks/W009/verification/pre-container/install-312.txt",
+      "sha256": "a68684d4c6df070af893c0f436c6026aef1b49e9108d2338248e7022f126d994"
+    },
+    "/workspace/Layauto/docs/tasks/W009/verification/installation-identity.json": {
+      "stored_path": "/workspace/Layauto/docs/tasks/W009/verification/pre-container/installation-identity.json",
+      "sha256": "a330dc1086edcb232aa8814d5f8e0a50bf5d0dd10ef8d467a2e4c47754d5bd50"
+    },
+    "/workspace/Layauto/docs/tasks/W009/verification/installed-pip-check-310.json": {
+      "stored_path": "/workspace/Layauto/docs/tasks/W009/verification/pre-container/installed-pip-check-310.json",
+      "sha256": "d5b56fa7dcf16c4a6774f2fd012e485a870df681d4388d7d23a805d9d48f16f2"
+    },
+    "/workspace/Layauto/docs/tasks/W009/verification/installed-pip-check-310.txt": {
+      "stored_path": "/workspace/Layauto/docs/tasks/W009/verification/pre-container/installed-pip-check-310.txt",
+      "sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09"
+    },
+    "/workspace/Layauto/docs/tasks/W009/verification/installed-pip-check-312.json": {
+      "stored_path": "/workspace/Layauto/docs/tasks/W009/verification/pre-container/installed-pip-check-312.json",
+      "sha256": "eadd5ca5855ee3d29561dd98e4a1bbcc07b7adc4bac60c53911678aecfaa6630"
+    },
+    "/workspace/Layauto/docs/tasks/W009/verification/installed-pip-check-312.txt": {
+      "stored_path": "/workspace/Layauto/docs/tasks/W009/verification/pre-container/installed-pip-check-312.txt",
+      "sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09"
+    },
+    "/workspace/Layauto/docs/tasks/W009/verification/installed-smoke-310.json": {
+      "stored_path": "/workspace/Layauto/docs/tasks/W009/verification/pre-container/installed-smoke-310.json",
+      "sha256": "a07c2822e1628414425afb236ae701c401dd897a5a3da152aecd5d369d36357c"
+    },
+    "/workspace/Layauto/docs/tasks/W009/verification/installed-smoke-310.txt": {
+      "stored_path": "/workspace/Layauto/docs/tasks/W009/verification/pre-container/installed-smoke-310.txt",
+      "sha256": "f91aa86bf9e5d3d88b48598c40c7c6cd4a07d4b6b5d8c94df2f845e434f69ac5"
+    },
+    "/workspace/Layauto/docs/tasks/W009/verification/installed-smoke-312.json": {
+      "stored_path": "/workspace/Layauto/docs/tasks/W009/verification/pre-container/installed-smoke-312.json",
+      "sha256": "1ac8bbcdaf3c4a16e6fd8850dca8e4b3f55860ee9a32cc29e6e7cc9f6ef87d74"
+    },
+    "/workspace/Layauto/docs/tasks/W009/verification/installed-smoke-312.txt": {
+      "stored_path": "/workspace/Layauto/docs/tasks/W009/verification/pre-container/installed-smoke-312.txt",
+      "sha256": "32e2ceb8101577beed7c349c7eae7f415614edee203a9ca13ffa2d13362c1d93"
+    },
+    "/workspace/Layauto/docs/tasks/W009/verification/package-identity.json": {
+      "stored_path": "/workspace/Layauto/docs/tasks/W009/verification/pre-container/package-identity.json",
+      "sha256": "69511d379309f04d652a74815c9c22e3539c2043146519b4de77a11696526685"
+    },
+    "/workspace/Layauto/docs/tasks/W009/verification/pytest-310.txt": {
+      "stored_path": "/workspace/Layauto/docs/tasks/W009/verification/pre-container/pytest-310.txt",
+      "sha256": "f0e60e4dd3e71a2a4635ca57080908172c078cb4d5c481f2cc4c2b959a7967cc"
+    },
+    "/workspace/Layauto/docs/tasks/W009/verification/pytest-312.txt": {
+      "stored_path": "/workspace/Layauto/docs/tasks/W009/verification/pre-container/pytest-312.txt",
+      "sha256": "b8cc8dd398f1766ca04053fbcb2c6c794622e75106342f9858d066c55294bf40"
+    },
+    "/workspace/Layauto/docs/tasks/W009/verification/source-manifest.json": {
+      "stored_path": "/workspace/Layauto/docs/tasks/W009/verification/pre-container/source-manifest.json",
+      "sha256": "9899cec7b67f65071d472537aa5f6ca5a3ed69badda64184d7b5119b153bc703"
+    },
+    "/workspace/Layauto/docs/tasks/W009/verification/source-snapshot.tar.gz": {
+      "stored_path": "/workspace/Layauto/docs/tasks/W009/verification/pre-container/source-snapshot.tar.gz",
+      "sha256": "5a6603dda240c4222aa0cc23bbc9465a8391a4c1360e95111fb0eeaa84853dc0"
+    }
+  }
+}

@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/workspace/work/w009-ipmr01/docs/tasks/W009/independent-premerge-review/validation/nested_base_confirmation.py", line 34, in <module>
+    assert observation == dict(actual_type="ValueError", actual_message="invalid geometry wire fields",
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

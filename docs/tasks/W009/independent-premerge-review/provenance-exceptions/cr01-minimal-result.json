@@ -1,0 +1,16 @@
+[
+  {
+    "enclosing": "draft",
+    "observed": "ValueError",
+    "message": "invalid geometry wire fields",
+    "same_object": false,
+    "cause_same_object": true
+  },
+  {
+    "enclosing": "result",
+    "observed": "ValueError",
+    "message": "invalid geometry wire fields",
+    "same_object": false,
+    "cause_same_object": true
+  }
+]

@@ -1,0 +1,3 @@
+3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]
+/workspace/.venvs/layauto/bin/python
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12

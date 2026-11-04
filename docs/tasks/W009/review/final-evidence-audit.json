@@ -1,0 +1,95 @@
+{
+  "commands": [
+    {
+      "cwd": "/workspace/Layauto",
+      "output": "pytest-310.txt",
+      "sha256": "a9c219120884360f87bbf81261658f11cd8f1d44b50d8e84dd6c8686fcc019cb"
+    },
+    {
+      "cwd": "/workspace/Layauto",
+      "output": "typing-310.txt",
+      "sha256": "522d7b3a15704213950b7053c882b6ddd0c41149631300ce6c1933d21b5971c3"
+    },
+    {
+      "cwd": "/workspace/Layauto",
+      "output": "pip-check-310.txt",
+      "sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09"
+    },
+    {
+      "cwd": "/workspace/Layauto",
+      "output": "pytest-312.txt",
+      "sha256": "22a0fd9262c55f7d5eff058f2eba238f6b3800c95b168cf0ba2e8a2b372b26aa"
+    },
+    {
+      "cwd": "/workspace/Layauto",
+      "output": "typing-312.txt",
+      "sha256": "522d7b3a15704213950b7053c882b6ddd0c41149631300ce6c1933d21b5971c3"
+    },
+    {
+      "cwd": "/workspace/Layauto",
+      "output": "pip-check-312.txt",
+      "sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09"
+    },
+    {
+      "cwd": "/workspace/Layauto",
+      "output": "build.txt",
+      "sha256": "10066c58a34c4a0d89c81927b78280078bbf43008bcaf65f5b75456836aabf26"
+    },
+    {
+      "cwd": "/workspace/Layauto",
+      "output": "create-install-312.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "cwd": "/workspace/work/w009-env/installed-cwd",
+      "output": "install-312.txt",
+      "sha256": "a68684d4c6df070af893c0f436c6026aef1b49e9108d2338248e7022f126d994"
+    },
+    {
+      "cwd": "/workspace/work/w009-env/installed-cwd",
+      "output": "installed-pip-check-312.txt",
+      "sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09"
+    },
+    {
+      "cwd": "/workspace/work/w009-env/installed-cwd",
+      "output": "installed-smoke-312.txt",
+      "sha256": "7038b016895cf6ec479e998c5f37b739504acf035591a05c3e9551cd622f981f"
+    },
+    {
+      "cwd": "/workspace/Layauto",
+      "output": "create-install-310.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "cwd": "/workspace/work/w009-env/installed-cwd",
+      "output": "install-310.txt",
+      "sha256": "994ea5c1865c75d1aabf09c49fe73990c82b6d14913e841866e1c305de6551d8"
+    },
+    {
+      "cwd": "/workspace/work/w009-env/installed-cwd",
+      "output": "installed-pip-check-310.txt",
+      "sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09"
+    },
+    {
+      "cwd": "/workspace/work/w009-env/installed-cwd",
+      "output": "installed-smoke-310.txt",
+      "sha256": "284107532830f776a87281738206158a4fe109ef16a514ff2e4a4680394d5628"
+    }
+  ],
+  "installed_tags": [
+    "310",
+    "312"
+  ],
+  "manifest_sha256": "32e60e783a7a7e4172ee3916e3ceb4fade329585b87a7c7091a85c8a6418d1b6",
+  "packages": {
+    "sdist": "2716df4fe382dfb64127ed9b46ee3c80aa53b071bab10175d7e4b65806c72c98",
+    "wheel": "27e97b27f8e3a4f5e2ff804a32fe3bd3aa33d3a6ea1f3e9b96075ea5858aaf95"
+  },
+  "runtime_files": 90,
+  "source_files": 240,
+  "status": "passed",
+  "tests": {
+    "pytest-310.txt": 914,
+    "pytest-312.txt": 914
+  }
+}

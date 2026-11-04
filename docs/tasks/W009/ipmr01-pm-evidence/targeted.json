@@ -1,0 +1,42 @@
+{
+  "head": "6cb4ecc2ecaa8bd6e5236b28b70149d9a4917534",
+  "cwd": "/workspace/Layauto",
+  "command": [
+    "/workspace/work/w005-pm-check-env/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-p",
+    "no:cacheprovider",
+    "tests/contracts/test_w009_nested_base_decode.py",
+    "tests/contracts/test_w009_captured_decode_exceptions.py",
+    "tests/contracts/test_w009_nested_receipt_exceptions.py",
+    "-q"
+  ],
+  "env_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONPATH": "/workspace/Layauto"
+  },
+  "started_utc": "2026-11-04T02:15:20.825224+00:00",
+  "elapsed_seconds": 317.259,
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "executable": "/workspace/work/w005-pm-check-env/bin/python",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "packages": {
+    "pytest": "9.2.0",
+    "mypy": "2.4.1",
+    "PyYAML": "6.0.3"
+  },
+  "environment_scope": "existing PM venv; not a clean install validation",
+  "returncode": 0,
+  "outputs": {
+    "stdout": {
+      "path": "targeted.stdout.txt",
+      "sha256": "79d772014c73c8cba129e4285384783fc9658f56cb775d367c3d0be205918d1c"
+    },
+    "stderr": {
+      "path": "targeted.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "classification": "incomplete intermediate run, not final validation",
+  "base": "4975e565a33d9594782645b6ad0f944b78ee6ae8",
+  "python312": {
+    "passed": 702,
+    "failed": 1,
+    "elapsed_seconds": 496.47,
+    "exit_code": 2
+  },
+  "python310": {
+    "passed": 534,
+    "failed": 1,
+    "elapsed_seconds": 438.85,
+    "exit_code": 2
+  },
+  "failure": "New W009 files triggered pre-W009 W007 explicit pure-state import whitelist. Original test passed separately in clean git archive snapshot on both interpreters.",
+  "stopped": "SIGINT by parent request to avoid duplicating final full matrix; known incomplete scope preserved."
+}

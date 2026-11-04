@@ -1,0 +1,37 @@
+{
+  "source_sha256": {
+    "layauto_v2/domain/regions.py": "b25193936b15d2cd98ff67bdf89f59ffb70656183bd9d7779861d88556d92ed5",
+    "layauto_v2/state/regions.py": "a7312a6dacfd4d70ee68e25dfa0638b0a267cf11c44192df7f068c09e2314c7f",
+    "layauto_v2/normalization/effective.py": "72c2941d65c9c6679093e313d27903323b282b09083c8f1fd54590b93d766833"
+  },
+  "observations": [
+    {
+      "case": "records",
+      "legacy_constructor_accepted": true,
+      "state": "rejected",
+      "draft_constructor": "rejected",
+      "public_builder": "rejected"
+    },
+    {
+      "case": "policies",
+      "legacy_constructor_accepted": true,
+      "state": "rejected",
+      "draft_constructor": "rejected",
+      "public_builder": "rejected"
+    },
+    {
+      "case": "layers",
+      "legacy_constructor_accepted": true,
+      "state": "rejected",
+      "draft_constructor": "rejected",
+      "public_builder": "rejected"
+    },
+    {
+      "case": "fragments",
+      "legacy_constructor_accepted": true,
+      "state": "rejected",
+      "draft_constructor": "rejected",
+      "public_builder": "rejected"
+    }
+  ]
+}

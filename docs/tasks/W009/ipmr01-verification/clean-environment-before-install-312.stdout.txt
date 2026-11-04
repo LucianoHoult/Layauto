@@ -1,0 +1,12 @@
+{
+  "base_executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+  "base_prefix": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python",
+  "distributions": {
+    "pip": "25.0.1"
+  },
+  "executable": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-312/bin/python",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "prefix": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-312",
+  "purelib": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-312/lib/python3.12/site-packages",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]"
+}

@@ -1,0 +1,27 @@
+{
+  "command": [
+    "/workspace/work/w009-ipmr01-env/py312/bin/python",
+    "-B",
+    "docs/tasks/W009/independent-premerge-review/provenance-exceptions/exception_paths.py"
+  ],
+  "cwd": "/workspace/work/w009-ipmr01-review",
+  "head": "73e38df8f932bbb5bd9caf074b442ad2f5c286e9",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "executable": "/workspace/work/w009-ipmr01-env/py312/bin/python",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "started_utc": "2026-11-03T11:53:45.889141+00:00",
+  "elapsed_seconds": 189.567,
+  "returncode": 0,
+  "outputs": {
+    "stdout": {
+      "path": "exception-matrix.stdout.txt",
+      "sha256": "367bd75b6b0ebcd9257b166685048abb85a25a0709765bafae4647aa487ad8c1",
+      "size": 30830
+    },
+    "stderr": {
+      "path": "exception-matrix.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    }
+  }
+}

@@ -1,0 +1,7 @@
+Downloading cpython-3.10.22-linux-x86_64-gnu (download) (28.0MiB)
+ Downloaded cpython-3.10.22-linux-x86_64-gnu (download)
+Installed Python 3.10.22 in 2.97s
+ + cpython-3.10.22-linux-x86_64-gnu
+warning: Failed to install executable for cpython-3.10.22-linux-x86_64-gnu
+  cause: Failed to create Python executable link
+  cause: failed to symlink file from /home/agent/.local/bin/python3.10 to /workspace/work/w009-env/python/cpython-3.10-linux-x86_64-gnu/bin/python3.10: Read-only file system (os error 30)

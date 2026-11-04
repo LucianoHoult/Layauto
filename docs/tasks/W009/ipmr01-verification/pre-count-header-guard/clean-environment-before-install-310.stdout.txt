@@ -1,0 +1,13 @@
+{
+  "base_executable": "/workspace/work/w009-ipmr01-env/runs/20261103T114038Z-d9317e20/clean-310/bin/python",
+  "base_prefix": "/workspace/work/w009-ipmr01-env/interpreters/cpython-3.10.22-linux-x86_64-gnu",
+  "distributions": {
+    "pip": "23.0.1",
+    "setuptools": "79.0.1"
+  },
+  "executable": "/workspace/work/w009-ipmr01-env/runs/20261103T114038Z-d9317e20/clean-310/bin/python",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "prefix": "/workspace/work/w009-ipmr01-env/runs/20261103T114038Z-d9317e20/clean-310",
+  "purelib": "/workspace/work/w009-ipmr01-env/runs/20261103T114038Z-d9317e20/clean-310/lib/python3.10/site-packages",
+  "python": "3.10.22 (main, Oct  3 2026, 01:32:06) [Clang 22.1.3 ]"
+}

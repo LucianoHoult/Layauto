@@ -1,0 +1,178 @@
+{
+  "links": [
+    {
+      "document": "docs/tasks/W009-effective-geometry-terminals.md",
+      "target": "W009/ipmr01-fix-review.md"
+    },
+    {
+      "document": "docs/tasks/W009-effective-geometry-terminals.md",
+      "target": "W009/ipmr01-verification/review/engineering-audit.json"
+    },
+    {
+      "document": "docs/tasks/W009/ipmr01-fix-review.md",
+      "target": "ipmr01-fix-task.md"
+    },
+    {
+      "document": "docs/tasks/W009/ipmr01-fix-review.md",
+      "target": "independent-premerge-review.md"
+    },
+    {
+      "document": "docs/tasks/W009/ipmr01-fix-review.md",
+      "target": "ipmr01-verification/review/version-scope.json"
+    },
+    {
+      "document": "docs/tasks/W009/ipmr01-fix-review.md",
+      "target": "ipmr01-verification/review/collection_snapshot.py"
+    },
+    {
+      "document": "docs/tasks/W009/ipmr01-fix-review.md",
+      "target": "ipmr01-verification/review/collection-snapshot-before.json"
+    },
+    {
+      "document": "docs/tasks/W009/ipmr01-fix-review.md",
+      "target": "ipmr01-verification/review/collection-snapshot-after.json"
+    },
+    {
+      "document": "docs/tasks/W009/ipmr01-fix-review.md",
+      "target": "ipmr01-verification/review/captured/report.md"
+    },
+    {
+      "document": "docs/tasks/W009/ipmr01-fix-review.md",
+      "target": "ipmr01-verification/review/"
+    },
+    {
+      "document": "docs/tasks/W009/ipmr01-fix-review.md",
+      "target": "ipmr01-verification/review/exception-matrix.stdout.txt"
+    },
+    {
+      "document": "docs/tasks/W009/ipmr01-fix-review.md",
+      "target": "ipmr01-verification/review/exception-matrix.json"
+    },
+    {
+      "document": "docs/tasks/W009/ipmr01-fix-review.md",
+      "target": "ipmr01-verification/review/captured/report.md"
+    },
+    {
+      "document": "docs/tasks/W009/ipmr01-fix-review.md",
+      "target": "ipmr01-verification/review/receipt_controls.py"
+    },
+    {
+      "document": "docs/tasks/W009/ipmr01-fix-review.md",
+      "target": "ipmr01-verification/review/receipt-controls.stdout.txt"
+    },
+    {
+      "document": "docs/tasks/W009/ipmr01-fix-review.md",
+      "target": "ipmr01-verification/review/receipt-controls.json"
+    },
+    {
+      "document": "docs/tasks/W009/ipmr01-fix-review.md",
+      "target": "ipmr01-verification/review/captured/identity.json"
+    },
+    {
+      "document": "docs/tasks/W009/ipmr01-fix-review.md",
+      "target": "ipmr01-verification/review/probe.py"
+    },
+    {
+      "document": "docs/tasks/W009/ipmr01-fix-review.md",
+      "target": "ipmr01-verification/review/independent-probe.stdout.txt"
+    },
+    {
+      "document": "docs/tasks/W009/ipmr01-fix-review.md",
+      "target": "ipmr01-verification/review/independent-probe.json"
+    },
+    {
+      "document": "docs/tasks/W009/ipmr01-fix-review.md",
+      "target": "ipmr01-verification/review/package-install-audit.json"
+    },
+    {
+      "document": "docs/tasks/W009/ipmr01-fix-review.md",
+      "target": "ipmr01-verification/review/engineering-audit.json"
+    },
+    {
+      "document": "docs/tasks/W009/ipmr01-fix-review.md",
+      "target": "ipmr01-verification/review/compatibility-audit.json"
+    },
+    {
+      "document": "docs/tasks/W009/ipmr01-fix-review.md",
+      "target": "ipmr01-verification/review/recovery-identity.json"
+    },
+    {
+      "document": "docs/tasks/W009/ipmr01-fix-review.md",
+      "target": "ipmr01-verification/review/engineering-command.json"
+    }
+  ],
+  "local_links_resolve": true,
+  "only_new_reviewer_task_section": true,
+  "original_118_source_items_unchanged": true,
+  "outputs": {
+    "docs/tasks/W009-effective-geometry-terminals.md": "5e4629b6722a93467b6a1c8a95249647f4e8dd41db563651047ab988dede1bc3",
+    "docs/tasks/W009/ipmr01-fix-review.md": "f62d8ee71f738ff2103f46eb9d9dd79d4ae561889b98e7dfed179ca6fdc3227c",
+    "docs/tasks/W009/ipmr01-verification/review/actual-installed-310.json": "35ce0652d358558c34d28ffda8adc201e733274d0e0a8d73043cd378a292dd57",
+    "docs/tasks/W009/ipmr01-verification/review/actual-installed-312.json": "48650066512e070c3f2b9141fff819930f5223a2be5e087bc4dcd520abf53eed",
+    "docs/tasks/W009/ipmr01-verification/review/captured-before-final/identity.json": "e81ff9b4297d1daca278465d08aa86121499b66c4371d2d0be4df0920b448ade",
+    "docs/tasks/W009/ipmr01-verification/review/captured-before-final/probe.py": "02a3310627a2dc3a85e4ce7511bd3042d10d4d4203ac6feaa0a6a0c771d7527b",
+    "docs/tasks/W009/ipmr01-verification/review/captured-before-final/report.md": "127836d66cf192e63f0922c4b963215efa8a4a63a45c46cdab5507c0a5f4fc2b",
+    "docs/tasks/W009/ipmr01-verification/review/captured-before-final/result.json": "569e9e1be6119f17811b0befc01ac40802ff6910ebfc9020c99eada8b1d77ac2",
+    "docs/tasks/W009/ipmr01-verification/review/captured-before-final/stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/tasks/W009/ipmr01-verification/review/captured-before-final/stdout.txt": "7489d38c8c90ca92287c3ee319c3cf4efdc5e83caeb33d4666df4518c8175f9d",
+    "docs/tasks/W009/ipmr01-verification/review/captured/collection-snapshot.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/tasks/W009/ipmr01-verification/review/captured/collection-snapshot.stdout.json": "d5279803fb1348ceeeb790ee8cd9292c26612907a12d1c409fa0eca2eb426d7e",
+    "docs/tasks/W009/ipmr01-verification/review/captured/identity.json": "59302aaa96a1dc5c06d3be3727c45d7075a02016d16e34a9657443d3cd286ed9",
+    "docs/tasks/W009/ipmr01-verification/review/captured/probe.py": "02a3310627a2dc3a85e4ce7511bd3042d10d4d4203ac6feaa0a6a0c771d7527b",
+    "docs/tasks/W009/ipmr01-verification/review/captured/report.md": "c9680e9081291ebcd99b8781b427e0220292fccf9dca77c740dbf580a6c1f271",
+    "docs/tasks/W009/ipmr01-verification/review/captured/result.json": "cd1296fe1e149b37aa4b9e0e57b91af3a922378f872764ea2b9859ec2e9c38bd",
+    "docs/tasks/W009/ipmr01-verification/review/captured/snapshot-tests.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/tasks/W009/ipmr01-verification/review/captured/snapshot-tests.stdout.txt": "3af68e453993c7a4f0ad8c931246fe8834e67d15262961e6b85d6dff699de512",
+    "docs/tasks/W009/ipmr01-verification/review/captured/stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/tasks/W009/ipmr01-verification/review/captured/stdout.txt": "d830b3c1d12bde0d1942124bfb05ccc98dcbfb4564e97d6efd2bb69278ca31c6",
+    "docs/tasks/W009/ipmr01-verification/review/collection-snapshot-after.json": "d5279803fb1348ceeeb790ee8cd9292c26612907a12d1c409fa0eca2eb426d7e",
+    "docs/tasks/W009/ipmr01-verification/review/collection-snapshot-before.json": "68551d1d2d091068b2ecd303b31519ce10b73c9f8d4326fc648e4adc54b2825f",
+    "docs/tasks/W009/ipmr01-verification/review/collection_snapshot.py": "b77275be7fe393f4fe0e428eb9db1642376517f0adec59dc1ebeef0db27b89ce",
+    "docs/tasks/W009/ipmr01-verification/review/compatibility-audit.json": "290a2e830ebf2d2e9faf93ca513370218748e99129b70c55878bbd80606b166b",
+    "docs/tasks/W009/ipmr01-verification/review/compatibility-audit.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/tasks/W009/ipmr01-verification/review/compatibility-audit.stdout.txt": "290a2e830ebf2d2e9faf93ca513370218748e99129b70c55878bbd80606b166b",
+    "docs/tasks/W009/ipmr01-verification/review/compatibility_audit.py": "769d4f0c93ee0f0d233446c841cdf0111a08c29e8b2e6e35c39fc96c6d15a642",
+    "docs/tasks/W009/ipmr01-verification/review/delivery_audit.py": "0000f41c7684e864e49da5d464bff8cb86cc18e50ab3c63e9e5b2692cca42223",
+    "docs/tasks/W009/ipmr01-verification/review/engineering-audit.json": "91b3ff6fff3fd6e326960d56fe9791f2e5d8c07de66ac8aa55d85f885f793f36",
+    "docs/tasks/W009/ipmr01-verification/review/engineering-command.json": "dfc0254e927ba0bfad3ae72687e4213df2eb89b32ac8d935fe2d72038b960bbd",
+    "docs/tasks/W009/ipmr01-verification/review/engineering-command.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/tasks/W009/ipmr01-verification/review/engineering-command.stdout.txt": "91b3ff6fff3fd6e326960d56fe9791f2e5d8c07de66ac8aa55d85f885f793f36",
+    "docs/tasks/W009/ipmr01-verification/review/engineering_audit.py": "638014e9aed0d6cbfea233cbf07a01959c961225f0bbb1ad3a64b90489aa1de7",
+    "docs/tasks/W009/ipmr01-verification/review/exception-matrix.json": "ed5d0bb10e4ab707dbfaf59570895adca3a49a9bfc888a0a19407f62e820f08b",
+    "docs/tasks/W009/ipmr01-verification/review/exception-matrix.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/tasks/W009/ipmr01-verification/review/exception-matrix.stdout.txt": "367bd75b6b0ebcd9257b166685048abb85a25a0709765bafae4647aa487ad8c1",
+    "docs/tasks/W009/ipmr01-verification/review/harness-initial/independent-probe.json": "2979a68f4e006ee3798fb82e99b8ca1839fa7a72a837034606572997b5725e59",
+    "docs/tasks/W009/ipmr01-verification/review/harness-initial/independent-probe.stderr.txt": "05bf23b0afa688ef091a4e5170485393779299eb19a50950b0583c77fcb5a598",
+    "docs/tasks/W009/ipmr01-verification/review/harness-initial/independent-probe.stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/tasks/W009/ipmr01-verification/review/harness-initial/package-install-audit.stderr.txt": "542c3d048fef0a72607952d128ce2979061d0f8344d3b36bd6f94b5771298732",
+    "docs/tasks/W009/ipmr01-verification/review/harness-initial/package-install-audit.stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/tasks/W009/ipmr01-verification/review/independent-probe.json": "9965df723b6bd80141c07f6cfa006af822a1583490b0c6bc37ef0b954934a2eb",
+    "docs/tasks/W009/ipmr01-verification/review/independent-probe.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/tasks/W009/ipmr01-verification/review/independent-probe.stdout.txt": "7e7f50144141c047bdf8e2980c4260711fbab1df89749d3e19361623c17e1bd6",
+    "docs/tasks/W009/ipmr01-verification/review/package-install-audit.json": "35b3b0998cd1472be3e72718ee8f3f2779a5f0ae9998851ad0a4dad41a0029de",
+    "docs/tasks/W009/ipmr01-verification/review/package-install-audit.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/tasks/W009/ipmr01-verification/review/package-install-audit.stdout.txt": "35b3b0998cd1472be3e72718ee8f3f2779a5f0ae9998851ad0a4dad41a0029de",
+    "docs/tasks/W009/ipmr01-verification/review/pre-final/exception-matrix.json": "19c3eec4bf6468659272b6c06aa30c48b6ef68d2685b51e273596ab5d3a6ed5d",
+    "docs/tasks/W009/ipmr01-verification/review/pre-final/exception-matrix.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/tasks/W009/ipmr01-verification/review/pre-final/exception-matrix.stdout.txt": "a8ed94dae832069e0466f15777b257e6aa95407323f3ded927c0b5c8bbb0c946",
+    "docs/tasks/W009/ipmr01-verification/review/pre-final/formal-regressions.json": "464861684f1d76652eea4c43c6ea0a928430ed1fc38af65c1580e76d6ac4fd57",
+    "docs/tasks/W009/ipmr01-verification/review/pre-final/formal-regressions.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/tasks/W009/ipmr01-verification/review/pre-final/formal-regressions.stdout.txt": "608d4eaf5c50c1a2aebe44f634c75983585a0090e51dc56dfa32ee282a72836f",
+    "docs/tasks/W009/ipmr01-verification/review/pre-final/independent-probe.json": "1052a20040f6693cc3ac454b178e39f2d8d49ae189b50eb9d29cf5bb0764db25",
+    "docs/tasks/W009/ipmr01-verification/review/pre-final/independent-probe.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/tasks/W009/ipmr01-verification/review/pre-final/independent-probe.stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/tasks/W009/ipmr01-verification/review/probe.py": "93381b0df3f7c6781a15069bfb4c284868eba8f5caba68445a6ee033122843af",
+    "docs/tasks/W009/ipmr01-verification/review/receipt-controls.json": "7100a1cdc20628b3f0a5e351cb4d203aa12b32b3b6b2a650c03d6ea2eab4e29b",
+    "docs/tasks/W009/ipmr01-verification/review/receipt-controls.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/tasks/W009/ipmr01-verification/review/receipt-controls.stdout.txt": "8730d0e45e8049f70260864f7795314a34036176d7caefaab11cbf13eeca10cd",
+    "docs/tasks/W009/ipmr01-verification/review/receipt_controls.py": "0018d0b66e5e1a7c8457f97ca92f3dc943483e2eda85544ba06f436789abab57",
+    "docs/tasks/W009/ipmr01-verification/review/recovery-identity.json": "2157fc17fd68ca4a926a88e27bcb922e2bc921576f2e32185b4fffab7c7cd4f4",
+    "docs/tasks/W009/ipmr01-verification/review/run_review.py": "48bf16c910ddd5ee09fcee667a078b1e17ffc075ca632d317c9c4eefee342441",
+    "docs/tasks/W009/ipmr01-verification/review/version-scope.json": "436579df76e80e7dca50327ff87e24181a729cb25e6626f66c1cd78cfd5db9f8",
+    "docs/tasks/W009/ipmr01-verification/review/version-scope.stdout.txt": "e0b0efb9a3af2464365942354645ae9a58479daf225ec08383ab0a9365bdcaed",
+    "docs/tasks/W009/ipmr01-verification/review/version_scope.py": "f05985921d56bcc481cc42af55f2639f147a62789179fabc1091c7e2bbfb619f"
+  },
+  "path_count": 67,
+  "reviewed_product": "73e38df8f932bbb5bd9caf074b442ad2f5c286e9",
+  "reviewer_only_paths": true
+}

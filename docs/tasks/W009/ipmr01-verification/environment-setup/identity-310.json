@@ -1,0 +1,14 @@
+{
+  "command": [
+    "/workspace/work/w009-ipmr01-env/py310/bin/python",
+    "-c",
+    "import sys,platform,importlib.metadata,json; print(json.dumps({\"version\":sys.version,\"executable\":sys.executable,\"base_executable\":sys._base_executable,\"platform\":platform.platform(),\"distributions\":{d.metadata[\"Name\"]:d.version for d in importlib.metadata.distributions()}},indent=2,sort_keys=True))"
+  ],
+  "cwd": "/workspace/work/w009-ipmr01-env",
+  "exit_code": 0,
+  "elapsed_seconds": 0.271,
+  "stdout": "identity-310.stdout.txt",
+  "stderr": "identity-310.stderr.txt",
+  "stdout_sha256": "f1d40b48a2df1ba46e4f5f828bb540c2b50cd02b237ad2362cc5bfcba5932e0c",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

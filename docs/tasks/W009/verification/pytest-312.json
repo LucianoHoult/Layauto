@@ -1,0 +1,17 @@
+{
+  "command": [
+    "/workspace/work/w009-env/py312/bin/python",
+    "-m",
+    "pytest",
+    "-p",
+    "no:cacheprovider",
+    "tests/unit",
+    "tests/contracts",
+    "-q"
+  ],
+  "cwd": "/workspace/Layauto",
+  "exit_code": 0,
+  "elapsed_seconds": 1056.125,
+  "output": "pytest-312.txt",
+  "output_sha256": "22a0fd9262c55f7d5eff058f2eba238f6b3800c95b168cf0ba2e8a2b372b26aa"
+}

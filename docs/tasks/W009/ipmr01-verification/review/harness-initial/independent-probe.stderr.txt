@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/workspace/work/w009-ipmr01-review/docs/tasks/W009/ipmr01-verification/review/probe.py", line 67, in <module>
+    raise AssertionError((type(record).__name__, field, tag, 'unexpected accepted malformed field'))
+AssertionError: ('Rect', 'x0', 'scalar', 'unexpected accepted malformed field')

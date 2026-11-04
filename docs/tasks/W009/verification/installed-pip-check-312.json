@@ -1,0 +1,13 @@
+{
+  "command": [
+    "/workspace/work/w009-env/clean-32e60e783a7a-312/bin/python",
+    "-m",
+    "pip",
+    "check"
+  ],
+  "cwd": "/workspace/work/w009-env/installed-cwd",
+  "exit_code": 0,
+  "elapsed_seconds": 0.52,
+  "output": "installed-pip-check-312.txt",
+  "output_sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09"
+}

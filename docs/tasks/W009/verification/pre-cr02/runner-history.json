@@ -1,0 +1,7 @@
+{
+  "initial_runner": "verify_final_initial_run.py",
+  "initial_runner_note": "Preserves the launched source by reversing the two documented runner-only edits: source-external cwd and pre-existing clean-directory guard. The running process loaded this initial source.",
+  "corrected_reusable_runner": "verify_final.py",
+  "final_adopted_external_smoke_runner": "finalize_outside.py",
+  "product_or_test_changes_during_run": false
+}

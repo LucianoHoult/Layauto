@@ -1,0 +1,205 @@
+{
+  "head": "73e38df8f932bbb5bd9caf074b442ad2f5c286e9",
+  "case_count": 33,
+  "all_explicit_value_errors": true,
+  "observations": [
+    {
+      "control": "missing model axes",
+      "entry": "constructor",
+      "exception": "ValueError",
+      "message": "missing captured evidence field/reference: parameter_axes"
+    },
+    {
+      "control": "missing model axes",
+      "entry": "w009-result-wire",
+      "exception": "ValueError",
+      "message": "missing captured evidence field/reference: parameter_axes"
+    },
+    {
+      "control": "wrong model parameters",
+      "entry": "constructor",
+      "exception": "ValueError",
+      "message": "expected nonempty evidence string"
+    },
+    {
+      "control": "wrong model parameters",
+      "entry": "w009-result-wire",
+      "exception": "ValueError",
+      "message": "expected nonempty evidence string"
+    },
+    {
+      "control": "missing raw query declarations",
+      "entry": "constructor",
+      "exception": "ValueError",
+      "message": "missing captured evidence field/reference: raw"
+    },
+    {
+      "control": "missing raw query declarations",
+      "entry": "w009-result-wire",
+      "exception": "ValueError",
+      "message": "missing captured evidence field/reference: raw"
+    },
+    {
+      "control": "wrong raw query uri",
+      "entry": "constructor",
+      "exception": "ValueError",
+      "message": "expected nonempty evidence string"
+    },
+    {
+      "control": "wrong raw query uri",
+      "entry": "w009-result-wire",
+      "exception": "ValueError",
+      "message": "expected nonempty evidence string"
+    },
+    {
+      "control": "wrong capability raw refs",
+      "entry": "constructor",
+      "exception": "ValueError",
+      "message": "expected immutable evidence sequence"
+    },
+    {
+      "control": "wrong capability raw refs",
+      "entry": "w009-result-wire",
+      "exception": "ValueError",
+      "message": "expected immutable evidence sequence"
+    },
+    {
+      "control": "missing query record identity",
+      "entry": "constructor",
+      "exception": "ValueError",
+      "message": "missing captured evidence field/reference: record_id"
+    },
+    {
+      "control": "missing query record identity",
+      "entry": "w009-result-wire",
+      "exception": "ValueError",
+      "message": "missing captured evidence field/reference: record_id"
+    },
+    {
+      "control": "wrong query precision",
+      "entry": "constructor",
+      "exception": "ValueError",
+      "message": "region precision differs from captured precision token"
+    },
+    {
+      "control": "wrong query precision",
+      "entry": "w009-result-wire",
+      "exception": "ValueError",
+      "message": "region precision differs from captured precision token"
+    },
+    {
+      "control": "missing coordinate operand",
+      "entry": "constructor",
+      "exception": "ValueError",
+      "message": "missing captured evidence field/reference: lexeme"
+    },
+    {
+      "control": "missing coordinate operand",
+      "entry": "w009-result-wire",
+      "exception": "ValueError",
+      "message": "missing captured evidence field/reference: lexeme"
+    },
+    {
+      "control": "wrong bounding region",
+      "entry": "constructor",
+      "exception": "ValueError",
+      "message": "expected immutable evidence map"
+    },
+    {
+      "control": "wrong bounding region",
+      "entry": "w009-result-wire",
+      "exception": "ValueError",
+      "message": "expected immutable evidence map"
+    },
+    {
+      "control": "missing xref metadata",
+      "entry": "constructor",
+      "exception": "ValueError",
+      "message": "missing captured evidence field/reference: instance_xref"
+    },
+    {
+      "control": "missing xref metadata",
+      "entry": "w009-result-wire",
+      "exception": "ValueError",
+      "message": "missing captured evidence field/reference: instance_xref"
+    },
+    {
+      "control": "wrong response source",
+      "entry": "constructor",
+      "exception": "ValueError",
+      "message": "expected immutable evidence map"
+    },
+    {
+      "control": "wrong response source",
+      "entry": "w009-result-wire",
+      "exception": "ValueError",
+      "message": "expected immutable evidence map"
+    },
+    {
+      "control": "missing response timestamp",
+      "entry": "constructor",
+      "exception": "ValueError",
+      "message": "missing captured evidence field/reference: timestamp"
+    },
+    {
+      "control": "missing response timestamp",
+      "entry": "w009-result-wire",
+      "exception": "ValueError",
+      "message": "missing captured evidence field/reference: timestamp"
+    },
+    {
+      "control": "wrong closure reference",
+      "entry": "constructor",
+      "exception": "ValueError",
+      "message": "header closure digest differs"
+    },
+    {
+      "control": "wrong closure reference",
+      "entry": "w009-result-wire",
+      "exception": "ValueError",
+      "message": "header closure digest differs"
+    },
+    {
+      "control": "missing cdl source lexeme",
+      "entry": "constructor",
+      "exception": "ValueError",
+      "message": "missing captured evidence field/reference: lexeme"
+    },
+    {
+      "control": "missing cdl source lexeme",
+      "entry": "w009-result-wire",
+      "exception": "ValueError",
+      "message": "missing captured evidence field/reference: lexeme"
+    },
+    {
+      "control": "wrong cdl parameters",
+      "entry": "constructor",
+      "exception": "ValueError",
+      "message": "expected immutable evidence map"
+    },
+    {
+      "control": "wrong cdl parameters",
+      "entry": "w009-result-wire",
+      "exception": "ValueError",
+      "message": "expected immutable evidence map"
+    },
+    {
+      "control": "extra cdl top field",
+      "entry": "constructor",
+      "exception": "ValueError",
+      "message": "unknown or missing CDL top fields"
+    },
+    {
+      "control": "extra cdl top field",
+      "entry": "w009-result-wire",
+      "exception": "ValueError",
+      "message": "unknown or missing CDL top fields"
+    },
+    {
+      "control": "blank response count-header token",
+      "entry": "w009-result-wire",
+      "exception": "ValueError",
+      "message": "response metadata differs from its captured response"
+    }
+  ]
+}

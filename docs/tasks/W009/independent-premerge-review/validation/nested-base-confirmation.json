@@ -1,0 +1,20 @@
+{
+  "head": "88a7ae9d0330b7c7fddda0b07366c7a96552b65e",
+  "executable": "/workspace/.venvs/layauto/bin/python",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "cwd": "/workspace/work/w009-review",
+  "wire_sha256": "1361a949e1493560354b4617e53e2c063128b333b20b5ad88704a543cdbd976b",
+  "expected": "the exact injected TypeError object must escape effective decode",
+  "observation": {
+    "actual_type": "ValueError",
+    "actual_message": "invalid geometry wire fields",
+    "same_object": false,
+    "cause_same_object": true
+  },
+  "source_sha256": {
+    "layauto_v2/normalization/effective_codec.py": "58893a786683e41ae58cedabbe24d44c0b8517d219b5346e7b76ad178c7f8bf0",
+    "layauto_v2/normalization/geometry_codec.py": "0c99e5aff74ea1fbe8500f03e89086667f80c856d77da535299fe9044dfc6d76",
+    "layauto_v2/state/occupancy.py": "4c97e4092fe27804d975aa1be01da9913de63930ab04a3fa9eff6ca79ee41a46"
+  },
+  "conclusion": "IPMR-01 reproduced; contract failed"
+}

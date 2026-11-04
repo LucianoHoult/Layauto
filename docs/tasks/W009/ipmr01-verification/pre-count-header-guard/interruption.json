@@ -1,0 +1,11 @@
+{
+  "head": "8aa11baebfea935933b18cae3f23ba8c1e9c6486",
+  "reason": "New explicit malformed count_header whitespace guard and formal case require final-source refreeze. Both pytest subprocesses were deliberately terminated by executor (exit -15). No pytest contract failure is inferred.",
+  "runner_defect": "pip23 sdist report uses archive_info.hash instead of archive_info.hashes; old runner raised KeyError before 3.10 smoke. New runner will parse and verify both formats.",
+  "old_matrix": {
+    "case_count": 99,
+    "same_object_count": 99,
+    "identity_failures": []
+  },
+  "adoption": "Intermediate history only; final full regression/build/install and matrix will rerun."
+}

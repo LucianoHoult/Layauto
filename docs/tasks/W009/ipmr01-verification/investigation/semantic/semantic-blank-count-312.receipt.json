@@ -1,0 +1,18 @@
+{
+  "cwd": "/workspace/work/w009-ipmr01-semantic",
+  "command": [
+    "/workspace/work/w009-ipmr01-env/py312/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "tests/contracts/test_w009_nested_receipt_exceptions.py",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "-k",
+    "blank_count_header",
+    "--basetemp=/workspace/work/w009-ipmr01-audit/pytest-count-header"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 17.562361478805542
+}

@@ -1,0 +1,13 @@
+{
+  "cwd": "/workspace/work/w009-ipmr01-semantic",
+  "command": [
+    "/workspace/work/w009-ipmr01-env/py312/bin/python",
+    "-B",
+    "-m",
+    "mypy",
+    "--cache-dir",
+    "/workspace/work/w009-ipmr01-env/semantic-mypy-312"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 0.4253244400024414
+}

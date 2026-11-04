@@ -1,0 +1,50 @@
+{
+  "head": "8aa11baebfea935933b18cae3f23ba8c1e9c6486",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "executable": "/workspace/work/w009-ipmr01-env/py312/bin/python",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "records": 15,
+  "mutation_cases": 1184,
+  "rejected": 1143,
+  "canonical_alternatives": 41,
+  "unexpected_exceptions": [],
+  "hash_exception_cases": [
+    {
+      "exception": "RuntimeError",
+      "same_object_and_chain": true
+    },
+    {
+      "exception": "ValueError",
+      "same_object_and_chain": true
+    },
+    {
+      "exception": "TypeError",
+      "same_object_and_chain": true
+    },
+    {
+      "exception": "KeyError",
+      "same_object_and_chain": true
+    },
+    {
+      "exception": "AttributeError",
+      "same_object_and_chain": true
+    },
+    {
+      "exception": "IndexError",
+      "same_object_and_chain": true
+    },
+    {
+      "exception": "UnicodeError",
+      "same_object_and_chain": true
+    },
+    {
+      "exception": "KeyboardInterrupt",
+      "same_object_and_chain": true
+    },
+    {
+      "exception": "SystemExit",
+      "same_object_and_chain": true
+    }
+  ],
+  "elapsed_s": 321.59649322999996
+}

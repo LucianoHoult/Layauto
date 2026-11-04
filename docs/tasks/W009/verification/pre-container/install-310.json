@@ -1,0 +1,16 @@
+{
+  "command": [
+    "/workspace/work/w009-env/clean-final-310/bin/python",
+    "-m",
+    "pip",
+    "install",
+    "--report",
+    "/workspace/Layauto/docs/tasks/W009/verification/install-310-report.json",
+    "/workspace/Layauto/docs/tasks/W009/verification/dist/layauto-0.2.0.tar.gz"
+  ],
+  "cwd": "/workspace/work/w009-env/installed-cwd",
+  "exit_code": 0,
+  "elapsed_seconds": 32.454,
+  "output": "install-310.txt",
+  "output_sha256": "a76b4cca0682fbb5a05df70a1d57ee094581da2512bb52bd16926546734a6c94"
+}

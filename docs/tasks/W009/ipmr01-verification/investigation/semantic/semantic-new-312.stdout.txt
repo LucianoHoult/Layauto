@@ -1,0 +1,75 @@
+...............................................FF.........               [100%]
+=================================== FAILURES ===================================
+_ test_malformed_receipt_fields_still_raise_explicit_value_error[missing_model] _
+
+receipts = ({'direct': NormalizationInput(parse=ParseResult(status='success', value=FrozenMap(_entries=(('config', FrozenMap(_ent...ecord":"EffectiveDraft"}}}},"record":"EffectiveGeometryResult"}},"wire_schema":"layauto-effective-geometry-wire/1"}}'})
+change = 'missing_model'
+
+    @pytest.mark.parametrize('change', [
+        'missing_formats', 'missing_limits', 'scalar_limits', 'collection_limit',
+        'missing_model', 'nested_required_parameter', 'missing_top_field', 'extra_top_field',
+        'nested_pin', 'unknown_model', 'missing_lexeme', 'missing_layout',
+        'collection_raw_ref', 'missing_records', 'missing_responses',
+    ])
+    def test_malformed_receipt_fields_still_raise_explicit_value_error(receipts, change):
+        values, _ = receipts
+        original = values['direct']
+>       parsed = forged_parse(original.parse, change)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/contracts/test_w009_nested_receipt_exceptions.py:130: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+parsed = ParseResult(status='success', value=FrozenMap(_entries=(('config', FrozenMap(_entries=(('schema_version', 'w003-site/1...3f8aac86af6d358a6cbff7eaf277015c8d188423ef88da51871a95df')), tool_run_id=None, schema_version='layauto-parse-result/1')
+change = 'missing_model'
+
+    def forged_parse(parsed, change):
+        value = mutable(parsed.value)
+        if change == 'missing_formats': value['tech'].pop('formats')
+        elif change == 'missing_limits': value['tech']['formats'].pop('limits')
+        elif change == 'scalar_limits': value['tech']['formats']['limits'] = 1
+        elif change == 'collection_limit': value['tech']['formats']['limits']['max_json_depth'] = []
+>       elif change == 'missing_model': value['tech']['physical']['models']['TOY_N'].pop('terminal_order')
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'toy_n'
+
+tests/contracts/test_w009_nested_receipt_exceptions.py:103: KeyError
+_ test_malformed_receipt_fields_still_raise_explicit_value_error[nested_required_parameter] _
+
+receipts = ({'direct': NormalizationInput(parse=ParseResult(status='success', value=FrozenMap(_entries=(('config', FrozenMap(_ent...ecord":"EffectiveDraft"}}}},"record":"EffectiveGeometryResult"}},"wire_schema":"layauto-effective-geometry-wire/1"}}'})
+change = 'nested_required_parameter'
+
+    @pytest.mark.parametrize('change', [
+        'missing_formats', 'missing_limits', 'scalar_limits', 'collection_limit',
+        'missing_model', 'nested_required_parameter', 'missing_top_field', 'extra_top_field',
+        'nested_pin', 'unknown_model', 'missing_lexeme', 'missing_layout',
+        'collection_raw_ref', 'missing_records', 'missing_responses',
+    ])
+    def test_malformed_receipt_fields_still_raise_explicit_value_error(receipts, change):
+        values, _ = receipts
+        original = values['direct']
+>       parsed = forged_parse(original.parse, change)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/contracts/test_w009_nested_receipt_exceptions.py:130: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+parsed = ParseResult(status='success', value=FrozenMap(_entries=(('config', FrozenMap(_entries=(('schema_version', 'w003-site/1...3f8aac86af6d358a6cbff7eaf277015c8d188423ef88da51871a95df')), tool_run_id=None, schema_version='layauto-parse-result/1')
+change = 'nested_required_parameter'
+
+    def forged_parse(parsed, change):
+        value = mutable(parsed.value)
+        if change == 'missing_formats': value['tech'].pop('formats')
+        elif change == 'missing_limits': value['tech']['formats'].pop('limits')
+        elif change == 'scalar_limits': value['tech']['formats']['limits'] = 1
+        elif change == 'collection_limit': value['tech']['formats']['limits']['max_json_depth'] = []
+        elif change == 'missing_model': value['tech']['physical']['models']['TOY_N'].pop('terminal_order')
+>       elif change == 'nested_required_parameter': value['tech']['physical']['models']['TOY_N']['required_parameters'][0] = {}
+                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'toy_n'
+
+tests/contracts/test_w009_nested_receipt_exceptions.py:104: KeyError
+=========================== short test summary info ============================
+FAILED tests/contracts/test_w009_nested_receipt_exceptions.py::test_malformed_receipt_fields_still_raise_explicit_value_error[missing_model]
+FAILED tests/contracts/test_w009_nested_receipt_exceptions.py::test_malformed_receipt_fields_still_raise_explicit_value_error[nested_required_parameter]
+2 failed, 56 passed in 53.60s

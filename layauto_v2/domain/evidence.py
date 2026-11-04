@@ -63,6 +63,9 @@ class EvidenceRecord:
         if not isinstance(self.kind, str) or not self.kind or self.schema_version != 'layauto-evidence/1' or self.parser_version != 'layauto-input/1':
             raise ValueError('invalid evidence discriminator/version')
         object.__setattr__(self, 'payload', freeze_map(self.payload))
-        object.__setattr__(self, 'sources', tuple(self.sources))
-        if not self.sources or any(not isinstance(s, SourceRef) or s.sha256 is None for s in self.sources):
+        if not isinstance(self.sources, (tuple, list)):
             raise ValueError('evidence requires read source references')
+        sources = tuple(self.sources)
+        if not sources or any(not isinstance(s, SourceRef) or s.sha256 is None for s in sources):
+            raise ValueError('evidence requires read source references')
+        object.__setattr__(self, 'sources', sources)

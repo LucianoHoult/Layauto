@@ -1,0 +1,17 @@
+{
+  "head": "73e38df8f932bbb5bd9caf074b442ad2f5c286e9",
+  "observations": [
+    {
+      "entry": "EvidenceRecord.sources",
+      "outcome": "accepted",
+      "retained_sources_repr": "(SourceRef(uri='independent-source', sha256='2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881', field=None, line=None, column=None, byte_offset=None, record_index=None),)",
+      "retained_invalid_none": false
+    },
+    {
+      "entry": "ParseResult.sources",
+      "outcome": "accepted",
+      "retained_sources_repr": "(SourceFile(uri='independent-source', data=b'x', sha256='2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881'),)",
+      "retained_invalid_none": false
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "head": "5f9af59c3d70564568861e14d24ea49653d76d71",
+  "reason": "Independent review found new P2: validating a list subclass then iterating again to store allowed content substitution. Executor stopped both pytest processes (-15) before applying a single-snapshot fix; this is not full regression success.",
+  "package_and_smoke": "Both package builds and clean installs/smokes completed at this intermediate source; final source will rebuild/reinstall.",
+  "matrix": "Original 99/99/[] and expected historical defect-assertion failure passed at this exact intermediate source; final source will rerun.",
+  "adoption": "Intermediate history only."
+}

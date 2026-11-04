@@ -1,0 +1,19 @@
+{
+  "base": "cdf3d2d5d2aeb0c441221c8bb0b41d0b302d8afa",
+  "head": "73e38df8f932bbb5bd9caf074b442ad2f5c286e9",
+  "changed_paths": [
+    "layauto_v2/domain/evidence.py",
+    "layauto_v2/domain/publication_codec.py",
+    "layauto_v2/domain/results.py",
+    "layauto_v2/normalization/_validation.py",
+    "layauto_v2/normalization/codec.py",
+    "layauto_v2/normalization/contracts.py",
+    "layauto_v2/normalization/geometry_codec.py",
+    "layauto_v2/state/layout_store.py",
+    "tests/contracts/test_w009_captured_decode_exceptions.py",
+    "tests/contracts/test_w009_nested_base_decode.py",
+    "tests/contracts/test_w009_nested_receipt_exceptions.py"
+  ],
+  "source_file_count": 118,
+  "protected_difference": []
+}

@@ -1,0 +1,436 @@
+{
+  "schema": "layauto-w009-finite-performance/1",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "interpreter": "/workspace/work/w009-env/py312/bin/python",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "source_sha256": {
+    "layauto_v2/domain/regions.py": "e355059a1888e8382452f124959c6302e2939e75e966ef15d1e34d2f683156f3",
+    "layauto_v2/state/regions.py": "e08e54f19e135e25cbd4952bcc587882c8ce10957bec83d185b3dc838e92eb11",
+    "layauto_v2/normalization/effective.py": "eddaccea3795ce61b932fcacdfff6d7bf0fc75da677ddcaa18062433a7b94e4f"
+  },
+  "scope": "finite synthetic witnesses, no new external limit or all-scale/production performance guarantee",
+  "complexity": {
+    "difference": "m relevant CUTs: O(m) x slabs, O(m log m) interval work each, O(m²) possible output pieces",
+    "local_grouping": "p pieces: O(p²) positive-length-edge comparisons in the worst case",
+    "region_validation": "for each region with q pieces: pairwise overlap O(q²), canonical_cover O(q² log q) upper bound, connectedness O(q²)",
+    "aggregate": "build materializes record results, EffectiveDraft constructor independently materializes them again; repeated constructors and decode repeat validation, with no memoization",
+    "upstream": "stress base preparation includes W008 partition/occupancy construction and is timed separately; W005 existing stream record ceiling remains unchanged"
+  },
+  "method": "one timed sample per operation/case; perf_counter elapsed wall time; no warmup or statistical throughput claim",
+  "executions": {
+    "pure": {
+      "command": "/workspace/work/w009-env/py312/bin/python docs/tasks/W009/verification/performance.py --case pure --output docs/tasks/W009/verification/performance.json",
+      "elapsed_seconds": 0.2868147570000019,
+      "results": [
+        {
+          "case": "strips",
+          "cut_count_m": 10,
+          "output_rectangles_p": 11,
+          "hand_expected_local_regions": 11,
+          "difference_seconds": 0.00014328300005672645,
+          "target_bounds": [
+            1000,
+            1000,
+            1042,
+            1042
+          ]
+        },
+        {
+          "case": "strips",
+          "cut_count_m": 50,
+          "output_rectangles_p": 51,
+          "hand_expected_local_regions": 51,
+          "difference_seconds": 0.0009157810000033351,
+          "target_bounds": [
+            1000,
+            1000,
+            1202,
+            1202
+          ]
+        },
+        {
+          "case": "strips",
+          "cut_count_m": 100,
+          "output_rectangles_p": 101,
+          "hand_expected_local_regions": 101,
+          "difference_seconds": 0.012811262000013812,
+          "target_bounds": [
+            1000,
+            1000,
+            1402,
+            1402
+          ]
+        },
+        {
+          "case": "strips",
+          "cut_count_m": 200,
+          "output_rectangles_p": 201,
+          "hand_expected_local_regions": 201,
+          "difference_seconds": 0.043643880999979956,
+          "target_bounds": [
+            1000,
+            1000,
+            1802,
+            1802
+          ]
+        },
+        {
+          "case": "crosscuts",
+          "cut_count_m": 10,
+          "output_rectangles_p": 36,
+          "hand_expected_local_regions": 36,
+          "difference_seconds": 0.00016359099993223936,
+          "target_bounds": [
+            1000,
+            1000,
+            1042,
+            1042
+          ]
+        },
+        {
+          "case": "crosscuts",
+          "cut_count_m": 50,
+          "output_rectangles_p": 676,
+          "hand_expected_local_regions": 676,
+          "difference_seconds": 0.007258271999944554,
+          "target_bounds": [
+            1000,
+            1000,
+            1202,
+            1202
+          ]
+        },
+        {
+          "case": "crosscuts",
+          "cut_count_m": 100,
+          "output_rectangles_p": 2601,
+          "hand_expected_local_regions": 2601,
+          "difference_seconds": 0.029822380999917186,
+          "target_bounds": [
+            1000,
+            1000,
+            1402,
+            1402
+          ]
+        },
+        {
+          "case": "crosscuts",
+          "cut_count_m": 200,
+          "output_rectangles_p": 10201,
+          "hand_expected_local_regions": 10201,
+          "difference_seconds": 0.117745498999966,
+          "target_bounds": [
+            1000,
+            1000,
+            1802,
+            1802
+          ]
+        },
+        {
+          "case": "holes",
+          "cut_count_m": 10,
+          "output_rectangles_p": 31,
+          "hand_expected_local_regions": 1,
+          "difference_seconds": 0.00012897800002065196,
+          "target_bounds": [
+            1000,
+            1000,
+            1042,
+            1042
+          ]
+        },
+        {
+          "case": "holes",
+          "cut_count_m": 50,
+          "output_rectangles_p": 151,
+          "hand_expected_local_regions": 1,
+          "difference_seconds": 0.005004187999929854,
+          "target_bounds": [
+            1000,
+            1000,
+            1202,
+            1202
+          ]
+        },
+        {
+          "case": "holes",
+          "cut_count_m": 100,
+          "output_rectangles_p": 301,
+          "hand_expected_local_regions": 1,
+          "difference_seconds": 0.027977500000019973,
+          "target_bounds": [
+            1000,
+            1000,
+            1402,
+            1402
+          ]
+        },
+        {
+          "case": "holes",
+          "cut_count_m": 200,
+          "output_rectangles_p": 601,
+          "hand_expected_local_regions": 1,
+          "difference_seconds": 0.015336273999992045,
+          "target_bounds": [
+            1000,
+            1000,
+            1802,
+            1802
+          ]
+        },
+        {
+          "case": "overlap",
+          "cut_count_m": 10,
+          "output_rectangles_p": 4,
+          "hand_expected_local_regions": 1,
+          "difference_seconds": 0.00019871899996815046,
+          "target_bounds": [
+            1000,
+            1000,
+            1042,
+            1042
+          ]
+        },
+        {
+          "case": "overlap",
+          "cut_count_m": 50,
+          "output_rectangles_p": 4,
+          "hand_expected_local_regions": 1,
+          "difference_seconds": 0.00017955099997379875,
+          "target_bounds": [
+            1000,
+            1000,
+            1202,
+            1202
+          ]
+        },
+        {
+          "case": "overlap",
+          "cut_count_m": 100,
+          "output_rectangles_p": 4,
+          "hand_expected_local_regions": 1,
+          "difference_seconds": 0.0003104629998915698,
+          "target_bounds": [
+            1000,
+            1000,
+            1402,
+            1402
+          ]
+        },
+        {
+          "case": "overlap",
+          "cut_count_m": 200,
+          "output_rectangles_p": 4,
+          "hand_expected_local_regions": 1,
+          "difference_seconds": 0.0005831109999689943,
+          "target_bounds": [
+            1000,
+            1000,
+            1802,
+            1802
+          ]
+        }
+      ]
+    },
+    "normal": {
+      "command": "/workspace/work/w009-env/py312/bin/python docs/tasks/W009/verification/performance.py --case normal --output docs/tasks/W009/verification/performance.json",
+      "elapsed_seconds": 6.481350299999917,
+      "results": [
+        {
+          "case": "normal",
+          "classification": "actual_capture",
+          "cut_count_m": 0,
+          "selected_record_count": 5,
+          "output_rectangles_p": 9,
+          "local_region_count": 9,
+          "all_drawn_records": 40,
+          "raw_base_fragments": 41,
+          "w005_capture_seconds": 4.287227098000017,
+          "w008_geometry_seconds": 2.129401668000014,
+          "stress_base_preparation_seconds": 0.0,
+          "effective_build_seconds": 0.01663043899998229,
+          "draft_constructor_rebuild_seconds": 0.014868406000005052,
+          "one_region_constructor_rebuild_seconds": 1.8069000020659587e-05
+        }
+      ]
+    },
+    "strips-10": {
+      "command": "/workspace/work/w009-env/py312/bin/python docs/tasks/W009/verification/performance.py --case strips-10 --output docs/tasks/W009/verification/performance.json",
+      "elapsed_seconds": 7.182048376000012,
+      "results": [
+        {
+          "case": "strips-10",
+          "classification": "neutral_in_memory_stream_stress",
+          "cut_count_m": 10,
+          "selected_record_count": 1,
+          "output_rectangles_p": 11,
+          "local_region_count": 11,
+          "all_drawn_records": 51,
+          "raw_base_fragments": 52,
+          "w005_capture_seconds": 4.582799969000007,
+          "w008_geometry_seconds": 2.2378944440000623,
+          "stress_base_preparation_seconds": 0.32323908000000756,
+          "effective_build_seconds": 0.010623698000017612,
+          "draft_constructor_rebuild_seconds": 0.005587956999988819,
+          "one_region_constructor_rebuild_seconds": 2.9997999945408083e-05
+        }
+      ]
+    },
+    "strips-50": {
+      "command": "/workspace/work/w009-env/py312/bin/python docs/tasks/W009/verification/performance.py --case strips-50 --output docs/tasks/W009/verification/performance.json",
+      "elapsed_seconds": 6.511161904000005,
+      "results": [
+        {
+          "case": "strips-50",
+          "classification": "neutral_in_memory_stream_stress",
+          "cut_count_m": 50,
+          "selected_record_count": 1,
+          "output_rectangles_p": 51,
+          "local_region_count": 51,
+          "all_drawn_records": 91,
+          "raw_base_fragments": 92,
+          "w005_capture_seconds": 4.522804704000009,
+          "w008_geometry_seconds": 1.3669898420000663,
+          "stress_base_preparation_seconds": 0.5546767549999458,
+          "effective_build_seconds": 0.025803080999935446,
+          "draft_constructor_rebuild_seconds": 0.008997298999929626,
+          "one_region_constructor_rebuild_seconds": 4.49780000053579e-05
+        }
+      ]
+    },
+    "strips-100": {
+      "command": "/workspace/work/w009-env/py312/bin/python docs/tasks/W009/verification/performance.py --case strips-100 --output docs/tasks/W009/verification/performance.json",
+      "elapsed_seconds": 4.277244902999996,
+      "results": [
+        {
+          "case": "strips-100",
+          "classification": "neutral_in_memory_stream_stress",
+          "cut_count_m": 100,
+          "selected_record_count": 1,
+          "output_rectangles_p": 101,
+          "local_region_count": 101,
+          "all_drawn_records": 141,
+          "raw_base_fragments": 142,
+          "w005_capture_seconds": 2.096321587000034,
+          "w008_geometry_seconds": 1.1283976309999844,
+          "stress_base_preparation_seconds": 0.942108075999954,
+          "effective_build_seconds": 0.03504032899991216,
+          "draft_constructor_rebuild_seconds": 0.017128840999930617,
+          "one_region_constructor_rebuild_seconds": 8.086200000434474e-05
+        }
+      ]
+    },
+    "crosscuts-10": {
+      "command": "/workspace/work/w009-env/py312/bin/python docs/tasks/W009/verification/performance.py --case crosscuts-10 --output docs/tasks/W009/verification/performance.json",
+      "elapsed_seconds": 3.506399506999969,
+      "results": [
+        {
+          "case": "crosscuts-10",
+          "classification": "neutral_in_memory_stream_stress",
+          "cut_count_m": 10,
+          "selected_record_count": 1,
+          "output_rectangles_p": 36,
+          "local_region_count": 36,
+          "all_drawn_records": 51,
+          "raw_base_fragments": 152,
+          "w005_capture_seconds": 2.070445229000029,
+          "w008_geometry_seconds": 1.066049874999976,
+          "stress_base_preparation_seconds": 0.3354618829999936,
+          "effective_build_seconds": 0.011477807999995093,
+          "draft_constructor_rebuild_seconds": 0.005770083000015802,
+          "one_region_constructor_rebuild_seconds": 3.2388000022365304e-05
+        }
+      ]
+    },
+    "crosscuts-20": {
+      "command": "/workspace/work/w009-env/py312/bin/python docs/tasks/W009/verification/performance.py --case crosscuts-20 --output docs/tasks/W009/verification/performance.json",
+      "elapsed_seconds": 3.952134871999988,
+      "results": [
+        {
+          "case": "crosscuts-20",
+          "classification": "neutral_in_memory_stream_stress",
+          "cut_count_m": 20,
+          "selected_record_count": 1,
+          "output_rectangles_p": 121,
+          "local_region_count": 121,
+          "all_drawn_records": 61,
+          "raw_base_fragments": 462,
+          "w005_capture_seconds": 2.2571573210000224,
+          "w008_geometry_seconds": 1.04337993799993,
+          "stress_base_preparation_seconds": 0.5727960609999627,
+          "effective_build_seconds": 0.027037558999950306,
+          "draft_constructor_rebuild_seconds": 0.03360338799996043,
+          "one_region_constructor_rebuild_seconds": 3.6662999946202035e-05
+        }
+      ]
+    },
+    "holes-10": {
+      "command": "/workspace/work/w009-env/py312/bin/python docs/tasks/W009/verification/performance.py --case holes-10 --output docs/tasks/W009/verification/performance.json",
+      "elapsed_seconds": 2.2808271249999734,
+      "results": [
+        {
+          "case": "holes-10",
+          "classification": "neutral_in_memory_stream_stress",
+          "cut_count_m": 10,
+          "selected_record_count": 1,
+          "output_rectangles_p": 31,
+          "local_region_count": 1,
+          "all_drawn_records": 51,
+          "raw_base_fragments": 52,
+          "w005_capture_seconds": 1.3865481509999427,
+          "w008_geometry_seconds": 0.649012090000042,
+          "stress_base_preparation_seconds": 0.2212997430000314,
+          "effective_build_seconds": 0.006623619000038161,
+          "draft_constructor_rebuild_seconds": 0.00369760099999894,
+          "one_region_constructor_rebuild_seconds": 0.0008185899999944013
+        }
+      ]
+    },
+    "holes-25": {
+      "command": "/workspace/work/w009-env/py312/bin/python docs/tasks/W009/verification/performance.py --case holes-25 --output docs/tasks/W009/verification/performance.json",
+      "elapsed_seconds": 3.6849481610000794,
+      "results": [
+        {
+          "case": "holes-25",
+          "classification": "neutral_in_memory_stream_stress",
+          "cut_count_m": 25,
+          "selected_record_count": 1,
+          "output_rectangles_p": 76,
+          "local_region_count": 1,
+          "all_drawn_records": 66,
+          "raw_base_fragments": 67,
+          "w005_capture_seconds": 2.1056369600000835,
+          "w008_geometry_seconds": 1.160759212999892,
+          "stress_base_preparation_seconds": 0.364633645999902,
+          "effective_build_seconds": 0.022444813999982216,
+          "draft_constructor_rebuild_seconds": 0.009491180000054555,
+          "one_region_constructor_rebuild_seconds": 0.004481519000023582
+        }
+      ]
+    },
+    "overlap-100": {
+      "command": "/workspace/work/w009-env/py312/bin/python docs/tasks/W009/verification/performance.py --case overlap-100 --output docs/tasks/W009/verification/performance.json",
+      "elapsed_seconds": 4.193724238999948,
+      "results": [
+        {
+          "case": "overlap-100",
+          "classification": "neutral_in_memory_stream_stress",
+          "cut_count_m": 100,
+          "selected_record_count": 1,
+          "output_rectangles_p": 4,
+          "local_region_count": 1,
+          "all_drawn_records": 141,
+          "raw_base_fragments": 505,
+          "w005_capture_seconds": 2.1223598909999737,
+          "w008_geometry_seconds": 1.0741147779999665,
+          "stress_base_preparation_seconds": 0.9497217420000652,
+          "effective_build_seconds": 0.011303793000024598,
+          "draft_constructor_rebuild_seconds": 0.0058221240000193575,
+          "one_region_constructor_rebuild_seconds": 9.509099993465497e-05
+        }
+      ]
+    }
+  },
+  "source_scope_note": "Measured before CR-02. Original recorded product SHA-256 values are preserved and resolve in pre-cr02/source-snapshot.tar.gz. CR-02 subsequently adds strict string guards; these timings are historical finite witnesses, not a post-CR02 rerun or full-scale guarantee.",
+  "source_snapshot": "pre-cr02/source-snapshot.tar.gz"
+}

@@ -1,0 +1,15 @@
+{
+  "command": [
+    "/workspace/work/w009-ipmr01-env/py312/bin/python",
+    "-m",
+    "pip",
+    "check"
+  ],
+  "cwd": "/workspace/work/w009-ipmr01-env",
+  "exit_code": 0,
+  "elapsed_seconds": 0.308,
+  "stdout": "pip-check-312.stdout.txt",
+  "stderr": "pip-check-312.stderr.txt",
+  "stdout_sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

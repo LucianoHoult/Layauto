@@ -1,0 +1,15 @@
+{
+  "command": [
+    "/workspace/.venvs/layauto/bin/python",
+    "-m",
+    "venv",
+    "/workspace/work/w009-ipmr01-env/py312"
+  ],
+  "cwd": "/workspace/work/w009-ipmr01-env",
+  "exit_code": 0,
+  "elapsed_seconds": 1.824,
+  "stdout": "create-312.stdout.txt",
+  "stderr": "create-312.stderr.txt",
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

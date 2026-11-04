@@ -1,0 +1,43 @@
+{
+  "package": "/workspace/work/w009-review/pre-container/layauto_v2/__init__.py",
+  "source_sha256": {
+    "layauto_v2/domain/regions.py": "4c1d749b291aaaf8f17fbe5e48a43e1f68d1392625642bbadf4727a40f520f5b",
+    "layauto_v2/state/regions.py": "129312e6f7654ea42e3f167f3cacaf2df6866ffddb55b5b10509da7cdc8aa658",
+    "layauto_v2/normalization/effective.py": "41fdfa1e114c349da370e3d9edbd1396840418fbdfc7a2ec40e3b5813978088f"
+  },
+  "observations": [
+    {
+      "case": "draft_records",
+      "status": "success retains mutable foreign DTO"
+    },
+    {
+      "case": "row_regions",
+      "status": "success retains mutable foreign DTO"
+    },
+    {
+      "case": "region_rectangles",
+      "status": "success retains mutable foreign DTO"
+    },
+    {
+      "case": "region_contributors",
+      "status": "success retains mutable foreign DTO"
+    },
+    {
+      "case": "base_records",
+      "status": "success retains mutable foreign DTO"
+    },
+    {
+      "case": "base_policies",
+      "status": "success retains mutable foreign DTO"
+    },
+    {
+      "case": "base_layers",
+      "status": "success retains mutable foreign DTO"
+    },
+    {
+      "case": "base_fragments",
+      "status": "success retains mutable foreign DTO"
+    }
+  ],
+  "closed": false
+}

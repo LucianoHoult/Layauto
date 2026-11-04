@@ -1,0 +1,21 @@
+{
+  "observed_utc": "2026-11-04T01:35:36.982824+00:00",
+  "purpose": "Recovery checkpoint only; final engineering receipt/review/doc/evidence delivery follows after missing checks finish. Not PM acceptance or main integration.",
+  "push_command": [
+    "git",
+    "push",
+    "origin",
+    "73e38df8f932bbb5bd9caf074b442ad2f5c286e9:refs/heads/codex/w009-effective-geometry-terminals"
+  ],
+  "observed_push_exit_code": 0,
+  "verification_command": [
+    "git",
+    "ls-remote",
+    "origin",
+    "refs/heads/codex/w009-effective-geometry-terminals",
+    "refs/heads/main"
+  ],
+  "verification_stdout": "73e38df8f932bbb5bd9caf074b442ad2f5c286e9\trefs/heads/codex/w009-effective-geometry-terminals\n4df07e68b05df4c57a8b8d44bc41e7e073938d3a\trefs/heads/main\n",
+  "observed_verification_exit_code": 0,
+  "all_five_product_commits_use_noreply_author_and_committer": true
+}

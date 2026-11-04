@@ -1,0 +1,27 @@
+{
+  "command": [
+    "/workspace/work/w009-ipmr01-env/py312/bin/python",
+    "-B",
+    "/workspace/work/w009-ipmr01-review/docs/tasks/W009/ipmr01-verification/review/engineering_audit.py"
+  ],
+  "cwd": "/workspace/work/w009-ipmr01-review",
+  "head": "73e38df8f932bbb5bd9caf074b442ad2f5c286e9",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "executable": "/workspace/work/w009-ipmr01-env/py312/bin/python",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "started_utc": "2026-11-04T01:56:44.125201+00:00",
+  "elapsed_seconds": 0.977,
+  "returncode": 0,
+  "outputs": {
+    "stdout": {
+      "path": "engineering-command.stdout.txt",
+      "sha256": "91b3ff6fff3fd6e326960d56fe9791f2e5d8c07de66ac8aa55d85f885f793f36",
+      "size": 5948
+    },
+    "stderr": {
+      "path": "engineering-command.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    }
+  }
+}

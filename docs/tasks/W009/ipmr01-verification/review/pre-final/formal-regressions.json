@@ -1,0 +1,35 @@
+{
+  "command": [
+    "/workspace/work/w009-ipmr01-env/py312/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "--basetemp=/workspace/work/w009-ipmr01-review-work/pytest",
+    "tests/contracts/test_w009_nested_base_decode.py",
+    "tests/contracts/test_w009_nested_receipt_exceptions.py",
+    "tests/contracts/test_w009_captured_decode_exceptions.py"
+  ],
+  "cwd": "/workspace/work/w009-ipmr01-review",
+  "head": "8aa11baebfea935933b18cae3f23ba8c1e9c6486",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "executable": "/workspace/work/w009-ipmr01-env/py312/bin/python",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "started_utc": "2026-11-03T11:43:04.138801+00:00",
+  "elapsed_seconds": 543.357,
+  "returncode": 0,
+  "outputs": {
+    "stdout": {
+      "path": "formal-regressions.stdout.txt",
+      "sha256": "608d4eaf5c50c1a2aebe44f634c75983585a0090e51dc56dfa32ee282a72836f",
+      "size": 352
+    },
+    "stderr": {
+      "path": "formal-regressions.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    }
+  }
+}

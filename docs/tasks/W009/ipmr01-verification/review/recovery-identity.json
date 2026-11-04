@@ -1,0 +1,43 @@
+{
+  "all245_review_files_match_manifest_and_git": true,
+  "captured_identity_sha256": "59302aaa96a1dc5c06d3be3727c45d7075a02016d16e34a9657443d3cd286ed9",
+  "captured_result_sha256": "cd1296fe1e149b37aa4b9e0e57b91af3a922378f872764ea2b9859ec2e9c38bd",
+  "final_probe_outputs_match_pre_disconnect_receipts": {
+    "exception-matrix": {
+      "stderr": {
+        "path": "exception-matrix.stderr.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "path": "exception-matrix.stdout.txt",
+        "sha256": "367bd75b6b0ebcd9257b166685048abb85a25a0709765bafae4647aa487ad8c1"
+      }
+    },
+    "independent-probe": {
+      "stderr": {
+        "path": "independent-probe.stderr.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "path": "independent-probe.stdout.txt",
+        "sha256": "7e7f50144141c047bdf8e2980c4260711fbab1df89749d3e19361623c17e1bd6"
+      }
+    },
+    "receipt-controls": {
+      "stderr": {
+        "path": "receipt-controls.stderr.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "path": "receipt-controls.stdout.txt",
+        "sha256": "8730d0e45e8049f70260864f7795314a34036176d7caefaab11cbf13eeca10cd"
+      }
+    }
+  },
+  "observed_utc": "2026-11-04T01:31:13.133877+00:00",
+  "review_tree_head": "73e38df8f932bbb5bd9caf074b442ad2f5c286e9",
+  "runtime_files": 90,
+  "scope": "Recovered source identity and completed reviewer evidence only; no product probe rerun, no final engineering pass assumed.",
+  "source_files": 245,
+  "source_manifest_sha256": "40a60ada56e2b560d1af88fec9c16e4d60a6b1384fb042f39202edfcaefefc2c"
+}

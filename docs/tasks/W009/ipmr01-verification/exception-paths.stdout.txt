@@ -1,0 +1,918 @@
+{
+  "case_count": 99,
+  "cwd": "/workspace/work/w009-ipmr01",
+  "executable": "/workspace/work/w009-ipmr01-env/py312/bin/python",
+  "head": "73e38df8f932bbb5bd9caf074b442ad2f5c286e9",
+  "identity_failures": [],
+  "observations": [
+    {
+      "cause_same_object": false,
+      "enclosing": "draft",
+      "injected": "RuntimeError",
+      "message": "independent premerge injected internal failure",
+      "observed": "RuntimeError",
+      "same_object": true,
+      "target": "layauto_v2.state.regions.slab_difference"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "draft",
+      "injected": "ValueError",
+      "message": "independent premerge injected internal failure",
+      "observed": "ValueError",
+      "same_object": true,
+      "target": "layauto_v2.state.regions.slab_difference"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "draft",
+      "injected": "TypeError",
+      "message": "independent premerge injected internal failure",
+      "observed": "TypeError",
+      "same_object": true,
+      "target": "layauto_v2.state.regions.slab_difference"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "draft",
+      "injected": "KeyError",
+      "message": "'independent premerge injected internal failure'",
+      "observed": "KeyError",
+      "same_object": true,
+      "target": "layauto_v2.state.regions.slab_difference"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "draft",
+      "injected": "AttributeError",
+      "message": "independent premerge injected internal failure",
+      "observed": "AttributeError",
+      "same_object": true,
+      "target": "layauto_v2.state.regions.slab_difference"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "draft",
+      "injected": "IndexError",
+      "message": "independent premerge injected internal failure",
+      "observed": "IndexError",
+      "same_object": true,
+      "target": "layauto_v2.state.regions.slab_difference"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "draft",
+      "injected": "UnicodeError",
+      "message": "independent premerge injected internal failure",
+      "observed": "UnicodeError",
+      "same_object": true,
+      "target": "layauto_v2.state.regions.slab_difference"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "draft",
+      "injected": "KeyboardInterrupt",
+      "message": "independent premerge injected internal failure",
+      "observed": "KeyboardInterrupt",
+      "same_object": true,
+      "target": "layauto_v2.state.regions.slab_difference"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "draft",
+      "injected": "SystemExit",
+      "message": "independent premerge injected internal failure",
+      "observed": "SystemExit",
+      "same_object": true,
+      "target": "layauto_v2.state.regions.slab_difference"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "draft",
+      "injected": "RuntimeError",
+      "message": "independent premerge injected internal failure",
+      "observed": "RuntimeError",
+      "same_object": true,
+      "target": "layauto_v2.domain.regions.canonical_cover"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "draft",
+      "injected": "ValueError",
+      "message": "independent premerge injected internal failure",
+      "observed": "ValueError",
+      "same_object": true,
+      "target": "layauto_v2.domain.regions.canonical_cover"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "draft",
+      "injected": "TypeError",
+      "message": "independent premerge injected internal failure",
+      "observed": "TypeError",
+      "same_object": true,
+      "target": "layauto_v2.domain.regions.canonical_cover"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "draft",
+      "injected": "KeyError",
+      "message": "'independent premerge injected internal failure'",
+      "observed": "KeyError",
+      "same_object": true,
+      "target": "layauto_v2.domain.regions.canonical_cover"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "draft",
+      "injected": "AttributeError",
+      "message": "independent premerge injected internal failure",
+      "observed": "AttributeError",
+      "same_object": true,
+      "target": "layauto_v2.domain.regions.canonical_cover"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "draft",
+      "injected": "IndexError",
+      "message": "independent premerge injected internal failure",
+      "observed": "IndexError",
+      "same_object": true,
+      "target": "layauto_v2.domain.regions.canonical_cover"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "draft",
+      "injected": "UnicodeError",
+      "message": "independent premerge injected internal failure",
+      "observed": "UnicodeError",
+      "same_object": true,
+      "target": "layauto_v2.domain.regions.canonical_cover"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "draft",
+      "injected": "KeyboardInterrupt",
+      "message": "independent premerge injected internal failure",
+      "observed": "KeyboardInterrupt",
+      "same_object": true,
+      "target": "layauto_v2.domain.regions.canonical_cover"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "draft",
+      "injected": "SystemExit",
+      "message": "independent premerge injected internal failure",
+      "observed": "SystemExit",
+      "same_object": true,
+      "target": "layauto_v2.domain.regions.canonical_cover"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "draft",
+      "injected": "RuntimeError",
+      "message": "independent premerge injected internal failure",
+      "observed": "RuntimeError",
+      "same_object": true,
+      "target": "layauto_v2.state.occupancy._fragments"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "draft",
+      "injected": "ValueError",
+      "message": "independent premerge injected internal failure",
+      "observed": "ValueError",
+      "same_object": true,
+      "target": "layauto_v2.state.occupancy._fragments"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "draft",
+      "injected": "TypeError",
+      "message": "independent premerge injected internal failure",
+      "observed": "TypeError",
+      "same_object": true,
+      "target": "layauto_v2.state.occupancy._fragments"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "draft",
+      "injected": "KeyError",
+      "message": "'independent premerge injected internal failure'",
+      "observed": "KeyError",
+      "same_object": true,
+      "target": "layauto_v2.state.occupancy._fragments"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "draft",
+      "injected": "AttributeError",
+      "message": "independent premerge injected internal failure",
+      "observed": "AttributeError",
+      "same_object": true,
+      "target": "layauto_v2.state.occupancy._fragments"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "draft",
+      "injected": "IndexError",
+      "message": "independent premerge injected internal failure",
+      "observed": "IndexError",
+      "same_object": true,
+      "target": "layauto_v2.state.occupancy._fragments"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "draft",
+      "injected": "UnicodeError",
+      "message": "independent premerge injected internal failure",
+      "observed": "UnicodeError",
+      "same_object": true,
+      "target": "layauto_v2.state.occupancy._fragments"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "draft",
+      "injected": "KeyboardInterrupt",
+      "message": "independent premerge injected internal failure",
+      "observed": "KeyboardInterrupt",
+      "same_object": true,
+      "target": "layauto_v2.state.occupancy._fragments"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "draft",
+      "injected": "SystemExit",
+      "message": "independent premerge injected internal failure",
+      "observed": "SystemExit",
+      "same_object": true,
+      "target": "layauto_v2.state.occupancy._fragments"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "draft",
+      "injected": "RuntimeError",
+      "message": "independent premerge injected internal failure",
+      "observed": "RuntimeError",
+      "same_object": true,
+      "target": "layauto_v2.state.coordinate._layers"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "draft",
+      "injected": "ValueError",
+      "message": "independent premerge injected internal failure",
+      "observed": "ValueError",
+      "same_object": true,
+      "target": "layauto_v2.state.coordinate._layers"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "draft",
+      "injected": "TypeError",
+      "message": "independent premerge injected internal failure",
+      "observed": "TypeError",
+      "same_object": true,
+      "target": "layauto_v2.state.coordinate._layers"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "draft",
+      "injected": "KeyError",
+      "message": "'independent premerge injected internal failure'",
+      "observed": "KeyError",
+      "same_object": true,
+      "target": "layauto_v2.state.coordinate._layers"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "draft",
+      "injected": "AttributeError",
+      "message": "independent premerge injected internal failure",
+      "observed": "AttributeError",
+      "same_object": true,
+      "target": "layauto_v2.state.coordinate._layers"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "draft",
+      "injected": "IndexError",
+      "message": "independent premerge injected internal failure",
+      "observed": "IndexError",
+      "same_object": true,
+      "target": "layauto_v2.state.coordinate._layers"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "draft",
+      "injected": "UnicodeError",
+      "message": "independent premerge injected internal failure",
+      "observed": "UnicodeError",
+      "same_object": true,
+      "target": "layauto_v2.state.coordinate._layers"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "draft",
+      "injected": "KeyboardInterrupt",
+      "message": "independent premerge injected internal failure",
+      "observed": "KeyboardInterrupt",
+      "same_object": true,
+      "target": "layauto_v2.state.coordinate._layers"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "draft",
+      "injected": "SystemExit",
+      "message": "independent premerge injected internal failure",
+      "observed": "SystemExit",
+      "same_object": true,
+      "target": "layauto_v2.state.coordinate._layers"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "draft",
+      "injected": "RuntimeError",
+      "message": "independent premerge injected internal failure",
+      "observed": "RuntimeError",
+      "same_object": true,
+      "target": "layauto_v2.state.layout_store._materialize"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "draft",
+      "injected": "ValueError",
+      "message": "independent premerge injected internal failure",
+      "observed": "ValueError",
+      "same_object": true,
+      "target": "layauto_v2.state.layout_store._materialize"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "draft",
+      "injected": "TypeError",
+      "message": "independent premerge injected internal failure",
+      "observed": "TypeError",
+      "same_object": true,
+      "target": "layauto_v2.state.layout_store._materialize"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "draft",
+      "injected": "KeyError",
+      "message": "'independent premerge injected internal failure'",
+      "observed": "KeyError",
+      "same_object": true,
+      "target": "layauto_v2.state.layout_store._materialize"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "draft",
+      "injected": "AttributeError",
+      "message": "independent premerge injected internal failure",
+      "observed": "AttributeError",
+      "same_object": true,
+      "target": "layauto_v2.state.layout_store._materialize"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "draft",
+      "injected": "IndexError",
+      "message": "independent premerge injected internal failure",
+      "observed": "IndexError",
+      "same_object": true,
+      "target": "layauto_v2.state.layout_store._materialize"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "draft",
+      "injected": "UnicodeError",
+      "message": "independent premerge injected internal failure",
+      "observed": "UnicodeError",
+      "same_object": true,
+      "target": "layauto_v2.state.layout_store._materialize"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "draft",
+      "injected": "KeyboardInterrupt",
+      "message": "independent premerge injected internal failure",
+      "observed": "KeyboardInterrupt",
+      "same_object": true,
+      "target": "layauto_v2.state.layout_store._materialize"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "draft",
+      "injected": "SystemExit",
+      "message": "independent premerge injected internal failure",
+      "observed": "SystemExit",
+      "same_object": true,
+      "target": "layauto_v2.state.layout_store._materialize"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "result",
+      "injected": "RuntimeError",
+      "message": "independent premerge injected internal failure",
+      "observed": "RuntimeError",
+      "same_object": true,
+      "target": "layauto_v2.state.regions.slab_difference"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "result",
+      "injected": "ValueError",
+      "message": "independent premerge injected internal failure",
+      "observed": "ValueError",
+      "same_object": true,
+      "target": "layauto_v2.state.regions.slab_difference"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "result",
+      "injected": "TypeError",
+      "message": "independent premerge injected internal failure",
+      "observed": "TypeError",
+      "same_object": true,
+      "target": "layauto_v2.state.regions.slab_difference"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "result",
+      "injected": "KeyError",
+      "message": "'independent premerge injected internal failure'",
+      "observed": "KeyError",
+      "same_object": true,
+      "target": "layauto_v2.state.regions.slab_difference"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "result",
+      "injected": "AttributeError",
+      "message": "independent premerge injected internal failure",
+      "observed": "AttributeError",
+      "same_object": true,
+      "target": "layauto_v2.state.regions.slab_difference"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "result",
+      "injected": "IndexError",
+      "message": "independent premerge injected internal failure",
+      "observed": "IndexError",
+      "same_object": true,
+      "target": "layauto_v2.state.regions.slab_difference"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "result",
+      "injected": "UnicodeError",
+      "message": "independent premerge injected internal failure",
+      "observed": "UnicodeError",
+      "same_object": true,
+      "target": "layauto_v2.state.regions.slab_difference"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "result",
+      "injected": "KeyboardInterrupt",
+      "message": "independent premerge injected internal failure",
+      "observed": "KeyboardInterrupt",
+      "same_object": true,
+      "target": "layauto_v2.state.regions.slab_difference"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "result",
+      "injected": "SystemExit",
+      "message": "independent premerge injected internal failure",
+      "observed": "SystemExit",
+      "same_object": true,
+      "target": "layauto_v2.state.regions.slab_difference"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "result",
+      "injected": "RuntimeError",
+      "message": "independent premerge injected internal failure",
+      "observed": "RuntimeError",
+      "same_object": true,
+      "target": "layauto_v2.domain.regions.canonical_cover"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "result",
+      "injected": "ValueError",
+      "message": "independent premerge injected internal failure",
+      "observed": "ValueError",
+      "same_object": true,
+      "target": "layauto_v2.domain.regions.canonical_cover"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "result",
+      "injected": "TypeError",
+      "message": "independent premerge injected internal failure",
+      "observed": "TypeError",
+      "same_object": true,
+      "target": "layauto_v2.domain.regions.canonical_cover"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "result",
+      "injected": "KeyError",
+      "message": "'independent premerge injected internal failure'",
+      "observed": "KeyError",
+      "same_object": true,
+      "target": "layauto_v2.domain.regions.canonical_cover"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "result",
+      "injected": "AttributeError",
+      "message": "independent premerge injected internal failure",
+      "observed": "AttributeError",
+      "same_object": true,
+      "target": "layauto_v2.domain.regions.canonical_cover"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "result",
+      "injected": "IndexError",
+      "message": "independent premerge injected internal failure",
+      "observed": "IndexError",
+      "same_object": true,
+      "target": "layauto_v2.domain.regions.canonical_cover"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "result",
+      "injected": "UnicodeError",
+      "message": "independent premerge injected internal failure",
+      "observed": "UnicodeError",
+      "same_object": true,
+      "target": "layauto_v2.domain.regions.canonical_cover"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "result",
+      "injected": "KeyboardInterrupt",
+      "message": "independent premerge injected internal failure",
+      "observed": "KeyboardInterrupt",
+      "same_object": true,
+      "target": "layauto_v2.domain.regions.canonical_cover"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "result",
+      "injected": "SystemExit",
+      "message": "independent premerge injected internal failure",
+      "observed": "SystemExit",
+      "same_object": true,
+      "target": "layauto_v2.domain.regions.canonical_cover"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "result",
+      "injected": "RuntimeError",
+      "message": "independent premerge injected internal failure",
+      "observed": "RuntimeError",
+      "same_object": true,
+      "target": "layauto_v2.state.occupancy._fragments"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "result",
+      "injected": "ValueError",
+      "message": "independent premerge injected internal failure",
+      "observed": "ValueError",
+      "same_object": true,
+      "target": "layauto_v2.state.occupancy._fragments"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "result",
+      "injected": "TypeError",
+      "message": "independent premerge injected internal failure",
+      "observed": "TypeError",
+      "same_object": true,
+      "target": "layauto_v2.state.occupancy._fragments"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "result",
+      "injected": "KeyError",
+      "message": "'independent premerge injected internal failure'",
+      "observed": "KeyError",
+      "same_object": true,
+      "target": "layauto_v2.state.occupancy._fragments"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "result",
+      "injected": "AttributeError",
+      "message": "independent premerge injected internal failure",
+      "observed": "AttributeError",
+      "same_object": true,
+      "target": "layauto_v2.state.occupancy._fragments"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "result",
+      "injected": "IndexError",
+      "message": "independent premerge injected internal failure",
+      "observed": "IndexError",
+      "same_object": true,
+      "target": "layauto_v2.state.occupancy._fragments"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "result",
+      "injected": "UnicodeError",
+      "message": "independent premerge injected internal failure",
+      "observed": "UnicodeError",
+      "same_object": true,
+      "target": "layauto_v2.state.occupancy._fragments"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "result",
+      "injected": "KeyboardInterrupt",
+      "message": "independent premerge injected internal failure",
+      "observed": "KeyboardInterrupt",
+      "same_object": true,
+      "target": "layauto_v2.state.occupancy._fragments"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "result",
+      "injected": "SystemExit",
+      "message": "independent premerge injected internal failure",
+      "observed": "SystemExit",
+      "same_object": true,
+      "target": "layauto_v2.state.occupancy._fragments"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "result",
+      "injected": "RuntimeError",
+      "message": "independent premerge injected internal failure",
+      "observed": "RuntimeError",
+      "same_object": true,
+      "target": "layauto_v2.state.coordinate._layers"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "result",
+      "injected": "ValueError",
+      "message": "independent premerge injected internal failure",
+      "observed": "ValueError",
+      "same_object": true,
+      "target": "layauto_v2.state.coordinate._layers"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "result",
+      "injected": "TypeError",
+      "message": "independent premerge injected internal failure",
+      "observed": "TypeError",
+      "same_object": true,
+      "target": "layauto_v2.state.coordinate._layers"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "result",
+      "injected": "KeyError",
+      "message": "'independent premerge injected internal failure'",
+      "observed": "KeyError",
+      "same_object": true,
+      "target": "layauto_v2.state.coordinate._layers"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "result",
+      "injected": "AttributeError",
+      "message": "independent premerge injected internal failure",
+      "observed": "AttributeError",
+      "same_object": true,
+      "target": "layauto_v2.state.coordinate._layers"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "result",
+      "injected": "IndexError",
+      "message": "independent premerge injected internal failure",
+      "observed": "IndexError",
+      "same_object": true,
+      "target": "layauto_v2.state.coordinate._layers"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "result",
+      "injected": "UnicodeError",
+      "message": "independent premerge injected internal failure",
+      "observed": "UnicodeError",
+      "same_object": true,
+      "target": "layauto_v2.state.coordinate._layers"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "result",
+      "injected": "KeyboardInterrupt",
+      "message": "independent premerge injected internal failure",
+      "observed": "KeyboardInterrupt",
+      "same_object": true,
+      "target": "layauto_v2.state.coordinate._layers"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "result",
+      "injected": "SystemExit",
+      "message": "independent premerge injected internal failure",
+      "observed": "SystemExit",
+      "same_object": true,
+      "target": "layauto_v2.state.coordinate._layers"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "result",
+      "injected": "RuntimeError",
+      "message": "independent premerge injected internal failure",
+      "observed": "RuntimeError",
+      "same_object": true,
+      "target": "layauto_v2.state.layout_store._materialize"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "result",
+      "injected": "ValueError",
+      "message": "independent premerge injected internal failure",
+      "observed": "ValueError",
+      "same_object": true,
+      "target": "layauto_v2.state.layout_store._materialize"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "result",
+      "injected": "TypeError",
+      "message": "independent premerge injected internal failure",
+      "observed": "TypeError",
+      "same_object": true,
+      "target": "layauto_v2.state.layout_store._materialize"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "result",
+      "injected": "KeyError",
+      "message": "'independent premerge injected internal failure'",
+      "observed": "KeyError",
+      "same_object": true,
+      "target": "layauto_v2.state.layout_store._materialize"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "result",
+      "injected": "AttributeError",
+      "message": "independent premerge injected internal failure",
+      "observed": "AttributeError",
+      "same_object": true,
+      "target": "layauto_v2.state.layout_store._materialize"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "result",
+      "injected": "IndexError",
+      "message": "independent premerge injected internal failure",
+      "observed": "IndexError",
+      "same_object": true,
+      "target": "layauto_v2.state.layout_store._materialize"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "result",
+      "injected": "UnicodeError",
+      "message": "independent premerge injected internal failure",
+      "observed": "UnicodeError",
+      "same_object": true,
+      "target": "layauto_v2.state.layout_store._materialize"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "result",
+      "injected": "KeyboardInterrupt",
+      "message": "independent premerge injected internal failure",
+      "observed": "KeyboardInterrupt",
+      "same_object": true,
+      "target": "layauto_v2.state.layout_store._materialize"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "result",
+      "injected": "SystemExit",
+      "message": "independent premerge injected internal failure",
+      "observed": "SystemExit",
+      "same_object": true,
+      "target": "layauto_v2.state.layout_store._materialize"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "result",
+      "injected": "RuntimeError",
+      "message": "independent premerge injected internal failure",
+      "observed": "RuntimeError",
+      "same_object": true,
+      "target": "layauto_v2.normalization.geometry_input.parse_gds"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "result",
+      "injected": "ValueError",
+      "message": "independent premerge injected internal failure",
+      "observed": "ValueError",
+      "same_object": true,
+      "target": "layauto_v2.normalization.geometry_input.parse_gds"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "result",
+      "injected": "TypeError",
+      "message": "independent premerge injected internal failure",
+      "observed": "TypeError",
+      "same_object": true,
+      "target": "layauto_v2.normalization.geometry_input.parse_gds"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "result",
+      "injected": "KeyError",
+      "message": "'independent premerge injected internal failure'",
+      "observed": "KeyError",
+      "same_object": true,
+      "target": "layauto_v2.normalization.geometry_input.parse_gds"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "result",
+      "injected": "AttributeError",
+      "message": "independent premerge injected internal failure",
+      "observed": "AttributeError",
+      "same_object": true,
+      "target": "layauto_v2.normalization.geometry_input.parse_gds"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "result",
+      "injected": "IndexError",
+      "message": "independent premerge injected internal failure",
+      "observed": "IndexError",
+      "same_object": true,
+      "target": "layauto_v2.normalization.geometry_input.parse_gds"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "result",
+      "injected": "UnicodeError",
+      "message": "independent premerge injected internal failure",
+      "observed": "UnicodeError",
+      "same_object": true,
+      "target": "layauto_v2.normalization.geometry_input.parse_gds"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "result",
+      "injected": "KeyboardInterrupt",
+      "message": "independent premerge injected internal failure",
+      "observed": "KeyboardInterrupt",
+      "same_object": true,
+      "target": "layauto_v2.normalization.geometry_input.parse_gds"
+    },
+    {
+      "cause_same_object": false,
+      "enclosing": "result",
+      "injected": "SystemExit",
+      "message": "independent premerge injected internal failure",
+      "observed": "SystemExit",
+      "same_object": true,
+      "target": "layauto_v2.normalization.geometry_input.parse_gds"
+    }
+  ],
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "same_object_count": 99,
+  "sources": {
+    "layauto_v2/domain/regions.py": "9fd1b2b98338c594533a39e2c0af4c28c1c0cc5c93f0a61481bc0f37be436cc5",
+    "layauto_v2/normalization/effective.py": "9e6cd99c7ba0a0d5c19f6299d879a8e7954b7ca49663755f18754b1c0cd9f8e5",
+    "layauto_v2/normalization/effective_codec.py": "58893a786683e41ae58cedabbe24d44c0b8517d219b5346e7b76ad178c7f8bf0",
+    "layauto_v2/normalization/geometry_codec.py": "e9d74eb17410c85efff28c6c5146376902d04402f531af1cf0bfc0e5cd58f2b8",
+    "layauto_v2/normalization/geometry_input.py": "11d6ff6aff23eaa4e2aa4203c0a97ce2f596a56ba345c7614edf8f6e02bddf30",
+    "layauto_v2/state/coordinate.py": "86199e5d7fe0ae7c01e95338e3bd5bd18530aa91cf1c632dfe85e94f6ae51d93",
+    "layauto_v2/state/layout_store.py": "6e87c3a2a7ffac3ffdeca4fb3d7097971bcf0b4b02d4a799db6583732cae7bf5",
+    "layauto_v2/state/occupancy.py": "4c97e4092fe27804d975aa1be01da9913de63930ab04a3fa9eff6ca79ee41a46",
+    "layauto_v2/state/regions.py": "de35da051c4d2a0e35fa403affdf43fb6202f3bae3d7c4f45eea9b290c74b315"
+  },
+  "wire_sha256": {
+    "draft": "1361a949e1493560354b4617e53e2c063128b333b20b5ad88704a543cdbd976b",
+    "result": "3506a92e7c290a77be5d5e34b9587a173c81e57e7a83203ab50fa55d84733436"
+  }
+}

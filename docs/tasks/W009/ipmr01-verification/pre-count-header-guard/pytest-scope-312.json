@@ -1,0 +1,7 @@
+{
+  "complete_v2": true,
+  "paths": [
+    "tests/contracts",
+    "tests/unit"
+  ]
+}

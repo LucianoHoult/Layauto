@@ -62,7 +62,13 @@ def _materialize(gds: EvidenceRecord, drawn: EvidenceRecord, formats: EvidenceRe
     records: list[DrawnRecord] = []
     for i, value in enumerate(elements):
         row = mapping(value)
-        policy = by_name[text(row['canonical_layer'])]
+        if set(row) != {'element', 'layer', 'datatype', 'canonical_layer', 'xy', 'bbox',
+                        'byte_offset', 'record_index', 'xy_byte_offset', 'xy_record_index', 'byte_length'}:
+            raise ValueError('unknown or missing preserved BOUNDARY fields')
+        layer = text(row['canonical_layer'])
+        if layer not in by_name:
+            raise ValueError('drawn record refers to an unknown layer policy')
+        policy = by_name[layer]
         key = StreamLayerKey(text(row['element']), integer(row['layer']), integer(row['datatype']))
         if key.to_value() != policy.declaration['stream_key']:
             raise ValueError('drawn stream key differs from selected layer policy')
@@ -72,7 +78,10 @@ def _materialize(gds: EvidenceRecord, drawn: EvidenceRecord, formats: EvidenceRe
         if integer(row['xy_record_index']) != ordinal + 3 or not offset < integer(row['xy_byte_offset']) < offset + integer(row['byte_length']):
             raise ValueError('drawn XY position is inconsistent')
         source = SourceRef(gds_source.uri, gds_source.sha256, byte_offset=offset, record_index=ordinal)
-        points = tuple((integer(sequence(pair)[0]), integer(sequence(pair)[1])) for pair in sequence(row['xy']))
+        pairs = tuple(sequence(pair) for pair in sequence(row['xy']))
+        if any(len(pair) != 2 for pair in pairs):
+            raise ValueError('drawn XY requires coordinate pairs')
+        points = tuple((integer(pair[0]), integer(pair[1])) for pair in pairs)
         bounds = tuple(unit.source_to_canonical(integer(c)) for c in sequence(row['bbox']))
         if len(bounds) != 4:
             raise ValueError('drawn bounding rectangle requires four coordinates')
