@@ -1,0 +1,16 @@
+{
+  "command": [
+    "/workspace/work/w009-ipmr01-env/py312/bin/python",
+    "-m",
+    "pip",
+    "freeze",
+    "--all"
+  ],
+  "cwd": "/workspace/work/w009-ipmr01-env",
+  "exit_code": 0,
+  "elapsed_seconds": 0.202,
+  "stdout": "freeze-312.stdout.txt",
+  "stderr": "freeze-312.stderr.txt",
+  "stdout_sha256": "cb1a7226336903a347e6c5c2e357213bfe297da86d188d274cdd6405d541c5d3",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

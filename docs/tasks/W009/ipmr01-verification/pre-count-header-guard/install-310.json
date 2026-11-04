@@ -1,0 +1,53 @@
+{
+  "base_sha": "cdf3d2d5d2aeb0c441221c8bb0b41d0b302d8afa",
+  "command": [
+    "/workspace/work/w009-ipmr01-env/runs/20261103T114038Z-d9317e20/clean-310/bin/python",
+    "-B",
+    "-m",
+    "pip",
+    "install",
+    "--report",
+    "/workspace/work/w009-ipmr01/docs/tasks/W009/ipmr01-verification/install-310-report.json",
+    "/workspace/work/w009-ipmr01/docs/tasks/W009/ipmr01-verification/dist/layauto-0.2.0.tar.gz"
+  ],
+  "cwd": "/workspace/work/w009-ipmr01-env/runs/20261103T114038Z-d9317e20/installed-cwd",
+  "elapsed_seconds": 35.102,
+  "env_overrides": {
+    "MPLBACKEND": "Agg",
+    "MPLCONFIGDIR": "/workspace/work/w009-ipmr01-env/runs/20261103T114038Z-d9317e20/mplconfig",
+    "MYPY_CACHE_DIR": "/workspace/work/w009-ipmr01-env/runs/20261103T114038Z-d9317e20/mypy-install-310",
+    "PIP_CACHE_DIR": "/workspace/work/w009-ipmr01-env/pip-cache",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "TMPDIR": "/workspace/work/w009-ipmr01-env/runs/20261103T114038Z-d9317e20/tmp",
+    "XDG_CACHE_HOME": "/workspace/work/w009-ipmr01-env/runs/20261103T114038Z-d9317e20/cache"
+  },
+  "exit_code": 0,
+  "finished_head": "8aa11baebfea935933b18cae3f23ba8c1e9c6486",
+  "head": "8aa11baebfea935933b18cae3f23ba8c1e9c6486",
+  "outputs": {
+    "stderr": {
+      "path": "install-310.stderr.txt",
+      "sha256": "6f935038d9c67f5db565da54332c503b28b3cb05e604c3d2f5493563ec126b0c"
+    },
+    "stdout": {
+      "path": "install-310.stdout.txt",
+      "sha256": "31ee0d4b656b21b542ca2de64a16ad2091ea73fc2dbfa900721de80dfbd38bc8"
+    }
+  },
+  "python_executable": "/workspace/work/w009-ipmr01-env/runs/20261103T114038Z-d9317e20/clean-310/bin/python",
+  "python_identity": {
+    "base_executable": "/workspace/work/w009-ipmr01-env/runs/20261103T114038Z-d9317e20/clean-310/bin/python",
+    "base_prefix": "/workspace/work/w009-ipmr01-env/interpreters/cpython-3.10.22-linux-x86_64-gnu",
+    "distributions": {
+      "pip": "23.0.1",
+      "setuptools": "79.0.1"
+    },
+    "executable": "/workspace/work/w009-ipmr01-env/runs/20261103T114038Z-d9317e20/clean-310/bin/python",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "prefix": "/workspace/work/w009-ipmr01-env/runs/20261103T114038Z-d9317e20/clean-310",
+    "purelib": "/workspace/work/w009-ipmr01-env/runs/20261103T114038Z-d9317e20/clean-310/lib/python3.10/site-packages",
+    "python": "3.10.22 (main, Oct  3 2026, 01:32:06) [Clang 22.1.3 ]"
+  },
+  "source_manifest_sha256": "54e26f0999f36ef75defe7d7ffd6f9e91fd146479798cfc853e9e44a44c2a5a2",
+  "started_utc": "2026-11-03T11:40:54.561792+00:00"
+}

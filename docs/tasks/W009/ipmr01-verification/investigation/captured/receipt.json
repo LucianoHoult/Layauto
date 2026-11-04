@@ -1,0 +1,57 @@
+{
+  "base": "cdf3d2d5d2aeb0c441221c8bb0b41d0b302d8afa",
+  "cwd": "/workspace/work/w009-ipmr01-captured",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "source_sha256": {
+    "layauto_v2/domain/publication_codec.py": "a7df707d29f68748b28a9ee827cd4ee6448f30ff6a4d176400fa2588b221eb17",
+    "layauto_v2/domain/evidence.py": "1a672a010d5434659417805c17db9d35a8b87d2cbc31b47fb3ea45102b14342f",
+    "layauto_v2/domain/results.py": "e8df4422f86362b06d90df55e757260a41fb1d4c180fd44b41112e09e5c5fe35",
+    "tests/contracts/test_w009_captured_decode_exceptions.py": "f60de8c57c05e884e60bcc442b84684d3090155e1d320be5307bcaf4820fea22"
+  },
+  "reproduction": {
+    "command": [
+      "/workspace/.venvs/layauto/bin/python",
+      "-B",
+      "/workspace/work/w009-ipmr01-captured-evidence/reproduce.py"
+    ],
+    "before_output": "reproduce-sourcefile-before.json",
+    "before_exit_code": 0,
+    "after_output": "reproduce-sourcefile-after.json",
+    "after_exit_code": 0
+  },
+  "typing": {
+    "command": [
+      "/workspace/work/w009-ipmr01-env/py312/bin/python",
+      "-B",
+      "-m",
+      "mypy",
+      "--cache-dir",
+      "/workspace/work/w009-ipmr01-captured-evidence/mypy-cache"
+    ],
+    "output": "mypy.txt",
+    "exit_code": 0
+  },
+  "note": "reproduce-before.json is an earlier shared hashlib-module patch that reaches geometry first; only the isolated module-binding reproduction above establishes this SourceFile boundary.",
+  "pytest": {
+    "command": [
+      "/workspace/.venvs/layauto/bin/python",
+      "-B",
+      "-m",
+      "pytest",
+      "-p",
+      "no:cacheprovider",
+      "tests/contracts/test_w009_captured_decode_exceptions.py",
+      "tests/unit/test_w006_publication.py",
+      "tests/contracts/test_w005_contracts.py",
+      "-q"
+    ],
+    "environment": {
+      "PYTHONDONTWRITEBYTECODE": "1",
+      "PYTHONPATH": "."
+    },
+    "output": "pytest.txt",
+    "exit_code": 0,
+    "passed": 133,
+    "elapsed_seconds": 122.04
+  }
+}

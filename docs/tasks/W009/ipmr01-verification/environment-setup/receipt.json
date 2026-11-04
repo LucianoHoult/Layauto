@@ -1,0 +1,211 @@
+{
+  "status": "passed",
+  "commands": [
+    {
+      "command": [
+        "/workspace/.venvs/layauto/bin/python",
+        "-c",
+        "import sys; print(sys.version); print(sys.executable); print(sys._base_executable)"
+      ],
+      "cwd": "/workspace/work/w009-ipmr01-env",
+      "exit_code": 0,
+      "elapsed_seconds": 0.019,
+      "stdout": "existing-312.stdout.txt",
+      "stderr": "existing-312.stderr.txt",
+      "stdout_sha256": "ce5396c0cb68dd2a957154fe0281ed8aee2aa326720ab233e39b588962640b97",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/uv",
+        "python",
+        "install",
+        "3.10"
+      ],
+      "cwd": "/workspace/work/w009-ipmr01-env",
+      "exit_code": 0,
+      "elapsed_seconds": 2.018,
+      "stdout": "download-310.stdout.txt",
+      "stderr": "download-310.stderr.txt",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "c23f23c005b070204201cc6cbd75bce264136dfff501397c1cbc1ac88aa57254"
+    },
+    {
+      "command": [
+        "/workspace/work/w009-ipmr01-env/interpreters/cpython-3.10.22-linux-x86_64-gnu/bin/python3.10",
+        "-m",
+        "venv",
+        "/workspace/work/w009-ipmr01-env/py310"
+      ],
+      "cwd": "/workspace/work/w009-ipmr01-env",
+      "exit_code": 0,
+      "elapsed_seconds": 3.51,
+      "stdout": "create-310.stdout.txt",
+      "stderr": "create-310.stderr.txt",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "/workspace/work/w009-ipmr01-env/py310/bin/python",
+        "-m",
+        "pip",
+        "install",
+        "--report",
+        "/workspace/work/w009-ipmr01-env/setup/pip-report-310.json",
+        "numpy",
+        "matplotlib",
+        "pyyaml",
+        "pytest",
+        "mypy",
+        "types-PyYAML",
+        "build",
+        "setuptools",
+        "wheel"
+      ],
+      "cwd": "/workspace/work/w009-ipmr01-env",
+      "exit_code": 0,
+      "elapsed_seconds": 18.717,
+      "stdout": "install-dependencies-310.stdout.txt",
+      "stderr": "install-dependencies-310.stderr.txt",
+      "stdout_sha256": "b7e8c950d04a014dfc8d12ffced335e07f767032b879b6562370fb0d65d3fef8",
+      "stderr_sha256": "e091950f90cffd3dcf60c566598ac29043d3cce845f774f9389cea0913af182d"
+    },
+    {
+      "command": [
+        "/workspace/work/w009-ipmr01-env/py310/bin/python",
+        "-m",
+        "pip",
+        "check"
+      ],
+      "cwd": "/workspace/work/w009-ipmr01-env",
+      "exit_code": 0,
+      "elapsed_seconds": 0.889,
+      "stdout": "pip-check-310.stdout.txt",
+      "stderr": "pip-check-310.stderr.txt",
+      "stdout_sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "/workspace/work/w009-ipmr01-env/py310/bin/python",
+        "-c",
+        "import sys,platform,importlib.metadata,json; print(json.dumps({\"version\":sys.version,\"executable\":sys.executable,\"base_executable\":sys._base_executable,\"platform\":platform.platform(),\"distributions\":{d.metadata[\"Name\"]:d.version for d in importlib.metadata.distributions()}},indent=2,sort_keys=True))"
+      ],
+      "cwd": "/workspace/work/w009-ipmr01-env",
+      "exit_code": 0,
+      "elapsed_seconds": 0.271,
+      "stdout": "identity-310.stdout.txt",
+      "stderr": "identity-310.stderr.txt",
+      "stdout_sha256": "f1d40b48a2df1ba46e4f5f828bb540c2b50cd02b237ad2362cc5bfcba5932e0c",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "/workspace/work/w009-ipmr01-env/py310/bin/python",
+        "-m",
+        "pip",
+        "freeze",
+        "--all"
+      ],
+      "cwd": "/workspace/work/w009-ipmr01-env",
+      "exit_code": 0,
+      "elapsed_seconds": 0.833,
+      "stdout": "freeze-310.stdout.txt",
+      "stderr": "freeze-310.stderr.txt",
+      "stdout_sha256": "110da1458ed73776aed67338745318633852e7d53081b7a8b120c7061830d684",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "/workspace/.venvs/layauto/bin/python",
+        "-m",
+        "venv",
+        "/workspace/work/w009-ipmr01-env/py312"
+      ],
+      "cwd": "/workspace/work/w009-ipmr01-env",
+      "exit_code": 0,
+      "elapsed_seconds": 1.824,
+      "stdout": "create-312.stdout.txt",
+      "stderr": "create-312.stderr.txt",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "/workspace/work/w009-ipmr01-env/py312/bin/python",
+        "-m",
+        "pip",
+        "install",
+        "--report",
+        "/workspace/work/w009-ipmr01-env/setup/pip-report-312.json",
+        "numpy",
+        "matplotlib",
+        "pyyaml",
+        "pytest",
+        "mypy",
+        "types-PyYAML",
+        "build",
+        "setuptools",
+        "wheel"
+      ],
+      "cwd": "/workspace/work/w009-ipmr01-env",
+      "exit_code": 0,
+      "elapsed_seconds": 17.41,
+      "stdout": "install-dependencies-312.stdout.txt",
+      "stderr": "install-dependencies-312.stderr.txt",
+      "stdout_sha256": "ce2f496638e437fe714010f01130ae2362e9046738960bab038b8d54b23d22c7",
+      "stderr_sha256": "f96a57a6d17645d3d9eb401b9cead41a648edf2499f2ca4bc3f9364d677b6080"
+    },
+    {
+      "command": [
+        "/workspace/work/w009-ipmr01-env/py312/bin/python",
+        "-m",
+        "pip",
+        "check"
+      ],
+      "cwd": "/workspace/work/w009-ipmr01-env",
+      "exit_code": 0,
+      "elapsed_seconds": 0.308,
+      "stdout": "pip-check-312.stdout.txt",
+      "stderr": "pip-check-312.stderr.txt",
+      "stdout_sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "/workspace/work/w009-ipmr01-env/py312/bin/python",
+        "-c",
+        "import sys,platform,importlib.metadata,json; print(json.dumps({\"version\":sys.version,\"executable\":sys.executable,\"base_executable\":sys._base_executable,\"platform\":platform.platform(),\"distributions\":{d.metadata[\"Name\"]:d.version for d in importlib.metadata.distributions()}},indent=2,sort_keys=True))"
+      ],
+      "cwd": "/workspace/work/w009-ipmr01-env",
+      "exit_code": 0,
+      "elapsed_seconds": 0.089,
+      "stdout": "identity-312.stdout.txt",
+      "stderr": "identity-312.stderr.txt",
+      "stdout_sha256": "0dedd8bf5638a8d8c5303efd01567a37c35ab9586eb525799ce734239210ec97",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "/workspace/work/w009-ipmr01-env/py312/bin/python",
+        "-m",
+        "pip",
+        "freeze",
+        "--all"
+      ],
+      "cwd": "/workspace/work/w009-ipmr01-env",
+      "exit_code": 0,
+      "elapsed_seconds": 0.202,
+      "stdout": "freeze-312.stdout.txt",
+      "stderr": "freeze-312.stderr.txt",
+      "stdout_sha256": "cb1a7226336903a347e6c5c2e357213bfe297da86d188d274cdd6405d541c5d3",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "interpreters": {
+    "310": "/workspace/work/w009-ipmr01-env/py310/bin/python",
+    "312": "/workspace/work/w009-ipmr01-env/py312/bin/python"
+  },
+  "scope": "Dedicated runtime and dev dependencies only; no product tests, build or product installation."
+}

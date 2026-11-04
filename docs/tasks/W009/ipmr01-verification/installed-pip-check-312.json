@@ -1,0 +1,62 @@
+{
+  "base_sha": "cdf3d2d5d2aeb0c441221c8bb0b41d0b302d8afa",
+  "command": [
+    "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-312/bin/python",
+    "-B",
+    "-m",
+    "pip",
+    "check"
+  ],
+  "cwd": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/installed-cwd",
+  "elapsed_seconds": 0.847,
+  "env_overrides": {
+    "MPLBACKEND": "Agg",
+    "MPLCONFIGDIR": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/mplconfig",
+    "MYPY_CACHE_DIR": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/mypy-installed-pip-check-312",
+    "PIP_CACHE_DIR": "/workspace/work/w009-ipmr01-env/pip-cache",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "TMPDIR": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/tmp",
+    "XDG_CACHE_HOME": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/cache"
+  },
+  "exit_code": 0,
+  "finished_head": "73e38df8f932bbb5bd9caf074b442ad2f5c286e9",
+  "head": "73e38df8f932bbb5bd9caf074b442ad2f5c286e9",
+  "outputs": {
+    "stderr": {
+      "path": "installed-pip-check-312.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stdout": {
+      "path": "installed-pip-check-312.stdout.txt",
+      "sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09"
+    }
+  },
+  "python_executable": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-312/bin/python",
+  "python_identity": {
+    "base_executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+    "base_prefix": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python",
+    "distributions": {
+      "PyYAML": "6.0.3",
+      "contourpy": "1.4.0",
+      "cycler": "0.12.1",
+      "fonttools": "4.68.0",
+      "kiwisolver": "1.5.1",
+      "layauto": "0.2.0",
+      "matplotlib": "3.11.2",
+      "numpy": "2.5.4",
+      "packaging": "26.3",
+      "pillow": "13.0.0",
+      "pip": "25.0.1",
+      "pyparsing": "3.3.3",
+      "python-dateutil": "4.0.0",
+      "tzdata": "2026.6"
+    },
+    "executable": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-312/bin/python",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "prefix": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-312",
+    "purelib": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-312/lib/python3.12/site-packages",
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]"
+  },
+  "source_manifest_sha256": "40a60ada56e2b560d1af88fec9c16e4d60a6b1384fb042f39202edfcaefefc2c",
+  "started_utc": "2026-11-03T11:51:37.685310+00:00"
+}

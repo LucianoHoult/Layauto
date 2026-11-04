@@ -1,0 +1,1759 @@
+{
+  "actual_test_counts": {
+    "310": 988,
+    "312": 1149
+  },
+  "base_sha": "cdf3d2d5d2aeb0c441221c8bb0b41d0b302d8afa",
+  "commands": [
+    {
+      "base_sha": "cdf3d2d5d2aeb0c441221c8bb0b41d0b302d8afa",
+      "command": [
+        "/workspace/work/w009-ipmr01-env/py312/bin/python",
+        "-I",
+        "-B",
+        "-c",
+        "import importlib.metadata,json,platform,sys,sysconfig\nprint(json.dumps({\"python\":sys.version,\"executable\":sys.executable,\"prefix\":sys.prefix,\n\"base_prefix\":sys.base_prefix,\"base_executable\":sys._base_executable,\n\"platform\":platform.platform(),\"purelib\":sysconfig.get_path(\"purelib\"),\n\"distributions\":{d.metadata[\"Name\"]:d.version for d in importlib.metadata.distributions()}},sort_keys=True,indent=2))"
+      ],
+      "cwd": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/build-source",
+      "elapsed_seconds": 0.126,
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "MPLCONFIGDIR": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/mplconfig",
+        "MYPY_CACHE_DIR": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/mypy-build-environment-312",
+        "PIP_CACHE_DIR": "/workspace/work/w009-ipmr01-env/pip-cache",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "TMPDIR": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/tmp",
+        "XDG_CACHE_HOME": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/cache"
+      },
+      "exit_code": 0,
+      "finished_head": "73e38df8f932bbb5bd9caf074b442ad2f5c286e9",
+      "head": "73e38df8f932bbb5bd9caf074b442ad2f5c286e9",
+      "outputs": {
+        "stderr": {
+          "path": "build-environment-312.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "path": "build-environment-312.stdout.txt",
+          "sha256": "0d155502aaa3850d32496c12f368d0c6aeb9e4a9476f8c6603eb54860a3b47f6"
+        }
+      },
+      "python_executable": "/workspace/work/w009-ipmr01-env/py312/bin/python",
+      "python_identity": {
+        "base_executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "base_prefix": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python",
+        "distributions": {
+          "PyYAML": "6.0.3",
+          "Pygments": "2.21.0",
+          "ast_serialize": "0.13.1",
+          "build": "1.6.1",
+          "contourpy": "1.4.0",
+          "cycler": "0.12.1",
+          "fonttools": "4.68.0",
+          "iniconfig": "2.3.1",
+          "kiwisolver": "1.5.1",
+          "librt": "0.16.0",
+          "matplotlib": "3.11.2",
+          "mypy": "2.4.1",
+          "mypy_extensions": "1.1.0",
+          "numpy": "2.5.4",
+          "packaging": "26.3",
+          "pathspec": "1.1.1",
+          "pillow": "13.0.0",
+          "pip": "25.0.1",
+          "pluggy": "1.7.0",
+          "pyparsing": "3.3.3",
+          "pyproject_hooks": "1.3.3",
+          "pytest": "9.2.0",
+          "python-dateutil": "4.0.0",
+          "setuptools": "84.2.1",
+          "types-PyYAML": "6.0.12.20261103",
+          "typing_extensions": "4.16.0",
+          "tzdata": "2026.6",
+          "wheel": "0.48.0"
+        },
+        "executable": "/workspace/work/w009-ipmr01-env/py312/bin/python",
+        "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+        "prefix": "/workspace/work/w009-ipmr01-env/py312",
+        "purelib": "/workspace/work/w009-ipmr01-env/py312/lib/python3.12/site-packages",
+        "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]"
+      },
+      "source_manifest_sha256": "40a60ada56e2b560d1af88fec9c16e4d60a6b1384fb042f39202edfcaefefc2c",
+      "started_utc": "2026-11-03T11:51:03.002863+00:00"
+    },
+    {
+      "base_sha": "cdf3d2d5d2aeb0c441221c8bb0b41d0b302d8afa",
+      "command": [
+        "/workspace/work/w009-ipmr01-env/py312/bin/python",
+        "-B",
+        "-m",
+        "build",
+        "--outdir",
+        "/workspace/work/w009-ipmr01/docs/tasks/W009/ipmr01-verification/dist"
+      ],
+      "cwd": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/build-source",
+      "elapsed_seconds": 6.861,
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "MPLCONFIGDIR": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/mplconfig",
+        "MYPY_CACHE_DIR": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/mypy-build",
+        "PIP_CACHE_DIR": "/workspace/work/w009-ipmr01-env/pip-cache",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "TMPDIR": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/tmp",
+        "XDG_CACHE_HOME": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/cache"
+      },
+      "exit_code": 0,
+      "finished_head": "73e38df8f932bbb5bd9caf074b442ad2f5c286e9",
+      "head": "73e38df8f932bbb5bd9caf074b442ad2f5c286e9",
+      "outputs": {
+        "stderr": {
+          "path": "build.stderr.txt",
+          "sha256": "7b2888f78d7fa636ed83e6385e6be3fdaf145831d191ec5b2a189ea147e86505"
+        },
+        "stdout": {
+          "path": "build.stdout.txt",
+          "sha256": "a042c98dec303321efbaa1831210538e0f2fe348adbd1dbda669180f2cb53def"
+        }
+      },
+      "python_executable": "/workspace/work/w009-ipmr01-env/py312/bin/python",
+      "python_identity": {
+        "base_executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "base_prefix": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python",
+        "distributions": {
+          "PyYAML": "6.0.3",
+          "Pygments": "2.21.0",
+          "ast_serialize": "0.13.1",
+          "build": "1.6.1",
+          "contourpy": "1.4.0",
+          "cycler": "0.12.1",
+          "fonttools": "4.68.0",
+          "iniconfig": "2.3.1",
+          "kiwisolver": "1.5.1",
+          "librt": "0.16.0",
+          "matplotlib": "3.11.2",
+          "mypy": "2.4.1",
+          "mypy_extensions": "1.1.0",
+          "numpy": "2.5.4",
+          "packaging": "26.3",
+          "pathspec": "1.1.1",
+          "pillow": "13.0.0",
+          "pip": "25.0.1",
+          "pluggy": "1.7.0",
+          "pyparsing": "3.3.3",
+          "pyproject_hooks": "1.3.3",
+          "pytest": "9.2.0",
+          "python-dateutil": "4.0.0",
+          "setuptools": "84.2.1",
+          "types-PyYAML": "6.0.12.20261103",
+          "typing_extensions": "4.16.0",
+          "tzdata": "2026.6",
+          "wheel": "0.48.0"
+        },
+        "executable": "/workspace/work/w009-ipmr01-env/py312/bin/python",
+        "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+        "prefix": "/workspace/work/w009-ipmr01-env/py312",
+        "purelib": "/workspace/work/w009-ipmr01-env/py312/lib/python3.12/site-packages",
+        "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]"
+      },
+      "source_manifest_sha256": "40a60ada56e2b560d1af88fec9c16e4d60a6b1384fb042f39202edfcaefefc2c",
+      "started_utc": "2026-11-03T11:51:03.132366+00:00"
+    },
+    {
+      "base_sha": "cdf3d2d5d2aeb0c441221c8bb0b41d0b302d8afa",
+      "command": [
+        "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-310/bin/python",
+        "-I",
+        "-B",
+        "-c",
+        "import importlib.metadata,json,platform,sys,sysconfig\nprint(json.dumps({\"python\":sys.version,\"executable\":sys.executable,\"prefix\":sys.prefix,\n\"base_prefix\":sys.base_prefix,\"base_executable\":sys._base_executable,\n\"platform\":platform.platform(),\"purelib\":sysconfig.get_path(\"purelib\"),\n\"distributions\":{d.metadata[\"Name\"]:d.version for d in importlib.metadata.distributions()}},sort_keys=True,indent=2))"
+      ],
+      "cwd": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/installed-cwd",
+      "elapsed_seconds": 0.801,
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "MPLCONFIGDIR": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/mplconfig",
+        "MYPY_CACHE_DIR": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/mypy-clean-environment-before-install-310",
+        "PIP_CACHE_DIR": "/workspace/work/w009-ipmr01-env/pip-cache",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "TMPDIR": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/tmp",
+        "XDG_CACHE_HOME": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/cache"
+      },
+      "exit_code": 0,
+      "finished_head": "73e38df8f932bbb5bd9caf074b442ad2f5c286e9",
+      "head": "73e38df8f932bbb5bd9caf074b442ad2f5c286e9",
+      "outputs": {
+        "stderr": {
+          "path": "clean-environment-before-install-310.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "path": "clean-environment-before-install-310.stdout.txt",
+          "sha256": "0c44018e70a334019aaa5286140dab8f2b7f5db3f2c3902301ecb0367a8ab006"
+        }
+      },
+      "python_executable": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-310/bin/python",
+      "python_identity": {
+        "base_executable": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-310/bin/python",
+        "base_prefix": "/workspace/work/w009-ipmr01-env/interpreters/cpython-3.10.22-linux-x86_64-gnu",
+        "distributions": {
+          "pip": "23.0.1",
+          "setuptools": "79.0.1"
+        },
+        "executable": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-310/bin/python",
+        "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+        "prefix": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-310",
+        "purelib": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-310/lib/python3.10/site-packages",
+        "python": "3.10.22 (main, Oct  3 2026, 01:32:06) [Clang 22.1.3 ]"
+      },
+      "source_manifest_sha256": "40a60ada56e2b560d1af88fec9c16e4d60a6b1384fb042f39202edfcaefefc2c",
+      "started_utc": "2026-11-03T11:51:21.493346+00:00"
+    },
+    {
+      "base_sha": "cdf3d2d5d2aeb0c441221c8bb0b41d0b302d8afa",
+      "command": [
+        "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-312/bin/python",
+        "-I",
+        "-B",
+        "-c",
+        "import importlib.metadata,json,platform,sys,sysconfig\nprint(json.dumps({\"python\":sys.version,\"executable\":sys.executable,\"prefix\":sys.prefix,\n\"base_prefix\":sys.base_prefix,\"base_executable\":sys._base_executable,\n\"platform\":platform.platform(),\"purelib\":sysconfig.get_path(\"purelib\"),\n\"distributions\":{d.metadata[\"Name\"]:d.version for d in importlib.metadata.distributions()}},sort_keys=True,indent=2))"
+      ],
+      "cwd": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/installed-cwd",
+      "elapsed_seconds": 0.207,
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "MPLCONFIGDIR": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/mplconfig",
+        "MYPY_CACHE_DIR": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/mypy-clean-environment-before-install-312",
+        "PIP_CACHE_DIR": "/workspace/work/w009-ipmr01-env/pip-cache",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "TMPDIR": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/tmp",
+        "XDG_CACHE_HOME": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/cache"
+      },
+      "exit_code": 0,
+      "finished_head": "73e38df8f932bbb5bd9caf074b442ad2f5c286e9",
+      "head": "73e38df8f932bbb5bd9caf074b442ad2f5c286e9",
+      "outputs": {
+        "stderr": {
+          "path": "clean-environment-before-install-312.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "path": "clean-environment-before-install-312.stdout.txt",
+          "sha256": "6a9696bf9dee94265b1f7c75fa3f8a8ce618d072841d44609a41a3fa1a52884d"
+        }
+      },
+      "python_executable": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-312/bin/python",
+      "python_identity": {
+        "base_executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "base_prefix": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python",
+        "distributions": {
+          "pip": "25.0.1"
+        },
+        "executable": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-312/bin/python",
+        "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+        "prefix": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-312",
+        "purelib": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-312/lib/python3.12/site-packages",
+        "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]"
+      },
+      "source_manifest_sha256": "40a60ada56e2b560d1af88fec9c16e4d60a6b1384fb042f39202edfcaefefc2c",
+      "started_utc": "2026-11-03T11:51:16.043417+00:00"
+    },
+    {
+      "base_sha": "cdf3d2d5d2aeb0c441221c8bb0b41d0b302d8afa",
+      "command": [
+        "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-310/bin/python",
+        "-I",
+        "-B",
+        "-c",
+        "import importlib.metadata,json,platform,sys,sysconfig\nprint(json.dumps({\"python\":sys.version,\"executable\":sys.executable,\"prefix\":sys.prefix,\n\"base_prefix\":sys.base_prefix,\"base_executable\":sys._base_executable,\n\"platform\":platform.platform(),\"purelib\":sysconfig.get_path(\"purelib\"),\n\"distributions\":{d.metadata[\"Name\"]:d.version for d in importlib.metadata.distributions()}},sort_keys=True,indent=2))"
+      ],
+      "cwd": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/installed-cwd",
+      "elapsed_seconds": 0.792,
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "MPLCONFIGDIR": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/mplconfig",
+        "MYPY_CACHE_DIR": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/mypy-clean-environment-installed-310",
+        "PIP_CACHE_DIR": "/workspace/work/w009-ipmr01-env/pip-cache",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "TMPDIR": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/tmp",
+        "XDG_CACHE_HOME": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/cache"
+      },
+      "exit_code": 0,
+      "finished_head": "73e38df8f932bbb5bd9caf074b442ad2f5c286e9",
+      "head": "73e38df8f932bbb5bd9caf074b442ad2f5c286e9",
+      "outputs": {
+        "stderr": {
+          "path": "clean-environment-installed-310.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "path": "clean-environment-installed-310.stdout.txt",
+          "sha256": "77aefb4ee4889386dc3b57ee24870eb98e6f106788fa6c8a559f5365838a8395"
+        }
+      },
+      "python_executable": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-310/bin/python",
+      "python_identity": {
+        "base_executable": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-310/bin/python",
+        "base_prefix": "/workspace/work/w009-ipmr01-env/interpreters/cpython-3.10.22-linux-x86_64-gnu",
+        "distributions": {
+          "PyYAML": "6.0.3",
+          "contourpy": "1.3.2",
+          "cycler": "0.12.1",
+          "fonttools": "4.65.0",
+          "kiwisolver": "1.5.1",
+          "layauto": "0.2.0",
+          "matplotlib": "3.10.9",
+          "numpy": "2.2.6",
+          "packaging": "26.3",
+          "pillow": "12.3.0",
+          "pip": "23.0.1",
+          "pyparsing": "3.3.3",
+          "python-dateutil": "3.0.0",
+          "setuptools": "79.0.1",
+          "six": "1.17.0",
+          "tzdata": "2026.6"
+        },
+        "executable": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-310/bin/python",
+        "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+        "prefix": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-310",
+        "purelib": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-310/lib/python3.10/site-packages",
+        "python": "3.10.22 (main, Oct  3 2026, 01:32:06) [Clang 22.1.3 ]"
+      },
+      "source_manifest_sha256": "40a60ada56e2b560d1af88fec9c16e4d60a6b1384fb042f39202edfcaefefc2c",
+      "started_utc": "2026-11-03T11:51:57.936789+00:00"
+    },
+    {
+      "base_sha": "cdf3d2d5d2aeb0c441221c8bb0b41d0b302d8afa",
+      "command": [
+        "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-312/bin/python",
+        "-I",
+        "-B",
+        "-c",
+        "import importlib.metadata,json,platform,sys,sysconfig\nprint(json.dumps({\"python\":sys.version,\"executable\":sys.executable,\"prefix\":sys.prefix,\n\"base_prefix\":sys.base_prefix,\"base_executable\":sys._base_executable,\n\"platform\":platform.platform(),\"purelib\":sysconfig.get_path(\"purelib\"),\n\"distributions\":{d.metadata[\"Name\"]:d.version for d in importlib.metadata.distributions()}},sort_keys=True,indent=2))"
+      ],
+      "cwd": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/installed-cwd",
+      "elapsed_seconds": 0.228,
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "MPLCONFIGDIR": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/mplconfig",
+        "MYPY_CACHE_DIR": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/mypy-clean-environment-installed-312",
+        "PIP_CACHE_DIR": "/workspace/work/w009-ipmr01-env/pip-cache",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "TMPDIR": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/tmp",
+        "XDG_CACHE_HOME": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/cache"
+      },
+      "exit_code": 0,
+      "finished_head": "73e38df8f932bbb5bd9caf074b442ad2f5c286e9",
+      "head": "73e38df8f932bbb5bd9caf074b442ad2f5c286e9",
+      "outputs": {
+        "stderr": {
+          "path": "clean-environment-installed-312.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "path": "clean-environment-installed-312.stdout.txt",
+          "sha256": "e41fbc97ca5629fe97dd8ce36807d4a60120fc1d54c720f7723e5232d7661274"
+        }
+      },
+      "python_executable": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-312/bin/python",
+      "python_identity": {
+        "base_executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "base_prefix": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python",
+        "distributions": {
+          "PyYAML": "6.0.3",
+          "contourpy": "1.4.0",
+          "cycler": "0.12.1",
+          "fonttools": "4.68.0",
+          "kiwisolver": "1.5.1",
+          "layauto": "0.2.0",
+          "matplotlib": "3.11.2",
+          "numpy": "2.5.4",
+          "packaging": "26.3",
+          "pillow": "13.0.0",
+          "pip": "25.0.1",
+          "pyparsing": "3.3.3",
+          "python-dateutil": "4.0.0",
+          "tzdata": "2026.6"
+        },
+        "executable": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-312/bin/python",
+        "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+        "prefix": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-312",
+        "purelib": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-312/lib/python3.12/site-packages",
+        "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]"
+      },
+      "source_manifest_sha256": "40a60ada56e2b560d1af88fec9c16e4d60a6b1384fb042f39202edfcaefefc2c",
+      "started_utc": "2026-11-03T11:51:37.451816+00:00"
+    },
+    {
+      "base_sha": "cdf3d2d5d2aeb0c441221c8bb0b41d0b302d8afa",
+      "command": [
+        "/workspace/work/w009-ipmr01-env/py310/bin/python",
+        "-B",
+        "-m",
+        "venv",
+        "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-310"
+      ],
+      "cwd": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/installed-cwd",
+      "elapsed_seconds": 11.428,
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "MPLCONFIGDIR": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/mplconfig",
+        "MYPY_CACHE_DIR": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/mypy-create-install-310",
+        "PIP_CACHE_DIR": "/workspace/work/w009-ipmr01-env/pip-cache",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "TMPDIR": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/tmp",
+        "XDG_CACHE_HOME": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/cache"
+      },
+      "exit_code": 0,
+      "finished_head": "73e38df8f932bbb5bd9caf074b442ad2f5c286e9",
+      "head": "73e38df8f932bbb5bd9caf074b442ad2f5c286e9",
+      "outputs": {
+        "stderr": {
+          "path": "create-install-310.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "path": "create-install-310.stdout.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "python_executable": "/workspace/work/w009-ipmr01-env/py310/bin/python",
+      "python_identity": {
+        "base_executable": "/workspace/work/w009-ipmr01-env/py310/bin/python",
+        "base_prefix": "/workspace/work/w009-ipmr01-env/interpreters/cpython-3.10.22-linux-x86_64-gnu",
+        "distributions": {
+          "PyYAML": "6.0.3",
+          "Pygments": "2.21.0",
+          "ast_serialize": "0.13.1",
+          "build": "1.6.1",
+          "contourpy": "1.3.2",
+          "cycler": "0.12.1",
+          "exceptiongroup": "1.3.1",
+          "fonttools": "4.65.0",
+          "iniconfig": "2.3.1",
+          "kiwisolver": "1.5.1",
+          "librt": "0.16.0",
+          "matplotlib": "3.10.9",
+          "mypy": "2.4.1",
+          "mypy_extensions": "1.1.0",
+          "numpy": "2.2.6",
+          "packaging": "26.3",
+          "pathspec": "1.1.1",
+          "pillow": "12.3.0",
+          "pip": "23.0.1",
+          "pluggy": "1.7.0",
+          "pyparsing": "3.3.3",
+          "pyproject_hooks": "1.3.3",
+          "pytest": "9.2.0",
+          "python-dateutil": "3.0.0",
+          "setuptools": "79.0.1",
+          "six": "1.17.0",
+          "tomli": "2.5.0",
+          "types-PyYAML": "6.0.12.20261103",
+          "typing_extensions": "4.16.0",
+          "tzdata": "2026.6",
+          "wheel": "0.48.0"
+        },
+        "executable": "/workspace/work/w009-ipmr01-env/py310/bin/python",
+        "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+        "prefix": "/workspace/work/w009-ipmr01-env/py310",
+        "purelib": "/workspace/work/w009-ipmr01-env/py310/lib/python3.10/site-packages",
+        "python": "3.10.22 (main, Oct  3 2026, 01:32:06) [Clang 22.1.3 ]"
+      },
+      "source_manifest_sha256": "40a60ada56e2b560d1af88fec9c16e4d60a6b1384fb042f39202edfcaefefc2c",
+      "started_utc": "2026-11-03T11:51:10.060577+00:00"
+    },
+    {
+      "base_sha": "cdf3d2d5d2aeb0c441221c8bb0b41d0b302d8afa",
+      "command": [
+        "/workspace/work/w009-ipmr01-env/py312/bin/python",
+        "-B",
+        "-m",
+        "venv",
+        "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-312"
+      ],
+      "cwd": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/installed-cwd",
+      "elapsed_seconds": 5.98,
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "MPLCONFIGDIR": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/mplconfig",
+        "MYPY_CACHE_DIR": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/mypy-create-install-312",
+        "PIP_CACHE_DIR": "/workspace/work/w009-ipmr01-env/pip-cache",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "TMPDIR": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/tmp",
+        "XDG_CACHE_HOME": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/cache"
+      },
+      "exit_code": 0,
+      "finished_head": "73e38df8f932bbb5bd9caf074b442ad2f5c286e9",
+      "head": "73e38df8f932bbb5bd9caf074b442ad2f5c286e9",
+      "outputs": {
+        "stderr": {
+          "path": "create-install-312.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "path": "create-install-312.stdout.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "python_executable": "/workspace/work/w009-ipmr01-env/py312/bin/python",
+      "python_identity": {
+        "base_executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "base_prefix": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python",
+        "distributions": {
+          "PyYAML": "6.0.3",
+          "Pygments": "2.21.0",
+          "ast_serialize": "0.13.1",
+          "build": "1.6.1",
+          "contourpy": "1.4.0",
+          "cycler": "0.12.1",
+          "fonttools": "4.68.0",
+          "iniconfig": "2.3.1",
+          "kiwisolver": "1.5.1",
+          "librt": "0.16.0",
+          "matplotlib": "3.11.2",
+          "mypy": "2.4.1",
+          "mypy_extensions": "1.1.0",
+          "numpy": "2.5.4",
+          "packaging": "26.3",
+          "pathspec": "1.1.1",
+          "pillow": "13.0.0",
+          "pip": "25.0.1",
+          "pluggy": "1.7.0",
+          "pyparsing": "3.3.3",
+          "pyproject_hooks": "1.3.3",
+          "pytest": "9.2.0",
+          "python-dateutil": "4.0.0",
+          "setuptools": "84.2.1",
+          "types-PyYAML": "6.0.12.20261103",
+          "typing_extensions": "4.16.0",
+          "tzdata": "2026.6",
+          "wheel": "0.48.0"
+        },
+        "executable": "/workspace/work/w009-ipmr01-env/py312/bin/python",
+        "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+        "prefix": "/workspace/work/w009-ipmr01-env/py312",
+        "purelib": "/workspace/work/w009-ipmr01-env/py312/lib/python3.12/site-packages",
+        "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]"
+      },
+      "source_manifest_sha256": "40a60ada56e2b560d1af88fec9c16e4d60a6b1384fb042f39202edfcaefefc2c",
+      "started_utc": "2026-11-03T11:51:10.056264+00:00"
+    },
+    {
+      "base_sha": "cdf3d2d5d2aeb0c441221c8bb0b41d0b302d8afa",
+      "command": [
+        "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-310/bin/python",
+        "-B",
+        "-m",
+        "pip",
+        "install",
+        "--report",
+        "/workspace/work/w009-ipmr01/docs/tasks/W009/ipmr01-verification/install-310-report.json",
+        "/workspace/work/w009-ipmr01/docs/tasks/W009/ipmr01-verification/dist/layauto-0.2.0.tar.gz"
+      ],
+      "cwd": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/installed-cwd",
+      "elapsed_seconds": 35.632,
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "MPLCONFIGDIR": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/mplconfig",
+        "MYPY_CACHE_DIR": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/mypy-install-310",
+        "PIP_CACHE_DIR": "/workspace/work/w009-ipmr01-env/pip-cache",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "TMPDIR": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/tmp",
+        "XDG_CACHE_HOME": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/cache"
+      },
+      "exit_code": 0,
+      "finished_head": "73e38df8f932bbb5bd9caf074b442ad2f5c286e9",
+      "head": "73e38df8f932bbb5bd9caf074b442ad2f5c286e9",
+      "outputs": {
+        "stderr": {
+          "path": "install-310.stderr.txt",
+          "sha256": "16033960b006cfe3c6817cf3f7e8f50a838238e33f5c512abeefe8a9403e0f94"
+        },
+        "stdout": {
+          "path": "install-310.stdout.txt",
+          "sha256": "06aadd3198d51a61a2c76b1a6939938416a468c040697d8c0e1fc1cbdd290dd4"
+        }
+      },
+      "python_executable": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-310/bin/python",
+      "python_identity": {
+        "base_executable": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-310/bin/python",
+        "base_prefix": "/workspace/work/w009-ipmr01-env/interpreters/cpython-3.10.22-linux-x86_64-gnu",
+        "distributions": {
+          "pip": "23.0.1",
+          "setuptools": "79.0.1"
+        },
+        "executable": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-310/bin/python",
+        "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+        "prefix": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-310",
+        "purelib": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-310/lib/python3.10/site-packages",
+        "python": "3.10.22 (main, Oct  3 2026, 01:32:06) [Clang 22.1.3 ]"
+      },
+      "source_manifest_sha256": "40a60ada56e2b560d1af88fec9c16e4d60a6b1384fb042f39202edfcaefefc2c",
+      "started_utc": "2026-11-03T11:51:22.301076+00:00"
+    },
+    {
+      "base_sha": "cdf3d2d5d2aeb0c441221c8bb0b41d0b302d8afa",
+      "command": [
+        "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-312/bin/python",
+        "-B",
+        "-m",
+        "pip",
+        "install",
+        "--report",
+        "/workspace/work/w009-ipmr01/docs/tasks/W009/ipmr01-verification/install-312-report.json",
+        "/workspace/work/w009-ipmr01/docs/tasks/W009/ipmr01-verification/dist/layauto-0.2.0-py3-none-any.whl"
+      ],
+      "cwd": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/installed-cwd",
+      "elapsed_seconds": 21.191,
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "MPLCONFIGDIR": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/mplconfig",
+        "MYPY_CACHE_DIR": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/mypy-install-312",
+        "PIP_CACHE_DIR": "/workspace/work/w009-ipmr01-env/pip-cache",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "TMPDIR": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/tmp",
+        "XDG_CACHE_HOME": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/cache"
+      },
+      "exit_code": 0,
+      "finished_head": "73e38df8f932bbb5bd9caf074b442ad2f5c286e9",
+      "head": "73e38df8f932bbb5bd9caf074b442ad2f5c286e9",
+      "outputs": {
+        "stderr": {
+          "path": "install-312.stderr.txt",
+          "sha256": "f96a57a6d17645d3d9eb401b9cead41a648edf2499f2ca4bc3f9364d677b6080"
+        },
+        "stdout": {
+          "path": "install-312.stdout.txt",
+          "sha256": "9ed87a8d9083c323acdb0221d454ce11f1dc16ab3b74dda28aa43bea4d13ecb7"
+        }
+      },
+      "python_executable": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-312/bin/python",
+      "python_identity": {
+        "base_executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "base_prefix": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python",
+        "distributions": {
+          "pip": "25.0.1"
+        },
+        "executable": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-312/bin/python",
+        "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+        "prefix": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-312",
+        "purelib": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-312/lib/python3.12/site-packages",
+        "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]"
+      },
+      "source_manifest_sha256": "40a60ada56e2b560d1af88fec9c16e4d60a6b1384fb042f39202edfcaefefc2c",
+      "started_utc": "2026-11-03T11:51:16.256038+00:00"
+    },
+    {
+      "base_sha": "cdf3d2d5d2aeb0c441221c8bb0b41d0b302d8afa",
+      "command": [
+        "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-310/bin/python",
+        "-I",
+        "-B",
+        "-c",
+        "import hashlib,json,pathlib,sys,sysconfig,layauto_v2\np=pathlib.Path(layauto_v2.__file__).resolve()\nroots={pathlib.Path(sysconfig.get_path(n)).resolve() for n in (\"purelib\",\"platlib\")}\nassert any(p.is_relative_to(r) for r in roots),p\nassert \"site-packages\" in p.parts,p\nprint(json.dumps({\"installed_package\":str(p),\"sys_path\":sys.path,\n\"runtime_files\":{str(f.relative_to(p.parent)):hashlib.sha256(f.read_bytes()).hexdigest()\nfor f in sorted(p.parent.rglob(\"*\")) if f.is_file() and (f.suffix==\".py\" or f.name==\"py.typed\")}},sort_keys=True,indent=2))"
+      ],
+      "cwd": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/installed-cwd",
+      "elapsed_seconds": 0.368,
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "MPLCONFIGDIR": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/mplconfig",
+        "MYPY_CACHE_DIR": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/mypy-installed-identity-310",
+        "PIP_CACHE_DIR": "/workspace/work/w009-ipmr01-env/pip-cache",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "TMPDIR": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/tmp",
+        "XDG_CACHE_HOME": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/cache"
+      },
+      "exit_code": 0,
+      "finished_head": "73e38df8f932bbb5bd9caf074b442ad2f5c286e9",
+      "head": "73e38df8f932bbb5bd9caf074b442ad2f5c286e9",
+      "outputs": {
+        "stderr": {
+          "path": "installed-identity-310.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "path": "installed-identity-310.stdout.txt",
+          "sha256": "6e8d7110b994e5a7e98a58746a7ec47d701f7d39fce695bea161a9e4e6ea1849"
+        }
+      },
+      "python_executable": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-310/bin/python",
+      "python_identity": {
+        "base_executable": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-310/bin/python",
+        "base_prefix": "/workspace/work/w009-ipmr01-env/interpreters/cpython-3.10.22-linux-x86_64-gnu",
+        "distributions": {
+          "PyYAML": "6.0.3",
+          "contourpy": "1.3.2",
+          "cycler": "0.12.1",
+          "fonttools": "4.65.0",
+          "kiwisolver": "1.5.1",
+          "layauto": "0.2.0",
+          "matplotlib": "3.10.9",
+          "numpy": "2.2.6",
+          "packaging": "26.3",
+          "pillow": "12.3.0",
+          "pip": "23.0.1",
+          "pyparsing": "3.3.3",
+          "python-dateutil": "3.0.0",
+          "setuptools": "79.0.1",
+          "six": "1.17.0",
+          "tzdata": "2026.6"
+        },
+        "executable": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-310/bin/python",
+        "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+        "prefix": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-310",
+        "purelib": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-310/lib/python3.10/site-packages",
+        "python": "3.10.22 (main, Oct  3 2026, 01:32:06) [Clang 22.1.3 ]"
+      },
+      "source_manifest_sha256": "40a60ada56e2b560d1af88fec9c16e4d60a6b1384fb042f39202edfcaefefc2c",
+      "started_utc": "2026-11-03T11:52:01.168724+00:00"
+    },
+    {
+      "base_sha": "cdf3d2d5d2aeb0c441221c8bb0b41d0b302d8afa",
+      "command": [
+        "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-312/bin/python",
+        "-I",
+        "-B",
+        "-c",
+        "import hashlib,json,pathlib,sys,sysconfig,layauto_v2\np=pathlib.Path(layauto_v2.__file__).resolve()\nroots={pathlib.Path(sysconfig.get_path(n)).resolve() for n in (\"purelib\",\"platlib\")}\nassert any(p.is_relative_to(r) for r in roots),p\nassert \"site-packages\" in p.parts,p\nprint(json.dumps({\"installed_package\":str(p),\"sys_path\":sys.path,\n\"runtime_files\":{str(f.relative_to(p.parent)):hashlib.sha256(f.read_bytes()).hexdigest()\nfor f in sorted(p.parent.rglob(\"*\")) if f.is_file() and (f.suffix==\".py\" or f.name==\"py.typed\")}},sort_keys=True,indent=2))"
+      ],
+      "cwd": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/installed-cwd",
+      "elapsed_seconds": 0.108,
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "MPLCONFIGDIR": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/mplconfig",
+        "MYPY_CACHE_DIR": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/mypy-installed-identity-312",
+        "PIP_CACHE_DIR": "/workspace/work/w009-ipmr01-env/pip-cache",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "TMPDIR": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/tmp",
+        "XDG_CACHE_HOME": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/cache"
+      },
+      "exit_code": 0,
+      "finished_head": "73e38df8f932bbb5bd9caf074b442ad2f5c286e9",
+      "head": "73e38df8f932bbb5bd9caf074b442ad2f5c286e9",
+      "outputs": {
+        "stderr": {
+          "path": "installed-identity-312.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "path": "installed-identity-312.stdout.txt",
+          "sha256": "d2256ab95664703876ac6071752dc460b1e4d11be90e3450df157ba8156471bc"
+        }
+      },
+      "python_executable": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-312/bin/python",
+      "python_identity": {
+        "base_executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "base_prefix": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python",
+        "distributions": {
+          "PyYAML": "6.0.3",
+          "contourpy": "1.4.0",
+          "cycler": "0.12.1",
+          "fonttools": "4.68.0",
+          "kiwisolver": "1.5.1",
+          "layauto": "0.2.0",
+          "matplotlib": "3.11.2",
+          "numpy": "2.5.4",
+          "packaging": "26.3",
+          "pillow": "13.0.0",
+          "pip": "25.0.1",
+          "pyparsing": "3.3.3",
+          "python-dateutil": "4.0.0",
+          "tzdata": "2026.6"
+        },
+        "executable": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-312/bin/python",
+        "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+        "prefix": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-312",
+        "purelib": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-312/lib/python3.12/site-packages",
+        "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]"
+      },
+      "source_manifest_sha256": "40a60ada56e2b560d1af88fec9c16e4d60a6b1384fb042f39202edfcaefefc2c",
+      "started_utc": "2026-11-03T11:51:38.535623+00:00"
+    },
+    {
+      "base_sha": "cdf3d2d5d2aeb0c441221c8bb0b41d0b302d8afa",
+      "command": [
+        "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-310/bin/python",
+        "-B",
+        "-m",
+        "pip",
+        "check"
+      ],
+      "cwd": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/installed-cwd",
+      "elapsed_seconds": 2.429,
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "MPLCONFIGDIR": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/mplconfig",
+        "MYPY_CACHE_DIR": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/mypy-installed-pip-check-310",
+        "PIP_CACHE_DIR": "/workspace/work/w009-ipmr01-env/pip-cache",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "TMPDIR": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/tmp",
+        "XDG_CACHE_HOME": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/cache"
+      },
+      "exit_code": 0,
+      "finished_head": "73e38df8f932bbb5bd9caf074b442ad2f5c286e9",
+      "head": "73e38df8f932bbb5bd9caf074b442ad2f5c286e9",
+      "outputs": {
+        "stderr": {
+          "path": "installed-pip-check-310.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "path": "installed-pip-check-310.stdout.txt",
+          "sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09"
+        }
+      },
+      "python_executable": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-310/bin/python",
+      "python_identity": {
+        "base_executable": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-310/bin/python",
+        "base_prefix": "/workspace/work/w009-ipmr01-env/interpreters/cpython-3.10.22-linux-x86_64-gnu",
+        "distributions": {
+          "PyYAML": "6.0.3",
+          "contourpy": "1.3.2",
+          "cycler": "0.12.1",
+          "fonttools": "4.65.0",
+          "kiwisolver": "1.5.1",
+          "layauto": "0.2.0",
+          "matplotlib": "3.10.9",
+          "numpy": "2.2.6",
+          "packaging": "26.3",
+          "pillow": "12.3.0",
+          "pip": "23.0.1",
+          "pyparsing": "3.3.3",
+          "python-dateutil": "3.0.0",
+          "setuptools": "79.0.1",
+          "six": "1.17.0",
+          "tzdata": "2026.6"
+        },
+        "executable": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-310/bin/python",
+        "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+        "prefix": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-310",
+        "purelib": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-310/lib/python3.10/site-packages",
+        "python": "3.10.22 (main, Oct  3 2026, 01:32:06) [Clang 22.1.3 ]"
+      },
+      "source_manifest_sha256": "40a60ada56e2b560d1af88fec9c16e4d60a6b1384fb042f39202edfcaefefc2c",
+      "started_utc": "2026-11-03T11:51:58.733067+00:00"
+    },
+    {
+      "base_sha": "cdf3d2d5d2aeb0c441221c8bb0b41d0b302d8afa",
+      "command": [
+        "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-312/bin/python",
+        "-B",
+        "-m",
+        "pip",
+        "check"
+      ],
+      "cwd": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/installed-cwd",
+      "elapsed_seconds": 0.847,
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "MPLCONFIGDIR": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/mplconfig",
+        "MYPY_CACHE_DIR": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/mypy-installed-pip-check-312",
+        "PIP_CACHE_DIR": "/workspace/work/w009-ipmr01-env/pip-cache",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "TMPDIR": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/tmp",
+        "XDG_CACHE_HOME": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/cache"
+      },
+      "exit_code": 0,
+      "finished_head": "73e38df8f932bbb5bd9caf074b442ad2f5c286e9",
+      "head": "73e38df8f932bbb5bd9caf074b442ad2f5c286e9",
+      "outputs": {
+        "stderr": {
+          "path": "installed-pip-check-312.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "path": "installed-pip-check-312.stdout.txt",
+          "sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09"
+        }
+      },
+      "python_executable": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-312/bin/python",
+      "python_identity": {
+        "base_executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "base_prefix": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python",
+        "distributions": {
+          "PyYAML": "6.0.3",
+          "contourpy": "1.4.0",
+          "cycler": "0.12.1",
+          "fonttools": "4.68.0",
+          "kiwisolver": "1.5.1",
+          "layauto": "0.2.0",
+          "matplotlib": "3.11.2",
+          "numpy": "2.5.4",
+          "packaging": "26.3",
+          "pillow": "13.0.0",
+          "pip": "25.0.1",
+          "pyparsing": "3.3.3",
+          "python-dateutil": "4.0.0",
+          "tzdata": "2026.6"
+        },
+        "executable": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-312/bin/python",
+        "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+        "prefix": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-312",
+        "purelib": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-312/lib/python3.12/site-packages",
+        "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]"
+      },
+      "source_manifest_sha256": "40a60ada56e2b560d1af88fec9c16e4d60a6b1384fb042f39202edfcaefefc2c",
+      "started_utc": "2026-11-03T11:51:37.685310+00:00"
+    },
+    {
+      "base_sha": "cdf3d2d5d2aeb0c441221c8bb0b41d0b302d8afa",
+      "command": [
+        "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-310/bin/python",
+        "-I",
+        "-B",
+        "/workspace/work/w009-ipmr01/docs/tasks/W009/ipmr01-verification/installed_smoke.py",
+        "/workspace/work/w009-ipmr01/tests/fixtures/w003_m1",
+        "/workspace/work/w009-ipmr01/docs/tasks/W009/ipmr01-verification/source-manifest.json"
+      ],
+      "cwd": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/installed-cwd",
+      "elapsed_seconds": 94.098,
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "MPLCONFIGDIR": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/mplconfig",
+        "MYPY_CACHE_DIR": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/mypy-installed-smoke-310",
+        "PIP_CACHE_DIR": "/workspace/work/w009-ipmr01-env/pip-cache",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "TMPDIR": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/tmp",
+        "XDG_CACHE_HOME": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/cache"
+      },
+      "exit_code": 0,
+      "finished_head": "73e38df8f932bbb5bd9caf074b442ad2f5c286e9",
+      "head": "73e38df8f932bbb5bd9caf074b442ad2f5c286e9",
+      "outputs": {
+        "stderr": {
+          "path": "installed-smoke-310.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "path": "installed-smoke-310.stdout.txt",
+          "sha256": "aa601d0ccbd221b3189fd75f472a9ad02533a68aa7586e0840bd3fec24ab1dc0"
+        }
+      },
+      "python_executable": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-310/bin/python",
+      "python_identity": {
+        "base_executable": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-310/bin/python",
+        "base_prefix": "/workspace/work/w009-ipmr01-env/interpreters/cpython-3.10.22-linux-x86_64-gnu",
+        "distributions": {
+          "PyYAML": "6.0.3",
+          "contourpy": "1.3.2",
+          "cycler": "0.12.1",
+          "fonttools": "4.65.0",
+          "kiwisolver": "1.5.1",
+          "layauto": "0.2.0",
+          "matplotlib": "3.10.9",
+          "numpy": "2.2.6",
+          "packaging": "26.3",
+          "pillow": "12.3.0",
+          "pip": "23.0.1",
+          "pyparsing": "3.3.3",
+          "python-dateutil": "3.0.0",
+          "setuptools": "79.0.1",
+          "six": "1.17.0",
+          "tzdata": "2026.6"
+        },
+        "executable": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-310/bin/python",
+        "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+        "prefix": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-310",
+        "purelib": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-310/lib/python3.10/site-packages",
+        "python": "3.10.22 (main, Oct  3 2026, 01:32:06) [Clang 22.1.3 ]"
+      },
+      "source_manifest_sha256": "40a60ada56e2b560d1af88fec9c16e4d60a6b1384fb042f39202edfcaefefc2c",
+      "started_utc": "2026-11-03T11:52:01.544474+00:00"
+    },
+    {
+      "base_sha": "cdf3d2d5d2aeb0c441221c8bb0b41d0b302d8afa",
+      "command": [
+        "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-312/bin/python",
+        "-I",
+        "-B",
+        "/workspace/work/w009-ipmr01/docs/tasks/W009/ipmr01-verification/installed_smoke.py",
+        "/workspace/work/w009-ipmr01/tests/fixtures/w003_m1",
+        "/workspace/work/w009-ipmr01/docs/tasks/W009/ipmr01-verification/source-manifest.json"
+      ],
+      "cwd": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/installed-cwd",
+      "elapsed_seconds": 93.784,
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "MPLCONFIGDIR": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/mplconfig",
+        "MYPY_CACHE_DIR": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/mypy-installed-smoke-312",
+        "PIP_CACHE_DIR": "/workspace/work/w009-ipmr01-env/pip-cache",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "TMPDIR": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/tmp",
+        "XDG_CACHE_HOME": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/cache"
+      },
+      "exit_code": 0,
+      "finished_head": "73e38df8f932bbb5bd9caf074b442ad2f5c286e9",
+      "head": "73e38df8f932bbb5bd9caf074b442ad2f5c286e9",
+      "outputs": {
+        "stderr": {
+          "path": "installed-smoke-312.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "path": "installed-smoke-312.stdout.txt",
+          "sha256": "51ae5a69ebf3d9113300f9083e40302a96b158a04236b4a804a552ff5cdf2544"
+        }
+      },
+      "python_executable": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-312/bin/python",
+      "python_identity": {
+        "base_executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "base_prefix": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python",
+        "distributions": {
+          "PyYAML": "6.0.3",
+          "contourpy": "1.4.0",
+          "cycler": "0.12.1",
+          "fonttools": "4.68.0",
+          "kiwisolver": "1.5.1",
+          "layauto": "0.2.0",
+          "matplotlib": "3.11.2",
+          "numpy": "2.5.4",
+          "packaging": "26.3",
+          "pillow": "13.0.0",
+          "pip": "25.0.1",
+          "pyparsing": "3.3.3",
+          "python-dateutil": "4.0.0",
+          "tzdata": "2026.6"
+        },
+        "executable": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-312/bin/python",
+        "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+        "prefix": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-312",
+        "purelib": "/workspace/work/w009-ipmr01-env/runs/20261103T115102Z-3888c7f6/clean-312/lib/python3.12/site-packages",
+        "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]"
+      },
+      "source_manifest_sha256": "40a60ada56e2b560d1af88fec9c16e4d60a6b1384fb042f39202edfcaefefc2c",
+      "started_utc": "2026-11-03T11:51:38.651061+00:00"
+    },
+    {
+      "base_sha": "cdf3d2d5d2aeb0c441221c8bb0b41d0b302d8afa",
+      "command": [
+        "/workspace/work/w009-ipmr01-env/py312/bin/python",
+        "-I",
+        "-B",
+        "-c",
+        "import importlib.metadata,json,platform,sys,sysconfig\nprint(json.dumps({\"python\":sys.version,\"executable\":sys.executable,\"prefix\":sys.prefix,\n\"base_prefix\":sys.base_prefix,\"base_executable\":sys._base_executable,\n\"platform\":platform.platform(),\"purelib\":sysconfig.get_path(\"purelib\"),\n\"distributions\":{d.metadata[\"Name\"]:d.version for d in importlib.metadata.distributions()}},sort_keys=True,indent=2))"
+      ],
+      "cwd": "/workspace/work/w009-ipmr01",
+      "elapsed_seconds": 0.121,
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "MPLCONFIGDIR": "/workspace/work/w009-ipmr01-env/runs/resume-20261104T013137Z-0d289d5a/mplconfig",
+        "MYPY_CACHE_DIR": "/workspace/work/w009-ipmr01-env/runs/resume-20261104T013137Z-0d289d5a/mypy-environment-312",
+        "PIP_CACHE_DIR": "/workspace/work/w009-ipmr01-env/pip-cache",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "TMPDIR": "/workspace/work/w009-ipmr01-env/runs/resume-20261104T013137Z-0d289d5a/tmp",
+        "XDG_CACHE_HOME": "/workspace/work/w009-ipmr01-env/runs/resume-20261104T013137Z-0d289d5a/cache"
+      },
+      "exit_code": 0,
+      "finished_head": "73e38df8f932bbb5bd9caf074b442ad2f5c286e9",
+      "head": "73e38df8f932bbb5bd9caf074b442ad2f5c286e9",
+      "outputs": {
+        "stderr": {
+          "path": "environment-312.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "path": "environment-312.stdout.txt",
+          "sha256": "0d155502aaa3850d32496c12f368d0c6aeb9e4a9476f8c6603eb54860a3b47f6"
+        }
+      },
+      "python_executable": "/workspace/work/w009-ipmr01-env/py312/bin/python",
+      "python_identity": {
+        "base_executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "base_prefix": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python",
+        "distributions": {
+          "PyYAML": "6.0.3",
+          "Pygments": "2.21.0",
+          "ast_serialize": "0.13.1",
+          "build": "1.6.1",
+          "contourpy": "1.4.0",
+          "cycler": "0.12.1",
+          "fonttools": "4.68.0",
+          "iniconfig": "2.3.1",
+          "kiwisolver": "1.5.1",
+          "librt": "0.16.0",
+          "matplotlib": "3.11.2",
+          "mypy": "2.4.1",
+          "mypy_extensions": "1.1.0",
+          "numpy": "2.5.4",
+          "packaging": "26.3",
+          "pathspec": "1.1.1",
+          "pillow": "13.0.0",
+          "pip": "25.0.1",
+          "pluggy": "1.7.0",
+          "pyparsing": "3.3.3",
+          "pyproject_hooks": "1.3.3",
+          "pytest": "9.2.0",
+          "python-dateutil": "4.0.0",
+          "setuptools": "84.2.1",
+          "types-PyYAML": "6.0.12.20261103",
+          "typing_extensions": "4.16.0",
+          "tzdata": "2026.6",
+          "wheel": "0.48.0"
+        },
+        "executable": "/workspace/work/w009-ipmr01-env/py312/bin/python",
+        "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+        "prefix": "/workspace/work/w009-ipmr01-env/py312",
+        "purelib": "/workspace/work/w009-ipmr01-env/py312/lib/python3.12/site-packages",
+        "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]"
+      },
+      "source_manifest_sha256": "40a60ada56e2b560d1af88fec9c16e4d60a6b1384fb042f39202edfcaefefc2c",
+      "started_utc": "2026-11-04T01:31:37.350641+00:00"
+    },
+    {
+      "base_sha": "cdf3d2d5d2aeb0c441221c8bb0b41d0b302d8afa",
+      "command": [
+        "/workspace/work/w009-ipmr01-env/py310/bin/python",
+        "-I",
+        "-B",
+        "-c",
+        "import importlib.metadata,json,platform,sys,sysconfig\nprint(json.dumps({\"python\":sys.version,\"executable\":sys.executable,\"prefix\":sys.prefix,\n\"base_prefix\":sys.base_prefix,\"base_executable\":sys._base_executable,\n\"platform\":platform.platform(),\"purelib\":sysconfig.get_path(\"purelib\"),\n\"distributions\":{d.metadata[\"Name\"]:d.version for d in importlib.metadata.distributions()}},sort_keys=True,indent=2))"
+      ],
+      "cwd": "/workspace/work/w009-ipmr01",
+      "elapsed_seconds": 0.357,
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "MPLCONFIGDIR": "/workspace/work/w009-ipmr01-env/runs/resume-20261104T013137Z-0d289d5a/mplconfig",
+        "MYPY_CACHE_DIR": "/workspace/work/w009-ipmr01-env/runs/resume-20261104T013137Z-0d289d5a/mypy-environment-310",
+        "PIP_CACHE_DIR": "/workspace/work/w009-ipmr01-env/pip-cache",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "TMPDIR": "/workspace/work/w009-ipmr01-env/runs/resume-20261104T013137Z-0d289d5a/tmp",
+        "XDG_CACHE_HOME": "/workspace/work/w009-ipmr01-env/runs/resume-20261104T013137Z-0d289d5a/cache"
+      },
+      "exit_code": 0,
+      "finished_head": "73e38df8f932bbb5bd9caf074b442ad2f5c286e9",
+      "head": "73e38df8f932bbb5bd9caf074b442ad2f5c286e9",
+      "outputs": {
+        "stderr": {
+          "path": "environment-310.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "path": "environment-310.stdout.txt",
+          "sha256": "15ee6dca860bab1e165c48eacece9c7c96ccfebd4f948da06a117a9c0af2c157"
+        }
+      },
+      "python_executable": "/workspace/work/w009-ipmr01-env/py310/bin/python",
+      "python_identity": {
+        "base_executable": "/workspace/work/w009-ipmr01-env/py310/bin/python",
+        "base_prefix": "/workspace/work/w009-ipmr01-env/interpreters/cpython-3.10.22-linux-x86_64-gnu",
+        "distributions": {
+          "PyYAML": "6.0.3",
+          "Pygments": "2.21.0",
+          "ast_serialize": "0.13.1",
+          "build": "1.6.1",
+          "contourpy": "1.3.2",
+          "cycler": "0.12.1",
+          "exceptiongroup": "1.3.1",
+          "fonttools": "4.65.0",
+          "iniconfig": "2.3.1",
+          "kiwisolver": "1.5.1",
+          "librt": "0.16.0",
+          "matplotlib": "3.10.9",
+          "mypy": "2.4.1",
+          "mypy_extensions": "1.1.0",
+          "numpy": "2.2.6",
+          "packaging": "26.3",
+          "pathspec": "1.1.1",
+          "pillow": "12.3.0",
+          "pip": "23.0.1",
+          "pluggy": "1.7.0",
+          "pyparsing": "3.3.3",
+          "pyproject_hooks": "1.3.3",
+          "pytest": "9.2.0",
+          "python-dateutil": "3.0.0",
+          "setuptools": "79.0.1",
+          "six": "1.17.0",
+          "tomli": "2.5.0",
+          "types-PyYAML": "6.0.12.20261103",
+          "typing_extensions": "4.16.0",
+          "tzdata": "2026.6",
+          "wheel": "0.48.0"
+        },
+        "executable": "/workspace/work/w009-ipmr01-env/py310/bin/python",
+        "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+        "prefix": "/workspace/work/w009-ipmr01-env/py310",
+        "purelib": "/workspace/work/w009-ipmr01-env/py310/lib/python3.10/site-packages",
+        "python": "3.10.22 (main, Oct  3 2026, 01:32:06) [Clang 22.1.3 ]"
+      },
+      "source_manifest_sha256": "40a60ada56e2b560d1af88fec9c16e4d60a6b1384fb042f39202edfcaefefc2c",
+      "started_utc": "2026-11-04T01:31:37.350288+00:00"
+    },
+    {
+      "base_sha": "cdf3d2d5d2aeb0c441221c8bb0b41d0b302d8afa",
+      "command": [
+        "/workspace/work/w009-ipmr01-env/py312/bin/python",
+        "-B",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "--basetemp",
+        "/workspace/work/w009-ipmr01-env/runs/resume-20261104T013137Z-0d289d5a/pytest-312",
+        "tests/contracts",
+        "tests/unit",
+        "-q"
+      ],
+      "cwd": "/workspace/work/w009-ipmr01",
+      "elapsed_seconds": 1071.409,
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "MPLCONFIGDIR": "/workspace/work/w009-ipmr01-env/runs/resume-20261104T013137Z-0d289d5a/mplconfig",
+        "MYPY_CACHE_DIR": "/workspace/work/w009-ipmr01-env/runs/resume-20261104T013137Z-0d289d5a/mypy-pytest-312",
+        "PIP_CACHE_DIR": "/workspace/work/w009-ipmr01-env/pip-cache",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PYTHONPATH": "/workspace/work/w009-ipmr01",
+        "TMPDIR": "/workspace/work/w009-ipmr01-env/runs/resume-20261104T013137Z-0d289d5a/tmp",
+        "XDG_CACHE_HOME": "/workspace/work/w009-ipmr01-env/runs/resume-20261104T013137Z-0d289d5a/cache"
+      },
+      "exit_code": 0,
+      "finished_head": "73e38df8f932bbb5bd9caf074b442ad2f5c286e9",
+      "head": "73e38df8f932bbb5bd9caf074b442ad2f5c286e9",
+      "outputs": {
+        "stderr": {
+          "path": "pytest-312.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "path": "pytest-312.stdout.txt",
+          "sha256": "1839bbad1a52ce1fa074af4b8be369229ae429255a5ea32e16341ffab311bd4d"
+        }
+      },
+      "python_executable": "/workspace/work/w009-ipmr01-env/py312/bin/python",
+      "python_identity": {
+        "base_executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "base_prefix": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python",
+        "distributions": {
+          "PyYAML": "6.0.3",
+          "Pygments": "2.21.0",
+          "ast_serialize": "0.13.1",
+          "build": "1.6.1",
+          "contourpy": "1.4.0",
+          "cycler": "0.12.1",
+          "fonttools": "4.68.0",
+          "iniconfig": "2.3.1",
+          "kiwisolver": "1.5.1",
+          "librt": "0.16.0",
+          "matplotlib": "3.11.2",
+          "mypy": "2.4.1",
+          "mypy_extensions": "1.1.0",
+          "numpy": "2.5.4",
+          "packaging": "26.3",
+          "pathspec": "1.1.1",
+          "pillow": "13.0.0",
+          "pip": "25.0.1",
+          "pluggy": "1.7.0",
+          "pyparsing": "3.3.3",
+          "pyproject_hooks": "1.3.3",
+          "pytest": "9.2.0",
+          "python-dateutil": "4.0.0",
+          "setuptools": "84.2.1",
+          "types-PyYAML": "6.0.12.20261103",
+          "typing_extensions": "4.16.0",
+          "tzdata": "2026.6",
+          "wheel": "0.48.0"
+        },
+        "executable": "/workspace/work/w009-ipmr01-env/py312/bin/python",
+        "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+        "prefix": "/workspace/work/w009-ipmr01-env/py312",
+        "purelib": "/workspace/work/w009-ipmr01-env/py312/lib/python3.12/site-packages",
+        "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]"
+      },
+      "source_manifest_sha256": "40a60ada56e2b560d1af88fec9c16e4d60a6b1384fb042f39202edfcaefefc2c",
+      "started_utc": "2026-11-04T01:31:37.475809+00:00"
+    },
+    {
+      "base_sha": "cdf3d2d5d2aeb0c441221c8bb0b41d0b302d8afa",
+      "command": [
+        "/workspace/work/w009-ipmr01-env/py312/bin/python",
+        "-B",
+        "-m",
+        "mypy",
+        "--cache-dir",
+        "/workspace/work/w009-ipmr01-env/runs/resume-20261104T013137Z-0d289d5a/typing-312"
+      ],
+      "cwd": "/workspace/work/w009-ipmr01",
+      "elapsed_seconds": 1.34,
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "MPLCONFIGDIR": "/workspace/work/w009-ipmr01-env/runs/resume-20261104T013137Z-0d289d5a/mplconfig",
+        "MYPY_CACHE_DIR": "/workspace/work/w009-ipmr01-env/runs/resume-20261104T013137Z-0d289d5a/mypy-typing-312",
+        "PIP_CACHE_DIR": "/workspace/work/w009-ipmr01-env/pip-cache",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PYTHONPATH": "/workspace/work/w009-ipmr01",
+        "TMPDIR": "/workspace/work/w009-ipmr01-env/runs/resume-20261104T013137Z-0d289d5a/tmp",
+        "XDG_CACHE_HOME": "/workspace/work/w009-ipmr01-env/runs/resume-20261104T013137Z-0d289d5a/cache"
+      },
+      "exit_code": 0,
+      "finished_head": "73e38df8f932bbb5bd9caf074b442ad2f5c286e9",
+      "head": "73e38df8f932bbb5bd9caf074b442ad2f5c286e9",
+      "outputs": {
+        "stderr": {
+          "path": "typing-312.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "path": "typing-312.stdout.txt",
+          "sha256": "522d7b3a15704213950b7053c882b6ddd0c41149631300ce6c1933d21b5971c3"
+        }
+      },
+      "python_executable": "/workspace/work/w009-ipmr01-env/py312/bin/python",
+      "python_identity": {
+        "base_executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "base_prefix": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python",
+        "distributions": {
+          "PyYAML": "6.0.3",
+          "Pygments": "2.21.0",
+          "ast_serialize": "0.13.1",
+          "build": "1.6.1",
+          "contourpy": "1.4.0",
+          "cycler": "0.12.1",
+          "fonttools": "4.68.0",
+          "iniconfig": "2.3.1",
+          "kiwisolver": "1.5.1",
+          "librt": "0.16.0",
+          "matplotlib": "3.11.2",
+          "mypy": "2.4.1",
+          "mypy_extensions": "1.1.0",
+          "numpy": "2.5.4",
+          "packaging": "26.3",
+          "pathspec": "1.1.1",
+          "pillow": "13.0.0",
+          "pip": "25.0.1",
+          "pluggy": "1.7.0",
+          "pyparsing": "3.3.3",
+          "pyproject_hooks": "1.3.3",
+          "pytest": "9.2.0",
+          "python-dateutil": "4.0.0",
+          "setuptools": "84.2.1",
+          "types-PyYAML": "6.0.12.20261103",
+          "typing_extensions": "4.16.0",
+          "tzdata": "2026.6",
+          "wheel": "0.48.0"
+        },
+        "executable": "/workspace/work/w009-ipmr01-env/py312/bin/python",
+        "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+        "prefix": "/workspace/work/w009-ipmr01-env/py312",
+        "purelib": "/workspace/work/w009-ipmr01-env/py312/lib/python3.12/site-packages",
+        "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]"
+      },
+      "source_manifest_sha256": "40a60ada56e2b560d1af88fec9c16e4d60a6b1384fb042f39202edfcaefefc2c",
+      "started_utc": "2026-11-04T01:49:28.887601+00:00"
+    },
+    {
+      "base_sha": "cdf3d2d5d2aeb0c441221c8bb0b41d0b302d8afa",
+      "command": [
+        "/workspace/work/w009-ipmr01-env/py312/bin/python",
+        "-B",
+        "-m",
+        "pip",
+        "check"
+      ],
+      "cwd": "/workspace/work/w009-ipmr01",
+      "elapsed_seconds": 0.277,
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "MPLCONFIGDIR": "/workspace/work/w009-ipmr01-env/runs/resume-20261104T013137Z-0d289d5a/mplconfig",
+        "MYPY_CACHE_DIR": "/workspace/work/w009-ipmr01-env/runs/resume-20261104T013137Z-0d289d5a/mypy-pip-check-312",
+        "PIP_CACHE_DIR": "/workspace/work/w009-ipmr01-env/pip-cache",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "TMPDIR": "/workspace/work/w009-ipmr01-env/runs/resume-20261104T013137Z-0d289d5a/tmp",
+        "XDG_CACHE_HOME": "/workspace/work/w009-ipmr01-env/runs/resume-20261104T013137Z-0d289d5a/cache"
+      },
+      "exit_code": 0,
+      "finished_head": "73e38df8f932bbb5bd9caf074b442ad2f5c286e9",
+      "head": "73e38df8f932bbb5bd9caf074b442ad2f5c286e9",
+      "outputs": {
+        "stderr": {
+          "path": "pip-check-312.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "path": "pip-check-312.stdout.txt",
+          "sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09"
+        }
+      },
+      "python_executable": "/workspace/work/w009-ipmr01-env/py312/bin/python",
+      "python_identity": {
+        "base_executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "base_prefix": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python",
+        "distributions": {
+          "PyYAML": "6.0.3",
+          "Pygments": "2.21.0",
+          "ast_serialize": "0.13.1",
+          "build": "1.6.1",
+          "contourpy": "1.4.0",
+          "cycler": "0.12.1",
+          "fonttools": "4.68.0",
+          "iniconfig": "2.3.1",
+          "kiwisolver": "1.5.1",
+          "librt": "0.16.0",
+          "matplotlib": "3.11.2",
+          "mypy": "2.4.1",
+          "mypy_extensions": "1.1.0",
+          "numpy": "2.5.4",
+          "packaging": "26.3",
+          "pathspec": "1.1.1",
+          "pillow": "13.0.0",
+          "pip": "25.0.1",
+          "pluggy": "1.7.0",
+          "pyparsing": "3.3.3",
+          "pyproject_hooks": "1.3.3",
+          "pytest": "9.2.0",
+          "python-dateutil": "4.0.0",
+          "setuptools": "84.2.1",
+          "types-PyYAML": "6.0.12.20261103",
+          "typing_extensions": "4.16.0",
+          "tzdata": "2026.6",
+          "wheel": "0.48.0"
+        },
+        "executable": "/workspace/work/w009-ipmr01-env/py312/bin/python",
+        "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+        "prefix": "/workspace/work/w009-ipmr01-env/py312",
+        "purelib": "/workspace/work/w009-ipmr01-env/py312/lib/python3.12/site-packages",
+        "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]"
+      },
+      "source_manifest_sha256": "40a60ada56e2b560d1af88fec9c16e4d60a6b1384fb042f39202edfcaefefc2c",
+      "started_utc": "2026-11-04T01:49:30.230299+00:00"
+    },
+    {
+      "base_sha": "cdf3d2d5d2aeb0c441221c8bb0b41d0b302d8afa",
+      "command": [
+        "/workspace/work/w009-ipmr01-env/py310/bin/python",
+        "-B",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "--basetemp",
+        "/workspace/work/w009-ipmr01-env/runs/resume-20261104T013137Z-0d289d5a/pytest-310",
+        "tests/contracts",
+        "tests/unit/test_w006_publication.py",
+        "-q"
+      ],
+      "cwd": "/workspace/work/w009-ipmr01",
+      "elapsed_seconds": 1469.101,
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "MPLCONFIGDIR": "/workspace/work/w009-ipmr01-env/runs/resume-20261104T013137Z-0d289d5a/mplconfig",
+        "MYPY_CACHE_DIR": "/workspace/work/w009-ipmr01-env/runs/resume-20261104T013137Z-0d289d5a/mypy-pytest-310",
+        "PIP_CACHE_DIR": "/workspace/work/w009-ipmr01-env/pip-cache",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PYTHONPATH": "/workspace/work/w009-ipmr01",
+        "TMPDIR": "/workspace/work/w009-ipmr01-env/runs/resume-20261104T013137Z-0d289d5a/tmp",
+        "XDG_CACHE_HOME": "/workspace/work/w009-ipmr01-env/runs/resume-20261104T013137Z-0d289d5a/cache"
+      },
+      "exit_code": 0,
+      "finished_head": "73e38df8f932bbb5bd9caf074b442ad2f5c286e9",
+      "head": "73e38df8f932bbb5bd9caf074b442ad2f5c286e9",
+      "outputs": {
+        "stderr": {
+          "path": "pytest-310.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "path": "pytest-310.stdout.txt",
+          "sha256": "bc43b2a6390e0dc4f3f5d1137d572071e031c79cdc26593109cb0cea16f49841"
+        }
+      },
+      "python_executable": "/workspace/work/w009-ipmr01-env/py310/bin/python",
+      "python_identity": {
+        "base_executable": "/workspace/work/w009-ipmr01-env/py310/bin/python",
+        "base_prefix": "/workspace/work/w009-ipmr01-env/interpreters/cpython-3.10.22-linux-x86_64-gnu",
+        "distributions": {
+          "PyYAML": "6.0.3",
+          "Pygments": "2.21.0",
+          "ast_serialize": "0.13.1",
+          "build": "1.6.1",
+          "contourpy": "1.3.2",
+          "cycler": "0.12.1",
+          "exceptiongroup": "1.3.1",
+          "fonttools": "4.65.0",
+          "iniconfig": "2.3.1",
+          "kiwisolver": "1.5.1",
+          "librt": "0.16.0",
+          "matplotlib": "3.10.9",
+          "mypy": "2.4.1",
+          "mypy_extensions": "1.1.0",
+          "numpy": "2.2.6",
+          "packaging": "26.3",
+          "pathspec": "1.1.1",
+          "pillow": "12.3.0",
+          "pip": "23.0.1",
+          "pluggy": "1.7.0",
+          "pyparsing": "3.3.3",
+          "pyproject_hooks": "1.3.3",
+          "pytest": "9.2.0",
+          "python-dateutil": "3.0.0",
+          "setuptools": "79.0.1",
+          "six": "1.17.0",
+          "tomli": "2.5.0",
+          "types-PyYAML": "6.0.12.20261103",
+          "typing_extensions": "4.16.0",
+          "tzdata": "2026.6",
+          "wheel": "0.48.0"
+        },
+        "executable": "/workspace/work/w009-ipmr01-env/py310/bin/python",
+        "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+        "prefix": "/workspace/work/w009-ipmr01-env/py310",
+        "purelib": "/workspace/work/w009-ipmr01-env/py310/lib/python3.10/site-packages",
+        "python": "3.10.22 (main, Oct  3 2026, 01:32:06) [Clang 22.1.3 ]"
+      },
+      "source_manifest_sha256": "40a60ada56e2b560d1af88fec9c16e4d60a6b1384fb042f39202edfcaefefc2c",
+      "started_utc": "2026-11-04T01:31:37.713418+00:00"
+    },
+    {
+      "base_sha": "cdf3d2d5d2aeb0c441221c8bb0b41d0b302d8afa",
+      "command": [
+        "/workspace/work/w009-ipmr01-env/py310/bin/python",
+        "-B",
+        "-m",
+        "mypy",
+        "--cache-dir",
+        "/workspace/work/w009-ipmr01-env/runs/resume-20261104T013137Z-0d289d5a/typing-310"
+      ],
+      "cwd": "/workspace/work/w009-ipmr01",
+      "elapsed_seconds": 1.711,
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "MPLCONFIGDIR": "/workspace/work/w009-ipmr01-env/runs/resume-20261104T013137Z-0d289d5a/mplconfig",
+        "MYPY_CACHE_DIR": "/workspace/work/w009-ipmr01-env/runs/resume-20261104T013137Z-0d289d5a/mypy-typing-310",
+        "PIP_CACHE_DIR": "/workspace/work/w009-ipmr01-env/pip-cache",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PYTHONPATH": "/workspace/work/w009-ipmr01",
+        "TMPDIR": "/workspace/work/w009-ipmr01-env/runs/resume-20261104T013137Z-0d289d5a/tmp",
+        "XDG_CACHE_HOME": "/workspace/work/w009-ipmr01-env/runs/resume-20261104T013137Z-0d289d5a/cache"
+      },
+      "exit_code": 0,
+      "finished_head": "73e38df8f932bbb5bd9caf074b442ad2f5c286e9",
+      "head": "73e38df8f932bbb5bd9caf074b442ad2f5c286e9",
+      "outputs": {
+        "stderr": {
+          "path": "typing-310.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "path": "typing-310.stdout.txt",
+          "sha256": "522d7b3a15704213950b7053c882b6ddd0c41149631300ce6c1933d21b5971c3"
+        }
+      },
+      "python_executable": "/workspace/work/w009-ipmr01-env/py310/bin/python",
+      "python_identity": {
+        "base_executable": "/workspace/work/w009-ipmr01-env/py310/bin/python",
+        "base_prefix": "/workspace/work/w009-ipmr01-env/interpreters/cpython-3.10.22-linux-x86_64-gnu",
+        "distributions": {
+          "PyYAML": "6.0.3",
+          "Pygments": "2.21.0",
+          "ast_serialize": "0.13.1",
+          "build": "1.6.1",
+          "contourpy": "1.3.2",
+          "cycler": "0.12.1",
+          "exceptiongroup": "1.3.1",
+          "fonttools": "4.65.0",
+          "iniconfig": "2.3.1",
+          "kiwisolver": "1.5.1",
+          "librt": "0.16.0",
+          "matplotlib": "3.10.9",
+          "mypy": "2.4.1",
+          "mypy_extensions": "1.1.0",
+          "numpy": "2.2.6",
+          "packaging": "26.3",
+          "pathspec": "1.1.1",
+          "pillow": "12.3.0",
+          "pip": "23.0.1",
+          "pluggy": "1.7.0",
+          "pyparsing": "3.3.3",
+          "pyproject_hooks": "1.3.3",
+          "pytest": "9.2.0",
+          "python-dateutil": "3.0.0",
+          "setuptools": "79.0.1",
+          "six": "1.17.0",
+          "tomli": "2.5.0",
+          "types-PyYAML": "6.0.12.20261103",
+          "typing_extensions": "4.16.0",
+          "tzdata": "2026.6",
+          "wheel": "0.48.0"
+        },
+        "executable": "/workspace/work/w009-ipmr01-env/py310/bin/python",
+        "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+        "prefix": "/workspace/work/w009-ipmr01-env/py310",
+        "purelib": "/workspace/work/w009-ipmr01-env/py310/lib/python3.10/site-packages",
+        "python": "3.10.22 (main, Oct  3 2026, 01:32:06) [Clang 22.1.3 ]"
+      },
+      "source_manifest_sha256": "40a60ada56e2b560d1af88fec9c16e4d60a6b1384fb042f39202edfcaefefc2c",
+      "started_utc": "2026-11-04T01:56:06.818661+00:00"
+    },
+    {
+      "base_sha": "cdf3d2d5d2aeb0c441221c8bb0b41d0b302d8afa",
+      "command": [
+        "/workspace/work/w009-ipmr01-env/py310/bin/python",
+        "-B",
+        "-m",
+        "pip",
+        "check"
+      ],
+      "cwd": "/workspace/work/w009-ipmr01",
+      "elapsed_seconds": 0.884,
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "MPLCONFIGDIR": "/workspace/work/w009-ipmr01-env/runs/resume-20261104T013137Z-0d289d5a/mplconfig",
+        "MYPY_CACHE_DIR": "/workspace/work/w009-ipmr01-env/runs/resume-20261104T013137Z-0d289d5a/mypy-pip-check-310",
+        "PIP_CACHE_DIR": "/workspace/work/w009-ipmr01-env/pip-cache",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "TMPDIR": "/workspace/work/w009-ipmr01-env/runs/resume-20261104T013137Z-0d289d5a/tmp",
+        "XDG_CACHE_HOME": "/workspace/work/w009-ipmr01-env/runs/resume-20261104T013137Z-0d289d5a/cache"
+      },
+      "exit_code": 0,
+      "finished_head": "73e38df8f932bbb5bd9caf074b442ad2f5c286e9",
+      "head": "73e38df8f932bbb5bd9caf074b442ad2f5c286e9",
+      "outputs": {
+        "stderr": {
+          "path": "pip-check-310.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "path": "pip-check-310.stdout.txt",
+          "sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09"
+        }
+      },
+      "python_executable": "/workspace/work/w009-ipmr01-env/py310/bin/python",
+      "python_identity": {
+        "base_executable": "/workspace/work/w009-ipmr01-env/py310/bin/python",
+        "base_prefix": "/workspace/work/w009-ipmr01-env/interpreters/cpython-3.10.22-linux-x86_64-gnu",
+        "distributions": {
+          "PyYAML": "6.0.3",
+          "Pygments": "2.21.0",
+          "ast_serialize": "0.13.1",
+          "build": "1.6.1",
+          "contourpy": "1.3.2",
+          "cycler": "0.12.1",
+          "exceptiongroup": "1.3.1",
+          "fonttools": "4.65.0",
+          "iniconfig": "2.3.1",
+          "kiwisolver": "1.5.1",
+          "librt": "0.16.0",
+          "matplotlib": "3.10.9",
+          "mypy": "2.4.1",
+          "mypy_extensions": "1.1.0",
+          "numpy": "2.2.6",
+          "packaging": "26.3",
+          "pathspec": "1.1.1",
+          "pillow": "12.3.0",
+          "pip": "23.0.1",
+          "pluggy": "1.7.0",
+          "pyparsing": "3.3.3",
+          "pyproject_hooks": "1.3.3",
+          "pytest": "9.2.0",
+          "python-dateutil": "3.0.0",
+          "setuptools": "79.0.1",
+          "six": "1.17.0",
+          "tomli": "2.5.0",
+          "types-PyYAML": "6.0.12.20261103",
+          "typing_extensions": "4.16.0",
+          "tzdata": "2026.6",
+          "wheel": "0.48.0"
+        },
+        "executable": "/workspace/work/w009-ipmr01-env/py310/bin/python",
+        "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+        "prefix": "/workspace/work/w009-ipmr01-env/py310",
+        "purelib": "/workspace/work/w009-ipmr01-env/py310/lib/python3.10/site-packages",
+        "python": "3.10.22 (main, Oct  3 2026, 01:32:06) [Clang 22.1.3 ]"
+      },
+      "source_manifest_sha256": "40a60ada56e2b560d1af88fec9c16e4d60a6b1384fb042f39202edfcaefefc2c",
+      "started_utc": "2026-11-04T01:56:08.532091+00:00"
+    }
+  ],
+  "errors": [],
+  "finished_head": "73e38df8f932bbb5bd9caf074b442ad2f5c286e9",
+  "finished_utc": "2026-11-04T01:56:09.441090+00:00",
+  "head": "73e38df8f932bbb5bd9caf074b442ad2f5c286e9",
+  "limitations": [
+    "Python3.10 defaults to affected W008/W009 plus explicitly added paths; actual paths and completeness are recorded in test_scopes.",
+    "Synthetic W003/W004 captures; no EDA or production admission.",
+    "No geometry/performance algorithm change or new production capability is established by these engineering checks."
+  ],
+  "python310_complete_v2_rerun": false,
+  "python_environments": {
+    "310": "/workspace/work/w009-ipmr01-env/py310/bin/python",
+    "312": "/workspace/work/w009-ipmr01-env/py312/bin/python"
+  },
+  "resumption": {
+    "adopted_completed_command_receipts": [
+      "build-environment-312.json",
+      "build.json",
+      "clean-environment-before-install-310.json",
+      "clean-environment-before-install-312.json",
+      "clean-environment-installed-310.json",
+      "clean-environment-installed-312.json",
+      "create-install-310.json",
+      "create-install-312.json",
+      "install-310.json",
+      "install-312.json",
+      "installed-identity-310.json",
+      "installed-identity-312.json",
+      "installed-pip-check-310.json",
+      "installed-pip-check-312.json",
+      "installed-smoke-310.json",
+      "installed-smoke-312.json"
+    ],
+    "archived_partial_outputs": {
+      "environment-310.json": "d55e954cd6b25e20d4cd823735f5978236ed5c5f5fc91e1f849e14e8df09a9cc",
+      "environment-310.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "environment-310.stdout.txt": "15ee6dca860bab1e165c48eacece9c7c96ccfebd4f948da06a117a9c0af2c157",
+      "environment-312.json": "5fac4241d0b124a573aaf677de7431c76b3b9008afc076cc87b031af386dd9f2",
+      "environment-312.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "environment-312.stdout.txt": "0d155502aaa3850d32496c12f368d0c6aeb9e4a9476f8c6603eb54860a3b47f6",
+      "final-r3-runner.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "final-r3-runner.stdout.txt": "bfd89008a8752ab7ef07cd519498c2711f537913104c6a924d88859d2dcfa9df",
+      "pytest-310.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "pytest-310.stdout.txt": "b304b98838308c92bafafc5e31d2f3645ba74b87b3c601fda8afdd70a8e8c413",
+      "pytest-312.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "pytest-312.stdout.txt": "5c4b1d353d33a10c727d5fb5898bd0d34454fc7a81ed0cf8f908cf507e148e03",
+      "pytest-scope-310.json": "a1ec6a33c6386f1c31bc4a46f8393511a70dd0e1dbb0bc14c985857941671d24",
+      "pytest-scope-312.json": "32b92c278e8e6bb187e55d5d71d6d25368a95c0be67dc69c4c35a59e4ac2a29a"
+    },
+    "both_packages_and_existing_install_trees_revalidated": true,
+    "interruption": "Environment became unavailable; no pytest/typing final receipt existed and no runner process was alive at reconnect. The interrupted pytest exit codes are unavailable, and partial outputs are not full regression passes.",
+    "product_sha": "73e38df8f932bbb5bd9caf074b442ad2f5c286e9",
+    "resumed_utc": "2026-11-04T01:31:37.348537+00:00",
+    "runtime_files_revalidated": 90,
+    "scope": "Only missing full pytest/type/development pip checks rerun; prior completed build/install/smoke and independent probes remain bound to unchanged source.",
+    "script_sha256": "91b77100e97d7ff253e64af990b7206cf71957c0b6b789b02d6405fde7701b9c",
+    "source_files_revalidated": 245,
+    "source_manifest_sha256": "40a60ada56e2b560d1af88fec9c16e4d60a6b1384fb042f39202edfcaefefc2c",
+    "status": "passed"
+  },
+  "run_id": "resume-20261104T013137Z-0d289d5a",
+  "runner_command": [
+    "/workspace/work/w009-ipmr01-env/py312/bin/python",
+    "docs/tasks/W009/ipmr01-verification/resume_verification.py"
+  ],
+  "runner_sha256": "5b543343eb4c057297dac0fb65cd9bf76c134ec6895e9ab7a74109746115b8da",
+  "runtime_count": 90,
+  "smoke_script_sha256": "dc6763c4157a91d84ea623143b1868e219ed534682b71e34e636dd1419211d9a",
+  "source_file_count": 245,
+  "source_identity_rechecked_after_all_commands": true,
+  "source_manifest_sha256": "40a60ada56e2b560d1af88fec9c16e4d60a6b1384fb042f39202edfcaefefc2c",
+  "source_snapshot_sha256": "09004b55b07f7a1398a797cf110c27cd6c3d703992dfffa89b1e7126b24fc8de",
+  "started_utc": "2026-11-03T11:51:02.801825+00:00",
+  "status": "passed",
+  "test_scopes": {
+    "310": {
+      "complete_v2": false,
+      "paths": [
+        "tests/contracts",
+        "tests/unit/test_w006_publication.py"
+      ]
+    },
+    "312": {
+      "complete_v2": true,
+      "paths": [
+        "tests/contracts",
+        "tests/unit"
+      ]
+    }
+  },
+  "typing_source_counts": {
+    "310": 44,
+    "312": 44
+  }
+}

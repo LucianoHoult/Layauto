@@ -1,0 +1,7 @@
+{
+  "complete_v2": false,
+  "paths": [
+    "tests/contracts",
+    "tests/unit/test_w006_publication.py"
+  ]
+}

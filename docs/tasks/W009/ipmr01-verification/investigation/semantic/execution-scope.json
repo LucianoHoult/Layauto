@@ -1,0 +1,49 @@
+{
+  "role": "execution-side reachable decoder investigation and fix; not independent review",
+  "commits": [
+    "c68b818ff7ec68cb4f55956a36f64c6f53ed6a76",
+    "02c52383bd1ea2532d57a2f54fbbbc57c8d6264f"
+  ],
+  "paths": [
+    "layauto_v2/normalization/contracts.py",
+    "layauto_v2/normalization/_validation.py",
+    "layauto_v2/normalization/codec.py",
+    "tests/contracts/test_w009_nested_receipt_exceptions.py"
+  ],
+  "checks": {
+    "semantic-new-r2-312": {
+      "loaded_commit": "c68b818ff7ec68cb4f55956a36f64c6f53ed6a76",
+      "passed": 58
+    },
+    "semantic-existing-312": {
+      "loaded_commit": "c68b818ff7ec68cb4f55956a36f64c6f53ed6a76",
+      "passed": 275,
+      "files": [
+        "tests/contracts/test_w007_contracts.py",
+        "tests/contracts/test_w007_inputs.py",
+        "tests/contracts/test_w008_capture_binding.py",
+        "tests/contracts/test_w008_geometry_wire.py"
+      ]
+    },
+    "semantic-blank-count-312": {
+      "loaded_commit": "02c52383bd1ea2532d57a2f54fbbbc57c8d6264f",
+      "passed": 1,
+      "deselected": 58
+    },
+    "semantic-typing-r2-312": {
+      "loaded_commit": "02c52383bd1ea2532d57a2f54fbbbc57c8d6264f",
+      "checked_modules": 44
+    },
+    "semantic-typing-r2-310": {
+      "loaded_commit": "02c52383bd1ea2532d57a2f54fbbbc57c8d6264f",
+      "checked_modules": 44
+    }
+  },
+  "limitations": [
+    "The 275 existing tests started before the blank-count-header follow-up and imported c68b818 source; only the follow-up control plus both typing checks ran at 02c5238. Root integration owns the complete final-source regression and builds.",
+    "The first new-test run had two test setup failures caused by model-key case and is retained; the corrected 58-test run passed.",
+    "The first attempted existing-test command named a nonexistent file and exited4; its original shell/tool observation remains in the session; the proper existing-test command passed.",
+    "The raw reachable catches hash injections contaminated global hashlib; exclude the 10 hash cases per reachable-catches-scope.json.",
+    "The malformed receipt field scan checks naked exception leakage in the consumed semantic receipt fields, not acceptance completeness or W009 success."
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "status": "passed",
+  "baseline_sha": "cdf3d2d5d2aeb0c441221c8bb0b41d0b302d8afa",
+  "final_sha": "73e38df8f932bbb5bd9caf074b442ad2f5c286e9",
+  "commands": {
+    "baseline": {
+      "command": [
+        "/workspace/work/w009-ipmr01-env/py312/bin/python",
+        "-B",
+        "/workspace/work/w009-ipmr01/docs/tasks/W009/ipmr01-verification/normal_wire_compatibility.py",
+        "/workspace/work/w009-ipmr01/tests/fixtures/w003_m1"
+      ],
+      "cwd": "/workspace/work/w009-ipmr01",
+      "PYTHONPATH": "/workspace/work/w009-ipmr01-compat/baseline",
+      "exit_code": 0
+    },
+    "final": {
+      "command": [
+        "/workspace/work/w009-ipmr01-env/py312/bin/python",
+        "-B",
+        "/workspace/work/w009-ipmr01/docs/tasks/W009/ipmr01-verification/normal_wire_compatibility.py",
+        "/workspace/work/w009-ipmr01/tests/fixtures/w003_m1"
+      ],
+      "cwd": "/workspace/work/w009-ipmr01",
+      "PYTHONPATH": "/workspace/work/w009-ipmr01",
+      "exit_code": 0
+    }
+  },
+  "wire_and_digest_identical": {
+    "base": {
+      "sha256": "835a47dc6c47ed6d6705b7d7a87cf58bff8a045921d5c62fd304ad8759f9a08e",
+      "record_digest": "835a47dc6c47ed6d6705b7d7a87cf58bff8a045921d5c62fd304ad8759f9a08e",
+      "length": 4783642
+    },
+    "draft": {
+      "sha256": "1361a949e1493560354b4617e53e2c063128b333b20b5ad88704a543cdbd976b",
+      "record_digest": "1361a949e1493560354b4617e53e2c063128b333b20b5ad88704a543cdbd976b",
+      "length": 531056
+    },
+    "result": {
+      "sha256": "3506a92e7c290a77be5d5e34b9587a173c81e57e7a83203ab50fa55d84733436",
+      "record_digest": "3506a92e7c290a77be5d5e34b9587a173c81e57e7a83203ab50fa55d84733436",
+      "length": 10563346
+    }
+  },
+  "semantic_digest": "22cc5551c14d49b53278eff80d5b3a04ea81ffc7c177080ff234abe04decaf75",
+  "note": "Both versions read the same fixture URI spelling. Historical result wire hashes from a relocated checkout can differ because W005 captures normalized cache files under absolute URIs; draft wire was already identical. This check compares both versions using identical captures, not a relocated historical hash.",
+  "outputs": {
+    "compatibility-baseline.stdout.json": "33c0cfbdda8c125fe13ac056fc61e77a8eac723d63fc01a4770b3b61c7d26052",
+    "compatibility-baseline.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "compatibility-final.stdout.json": "62313abb7a8b6b96d695d22a7fbd4945ffd5b1b447ee81b8b88f3ee70c7c1d65",
+    "compatibility-final.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "normal_wire_compatibility.py": "3c58fcd8ac32ac0cb37946cc573a28c56e25823b86b76b5c503e3eaa1f8ef2c6"
+  }
+}

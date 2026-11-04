@@ -1,0 +1,17 @@
+{
+  "reason": "Preserve original receipts without rewriting their paths; these artifacts moved when final validation was refrozen.",
+  "artifacts": [
+    {
+      "kind": "wheel",
+      "original_recorded_path": "/workspace/work/w009-ipmr01/docs/tasks/W009/ipmr01-verification/dist/layauto-0.2.0-py3-none-any.whl",
+      "archived_path": "pre-count-header-guard/dist/layauto-0.2.0-py3-none-any.whl",
+      "sha256": "11bf5a87b320cdde4b4cdfc75c76519df1f93527c82866fe3b208e7cf5522548"
+    },
+    {
+      "kind": "sdist",
+      "original_recorded_path": "/workspace/work/w009-ipmr01/docs/tasks/W009/ipmr01-verification/dist/layauto-0.2.0.tar.gz",
+      "archived_path": "pre-count-header-guard/dist/layauto-0.2.0.tar.gz",
+      "sha256": "d3c83953756ef0b9e5e47062f36abb6beb46b8dcb9aff264d5e6c993af9ec26b"
+    }
+  ]
+}

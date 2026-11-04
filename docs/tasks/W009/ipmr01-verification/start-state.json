@@ -1,0 +1,26 @@
+{
+  "recovery": "cdf3d2d5d2aeb0c441221c8bb0b41d0b302d8afa",
+  "main": "4df07e68b05df4c57a8b8d44bc41e7e073938d3a",
+  "cwd": "/workspace/work/w009-ipmr01",
+  "head": "cdf3d2d5d2aeb0c441221c8bb0b41d0b302d8afa",
+  "branch": "codex/w009-effective-geometry-terminals",
+  "remote": "https://github.com/LucianoHoult/Layauto.git",
+  "initial_original_checkout": {
+    "path": "/workspace/Layauto",
+    "branch": "work",
+    "head": "4df07e68b05df4c57a8b8d44bc41e7e073938d3a",
+    "staged": [],
+    "unstaged": [],
+    "untracked": []
+  },
+  "worktree_status_observed_after_initial_edits": "# branch.oid cdf3d2d5d2aeb0c441221c8bb0b41d0b302d8afa\n# branch.head codex/w009-effective-geometry-terminals\n1 .M N... 100644 100644 100644 2b16269c82142f38278236897a9b4f2376f59ca6 2b16269c82142f38278236897a9b4f2376f59ca6 layauto_v2/normalization/geometry_codec.py\n1 .M N... 100644 100644 100644 0c5f2a27ebde242cf3dd8500795ba918f122700b 0c5f2a27ebde242cf3dd8500795ba918f122700b layauto_v2/state/layout_store.py\n? docs/tasks/W009/ipmr01-fix.md\n? tests/contracts/test_w009_nested_base_decode.py\n? work/",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "local_agents": "AGENTS.md",
+  "remote_query": {
+    "method": "git ls-remote origin refs/heads/codex/w009-effective-geometry-terminals refs/heads/main",
+    "network": "with_additional_permissions network=true, inherited proxy/TLS preserved",
+    "exit_code": 0,
+    "stdout": "cdf3d2d5d2aeb0c441221c8bb0b41d0b302d8afa\trefs/heads/codex/w009-effective-geometry-terminals\n4df07e68b05df4c57a8b8d44bc41e7e073938d3a\trefs/heads/main\n"
+  }
+}

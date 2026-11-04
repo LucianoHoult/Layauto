@@ -80,6 +80,13 @@
 
 独立review修正项处置与剩余数量由下节及reviewer报告维护。执行交付提交推送沿用项目noreply身份，远端完整SHA在Git与执行回复核对；PM从当前W009分支接收并决定验收/集成。未合并main、未改current-work/PM要求段，未启动下一任务。
 
+
+### E3 IPMR-01 完整嵌套解码补修（2026-11-03，执行）
+
+从指定恢复提交 `cdf3d2d5d2aeb0c441221c8bb0b41d0b302d8afa` 在原分支隔离工作树执行，原 checkout/远端 main 保持。按 [补修要求](W009/ipmr01-fix-task.md) 修复 W009 复用 W008 layout/partition/occupancy 的 constructor 异常包裹，并处理实际确认的 semantic receipt/readback/captured SourceFile 同链边界；畸形字段通过显式结构/类型/引用/索引检查拒绝，输入认证、wire/schema、数学与不可变合同保持。原 finding、历史报告及 PM1/PM2 均保留。
+
+[本轮执行交接](W009/ipmr01-fix.md)记录调用链、追加反例、235项正式新回归、各版本及验证范围；[新证据目录](W009/ipmr01-verification/README.md)保存最终245项源/测试/配置清单、原99项异常矩阵、既有cause/context、畸形对照和双解释器/新包/两套源码外干净安装材料。最终Python3.12完整**1149项**、Python3.10受影响**988项**、双typing各44源模块、新wheel/sdist及两套源码外干净安装smoke通过；原99矩阵达到99/99且失败列表为空。3.10其余unit parser未重跑，范围与版本限制见本轮执行交接及机器回执。独立review由未承担修复者维护下节及单独报告；执行者不代写关闭或 PM 验收。最终分支/远端完整SHA在Git及执行交回时核对，不修改PM阶段/current-work、不合main或启动后续任务。
+
 ## Review 结论（reviewer）
 
 ### R1 独立方案、代码及修正复核（2026-11-03）

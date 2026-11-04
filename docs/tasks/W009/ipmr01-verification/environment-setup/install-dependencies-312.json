@@ -1,0 +1,26 @@
+{
+  "command": [
+    "/workspace/work/w009-ipmr01-env/py312/bin/python",
+    "-m",
+    "pip",
+    "install",
+    "--report",
+    "/workspace/work/w009-ipmr01-env/setup/pip-report-312.json",
+    "numpy",
+    "matplotlib",
+    "pyyaml",
+    "pytest",
+    "mypy",
+    "types-PyYAML",
+    "build",
+    "setuptools",
+    "wheel"
+  ],
+  "cwd": "/workspace/work/w009-ipmr01-env",
+  "exit_code": 0,
+  "elapsed_seconds": 17.41,
+  "stdout": "install-dependencies-312.stdout.txt",
+  "stderr": "install-dependencies-312.stderr.txt",
+  "stdout_sha256": "ce2f496638e437fe714010f01130ae2362e9046738960bab038b8d54b23d22c7",
+  "stderr_sha256": "f96a57a6d17645d3d9eb401b9cead41a648edf2499f2ca4bc3f9364d677b6080"
+}

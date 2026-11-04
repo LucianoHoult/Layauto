@@ -1,0 +1,41 @@
+Processing /workspace/work/w009-ipmr01/docs/tasks/W009/ipmr01-verification/dist/layauto-0.2.0.tar.gz
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Collecting matplotlib
+  Using cached matplotlib-3.10.9-cp310-cp310-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (8.8 MB)
+Collecting pyyaml
+  Using cached pyyaml-6.0.3-cp310-cp310-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (770 kB)
+Collecting numpy
+  Using cached numpy-2.2.6-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (16.8 MB)
+Collecting pillow>=8
+  Using cached pillow-12.3.0-cp310-cp310-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (6.9 MB)
+Collecting fonttools>=4.22.0
+  Using cached fonttools-4.65.0-cp310-cp310-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (5.3 MB)
+Collecting python-dateutil>=2.7
+  Using cached python_dateutil-3.0.0-py2.py3-none-any.whl (94 kB)
+Collecting cycler>=0.10
+  Using cached cycler-0.12.1-py3-none-any.whl (8.3 kB)
+Collecting packaging>=20.0
+  Using cached packaging-26.3-py3-none-any.whl (129 kB)
+Collecting kiwisolver>=1.3.1
+  Using cached kiwisolver-1.5.1-cp310-cp310-manylinux_2_12_x86_64.manylinux2010_x86_64.whl (1.6 MB)
+Collecting contourpy>=1.0.1
+  Using cached contourpy-1.3.2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (325 kB)
+Collecting pyparsing>=3
+  Using cached pyparsing-3.3.3-py3-none-any.whl (126 kB)
+Collecting six>=1.6
+  Using cached six-1.17.0-py2.py3-none-any.whl (11 kB)
+Collecting tzdata
+  Using cached tzdata-2026.6-py2.py3-none-any.whl (348 kB)
+Building wheels for collected packages: layauto
+  Building wheel for layauto (pyproject.toml): started
+  Building wheel for layauto (pyproject.toml): finished with status 'done'
+  Created wheel for layauto: filename=layauto-0.2.0-py3-none-any.whl size=137278 sha256=a68becd595f5c86711adeb8dc8d67b5efe4dfdfb82c602f6a98f8d6796991224
+  Stored in directory: /workspace/work/w009-ipmr01-env/pip-cache/wheels/8f/71/f6/bd508a3491fa0e0136e2824e3ef69e7291a1b3b0532b9bfb05
+Successfully built layauto
+Installing collected packages: tzdata, six, pyyaml, pyparsing, pillow, packaging, numpy, kiwisolver, fonttools, cycler, python-dateutil, contourpy, matplotlib, layauto
+Successfully installed contourpy-1.3.2 cycler-0.12.1 fonttools-4.65.0 kiwisolver-1.5.1 layauto-0.2.0 matplotlib-3.10.9 numpy-2.2.6 packaging-26.3 pillow-12.3.0 pyparsing-3.3.3 python-dateutil-3.0.0 pyyaml-6.0.3 six-1.17.0 tzdata-2026.6

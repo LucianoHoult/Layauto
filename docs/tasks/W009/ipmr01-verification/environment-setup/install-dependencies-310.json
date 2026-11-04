@@ -1,0 +1,26 @@
+{
+  "command": [
+    "/workspace/work/w009-ipmr01-env/py310/bin/python",
+    "-m",
+    "pip",
+    "install",
+    "--report",
+    "/workspace/work/w009-ipmr01-env/setup/pip-report-310.json",
+    "numpy",
+    "matplotlib",
+    "pyyaml",
+    "pytest",
+    "mypy",
+    "types-PyYAML",
+    "build",
+    "setuptools",
+    "wheel"
+  ],
+  "cwd": "/workspace/work/w009-ipmr01-env",
+  "exit_code": 0,
+  "elapsed_seconds": 18.717,
+  "stdout": "install-dependencies-310.stdout.txt",
+  "stderr": "install-dependencies-310.stderr.txt",
+  "stdout_sha256": "b7e8c950d04a014dfc8d12ffced335e07f767032b879b6562370fb0d65d3fef8",
+  "stderr_sha256": "e091950f90cffd3dcf60c566598ac29043d3cce845f774f9389cea0913af182d"
+}

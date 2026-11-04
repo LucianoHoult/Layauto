@@ -1,0 +1,19 @@
+{
+  "cwd": "/workspace/work/w009-ipmr01-semantic",
+  "command": [
+    "/workspace/work/w009-ipmr01-env/py312/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "tests/contracts/test_w007_contracts.py",
+    "tests/contracts/test_w007_inputs.py",
+    "tests/contracts/test_w008_capture_binding.py",
+    "tests/contracts/test_w008_geometry_wire.py",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "--basetemp=/workspace/work/w009-ipmr01-audit/pytest-existing"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 503.1188473701477
+}

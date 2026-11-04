@@ -1,0 +1,8 @@
+{
+  "head": "cdf3d2d5d2aeb0c441221c8bb0b41d0b302d8afa",
+  "wire_sha256": "75854eb29c10ff745c56812ba100216a802104ee25f2a32d7e09e1505e5ab03c",
+  "observed": "TypeError",
+  "message": "captured SourceFile hash calculation failed internally",
+  "same_object": true,
+  "cause_is_failure": false
+}

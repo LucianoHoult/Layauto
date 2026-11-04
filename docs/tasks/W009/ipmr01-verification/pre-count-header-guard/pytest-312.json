@@ -1,0 +1,83 @@
+{
+  "base_sha": "cdf3d2d5d2aeb0c441221c8bb0b41d0b302d8afa",
+  "command": [
+    "/workspace/work/w009-ipmr01-env/py312/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-p",
+    "no:cacheprovider",
+    "--basetemp",
+    "/workspace/work/w009-ipmr01-env/runs/20261103T114038Z-d9317e20/pytest-312",
+    "tests/contracts",
+    "tests/unit",
+    "-q"
+  ],
+  "cwd": "/workspace/work/w009-ipmr01",
+  "elapsed_seconds": 172.903,
+  "env_overrides": {
+    "MPLBACKEND": "Agg",
+    "MPLCONFIGDIR": "/workspace/work/w009-ipmr01-env/runs/20261103T114038Z-d9317e20/mplconfig",
+    "MYPY_CACHE_DIR": "/workspace/work/w009-ipmr01-env/runs/20261103T114038Z-d9317e20/mypy-pytest-312",
+    "PIP_CACHE_DIR": "/workspace/work/w009-ipmr01-env/pip-cache",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONPATH": "/workspace/work/w009-ipmr01",
+    "TMPDIR": "/workspace/work/w009-ipmr01-env/runs/20261103T114038Z-d9317e20/tmp",
+    "XDG_CACHE_HOME": "/workspace/work/w009-ipmr01-env/runs/20261103T114038Z-d9317e20/cache"
+  },
+  "exit_code": -15,
+  "finished_head": "8aa11baebfea935933b18cae3f23ba8c1e9c6486",
+  "head": "8aa11baebfea935933b18cae3f23ba8c1e9c6486",
+  "outputs": {
+    "stderr": {
+      "path": "pytest-312.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stdout": {
+      "path": "pytest-312.stdout.txt",
+      "sha256": "47320d9087e6352422f15f716a08fa7bd254301966d4c292fd67665e7a998f0b"
+    }
+  },
+  "python_executable": "/workspace/work/w009-ipmr01-env/py312/bin/python",
+  "python_identity": {
+    "base_executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+    "base_prefix": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python",
+    "distributions": {
+      "PyYAML": "6.0.3",
+      "Pygments": "2.21.0",
+      "ast_serialize": "0.13.1",
+      "build": "1.6.1",
+      "contourpy": "1.4.0",
+      "cycler": "0.12.1",
+      "fonttools": "4.68.0",
+      "iniconfig": "2.3.1",
+      "kiwisolver": "1.5.1",
+      "librt": "0.16.0",
+      "matplotlib": "3.11.2",
+      "mypy": "2.4.1",
+      "mypy_extensions": "1.1.0",
+      "numpy": "2.5.4",
+      "packaging": "26.3",
+      "pathspec": "1.1.1",
+      "pillow": "13.0.0",
+      "pip": "25.0.1",
+      "pluggy": "1.7.0",
+      "pyparsing": "3.3.3",
+      "pyproject_hooks": "1.3.3",
+      "pytest": "9.2.0",
+      "python-dateutil": "4.0.0",
+      "setuptools": "84.2.1",
+      "types-PyYAML": "6.0.12.20261103",
+      "typing_extensions": "4.16.0",
+      "tzdata": "2026.6",
+      "wheel": "0.48.0"
+    },
+    "executable": "/workspace/work/w009-ipmr01-env/py312/bin/python",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "prefix": "/workspace/work/w009-ipmr01-env/py312",
+    "purelib": "/workspace/work/w009-ipmr01-env/py312/lib/python3.12/site-packages",
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]"
+  },
+  "source_manifest_sha256": "54e26f0999f36ef75defe7d7ffd6f9e91fd146479798cfc853e9e44a44c2a5a2",
+  "started_utc": "2026-11-03T11:40:38.751927+00:00"
+}
