@@ -1,0 +1,53 @@
+{
+  "reason": "Parent-directed stop after the reproduced unchanged W007 dependency whitelist guard rejected new authorized W010 pure-state imports. Preserve all first-run output; no success claim.",
+  "runner_pid": 5016,
+  "runner_argv": [
+    "/workspace/.venvs/w010-dev312/bin/python",
+    "work/w010-preflight/prepare_final.py",
+    "--root",
+    "/workspace/Layauto",
+    "--out",
+    "/workspace/Layauto/docs/tasks/W010/verification",
+    "--work",
+    "/workspace/work/w010-final-fba1e7b",
+    "--smoke",
+    "/workspace/Layauto/docs/tasks/W010/installed_smoke.py",
+    "--python310",
+    "/workspace/.venvs/w010-py310/bin/python",
+    "--python312",
+    "/workspace/.venvs/w010-dev312/bin/python",
+    "--expected-tests",
+    "1464"
+  ],
+  "children": [
+    {
+      "pid": 5042,
+      "argv": [
+        "/workspace/.venvs/w010-dev312/bin/python",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "tests/unit",
+        "tests/contracts",
+        "-q"
+      ]
+    },
+    {
+      "pid": 5044,
+      "argv": [
+        "/workspace/.venvs/w010-py310/bin/python",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "tests/unit",
+        "tests/contracts",
+        "-q"
+      ]
+    }
+  ],
+  "runner_signal": "SIGTERM",
+  "child_signal": "SIGINT",
+  "verified_identity": true
+}

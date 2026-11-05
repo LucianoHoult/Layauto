@@ -1,0 +1,7 @@
+{
+  "reason": "Existing W006 independent sample comparison reads this documentation fixture; initial subset snapshot omitted it.",
+  "path": "docs/tasks/W003/examples/records.json",
+  "git_commit": "9758a157115cc22d91ce095ac2002209b9f210d3",
+  "sha256": "7a1eda0d255aab377319d5cb104089f7788ba4398d8e8f91a098cc5dc0832a31",
+  "runtime_smoke_consumes_sample": false
+}

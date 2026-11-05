@@ -1,0 +1,35 @@
+{
+  "command": [
+    "/workspace/.venvs/w010-py310/bin/python",
+    "-m",
+    "pytest",
+    "-p",
+    "no:cacheprovider",
+    "tests/unit",
+    "tests/contracts",
+    "-q"
+  ],
+  "cwd": "/workspace/Layauto/work/w010-preflight/snapshot",
+  "environment_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PIP_CACHE_DIR": "/workspace/Layauto/work/w010-preflight/pip-cache",
+    "MYPY_CACHE_DIR": "/workspace/Layauto/work/w010-preflight/mypy-baseline-pytest-310",
+    "MPLCONFIGDIR": "/workspace/Layauto/work/w010-preflight/mplconfig"
+  },
+  "output": "baseline-pytest-310.partial.txt",
+  "output_sha256": "12d33dd9e5e459d31bed8279bd476fa16d9cb4a53ac5ffdca2e2644b5d088820",
+  "complete": false,
+  "observed_summary": "1 failed, 992 passed in 950.02s",
+  "known_failure": "Initial harness snapshot omitted docs/tasks/W003/examples/records.json; targeted before/after artifacts preserve the failure and correction.",
+  "termination": {
+    "reason": "Parent authorized stopping the redundant preflight to prioritize the frozen final 1464-test dual-interpreter matrix.",
+    "verified_process_argv_before_signaling": true,
+    "wrapper_signal": "SIGTERM",
+    "wrapper_exit_code": 143,
+    "pytest_signal": "SIGINT",
+    "pytest_output_confirms_KeyboardInterrupt": true
+  },
+  "baseline310_mypy": "not_reached",
+  "baseline312_full_pytest": "not_run",
+  "success_claim": false
+}

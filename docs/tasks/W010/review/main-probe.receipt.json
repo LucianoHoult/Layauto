@@ -1,0 +1,37 @@
+{
+  "schema": "layauto-w010-independent-main-probe/1",
+  "reviewer": "/root/code_review",
+  "base": "9758a157115cc22d91ce095ac2002209b9f210d3",
+  "head": "0f5029df935bc0acd106aad1bc2be81304d4f442",
+  "cwd": "/workspace/Layauto",
+  "command": [
+    "/workspace/.venvs/w010-dev312/bin/python",
+    "-B",
+    "docs/tasks/W010/review/main-probe.py"
+  ],
+  "environment_overrides": {
+    "PYTHONPATH": "/workspace/Layauto"
+  },
+  "exit_code": 0,
+  "artifacts": {
+    "main-probe.py": {
+      "sha256": "759836ff25bfc8d5207d40608ac3ea581036e69b2d243d38b9177193c782b20e",
+      "size_bytes": 7895
+    },
+    "main-probe.stdout.json": {
+      "sha256": "6b0aa51f3d05b1b53e2d07ff3147ccd1061f368f5c258bbc46ffe2d0d45ebf45",
+      "size_bytes": 784
+    },
+    "main-probe.stderr.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    "main-probe.initial-import-failure.txt": {
+      "sha256": "e7d07a9b6986b70a9977891cd164cdf8d92a4ecb0f966e581744cb8bad658df3",
+      "size_bytes": 354
+    }
+  },
+  "source_manifest_sha256": "cef29336dba1bf572fd30227f354365d4a4d780e721d089b70095589d0f55889",
+  "initial_harness_failure": "Without explicit source PYTHONPATH, script import selected an older developer-environment installed package and raised ImportError before invoking W010; raw failure retained, corrected source command is the passed run.",
+  "documentation_rerun": "Only the probe docstring was clarified: the whole-fixture preservation inventory hashes answer files without using their content for runtime inputs or graph expectations; the final passed run uses this clarified script."
+}

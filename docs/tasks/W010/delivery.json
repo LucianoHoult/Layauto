@@ -1,0 +1,37 @@
+{
+  "schema": "layauto-w010-execution-delivery/1",
+  "generated_at_utc": "2026-11-05T03:25:12.078144+00:00",
+  "repository": "LucianoHoult/Layauto",
+  "branch": "codex/w010-local-contact-connectivity",
+  "base": "9758a157115cc22d91ce095ac2002209b9f210d3",
+  "tested_reviewed_product_commit": "0f5029df935bc0acd106aad1bc2be81304d4f442",
+  "status": "execution_reviewed_pending_pm",
+  "pm_acceptance": "not_performed_by_execution",
+  "test_counts": {
+    "312": 1465,
+    "310": 1465
+  },
+  "retained_baseline_tests": 1149,
+  "new_tests": 316,
+  "strict_mypy_files_per_interpreter": 48,
+  "source_file_count": 252,
+  "runtime_file_count": 94,
+  "source_manifest_sha256": "cef29336dba1bf572fd30227f354365d4a4d780e721d089b70095589d0f55889",
+  "source_snapshot_sha256": "493d36ebeb4bd5d43f8bbb06139b27e3be7997dad12e913c9ca36c362ba843d1",
+  "engineering_receipt_sha256": "856f78919b92098632fda3ca988ebcc6f4b739c817794fce691035e028562b9a",
+  "engineering_evidence_manifest_sha256": "ebf1cf092ba9168ae37dfd622aa47cae39ce812786e5c9e84bd485064d88593c",
+  "independent_code_review_sha256": "0a94d2e8dfc01a274f85dff34ad06bb466c243a7b63f72bd7ea0831cf97c6b7f",
+  "independent_review_identity_sha256": "c70f530791a216f3290cec00110e7eec5282bf938061717986f96879315de880",
+  "task_review_section_sha256": "d4a4a2c7ca0480e1701c171ef62d2092de5a1aefa868c52f01cb31651631ad84",
+  "execution_record": "docs/tasks/W010/execution.md",
+  "task_record": "docs/tasks/W010-local-contact-connectivity.md",
+  "protected_paths_unchanged": [
+    "docs/current-work.md",
+    "docs/architecture.md",
+    "docs/collaboration",
+    "docs/environment",
+    "tests/fixtures",
+    "legacy_mvp"
+  ],
+  "publication_identity": "Final Git commit and remote full SHA are supplied by the final push/handoff; this file does not self-reference its future commit."
+}

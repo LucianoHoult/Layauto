@@ -1,0 +1,21 @@
+{
+  "command": [
+    "/workspace/work/w010-final-fba1e7b/clean-312/bin/python",
+    "-m",
+    "pip",
+    "check"
+  ],
+  "cwd": "/workspace/work/w010-final-fba1e7b/installed-cwd",
+  "exit_code": 0,
+  "environment_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PIP_CACHE_DIR": "/workspace/work/w010-final-fba1e7b/pip-cache",
+    "MYPY_CACHE_DIR": "/workspace/work/w010-final-fba1e7b/mypy-installed-pip-check-312",
+    "MPLCONFIGDIR": "/workspace/work/w010-final-fba1e7b/mplconfig"
+  },
+  "elapsed_seconds": 0.217,
+  "stdout": "installed-pip-check-312.stdout.txt",
+  "stdout_sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09",
+  "stderr": "installed-pip-check-312.stderr.txt",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

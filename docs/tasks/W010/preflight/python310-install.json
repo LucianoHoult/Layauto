@@ -1,0 +1,13 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/uv",
+    "python",
+    "install",
+    "3.10"
+  ],
+  "cwd": "/workspace/Layauto",
+  "exit_code": 0,
+  "elapsed_seconds": 7.821,
+  "output": "python310-install.txt",
+  "output_sha256": "8ac00096b22425228fb66fdd022302a9a37e4f6c9ce7b360ea485e16e3e49380"
+}

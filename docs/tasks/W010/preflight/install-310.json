@@ -1,0 +1,14 @@
+{
+  "command": [
+    "/workspace/.venvs/w010-py310/bin/python",
+    "-m",
+    "pip",
+    "install",
+    ".[dev,gds]"
+  ],
+  "cwd": "/workspace/Layauto/work/w010-preflight/snapshot",
+  "exit_code": 0,
+  "elapsed_seconds": 50.274,
+  "output": "install-310.txt",
+  "output_sha256": "6ae408432ce9c8799924d9097e5b350d3b22fd4d34788905875bf57b376b6c6a"
+}

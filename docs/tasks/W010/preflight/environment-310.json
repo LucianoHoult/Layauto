@@ -1,0 +1,12 @@
+{
+  "command": [
+    "/workspace/.venvs/w010-py310/bin/python",
+    "-c",
+    "import sys,platform,importlib.metadata as m,json; print(json.dumps({\"executable\":sys.executable,\"version\":sys.version,\"platform\":platform.platform(),\"packages\":{d.metadata[\"Name\"]:d.version for d in m.distributions()}},indent=2))"
+  ],
+  "cwd": "/workspace/Layauto",
+  "exit_code": 0,
+  "elapsed_seconds": 0.197,
+  "output": "environment-310.txt",
+  "output_sha256": "c404b821fded998e619a5fff6402809739d864f3fff67acb65058685a8463998"
+}

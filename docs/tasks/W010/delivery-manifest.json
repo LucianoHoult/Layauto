@@ -1,0 +1,879 @@
+{
+  "schema": "layauto-w010-delivery-files/1",
+  "base": "9758a157115cc22d91ce095ac2002209b9f210d3",
+  "tested_reviewed_product_commit": "0f5029df935bc0acd106aad1bc2be81304d4f442",
+  "files": {
+    "docs/tasks/W010/boundary-check/pytest-310.txt": {
+      "bytes": 98,
+      "sha256": "4de64934605dc63b561f8b2a59ff4a7fa10d1068e8dfcae0f632ddefa3a3b684"
+    },
+    "docs/tasks/W010/boundary-check/pytest-312.txt": {
+      "bytes": 98,
+      "sha256": "d2e19278f2acef7cfe468afa87fbba8925315ff38a8d23649526ec4f7bbe6521"
+    },
+    "docs/tasks/W010/boundary-check/review.md": {
+      "bytes": 3742,
+      "sha256": "670e50fb5f66279cb8e7301d545d5165909db4cff1abf91a9c87226f70cc072c"
+    },
+    "docs/tasks/W010/code-review.md": {
+      "bytes": 9643,
+      "sha256": "0a94d2e8dfc01a274f85dff34ad06bb466c243a7b63f72bd7ea0831cf97c6b7f"
+    },
+    "docs/tasks/W010/delivery.json": {
+      "bytes": 1818,
+      "sha256": "8735e962420e569194849acc495672518bfabadc0c37298cb0c5fca1bede901e"
+    },
+    "docs/tasks/W010/execution.md": {
+      "bytes": 10233,
+      "sha256": "233022aa13a7f0e502a5d40026892c754977487ff2316b4dce76acd88270d3cd"
+    },
+    "docs/tasks/W010/handoff-review.md": {
+      "bytes": 7737,
+      "sha256": "967ccfd7b5fffe12e4b122ebd005f67afb758fc288940e8553c0df0d2bb19cd9"
+    },
+    "docs/tasks/W010/installed_smoke.py": {
+      "bytes": 4730,
+      "sha256": "a7b8ede4c7e961bf1d85fbe5b52c90579b9beaeae18dfc3136fd5f350614e37f"
+    },
+    "docs/tasks/W010/performance.json": {
+      "bytes": 33759,
+      "sha256": "fd9fa0085b5f4799201d27f9872db702133e6a5b2252d14ae43090ad3daa900b"
+    },
+    "docs/tasks/W010/performance_probe.py": {
+      "bytes": 16408,
+      "sha256": "fe54260bf8b5da882da424d30c38a2f01d31c625006c0b39adf1ce2610dbfbbd"
+    },
+    "docs/tasks/W010/plan-review.md": {
+      "bytes": 5797,
+      "sha256": "dfbb8639cf2d9e1d44d5a2d3c0583be20a0266549cb84154bcf67fd561cf66d9"
+    },
+    "docs/tasks/W010/plan.md": {
+      "bytes": 7504,
+      "sha256": "e6578dd652aafab1de41c4a0adf321c2008adcb3ec47585d5bf5f8c7108b0e8d"
+    },
+    "docs/tasks/W010/preflight/README.md": {
+      "bytes": 2372,
+      "sha256": "fc6b6368161c10de6a4953f3d014635574956607dddaff5e9db589d7832f7335"
+    },
+    "docs/tasks/W010/preflight/baseline-collection310.txt": {
+      "bytes": 141257,
+      "sha256": "45f8d30e3e834f7d88cf8b97084f17bf04d3b7d66eb98004bb5deeee57683479"
+    },
+    "docs/tasks/W010/preflight/baseline-corrected-manifest.json": {
+      "bytes": 29710,
+      "sha256": "4151d3eb7180cad8195a4de2c5b5bbeabedbf0d1f34cccd0138dcb30eab92258"
+    },
+    "docs/tasks/W010/preflight/baseline-corrected-source.tar.gz": {
+      "bytes": 297483,
+      "sha256": "352bbb0c703db222c35e82bcd19860637a5636302314d7674474697ec9c0ca56"
+    },
+    "docs/tasks/W010/preflight/baseline-harness-before310.json": {
+      "bytes": 701,
+      "sha256": "2a05d4fda3f89913adb503b5578e10f46d0705d12d81b60cb8d918d3a749d2c4"
+    },
+    "docs/tasks/W010/preflight/baseline-harness-before310.txt": {
+      "bytes": 2086,
+      "sha256": "a73f6391887844191360c8bcbd3b3297f086ab603779130357b816c97f2d1bb5"
+    },
+    "docs/tasks/W010/preflight/baseline-harness-correction.json": {
+      "bytes": 365,
+      "sha256": "7b961135743dbc4dd99b6db5f2d23f4adda99a9ba1ee38744d19b57f082b625c"
+    },
+    "docs/tasks/W010/preflight/baseline-harness-retest310.json": {
+      "bytes": 574,
+      "sha256": "ade9e07bf280a23fc5d18461ee6b7e39a472224c4e3dc94288ca84f461cfbefa"
+    },
+    "docs/tasks/W010/preflight/baseline-harness-retest310.txt": {
+      "bytes": 98,
+      "sha256": "7fefcaf66f6e7137767bc25d16d128cbf7b8617ad0b6f14fbf9a0b8e7fdd81cd"
+    },
+    "docs/tasks/W010/preflight/baseline-import-dev312.json": {
+      "bytes": 391,
+      "sha256": "003d6cbd6575f2eba33a785b25bacf8f1286d01d6bd6e27b8a9bd609f3fda78a"
+    },
+    "docs/tasks/W010/preflight/baseline-import-dev312.txt": {
+      "bytes": 125,
+      "sha256": "08d865ac17ce0d0d66258d649d1f75d13f0ca8570fe88e441729aa0208a1faf6"
+    },
+    "docs/tasks/W010/preflight/baseline-manifest.json": {
+      "bytes": 29492,
+      "sha256": "f6aa1a43f1d04346b2642a2c7a702ae2bab0940dae920e7b75cddffb645822d1"
+    },
+    "docs/tasks/W010/preflight/baseline-mypy-dev312.json": {
+      "bytes": 325,
+      "sha256": "1f0d080375b4b5fe3af2e7c163b03c4fa16c8583528dfa3c76555569a383795a"
+    },
+    "docs/tasks/W010/preflight/baseline-mypy-dev312.txt": {
+      "bytes": 44,
+      "sha256": "522d7b3a15704213950b7053c882b6ddd0c41149631300ce6c1933d21b5971c3"
+    },
+    "docs/tasks/W010/preflight/baseline-pytest-310.partial.json": {
+      "bytes": 1376,
+      "sha256": "26be72c0e8ba447c5f9f1dc9b8c49f32c588bf615aaecea17fb5416f57095758"
+    },
+    "docs/tasks/W010/preflight/baseline-pytest-310.partial.txt": {
+      "bytes": 3361,
+      "sha256": "12d33dd9e5e459d31bed8279bd476fa16d9cb4a53ac5ffdca2e2644b5d088820"
+    },
+    "docs/tasks/W010/preflight/baseline-source.tar.gz": {
+      "bytes": 295852,
+      "sha256": "0214693254e6c858d163074c990426c689f48918b335dce47b4bfe057cbb245d"
+    },
+    "docs/tasks/W010/preflight/environment-310.json": {
+      "bytes": 525,
+      "sha256": "bbdf30d064ccc7664a00110a78ce140b30df969b620571ceb5f0758a41ad6908"
+    },
+    "docs/tasks/W010/preflight/environment-310.txt": {
+      "bytes": 1040,
+      "sha256": "c404b821fded998e619a5fff6402809739d864f3fff67acb65058685a8463998"
+    },
+    "docs/tasks/W010/preflight/environment-dev312.txt": {
+      "bytes": 939,
+      "sha256": "9aee15d4ee2f904ab5e8ed362946ee317235cc7c669351cd6579dfbb8a53e6fe"
+    },
+    "docs/tasks/W010/preflight/evidence-manifest.json": {
+      "bytes": 3195,
+      "sha256": "a2ee2ed0ae8580b30eccbfd205e55b5fd0e0ead5226c5c0db2c176efae92a279"
+    },
+    "docs/tasks/W010/preflight/install-310.json": {
+      "bytes": 348,
+      "sha256": "0c63121ea5d44d8b974399e1244220d5a66016d8fb8fb11eb03a6b0fe03eac24"
+    },
+    "docs/tasks/W010/preflight/install-310.txt": {
+      "bytes": 7768,
+      "sha256": "6ae408432ce9c8799924d9097e5b350d3b22fd4d34788905875bf57b376b6c6a"
+    },
+    "docs/tasks/W010/preflight/install-dev312-retry1.txt": {
+      "bytes": 9095,
+      "sha256": "775349f06a5895c26918a4d87def7bb13b7ab8ecda606add8fd5dcf7d8b8f5dd"
+    },
+    "docs/tasks/W010/preflight/install-dev312.txt": {
+      "bytes": 8522,
+      "sha256": "76f303ee6c729983927a4696a24e483ed4b6ae41b6fd8b1d985d7db69f8fdff9"
+    },
+    "docs/tasks/W010/preflight/pip-check-310.json": {
+      "bytes": 300,
+      "sha256": "bca41f0aa391ac24a2665e2e7e8ac3b71b5d7d6d771d1004158ddca999a6935b"
+    },
+    "docs/tasks/W010/preflight/pip-check-310.txt": {
+      "bytes": 30,
+      "sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09"
+    },
+    "docs/tasks/W010/preflight/pip-check-dev312.txt": {
+      "bytes": 294,
+      "sha256": "35bb3d1e4d1d0091788acae77c6d707f1dfb81d2384e34fd54a205f9497ce313"
+    },
+    "docs/tasks/W010/preflight/preflight.py": {
+      "bytes": 2880,
+      "sha256": "ccd58b0351f4c80881c9327068b2bc47b014fcea45486469ce161fd03f02b81d"
+    },
+    "docs/tasks/W010/preflight/python310-install.json": {
+      "bytes": 340,
+      "sha256": "d2ff230c91550becb06d5f86d63f95695c9f7a1bd28b2208bae3883beb21bc8f"
+    },
+    "docs/tasks/W010/preflight/python310-install.txt": {
+      "bytes": 429,
+      "sha256": "8ac00096b22425228fb66fdd022302a9a37e4f6c9ce7b360ea485e16e3e49380"
+    },
+    "docs/tasks/W010/preflight/setup-receipt.json": {
+      "bytes": 1629,
+      "sha256": "d0b89fbe2d2cc3b0c8b994826433fd1e43341ed2b06468d4186f795759d9f864"
+    },
+    "docs/tasks/W010/preflight/venv-310.json": {
+      "bytes": 373,
+      "sha256": "b03cf815ca727b9485ad706a9b9aac2992552567e2f95e78914def530dcc0b5a"
+    },
+    "docs/tasks/W010/preflight/venv-310.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/tasks/W010/review/boundary-probe-result.json": {
+      "bytes": 45768,
+      "sha256": "5e1672f5d8350036ed26682231e5d8ddfd3898ad07082fa850f1e04fe51584db"
+    },
+    "docs/tasks/W010/review/boundary-probe.py": {
+      "bytes": 9632,
+      "sha256": "711b10f1bab54c87c83cff9eb72cd2939a685c6d79cdcad1825c54abfbf4e02b"
+    },
+    "docs/tasks/W010/review/boundary-probe.stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/tasks/W010/review/boundary-probe.stdout.txt": {
+      "bytes": 530,
+      "sha256": "f2fc6e82fa7ad947b3489a46fb78b40a0e4535617c745b1d488abfa7049fbe45"
+    },
+    "docs/tasks/W010/review/boundary-receipt.json": {
+      "bytes": 2660,
+      "sha256": "e2aa28ca744b25abb5be3b810587f0ce4640a194454471a577ddbadf422a240c"
+    },
+    "docs/tasks/W010/review/boundary-review.md": {
+      "bytes": 5715,
+      "sha256": "3711fdde3f3c9156e00d8faa31a9a0d346cf61e133addc7db1355a63ea7a272d"
+    },
+    "docs/tasks/W010/review/evidence-audit.json": {
+      "bytes": 18311,
+      "sha256": "91dfe7a520168d668843b67018c412aee1b909cd27fe666da9d16157a242e5c4"
+    },
+    "docs/tasks/W010/review/evidence-audit.py": {
+      "bytes": 15203,
+      "sha256": "05f1139d587fc9ed636db5c6281cfbc6c282992347802ef1200238ccbea5e53b"
+    },
+    "docs/tasks/W010/review/evidence-review.md": {
+      "bytes": 4588,
+      "sha256": "7f3328a695202d111075c1ccdb2af9be2f2125c9ad53141cd235c6684987dce3"
+    },
+    "docs/tasks/W010/review/final-review-identity.json": {
+      "bytes": 4787,
+      "sha256": "c70f530791a216f3290cec00110e7eec5282bf938061717986f96879315de880"
+    },
+    "docs/tasks/W010/review/main-probe.initial-import-failure.txt": {
+      "bytes": 354,
+      "sha256": "e7d07a9b6986b70a9977891cd164cdf8d92a4ecb0f966e581744cb8bad658df3"
+    },
+    "docs/tasks/W010/review/main-probe.py": {
+      "bytes": 7895,
+      "sha256": "759836ff25bfc8d5207d40608ac3ea581036e69b2d243d38b9177193c782b20e"
+    },
+    "docs/tasks/W010/review/main-probe.receipt.json": {
+      "bytes": 1650,
+      "sha256": "a3cca60177dee67cd29936e08251f4096a92b16a355654a9c0f1923a0baecd97"
+    },
+    "docs/tasks/W010/review/main-probe.stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/tasks/W010/review/main-probe.stdout.json": {
+      "bytes": 784,
+      "sha256": "6b0aa51f3d05b1b53e2d07ff3147ccd1061f368f5c258bbc46ffe2d0d45ebf45"
+    },
+    "docs/tasks/W010/review/math-probe.py": {
+      "bytes": 13378,
+      "sha256": "8f9f45ccdd68b6653222d4526aa1adcc6b2b86fb4f0f5b933c33b02a5265eb74"
+    },
+    "docs/tasks/W010/review/math-receipt.json": {
+      "bytes": 997,
+      "sha256": "a5e111383dce8d0d1f8c9549dba92f7dcca641714dfe68c3e9d3e1c33eff0fdc"
+    },
+    "docs/tasks/W010/review/math-result.json": {
+      "bytes": 3631,
+      "sha256": "a749292385f769a4599046cdd84eaa33b326f960c6ab19ca38443cbea74d1100"
+    },
+    "docs/tasks/W010/review/math-review.md": {
+      "bytes": 4964,
+      "sha256": "f0dd24861a0d8ce1f869ee547274867716ea44cb0cec196fa4003f6771150fac"
+    },
+    "docs/tasks/W010/review/math-stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/tasks/W010/review/math-stdout.txt": {
+      "bytes": 3631,
+      "sha256": "a749292385f769a4599046cdd84eaa33b326f960c6ab19ca38443cbea74d1100"
+    },
+    "docs/tasks/W010/scope-check-fba1e7b.json": {
+      "bytes": 1547,
+      "sha256": "09cfd6ba578daeb2671ccb26db23ed7141e915c3d0598244cc23b933c1ebcb67"
+    },
+    "docs/tasks/W010/scope-check.json": {
+      "bytes": 1796,
+      "sha256": "988a854a72a1227d4df4a5e7bb46b5a940fb4d0b6a45e59b3db8377ed533b6e0"
+    },
+    "docs/tasks/W010/verification/README.md": {
+      "bytes": 2750,
+      "sha256": "db09f5a4dd20b53cf78c093d5fc313986ea20b9ad06a29807c49deae6db058c5"
+    },
+    "docs/tasks/W010/verification/baseline-collection.txt": {
+      "bytes": 141257,
+      "sha256": "45f8d30e3e834f7d88cf8b97084f17bf04d3b7d66eb98004bb5deeee57683479"
+    },
+    "docs/tasks/W010/verification/build.json": {
+      "bytes": 784,
+      "sha256": "fada42b0856142f49ae9794476238ff0b62de592d115e9786befb10146e5ca3d"
+    },
+    "docs/tasks/W010/verification/build.stderr.txt": {
+      "bytes": 617,
+      "sha256": "7b2888f78d7fa636ed83e6385e6be3fdaf145831d191ec5b2a189ea147e86505"
+    },
+    "docs/tasks/W010/verification/build.stdout.txt": {
+      "bytes": 33455,
+      "sha256": "74d85c66833a51ac156b857389c3aa687d8641f1f595c8c18948a527dd7c0edb"
+    },
+    "docs/tasks/W010/verification/collection-310.json": {
+      "bytes": 842,
+      "sha256": "daa05f1d3c850367d1b7f1206ca1ab18a7feb24411e74503212b65dda91a6b5e"
+    },
+    "docs/tasks/W010/verification/collection-310.stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/tasks/W010/verification/collection-310.stdout.txt": {
+      "bytes": 189294,
+      "sha256": "89106cbba734992c33df70afdf196128a7a84fd203957eca249e368c5635f3fe"
+    },
+    "docs/tasks/W010/verification/collection-312.json": {
+      "bytes": 843,
+      "sha256": "84a30e015c038ad2439ab01525cb92dd55ef1e649921b30a92da04c151b90497"
+    },
+    "docs/tasks/W010/verification/collection-312.stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/tasks/W010/verification/collection-312.stdout.txt": {
+      "bytes": 189294,
+      "sha256": "d2ff08201c1de3d3b21bf9204c4fb397f0bce8046c7f2562ae3b72d591f23b59"
+    },
+    "docs/tasks/W010/verification/create-install-310.json": {
+      "bytes": 804,
+      "sha256": "a2816acab4a2957395b61706d1165a790242d362a7c89b60b87164fa09634f68"
+    },
+    "docs/tasks/W010/verification/create-install-310.stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/tasks/W010/verification/create-install-310.stdout.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/tasks/W010/verification/create-install-312.json": {
+      "bytes": 805,
+      "sha256": "816686c4460bf3e714872ad8857742817748aec7d5842d8b52a590d86721b215"
+    },
+    "docs/tasks/W010/verification/create-install-312.stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/tasks/W010/verification/create-install-312.stdout.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/tasks/W010/verification/dist/layauto-0.2.0-py3-none-any.whl": {
+      "bytes": 150056,
+      "sha256": "f77c718aa292d8c15c37206a1543462e29888dc65e38e61cc830856f75c60232"
+    },
+    "docs/tasks/W010/verification/dist/layauto-0.2.0.tar.gz": {
+      "bytes": 120708,
+      "sha256": "49b5fdd10ee7aca6f349dfcaea1d42292dfd647a6d05a9aa695d180d85d25d5b"
+    },
+    "docs/tasks/W010/verification/environment-310.json": {
+      "bytes": 1120,
+      "sha256": "62e8184e751c1765a1eed30c5d4d24287fd360bd710502a0b7cf4a6552b2763d"
+    },
+    "docs/tasks/W010/verification/environment-310.stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/tasks/W010/verification/environment-310.stdout.txt": {
+      "bytes": 1128,
+      "sha256": "d40ef44b522d140c8a7dbb7c3ac7b854c2a3a3691302f47e383dfc0e863a81da"
+    },
+    "docs/tasks/W010/verification/environment-312.json": {
+      "bytes": 1121,
+      "sha256": "9a8175aa4b54599b36101b7ea913746d843541811ce90d1a242694e6413638fc"
+    },
+    "docs/tasks/W010/verification/environment-312.stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/tasks/W010/verification/environment-312.stdout.txt": {
+      "bytes": 1027,
+      "sha256": "b774cbeda6cd8a46df70372cd5814337132d8fb2c9b0df18d258270551f828fe"
+    },
+    "docs/tasks/W010/verification/evidence-manifest.json": {
+      "bytes": 7602,
+      "sha256": "ebf1cf092ba9168ae37dfd622aa47cae39ce812786e5c9e84bd485064d88593c"
+    },
+    "docs/tasks/W010/verification/install-310-report.json": {
+      "bytes": 304257,
+      "sha256": "7c37b8b1b06311d014ab4b22429bbaa528425e533c35ddbed76accca6b86aeca"
+    },
+    "docs/tasks/W010/verification/install-310.json": {
+      "bytes": 938,
+      "sha256": "284d2e8f23c642008d42612d3f5aa0bfe9d15bcee560923c7eb1a6e11bdace98"
+    },
+    "docs/tasks/W010/verification/install-310.stderr.txt": {
+      "bytes": 170,
+      "sha256": "77ad553e97dd5df4e1cfae834914c0fcca72a0d9f2484bd77ee70aeaa930997d"
+    },
+    "docs/tasks/W010/verification/install-310.stdout.txt": {
+      "bytes": 4408,
+      "sha256": "a8b9a8c1e8c73d86d32d132a9b14a3cba85239071f62afa3935c789fcb44ee79"
+    },
+    "docs/tasks/W010/verification/install-312-report.json": {
+      "bytes": 276043,
+      "sha256": "e60bea1f7e74bdd260b49bcaf668999168166486bcc675c44984c936c2fe61cb"
+    },
+    "docs/tasks/W010/verification/install-312.json": {
+      "bytes": 948,
+      "sha256": "f3842bc8e402183d544279e86cf3465d95a77fc4bd31a34a4b4135d8eba8c64d"
+    },
+    "docs/tasks/W010/verification/install-312.stderr.txt": {
+      "bytes": 121,
+      "sha256": "f96a57a6d17645d3d9eb401b9cead41a648edf2499f2ca4bc3f9364d677b6080"
+    },
+    "docs/tasks/W010/verification/install-312.stdout.txt": {
+      "bytes": 4173,
+      "sha256": "bab9a4cb70efbb51f5344470b59f9dcb7cf1c44a82c9281039102307e57966c1"
+    },
+    "docs/tasks/W010/verification/installation-identity.json": {
+      "bytes": 19733,
+      "sha256": "811fa7cd040c07175d492a0407c0171452fd5944314a89ba9b5c153c397fb983"
+    },
+    "docs/tasks/W010/verification/installed-identity-310.json": {
+      "bytes": 962,
+      "sha256": "d8392a1001ede199d7bb7eda185409b6ce0e2385d760e63825ff039a66210d30"
+    },
+    "docs/tasks/W010/verification/installed-identity-310.stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/tasks/W010/verification/installed-identity-310.stdout.txt": {
+      "bytes": 268,
+      "sha256": "d8e284686c07ac236cb011ebe008e28b9bc1370c727e7c84edd542496d8eae1e"
+    },
+    "docs/tasks/W010/verification/installed-identity-312.json": {
+      "bytes": 962,
+      "sha256": "695bbc74b5ebe7dd64b820276034748fd5df8c4337ca8ee74b927841940b7e3b"
+    },
+    "docs/tasks/W010/verification/installed-identity-312.stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/tasks/W010/verification/installed-identity-312.stdout.txt": {
+      "bytes": 268,
+      "sha256": "fa36e8ba5180a9375249ffea0ab73601fbbc35f04214c31879072a1689588e36"
+    },
+    "docs/tasks/W010/verification/installed-pip-check-310.json": {
+      "bytes": 794,
+      "sha256": "5b97a730e80cc724fdfad0da6323812d1f1f97572196ba9c30ba69762048ce69"
+    },
+    "docs/tasks/W010/verification/installed-pip-check-310.stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/tasks/W010/verification/installed-pip-check-310.stdout.txt": {
+      "bytes": 30,
+      "sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09"
+    },
+    "docs/tasks/W010/verification/installed-pip-check-312.json": {
+      "bytes": 794,
+      "sha256": "345fee40dac71d734fd34dee325606c6a365c9a10318aa67c79ea0bf295ebcac"
+    },
+    "docs/tasks/W010/verification/installed-pip-check-312.stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/tasks/W010/verification/installed-pip-check-312.stdout.txt": {
+      "bytes": 30,
+      "sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09"
+    },
+    "docs/tasks/W010/verification/installed-smoke-310.json": {
+      "bytes": 917,
+      "sha256": "7eaa0baeb4adfd99d10720cdd8919002962a2041a08493b3751a5dfedb0e20a4"
+    },
+    "docs/tasks/W010/verification/installed-smoke-310.stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/tasks/W010/verification/installed-smoke-310.stdout.txt": {
+      "bytes": 938,
+      "sha256": "cb95f4c9a4655ff106dce54332854a334938189ce5e5c2f4a818660ec8906189"
+    },
+    "docs/tasks/W010/verification/installed-smoke-312.json": {
+      "bytes": 916,
+      "sha256": "1c5603a6a8afc7c8ad27dc2cfee311070323417dd5be8ccd95c1582cd7887c5f"
+    },
+    "docs/tasks/W010/verification/installed-smoke-312.stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/tasks/W010/verification/installed-smoke-312.stdout.txt": {
+      "bytes": 938,
+      "sha256": "5826fbf3a20a60c3e00f019b06bab951c8386438ea2f65e099dda3db62f6ce77"
+    },
+    "docs/tasks/W010/verification/installed_smoke.py": {
+      "bytes": 4730,
+      "sha256": "a7b8ede4c7e961bf1d85fbe5b52c90579b9beaeae18dfc3136fd5f350614e37f"
+    },
+    "docs/tasks/W010/verification/package-identity.json": {
+      "bytes": 19083,
+      "sha256": "36f8449b8cb08856f22b968bca14bd7219f0564f3ca29051ed83cf79adc21fe6"
+    },
+    "docs/tasks/W010/verification/pip-check-310.json": {
+      "bytes": 742,
+      "sha256": "852ecae54452f947b55ffc8cc5fdf845c83cd1d328c8b644495456d0fac78e72"
+    },
+    "docs/tasks/W010/verification/pip-check-310.stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/tasks/W010/verification/pip-check-310.stdout.txt": {
+      "bytes": 30,
+      "sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09"
+    },
+    "docs/tasks/W010/verification/pip-check-312.json": {
+      "bytes": 743,
+      "sha256": "6740b6cdd440086cc618ee295c92246a90860bbde830eb7f5ab9c313270ee5de"
+    },
+    "docs/tasks/W010/verification/pip-check-312.stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/tasks/W010/verification/pip-check-312.stdout.txt": {
+      "bytes": 30,
+      "sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09"
+    },
+    "docs/tasks/W010/verification/prepare_final.py": {
+      "bytes": 14770,
+      "sha256": "aeac892e4b43dbe3a7aae68d979f800c9de5007d99fe33c032a3599898b12fd8"
+    },
+    "docs/tasks/W010/verification/pytest-310.json": {
+      "bytes": 810,
+      "sha256": "9f375275e663a4122152d826a3aa184eeac04a1082ae29cddc7e4de2540cb81c"
+    },
+    "docs/tasks/W010/verification/pytest-310.stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/tasks/W010/verification/pytest-310.stdout.txt": {
+      "bytes": 1714,
+      "sha256": "346211ac159ea386bb2c43ebb6d286d5002e0ab4b55382f8526d062a2022f9bf"
+    },
+    "docs/tasks/W010/verification/pytest-312.json": {
+      "bytes": 812,
+      "sha256": "03033c5fbdd45164b8f5871a521d98297b4a69f0d0764cc680bee60ae608fe77"
+    },
+    "docs/tasks/W010/verification/pytest-312.stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/tasks/W010/verification/pytest-312.stdout.txt": {
+      "bytes": 1714,
+      "sha256": "15e8ba1bc316a566282795f759dc7633e2442ff811178c8b95602c4cd972e4b0"
+    },
+    "docs/tasks/W010/verification/pytest-scope-310.json": {
+      "bytes": 121,
+      "sha256": "a607f64b646f44243a38c59597eb7d0304b0034bc72637f2b3c1a00ac2e25fa2"
+    },
+    "docs/tasks/W010/verification/pytest-scope-312.json": {
+      "bytes": 121,
+      "sha256": "a607f64b646f44243a38c59597eb7d0304b0034bc72637f2b3c1a00ac2e25fa2"
+    },
+    "docs/tasks/W010/verification/receipt.json": {
+      "bytes": 21658,
+      "sha256": "856f78919b92098632fda3ca988ebcc6f4b739c817794fce691035e028562b9a"
+    },
+    "docs/tasks/W010/verification/source-manifest.json": {
+      "bytes": 40005,
+      "sha256": "cef29336dba1bf572fd30227f354365d4a4d780e721d089b70095589d0f55889"
+    },
+    "docs/tasks/W010/verification/source-snapshot.tar.gz": {
+      "bytes": 319963,
+      "sha256": "493d36ebeb4bd5d43f8bbb06139b27e3be7997dad12e913c9ca36c362ba843d1"
+    },
+    "docs/tasks/W010/verification/typing-310.json": {
+      "bytes": 721,
+      "sha256": "d73e3ae634233dc1a884cf1ccca52f53865df616151a2854fee7e499cc323d5e"
+    },
+    "docs/tasks/W010/verification/typing-310.stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/tasks/W010/verification/typing-310.stdout.txt": {
+      "bytes": 44,
+      "sha256": "a459b8765e4db93f08156e7d98399988a9b87243303f92178f28c9db897f6066"
+    },
+    "docs/tasks/W010/verification/typing-312.json": {
+      "bytes": 722,
+      "sha256": "ab504537b8d41d9b4f4fe9262139d3b7cdeb13686f218ff09bf5d180ca420123"
+    },
+    "docs/tasks/W010/verification/typing-312.stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/tasks/W010/verification/typing-312.stdout.txt": {
+      "bytes": 44,
+      "sha256": "a459b8765e4db93f08156e7d98399988a9b87243303f92178f28c9db897f6066"
+    },
+    "docs/tasks/W010/verification-r1/artifact-relocations.json": {
+      "bytes": 400,
+      "sha256": "7ebc932116d6175dc772721a5ace02d345bde78e38b43169ac7c4b7c2f4ed05a"
+    },
+    "docs/tasks/W010/verification-r1/baseline-collection.txt": {
+      "bytes": 141257,
+      "sha256": "45f8d30e3e834f7d88cf8b97084f17bf04d3b7d66eb98004bb5deeee57683479"
+    },
+    "docs/tasks/W010/verification-r1/build.json": {
+      "bytes": 784,
+      "sha256": "c5e6bbc7552a3ddcfdec88a8eb6b13eaa040ed8a19cec0db0e0eb459581716da"
+    },
+    "docs/tasks/W010/verification-r1/build.stderr.txt": {
+      "bytes": 617,
+      "sha256": "7b2888f78d7fa636ed83e6385e6be3fdaf145831d191ec5b2a189ea147e86505"
+    },
+    "docs/tasks/W010/verification-r1/build.stdout.txt": {
+      "bytes": 33455,
+      "sha256": "da6568ea82c6cebb9c8eda304a7431c3ebb0abab7e8dc89704312e9684ce7547"
+    },
+    "docs/tasks/W010/verification-r1/collection-310.json": {
+      "bytes": 841,
+      "sha256": "408f80f921e036fcbbc67f662bad28b2fcab47cb0f017aed7afeff22471ce633"
+    },
+    "docs/tasks/W010/verification-r1/collection-310.stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/tasks/W010/verification-r1/collection-310.stdout.txt": {
+      "bytes": 189197,
+      "sha256": "3c3713cab5d945b7347a876848ed037f1d081314ce3dba3f9c76f5343caf3f92"
+    },
+    "docs/tasks/W010/verification-r1/collection-312.json": {
+      "bytes": 843,
+      "sha256": "302eed144434db1158a7abb41a3c9c337c1984fb5776bd2524e55e81f63a9e7c"
+    },
+    "docs/tasks/W010/verification-r1/collection-312.stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/tasks/W010/verification-r1/collection-312.stdout.txt": {
+      "bytes": 189197,
+      "sha256": "768136ad049a1c39dbaa6cabaffa42b172851cb65a4db8a9fe1414e0ca2e6266"
+    },
+    "docs/tasks/W010/verification-r1/create-install-310.json": {
+      "bytes": 804,
+      "sha256": "42cb0048379b1389f32dfa16b84e87f237a28674fe4dc7cf5fe71d19c8c1fd64"
+    },
+    "docs/tasks/W010/verification-r1/create-install-310.stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/tasks/W010/verification-r1/create-install-310.stdout.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/tasks/W010/verification-r1/create-install-312.json": {
+      "bytes": 805,
+      "sha256": "efeef0b3b04d27b39df1f7af3e553a00ec95cf4ce631a5069bb458fe21d7b2b1"
+    },
+    "docs/tasks/W010/verification-r1/create-install-312.stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/tasks/W010/verification-r1/create-install-312.stdout.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/tasks/W010/verification-r1/diagnostic-312-boundary.json": {
+      "bytes": 596,
+      "sha256": "f4955f55eaecaf20b7735644bd80b99aa6d25ac1b50fb08148e84f2357e8037e"
+    },
+    "docs/tasks/W010/verification-r1/diagnostic-312-boundary.stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/tasks/W010/verification-r1/diagnostic-312-boundary.stdout.txt": {
+      "bytes": 5190,
+      "sha256": "2bc5822578f9bcaa26b7f56b98ae0c50c7a36e969ccce57116d41b96dbf670a4"
+    },
+    "docs/tasks/W010/verification-r1/dist/layauto-0.2.0-py3-none-any.whl": {
+      "bytes": 150056,
+      "sha256": "836da96468b5ebdc49b8ed590beee779f316e2717845f398ee8ee522c7bb3b7b"
+    },
+    "docs/tasks/W010/verification-r1/dist/layauto-0.2.0.tar.gz": {
+      "bytes": 120779,
+      "sha256": "7f9ab60bd991012d0d04f769aecabafaa58e7569ba7c72c1c9b757700b682122"
+    },
+    "docs/tasks/W010/verification-r1/environment-310.json": {
+      "bytes": 1120,
+      "sha256": "81e574668b2597fa12c36ed37a7ee9657b5d0d37395e7965809da8b9036a5b1c"
+    },
+    "docs/tasks/W010/verification-r1/environment-310.stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/tasks/W010/verification-r1/environment-310.stdout.txt": {
+      "bytes": 1128,
+      "sha256": "d1f3fd7241eae01c9f53e8a2ad192a5eded45898a73a4bdc57614486c7ad80ef"
+    },
+    "docs/tasks/W010/verification-r1/environment-312.json": {
+      "bytes": 1121,
+      "sha256": "ce5cef57081f00f17ede0916c8114112cc86918d975a7179dd441575b5c3e666"
+    },
+    "docs/tasks/W010/verification-r1/environment-312.stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/tasks/W010/verification-r1/environment-312.stdout.txt": {
+      "bytes": 1027,
+      "sha256": "8fce0039369ee20c0ba261d7b19fa150bde4fdfc91156f7aa192734c8a218334"
+    },
+    "docs/tasks/W010/verification-r1/evidence-manifest.json": {
+      "bytes": 6715,
+      "sha256": "31d8d1e6bcf260008e94157562b2c8fc9dc1719a640966e1ed66a8e0d8490322"
+    },
+    "docs/tasks/W010/verification-r1/failure.json": {
+      "bytes": 828,
+      "sha256": "7ae205b82da5be4a34c433b581c39c4521185690ad1e1a6e63d3956b0b95cdec"
+    },
+    "docs/tasks/W010/verification-r1/install-310-report.json": {
+      "bytes": 304257,
+      "sha256": "85c70845706fdaf3efba11bbe993bf6e2298171e135d62cfff05cc6e57d61c36"
+    },
+    "docs/tasks/W010/verification-r1/install-310.json": {
+      "bytes": 938,
+      "sha256": "6f0ee626540b99d6453b7111e076147c7d459f855e922eee3623bef136e68923"
+    },
+    "docs/tasks/W010/verification-r1/install-310.stderr.txt": {
+      "bytes": 170,
+      "sha256": "24782812c1fd22a7b47e89edecdf80dedb2a756e6c2696f62e5934792b48fcd4"
+    },
+    "docs/tasks/W010/verification-r1/install-310.stdout.txt": {
+      "bytes": 4408,
+      "sha256": "a0ba44d3ca22f90686a2ce2d8a9fcc63d4926c60b49bda99f306404f414bb5c8"
+    },
+    "docs/tasks/W010/verification-r1/install-312-report.json": {
+      "bytes": 276043,
+      "sha256": "f551449a17452958b3e86e80802a3eb9048d2ab53aa25260e69d960fb4b3864d"
+    },
+    "docs/tasks/W010/verification-r1/install-312.json": {
+      "bytes": 948,
+      "sha256": "6df7653fddb48dc038f5baa725a4997123c7d4fd17b3f6b1d26f58c0b12b3e31"
+    },
+    "docs/tasks/W010/verification-r1/install-312.stderr.txt": {
+      "bytes": 121,
+      "sha256": "f96a57a6d17645d3d9eb401b9cead41a648edf2499f2ca4bc3f9364d677b6080"
+    },
+    "docs/tasks/W010/verification-r1/install-312.stdout.txt": {
+      "bytes": 4173,
+      "sha256": "5cf80dbce4936669f4a5e087a2b9216bd0e079b5edbc5a54ae377bf1fc2dc4b4"
+    },
+    "docs/tasks/W010/verification-r1/installation-identity.json": {
+      "bytes": 19733,
+      "sha256": "76d033648331398a1b90596442490d911936fe4a97f781ca4e6c522a34f2b66f"
+    },
+    "docs/tasks/W010/verification-r1/installed-identity-310.json": {
+      "bytes": 962,
+      "sha256": "23547fb8adcdf8fed290f869d1cf9a0582c268d9057277f1d50f1826d34c351d"
+    },
+    "docs/tasks/W010/verification-r1/installed-identity-310.stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/tasks/W010/verification-r1/installed-identity-310.stdout.txt": {
+      "bytes": 268,
+      "sha256": "0c88903dd1cdf5c88423383056e2be2a406f7f95d8bccc165dcd336c2e28449d"
+    },
+    "docs/tasks/W010/verification-r1/installed-identity-312.json": {
+      "bytes": 962,
+      "sha256": "e5d6d3ec83eae8a613acfcf39fbc9d123f8df058ce74763b79827fa00df2ce26"
+    },
+    "docs/tasks/W010/verification-r1/installed-identity-312.stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/tasks/W010/verification-r1/installed-identity-312.stdout.txt": {
+      "bytes": 268,
+      "sha256": "1cf0281e10c9af6d263c82878a50e854175514b16d1db71ef0d21be9734925c4"
+    },
+    "docs/tasks/W010/verification-r1/installed-pip-check-310.json": {
+      "bytes": 795,
+      "sha256": "19b2341c87e7ea3fffd28d49710a05bea5c40e0ab589a2f54648ee0dfe61acc1"
+    },
+    "docs/tasks/W010/verification-r1/installed-pip-check-310.stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/tasks/W010/verification-r1/installed-pip-check-310.stdout.txt": {
+      "bytes": 30,
+      "sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09"
+    },
+    "docs/tasks/W010/verification-r1/installed-pip-check-312.json": {
+      "bytes": 795,
+      "sha256": "37343f4313af945f177d0c14104db85e5f1b6152dc51e359deeb59152d4aa743"
+    },
+    "docs/tasks/W010/verification-r1/installed-pip-check-312.stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/tasks/W010/verification-r1/installed-pip-check-312.stdout.txt": {
+      "bytes": 30,
+      "sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09"
+    },
+    "docs/tasks/W010/verification-r1/installed-smoke-310.json": {
+      "bytes": 917,
+      "sha256": "727d09482c431bfb302c6acc39a7a7476a70e655c3192f9a86ae77bc1c5ac354"
+    },
+    "docs/tasks/W010/verification-r1/installed-smoke-310.stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/tasks/W010/verification-r1/installed-smoke-310.stdout.txt": {
+      "bytes": 938,
+      "sha256": "6fab533504002212fd0099508e03fde7da033fc15816d859ed421ac1c6a56c85"
+    },
+    "docs/tasks/W010/verification-r1/installed-smoke-312.json": {
+      "bytes": 916,
+      "sha256": "193afe3bc8f37671e435cbebeda3c8e529eda8156992f5e1defaac4af479a514"
+    },
+    "docs/tasks/W010/verification-r1/installed-smoke-312.stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/tasks/W010/verification-r1/installed-smoke-312.stdout.txt": {
+      "bytes": 938,
+      "sha256": "48224897dfab67f16ed78e91fcc18343a27e32dc1ad402bcb313de8eadc2ee4f"
+    },
+    "docs/tasks/W010/verification-r1/installed_smoke.py": {
+      "bytes": 4730,
+      "sha256": "a7b8ede4c7e961bf1d85fbe5b52c90579b9beaeae18dfc3136fd5f350614e37f"
+    },
+    "docs/tasks/W010/verification-r1/interruption.json": {
+      "bytes": 1340,
+      "sha256": "b2ca31e0926ecc0bf8eac164fc074023713502f2327d63a08eecce08d8bc2d4a"
+    },
+    "docs/tasks/W010/verification-r1/package-identity.json": {
+      "bytes": 19083,
+      "sha256": "d7e78da4c3a9e0ab3a6c343fffc3b200bcc130bc0afd975bf2a7f0cc3f39a50f"
+    },
+    "docs/tasks/W010/verification-r1/prepare_final.py": {
+      "bytes": 14770,
+      "sha256": "aeac892e4b43dbe3a7aae68d979f800c9de5007d99fe33c032a3599898b12fd8"
+    },
+    "docs/tasks/W010/verification-r1/pytest-310.stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/tasks/W010/verification-r1/pytest-310.stdout.txt": {
+      "bytes": 6053,
+      "sha256": "51a5c9c8305ed466f00dfc305364c1b914bb350840644842ac74cab691ed6c6b"
+    },
+    "docs/tasks/W010/verification-r1/pytest-312.stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/tasks/W010/verification-r1/pytest-312.stdout.txt": {
+      "bytes": 6141,
+      "sha256": "c648d6df8ae3bf66afc5e3b93aeb0ac4cefa120a00f282e0414201bd02321878"
+    },
+    "docs/tasks/W010/verification-r1/pytest-scope-310.json": {
+      "bytes": 121,
+      "sha256": "c3c1b104c648758a09e485a1b9776e7168b218b5e6bc18d1d5496772f9da7824"
+    },
+    "docs/tasks/W010/verification-r1/pytest-scope-312.json": {
+      "bytes": 121,
+      "sha256": "c3c1b104c648758a09e485a1b9776e7168b218b5e6bc18d1d5496772f9da7824"
+    },
+    "docs/tasks/W010/verification-r1/source-manifest.json": {
+      "bytes": 39887,
+      "sha256": "f2a18f42e88d98fd7741713b37d2e0b8a6f40d0822b09a2f6c542d85313ccbd5"
+    },
+    "docs/tasks/W010/verification-r1/source-snapshot.tar.gz": {
+      "bytes": 319351,
+      "sha256": "41db8c595bc4dbd3f4cb74e7929e70d4f9218f569b94a5ec298eccd79d608146"
+    },
+    "docs/tasks/W010-local-contact-connectivity.md": {
+      "bytes": 21249,
+      "sha256": "b2913937d4c8ed4831f5ff6112e5254e6ca79a9d3ccc646622a1b2651e73386c"
+    }
+  }
+}

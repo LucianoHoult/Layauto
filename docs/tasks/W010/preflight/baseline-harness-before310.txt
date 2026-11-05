@@ -1,0 +1,37 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+____________ test_f1_request_independently_matches_accepted_sample _____________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-4/test_f1_request_independently_0')
+
+    def test_f1_request_independently_matches_accepted_sample(tmp_path):
+        root = copy_input(tmp_path)
+        request = caller_request(root)
+        path = Path(__file__).resolve().parents[2] / 'docs/tasks/W003/examples/records.json'
+>       samples = json.loads(path.read_text(encoding='utf-8'))['records']
+
+tests/contracts/test_w006_pipeline.py:195: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../python/cpython-3.10.22-linux-x86_64-gnu/lib/python3.10/pathlib.py:1134: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/workspace/Layauto/work/w010-preflight/initial-repro/docs/tasks/W003/examples/records.json')
+mode = 'r', buffering = -1, encoding = 'utf-8', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return self._accessor.open(self, mode, buffering, encoding, errors,
+                                   newline)
+E       FileNotFoundError: [Errno 2] No such file or directory: '/workspace/Layauto/work/w010-preflight/initial-repro/docs/tasks/W003/examples/records.json'
+
+../python/cpython-3.10.22-linux-x86_64-gnu/lib/python3.10/pathlib.py:1119: FileNotFoundError
+=========================== short test summary info ============================
+FAILED tests/contracts/test_w006_pipeline.py::test_f1_request_independently_matches_accepted_sample
+1 failed in 0.59s

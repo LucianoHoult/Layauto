@@ -64,9 +64,27 @@
 
 最终实现、A1–A8、工程/独立代码 review 及交付身份将在后续记录追加；本段不宣称产品验证或 PM 验收。
 
+### E2 最终执行、独立 review 与交 PM（2026-11-05，执行）
+
+已完成 A1–A8 的实现与验证，冻结产品/测试提交为 **`0f5029df935bc0acd106aad1bc2be81304d4f442`**；后续交付只保存执行、review 和证据，不改变受测/受审代码。公开入口为 `normalization.build_local_connectivity`，内部 DTO、纯 state 草稿及 closed/versioned codec 分层；完整来源、独立 region 端点和本地 scope 保持，contact edge 与逐侧 T05 enclosure 分开。正常 14 节点/8 connector 边/6 分量及 16 侧 audit 通过；cut-islands 为 3 分量/0 边；via_enclosure 的 VN 边保留且 LN 侧明确 violation。不是整个 T05/mandatory、完整 Stage2/M1 或生产准入通过。
+
+最终 Python **3.10.22 / 3.12.14 各 1465 passed**（原 1149 nodeid 全保留，新增 316），双 strict mypy **48 个源模块**，新 wheel/sdist、两套干净安装/pip check、源码外 `-I -B` 真实 direct/readback 组合 smoke 全部通过。21 条命令均 exit 0；252 项 source/tests/config 完整快照及 94 项 runtime＝两包＝两实际安装字节身份一致。版本、A1–A8、资源成本及未验证范围详见[执行交接](W010/execution.md)、[最终回执](W010/verification/receipt.json)和[源码清单](W010/verification/source-manifest.json)。preflight 缺测试文档和 R1 旧依赖守卫的真实失败/中断保留原版本，不混充最终通过；原 guard 只增加具名纯依赖白名单，已独立复核。
+
+完整工程矩阵结束后，未参与设计/实现/正式测试的独立 reviewer 及三项专项完成[最终代码 review](W010/code-review.md)，其最终结论为**新增及剩余必须修正项0**；下节保留 reviewer 原结论及直接运行/采用证据的范围。独立记录包括手写完整图的实际 direct/readback、20,000 项精确数学对照、166 项错形拒绝、220/220 条原异常及其链、68/68 工程身份审计；review 没有冒称重跑全部正式矩阵。受测/受审版本在 review 后没有产品、测试或配置变动。
+
+[交付身份](W010/delivery.json)与[交付文件清单](W010/delivery-manifest.json)绑定实现、测试、实际包、命令原输出、源码快照、执行及 review 记录；最终 Git/远端完整 SHA 以推送核对和交接回复标识，不让文档自指未来提交。仅交 PM 核验接收；本执行不代做验收或集成，current-work、main 和后续任务保持原边界。
+
 ## Review结论（reviewer）
 
-方案/代码review未执行；后续分别由未承担相应变更者记录实际身份、findings及独立复核。PM派发要求review另附，不代替产品方案/代码review。
+### R1 最终独立代码及工程证据 review（2026-11-05）
+
+Reviewer `/root/code_review` 及未实施的数学、公开边界、工程证据专项，在执行者明确双解释器完整工程矩阵通过后开始审查。**最终独立代码 review 完成，新增及剩余必须修正项均为0，建议交PM核验接收。** 受审 base `9758a157115cc22d91ce095ac2002209b9f210d3`，冻结产品/测试 head `0f5029df935bc0acd106aad1bc2be81304d4f442`；[完整报告](W010/code-review.md)逐项对照A1–A8、实际15文件diff与上游合同。本段不代写PM验收或集成决定。
+
+Reviewer 实际独立运行真实W005/W006 readback→W008→W009→W010禁IO组合，以完整手写几何/边/成员表核14节点、8 connector边、6分量和16侧audit；输入/attempt及外部body边界保持。数学专项20,000项独立谓词比较、4个完整实际图及5个定位拒绝通过，明确特殊图neutral/captured分层；via_enclosure边保留且violation、cut-islands 3/0/3、重复/孔洞完整图均有独立依据。边界专项166项字段错形ValueError拒绝、220/220个完整nested constructor故障保留原object及cause/context/suppression、4组集合快照及8项可变text拒绝通过，failures=[]；原脚本/输出/身份存于[独立review附件](W010/review/)。
+
+独立工程审计68/68通过：252项源码/测试/配置逐字节等于Git、当前、实际测试树和完整归档，两包及两实际安装各94 runtime一致，21条命令及42份原输出身份闭合；source-manifest SHA-256 `cef29336dba1bf572fd30227f354365d4a4d780e721d089b70095589d0f55889`。双解释器各1465项（原1149 IDs全保留、新增316）、双strict typing48、新包/双干净安装及源码外组合smoke采用已独立核验执行回执，reviewer未冒称重跑全矩阵或重建/重装，另实际复查两安装导入。R1历史guard失败、preflight partial和原证据均保持原身份，不混充最终通过。
+
+contact与T05审计分离、独立region端点计数、完整source/scope与公开neutral/captured验证已核实；完整坐标、有效region occupancy、外部body/U06、FIN/器件/标注、其余mandatory/lifecycle、baseline/no_change/terminal/Stage6及真实PDK/EDA仍后置。有限资源记录披露重复认证、约23MB含cache正常wire和约988MiB累积RSS高水位，未测大量多片/最大规模，不作生产性能保证。Reviewer只修改本Review段、代码review报告与独立附件，未改产品/正式测试/PM/current-work，未验收、合main、提交或推送。
 
 ## PM验收与交接（PM）
 

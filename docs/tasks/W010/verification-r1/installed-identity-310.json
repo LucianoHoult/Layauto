@@ -1,0 +1,22 @@
+{
+  "command": [
+    "/workspace/work/w010-final-fba1e7b/clean-310/bin/python",
+    "-I",
+    "-B",
+    "-c",
+    "import layauto_v2,sys,json; print(json.dumps({\"package\":layauto_v2.__file__,\"executable\":sys.executable,\"version\":sys.version,\"isolated\":sys.flags.isolated}))"
+  ],
+  "cwd": "/workspace/work/w010-final-fba1e7b/installed-cwd",
+  "exit_code": 0,
+  "environment_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PIP_CACHE_DIR": "/workspace/work/w010-final-fba1e7b/pip-cache",
+    "MYPY_CACHE_DIR": "/workspace/work/w010-final-fba1e7b/mypy-installed-identity-310",
+    "MPLCONFIGDIR": "/workspace/work/w010-final-fba1e7b/mplconfig"
+  },
+  "elapsed_seconds": 0.058,
+  "stdout": "installed-identity-310.stdout.txt",
+  "stdout_sha256": "0c88903dd1cdf5c88423383056e2be2a406f7f95d8bccc165dcd336c2e28449d",
+  "stderr": "installed-identity-310.stderr.txt",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

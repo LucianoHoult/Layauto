@@ -1,0 +1,99 @@
+{
+  "status": "passed",
+  "started_at_utc": "2026-11-05T03:00:11.585769+00:00",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "executable": "/workspace/.venvs/w010-dev312/bin/python",
+  "cwd": "/workspace/Layauto",
+  "head": "0f5029df935bc0acd106aad1bc2be81304d4f442",
+  "source_sha256": {
+    "layauto_v2/state/local_connectivity.py": "a14d973fba81018bf9fa62d2abee388febf3ae3e5117af5fb3ab7b3aa92bb8a1",
+    "layauto_v2/domain/local_connectivity.py": "efc345ac80859a956983dda87612f5d6eccc93e3ae42460f0954d7fb7c5dd68e",
+    "layauto_v2/normalization/local_connectivity.py": "ecc7d1455ebca51125b0265cdab21c5432b46ab72405ba0e3cca0ec51843287f"
+  },
+  "predicates": {
+    "random_seed": 202611050010,
+    "contact_comparisons": 10000,
+    "enclosure_comparisons": 10000,
+    "contact_outcomes": {
+      "False": 2904,
+      "True": 7096
+    },
+    "enclosure_outcomes": {
+      "False": 8302,
+      "True": 1698
+    },
+    "coordinate_translation_magnitude": "1329227995784915872903807060280344576",
+    "oracle_contact": "occupied unit square sets and four-neighbor shared unit edges",
+    "oracle_enclosure": "sequential exact rational uncovered-rectangle peeling"
+  },
+  "actual_graphs": {
+    "normal": {
+      "nodes": 14,
+      "edges": 8,
+      "components": 6,
+      "audits": 16,
+      "enclosure_status": "pass",
+      "public_capture_result": true,
+      "semantic_digest": "f0cc218b18ac29af6dab0fdb2c109fa676228e5110044a8b4a48d31cdac7d8e7"
+    },
+    "via_enclosure": {
+      "nodes": 14,
+      "edges": 8,
+      "components": 6,
+      "audits": 16,
+      "enclosure_status": "violation",
+      "public_capture_result": false,
+      "semantic_digest": "9732bef8099fa6fb3f7a27bcbff8a8b1114a1d9accce3cbad34f8248a5b9e844"
+    },
+    "cut_islands": {
+      "nodes": 3,
+      "edges": 0,
+      "components": 3,
+      "audits": 0,
+      "enclosure_status": "pass",
+      "public_capture_result": false,
+      "semantic_digest": "42ed0e0c2fd0bfa53a16bb0e6889f43e31efd0bc6ec01ebccb38837ac2c521cc"
+    },
+    "generated_topology_hole_duplicate_connector": {
+      "nodes": 36,
+      "edges": 67,
+      "components": 10,
+      "audits": 22,
+      "enclosure_status": "violation",
+      "public_capture_result": false,
+      "semantic_digest": "4dc2599c17faebb3045cec66fd55a627a173217b8b4186004e4aac0e87daeae6"
+    },
+    "duplicate_region": {
+      "status": "located_rejection",
+      "code": "AmbiguousConnectorEndpoint",
+      "field": "/electrical_connects/0",
+      "message": "connector requires exactly one independent LI region; found 2"
+    },
+    "connected_two_regions": {
+      "status": "located_rejection",
+      "code": "AmbiguousConnectorEndpoint",
+      "field": "/electrical_connects/1",
+      "message": "connector requires exactly one independent LI region; found 2"
+    },
+    "second_candidate_fails_enclosure": {
+      "status": "located_rejection",
+      "code": "AmbiguousConnectorEndpoint",
+      "field": "/electrical_connects/1",
+      "message": "connector requires exactly one independent LI region; found 2"
+    },
+    "edge_only": {
+      "status": "located_rejection",
+      "code": "AmbiguousConnectorEndpoint",
+      "field": "/electrical_connects/0",
+      "message": "connector requires exactly one independent LI region; found 0"
+    },
+    "corner_only": {
+      "status": "located_rejection",
+      "code": "AmbiguousConnectorEndpoint",
+      "field": "/electrical_connects/0",
+      "message": "connector requires exactly one independent LI region; found 0"
+    }
+  },
+  "elapsed_seconds": 20.033265007999944,
+  "finished_at_utc": "2026-11-05T03:00:31.619049+00:00"
+}

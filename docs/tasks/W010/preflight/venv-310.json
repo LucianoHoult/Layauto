@@ -1,0 +1,13 @@
+{
+  "command": [
+    "/workspace/Layauto/work/w010-preflight/python/cpython-3.10.22-linux-x86_64-gnu/bin/python3.10",
+    "-m",
+    "venv",
+    "/workspace/.venvs/w010-py310"
+  ],
+  "cwd": "/workspace/Layauto",
+  "exit_code": 0,
+  "elapsed_seconds": 2.786,
+  "output": "venv-310.txt",
+  "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

@@ -1,0 +1,26 @@
+{
+  "command": [
+    "/workspace/.venvs/w010-dev312/bin/python",
+    "-m",
+    "pytest",
+    "-p",
+    "no:cacheprovider",
+    "--collect-only",
+    "tests/unit",
+    "tests/contracts",
+    "-q"
+  ],
+  "cwd": "/workspace/work/w010-final-fba1e7b/source",
+  "exit_code": 0,
+  "environment_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PIP_CACHE_DIR": "/workspace/work/w010-final-fba1e7b/pip-cache",
+    "MYPY_CACHE_DIR": "/workspace/work/w010-final-fba1e7b/mypy-collection-312",
+    "MPLCONFIGDIR": "/workspace/work/w010-final-fba1e7b/mplconfig"
+  },
+  "elapsed_seconds": 1.071,
+  "stdout": "collection-312.stdout.txt",
+  "stdout_sha256": "768136ad049a1c39dbaa6cabaffa42b172851cb65a4db8a9fe1414e0ca2e6266",
+  "stderr": "collection-312.stderr.txt",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}
