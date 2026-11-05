@@ -253,6 +253,43 @@ projection, contact graph, FIN/body extraction, annotation overlay, baseline or
 run terminal is produced. Requirements, reviews and engineering evidence are
 linked from [W009](docs/tasks/W009-effective-geometry-terminals.md).
 
+## Local contact graph and enclosure audit
+
+W010 consumes a successful W009 result and its authenticated captured rule owner:
+
+```python
+from layauto_v2.normalization import build_local_connectivity
+
+if effective.status == "success":
+    local = build_local_connectivity(effective)
+    if local.status == "success":
+        graph = local.value
+        physical_edges = graph.edges
+        local_enclosure_status = graph.local_enclosure_status
+```
+
+Each independent OD S/D region, cut LI region and original POLY/M1/local BODY
+record remains a separate node. Same-layer positive area or positive length
+shared edges connect; point contact does not. Declared connectors require one
+positive-area region on each side before component grouping or enclosure checks.
+Duplicate records retain their identities. Every node, including isolated BODY
+regions, belongs to a complete local component.
+
+Physical connector edges and their per-side T05 enclosure audits are separate.
+A successful graph can carry `local_enclosure_status="violation"`; this does not
+establish mandatory rule success. Enclosure checks the exact region set using
+rational margins, including holes and multiple pieces. Typed references bind
+sources, geometry, scope, units and operators; the versioned canonical wire in
+`normalization.local_connectivity_codec` reconstructs complete graphs and audits.
+
+The pure component preserves the complete input, drawn occupancy, semantic/query
+evidence, readback attempt and separate external body evidence. Unsupported
+operators or ambiguous connector endpoints return located component issues;
+unexpected exceptions and interrupts propagate unchanged. It does not create
+external body edges, verified net/device labels, a complete coordinate model,
+all mandatory checks, a baseline or a run terminal. Scope, reviews and engineering
+evidence are recorded in [W010](docs/tasks/W010-local-contact-connectivity.md).
+
 ## Legacy MVP archive
 
 The previous MVP implementation has been moved as-is to
