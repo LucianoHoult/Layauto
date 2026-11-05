@@ -1,4 +1,5 @@
 """W010 public graph completeness, provenance, immutable and closed-wire checks."""
+import ast
 from dataclasses import FrozenInstanceError, fields, replace
 from fractions import Fraction
 import os
@@ -19,6 +20,27 @@ from layauto_v2.state.local_connectivity import build_local_connectivity_draft
 from test_w008_capture_binding import forged_payload
 from w005_cases import FIXTURE
 from w007_cases import mutable, read
+
+
+def test_new_domain_and_state_keep_pure_dependency_direction():
+    import layauto_v2
+    root = Path(layauto_v2.__file__).resolve().parent
+    forbidden = ('layauto_v2.normalization', 'layauto_v2.importers', 'layauto_v2.pipeline',
+                 'layauto_v2.repository', 'layauto_v2.transactions', 'legacy_mvp', 'tests',
+                 'pathlib', 'subprocess', 'os', 'io')
+    for relative in ('domain/local_connectivity.py', 'state/local_connectivity.py'):
+        path = root / relative
+        for node in ast.walk(ast.parse(path.read_text())):
+            if isinstance(node, ast.Import):
+                imports = [alias.name for alias in node.names]
+            elif isinstance(node, ast.ImportFrom):
+                imports = [node.module or '']
+            else:
+                imports = []
+            rejected = forbidden + (('layauto_v2.state', 'layauto_v2.tech') if relative.startswith('domain/') else ())
+            assert not any(module.startswith(rejected) for module in imports), (path, imports)
+            if isinstance(node, ast.Call) and isinstance(node.func, ast.Name):
+                assert node.func.id not in ('open', 'hash', 'eval', 'exec'), (path, node.lineno)
 
 
 @pytest.fixture(scope='module')

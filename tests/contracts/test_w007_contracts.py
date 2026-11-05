@@ -348,7 +348,24 @@ def test_normalization_and_new_domain_keep_pure_dependency_boundaries():
                                                       and {alias.name for alias in node.names} == {'EffectiveDraft'})
                                                      or (node.module == 'layauto_v2.state.occupancy'
                                                          and {alias.name for alias in node.names} == {'BaseOccupancy'})))))
-            if not (allowed_decoder or allowed_geometry_decoder or allowed_geometry_state or allowed_effective_state):
+            # W010 only composes the neutral local draft and its closed type
+            # registry. Mutable state/publication dependencies remain forbidden.
+            allowed_local_contact_state = (path.parent.name == 'normalization'
+                                            and isinstance(node, ast.ImportFrom)
+                                            and ((path.name == 'local_connectivity.py'
+                                                  and node.module == 'layauto_v2.state.local_connectivity'
+                                                  and {alias.name for alias in node.names} <= {
+                                                      'DRAFT_TYPES', 'LocalConnectivityDraft',
+                                                      'build_local_connectivity_draft'})
+                                                 or (path.name == 'local_connectivity_codec.py'
+                                                     and ((node.module == 'layauto_v2.state.local_connectivity'
+                                                           and {alias.name for alias in node.names} <= {
+                                                               'DRAFT_TYPES', 'LocalConnectivityDraft'})
+                                                          or (node.module == 'layauto_v2.state.regions'
+                                                              and {alias.name for alias in node.names} == {
+                                                                  'EffectiveDraft'})))))
+            if not (allowed_decoder or allowed_geometry_decoder or allowed_geometry_state
+                    or allowed_effective_state or allowed_local_contact_state):
                 violations.extend((str(path), module) for module in modules if module.startswith(forbidden))
         for node in ast.walk(tree):
             if isinstance(node, ast.Call) and isinstance(node.func, ast.Name):
