@@ -1,0 +1,46 @@
+{
+  "contact_comparisons": 12288,
+  "contact_outcomes": {
+    "False": 5426,
+    "True": 6862
+  },
+  "cwd": "/workspace/Layauto",
+  "elapsed_seconds": 0.882,
+  "enclosure_comparisons": 5120,
+  "enclosure_outcomes": {
+    "False": 4602,
+    "True": 518
+  },
+  "executable": "/workspace/work/w005-pm-check-env/bin/python",
+  "head": "ca39aedcb71fda02f77ffda1eb5d5dddc598226e",
+  "masks": 512,
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "rational_margins": [
+    "0",
+    "1/3",
+    "1/2",
+    "1",
+    "3/2"
+  ],
+  "row_decomposition_comparisons": 8704,
+  "scope": "PM finite geometry check; not a complete premerge or production proof",
+  "script_sha256": "1d97e2653b8d6b71affe0e4f84de9ccfc372fe4ca9d4b36c2386b72d57728008",
+  "source_sha256": {
+    "layauto_v2/domain/local_connectivity.py": "efc345ac80859a956983dda87612f5d6eccc93e3ae42460f0954d7fb7c5dd68e",
+    "layauto_v2/normalization/local_connectivity.py": "ecc7d1455ebca51125b0265cdab21c5432b46ab72405ba0e3cca0ec51843287f",
+    "layauto_v2/normalization/local_connectivity_codec.py": "3443d1a836c305ce36cf7c117234a18ae8f1b847724b203ed071213b60574619",
+    "layauto_v2/state/local_connectivity.py": "a14d973fba81018bf9fa62d2abee388febf3ae3e5117af5fb3ab7b3aa92bb8a1"
+  },
+  "status": "passed",
+  "translations": [
+    [
+      0,
+      0
+    ],
+    [
+      1267650600228229401496703205376,
+      -1267650600228229401496703205376
+    ]
+  ]
+}

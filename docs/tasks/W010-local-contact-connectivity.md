@@ -8,8 +8,8 @@
 | --- | --- |
 | ID / 目标 | W010；从认证W009产物及同源接触/规则声明构造只读、精确、可重建的局部contact/connector/component草稿，并记录局部T05 enclosure判据 |
 | 里程碑 / 依赖 | M1第六个产品切片；W005–W009已验收集成。W009经[PR #63](https://github.com/LucianoHoult/Layauto/pull/63)合并`8c60f6c6183aed79a08ec8bb232a31f918837f68`，见[PM4](W009-effective-geometry-terminals.md#pm4-integration-20261104)。本任务从含其验收补记的main `3be0b98359038bab6c23980b55a48987cc71a369`建立 |
-| 授权依据 / 阶段 | 用户2026-11-04要求继续推进，沿用独立执行session。**可执行：派发要求已独立复核，必须修正项0；先细化方案并独立review，原范围内修正后实现A1–A8。** 本次仅准备任务，无产品实现 |
-| 恢复位置 | `codex/w010-local-contact-connectivity`，接手包含本任务及current-work的PM交接提交；完整SHA见Git/回复 |
+| 授权依据 / 阶段 | 用户交回W010执行结果，沿用独立session分工。**待验收：实现及方案/代码review已交付，PM分支技术接收通过，本次新增必须修正项0。** 下一步独立合并前复核，尚未集成或最终验收，见[PM1](#pm1-receipt-20261106) |
+| 恢复位置 | `codex/w010-local-contact-connectivity`，执行交付`ca39aedcb71fda02f77ffda1eb5d5dddc598226e`、冻结产品/正式测试`0f5029df935bc0acd106aad1bc2be81304d4f442`；接手包含PM1及current-work补记的最新提交，完整SHA见Git/回复。main仍为上述起点 |
 | 允许修改 | 必要中立node/edge/component/enclosure DTO与refs；`state/`纯局部连通草稿；`normalization/`同源适配、组合与codec；直接必要的tech/geometry校验复用、对应tests、typing/build配置、README及本任务附件。内部模块/算法由执行者选择 |
 | 非目标 | 不补完整合法工艺坐标/制造或routing lattice；不实现全部region occupancy投影、外部body证明/FIN计数/器件抽取/DeviceId-net join/query overlay、通用DRC/CSP、全部mandatory规则、lifecycle闭合、可变图更新/跨mutation lineage、baseline/seal/no_change/terminal/Stage6。fixture/答案/历史证据和生产格式不改，U06不顺手实现 |
 | 架构依据 | 本次main的[architecture](../architecture.md) §2.2–2.3、§3.1/3.4–3.6、§4.5–4.8、§5.6–5.9、§8.1/8.4–8.5、§11.2–11.3/11.14–11.15、§12.3/12.5；[W003合同](W003/contracts.md)、[manual review](W003/manual-verification.md) MR-045/047/052/054/056及W004现行body修订；W007–W009已验收的输入/来源/单位/公开结果合同 |
@@ -88,11 +88,21 @@ contact与T05审计分离、独立region端点计数、完整source/scope与公�
 
 ## PM验收与交接（PM）
 
-本轮仅准备W010。W009已验收并集成，不把新图草稿视为完整ConnectivityState或M1闭环。
+最初派发时仅准备W010；当前阶段以下文最新PM记录为准。W009已验收并集成，不把新图草稿视为完整ConnectivityState或M1闭环。
 
 **派发要求独立复核（2026-11-04）：** 未参与范围调查/任务起草的`/root/w010_handoff_review`对照架构、实际owner/样本及W008/W009接口，必须修正项0，见[独立记录](W010/handoff-review.md)。初审任务SHA-256 `b14f7051591a8ace8b888e62248afbaa29bc6f8f61dedff093b351c0c01ec4fa`；随后采纳两项非阻塞澄清：新增rules的payload与实际捕获source role绑定；重复connector保留各record/audit，并区分重复导体region的端点歧义。澄清稿SHA-256 `215bd28756437a019fe7ba6a5471bb7c23f238cb0d4e1173197ed1333879718e`，本阶段/PM接收补记未改其行为要求与A1–A8；最终文本身份由独立报告追加。
 
-任务阶段可执行，下一步独立执行session先方案review后实现，当前无W010方案/代码review、产品验证或验收。
+最初派发阶段为可执行，要求独立执行session先方案review后实现；当时尚无W010产品验证或验收，本段保留原派发事实。
+
+<a id="pm1-receipt-20261106"></a>
+
+### PM1 分支技术接收（2026-11-06）
+
+已核对远端交付`ca39aedcb71fda02f77ffda1eb5d5dddc598226e`、冻结产品`0f5029df935bc0acd106aad1bc2be81304d4f442`、A1–A8覆盖及方案/代码独立review。PM实际Python3.12定向正式回归**50 passed / 233.81s**、原独立主probe direct/readback真实14节点/8边/6分量/16audit通过、strict typing **48模块通过**；新增独立512掩码的12,288接触/5,120有理包围/8,704等覆盖比较均通过。**分支技术接收通过，本次新增必须修正项0；待最终验收。**
+
+252项源/完整tar、两包各94runtime、21条命令42份原输出、原1149保留/新增316、review及218项交付身份均已实核。原双解释器完整各1465项、双typing/构建/双干净安装及更广独立边界矩阵按最终身份采信；本机未重跑完整矩阵或重建/安装，原实际安装/测试树不在本机。详见[PM接收说明](W010/pm-receipt.md)及[机器回执](W010/pm-receipt.json)；旧交付清单对应ca39版本，本次PM状态追加不改写旧hash。
+
+PM专项不冒称新的独立premerge session已经完成。下一步单独session合并前复核，通过后再main集成及组合验证；本轮未合main或启动下一任务。contact与局部T05分离、来源/scope/异常边界已核验，完整工艺坐标/body/FIN/器件/标注、其余mandatory/发布和U06仍后置，未宣称完整M1或生产准入。
 
 ### 独立执行session prompt
 

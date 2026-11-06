@@ -1,0 +1,27 @@
+{
+  "status": "passed",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "product_head": "0f5029df935bc0acd106aad1bc2be81304d4f442",
+  "direct": {
+    "nodes": 14,
+    "edges": 8,
+    "components": 6,
+    "audits": 16,
+    "semantic_digest": "f0cc218b18ac29af6dab0fdb2c109fa676228e5110044a8b4a48d31cdac7d8e7"
+  },
+  "readback": {
+    "nodes": 14,
+    "edges": 8,
+    "components": 6,
+    "audits": 16,
+    "semantic_digest": "f0cc218b18ac29af6dab0fdb2c109fa676228e5110044a8b4a48d31cdac7d8e7"
+  },
+  "assertions": {
+    "foreign_rules_source_rejected_by_captured_result": true,
+    "missing_edge_rejected": true,
+    "false_audit_rejected": true,
+    "missing_completed_rejected": true,
+    "fixture_unchanged": true
+  },
+  "elapsed_seconds": 58.00455631699879
+}
