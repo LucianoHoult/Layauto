@@ -1,0 +1,12 @@
+{
+  "command": [
+    "/workspace/.venvs/w010-dev312/bin/python",
+    "-m",
+    "mypy"
+  ],
+  "cwd": "/workspace/Layauto/work/w010-preflight/snapshot",
+  "exit_code": 0,
+  "elapsed_seconds": 1.299,
+  "output": "baseline-mypy-dev312.txt",
+  "output_sha256": "522d7b3a15704213950b7053c882b6ddd0c41149631300ce6c1933d21b5971c3"
+}

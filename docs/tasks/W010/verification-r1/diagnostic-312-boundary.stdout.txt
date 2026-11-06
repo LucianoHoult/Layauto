@@ -1,0 +1,66 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+______ test_normalization_and_new_domain_keep_pure_dependency_boundaries _______
+
+    def test_normalization_and_new_domain_keep_pure_dependency_boundaries():
+        import layauto_v2
+        root = Path(layauto_v2.__file__).resolve().parent
+        files_to_check = list((root / 'normalization').glob('*.py')) + [root / 'domain' / name for name in (
+            'circuit.py', 'identifiers.py', 'intent.py', 'source_location.py')]
+        assert files_to_check
+        forbidden = ('pathlib', 'os', 'io', 'subprocess', 'layauto_v2.importers',
+                     'layauto_v2.tooling', 'layauto_v2.repository', 'layauto_v2.pipeline',
+                     'layauto_v2.transactions', 'layauto_v2.state', 'legacy_mvp', 'tests')
+        violations = []
+        for path in files_to_check:
+            tree = ast.parse(path.read_text(), filename=str(path))
+            for node in ast.walk(tree):
+                if isinstance(node, ast.Import):
+                    modules = [item.name for item in node.names]
+                elif isinstance(node, ast.ImportFrom):
+                    modules = [node.module or '']
+                else:
+                    continue
+                allowed_decoder = (path.parent.name == 'normalization' and path.name == '_validation.py'
+                                   and isinstance(node, ast.ImportFrom)
+                                   and node.module == 'layauto_v2.importers.config'
+                                   and {alias.name for alias in node.names} <= {'load_document', 'validate_document'})
+                # W008 adds an explicitly bounded captured-byte adapter and pure
+                # state construction. Preserve W007's restriction everywhere else.
+                allowed_geometry_decoder = (path.parent.name == 'normalization' and path.name == 'geometry_input.py'
+                                            and isinstance(node, ast.ImportFrom)
+                                            and ((node.module == 'layauto_v2.importers.config'
+                                                  and {alias.name for alias in node.names} <= {'load_document', 'validate_document', 'validate_tech'})
+                                                 or (node.module == 'layauto_v2.importers.gds'
+                                                     and {alias.name for alias in node.names} == {'parse_gds'})))
+                allowed_geometry_state = (path.parent.name == 'normalization'
+                                          and path.name in ('geometry.py', 'geometry_codec.py')
+                                          and isinstance(node, ast.ImportFrom)
+                                          and node.module in ('layauto_v2.state.layout_store',
+                                                              'layauto_v2.state.coordinate', 'layauto_v2.state.occupancy'))
+                # W009 only adds these pure draft/codec dependencies; it does not
+                # grant normalization access to mutable state or publication APIs.
+                allowed_effective_state = (path.parent.name == 'normalization'
+                                           and isinstance(node, ast.ImportFrom)
+                                           and ((path.name == 'effective.py' and node.module == 'layauto_v2.state.regions'
+                                                 and {alias.name for alias in node.names} <= {'EffectiveDraft', 'build_effective_draft'})
+                                                or (path.name == 'effective_codec.py'
+                                                    and ((node.module == 'layauto_v2.state.regions'
+                                                          and {alias.name for alias in node.names} == {'EffectiveDraft'})
+                                                         or (node.module == 'layauto_v2.state.occupancy'
+                                                             and {alias.name for alias in node.names} == {'BaseOccupancy'})))))
+                if not (allowed_decoder or allowed_geometry_decoder or allowed_geometry_state or allowed_effective_state):
+                    violations.extend((str(path), module) for module in modules if module.startswith(forbidden))
+            for node in ast.walk(tree):
+                if isinstance(node, ast.Call) and isinstance(node.func, ast.Name):
+                    assert node.func.id not in ('open', 'hash', 'eval', 'exec'), (path, node.lineno)
+>       assert violations == []
+E       AssertionError: assert [('/workspace...onnectivity')] == []
+E         
+E         Left contains 3 more items, first extra item: ('/workspace/work/w010-final-fba1e7b/source/layauto_v2/normalization/local_connectivity_codec.py', 'layauto_v2.state.local_connectivity')
+E         Use -v to get more diff
+
+tests/contracts/test_w007_contracts.py:356: AssertionError
+=========================== short test summary info ============================
+FAILED tests/contracts/test_w007_contracts.py::test_normalization_and_new_domain_keep_pure_dependency_boundaries
+1 failed in 0.25s

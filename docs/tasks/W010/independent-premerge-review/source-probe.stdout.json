@@ -1,0 +1,266 @@
+{
+  "cases": [
+    {
+      "name": "actual_direct_no_io_retained_prior",
+      "status": "pass",
+      "seconds": 12.781916749999937
+    },
+    {
+      "name": "actual_readback_no_io",
+      "status": "pass",
+      "seconds": 24.026686345999906
+    },
+    {
+      "name": "neutral_rules_origin_unacquired_uri",
+      "status": "pass",
+      "seconds": 0.2120916290000423
+    },
+    {
+      "name": "captured_rules_origin_unacquired_uri",
+      "status": "rejected",
+      "exception": "ValueError",
+      "message": "local graph/audit differs from this captured input or rules owner",
+      "seconds": 6.072314645999995
+    },
+    {
+      "name": "neutral_rules_origin_captured_wrong_role",
+      "status": "pass",
+      "seconds": 0.22882951000008234
+    },
+    {
+      "name": "captured_rules_origin_captured_wrong_role",
+      "status": "rejected",
+      "exception": "ValueError",
+      "message": "local graph/audit differs from this captured input or rules owner",
+      "seconds": 5.686494925000034
+    },
+    {
+      "name": "grouped_rules_builder",
+      "status": "rejected",
+      "exception": "GeometryInputError",
+      "message": "captured bytes differ from accepted /tech evidence",
+      "seconds": 3.2259681680000085,
+      "located": {
+        "code": "GeometryCaptureBindingMismatch",
+        "uri": "tech.json",
+        "field": "/tech"
+      }
+    },
+    {
+      "name": "grouped_rules_constructor",
+      "status": "rejected",
+      "exception": "GeometryInputError",
+      "message": "captured bytes differ from accepted /tech evidence",
+      "seconds": 3.509144225,
+      "located": {
+        "code": "GeometryCaptureBindingMismatch",
+        "uri": "tech.json",
+        "field": "/tech"
+      }
+    },
+    {
+      "name": "grouped_physical_builder",
+      "status": "rejected",
+      "exception": "GeometryInputError",
+      "message": "captured bytes differ from accepted /tech evidence",
+      "seconds": 3.5144412330000705,
+      "located": {
+        "code": "GeometryCaptureBindingMismatch",
+        "uri": "tech.json",
+        "field": "/tech"
+      }
+    },
+    {
+      "name": "grouped_physical_constructor",
+      "status": "rejected",
+      "exception": "GeometryInputError",
+      "message": "captured bytes differ from accepted /tech evidence",
+      "seconds": 3.157909267999912,
+      "located": {
+        "code": "GeometryCaptureBindingMismatch",
+        "uri": "tech.json",
+        "field": "/tech"
+      }
+    },
+    {
+      "name": "grouped_drawn_builder",
+      "status": "rejected",
+      "exception": "GeometryInputError",
+      "message": "captured bytes differ from accepted /tech evidence",
+      "seconds": 3.3651721009999847,
+      "located": {
+        "code": "GeometryCaptureBindingMismatch",
+        "uri": "tech.json",
+        "field": "/tech"
+      }
+    },
+    {
+      "name": "grouped_drawn_constructor",
+      "status": "rejected",
+      "exception": "GeometryInputError",
+      "message": "captured bytes differ from accepted /tech evidence",
+      "seconds": 3.84483404599996,
+      "located": {
+        "code": "GeometryCaptureBindingMismatch",
+        "uri": "tech.json",
+        "field": "/tech"
+      }
+    },
+    {
+      "name": "grouped_formats_builder",
+      "status": "rejected",
+      "exception": "GeometryInputError",
+      "message": "captured bytes differ from accepted /tech evidence",
+      "seconds": 4.11681787200007,
+      "located": {
+        "code": "GeometryCaptureBindingMismatch",
+        "uri": "tech.json",
+        "field": "/tech"
+      }
+    },
+    {
+      "name": "grouped_formats_constructor",
+      "status": "rejected",
+      "exception": "GeometryInputError",
+      "message": "captured bytes differ from accepted /tech evidence",
+      "seconds": 4.000365544000033,
+      "located": {
+        "code": "GeometryCaptureBindingMismatch",
+        "uri": "tech.json",
+        "field": "/tech"
+      }
+    },
+    {
+      "name": "foreign_unit",
+      "status": "rejected",
+      "exception": "ValueError",
+      "message": "local graph contains foreign source/scope/unit/operator binding",
+      "seconds": 0.07853377300000375
+    },
+    {
+      "name": "lost_completed",
+      "status": "rejected",
+      "exception": "ValueError",
+      "message": "local result must retain all captured completed facts",
+      "seconds": 5.652744498999937
+    },
+    {
+      "name": "readback_wrong_run",
+      "status": "rejected",
+      "exception": "ValueError",
+      "message": "readback checkpoint/value differs from ready attempt",
+      "seconds": 1.425454635000051
+    },
+    {
+      "name": "constructor_added_node",
+      "status": "rejected",
+      "exception": "ValueError",
+      "message": "local graph omitted/added nodes, edges, components or independent enclosure facts",
+      "seconds": 0.11425439399999959
+    },
+    {
+      "name": "nested_result_wire_added_node",
+      "status": "rejected",
+      "exception": "ValueError",
+      "message": "local graph omitted/added nodes, edges, components or independent enclosure facts",
+      "seconds": 1.6010025710000946
+    },
+    {
+      "name": "constructor_added_body_edge",
+      "status": "rejected",
+      "exception": "ValueError",
+      "message": "local graph omitted/added nodes, edges, components or independent enclosure facts",
+      "seconds": 0.12046446700003344
+    },
+    {
+      "name": "nested_result_wire_added_body_edge",
+      "status": "rejected",
+      "exception": "ValueError",
+      "message": "local graph omitted/added nodes, edges, components or independent enclosure facts",
+      "seconds": 1.648019176000048
+    },
+    {
+      "name": "constructor_false_union",
+      "status": "rejected",
+      "exception": "ValueError",
+      "message": "local graph omitted/added nodes, edges, components or independent enclosure facts",
+      "seconds": 0.1184239220000336
+    },
+    {
+      "name": "nested_result_wire_false_union",
+      "status": "rejected",
+      "exception": "ValueError",
+      "message": "local graph omitted/added nodes, edges, components or independent enclosure facts",
+      "seconds": 2.025253396000039
+    },
+    {
+      "name": "constructor_false_audit",
+      "status": "rejected",
+      "exception": "ValueError",
+      "message": "local graph omitted/added nodes, edges, components or independent enclosure facts",
+      "seconds": 0.1412201200000709
+    },
+    {
+      "name": "nested_result_wire_false_audit",
+      "status": "rejected",
+      "exception": "ValueError",
+      "message": "local graph omitted/added nodes, edges, components or independent enclosure facts",
+      "seconds": 1.635107134000009
+    },
+    {
+      "name": "constructor_foreign_endpoint",
+      "status": "rejected",
+      "exception": "ValueError",
+      "message": "local graph omitted/added nodes, edges, components or independent enclosure facts",
+      "seconds": 0.18682578499999636
+    },
+    {
+      "name": "nested_result_wire_foreign_endpoint",
+      "status": "rejected",
+      "exception": "ValueError",
+      "message": "local graph omitted/added nodes, edges, components or independent enclosure facts",
+      "seconds": 1.775995681999916
+    },
+    {
+      "name": "constructor_false_success",
+      "status": "rejected",
+      "exception": "ValueError",
+      "message": "local success requires a complete draft and no input issues",
+      "seconds": 5.445332709000013
+    },
+    {
+      "name": "nested_wire_false_success",
+      "status": "rejected",
+      "exception": "ValueError",
+      "message": "local success requires a complete draft and no input issues",
+      "seconds": 12.969520983999928
+    },
+    {
+      "name": "actual_renamed_query_inputs",
+      "status": "pass",
+      "seconds": 13.364836879999984
+    },
+    {
+      "name": "readback_roundtrip",
+      "status": "pass",
+      "seconds": 34.16621521500008
+    }
+  ],
+  "direct_readback_equivalent": true,
+  "rules_actual_role_index": 6,
+  "renamed_query_draft_ref_equal": true,
+  "renamed_query_same_complete_graph": true,
+  "status": "pass",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "root": "/workspace/Layauto-w010",
+  "elapsed_seconds": 176.49277263600004,
+  "wire_bytes": 59422834,
+  "wire_sha256": "417fce0c7ccd6f96b47d3b091f9b45526764c607e73b47e0e3e572c18af19f5d",
+  "semantic_digest": "f0cc218b18ac29af6dab0fdb2c109fa676228e5110044a8b4a48d31cdac7d8e7",
+  "counts": [
+    14,
+    8,
+    6,
+    16
+  ]
+}

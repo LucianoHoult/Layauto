@@ -1,0 +1,19 @@
+{
+  "command": [
+    "/workspace/.venvs/w010-dev312/bin/python",
+    "-m",
+    "pytest",
+    "-p",
+    "no:cacheprovider",
+    "tests/contracts/test_w007_contracts.py::test_normalization_and_new_domain_keep_pure_dependency_boundaries",
+    "-q"
+  ],
+  "cwd": "/workspace/work/w010-final-fba1e7b/source",
+  "exit_code": 1,
+  "elapsed_seconds": 0.441,
+  "stdout": "diagnostic-312-boundary.stdout.txt",
+  "stderr": "diagnostic-312-boundary.stderr.txt",
+  "source_git_head": "fba1e7be688c5fce88834dc8b859a8660bff6b7f",
+  "first_full_suite_failure_ordinal": 444,
+  "inferred_nodeid_confirmed": true
+}

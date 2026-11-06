@@ -1,0 +1,47 @@
+{
+  "python310": {
+    "path": "/workspace/.venvs/w010-py310/bin/python",
+    "version_file": "environment-310.txt",
+    "dependency_check": "pip-check-310.txt"
+  },
+  "python312": {
+    "path": "/workspace/.venvs/w010-dev312/bin/python",
+    "version_file": "environment-dev312.txt",
+    "dependency_check": "pip-check-dev312.txt"
+  },
+  "parallel312_setup": {
+    "cwd": "/workspace/Layauto/work/w010-preflight/snapshot",
+    "initial_install": {
+      "command": [
+        "/workspace/.venvs/w010-dev312/bin/python",
+        "-m",
+        "pip",
+        "--cache-dir",
+        "/workspace/Layauto/work/w010-preflight/pip-cache",
+        "install",
+        ".[dev,gds]"
+      ],
+      "exit_code": 1,
+      "output": "install-dev312.txt",
+      "cause": "Pillow download was truncated after a proxy disconnection; pip refused the wheel hash."
+    },
+    "retry": {
+      "command": [
+        "/workspace/.venvs/w010-dev312/bin/python",
+        "-m",
+        "pip",
+        "--no-cache-dir",
+        "install",
+        ".[dev,gds]"
+      ],
+      "exit_code": 0,
+      "output": "install-dev312-retry1.txt",
+      "integrity_checks_disabled": false
+    }
+  },
+  "baseline310_status": "intentionally_interrupted_partial: 992 passed, 1 known harness failure, KeyboardInterrupt; not a 1149-test success",
+  "baseline312_full_regression": "not_run; final 1464-test dual full matrix started separately",
+  "source_identity": "9758a157115cc22d91ce095ac2002209b9f210d3",
+  "credentials_printed": false,
+  "preflight_wrapper_remaining_steps": "not_run after intentional stop; preflight.py records the original intended sequence only"
+}

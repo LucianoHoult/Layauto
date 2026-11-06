@@ -1,0 +1,33 @@
+{
+  "source_unchanged_after_probe": {
+    "layauto_v2/state/local_connectivity.py": true,
+    "layauto_v2/domain/local_connectivity.py": true,
+    "layauto_v2/normalization/local_connectivity.py": true
+  },
+  "all_sources_unchanged": true,
+  "artifacts": {
+    "math-probe.py": {
+      "sha256": "8f9f45ccdd68b6653222d4526aa1adcc6b2b86fb4f0f5b933c33b02a5265eb74",
+      "size_bytes": 13378
+    },
+    "math-result.json": {
+      "sha256": "a749292385f769a4599046cdd84eaa33b326f960c6ab19ca38443cbea74d1100",
+      "size_bytes": 3631
+    },
+    "math-stdout.txt": {
+      "sha256": "a749292385f769a4599046cdd84eaa33b326f960c6ab19ca38443cbea74d1100",
+      "size_bytes": 3631
+    },
+    "math-stderr.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    }
+  },
+  "command": [
+    "/workspace/.venvs/w010-dev312/bin/python",
+    "-B",
+    "docs/tasks/W010/review/math-probe.py"
+  ],
+  "cwd": "/workspace/Layauto",
+  "status": "passed"
+}

@@ -1,0 +1,12 @@
+{
+  "command": [
+    "/workspace/.venvs/w010-dev312/bin/python",
+    "-c",
+    "import layauto_v2,sys; print(sys.version); print(layauto_v2.__file__)"
+  ],
+  "cwd": "/workspace/Layauto/work/w010-preflight/snapshot",
+  "exit_code": 0,
+  "elapsed_seconds": 0.01,
+  "output": "baseline-import-dev312.txt",
+  "output_sha256": "08d865ac17ce0d0d66258d649d1f75d13f0ca8570fe88e441729aa0208a1faf6"
+}

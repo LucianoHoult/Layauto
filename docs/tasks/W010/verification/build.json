@@ -1,0 +1,22 @@
+{
+  "command": [
+    "/workspace/.venvs/w010-dev312/bin/python",
+    "-m",
+    "build",
+    "--outdir",
+    "/workspace/Layauto/docs/tasks/W010/verification/dist"
+  ],
+  "cwd": "/workspace/work/w010-final-0f5029d/source",
+  "exit_code": 0,
+  "environment_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PIP_CACHE_DIR": "/workspace/work/w010-final-0f5029d/pip-cache",
+    "MYPY_CACHE_DIR": "/workspace/work/w010-final-0f5029d/mypy-build",
+    "MPLCONFIGDIR": "/workspace/work/w010-final-0f5029d/mplconfig"
+  },
+  "elapsed_seconds": 5.532,
+  "stdout": "build.stdout.txt",
+  "stdout_sha256": "74d85c66833a51ac156b857389c3aa687d8641f1f595c8c18948a527dd7c0edb",
+  "stderr": "build.stderr.txt",
+  "stderr_sha256": "7b2888f78d7fa636ed83e6385e6be3fdaf145831d191ec5b2a189ea147e86505"
+}

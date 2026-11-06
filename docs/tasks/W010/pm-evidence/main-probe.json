@@ -1,0 +1,35 @@
+{
+  "head": "ca39aedcb71fda02f77ffda1eb5d5dddc598226e",
+  "cwd": "/workspace/Layauto",
+  "command": [
+    "/workspace/work/w005-pm-check-env/bin/python",
+    "-B",
+    "docs/tasks/W010/review/main-probe.py"
+  ],
+  "env_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONPATH": "/workspace/Layauto"
+  },
+  "started_utc": "2026-11-06T02:58:05.550577+00:00",
+  "elapsed_seconds": 58.346,
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "executable": "/workspace/work/w005-pm-check-env/bin/python",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "packages": {
+    "pytest": "9.2.0",
+    "mypy": "2.4.1",
+    "PyYAML": "6.0.3"
+  },
+  "environment_scope": "existing PM venv; not a clean install validation",
+  "returncode": 0,
+  "outputs": {
+    "stdout": {
+      "path": "main-probe.stdout.txt",
+      "sha256": "ac897c4467c7e708fc86156139d46fc2c9bfe59e6b228b4833959b23bdc0e3ed"
+    },
+    "stderr": {
+      "path": "main-probe.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  }
+}

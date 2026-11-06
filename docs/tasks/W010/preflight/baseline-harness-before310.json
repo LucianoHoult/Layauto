@@ -1,0 +1,21 @@
+{
+  "command": [
+    "/workspace/.venvs/w010-py310/bin/python",
+    "-m",
+    "pytest",
+    "-p",
+    "no:cacheprovider",
+    "tests/contracts/test_w006_pipeline.py::test_f1_request_independently_matches_accepted_sample",
+    "-q"
+  ],
+  "cwd": "/workspace/Layauto/work/w010-preflight/initial-repro",
+  "environment_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "exit_code": 1,
+  "elapsed_seconds": 1.662,
+  "output": "baseline-harness-before310.txt",
+  "output_sha256": "a73f6391887844191360c8bcbd3b3297f086ab603779130357b816c97f2d1bb5",
+  "source_manifest": "baseline-manifest.json",
+  "purpose": "Targeted reproduction of the initial subset snapshot omission; product/tests unchanged."
+}

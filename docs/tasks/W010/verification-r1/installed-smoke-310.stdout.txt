@@ -1,0 +1,25 @@
+{
+  "python": "3.10.22 (main, Oct  3 2026, 01:32:06) [Clang 22.1.3 ]",
+  "executable": "/workspace/work/w010-final-fba1e7b/clean-310/bin/python",
+  "package": "/workspace/work/w010-final-fba1e7b/clean-310/lib/python3.10/site-packages/layauto_v2/__init__.py",
+  "distribution_version": "0.2.0",
+  "direct": {
+    "wire_sha256": "90c71f2cc23efdd74bd7097e9fdff7106610cc47d83324c47374c28a1ecbd576",
+    "semantic_digest": "f0cc218b18ac29af6dab0fdb2c109fa676228e5110044a8b4a48d31cdac7d8e7",
+    "nodes": 14,
+    "edges": 8,
+    "components": 6,
+    "audits": 16,
+    "local_enclosure_status": "pass"
+  },
+  "readback": {
+    "wire_sha256": "c2eba59609452c807421e1b981ba7438581333223c9e88ab0511584acf746ebc",
+    "semantic_digest": "f0cc218b18ac29af6dab0fdb2c109fa676228e5110044a8b4a48d31cdac7d8e7",
+    "nodes": 14,
+    "edges": 8,
+    "components": 6,
+    "audits": 16,
+    "local_enclosure_status": "pass"
+  },
+  "attempt_unchanged": true
+}

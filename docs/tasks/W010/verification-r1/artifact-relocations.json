@@ -1,0 +1,7 @@
+{
+  "reason": "Preserve first failed frozen matrix; no output overwritten. Absolute command paths retain actual original execution locations.",
+  "original_directory": "/workspace/Layauto/docs/tasks/W010/verification",
+  "preserved_directory": "/workspace/Layauto/docs/tasks/W010/verification-r1",
+  "source_work_directory": "/workspace/work/w010-final-fba1e7b",
+  "relative_paths_unchanged": true
+}

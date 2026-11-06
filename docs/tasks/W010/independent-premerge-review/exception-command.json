@@ -1,0 +1,21 @@
+{
+  "status": "passed",
+  "command": [
+    "/workspace/.venvs/layauto/bin/python",
+    "-B",
+    "/workspace/Layauto-w010/docs/tasks/W010/independent-premerge-review/exception-probe.py"
+  ],
+  "cwd": "/workspace/Layauto-w010",
+  "head": "c4909ab679d0c0806200fcb132db8a5de1ad3e75",
+  "script_sha256": "8a1c5187ed6a3d7c20fd09ea680785360aa0e331d03096e1296af8a95850f0ac",
+  "start_utc": "2026-11-06T03:15:41.297369+00:00",
+  "environment": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONPATH": "."
+  },
+  "exit_code": 0,
+  "elapsed_seconds": 1429.5802993774414,
+  "finish_utc": "2026-11-06T03:39:30.876360+00:00",
+  "stdout_sha256": "b4df31806030f10adca47750486d731fee0818ec5991b0782033d3ec4f21f28d",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

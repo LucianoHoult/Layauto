@@ -1,0 +1,50 @@
+{
+  "status": "pass",
+  "checks": 45,
+  "failures": [],
+  "historical_paths_available": {
+    "310": {
+      "executable_exists": false,
+      "package_exists": false
+    },
+    "312": {
+      "executable_exists": false,
+      "package_exists": false
+    },
+    "original_test_tree_exists": false
+  },
+  "performance_original_values": [
+    {
+      "case": "normal",
+      "wire_bytes": 15470850,
+      "max_pieces": 1,
+      "nodes": 14,
+      "rss_kib_cumulative": 926272,
+      "public_build_seconds": 10.305591348999997
+    },
+    {
+      "case": "special_cut_islands",
+      "wire_bytes": 12579736,
+      "max_pieces": 1,
+      "nodes": 3,
+      "rss_kib_cumulative": 926272,
+      "public_build_seconds": 6.619064936999962
+    },
+    {
+      "case": "extra_20_isolated_M1",
+      "wire_bytes": 17086974,
+      "max_pieces": 1,
+      "nodes": 34,
+      "rss_kib_cumulative": 1011524,
+      "public_build_seconds": 13.904023327000004
+    },
+    {
+      "case": "extra_8_duplicate_CONTACT",
+      "wire_bytes": 16096466,
+      "max_pieces": 1,
+      "nodes": 14,
+      "rss_kib_cumulative": 1011524,
+      "public_build_seconds": 12.101904427999898
+    }
+  ]
+}

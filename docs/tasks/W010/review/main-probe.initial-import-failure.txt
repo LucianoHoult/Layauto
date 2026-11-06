@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/workspace/Layauto/docs/tasks/W010/review/main-probe.py", line 22, in <module>
+    from layauto_v2.normalization import (
+ImportError: cannot import name 'build_local_connectivity' from 'layauto_v2.normalization' (/workspace/.venvs/w010-dev312/lib/python3.12/site-packages/layauto_v2/normalization/__init__.py)

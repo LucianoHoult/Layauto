@@ -1,0 +1,484 @@
+running egg_info
+creating layauto.egg-info
+writing layauto.egg-info/PKG-INFO
+writing dependency_links to layauto.egg-info/dependency_links.txt
+writing requirements to layauto.egg-info/requires.txt
+writing top-level names to layauto.egg-info/top_level.txt
+writing manifest file 'layauto.egg-info/SOURCES.txt'
+reading manifest file 'layauto.egg-info/SOURCES.txt'
+writing manifest file 'layauto.egg-info/SOURCES.txt'
+running sdist
+running egg_info
+writing layauto.egg-info/PKG-INFO
+writing dependency_links to layauto.egg-info/dependency_links.txt
+writing requirements to layauto.egg-info/requires.txt
+writing top-level names to layauto.egg-info/top_level.txt
+reading manifest file 'layauto.egg-info/SOURCES.txt'
+writing manifest file 'layauto.egg-info/SOURCES.txt'
+running check
+creating layauto-0.2.0
+creating layauto-0.2.0/layauto.egg-info
+creating layauto-0.2.0/layauto_v2
+creating layauto-0.2.0/layauto_v2/annotation
+creating layauto-0.2.0/layauto_v2/constraints
+creating layauto-0.2.0/layauto_v2/derive
+creating layauto-0.2.0/layauto_v2/domain
+creating layauto-0.2.0/layauto_v2/export
+creating layauto-0.2.0/layauto_v2/importers
+creating layauto-0.2.0/layauto_v2/normalization
+creating layauto-0.2.0/layauto_v2/planning
+creating layauto-0.2.0/layauto_v2/repository
+creating layauto-0.2.0/layauto_v2/state
+creating layauto-0.2.0/layauto_v2/tech
+creating layauto-0.2.0/layauto_v2/tooling
+creating layauto-0.2.0/layauto_v2/transactions
+creating layauto-0.2.0/layauto_v2/validation
+copying files to layauto-0.2.0...
+copying README.md -> layauto-0.2.0
+copying pyproject.toml -> layauto-0.2.0
+copying layauto.egg-info/PKG-INFO -> layauto-0.2.0/layauto.egg-info
+copying layauto.egg-info/SOURCES.txt -> layauto-0.2.0/layauto.egg-info
+copying layauto.egg-info/dependency_links.txt -> layauto-0.2.0/layauto.egg-info
+copying layauto.egg-info/requires.txt -> layauto-0.2.0/layauto.egg-info
+copying layauto.egg-info/top_level.txt -> layauto-0.2.0/layauto.egg-info
+copying layauto_v2/__init__.py -> layauto-0.2.0/layauto_v2
+copying layauto_v2/pipeline.py -> layauto-0.2.0/layauto_v2
+copying layauto_v2/py.typed -> layauto-0.2.0/layauto_v2
+copying layauto_v2/annotation/__init__.py -> layauto-0.2.0/layauto_v2/annotation
+copying layauto_v2/annotation/calibre_bundle.py -> layauto-0.2.0/layauto_v2/annotation
+copying layauto_v2/annotation/coverage.py -> layauto-0.2.0/layauto_v2/annotation
+copying layauto_v2/annotation/layer_map.py -> layauto-0.2.0/layauto_v2/annotation
+copying layauto_v2/annotation/layer_overlay.py -> layauto-0.2.0/layauto_v2/annotation
+copying layauto_v2/constraints/__init__.py -> layauto-0.2.0/layauto_v2/constraints
+copying layauto_v2/constraints/drc_context.py -> layauto-0.2.0/layauto_v2/constraints
+copying layauto_v2/constraints/engine.py -> layauto-0.2.0/layauto_v2/constraints
+copying layauto_v2/constraints/result.py -> layauto-0.2.0/layauto_v2/constraints
+copying layauto_v2/constraints/rules.py -> layauto-0.2.0/layauto_v2/constraints
+copying layauto_v2/derive/__init__.py -> layauto-0.2.0/layauto_v2/derive
+copying layauto_v2/derive/invalidation.py -> layauto-0.2.0/layauto_v2/derive
+copying layauto_v2/derive/markings.py -> layauto-0.2.0/layauto_v2/derive
+copying layauto_v2/derive/views.py -> layauto-0.2.0/layauto_v2/derive
+copying layauto_v2/domain/__init__.py -> layauto-0.2.0/layauto_v2/domain
+copying layauto_v2/domain/acquisition.py -> layauto-0.2.0/layauto_v2/domain
+copying layauto_v2/domain/circuit.py -> layauto-0.2.0/layauto_v2/domain
+copying layauto_v2/domain/codec.py -> layauto-0.2.0/layauto_v2/domain
+copying layauto_v2/domain/evidence.py -> layauto-0.2.0/layauto_v2/domain
+copying layauto_v2/domain/geometry.py -> layauto-0.2.0/layauto_v2/domain
+copying layauto_v2/domain/identifiers.py -> layauto-0.2.0/layauto_v2/domain
+copying layauto_v2/domain/intent.py -> layauto-0.2.0/layauto_v2/domain
+copying layauto_v2/domain/local_connectivity.py -> layauto-0.2.0/layauto_v2/domain
+copying layauto_v2/domain/policy.py -> layauto-0.2.0/layauto_v2/domain
+copying layauto_v2/domain/publication.py -> layauto-0.2.0/layauto_v2/domain
+copying layauto_v2/domain/publication_codec.py -> layauto-0.2.0/layauto_v2/domain
+copying layauto_v2/domain/regions.py -> layauto-0.2.0/layauto_v2/domain
+copying layauto_v2/domain/results.py -> layauto-0.2.0/layauto_v2/domain
+copying layauto_v2/domain/source_location.py -> layauto-0.2.0/layauto_v2/domain
+copying layauto_v2/export/__init__.py -> layauto-0.2.0/layauto_v2/export
+copying layauto_v2/export/cdl.py -> layauto-0.2.0/layauto_v2/export
+copying layauto_v2/export/gds.py -> layauto-0.2.0/layauto_v2/export
+copying layauto_v2/export/json.py -> layauto-0.2.0/layauto_v2/export
+copying layauto_v2/export/reports.py -> layauto-0.2.0/layauto_v2/export
+copying layauto_v2/export/skill.py -> layauto-0.2.0/layauto_v2/export
+copying layauto_v2/export/visualization.py -> layauto-0.2.0/layauto_v2/export
+copying layauto_v2/importers/__init__.py -> layauto-0.2.0/layauto_v2/importers
+copying layauto_v2/importers/_access.py -> layauto-0.2.0/layauto_v2/importers
+copying layauto_v2/importers/_query_raw.py -> layauto-0.2.0/layauto_v2/importers
+copying layauto_v2/importers/calibre.py -> layauto-0.2.0/layauto_v2/importers
+copying layauto_v2/importers/cdl.py -> layauto-0.2.0/layauto_v2/importers
+copying layauto_v2/importers/config.py -> layauto-0.2.0/layauto_v2/importers
+copying layauto_v2/importers/gds.py -> layauto-0.2.0/layauto_v2/importers
+copying layauto_v2/importers/reader.py -> layauto-0.2.0/layauto_v2/importers
+copying layauto_v2/normalization/__init__.py -> layauto-0.2.0/layauto_v2/normalization
+copying layauto_v2/normalization/_validation.py -> layauto-0.2.0/layauto_v2/normalization
+copying layauto_v2/normalization/codec.py -> layauto-0.2.0/layauto_v2/normalization
+copying layauto_v2/normalization/component.py -> layauto-0.2.0/layauto_v2/normalization
+copying layauto_v2/normalization/contracts.py -> layauto-0.2.0/layauto_v2/normalization
+copying layauto_v2/normalization/effective.py -> layauto-0.2.0/layauto_v2/normalization
+copying layauto_v2/normalization/effective_codec.py -> layauto-0.2.0/layauto_v2/normalization
+copying layauto_v2/normalization/geometry.py -> layauto-0.2.0/layauto_v2/normalization
+copying layauto_v2/normalization/geometry_codec.py -> layauto-0.2.0/layauto_v2/normalization
+copying layauto_v2/normalization/geometry_input.py -> layauto-0.2.0/layauto_v2/normalization
+copying layauto_v2/normalization/identity.py -> layauto-0.2.0/layauto_v2/normalization
+copying layauto_v2/normalization/input.py -> layauto-0.2.0/layauto_v2/normalization
+copying layauto_v2/normalization/local_connectivity.py -> layauto-0.2.0/layauto_v2/normalization
+copying layauto_v2/normalization/local_connectivity_codec.py -> layauto-0.2.0/layauto_v2/normalization
+copying layauto_v2/normalization/semantic.py -> layauto-0.2.0/layauto_v2/normalization
+copying layauto_v2/planning/__init__.py -> layauto-0.2.0/layauto_v2/planning
+copying layauto_v2/planning/candidate.py -> layauto-0.2.0/layauto_v2/planning
+copying layauto_v2/planning/repair.py -> layauto-0.2.0/layauto_v2/planning
+copying layauto_v2/planning/resize.py -> layauto-0.2.0/layauto_v2/planning
+copying layauto_v2/planning/routing.py -> layauto-0.2.0/layauto_v2/planning
+copying layauto_v2/planning/unsupported.py -> layauto-0.2.0/layauto_v2/planning
+copying layauto_v2/repository/__init__.py -> layauto-0.2.0/layauto_v2/repository
+copying layauto_v2/repository/publication.py -> layauto-0.2.0/layauto_v2/repository
+copying layauto_v2/state/__init__.py -> layauto-0.2.0/layauto_v2/state
+copying layauto_v2/state/connectivity.py -> layauto-0.2.0/layauto_v2/state
+copying layauto_v2/state/coordinate.py -> layauto-0.2.0/layauto_v2/state
+copying layauto_v2/state/layout_store.py -> layauto-0.2.0/layauto_v2/state
+copying layauto_v2/state/local_connectivity.py -> layauto-0.2.0/layauto_v2/state
+copying layauto_v2/state/mutation.py -> layauto-0.2.0/layauto_v2/state
+copying layauto_v2/state/occupancy.py -> layauto-0.2.0/layauto_v2/state
+copying layauto_v2/state/regions.py -> layauto-0.2.0/layauto_v2/state
+copying layauto_v2/state/snapshot.py -> layauto-0.2.0/layauto_v2/state
+copying layauto_v2/tech/__init__.py -> layauto-0.2.0/layauto_v2/tech
+copying layauto_v2/tech/schema.py -> layauto-0.2.0/layauto_v2/tech
+copying layauto_v2/tooling/__init__.py -> layauto-0.2.0/layauto_v2/tooling
+copying layauto_v2/tooling/fixture.py -> layauto-0.2.0/layauto_v2/tooling
+copying layauto_v2/transactions/__init__.py -> layauto-0.2.0/layauto_v2/transactions
+copying layauto_v2/transactions/change_set.py -> layauto-0.2.0/layauto_v2/transactions
+copying layauto_v2/transactions/commit_log.py -> layauto-0.2.0/layauto_v2/transactions
+copying layauto_v2/transactions/provenance.py -> layauto-0.2.0/layauto_v2/transactions
+copying layauto_v2/transactions/transaction.py -> layauto-0.2.0/layauto_v2/transactions
+copying layauto_v2/validation/__init__.py -> layauto-0.2.0/layauto_v2/validation
+copying layauto_v2/validation/golden.py -> layauto-0.2.0/layauto_v2/validation
+copying layauto_v2/validation/policy.py -> layauto-0.2.0/layauto_v2/validation
+copying layauto_v2/validation/result.py -> layauto-0.2.0/layauto_v2/validation
+copying layauto_v2/validation/self_consistency.py -> layauto-0.2.0/layauto_v2/validation
+copying layauto_v2/validation/signoff.py -> layauto-0.2.0/layauto_v2/validation
+Writing layauto-0.2.0/setup.cfg
+Creating tar archive
+removing 'layauto-0.2.0' (and everything under it)
+running egg_info
+writing layauto.egg-info/PKG-INFO
+writing dependency_links to layauto.egg-info/dependency_links.txt
+writing requirements to layauto.egg-info/requires.txt
+writing top-level names to layauto.egg-info/top_level.txt
+reading manifest file 'layauto.egg-info/SOURCES.txt'
+writing manifest file 'layauto.egg-info/SOURCES.txt'
+running bdist_wheel
+running build
+running build_py
+creating build/lib/layauto_v2
+copying layauto_v2/pipeline.py -> build/lib/layauto_v2
+copying layauto_v2/__init__.py -> build/lib/layauto_v2
+creating build/lib/layauto_v2/validation
+copying layauto_v2/validation/signoff.py -> build/lib/layauto_v2/validation
+copying layauto_v2/validation/self_consistency.py -> build/lib/layauto_v2/validation
+copying layauto_v2/validation/result.py -> build/lib/layauto_v2/validation
+copying layauto_v2/validation/policy.py -> build/lib/layauto_v2/validation
+copying layauto_v2/validation/golden.py -> build/lib/layauto_v2/validation
+copying layauto_v2/validation/__init__.py -> build/lib/layauto_v2/validation
+creating build/lib/layauto_v2/transactions
+copying layauto_v2/transactions/transaction.py -> build/lib/layauto_v2/transactions
+copying layauto_v2/transactions/provenance.py -> build/lib/layauto_v2/transactions
+copying layauto_v2/transactions/commit_log.py -> build/lib/layauto_v2/transactions
+copying layauto_v2/transactions/change_set.py -> build/lib/layauto_v2/transactions
+copying layauto_v2/transactions/__init__.py -> build/lib/layauto_v2/transactions
+creating build/lib/layauto_v2/tooling
+copying layauto_v2/tooling/fixture.py -> build/lib/layauto_v2/tooling
+copying layauto_v2/tooling/__init__.py -> build/lib/layauto_v2/tooling
+creating build/lib/layauto_v2/tech
+copying layauto_v2/tech/schema.py -> build/lib/layauto_v2/tech
+copying layauto_v2/tech/__init__.py -> build/lib/layauto_v2/tech
+creating build/lib/layauto_v2/state
+copying layauto_v2/state/snapshot.py -> build/lib/layauto_v2/state
+copying layauto_v2/state/regions.py -> build/lib/layauto_v2/state
+copying layauto_v2/state/occupancy.py -> build/lib/layauto_v2/state
+copying layauto_v2/state/mutation.py -> build/lib/layauto_v2/state
+copying layauto_v2/state/local_connectivity.py -> build/lib/layauto_v2/state
+copying layauto_v2/state/layout_store.py -> build/lib/layauto_v2/state
+copying layauto_v2/state/coordinate.py -> build/lib/layauto_v2/state
+copying layauto_v2/state/connectivity.py -> build/lib/layauto_v2/state
+copying layauto_v2/state/__init__.py -> build/lib/layauto_v2/state
+creating build/lib/layauto_v2/repository
+copying layauto_v2/repository/publication.py -> build/lib/layauto_v2/repository
+copying layauto_v2/repository/__init__.py -> build/lib/layauto_v2/repository
+creating build/lib/layauto_v2/planning
+copying layauto_v2/planning/unsupported.py -> build/lib/layauto_v2/planning
+copying layauto_v2/planning/routing.py -> build/lib/layauto_v2/planning
+copying layauto_v2/planning/resize.py -> build/lib/layauto_v2/planning
+copying layauto_v2/planning/repair.py -> build/lib/layauto_v2/planning
+copying layauto_v2/planning/candidate.py -> build/lib/layauto_v2/planning
+copying layauto_v2/planning/__init__.py -> build/lib/layauto_v2/planning
+creating build/lib/layauto_v2/normalization
+copying layauto_v2/normalization/semantic.py -> build/lib/layauto_v2/normalization
+copying layauto_v2/normalization/local_connectivity_codec.py -> build/lib/layauto_v2/normalization
+copying layauto_v2/normalization/local_connectivity.py -> build/lib/layauto_v2/normalization
+copying layauto_v2/normalization/input.py -> build/lib/layauto_v2/normalization
+copying layauto_v2/normalization/identity.py -> build/lib/layauto_v2/normalization
+copying layauto_v2/normalization/geometry_input.py -> build/lib/layauto_v2/normalization
+copying layauto_v2/normalization/geometry_codec.py -> build/lib/layauto_v2/normalization
+copying layauto_v2/normalization/geometry.py -> build/lib/layauto_v2/normalization
+copying layauto_v2/normalization/effective_codec.py -> build/lib/layauto_v2/normalization
+copying layauto_v2/normalization/effective.py -> build/lib/layauto_v2/normalization
+copying layauto_v2/normalization/contracts.py -> build/lib/layauto_v2/normalization
+copying layauto_v2/normalization/component.py -> build/lib/layauto_v2/normalization
+copying layauto_v2/normalization/codec.py -> build/lib/layauto_v2/normalization
+copying layauto_v2/normalization/_validation.py -> build/lib/layauto_v2/normalization
+copying layauto_v2/normalization/__init__.py -> build/lib/layauto_v2/normalization
+creating build/lib/layauto_v2/importers
+copying layauto_v2/importers/reader.py -> build/lib/layauto_v2/importers
+copying layauto_v2/importers/gds.py -> build/lib/layauto_v2/importers
+copying layauto_v2/importers/config.py -> build/lib/layauto_v2/importers
+copying layauto_v2/importers/cdl.py -> build/lib/layauto_v2/importers
+copying layauto_v2/importers/calibre.py -> build/lib/layauto_v2/importers
+copying layauto_v2/importers/_query_raw.py -> build/lib/layauto_v2/importers
+copying layauto_v2/importers/_access.py -> build/lib/layauto_v2/importers
+copying layauto_v2/importers/__init__.py -> build/lib/layauto_v2/importers
+creating build/lib/layauto_v2/export
+copying layauto_v2/export/visualization.py -> build/lib/layauto_v2/export
+copying layauto_v2/export/skill.py -> build/lib/layauto_v2/export
+copying layauto_v2/export/reports.py -> build/lib/layauto_v2/export
+copying layauto_v2/export/json.py -> build/lib/layauto_v2/export
+copying layauto_v2/export/gds.py -> build/lib/layauto_v2/export
+copying layauto_v2/export/cdl.py -> build/lib/layauto_v2/export
+copying layauto_v2/export/__init__.py -> build/lib/layauto_v2/export
+creating build/lib/layauto_v2/domain
+copying layauto_v2/domain/source_location.py -> build/lib/layauto_v2/domain
+copying layauto_v2/domain/results.py -> build/lib/layauto_v2/domain
+copying layauto_v2/domain/regions.py -> build/lib/layauto_v2/domain
+copying layauto_v2/domain/publication_codec.py -> build/lib/layauto_v2/domain
+copying layauto_v2/domain/publication.py -> build/lib/layauto_v2/domain
+copying layauto_v2/domain/policy.py -> build/lib/layauto_v2/domain
+copying layauto_v2/domain/local_connectivity.py -> build/lib/layauto_v2/domain
+copying layauto_v2/domain/intent.py -> build/lib/layauto_v2/domain
+copying layauto_v2/domain/identifiers.py -> build/lib/layauto_v2/domain
+copying layauto_v2/domain/geometry.py -> build/lib/layauto_v2/domain
+copying layauto_v2/domain/evidence.py -> build/lib/layauto_v2/domain
+copying layauto_v2/domain/codec.py -> build/lib/layauto_v2/domain
+copying layauto_v2/domain/circuit.py -> build/lib/layauto_v2/domain
+copying layauto_v2/domain/acquisition.py -> build/lib/layauto_v2/domain
+copying layauto_v2/domain/__init__.py -> build/lib/layauto_v2/domain
+creating build/lib/layauto_v2/derive
+copying layauto_v2/derive/views.py -> build/lib/layauto_v2/derive
+copying layauto_v2/derive/markings.py -> build/lib/layauto_v2/derive
+copying layauto_v2/derive/invalidation.py -> build/lib/layauto_v2/derive
+copying layauto_v2/derive/__init__.py -> build/lib/layauto_v2/derive
+creating build/lib/layauto_v2/constraints
+copying layauto_v2/constraints/rules.py -> build/lib/layauto_v2/constraints
+copying layauto_v2/constraints/result.py -> build/lib/layauto_v2/constraints
+copying layauto_v2/constraints/engine.py -> build/lib/layauto_v2/constraints
+copying layauto_v2/constraints/drc_context.py -> build/lib/layauto_v2/constraints
+copying layauto_v2/constraints/__init__.py -> build/lib/layauto_v2/constraints
+creating build/lib/layauto_v2/annotation
+copying layauto_v2/annotation/layer_overlay.py -> build/lib/layauto_v2/annotation
+copying layauto_v2/annotation/layer_map.py -> build/lib/layauto_v2/annotation
+copying layauto_v2/annotation/coverage.py -> build/lib/layauto_v2/annotation
+copying layauto_v2/annotation/calibre_bundle.py -> build/lib/layauto_v2/annotation
+copying layauto_v2/annotation/__init__.py -> build/lib/layauto_v2/annotation
+running egg_info
+writing layauto.egg-info/PKG-INFO
+writing dependency_links to layauto.egg-info/dependency_links.txt
+writing requirements to layauto.egg-info/requires.txt
+writing top-level names to layauto.egg-info/top_level.txt
+reading manifest file 'layauto.egg-info/SOURCES.txt'
+writing manifest file 'layauto.egg-info/SOURCES.txt'
+copying layauto_v2/py.typed -> build/lib/layauto_v2
+installing to build/bdist.linux-x86_64/wheel
+running install
+running install_lib
+creating build/bdist.linux-x86_64/wheel
+creating build/bdist.linux-x86_64/wheel/layauto_v2
+copying build/lib/layauto_v2/py.typed -> build/bdist.linux-x86_64/wheel/./layauto_v2
+creating build/bdist.linux-x86_64/wheel/layauto_v2/annotation
+copying build/lib/layauto_v2/annotation/__init__.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/annotation
+copying build/lib/layauto_v2/annotation/calibre_bundle.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/annotation
+copying build/lib/layauto_v2/annotation/coverage.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/annotation
+copying build/lib/layauto_v2/annotation/layer_map.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/annotation
+copying build/lib/layauto_v2/annotation/layer_overlay.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/annotation
+creating build/bdist.linux-x86_64/wheel/layauto_v2/constraints
+copying build/lib/layauto_v2/constraints/__init__.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/constraints
+copying build/lib/layauto_v2/constraints/drc_context.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/constraints
+copying build/lib/layauto_v2/constraints/engine.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/constraints
+copying build/lib/layauto_v2/constraints/result.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/constraints
+copying build/lib/layauto_v2/constraints/rules.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/constraints
+creating build/bdist.linux-x86_64/wheel/layauto_v2/derive
+copying build/lib/layauto_v2/derive/__init__.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/derive
+copying build/lib/layauto_v2/derive/invalidation.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/derive
+copying build/lib/layauto_v2/derive/markings.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/derive
+copying build/lib/layauto_v2/derive/views.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/derive
+creating build/bdist.linux-x86_64/wheel/layauto_v2/domain
+copying build/lib/layauto_v2/domain/__init__.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/domain
+copying build/lib/layauto_v2/domain/acquisition.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/domain
+copying build/lib/layauto_v2/domain/circuit.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/domain
+copying build/lib/layauto_v2/domain/codec.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/domain
+copying build/lib/layauto_v2/domain/evidence.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/domain
+copying build/lib/layauto_v2/domain/geometry.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/domain
+copying build/lib/layauto_v2/domain/identifiers.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/domain
+copying build/lib/layauto_v2/domain/intent.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/domain
+copying build/lib/layauto_v2/domain/local_connectivity.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/domain
+copying build/lib/layauto_v2/domain/policy.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/domain
+copying build/lib/layauto_v2/domain/publication.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/domain
+copying build/lib/layauto_v2/domain/publication_codec.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/domain
+copying build/lib/layauto_v2/domain/regions.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/domain
+copying build/lib/layauto_v2/domain/results.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/domain
+copying build/lib/layauto_v2/domain/source_location.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/domain
+creating build/bdist.linux-x86_64/wheel/layauto_v2/export
+copying build/lib/layauto_v2/export/__init__.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/export
+copying build/lib/layauto_v2/export/cdl.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/export
+copying build/lib/layauto_v2/export/gds.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/export
+copying build/lib/layauto_v2/export/json.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/export
+copying build/lib/layauto_v2/export/reports.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/export
+copying build/lib/layauto_v2/export/skill.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/export
+copying build/lib/layauto_v2/export/visualization.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/export
+creating build/bdist.linux-x86_64/wheel/layauto_v2/importers
+copying build/lib/layauto_v2/importers/__init__.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/importers
+copying build/lib/layauto_v2/importers/_access.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/importers
+copying build/lib/layauto_v2/importers/_query_raw.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/importers
+copying build/lib/layauto_v2/importers/calibre.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/importers
+copying build/lib/layauto_v2/importers/cdl.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/importers
+copying build/lib/layauto_v2/importers/config.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/importers
+copying build/lib/layauto_v2/importers/gds.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/importers
+copying build/lib/layauto_v2/importers/reader.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/importers
+creating build/bdist.linux-x86_64/wheel/layauto_v2/normalization
+copying build/lib/layauto_v2/normalization/__init__.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/normalization
+copying build/lib/layauto_v2/normalization/_validation.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/normalization
+copying build/lib/layauto_v2/normalization/codec.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/normalization
+copying build/lib/layauto_v2/normalization/component.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/normalization
+copying build/lib/layauto_v2/normalization/contracts.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/normalization
+copying build/lib/layauto_v2/normalization/effective.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/normalization
+copying build/lib/layauto_v2/normalization/effective_codec.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/normalization
+copying build/lib/layauto_v2/normalization/geometry.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/normalization
+copying build/lib/layauto_v2/normalization/geometry_codec.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/normalization
+copying build/lib/layauto_v2/normalization/geometry_input.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/normalization
+copying build/lib/layauto_v2/normalization/identity.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/normalization
+copying build/lib/layauto_v2/normalization/input.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/normalization
+copying build/lib/layauto_v2/normalization/local_connectivity.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/normalization
+copying build/lib/layauto_v2/normalization/local_connectivity_codec.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/normalization
+copying build/lib/layauto_v2/normalization/semantic.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/normalization
+creating build/bdist.linux-x86_64/wheel/layauto_v2/planning
+copying build/lib/layauto_v2/planning/__init__.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/planning
+copying build/lib/layauto_v2/planning/candidate.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/planning
+copying build/lib/layauto_v2/planning/repair.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/planning
+copying build/lib/layauto_v2/planning/resize.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/planning
+copying build/lib/layauto_v2/planning/routing.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/planning
+copying build/lib/layauto_v2/planning/unsupported.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/planning
+creating build/bdist.linux-x86_64/wheel/layauto_v2/repository
+copying build/lib/layauto_v2/repository/__init__.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/repository
+copying build/lib/layauto_v2/repository/publication.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/repository
+creating build/bdist.linux-x86_64/wheel/layauto_v2/state
+copying build/lib/layauto_v2/state/__init__.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/state
+copying build/lib/layauto_v2/state/connectivity.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/state
+copying build/lib/layauto_v2/state/coordinate.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/state
+copying build/lib/layauto_v2/state/layout_store.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/state
+copying build/lib/layauto_v2/state/local_connectivity.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/state
+copying build/lib/layauto_v2/state/mutation.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/state
+copying build/lib/layauto_v2/state/occupancy.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/state
+copying build/lib/layauto_v2/state/regions.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/state
+copying build/lib/layauto_v2/state/snapshot.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/state
+creating build/bdist.linux-x86_64/wheel/layauto_v2/tech
+copying build/lib/layauto_v2/tech/__init__.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/tech
+copying build/lib/layauto_v2/tech/schema.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/tech
+creating build/bdist.linux-x86_64/wheel/layauto_v2/tooling
+copying build/lib/layauto_v2/tooling/__init__.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/tooling
+copying build/lib/layauto_v2/tooling/fixture.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/tooling
+creating build/bdist.linux-x86_64/wheel/layauto_v2/transactions
+copying build/lib/layauto_v2/transactions/__init__.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/transactions
+copying build/lib/layauto_v2/transactions/change_set.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/transactions
+copying build/lib/layauto_v2/transactions/commit_log.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/transactions
+copying build/lib/layauto_v2/transactions/provenance.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/transactions
+copying build/lib/layauto_v2/transactions/transaction.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/transactions
+creating build/bdist.linux-x86_64/wheel/layauto_v2/validation
+copying build/lib/layauto_v2/validation/__init__.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/validation
+copying build/lib/layauto_v2/validation/golden.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/validation
+copying build/lib/layauto_v2/validation/policy.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/validation
+copying build/lib/layauto_v2/validation/result.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/validation
+copying build/lib/layauto_v2/validation/self_consistency.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/validation
+copying build/lib/layauto_v2/validation/signoff.py -> build/bdist.linux-x86_64/wheel/./layauto_v2/validation
+copying build/lib/layauto_v2/__init__.py -> build/bdist.linux-x86_64/wheel/./layauto_v2
+copying build/lib/layauto_v2/pipeline.py -> build/bdist.linux-x86_64/wheel/./layauto_v2
+running install_egg_info
+Copying layauto.egg-info to build/bdist.linux-x86_64/wheel/./layauto-0.2.0-py3.12.egg-info
+running install_scripts
+creating build/bdist.linux-x86_64/wheel/layauto-0.2.0.dist-info/WHEEL
+creating '/workspace/Layauto/docs/tasks/W010/verification/dist/.tmp-diq2opky/layauto-0.2.0-py3-none-any.whl' and adding 'build/bdist.linux-x86_64/wheel' to it
+adding 'layauto_v2/__init__.py'
+adding 'layauto_v2/pipeline.py'
+adding 'layauto_v2/py.typed'
+adding 'layauto_v2/annotation/__init__.py'
+adding 'layauto_v2/annotation/calibre_bundle.py'
+adding 'layauto_v2/annotation/coverage.py'
+adding 'layauto_v2/annotation/layer_map.py'
+adding 'layauto_v2/annotation/layer_overlay.py'
+adding 'layauto_v2/constraints/__init__.py'
+adding 'layauto_v2/constraints/drc_context.py'
+adding 'layauto_v2/constraints/engine.py'
+adding 'layauto_v2/constraints/result.py'
+adding 'layauto_v2/constraints/rules.py'
+adding 'layauto_v2/derive/__init__.py'
+adding 'layauto_v2/derive/invalidation.py'
+adding 'layauto_v2/derive/markings.py'
+adding 'layauto_v2/derive/views.py'
+adding 'layauto_v2/domain/__init__.py'
+adding 'layauto_v2/domain/acquisition.py'
+adding 'layauto_v2/domain/circuit.py'
+adding 'layauto_v2/domain/codec.py'
+adding 'layauto_v2/domain/evidence.py'
+adding 'layauto_v2/domain/geometry.py'
+adding 'layauto_v2/domain/identifiers.py'
+adding 'layauto_v2/domain/intent.py'
+adding 'layauto_v2/domain/local_connectivity.py'
+adding 'layauto_v2/domain/policy.py'
+adding 'layauto_v2/domain/publication.py'
+adding 'layauto_v2/domain/publication_codec.py'
+adding 'layauto_v2/domain/regions.py'
+adding 'layauto_v2/domain/results.py'
+adding 'layauto_v2/domain/source_location.py'
+adding 'layauto_v2/export/__init__.py'
+adding 'layauto_v2/export/cdl.py'
+adding 'layauto_v2/export/gds.py'
+adding 'layauto_v2/export/json.py'
+adding 'layauto_v2/export/reports.py'
+adding 'layauto_v2/export/skill.py'
+adding 'layauto_v2/export/visualization.py'
+adding 'layauto_v2/importers/__init__.py'
+adding 'layauto_v2/importers/_access.py'
+adding 'layauto_v2/importers/_query_raw.py'
+adding 'layauto_v2/importers/calibre.py'
+adding 'layauto_v2/importers/cdl.py'
+adding 'layauto_v2/importers/config.py'
+adding 'layauto_v2/importers/gds.py'
+adding 'layauto_v2/importers/reader.py'
+adding 'layauto_v2/normalization/__init__.py'
+adding 'layauto_v2/normalization/_validation.py'
+adding 'layauto_v2/normalization/codec.py'
+adding 'layauto_v2/normalization/component.py'
+adding 'layauto_v2/normalization/contracts.py'
+adding 'layauto_v2/normalization/effective.py'
+adding 'layauto_v2/normalization/effective_codec.py'
+adding 'layauto_v2/normalization/geometry.py'
+adding 'layauto_v2/normalization/geometry_codec.py'
+adding 'layauto_v2/normalization/geometry_input.py'
+adding 'layauto_v2/normalization/identity.py'
+adding 'layauto_v2/normalization/input.py'
+adding 'layauto_v2/normalization/local_connectivity.py'
+adding 'layauto_v2/normalization/local_connectivity_codec.py'
+adding 'layauto_v2/normalization/semantic.py'
+adding 'layauto_v2/planning/__init__.py'
+adding 'layauto_v2/planning/candidate.py'
+adding 'layauto_v2/planning/repair.py'
+adding 'layauto_v2/planning/resize.py'
+adding 'layauto_v2/planning/routing.py'
+adding 'layauto_v2/planning/unsupported.py'
+adding 'layauto_v2/repository/__init__.py'
+adding 'layauto_v2/repository/publication.py'
+adding 'layauto_v2/state/__init__.py'
+adding 'layauto_v2/state/connectivity.py'
+adding 'layauto_v2/state/coordinate.py'
+adding 'layauto_v2/state/layout_store.py'
+adding 'layauto_v2/state/local_connectivity.py'
+adding 'layauto_v2/state/mutation.py'
+adding 'layauto_v2/state/occupancy.py'
+adding 'layauto_v2/state/regions.py'
+adding 'layauto_v2/state/snapshot.py'
+adding 'layauto_v2/tech/__init__.py'
+adding 'layauto_v2/tech/schema.py'
+adding 'layauto_v2/tooling/__init__.py'
+adding 'layauto_v2/tooling/fixture.py'
+adding 'layauto_v2/transactions/__init__.py'
+adding 'layauto_v2/transactions/change_set.py'
+adding 'layauto_v2/transactions/commit_log.py'
+adding 'layauto_v2/transactions/provenance.py'
+adding 'layauto_v2/transactions/transaction.py'
+adding 'layauto_v2/validation/__init__.py'
+adding 'layauto_v2/validation/golden.py'
+adding 'layauto_v2/validation/policy.py'
+adding 'layauto_v2/validation/result.py'
+adding 'layauto_v2/validation/self_consistency.py'
+adding 'layauto_v2/validation/signoff.py'
+adding 'layauto-0.2.0.dist-info/METADATA'
+adding 'layauto-0.2.0.dist-info/WHEEL'
+adding 'layauto-0.2.0.dist-info/top_level.txt'
+adding 'layauto-0.2.0.dist-info/RECORD'
+removing build/bdist.linux-x86_64/wheel
+Successfully built layauto-0.2.0.tar.gz and layauto-0.2.0-py3-none-any.whl

@@ -1,0 +1,184 @@
+{
+  "schema": "layauto-w010-pm-receipt/1",
+  "date": "2026-11-06",
+  "reviewed_head": "ca39aedcb71fda02f77ffda1eb5d5dddc598226e",
+  "product": "0f5029df935bc0acd106aad1bc2be81304d4f442",
+  "preparation_base": "9758a157115cc22d91ce095ac2002209b9f210d3",
+  "main_observed": "3be0b98359038bab6c23980b55a48987cc71a369",
+  "status": "branch_technical_receipt_passed_pending_premerge_review_and_final_acceptance",
+  "new_must_fix": 0,
+  "source_manifest_sha256": "cef29336dba1bf572fd30227f354365d4a4d780e721d089b70095589d0f55889",
+  "actual_checks": {
+    "targeted": {
+      "head": "ca39aedcb71fda02f77ffda1eb5d5dddc598226e",
+      "cwd": "/workspace/Layauto",
+      "command": [
+        "/workspace/work/w005-pm-check-env/bin/python",
+        "-B",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "-q",
+        "tests/contracts/test_w010_geometry.py",
+        "tests/contracts/test_w010_contracts.py",
+        "tests/contracts/test_w010_exceptions.py",
+        "-k",
+        "same_layer_exact_hand or exact_set_enclosure_hand or cut_islands_preserve or existing_via_enclosure_failure or connector_counts_independent or duplicate_connectors_keep or actual_multi_piece_li_enclosure or rules_payload_and_actual_source_role or public_collections_take_one_snapshot or public_draft_rejects_incomplete or expected_policy_failure_does_not_become_context"
+      ],
+      "env_overrides": {
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PYTHONPATH": "/workspace/Layauto"
+      },
+      "started_utc": "2026-11-06T02:58:05.527044+00:00",
+      "elapsed_seconds": 234.483,
+      "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+      "executable": "/workspace/work/w005-pm-check-env/bin/python",
+      "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+      "packages": {
+        "pytest": "9.2.0",
+        "mypy": "2.4.1",
+        "PyYAML": "6.0.3"
+      },
+      "environment_scope": "existing PM venv; not a clean install validation",
+      "returncode": 0,
+      "outputs": {
+        "stdout": {
+          "path": "targeted.stdout.txt",
+          "sha256": "c9a3409011e2b2903f465bc33e33e846f14932bcbb647a7833fd545e9618460c"
+        },
+        "stderr": {
+          "path": "targeted.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    "main-probe": {
+      "head": "ca39aedcb71fda02f77ffda1eb5d5dddc598226e",
+      "cwd": "/workspace/Layauto",
+      "command": [
+        "/workspace/work/w005-pm-check-env/bin/python",
+        "-B",
+        "docs/tasks/W010/review/main-probe.py"
+      ],
+      "env_overrides": {
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PYTHONPATH": "/workspace/Layauto"
+      },
+      "started_utc": "2026-11-06T02:58:05.550577+00:00",
+      "elapsed_seconds": 58.346,
+      "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+      "executable": "/workspace/work/w005-pm-check-env/bin/python",
+      "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+      "packages": {
+        "pytest": "9.2.0",
+        "mypy": "2.4.1",
+        "PyYAML": "6.0.3"
+      },
+      "environment_scope": "existing PM venv; not a clean install validation",
+      "returncode": 0,
+      "outputs": {
+        "stdout": {
+          "path": "main-probe.stdout.txt",
+          "sha256": "ac897c4467c7e708fc86156139d46fc2c9bfe59e6b228b4833959b23bdc0e3ed"
+        },
+        "stderr": {
+          "path": "main-probe.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    "typing": {
+      "head": "ca39aedcb71fda02f77ffda1eb5d5dddc598226e",
+      "cwd": "/workspace/Layauto",
+      "command": [
+        "/workspace/work/w005-pm-check-env/bin/python",
+        "-B",
+        "-m",
+        "mypy",
+        "--cache-dir",
+        "/workspace/work/w010-pm/mypy-cache"
+      ],
+      "env_overrides": {
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PYTHONPATH": "/workspace/Layauto"
+      },
+      "started_utc": "2026-11-06T02:58:05.513519+00:00",
+      "elapsed_seconds": 2.045,
+      "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+      "executable": "/workspace/work/w005-pm-check-env/bin/python",
+      "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+      "packages": {
+        "pytest": "9.2.0",
+        "mypy": "2.4.1",
+        "PyYAML": "6.0.3"
+      },
+      "environment_scope": "existing PM venv; not a clean install validation",
+      "returncode": 0,
+      "outputs": {
+        "stdout": {
+          "path": "typing.stdout.txt",
+          "sha256": "a459b8765e4db93f08156e7d98399988a9b87243303f92178f28c9db897f6066"
+        },
+        "stderr": {
+          "path": "typing.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    }
+  },
+  "actual_targeted_summary": "50 passed, 266 deselected, 1 warning in 233.81s",
+  "actual_typing": "48 source files passed",
+  "actual_main_probe_summary": {
+    "direct": {
+      "nodes": 14,
+      "edges": 8,
+      "components": 6,
+      "audits": 16,
+      "semantic_digest": "f0cc218b18ac29af6dab0fdb2c109fa676228e5110044a8b4a48d31cdac7d8e7"
+    },
+    "readback": {
+      "nodes": 14,
+      "edges": 8,
+      "components": 6,
+      "audits": 16,
+      "semantic_digest": "f0cc218b18ac29af6dab0fdb2c109fa676228e5110044a8b4a48d31cdac7d8e7"
+    },
+    "assertions": {
+      "foreign_rules_source_rejected_by_captured_result": true,
+      "missing_edge_rejected": true,
+      "false_audit_rejected": true,
+      "missing_completed_rejected": true,
+      "fixture_unchanged": true
+    }
+  },
+  "actual_pm_geometry_summary": {
+    "contact_comparisons": 12288,
+    "enclosure_comparisons": 5120,
+    "decomposition_comparisons": 8704,
+    "coverage_masks": 512
+  },
+  "adopted_original_validation": "Original final3.10/3.12 full1465 each,typing48 each,new wheel/sdist and two clean outside-source installs/smoke,220-case boundary matrix and full independent review after source/archive/package/record identity checks; no repeat full matrix, original install/test trees absent on PM host.",
+  "original_delivery_manifest_version": "ca39aedcb71fda02f77ffda1eb5d5dddc598226e",
+  "next": "Dedicated independent premerge session; then main integration and combination verification before final acceptance. Next product task not started.",
+  "pm_evidence_sha256": {
+    "evidence/audit-result.json": "861f4bb21900de09691a8d898bd37988adab0ca1c8c1ae75b4d45e2fe4836c80",
+    "evidence/audit.py": "9e8dab6155d7127c148ccbe8b7b458ef8bef6bdf01b8c502f3cd065e002c5669",
+    "evidence/audit.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/report.md": "21c26cf789963b54d035f7e3ac04960a4abdb5b8338f17c75fb48a8f76a3db8c",
+    "geometry/exhaustive_probe.py": "1d97e2653b8d6b71affe0e4f84de9ccfc372fe4ca9d4b36c2386b72d57728008",
+    "geometry/probe.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "geometry/probe.stdout.json": "d7e0c0477611be332d3a34b61db3305b21151a03698e0aa01da4590e6d26b491",
+    "geometry/report.md": "628bcd0234dddbaf5ca5d9e1d91058709e46ed7159458a69bec1780e3ea7c2a7",
+    "main-probe.json": "165f922ac29bd1e31be3a0fb05a0535c92410cb2cef2ed3fc216d77e9c25ad17",
+    "main-probe.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "main-probe.stdout.txt": "ac897c4467c7e708fc86156139d46fc2c9bfe59e6b228b4833959b23bdc0e3ed",
+    "run_check.py": "eedb12dad37bde67c0200bf7c20c1f7755d0c57fca829fbc95bdeb3c001ac1ec",
+    "targeted.json": "0662fcd32c8cd095b962bdd1794979fd8adf80dec45fe28ee040f196830b5a74",
+    "targeted.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "targeted.stdout.txt": "c9a3409011e2b2903f465bc33e33e846f14932bcbb647a7833fd545e9618460c",
+    "typing.json": "47554875bc7a9b5d5d6e14177e0efc7ab1d8d0707b5f6dcfd7d2f8e4a36e8d67",
+    "typing.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "typing.stdout.txt": "a459b8765e4db93f08156e7d98399988a9b87243303f92178f28c9db897f6066"
+  }
+}

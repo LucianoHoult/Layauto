@@ -1,0 +1,14 @@
+{
+  "command": [
+    "/workspace/.venvs/layauto/bin/python",
+    "-B",
+    "docs/tasks/W010/independent-premerge-review/exception-snapshot.py"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 0.983609676361084,
+  "cwd": "/workspace/Layauto-w010",
+  "head": "c4909ab679d0c0806200fcb132db8a5de1ad3e75",
+  "script_sha256": "3c17af79d828a1ed9a7f3e9735922ca2232af2eb7525983551020710a1083b26",
+  "exception-snapshot.stdout.json": "4d1bac24b12d5ac8d766bfad7f63d95d80c7c84df527c21875c27e1de0df403d",
+  "exception-snapshot.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

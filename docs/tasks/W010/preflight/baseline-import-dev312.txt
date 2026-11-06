@@ -1,0 +1,2 @@
+3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]
+/workspace/Layauto/work/w010-preflight/snapshot/layauto_v2/__init__.py

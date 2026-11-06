@@ -1,0 +1,111 @@
+{
+  "schema": "layauto-w010-final-independent-review-identity/1",
+  "reviewer": "/root/code_review",
+  "base": "9758a157115cc22d91ce095ac2002209b9f210d3",
+  "product_head": "0f5029df935bc0acd106aad1bc2be81304d4f442",
+  "status": "passed",
+  "must_fix_findings": 0,
+  "source_manifest_sha256": "cef29336dba1bf572fd30227f354365d4a4d780e721d089b70095589d0f55889",
+  "source_files_match_current_and_frozen_git": 252,
+  "code_review_sha256": "0a94d2e8dfc01a274f85dff34ad06bb466c243a7b63f72bd7ea0831cf97c6b7f",
+  "task_review_section_sha256": "d4a4a2c7ca0480e1701c171ef62d2092de5a1aefa868c52f01cb31651631ad84",
+  "artifacts": {
+    "docs/tasks/W010/review/boundary-probe-result.json": {
+      "sha256": "5e1672f5d8350036ed26682231e5d8ddfd3898ad07082fa850f1e04fe51584db",
+      "size_bytes": 45768
+    },
+    "docs/tasks/W010/review/boundary-probe.py": {
+      "sha256": "711b10f1bab54c87c83cff9eb72cd2939a685c6d79cdcad1825c54abfbf4e02b",
+      "size_bytes": 9632
+    },
+    "docs/tasks/W010/review/boundary-probe.stderr.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    "docs/tasks/W010/review/boundary-probe.stdout.txt": {
+      "sha256": "f2fc6e82fa7ad947b3489a46fb78b40a0e4535617c745b1d488abfa7049fbe45",
+      "size_bytes": 530
+    },
+    "docs/tasks/W010/review/boundary-receipt.json": {
+      "sha256": "e2aa28ca744b25abb5be3b810587f0ce4640a194454471a577ddbadf422a240c",
+      "size_bytes": 2660
+    },
+    "docs/tasks/W010/review/boundary-review.md": {
+      "sha256": "3711fdde3f3c9156e00d8faa31a9a0d346cf61e133addc7db1355a63ea7a272d",
+      "size_bytes": 5715
+    },
+    "docs/tasks/W010/review/evidence-audit.json": {
+      "sha256": "91dfe7a520168d668843b67018c412aee1b909cd27fe666da9d16157a242e5c4",
+      "size_bytes": 18311
+    },
+    "docs/tasks/W010/review/evidence-audit.py": {
+      "sha256": "05f1139d587fc9ed636db5c6281cfbc6c282992347802ef1200238ccbea5e53b",
+      "size_bytes": 15203
+    },
+    "docs/tasks/W010/review/evidence-review.md": {
+      "sha256": "7f3328a695202d111075c1ccdb2af9be2f2125c9ad53141cd235c6684987dce3",
+      "size_bytes": 4588
+    },
+    "docs/tasks/W010/review/main-probe.initial-import-failure.txt": {
+      "sha256": "e7d07a9b6986b70a9977891cd164cdf8d92a4ecb0f966e581744cb8bad658df3",
+      "size_bytes": 354
+    },
+    "docs/tasks/W010/review/main-probe.py": {
+      "sha256": "759836ff25bfc8d5207d40608ac3ea581036e69b2d243d38b9177193c782b20e",
+      "size_bytes": 7895
+    },
+    "docs/tasks/W010/review/main-probe.receipt.json": {
+      "sha256": "a3cca60177dee67cd29936e08251f4096a92b16a355654a9c0f1923a0baecd97",
+      "size_bytes": 1650
+    },
+    "docs/tasks/W010/review/main-probe.stderr.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    "docs/tasks/W010/review/main-probe.stdout.json": {
+      "sha256": "6b0aa51f3d05b1b53e2d07ff3147ccd1061f368f5c258bbc46ffe2d0d45ebf45",
+      "size_bytes": 784
+    },
+    "docs/tasks/W010/review/math-probe.py": {
+      "sha256": "8f9f45ccdd68b6653222d4526aa1adcc6b2b86fb4f0f5b933c33b02a5265eb74",
+      "size_bytes": 13378
+    },
+    "docs/tasks/W010/review/math-receipt.json": {
+      "sha256": "a5e111383dce8d0d1f8c9549dba92f7dcca641714dfe68c3e9d3e1c33eff0fdc",
+      "size_bytes": 997
+    },
+    "docs/tasks/W010/review/math-result.json": {
+      "sha256": "a749292385f769a4599046cdd84eaa33b326f960c6ab19ca38443cbea74d1100",
+      "size_bytes": 3631
+    },
+    "docs/tasks/W010/review/math-review.md": {
+      "sha256": "f0dd24861a0d8ce1f869ee547274867716ea44cb0cec196fa4003f6771150fac",
+      "size_bytes": 4964
+    },
+    "docs/tasks/W010/review/math-stderr.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    "docs/tasks/W010/review/math-stdout.txt": {
+      "sha256": "a749292385f769a4599046cdd84eaa33b326f960c6ab19ca38443cbea74d1100",
+      "size_bytes": 3631
+    },
+    "docs/tasks/W010/code-review.md": {
+      "sha256": "0a94d2e8dfc01a274f85dff34ad06bb466c243a7b63f72bd7ea0831cf97c6b7f",
+      "size_bytes": 9643
+    }
+  },
+  "scope": "Report and independent review artifacts only; task Review section hash excludes later execution/PM appendices. Manifest does not include its own bytes.",
+  "task_review_section_extraction": {
+    "start_delimiter": "## Review结论（reviewer）\n",
+    "end_delimiter": "\n## PM验收与交接（PM）",
+    "method": "read_text().split(start_delimiter, 1)[1].split(end_delimiter, 1)[0].encode(\"utf-8\")",
+    "delimiters_included": false,
+    "strip_or_newline_trimming": false,
+    "encoding": "utf-8",
+    "character_count": 1413,
+    "byte_count": 2551,
+    "leading_newline_count": 1,
+    "trailing_newline_count": 1
+  }
+}

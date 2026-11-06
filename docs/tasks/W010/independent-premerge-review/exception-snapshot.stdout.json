@@ -1,0 +1,75 @@
+{
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "executable": "/workspace/.venvs/layauto/bin/python",
+  "cases": [
+    {
+      "passed": true,
+      "saved_type": "tuple",
+      "record": "EvidenceRecord",
+      "field": "sources",
+      "valid_first": true,
+      "iterations": 1
+    },
+    {
+      "passed": true,
+      "exception": "ValueError",
+      "diagnostic": "evidence requires read source references",
+      "record": "EvidenceRecord",
+      "field": "sources",
+      "valid_first": false,
+      "iterations": 1
+    },
+    {
+      "passed": true,
+      "saved_type": "tuple",
+      "record": "ParseResult",
+      "field": "sources",
+      "valid_first": true,
+      "iterations": 1
+    },
+    {
+      "passed": true,
+      "exception": "ValueError",
+      "diagnostic": "invalid parse record fields",
+      "record": "ParseResult",
+      "field": "sources",
+      "valid_first": false,
+      "iterations": 1
+    },
+    {
+      "passed": true,
+      "saved_type": "tuple",
+      "record": "ParseResult",
+      "field": "completed",
+      "valid_first": true,
+      "iterations": 1
+    },
+    {
+      "passed": true,
+      "exception": "ValueError",
+      "diagnostic": "invalid parse record fields",
+      "record": "ParseResult",
+      "field": "completed",
+      "valid_first": false,
+      "iterations": 1
+    },
+    {
+      "passed": true,
+      "saved_type": "tuple",
+      "record": "ParseResult",
+      "field": "issues",
+      "valid_first": true,
+      "iterations": 1
+    },
+    {
+      "passed": true,
+      "exception": "ValueError",
+      "diagnostic": "invalid parse record fields",
+      "record": "ParseResult",
+      "field": "issues",
+      "valid_first": false,
+      "iterations": 1
+    }
+  ],
+  "status": "passed"
+}

@@ -1,0 +1,19 @@
+{
+  "command": [
+    "/workspace/.venvs/w010-py310/bin/python",
+    "-m",
+    "pytest",
+    "-p",
+    "no:cacheprovider",
+    "tests/contracts/test_w006_pipeline.py::test_f1_request_independently_matches_accepted_sample",
+    "-q"
+  ],
+  "cwd": "/workspace/Layauto/work/w010-preflight/snapshot",
+  "environment_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "exit_code": 0,
+  "output": "baseline-harness-retest310.txt",
+  "output_sha256": "7fefcaf66f6e7137767bc25d16d128cbf7b8617ad0b6f14fbf9a0b8e7fdd81cd",
+  "source_manifest": "baseline-corrected-manifest.json"
+}

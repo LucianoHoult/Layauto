@@ -1,0 +1,12 @@
+{
+  "status": "failed_and_interrupted",
+  "source_git_head": "fba1e7be688c5fce88834dc8b859a8660bff6b7f",
+  "reason": "Original W007 pure-dependency guard lacks the explicitly bounded W010 pure-state imports. Diagnostic targeted reproduction failed with three imported-state-module entries. Parent stopped this first matrix before full completion for a narrow test guard fix.",
+  "diagnostic": "diagnostic-312-boundary.json",
+  "raw_partial_summaries": {
+    "310": "1 failed, 616 passed in 273.06s (0:04:33)",
+    "312": "1 failed, 696 passed in 273.74s (0:04:33)"
+  },
+  "completed_package_flow": "Both new artifacts, both fresh installs, both installed direct/readback smoke commands and pip checks completed with exit code 0. Full tests/typing not completed; this is not A8 success.",
+  "interruption": "interruption.json"
+}

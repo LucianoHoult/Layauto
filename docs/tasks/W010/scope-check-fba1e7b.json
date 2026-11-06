@@ -1,0 +1,43 @@
+{
+  "checked_at": "2026-11-05T01:50:24.914630+00:00",
+  "base": "9758a157115cc22d91ce095ac2002209b9f210d3",
+  "product_head": "fba1e7be688c5fce88834dc8b859a8660bff6b7f",
+  "protected_paths": [
+    "docs/current-work.md",
+    "docs/architecture.md",
+    "docs/collaboration",
+    "docs/environment",
+    "tests/fixtures",
+    "legacy_mvp",
+    "layauto_v2/importers",
+    "layauto_v2/pipeline.py",
+    "layauto_v2/repository",
+    "layauto_v2/normalization/effective.py",
+    "layauto_v2/normalization/effective_codec.py",
+    "layauto_v2/normalization/geometry.py",
+    "layauto_v2/normalization/geometry_codec.py",
+    "layauto_v2/normalization/geometry_input.py",
+    "layauto_v2/domain/regions.py",
+    "layauto_v2/state/regions.py"
+  ],
+  "protected_differences": [],
+  "old_test_file_count": 27,
+  "old_test_changes": [],
+  "tracked_changed_paths": [
+    "README.md",
+    "docs/tasks/W010-local-contact-connectivity.md",
+    "docs/tasks/W010/plan-review.md",
+    "docs/tasks/W010/plan.md",
+    "layauto_v2/domain/local_connectivity.py",
+    "layauto_v2/normalization/__init__.py",
+    "layauto_v2/normalization/local_connectivity.py",
+    "layauto_v2/normalization/local_connectivity_codec.py",
+    "layauto_v2/state/local_connectivity.py",
+    "pyproject.toml",
+    "tests/contracts/test_w010_contracts.py",
+    "tests/contracts/test_w010_exceptions.py",
+    "tests/contracts/test_w010_geometry.py",
+    "tests/contracts/w010_cases.py"
+  ],
+  "note": "Read-only scope check; final engineering results and independent review are separate."
+}
