@@ -1,0 +1,144 @@
+{
+  "schema": "layauto-w010-integration/1",
+  "date": "2026-11-06",
+  "pr": 64,
+  "pr_url": "https://github.com/LucianoHoult/Layauto/pull/64",
+  "merge_commit": "84c54857a1b20b9fb29c9b5a73e7b8d686b6e736",
+  "base": "3be0b98359038bab6c23980b55a48987cc71a369",
+  "reviewed_head": "f99b59abc88305133661dd2a510fbcaf36a9c6c6",
+  "premerge_review_subject": "c4909ab679d0c0806200fcb132db8a5de1ad3e75",
+  "product": "0f5029df935bc0acd106aad1bc2be81304d4f442",
+  "merge_tree": "49042d5076c614457b5d2020265f98cb74b53ca2",
+  "reviewed_head_tree": "49042d5076c614457b5d2020265f98cb74b53ca2",
+  "source_manifest_sha256": "cef29336dba1bf572fd30227f354365d4a4d780e721d089b70095589d0f55889",
+  "source_files": 252,
+  "source_audit": "all 252 current files match final product manifest",
+  "actual_checks": {
+    "combined": {
+      "head": "84c54857a1b20b9fb29c9b5a73e7b8d686b6e736",
+      "cwd": "/workspace/Layauto",
+      "command": [
+        "/workspace/work/w005-pm-check-env/bin/python",
+        "-B",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "-q",
+        "tests/contracts/test_w010_geometry.py",
+        "tests/contracts/test_w010_contracts.py",
+        "tests/contracts/test_w010_exceptions.py",
+        "-k",
+        "existing_via_enclosure_failure or cut_islands_preserve or connector_counts_independent or duplicate_connectors_keep or actual_multi_piece_li_enclosure or rules_payload_and_actual_source_role or expected_policy_failure_does_not_become_context or public_collections_take_one_snapshot"
+      ],
+      "env_overrides": {
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PYTHONPATH": "/workspace/Layauto"
+      },
+      "started_utc": "2026-11-06T08:49:25.661257+00:00",
+      "elapsed_seconds": 229.831,
+      "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+      "executable": "/workspace/work/w005-pm-check-env/bin/python",
+      "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+      "packages": {
+        "pytest": "9.2.0",
+        "mypy": "2.4.1",
+        "PyYAML": "6.0.3"
+      },
+      "environment_scope": "existing PM venv; not a clean install validation",
+      "returncode": 0,
+      "outputs": {
+        "stdout": {
+          "path": "combined.stdout.txt",
+          "sha256": "115b8c8b3ed02da32deb80fb94a6d535a4e81e76f3e6e08917b4b3cc1ffaf832"
+        },
+        "stderr": {
+          "path": "combined.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    "main-probe": {
+      "head": "84c54857a1b20b9fb29c9b5a73e7b8d686b6e736",
+      "cwd": "/workspace/Layauto",
+      "command": [
+        "/workspace/work/w005-pm-check-env/bin/python",
+        "-B",
+        "docs/tasks/W010/review/main-probe.py"
+      ],
+      "env_overrides": {
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PYTHONPATH": "/workspace/Layauto"
+      },
+      "started_utc": "2026-11-06T08:49:25.666659+00:00",
+      "elapsed_seconds": 61.32,
+      "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+      "executable": "/workspace/work/w005-pm-check-env/bin/python",
+      "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+      "packages": {
+        "pytest": "9.2.0",
+        "mypy": "2.4.1",
+        "PyYAML": "6.0.3"
+      },
+      "environment_scope": "existing PM venv; not a clean install validation",
+      "returncode": 0,
+      "outputs": {
+        "stdout": {
+          "path": "main-probe.stdout.txt",
+          "sha256": "78ac941685a8dbcea4adaef18daf0b382d7622fabf6360a52c8386293ae6c624"
+        },
+        "stderr": {
+          "path": "main-probe.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    }
+  },
+  "combined_summary": "15 passed, 301 deselected, 1 warning in 229.40s",
+  "actual_main_probe_summary": {
+    "direct": {
+      "nodes": 14,
+      "edges": 8,
+      "components": 6,
+      "audits": 16,
+      "semantic_digest": "f0cc218b18ac29af6dab0fdb2c109fa676228e5110044a8b4a48d31cdac7d8e7"
+    },
+    "readback": {
+      "nodes": 14,
+      "edges": 8,
+      "components": 6,
+      "audits": 16,
+      "semantic_digest": "f0cc218b18ac29af6dab0fdb2c109fa676228e5110044a8b4a48d31cdac7d8e7"
+    },
+    "assertions": {
+      "foreign_rules_source_rejected_by_captured_result": true,
+      "missing_edge_rejected": true,
+      "false_audit_rejected": true,
+      "missing_completed_rejected": true,
+      "fixture_unchanged": true
+    }
+  },
+  "adopted_validation": "Identical merge tree/source: original dual1465/typing48/build/installs, dedicated premerge1465/typing48 and independent boundary/source/math checks, PM50/main-probe/48 and finite geometry checks remain applicable; no duplicate full matrix or build/install.",
+  "remaining_must_fix": 0,
+  "nonblocking_suggestions": {
+    "E-N01": "Addressed by resource-summary.md and resource-values.json; historical reports unchanged."
+  },
+  "github_ci": "No commit statuses or PR workflow runs returned; absence is not passing CI.",
+  "task_acceptance": "W010 accepted in declared synthetic/local scope; no complete Stage2/M1 or production admission claim",
+  "evidence_sha256": {
+    "combined.json": "f7d9875cdc6893df7c83ae92c9dd1376fb2249444b764ebf9a321e7514d80926",
+    "combined.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "combined.stdout.txt": "115b8c8b3ed02da32deb80fb94a6d535a4e81e76f3e6e08917b4b3cc1ffaf832",
+    "github-evidence.json": "a18eb4388882184965cb350c489480cb7e04b9937ca971e71607898d93a81987",
+    "main-probe.json": "9a477f75650876cd8f23f21e75ed5b57aeaf8b2df881a54e096ac6b0628e12fe",
+    "main-probe.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "main-probe.stdout.txt": "78ac941685a8dbcea4adaef18daf0b382d7622fabf6360a52c8386293ae6c624",
+    "resource-values.json": "98e9d5947fe3920a42e3f0bace3ca5233807ec53c30ad43cb80295528fe6dbd8",
+    "review-check/audit-initial.stderr.txt": "5aa7b2f3492b5bfe288f8b871514704911d3fce7a636ea9423550fc2ebccbc4f",
+    "review-check/audit-result.json": "883495426cecdcc810e088a2cec396706110ec2098b3fd30d8fe4b0581a145bb",
+    "review-check/audit.py": "687885f9b277d932892c78d7a80881b7176997e404e0d05e73da74c36ae019ba",
+    "review-check/audit.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "review-check/report.md": "5454dbedbf9bbf5af32923c4bf23d6d0f7b1f8b80923c64ae7cb9437742882d3",
+    "run_check.py": "74ce6c1096c39dce589b967c9acb17e5ac8b59488d214722475955644e81075a"
+  }
+}

@@ -1,0 +1,108 @@
+{
+  "status": "passed",
+  "must_fix": 0,
+  "checked_utc": "2026-11-06T08:48:05.960066+00:00",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "head_observed_at_completion": "f99b59abc88305133661dd2a510fbcaf36a9c6c6",
+  "pinned_handoff": "f99b59abc88305133661dd2a510fbcaf36a9c6c6",
+  "reviewed_head": "c4909ab679d0c0806200fcb132db8a5de1ad3e75",
+  "product": "0f5029df935bc0acd106aad1bc2be81304d4f442",
+  "diff_files": 73,
+  "diff_limited_to_review_materials_and_reviewer_append": true,
+  "source_files": 252,
+  "runtime_files": 94,
+  "source_archive_matches": true,
+  "command_checks": {
+    "pytest": {
+      "head": "c4909ab679d0c0806200fcb132db8a5de1ad3e75",
+      "returncode": 0,
+      "command": [
+        "/workspace/.venvs/layauto/bin/python",
+        "-B",
+        "-m",
+        "pytest",
+        "tests/unit",
+        "tests/contracts",
+        "-q",
+        "-p",
+        "no:cacheprovider"
+      ],
+      "elapsed_seconds": 3078.855,
+      "outputs": {
+        "stdout": {
+          "path": "pytest.stdout.txt",
+          "sha256": "3963bbb538a172a6c1dd0f7325fc9a630a88ac0df70fd8415713c2b941b9f2cf"
+        },
+        "stderr": {
+          "path": "pytest.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    "typing": {
+      "head": "c4909ab679d0c0806200fcb132db8a5de1ad3e75",
+      "returncode": 0,
+      "command": [
+        "/workspace/.venvs/layauto/bin/python",
+        "-B",
+        "-m",
+        "mypy",
+        "--cache-dir",
+        "/workspace/work/w010-premerge-cache/mypy"
+      ],
+      "elapsed_seconds": 1.478,
+      "outputs": {
+        "stdout": {
+          "path": "typing.stdout.txt",
+          "sha256": "a459b8765e4db93f08156e7d98399988a9b87243303f92178f28c9db897f6066"
+        },
+        "stderr": {
+          "path": "typing.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    }
+  },
+  "original_review_evidence_checks": 45,
+  "p3": {
+    "id": "E-N01",
+    "blocking": false,
+    "direct_uncached_cases": [
+      {
+        "case": "normal",
+        "result_wire_bytes": 15470850,
+        "max_pieces_per_region": 1,
+        "process_peak_rss_kib_cumulative": 926272
+      },
+      {
+        "case": "special_cut_islands",
+        "result_wire_bytes": 12579736,
+        "max_pieces_per_region": 1,
+        "process_peak_rss_kib_cumulative": 926272
+      },
+      {
+        "case": "extra_20_isolated_M1",
+        "result_wire_bytes": 17086974,
+        "max_pieces_per_region": 1,
+        "process_peak_rss_kib_cumulative": 1011524
+      },
+      {
+        "case": "extra_8_duplicate_CONTACT",
+        "result_wire_bytes": 16096466,
+        "max_pieces_per_region": 1,
+        "process_peak_rss_kib_cumulative": 1011524
+      }
+    ],
+    "wire_min_bytes": 12579736,
+    "wire_max_bytes": 17086974,
+    "correct_decimal_MB_summary": "12.58–17.09 MB",
+    "peak_cumulative_rss_MiB": 987.81640625,
+    "supplemental_readback_wire_bytes": 59422834,
+    "note": "Readback carries a different retained chain, not the same identity as direct; no production upper bound."
+  },
+  "limitations": [
+    "Read-only current/Git/archive and archived command-output identity audit.",
+    "No pytest, typing, build, installation or performance command was rerun.",
+    "Historical commands remain adopted reviewer execution evidence, not newly observed executions."
+  ]
+}

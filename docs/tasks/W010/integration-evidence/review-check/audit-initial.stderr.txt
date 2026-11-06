@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/workspace/work/w010-integration/review-check/audit.py", line 49, in <module>
+    assert tag == 'insert' and review_start <= i <= pm_start, (tag, i, j)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('insert', 10326, 10326)

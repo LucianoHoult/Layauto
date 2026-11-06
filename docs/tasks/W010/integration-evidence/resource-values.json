@@ -1,0 +1,30 @@
+{
+  "date": "2026-11-06",
+  "finding": "E-N01",
+  "status": "PM summary clarification applied; nonblocking",
+  "source_performance_sha256": "fd9fa0085b5f4799201d27f9872db702133e6a5b2252d14ae43090ad3daa900b",
+  "cases": [
+    {
+      "case": "normal",
+      "result_wire_bytes": 15470850
+    },
+    {
+      "case": "special_cut_islands",
+      "result_wire_bytes": 12579736
+    },
+    {
+      "case": "extra_20_isolated_M1",
+      "result_wire_bytes": 17086974
+    },
+    {
+      "case": "extra_8_duplicate_CONTACT",
+      "result_wire_bytes": 16096466
+    }
+  ],
+  "no_cache_direct_min_bytes": 12579736,
+  "no_cache_direct_max_bytes": 17086974,
+  "MB_definition_bytes": 1000000,
+  "readback_observation_bytes": 59422834,
+  "readback_source_sha256": "e56eb03ccf50ca0bf5f3b59b8dcb559434d05dc3e238ecf65c360daa2147068b",
+  "scope": "Recomputed archived record values; not a new performance run or production bound; direct/readback retain different chains."
+}

@@ -8,8 +8,8 @@
 | --- | --- |
 | ID / 目标 | W010；从认证W009产物及同源接触/规则声明构造只读、精确、可重建的局部contact/connector/component草稿，并记录局部T05 enclosure判据 |
 | 里程碑 / 依赖 | M1第六个产品切片；W005–W009已验收集成。W009经[PR #63](https://github.com/LucianoHoult/Layauto/pull/63)合并`8c60f6c6183aed79a08ec8bb232a31f918837f68`，见[PM4](W009-effective-geometry-terminals.md#pm4-integration-20261104)。本任务从含其验收补记的main `3be0b98359038bab6c23980b55a48987cc71a369`建立 |
-| 授权依据 / 阶段 | 用户交回W010执行结果，沿用独立session分工。**待验收：实现及方案/代码review已交付，PM分支技术接收通过，本次新增必须修正项0。** 下一步独立合并前复核，尚未集成或最终验收，见[PM1](#pm1-receipt-20261106) |
-| 恢复位置 | `codex/w010-local-contact-connectivity`，执行交付`ca39aedcb71fda02f77ffda1eb5d5dddc598226e`、冻结产品/正式测试`0f5029df935bc0acd106aad1bc2be81304d4f442`；接手包含PM1及current-work补记的最新提交，完整SHA见Git/回复。main仍为上述起点 |
+| 授权依据 / 阶段 | 用户交回独立合并前复核，沿用继续推进授权及独立session分工。**已验收：剩余必须修正项0；PR #64合入main，合并tree与已审head一致，15项定向组合及direct/readback主probe通过。** 验收限本任务synthetic/local范围，见[PM2](#pm2-integration-20261106) |
+| 恢复位置 | main合并`84c54857a1b20b9fb29c9b5a73e7b8d686b6e736`，接手包含PM2的最新main；已审分支head`f99b59abc88305133661dd2a510fbcaf36a9c6c6`、产品`0f5029df935bc0acd106aad1bc2be81304d4f442`保留。原分支未删除，下一任务另建分支 |
 | 允许修改 | 必要中立node/edge/component/enclosure DTO与refs；`state/`纯局部连通草稿；`normalization/`同源适配、组合与codec；直接必要的tech/geometry校验复用、对应tests、typing/build配置、README及本任务附件。内部模块/算法由执行者选择 |
 | 非目标 | 不补完整合法工艺坐标/制造或routing lattice；不实现全部region occupancy投影、外部body证明/FIN计数/器件抽取/DeviceId-net join/query overlay、通用DRC/CSP、全部mandatory规则、lifecycle闭合、可变图更新/跨mutation lineage、baseline/seal/no_change/terminal/Stage6。fixture/答案/历史证据和生产格式不改，U06不顺手实现 |
 | 架构依据 | 本次main的[architecture](../architecture.md) §2.2–2.3、§3.1/3.4–3.6、§4.5–4.8、§5.6–5.9、§8.1/8.4–8.5、§11.2–11.3/11.14–11.15、§12.3/12.5；[W003合同](W003/contracts.md)、[manual review](W003/manual-verification.md) MR-045/047/052/054/056及W004现行body修订；W007–W009已验收的输入/来源/单位/公开结果合同 |
@@ -111,6 +111,18 @@ contact与T05审计分离、独立region端点计数、完整source/scope与公�
 252项源/完整tar、两包各94runtime、21条命令42份原输出、原1149保留/新增316、review及218项交付身份均已实核。原双解释器完整各1465项、双typing/构建/双干净安装及更广独立边界矩阵按最终身份采信；本机未重跑完整矩阵或重建/安装，原实际安装/测试树不在本机。详见[PM接收说明](W010/pm-receipt.md)及[机器回执](W010/pm-receipt.json)；旧交付清单对应ca39版本，本次PM状态追加不改写旧hash。
 
 PM专项不冒称新的独立premerge session已经完成。下一步单独session合并前复核，通过后再main集成及组合验证；本轮未合main或启动下一任务。contact与局部T05分离、来源/scope/异常边界已核验，完整工艺坐标/body/FIN/器件/标注、其余mandatory/发布和U06仍后置，未宣称完整M1或生产准入。
+
+<a id="pm2-integration-20261106"></a>
+
+### PM2 最终验收与main集成（2026-11-06）
+
+接收[独立合并前复核](W010/independent-premerge-review.md)交付`f99b59abc88305133661dd2a510fbcaf36a9c6c6`：剩余必须修正项0，完整1465项/typing48实跑和来源/几何/异常链证据身份一致，review交付仅追加review材料及reviewer记录。通过[PR #64](https://github.com/LucianoHoult/Layauto/pull/64)将该head合入main `84c54857a1b20b9fb29c9b5a73e7b8d686b6e736`；两parent为原main `3be0b98359038bab6c23980b55a48987cc71a369`及上述head。合并/已审tree均为`49042d5076c614457b5d2020265f98cb74b53ca2`，252项最终源码hash全部匹配，无未审产品变化。
+
+在实际合并版本/Linux Python3.12.14上完成**15 passed / 229.40s**定向组合验证（另301项未选）：cut-islands、via_enclosure边保留/违例、独立端点歧义、重复connector、多片包围、rules绑定、单次集合快照及policy error后二次认证异常链均覆盖。另实际重跑独立主probe，direct/readback各**14节点/8边/6分量/16audit**、无IO/原attempt不变及异来源/漏edge/假audit拒绝通过（61.320s）。原双完整1465/typing48、包/双安装、独立premerge与PM50/几何专项按完全相同tree继续适用；未重复全量矩阵、typing或构建安装。
+
+E-N01为P3非阻塞摘要精度建议，已采纳并在[PM资源澄清](W010/resource-summary.md)记录四例无cache direct wire正确范围**12.58–17.09 MB**，以及独立readback约59.42 MB的不同保留链观察；原报告/数据未改写，没有新增性能实跑或生产上界。GitHub未返回commit status或PR workflow记录，不把空列表称为CI通过。
+
+见[集成回执](W010/integration-receipt.json)、[实际组合输出](W010/integration-evidence/combined.stdout.txt)及[集成前事实检查](W010/integration-evidence/review-check/report.md)。**W010在声明synthetic/local范围最终验收，集成完成，剩余必须修正项0。** 已具备本地图与独立局部T05事实，不等于全部T05/完整规则、Stage2/M1或真实生产准入。完整坐标、外部body/U06、FIN/器件/标注及发布继续后置；下一任务尚未准备或实现。
 
 ### 独立执行session prompt
 

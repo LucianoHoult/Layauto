@@ -1,0 +1,106 @@
+{
+  "pr_number": 64,
+  "pr_url": "https://github.com/LucianoHoult/Layauto/pull/64",
+  "initial_gates": [
+    {
+      "kind": "open_prs",
+      "result": {
+        "issues": []
+      }
+    },
+    {
+      "kind": "commit_statuses",
+      "result": {
+        "statuses": []
+      }
+    },
+    {
+      "kind": "pull_request_workflow_runs",
+      "result": {
+        "workflow_runs": []
+      }
+    }
+  ],
+  "premerge_pr": {
+    "url": "https://github.com/LucianoHoult/Layauto/pull/64",
+    "number": 64,
+    "state": "open",
+    "merged": false,
+    "mergeable": true,
+    "draft": false,
+    "body": "W010 builds a source-bound local physical graph from W009 effective regions: exact same-layer contacts, declared connector edges and complete components. Each connector retains its own provenance and side audits; insufficient enclosure is reported separately while the physical contact edge remains.\n\nIndependent plan/code review, PM receipt and a dedicated premerge review are complete with zero must-fix findings. Normal direct/readback inputs produce the independently checked 14 nodes, 8 connector edges, 6 components and 16 side audits; cut-islands remain disconnected and the via-enclosure witness keeps its edge plus an explicit violation. Public DTO/wire, source authentication and complete nested exception-chain checks are covered.\n\nValidation: original Python 3.10/3.12 full suites each 1465 passed, typing48, new packages and two clean outside-source installs; independent premerge reran the full 1465 and typing48, plus geometry/provenance/exception checks. PM reran 50 targeted cases, direct/readback composition, typing48 and independent finite geometry checks. Final source/package/evidence identities match.\n\nOne P3 resource-summary wording suggestion is nonblocking: the four no-cache cases span 12.58–17.09 MB, not 15.47–17.09 MB. PM will record the clarification with integration evidence while preserving historical reports. Full technology coordinates, external body/FIN/device extraction, annotation and remaining rule/publication stages stay deferred. Final W010 acceptance follows main integration and combination verification.\n\nEvidence: docs/tasks/W010/independent-premerge-review.md and docs/tasks/W010/pm-receipt.md.",
+    "title": "feat: build exact local connectivity and enclosure audits (W010)",
+    "base": "main",
+    "base_sha": "3be0b98359038bab6c23980b55a48987cc71a369",
+    "head": "codex/w010-local-contact-connectivity",
+    "head_sha": "f99b59abc88305133661dd2a510fbcaf36a9c6c6",
+    "head_repo_id": 1144936784,
+    "head_repo_full_name": "LucianoHoult/Layauto",
+    "merge_commit_sha": "263e89e18e2b6e7f58121ae9f3566520de23d166",
+    "user": {
+      "login": "LucianoHoult",
+      "name": "LucianoHoult",
+      "email": null,
+      "avatar_url": "https://avatars.githubusercontent.com/u/29163839?v=4",
+      "id": 29163839
+    },
+    "requested_reviewers": null,
+    "requested_team_reviewers": null,
+    "diff": null,
+    "comments": null,
+    "created_at": "2026-11-06T08:46:00Z",
+    "updated_at": "2026-11-06T08:48:38Z",
+    "closed_at": null,
+    "merged_at": null,
+    "commits": 7,
+    "changed_files": 326,
+    "additions": 38309,
+    "deletions": 8,
+    "display_url": "https://github.com/LucianoHoult/Layauto/pull/64",
+    "display_title": "feat: build exact local connectivity and enclosure audits (W010)"
+  },
+  "merge_result": {
+    "sha": "84c54857a1b20b9fb29c9b5a73e7b8d686b6e736",
+    "merged": true,
+    "message": "Pull Request successfully merged"
+  },
+  "after_merge": {
+    "url": "https://github.com/LucianoHoult/Layauto/pull/64",
+    "number": 64,
+    "state": "closed",
+    "merged": true,
+    "mergeable": false,
+    "draft": false,
+    "body": "W010 builds a source-bound local physical graph from W009 effective regions: exact same-layer contacts, declared connector edges and complete components. Each connector retains its own provenance and side audits; insufficient enclosure is reported separately while the physical contact edge remains.\n\nIndependent plan/code review, PM receipt and a dedicated premerge review are complete with zero must-fix findings. Normal direct/readback inputs produce the independently checked 14 nodes, 8 connector edges, 6 components and 16 side audits; cut-islands remain disconnected and the via-enclosure witness keeps its edge plus an explicit violation. Public DTO/wire, source authentication and complete nested exception-chain checks are covered.\n\nValidation: original Python 3.10/3.12 full suites each 1465 passed, typing48, new packages and two clean outside-source installs; independent premerge reran the full 1465 and typing48, plus geometry/provenance/exception checks. PM reran 50 targeted cases, direct/readback composition, typing48 and independent finite geometry checks. Final source/package/evidence identities match.\n\nOne P3 resource-summary wording suggestion is nonblocking: the four no-cache cases span 12.58–17.09 MB, not 15.47–17.09 MB. PM will record the clarification with integration evidence while preserving historical reports. Full technology coordinates, external body/FIN/device extraction, annotation and remaining rule/publication stages stay deferred. Final W010 acceptance follows main integration and combination verification.\n\nEvidence: docs/tasks/W010/independent-premerge-review.md and docs/tasks/W010/pm-receipt.md.",
+    "title": "feat: build exact local connectivity and enclosure audits (W010)",
+    "base": "main",
+    "base_sha": "3be0b98359038bab6c23980b55a48987cc71a369",
+    "head": "codex/w010-local-contact-connectivity",
+    "head_sha": "f99b59abc88305133661dd2a510fbcaf36a9c6c6",
+    "head_repo_id": 1144936784,
+    "head_repo_full_name": "LucianoHoult/Layauto",
+    "merge_commit_sha": "84c54857a1b20b9fb29c9b5a73e7b8d686b6e736",
+    "user": {
+      "login": "LucianoHoult",
+      "name": "LucianoHoult",
+      "email": null,
+      "avatar_url": "https://avatars.githubusercontent.com/u/29163839?v=4",
+      "id": 29163839
+    },
+    "requested_reviewers": null,
+    "requested_team_reviewers": null,
+    "diff": null,
+    "comments": null,
+    "created_at": "2026-11-06T08:46:00Z",
+    "updated_at": "2026-11-06T08:48:53Z",
+    "closed_at": "2026-11-06T08:48:52Z",
+    "merged_at": "2026-11-06T08:48:52Z",
+    "commits": 7,
+    "changed_files": 326,
+    "additions": 38309,
+    "deletions": 8,
+    "display_url": "https://github.com/LucianoHoult/Layauto/pull/64",
+    "display_title": "feat: build exact local connectivity and enclosure audits (W010)"
+  },
+  "ci_note": "No statuses or PR workflow runs returned; absence is not passing CI."
+}
