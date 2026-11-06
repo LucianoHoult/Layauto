@@ -1,0 +1,16 @@
+{"mathematical_unit_square_oracles": {"contact": 1600, "enclosure": 1600}}
+{"case": "normal", "nodes": 14, "edges": 8, "components": 6, "audits": 16, "enclosure": "pass", "semantic_digest": "f0cc218b18ac29af6dab0fdb2c109fa676228e5110044a8b4a48d31cdac7d8e7"}
+{"case": "cut_islands", "nodes": 3, "edges": 0, "components": 3, "audits": 0, "enclosure": "pass", "semantic_digest": "42ed0e0c2fd0bfa53a16bb0e6889f43e31efd0bc6ec01ebccb38837ac2c521cc"}
+{"case": "via_enclosure", "nodes": 14, "edges": 8, "components": 6, "audits": 16, "enclosure": "violation", "semantic_digest": "9732bef8099fa6fb3f7a27bcbff8a8b1114a1d9accce3cbad34f8248a5b9e844"}
+{"case": "duplicate_connector", "nodes": 14, "edges": 9, "components": 6, "audits": 18, "enclosure": "pass", "semantic_digest": "75fee89d30a3c9311c6076e0edd11a08d643e84601e0b3732a0e75b688eb7ed9"}
+{"case": "duplicate_conductor", "expected_ambiguous_sides": 2, "observed_code": "AmbiguousConnectorEndpoint"}
+{"case": "connected_candidates", "expected_ambiguous_sides": 2, "observed_code": "AmbiguousConnectorEndpoint"}
+{"case": "enclosure_cannot_disambiguate", "expected_ambiguous_sides": 1, "observed_code": "AmbiguousConnectorEndpoint"}
+{"case": "edge_only", "expected_ambiguous_sides": 1, "observed_code": "AmbiguousConnectorEndpoint"}
+{"case": "corner_only", "expected_ambiguous_sides": 1, "observed_code": "AmbiguousConnectorEndpoint"}
+{"case": "missing_side", "expected_ambiguous_sides": 2, "observed_code": "AmbiguousConnectorEndpoint"}
+{"case": "cut_boundary", "nodes": 16, "edges": 9, "components": 7, "audits": 16, "enclosure": "pass", "semantic_digest": "71e3a302272ac9738d4ec0fe69da8fbfbbe3e1a5da39cd020b95637b209570c9"}
+{"case": "hole_and_cross_piece", "nodes": 16, "edges": 10, "components": 7, "audits": 20, "enclosure": "violation", "semantic_digest": "a6b20d571c6b20122a4c644d37dc48cebbb1d91f774c8313f366f28c412d246f"}
+{"case": "negative_reordered", "nodes": 14, "edges": 8, "components": 6, "audits": 16, "enclosure": "pass", "semantic_digest": "d19e665e1aea212eff6c0563a44ebcfeea9d0f3da67abce708ef5b63f3532496"}
+{"case": "reordered_renamed", "nodes": 14, "edges": 8, "components": 6, "audits": 16, "enclosure": "pass", "semantic_digest": "f0cc218b18ac29af6dab0fdb2c109fa676228e5110044a8b4a48d31cdac7d8e7"}
+{"status": "passed", "elapsed_seconds": 184.636515083}

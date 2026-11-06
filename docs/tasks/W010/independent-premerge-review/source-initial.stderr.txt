@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "/workspace/Layauto-w010/docs/tasks/W010/independent-premerge-review/source-probe.py", line 214, in <module>
+    message='success requires a complete draft')
+^^^
+  File "/workspace/Layauto-w010/docs/tasks/W010/independent-premerge-review/source-probe.py", line 191, in main
+    reject('lost_completed', lambda: replace(direct, completed=()), message='retain all captured completed facts')
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/dataclasses.py", line 1588, in replace
+    return obj.__class__(**changes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<string>", line 12, in __init__
+  File "/workspace/Layauto-w010/layauto_v2/domain/publication.py", line 548, in __post_init__
+    raise ValueError('inputs-ready requires the same unsealed attempt')
+ValueError: inputs-ready requires the same unsealed attempt

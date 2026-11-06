@@ -86,6 +86,14 @@ Reviewer 实际独立运行真实W005/W006 readback→W008→W009→W010禁IO组
 
 contact与T05审计分离、独立region端点计数、完整source/scope与公开neutral/captured验证已核实；完整坐标、有效region occupancy、外部body/U06、FIN/器件/标注、其余mandatory/lifecycle、baseline/no_change/terminal/Stage6及真实PDK/EDA仍后置。有限资源记录披露重复认证、约23MB含cache正常wire和约988MiB累积RSS高水位，未测大量多片/最大规模，不作生产性能保证。Reviewer只修改本Review段、代码review报告与独立附件，未改产品/正式测试/PM/current-work，未验收、合main、提交或推送。
 
+### R2 独立合并前复核（2026-11-06）
+
+本独立 session reviewer `/root` 及未参与原设计/实施的数学、来源、异常和工程专项，对 **main `3be0b98359038bab6c23980b55a48987cc71a369` → 待审HEAD `c4909ab679d0c0806200fcb132db8a5de1ad3e75` 完整交付**复核，以准备 `9758a157…` → 冻结产品 `0f5029d…` 定位实现；远端身份一致，原 checkout 保留，独立 worktree 完成审查。**新增及剩余必须修正项0，建议PM进入集成及组合验证。** 这是独立review建议，不代写PM验收或集成事实。见[完整报告](W010/independent-premerge-review.md)及[独立证据](W010/independent-premerge-review/delivery-audit.json)。
+
+本次Python3.12.14完整v2 **1465 passed / 3076.64s**、strict typing **48模块**及pip check均exit0；独立新编3200+15数学判据、14个完整captured几何变体及3个策略拒绝、31项来源/公开完整性、260项异常/不可变边界和另8项FXR-01集合快照均通过。其中159个故障保持原exception及既有cause/context/suppression，含56条真实ContactProblem后再次认证路径；未以success decode或任意异常拒绝代替该边界验证。正常完整14/8/6/16、cut-islands3/0/3、VN边保留且LI侧violation、重复来源/独立端点/完整分组均有本次独立集合与图判据。
+
+工程45/45审计核对252源/归档、两包94runtime、原1149 nodeid保留/新增316及具名依赖守卫；旧218项delivery按 **ca39aed版本Git内容**匹配。原双解释器/构建/双干净安装按身份采信，历史安装树本机不存在，不冒称重新安装或观察历史执行。两次source probe编排失败原样保留并与最终通过分开。唯一非阻塞建议E-N01（P3）为资源摘要下界应含cut-islands约12.58MB；不改变已披露最大成本或max-pieces=1等限制。本轮仅写review报告/附件和本段；产品、正式测试、fixture/答案、历史证据、PM/current-work不改，完整工艺坐标、外部body/U06、FIN/器件/标注、其余mandatory/lifecycle及发布闭合继续后置。
+
 ## PM验收与交接（PM）
 
 最初派发时仅准备W010；当前阶段以下文最新PM记录为准。W009已验收并集成，不把新图草稿视为完整ConnectivityState或M1闭环。

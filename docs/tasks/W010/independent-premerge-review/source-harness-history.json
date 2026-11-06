@@ -1,0 +1,33 @@
+{
+  "initial": {
+    "script": "source-initial-probe.py",
+    "receipt": "source-initial-receipt.json",
+    "stdout": "source-initial.stdout.txt",
+    "stderr": "source-initial.stderr.txt",
+    "exit_code": 1,
+    "classification": "harness setup rejected foreign InputsReady before rejection wrapper"
+  },
+  "second": {
+    "script": "source-second-probe.py",
+    "receipt": "source-second-receipt.json",
+    "stdout": "source-second.stdout.json",
+    "stderr": "source-second.stderr.txt",
+    "exit_code": 1,
+    "classification": "harness incorrectly expected query-only rename to change neutral geometry ref; corrected to compare complete captured result digest",
+    "original_receipt_output_relocations": {
+      "source-probe.stdout.json": "source-second.stdout.json",
+      "source-probe.stderr.txt": "source-second.stderr.txt"
+    }
+  },
+  "sha256": {
+    "source-initial-probe.py": "93d834738d758b25125572e6ab932b194a1b849cbf78ab41468ba2e44cdc6aa4",
+    "source-initial-receipt.json": "0bc52d5718eaae10330a36e4e76f904ea28c1e4cad1bab96b8c2431d0a0c8367",
+    "source-initial.stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source-initial.stderr.txt": "990f7fd4b3fe2441278221f22d9c57054bf2100304ee39a7dc93e9ac7edffdec",
+    "source-initial.exitcode.txt": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+    "source-second-probe.py": "7149d5bc6e57ea8bab1f1e2d4f23e80b40ce07072ca2dc6cd12e34cd41855938",
+    "source-second-receipt.json": "ef11c0d9599a35ea2b7f652300f445ec13530378334d5324d20b5add7e8f5ae2",
+    "source-second.stdout.json": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source-second.stderr.txt": "0ea8c50de7d456ea23afda5ec4c408c9571fa5da7beee4ba389a48c7334c9b60"
+  }
+}

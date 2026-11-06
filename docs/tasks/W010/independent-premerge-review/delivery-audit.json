@@ -1,0 +1,279 @@
+{
+  "reviewed_head": "c4909ab679d0c0806200fcb132db8a5de1ad3e75",
+  "source_files_unchanged": 252,
+  "reviewer_only_task_addition": true,
+  "allowed_paths_only": true,
+  "checks": {
+    "pytest": {
+      "returncode": 0,
+      "elapsed_seconds": 3078.855
+    },
+    "typing": {
+      "returncode": 0,
+      "elapsed_seconds": 1.478
+    },
+    "pip-check": {
+      "returncode": 0,
+      "elapsed_seconds": 0.324
+    }
+  },
+  "new_report_links_verified": [
+    [
+      "docs/tasks/W010/independent-premerge-review.md",
+      "independent-premerge-review/remote-before.txt"
+    ],
+    [
+      "docs/tasks/W010/independent-premerge-review.md",
+      "independent-premerge-review/version-scope.json"
+    ],
+    [
+      "docs/tasks/W010/independent-premerge-review.md",
+      "independent-premerge-review/source-review.md"
+    ],
+    [
+      "docs/tasks/W010/independent-premerge-review.md",
+      "independent-premerge-review/geometry-review.md"
+    ],
+    [
+      "docs/tasks/W010/independent-premerge-review.md",
+      "independent-premerge-review/exception-review.md"
+    ],
+    [
+      "docs/tasks/W010/independent-premerge-review.md",
+      "independent-premerge-review/evidence-review.md"
+    ],
+    [
+      "docs/tasks/W010/independent-premerge-review.md",
+      "independent-premerge-review/run_check.py"
+    ],
+    [
+      "docs/tasks/W010/independent-premerge-review.md",
+      "independent-premerge-review/validation/pytest.stdout.txt"
+    ],
+    [
+      "docs/tasks/W010/independent-premerge-review.md",
+      "independent-premerge-review/validation/pytest.json"
+    ],
+    [
+      "docs/tasks/W010/independent-premerge-review.md",
+      "independent-premerge-review/validation/typing.stdout.txt"
+    ],
+    [
+      "docs/tasks/W010/independent-premerge-review.md",
+      "independent-premerge-review/validation/typing.json"
+    ],
+    [
+      "docs/tasks/W010/independent-premerge-review.md",
+      "independent-premerge-review/validation/pip-check.json"
+    ],
+    [
+      "docs/tasks/W010/independent-premerge-review.md",
+      "independent-premerge-review/geometry-receipt.json"
+    ],
+    [
+      "docs/tasks/W010/independent-premerge-review.md",
+      "independent-premerge-review/source-probe.stdout.json"
+    ],
+    [
+      "docs/tasks/W010/independent-premerge-review.md",
+      "independent-premerge-review/source-receipt.json"
+    ],
+    [
+      "docs/tasks/W010/independent-premerge-review.md",
+      "independent-premerge-review/exception-results.json"
+    ],
+    [
+      "docs/tasks/W010/independent-premerge-review.md",
+      "independent-premerge-review/exception-command.json"
+    ],
+    [
+      "docs/tasks/W010/independent-premerge-review.md",
+      "independent-premerge-review/exception-snapshot-command.json"
+    ],
+    [
+      "docs/tasks/W010/independent-premerge-review.md",
+      "independent-premerge-review/evidence-audit-run.json"
+    ],
+    [
+      "docs/tasks/W010/independent-premerge-review.md",
+      "independent-premerge-review/source-harness-history.json"
+    ],
+    [
+      "docs/tasks/W010/independent-premerge-review.md",
+      "independent-premerge-review/evidence-review.md"
+    ],
+    [
+      "docs/tasks/W010/independent-premerge-review.md",
+      "independent-premerge-review/evidence-result.json"
+    ],
+    [
+      "docs/tasks/W010/independent-premerge-review.md",
+      "independent-premerge-review/delivery-audit.json"
+    ],
+    [
+      "docs/tasks/W010/independent-premerge-review/source-review.md",
+      "source-probe.py"
+    ],
+    [
+      "docs/tasks/W010/independent-premerge-review/source-review.md",
+      "source-run.py"
+    ],
+    [
+      "docs/tasks/W010/independent-premerge-review/source-review.md",
+      "source-probe.stdout.json"
+    ],
+    [
+      "docs/tasks/W010/independent-premerge-review/source-review.md",
+      "source-probe.stderr.txt"
+    ],
+    [
+      "docs/tasks/W010/independent-premerge-review/source-review.md",
+      "source-receipt.json"
+    ],
+    [
+      "docs/tasks/W010/independent-premerge-review/source-review.md",
+      "source-harness-history.json"
+    ],
+    [
+      "docs/tasks/W010/independent-premerge-review/exception-review.md",
+      "exception-results.json"
+    ],
+    [
+      "docs/tasks/W010/independent-premerge-review/exception-review.md",
+      "exception-probe.py"
+    ],
+    [
+      "docs/tasks/W010/independent-premerge-review/exception-review.md",
+      "exception-command.json"
+    ],
+    [
+      "docs/tasks/W010/independent-premerge-review/exception-review.md",
+      "exception-stdout.txt"
+    ],
+    [
+      "docs/tasks/W010/independent-premerge-review/exception-review.md",
+      "exception-stderr.txt"
+    ],
+    [
+      "docs/tasks/W010/independent-premerge-review/exception-review.md",
+      "exception-snapshot.py"
+    ],
+    [
+      "docs/tasks/W010/independent-premerge-review/exception-review.md",
+      "exception-snapshot-command.json"
+    ],
+    [
+      "docs/tasks/W010/independent-premerge-review/exception-review.md",
+      "exception-snapshot.stdout.json"
+    ],
+    [
+      "docs/tasks/W010/independent-premerge-review/exception-review.md",
+      "exception-snapshot.stderr.txt"
+    ],
+    [
+      "docs/tasks/W010/independent-premerge-review/geometry-review.md",
+      "geometry-receipt.json"
+    ],
+    [
+      "docs/tasks/W010/independent-premerge-review/geometry-review.md",
+      "geometry-probe.py"
+    ],
+    [
+      "docs/tasks/W010/independent-premerge-review/evidence-review.md",
+      "evidence-audit.py"
+    ],
+    [
+      "docs/tasks/W010/independent-premerge-review/evidence-review.md",
+      "evidence-audit.stdout.txt"
+    ],
+    [
+      "docs/tasks/W010/independent-premerge-review/evidence-review.md",
+      "evidence-audit.stderr.txt"
+    ],
+    [
+      "docs/tasks/W010/independent-premerge-review/evidence-review.md",
+      "evidence-audit-run.json"
+    ],
+    [
+      "docs/tasks/W010/independent-premerge-review/evidence-review.md",
+      "evidence-result.json"
+    ]
+  ],
+  "files_sha256": {
+    "docs/tasks/W010-local-contact-connectivity.md": "7b2fb49bee7e68633d9a4ed6b716b6bdab0ddcead584bf9d84d813261640460a",
+    "docs/tasks/W010/independent-premerge-review.md": "6255af9bc7f00674e946392cd545eb4e86001f58714e8494cfc56b3b06515ad8",
+    "docs/tasks/W010/independent-premerge-review/delivery_audit.py": "55276aba2375fba3d52d5f5c941de3faadc81f4c461beb0b6fb7eced8693c71f",
+    "docs/tasks/W010/independent-premerge-review/evidence-audit-run.json": "42b1ad21b157c3eac1d47bc1980e6c8b4bfbd1c62533e9e11140daf016a0a35e",
+    "docs/tasks/W010/independent-premerge-review/evidence-audit.py": "79a59626f1d1e25ae20a33b8dd2501baf92190ec589c8f0b8772a9fb25fdc006",
+    "docs/tasks/W010/independent-premerge-review/evidence-audit.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/tasks/W010/independent-premerge-review/evidence-audit.stdout.txt": "cbcb386b4a96580b8f16461b17c912cbd0287051e89d2f1e9d8b7b19a43865d5",
+    "docs/tasks/W010/independent-premerge-review/evidence-baseline-collection.json": "64892a55e449fd9ccd40ccc2c6601666a22849549845c3790e111aa96d212cac",
+    "docs/tasks/W010/independent-premerge-review/evidence-baseline-collection.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/tasks/W010/independent-premerge-review/evidence-baseline-collection.stdout.txt": "4c66db3a51dd8a7849b9395622e5260e6fed54032378f1445013567052a08b39",
+    "docs/tasks/W010/independent-premerge-review/evidence-current-collection.json": "768ae619ea502ef5ab9d77de3b1b5218d2a3dedafc7d399859c818a82286bf76",
+    "docs/tasks/W010/independent-premerge-review/evidence-current-collection.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/tasks/W010/independent-premerge-review/evidence-current-collection.stdout.txt": "6dc5dc3eb5dff4c69de489ea676b4b1b963bb84aa4f571c2dc08e17ea6197d86",
+    "docs/tasks/W010/independent-premerge-review/evidence-guards.json": "b8db2f1a24c9fce3726a993b7da0bed32de323b2bc516882e90623e55d88ad8b",
+    "docs/tasks/W010/independent-premerge-review/evidence-guards.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/tasks/W010/independent-premerge-review/evidence-guards.stdout.txt": "7d8791a9bb72e65283b3c0e607dd407e50bce3050f811bc7cf9b37f38c330fda",
+    "docs/tasks/W010/independent-premerge-review/evidence-result.json": "18d2e690c08de1f54d9b90f1b3870f3dc63aacee539a196752bf2313595ced4c",
+    "docs/tasks/W010/independent-premerge-review/evidence-review.md": "5fe87453ef6ebe6d761f5344a9abf72c9fd4ed3169719a41118b93484a2f3e93",
+    "docs/tasks/W010/independent-premerge-review/exception-command.json": "9a70cbb8a02186e42cf50fb569d1b7804545ea7ed5534204ab9427a35337c1f4",
+    "docs/tasks/W010/independent-premerge-review/exception-probe.py": "8a1c5187ed6a3d7c20fd09ea680785360aa0e331d03096e1296af8a95850f0ac",
+    "docs/tasks/W010/independent-premerge-review/exception-results.json": "80ea87476b2ae2b8195b166e914b91b744017e89aac574f08587b344aca39529",
+    "docs/tasks/W010/independent-premerge-review/exception-review.md": "3c0fdf6df072a2491ede645754f411ba872d1861470f599acad1024fecc45543",
+    "docs/tasks/W010/independent-premerge-review/exception-snapshot-command.json": "a3c758fe67c991653136ea23c8f02179bcaab6199c095f255029034f2da7ea53",
+    "docs/tasks/W010/independent-premerge-review/exception-snapshot.py": "3c17af79d828a1ed9a7f3e9735922ca2232af2eb7525983551020710a1083b26",
+    "docs/tasks/W010/independent-premerge-review/exception-snapshot.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/tasks/W010/independent-premerge-review/exception-snapshot.stdout.json": "4d1bac24b12d5ac8d766bfad7f63d95d80c7c84df527c21875c27e1de0df403d",
+    "docs/tasks/W010/independent-premerge-review/exception-stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/tasks/W010/independent-premerge-review/exception-stdout.txt": "b4df31806030f10adca47750486d731fee0818ec5991b0782033d3ec4f21f28d",
+    "docs/tasks/W010/independent-premerge-review/geometry-boundary-exit-code.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "docs/tasks/W010/independent-premerge-review/geometry-boundary-probe.py": "6e9e2ec3b0c6048d58a4f5287ab06d853fda90947f6e83839c64f53a40b1f248",
+    "docs/tasks/W010/independent-premerge-review/geometry-boundary-result.json": "0baa82ed505aa92e4c28c392c2108ef6b4e2438fc6ff02392e9f80c6bd87a56f",
+    "docs/tasks/W010/independent-premerge-review/geometry-boundary-stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/tasks/W010/independent-premerge-review/geometry-boundary-stdout.txt": "51f3167a22b42615f120ff37a9b54b041938e09d9399e95be6fe41ceb8bfd3db",
+    "docs/tasks/W010/independent-premerge-review/geometry-exit-code.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "docs/tasks/W010/independent-premerge-review/geometry-probe.py": "a56f793353e56ca27a3f01142a890e1ca6bbc51e92622a0f2aac23f600141da2",
+    "docs/tasks/W010/independent-premerge-review/geometry-receipt.json": "a06155c36fee3bf36d32715a42d640aa0aab3904fbc723ae7ec6455a0e87aa2e",
+    "docs/tasks/W010/independent-premerge-review/geometry-result.json": "60f97b69dbad0d4f004c06684d3819fcbc5513d5faf8091760d6830a58d2efbb",
+    "docs/tasks/W010/independent-premerge-review/geometry-review.md": "ab7fb1e55e860a0034b6da30efb39a5221ac5c8cecbecf45fa892febfb896651",
+    "docs/tasks/W010/independent-premerge-review/geometry-stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/tasks/W010/independent-premerge-review/geometry-stdout.txt": "8872c6d8d6dd5385bb29043855348d49a636868625d9ec9364873c5f2dae8fc4",
+    "docs/tasks/W010/independent-premerge-review/remote-before.txt": "d384759ff1a549e6aca9c5de63ca5f3be1c790861f65ad64453498f4a55549a0",
+    "docs/tasks/W010/independent-premerge-review/run_check.py": "aef76f132b6ae355d8b1a2a76927ea90d22c31774aa3a4bbb279e39e94b353d0",
+    "docs/tasks/W010/independent-premerge-review/source-harness-history.json": "91aa01ecb72188a07a6b4e786cae555791f21a5e8748b7bd0109f5cff8fccefb",
+    "docs/tasks/W010/independent-premerge-review/source-initial-probe.py": "93d834738d758b25125572e6ab932b194a1b849cbf78ab41468ba2e44cdc6aa4",
+    "docs/tasks/W010/independent-premerge-review/source-initial-receipt.json": "0bc52d5718eaae10330a36e4e76f904ea28c1e4cad1bab96b8c2431d0a0c8367",
+    "docs/tasks/W010/independent-premerge-review/source-initial.exitcode.txt": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+    "docs/tasks/W010/independent-premerge-review/source-initial.stderr.txt": "990f7fd4b3fe2441278221f22d9c57054bf2100304ee39a7dc93e9ac7edffdec",
+    "docs/tasks/W010/independent-premerge-review/source-initial.stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/tasks/W010/independent-premerge-review/source-probe.py": "2a0a227e901533fa7235a012f15bcfbd9ffd3a01b3f88189721c8f0052850cdb",
+    "docs/tasks/W010/independent-premerge-review/source-probe.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/tasks/W010/independent-premerge-review/source-probe.stdout.json": "e56eb03ccf50ca0bf5f3b59b8dcb559434d05dc3e238ecf65c360daa2147068b",
+    "docs/tasks/W010/independent-premerge-review/source-receipt.json": "9110cc747bc1d0eab610d971964158a0efc20c04969774d22b43679d8307b7c9",
+    "docs/tasks/W010/independent-premerge-review/source-review.md": "74d6dd8100c6e11d5e60ba9d4b809d4aa75b543ad4ad9255aaa291e62e36b560",
+    "docs/tasks/W010/independent-premerge-review/source-run.py": "8afc22ad06278c2352ce42a2d6ac4b57779b45558e26dca67776a7e865e8b193",
+    "docs/tasks/W010/independent-premerge-review/source-second-probe.py": "7149d5bc6e57ea8bab1f1e2d4f23e80b40ce07072ca2dc6cd12e34cd41855938",
+    "docs/tasks/W010/independent-premerge-review/source-second-receipt.json": "ef11c0d9599a35ea2b7f652300f445ec13530378334d5324d20b5add7e8f5ae2",
+    "docs/tasks/W010/independent-premerge-review/source-second.stderr.txt": "0ea8c50de7d456ea23afda5ec4c408c9571fa5da7beee4ba389a48c7334c9b60",
+    "docs/tasks/W010/independent-premerge-review/source-second.stdout.json": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/tasks/W010/independent-premerge-review/validation/pip-check.json": "7fea6c0268ef11973432c0c46ffee0bf552e02381b89dcb7e030321749f11374",
+    "docs/tasks/W010/independent-premerge-review/validation/pip-check.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/tasks/W010/independent-premerge-review/validation/pip-check.stdout.txt": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09",
+    "docs/tasks/W010/independent-premerge-review/validation/pytest.json": "2a4a6f8b16b32804427477daaef87d110f48e40c2fa839854b15d688b4976709",
+    "docs/tasks/W010/independent-premerge-review/validation/pytest.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/tasks/W010/independent-premerge-review/validation/pytest.stdout.txt": "3963bbb538a172a6c1dd0f7325fc9a630a88ac0df70fd8415713c2b941b9f2cf",
+    "docs/tasks/W010/independent-premerge-review/validation/typing-setup.json": "9e3714917b58aa9f888259e4576ad20c831d2bc7999948a5b1d2bcc0a9d8717e",
+    "docs/tasks/W010/independent-premerge-review/validation/typing-setup.stderr.txt": "f96a57a6d17645d3d9eb401b9cead41a648edf2499f2ca4bc3f9364d677b6080",
+    "docs/tasks/W010/independent-premerge-review/validation/typing-setup.stdout.txt": "d655b9caa3ec32925a31d4592323e7f2ada6d548ba5e0f3107d662e7e5368b40",
+    "docs/tasks/W010/independent-premerge-review/validation/typing.json": "fff7e5c9ed49290bd1c2440942d6b215d0e6d5a26a960406c6d59c525f5f5590",
+    "docs/tasks/W010/independent-premerge-review/validation/typing.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/tasks/W010/independent-premerge-review/validation/typing.stdout.txt": "a459b8765e4db93f08156e7d98399988a9b87243303f92178f28c9db897f6066",
+    "docs/tasks/W010/independent-premerge-review/version-scope.json": "c6d3748f04a4004caaf81bb38aa084034a5cd2c58620c86efceb4ea175069ab3",
+    "docs/tasks/W010/independent-premerge-review/version_scope.py": "6460db67b81b2a4dcdc29208c1f49590a2503337b7eb133e7b731e57fd4c3c07"
+  },
+  "original_checkout_status": "## work\n",
+  "status": "passed",
+  "note": "Evidence excludes this self-referential audit; review commit and remote SHA are reported after push."
+}

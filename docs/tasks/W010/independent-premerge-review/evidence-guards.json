@@ -1,0 +1,24 @@
+{
+  "command": [
+    "/workspace/.venvs/layauto/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-p",
+    "no:cacheprovider",
+    "tests/contracts/test_w007_contracts.py::test_normalization_and_new_domain_keep_pure_dependency_boundaries",
+    "tests/contracts/test_w010_contracts.py::test_new_domain_and_state_keep_pure_dependency_direction",
+    "-q"
+  ],
+  "cwd": "/workspace/Layauto-w010",
+  "exit_code": 0,
+  "elapsed_seconds": 0.5812876120000112,
+  "environment_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTEST_DISABLE_PLUGIN_AUTOLOAD": "1",
+    "PYTHONPATH": "/workspace/Layauto-w010",
+    "MPLCONFIGDIR": "/tmp/w010-evidence-mpl"
+  },
+  "stdout_sha256": "7d8791a9bb72e65283b3c0e607dd407e50bce3050f811bc7cf9b37f38c330fda",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

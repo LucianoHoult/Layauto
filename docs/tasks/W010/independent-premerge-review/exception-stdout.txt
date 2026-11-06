@@ -1,0 +1,261 @@
+{"name": "roundtrip-direct", "passed": true}
+{"name": "roundtrip-readback", "passed": true}
+{"name": "nested-direct", "passed": true, "target": "layauto_v2.state.local_connectivity.same_layer_contact", "fault": "ValueError", "calls": 1, "received": "ValueError", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "nested-direct", "passed": true, "target": "layauto_v2.state.local_connectivity.same_layer_contact", "fault": "TypeError", "calls": 1, "received": "TypeError", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "nested-direct", "passed": true, "target": "layauto_v2.state.local_connectivity.same_layer_contact", "fault": "KeyboardInterrupt", "calls": 1, "received": "KeyboardInterrupt", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "nested-direct", "passed": true, "target": "layauto_v2.state.local_connectivity.same_layer_contact", "fault": "SystemExit", "calls": 1, "received": "SystemExit", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "nested-direct", "passed": true, "target": "layauto_v2.state.local_connectivity.encloses_connector", "fault": "ValueError", "calls": 1, "received": "ValueError", "same_object": true, "context": "LookupError", "suppression": true}
+{"name": "nested-direct", "passed": true, "target": "layauto_v2.state.local_connectivity.encloses_connector", "fault": "TypeError", "calls": 1, "received": "TypeError", "same_object": true, "context": "LookupError", "suppression": true}
+{"name": "nested-direct", "passed": true, "target": "layauto_v2.state.local_connectivity.encloses_connector", "fault": "KeyboardInterrupt", "calls": 1, "received": "KeyboardInterrupt", "same_object": true, "context": "LookupError", "suppression": true}
+{"name": "nested-direct", "passed": true, "target": "layauto_v2.state.local_connectivity.encloses_connector", "fault": "SystemExit", "calls": 1, "received": "SystemExit", "same_object": true, "context": "LookupError", "suppression": true}
+{"name": "nested-direct", "passed": true, "target": "layauto_v2.state.local_connectivity._components", "fault": "ValueError", "calls": 1, "received": "ValueError", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "nested-direct", "passed": true, "target": "layauto_v2.state.local_connectivity._components", "fault": "TypeError", "calls": 1, "received": "TypeError", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "nested-direct", "passed": true, "target": "layauto_v2.state.local_connectivity._components", "fault": "KeyboardInterrupt", "calls": 1, "received": "KeyboardInterrupt", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "nested-direct", "passed": true, "target": "layauto_v2.state.local_connectivity._components", "fault": "SystemExit", "calls": 1, "received": "SystemExit", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "nested-direct", "passed": true, "target": "layauto_v2.state.regions.slab_difference", "fault": "ValueError", "calls": 1, "received": "ValueError", "same_object": true, "context": "LookupError", "suppression": true}
+{"name": "nested-direct", "passed": true, "target": "layauto_v2.state.regions.slab_difference", "fault": "TypeError", "calls": 1, "received": "TypeError", "same_object": true, "context": "LookupError", "suppression": true}
+{"name": "nested-direct", "passed": true, "target": "layauto_v2.state.regions.slab_difference", "fault": "KeyboardInterrupt", "calls": 1, "received": "KeyboardInterrupt", "same_object": true, "context": "LookupError", "suppression": true}
+{"name": "nested-direct", "passed": true, "target": "layauto_v2.state.regions.slab_difference", "fault": "SystemExit", "calls": 1, "received": "SystemExit", "same_object": true, "context": "LookupError", "suppression": true}
+{"name": "nested-direct", "passed": true, "target": "layauto_v2.state.layout_store._materialize", "fault": "ValueError", "calls": 1, "received": "ValueError", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "nested-direct", "passed": true, "target": "layauto_v2.state.layout_store._materialize", "fault": "TypeError", "calls": 1, "received": "TypeError", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "nested-direct", "passed": true, "target": "layauto_v2.state.layout_store._materialize", "fault": "KeyboardInterrupt", "calls": 1, "received": "KeyboardInterrupt", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "nested-direct", "passed": true, "target": "layauto_v2.state.layout_store._materialize", "fault": "SystemExit", "calls": 1, "received": "SystemExit", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "nested-direct", "passed": true, "target": "layauto_v2.state.coordinate._layers", "fault": "ValueError", "calls": 1, "received": "ValueError", "same_object": true, "context": "LookupError", "suppression": true}
+{"name": "nested-direct", "passed": true, "target": "layauto_v2.state.coordinate._layers", "fault": "TypeError", "calls": 1, "received": "TypeError", "same_object": true, "context": "LookupError", "suppression": true}
+{"name": "nested-direct", "passed": true, "target": "layauto_v2.state.coordinate._layers", "fault": "KeyboardInterrupt", "calls": 1, "received": "KeyboardInterrupt", "same_object": true, "context": "LookupError", "suppression": true}
+{"name": "nested-direct", "passed": true, "target": "layauto_v2.state.coordinate._layers", "fault": "SystemExit", "calls": 1, "received": "SystemExit", "same_object": true, "context": "LookupError", "suppression": true}
+{"name": "nested-direct", "passed": true, "target": "layauto_v2.state.occupancy._fragments", "fault": "ValueError", "calls": 1, "received": "ValueError", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "nested-direct", "passed": true, "target": "layauto_v2.state.occupancy._fragments", "fault": "TypeError", "calls": 1, "received": "TypeError", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "nested-direct", "passed": true, "target": "layauto_v2.state.occupancy._fragments", "fault": "KeyboardInterrupt", "calls": 1, "received": "KeyboardInterrupt", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "nested-direct", "passed": true, "target": "layauto_v2.state.occupancy._fragments", "fault": "SystemExit", "calls": 1, "received": "SystemExit", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "nested-direct", "passed": true, "target": "layauto_v2.normalization.contracts.request_decoder_input", "fault": "ValueError", "calls": 1, "received": "ValueError", "same_object": true, "context": "LookupError", "suppression": true}
+{"name": "nested-direct", "passed": true, "target": "layauto_v2.normalization.contracts.request_decoder_input", "fault": "TypeError", "calls": 1, "received": "TypeError", "same_object": true, "context": "LookupError", "suppression": true}
+{"name": "nested-direct", "passed": true, "target": "layauto_v2.normalization.contracts.request_decoder_input", "fault": "KeyboardInterrupt", "calls": 1, "received": "KeyboardInterrupt", "same_object": true, "context": "LookupError", "suppression": true}
+{"name": "nested-direct", "passed": true, "target": "layauto_v2.normalization.contracts.request_decoder_input", "fault": "SystemExit", "calls": 1, "received": "SystemExit", "same_object": true, "context": "LookupError", "suppression": true}
+{"name": "nested-direct", "passed": true, "target": "layauto_v2.normalization._validation._validate_cdl", "fault": "ValueError", "calls": 1, "received": "ValueError", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "nested-direct", "passed": true, "target": "layauto_v2.normalization._validation._validate_cdl", "fault": "TypeError", "calls": 1, "received": "TypeError", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "nested-direct", "passed": true, "target": "layauto_v2.normalization._validation._validate_cdl", "fault": "KeyboardInterrupt", "calls": 1, "received": "KeyboardInterrupt", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "nested-direct", "passed": true, "target": "layauto_v2.normalization._validation._validate_cdl", "fault": "SystemExit", "calls": 1, "received": "SystemExit", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "nested-direct", "passed": true, "target": "layauto_v2.normalization._validation._validate_query", "fault": "ValueError", "calls": 1, "received": "ValueError", "same_object": true, "context": "LookupError", "suppression": true}
+{"name": "nested-direct", "passed": true, "target": "layauto_v2.normalization._validation._validate_query", "fault": "TypeError", "calls": 1, "received": "TypeError", "same_object": true, "context": "LookupError", "suppression": true}
+{"name": "nested-direct", "passed": true, "target": "layauto_v2.normalization._validation._validate_query", "fault": "KeyboardInterrupt", "calls": 1, "received": "KeyboardInterrupt", "same_object": true, "context": "LookupError", "suppression": true}
+{"name": "nested-direct", "passed": true, "target": "layauto_v2.normalization._validation._validate_query", "fault": "SystemExit", "calls": 1, "received": "SystemExit", "same_object": true, "context": "LookupError", "suppression": true}
+{"name": "nested-direct", "passed": true, "target": "layauto_v2.domain.evidence.hashlib", "fault": "ValueError", "calls": 1, "received": "ValueError", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "nested-direct", "passed": true, "target": "layauto_v2.domain.evidence.hashlib", "fault": "TypeError", "calls": 1, "received": "TypeError", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "nested-direct", "passed": true, "target": "layauto_v2.domain.evidence.hashlib", "fault": "KeyboardInterrupt", "calls": 1, "received": "KeyboardInterrupt", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "nested-direct", "passed": true, "target": "layauto_v2.domain.evidence.hashlib", "fault": "SystemExit", "calls": 1, "received": "SystemExit", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "nested-readback", "passed": true, "target": "layauto_v2.state.local_connectivity.same_layer_contact", "fault": "ValueError", "calls": 1, "received": "ValueError", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "nested-readback", "passed": true, "target": "layauto_v2.state.local_connectivity.same_layer_contact", "fault": "TypeError", "calls": 1, "received": "TypeError", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "nested-readback", "passed": true, "target": "layauto_v2.state.local_connectivity.same_layer_contact", "fault": "KeyboardInterrupt", "calls": 1, "received": "KeyboardInterrupt", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "nested-readback", "passed": true, "target": "layauto_v2.state.local_connectivity.same_layer_contact", "fault": "SystemExit", "calls": 1, "received": "SystemExit", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "nested-readback", "passed": true, "target": "layauto_v2.state.local_connectivity.encloses_connector", "fault": "ValueError", "calls": 1, "received": "ValueError", "same_object": true, "context": "LookupError", "suppression": true}
+{"name": "nested-readback", "passed": true, "target": "layauto_v2.state.local_connectivity.encloses_connector", "fault": "TypeError", "calls": 1, "received": "TypeError", "same_object": true, "context": "LookupError", "suppression": true}
+{"name": "nested-readback", "passed": true, "target": "layauto_v2.state.local_connectivity.encloses_connector", "fault": "KeyboardInterrupt", "calls": 1, "received": "KeyboardInterrupt", "same_object": true, "context": "LookupError", "suppression": true}
+{"name": "nested-readback", "passed": true, "target": "layauto_v2.state.local_connectivity.encloses_connector", "fault": "SystemExit", "calls": 1, "received": "SystemExit", "same_object": true, "context": "LookupError", "suppression": true}
+{"name": "nested-readback", "passed": true, "target": "layauto_v2.state.local_connectivity._components", "fault": "ValueError", "calls": 1, "received": "ValueError", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "nested-readback", "passed": true, "target": "layauto_v2.state.local_connectivity._components", "fault": "TypeError", "calls": 1, "received": "TypeError", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "nested-readback", "passed": true, "target": "layauto_v2.state.local_connectivity._components", "fault": "KeyboardInterrupt", "calls": 1, "received": "KeyboardInterrupt", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "nested-readback", "passed": true, "target": "layauto_v2.state.local_connectivity._components", "fault": "SystemExit", "calls": 1, "received": "SystemExit", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "nested-readback", "passed": true, "target": "layauto_v2.state.regions.slab_difference", "fault": "ValueError", "calls": 1, "received": "ValueError", "same_object": true, "context": "LookupError", "suppression": true}
+{"name": "nested-readback", "passed": true, "target": "layauto_v2.state.regions.slab_difference", "fault": "TypeError", "calls": 1, "received": "TypeError", "same_object": true, "context": "LookupError", "suppression": true}
+{"name": "nested-readback", "passed": true, "target": "layauto_v2.state.regions.slab_difference", "fault": "KeyboardInterrupt", "calls": 1, "received": "KeyboardInterrupt", "same_object": true, "context": "LookupError", "suppression": true}
+{"name": "nested-readback", "passed": true, "target": "layauto_v2.state.regions.slab_difference", "fault": "SystemExit", "calls": 1, "received": "SystemExit", "same_object": true, "context": "LookupError", "suppression": true}
+{"name": "nested-readback", "passed": true, "target": "layauto_v2.state.layout_store._materialize", "fault": "ValueError", "calls": 1, "received": "ValueError", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "nested-readback", "passed": true, "target": "layauto_v2.state.layout_store._materialize", "fault": "TypeError", "calls": 1, "received": "TypeError", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "nested-readback", "passed": true, "target": "layauto_v2.state.layout_store._materialize", "fault": "KeyboardInterrupt", "calls": 1, "received": "KeyboardInterrupt", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "nested-readback", "passed": true, "target": "layauto_v2.state.layout_store._materialize", "fault": "SystemExit", "calls": 1, "received": "SystemExit", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "nested-readback", "passed": true, "target": "layauto_v2.state.coordinate._layers", "fault": "ValueError", "calls": 1, "received": "ValueError", "same_object": true, "context": "LookupError", "suppression": true}
+{"name": "nested-readback", "passed": true, "target": "layauto_v2.state.coordinate._layers", "fault": "TypeError", "calls": 1, "received": "TypeError", "same_object": true, "context": "LookupError", "suppression": true}
+{"name": "nested-readback", "passed": true, "target": "layauto_v2.state.coordinate._layers", "fault": "KeyboardInterrupt", "calls": 1, "received": "KeyboardInterrupt", "same_object": true, "context": "LookupError", "suppression": true}
+{"name": "nested-readback", "passed": true, "target": "layauto_v2.state.coordinate._layers", "fault": "SystemExit", "calls": 1, "received": "SystemExit", "same_object": true, "context": "LookupError", "suppression": true}
+{"name": "nested-readback", "passed": true, "target": "layauto_v2.state.occupancy._fragments", "fault": "ValueError", "calls": 1, "received": "ValueError", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "nested-readback", "passed": true, "target": "layauto_v2.state.occupancy._fragments", "fault": "TypeError", "calls": 1, "received": "TypeError", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "nested-readback", "passed": true, "target": "layauto_v2.state.occupancy._fragments", "fault": "KeyboardInterrupt", "calls": 1, "received": "KeyboardInterrupt", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "nested-readback", "passed": true, "target": "layauto_v2.state.occupancy._fragments", "fault": "SystemExit", "calls": 1, "received": "SystemExit", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "nested-readback", "passed": true, "target": "layauto_v2.normalization.contracts.request_decoder_input", "fault": "ValueError", "calls": 1, "received": "ValueError", "same_object": true, "context": "LookupError", "suppression": true}
+{"name": "nested-readback", "passed": true, "target": "layauto_v2.normalization.contracts.request_decoder_input", "fault": "TypeError", "calls": 1, "received": "TypeError", "same_object": true, "context": "LookupError", "suppression": true}
+{"name": "nested-readback", "passed": true, "target": "layauto_v2.normalization.contracts.request_decoder_input", "fault": "KeyboardInterrupt", "calls": 1, "received": "KeyboardInterrupt", "same_object": true, "context": "LookupError", "suppression": true}
+{"name": "nested-readback", "passed": true, "target": "layauto_v2.normalization.contracts.request_decoder_input", "fault": "SystemExit", "calls": 1, "received": "SystemExit", "same_object": true, "context": "LookupError", "suppression": true}
+{"name": "nested-readback", "passed": true, "target": "layauto_v2.normalization._validation._validate_cdl", "fault": "ValueError", "calls": 1, "received": "ValueError", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "nested-readback", "passed": true, "target": "layauto_v2.normalization._validation._validate_cdl", "fault": "TypeError", "calls": 1, "received": "TypeError", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "nested-readback", "passed": true, "target": "layauto_v2.normalization._validation._validate_cdl", "fault": "KeyboardInterrupt", "calls": 1, "received": "KeyboardInterrupt", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "nested-readback", "passed": true, "target": "layauto_v2.normalization._validation._validate_cdl", "fault": "SystemExit", "calls": 1, "received": "SystemExit", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "nested-readback", "passed": true, "target": "layauto_v2.normalization._validation._validate_query", "fault": "ValueError", "calls": 1, "received": "ValueError", "same_object": true, "context": "LookupError", "suppression": true}
+{"name": "nested-readback", "passed": true, "target": "layauto_v2.normalization._validation._validate_query", "fault": "TypeError", "calls": 1, "received": "TypeError", "same_object": true, "context": "LookupError", "suppression": true}
+{"name": "nested-readback", "passed": true, "target": "layauto_v2.normalization._validation._validate_query", "fault": "KeyboardInterrupt", "calls": 1, "received": "KeyboardInterrupt", "same_object": true, "context": "LookupError", "suppression": true}
+{"name": "nested-readback", "passed": true, "target": "layauto_v2.normalization._validation._validate_query", "fault": "SystemExit", "calls": 1, "received": "SystemExit", "same_object": true, "context": "LookupError", "suppression": true}
+{"name": "nested-readback", "passed": true, "target": "layauto_v2.domain.evidence.hashlib", "fault": "ValueError", "calls": 1, "received": "ValueError", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "nested-readback", "passed": true, "target": "layauto_v2.domain.evidence.hashlib", "fault": "TypeError", "calls": 1, "received": "TypeError", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "nested-readback", "passed": true, "target": "layauto_v2.domain.evidence.hashlib", "fault": "KeyboardInterrupt", "calls": 1, "received": "KeyboardInterrupt", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "nested-readback", "passed": true, "target": "layauto_v2.domain.evidence.hashlib", "fault": "SystemExit", "calls": 1, "received": "SystemExit", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "nested-readback", "passed": true, "target": "layauto_v2.normalization.contracts.content_ref", "fault": "ValueError", "calls": 1, "received": "ValueError", "same_object": true, "context": "LookupError", "suppression": true}
+{"name": "nested-readback", "passed": true, "target": "layauto_v2.normalization.contracts.content_ref", "fault": "TypeError", "calls": 1, "received": "TypeError", "same_object": true, "context": "LookupError", "suppression": true}
+{"name": "nested-readback", "passed": true, "target": "layauto_v2.normalization.contracts.content_ref", "fault": "KeyboardInterrupt", "calls": 1, "received": "KeyboardInterrupt", "same_object": true, "context": "LookupError", "suppression": true}
+{"name": "nested-readback", "passed": true, "target": "layauto_v2.normalization.contracts.content_ref", "fault": "SystemExit", "calls": 1, "received": "SystemExit", "same_object": true, "context": "LookupError", "suppression": true}
+{"name": "builder-direct", "passed": true, "target": "layauto_v2.state.local_connectivity.same_layer_contact", "fault": "RuntimeError", "calls": 1, "received": "RuntimeError", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "builder-direct", "passed": true, "target": "layauto_v2.state.local_connectivity.encloses_connector", "fault": "RuntimeError", "calls": 1, "received": "RuntimeError", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "builder-direct", "passed": true, "target": "layauto_v2.state.local_connectivity._components", "fault": "RuntimeError", "calls": 1, "received": "RuntimeError", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "builder-direct", "passed": true, "target": "layauto_v2.state.regions.slab_difference", "fault": "RuntimeError", "calls": 1, "received": "RuntimeError", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "builder-direct", "passed": true, "target": "layauto_v2.state.layout_store._materialize", "fault": "RuntimeError", "calls": 1, "received": "RuntimeError", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "builder-direct", "passed": true, "target": "layauto_v2.state.coordinate._layers", "fault": "RuntimeError", "calls": 1, "received": "RuntimeError", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "builder-direct", "passed": true, "target": "layauto_v2.state.occupancy._fragments", "fault": "RuntimeError", "calls": 1, "received": "RuntimeError", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "builder-direct", "passed": true, "target": "layauto_v2.normalization.contracts.request_decoder_input", "fault": "RuntimeError", "calls": 1, "received": "RuntimeError", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "builder-direct", "passed": true, "target": "layauto_v2.normalization._validation._validate_cdl", "fault": "RuntimeError", "calls": 1, "received": "RuntimeError", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "builder-direct", "passed": true, "target": "layauto_v2.normalization._validation._validate_query", "fault": "RuntimeError", "calls": 1, "received": "RuntimeError", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "builder-direct", "passed": true, "target": "layauto_v2.domain.evidence.hashlib", "fault": "RuntimeError", "calls": 1, "received": "RuntimeError", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "real-policy-error-direct", "passed": true, "issue": "UnsupportedLocalContactOperator", "source": "tech/physical.json", "field": "/operators/same_layer_contact~11"}
+{"name": "error-wire-roundtrip-direct", "passed": true}
+{"name": "real-policy-second-auth-direct", "passed": true, "target": "layauto_v2.state.layout_store._materialize", "fault": "ValueError", "calls": 3, "received": "ValueError", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "second-auth-reached-direct", "passed": true}
+{"name": "real-policy-second-auth-direct", "passed": true, "target": "layauto_v2.state.layout_store._materialize", "fault": "ValueError", "calls": 3, "received": "ValueError", "same_object": true, "context": "LookupError", "suppression": true}
+{"name": "second-auth-reached-direct", "passed": true}
+{"name": "real-policy-second-auth-direct", "passed": true, "target": "layauto_v2.state.layout_store._materialize", "fault": "TypeError", "calls": 3, "received": "TypeError", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "second-auth-reached-direct", "passed": true}
+{"name": "real-policy-second-auth-direct", "passed": true, "target": "layauto_v2.state.layout_store._materialize", "fault": "TypeError", "calls": 3, "received": "TypeError", "same_object": true, "context": "LookupError", "suppression": true}
+{"name": "second-auth-reached-direct", "passed": true}
+{"name": "real-policy-second-auth-direct", "passed": true, "target": "layauto_v2.state.layout_store._materialize", "fault": "KeyboardInterrupt", "calls": 3, "received": "KeyboardInterrupt", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "second-auth-reached-direct", "passed": true}
+{"name": "real-policy-second-auth-direct", "passed": true, "target": "layauto_v2.state.layout_store._materialize", "fault": "KeyboardInterrupt", "calls": 3, "received": "KeyboardInterrupt", "same_object": true, "context": "LookupError", "suppression": true}
+{"name": "second-auth-reached-direct", "passed": true}
+{"name": "real-policy-second-auth-direct", "passed": true, "target": "layauto_v2.state.layout_store._materialize", "fault": "SystemExit", "calls": 3, "received": "SystemExit", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "second-auth-reached-direct", "passed": true}
+{"name": "real-policy-second-auth-direct", "passed": true, "target": "layauto_v2.state.layout_store._materialize", "fault": "SystemExit", "calls": 3, "received": "SystemExit", "same_object": true, "context": "LookupError", "suppression": true}
+{"name": "second-auth-reached-direct", "passed": true}
+{"name": "real-policy-second-auth-direct", "passed": true, "target": "layauto_v2.normalization.contracts.request_decoder_input", "fault": "ValueError", "calls": 2, "received": "ValueError", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "second-auth-reached-direct", "passed": true}
+{"name": "real-policy-second-auth-direct", "passed": true, "target": "layauto_v2.normalization.contracts.request_decoder_input", "fault": "ValueError", "calls": 2, "received": "ValueError", "same_object": true, "context": "LookupError", "suppression": true}
+{"name": "second-auth-reached-direct", "passed": true}
+{"name": "real-policy-second-auth-direct", "passed": true, "target": "layauto_v2.normalization.contracts.request_decoder_input", "fault": "TypeError", "calls": 2, "received": "TypeError", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "second-auth-reached-direct", "passed": true}
+{"name": "real-policy-second-auth-direct", "passed": true, "target": "layauto_v2.normalization.contracts.request_decoder_input", "fault": "TypeError", "calls": 2, "received": "TypeError", "same_object": true, "context": "LookupError", "suppression": true}
+{"name": "second-auth-reached-direct", "passed": true}
+{"name": "real-policy-second-auth-direct", "passed": true, "target": "layauto_v2.normalization.contracts.request_decoder_input", "fault": "KeyboardInterrupt", "calls": 2, "received": "KeyboardInterrupt", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "second-auth-reached-direct", "passed": true}
+{"name": "real-policy-second-auth-direct", "passed": true, "target": "layauto_v2.normalization.contracts.request_decoder_input", "fault": "KeyboardInterrupt", "calls": 2, "received": "KeyboardInterrupt", "same_object": true, "context": "LookupError", "suppression": true}
+{"name": "second-auth-reached-direct", "passed": true}
+{"name": "real-policy-second-auth-direct", "passed": true, "target": "layauto_v2.normalization.contracts.request_decoder_input", "fault": "SystemExit", "calls": 2, "received": "SystemExit", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "second-auth-reached-direct", "passed": true}
+{"name": "real-policy-second-auth-direct", "passed": true, "target": "layauto_v2.normalization.contracts.request_decoder_input", "fault": "SystemExit", "calls": 2, "received": "SystemExit", "same_object": true, "context": "LookupError", "suppression": true}
+{"name": "second-auth-reached-direct", "passed": true}
+{"name": "real-policy-second-auth-direct", "passed": true, "target": "layauto_v2.domain.evidence.hashlib", "fault": "ValueError", "calls": 28, "received": "ValueError", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "second-auth-reached-direct", "passed": true}
+{"name": "real-policy-second-auth-direct", "passed": true, "target": "layauto_v2.domain.evidence.hashlib", "fault": "ValueError", "calls": 28, "received": "ValueError", "same_object": true, "context": "LookupError", "suppression": true}
+{"name": "second-auth-reached-direct", "passed": true}
+{"name": "real-policy-second-auth-direct", "passed": true, "target": "layauto_v2.domain.evidence.hashlib", "fault": "TypeError", "calls": 28, "received": "TypeError", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "second-auth-reached-direct", "passed": true}
+{"name": "real-policy-second-auth-direct", "passed": true, "target": "layauto_v2.domain.evidence.hashlib", "fault": "TypeError", "calls": 28, "received": "TypeError", "same_object": true, "context": "LookupError", "suppression": true}
+{"name": "second-auth-reached-direct", "passed": true}
+{"name": "real-policy-second-auth-direct", "passed": true, "target": "layauto_v2.domain.evidence.hashlib", "fault": "KeyboardInterrupt", "calls": 28, "received": "KeyboardInterrupt", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "second-auth-reached-direct", "passed": true}
+{"name": "real-policy-second-auth-direct", "passed": true, "target": "layauto_v2.domain.evidence.hashlib", "fault": "KeyboardInterrupt", "calls": 28, "received": "KeyboardInterrupt", "same_object": true, "context": "LookupError", "suppression": true}
+{"name": "second-auth-reached-direct", "passed": true}
+{"name": "real-policy-second-auth-direct", "passed": true, "target": "layauto_v2.domain.evidence.hashlib", "fault": "SystemExit", "calls": 28, "received": "SystemExit", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "second-auth-reached-direct", "passed": true}
+{"name": "real-policy-second-auth-direct", "passed": true, "target": "layauto_v2.domain.evidence.hashlib", "fault": "SystemExit", "calls": 28, "received": "SystemExit", "same_object": true, "context": "LookupError", "suppression": true}
+{"name": "second-auth-reached-direct", "passed": true}
+{"name": "real-policy-error-readback", "passed": true, "issue": "UnsupportedLocalContactOperator", "source": "tech/physical.json", "field": "/operators/same_layer_contact~11"}
+{"name": "error-wire-roundtrip-readback", "passed": true}
+{"name": "real-policy-second-auth-readback", "passed": true, "target": "layauto_v2.state.layout_store._materialize", "fault": "ValueError", "calls": 3, "received": "ValueError", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "second-auth-reached-readback", "passed": true}
+{"name": "real-policy-second-auth-readback", "passed": true, "target": "layauto_v2.state.layout_store._materialize", "fault": "ValueError", "calls": 3, "received": "ValueError", "same_object": true, "context": "LookupError", "suppression": true}
+{"name": "second-auth-reached-readback", "passed": true}
+{"name": "real-policy-second-auth-readback", "passed": true, "target": "layauto_v2.state.layout_store._materialize", "fault": "TypeError", "calls": 3, "received": "TypeError", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "second-auth-reached-readback", "passed": true}
+{"name": "real-policy-second-auth-readback", "passed": true, "target": "layauto_v2.state.layout_store._materialize", "fault": "TypeError", "calls": 3, "received": "TypeError", "same_object": true, "context": "LookupError", "suppression": true}
+{"name": "second-auth-reached-readback", "passed": true}
+{"name": "real-policy-second-auth-readback", "passed": true, "target": "layauto_v2.state.layout_store._materialize", "fault": "KeyboardInterrupt", "calls": 3, "received": "KeyboardInterrupt", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "second-auth-reached-readback", "passed": true}
+{"name": "real-policy-second-auth-readback", "passed": true, "target": "layauto_v2.state.layout_store._materialize", "fault": "KeyboardInterrupt", "calls": 3, "received": "KeyboardInterrupt", "same_object": true, "context": "LookupError", "suppression": true}
+{"name": "second-auth-reached-readback", "passed": true}
+{"name": "real-policy-second-auth-readback", "passed": true, "target": "layauto_v2.state.layout_store._materialize", "fault": "SystemExit", "calls": 3, "received": "SystemExit", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "second-auth-reached-readback", "passed": true}
+{"name": "real-policy-second-auth-readback", "passed": true, "target": "layauto_v2.state.layout_store._materialize", "fault": "SystemExit", "calls": 3, "received": "SystemExit", "same_object": true, "context": "LookupError", "suppression": true}
+{"name": "second-auth-reached-readback", "passed": true}
+{"name": "real-policy-second-auth-readback", "passed": true, "target": "layauto_v2.normalization.contracts.request_decoder_input", "fault": "ValueError", "calls": 2, "received": "ValueError", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "second-auth-reached-readback", "passed": true}
+{"name": "real-policy-second-auth-readback", "passed": true, "target": "layauto_v2.normalization.contracts.request_decoder_input", "fault": "ValueError", "calls": 2, "received": "ValueError", "same_object": true, "context": "LookupError", "suppression": true}
+{"name": "second-auth-reached-readback", "passed": true}
+{"name": "real-policy-second-auth-readback", "passed": true, "target": "layauto_v2.normalization.contracts.request_decoder_input", "fault": "TypeError", "calls": 2, "received": "TypeError", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "second-auth-reached-readback", "passed": true}
+{"name": "real-policy-second-auth-readback", "passed": true, "target": "layauto_v2.normalization.contracts.request_decoder_input", "fault": "TypeError", "calls": 2, "received": "TypeError", "same_object": true, "context": "LookupError", "suppression": true}
+{"name": "second-auth-reached-readback", "passed": true}
+{"name": "real-policy-second-auth-readback", "passed": true, "target": "layauto_v2.normalization.contracts.request_decoder_input", "fault": "KeyboardInterrupt", "calls": 2, "received": "KeyboardInterrupt", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "second-auth-reached-readback", "passed": true}
+{"name": "real-policy-second-auth-readback", "passed": true, "target": "layauto_v2.normalization.contracts.request_decoder_input", "fault": "KeyboardInterrupt", "calls": 2, "received": "KeyboardInterrupt", "same_object": true, "context": "LookupError", "suppression": true}
+{"name": "second-auth-reached-readback", "passed": true}
+{"name": "real-policy-second-auth-readback", "passed": true, "target": "layauto_v2.normalization.contracts.request_decoder_input", "fault": "SystemExit", "calls": 2, "received": "SystemExit", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "second-auth-reached-readback", "passed": true}
+{"name": "real-policy-second-auth-readback", "passed": true, "target": "layauto_v2.normalization.contracts.request_decoder_input", "fault": "SystemExit", "calls": 2, "received": "SystemExit", "same_object": true, "context": "LookupError", "suppression": true}
+{"name": "second-auth-reached-readback", "passed": true}
+{"name": "real-policy-second-auth-readback", "passed": true, "target": "layauto_v2.domain.evidence.hashlib", "fault": "ValueError", "calls": 82, "received": "ValueError", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "second-auth-reached-readback", "passed": true}
+{"name": "real-policy-second-auth-readback", "passed": true, "target": "layauto_v2.domain.evidence.hashlib", "fault": "ValueError", "calls": 82, "received": "ValueError", "same_object": true, "context": "LookupError", "suppression": true}
+{"name": "second-auth-reached-readback", "passed": true}
+{"name": "real-policy-second-auth-readback", "passed": true, "target": "layauto_v2.domain.evidence.hashlib", "fault": "TypeError", "calls": 82, "received": "TypeError", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "second-auth-reached-readback", "passed": true}
+{"name": "real-policy-second-auth-readback", "passed": true, "target": "layauto_v2.domain.evidence.hashlib", "fault": "TypeError", "calls": 82, "received": "TypeError", "same_object": true, "context": "LookupError", "suppression": true}
+{"name": "second-auth-reached-readback", "passed": true}
+{"name": "real-policy-second-auth-readback", "passed": true, "target": "layauto_v2.domain.evidence.hashlib", "fault": "KeyboardInterrupt", "calls": 82, "received": "KeyboardInterrupt", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "second-auth-reached-readback", "passed": true}
+{"name": "real-policy-second-auth-readback", "passed": true, "target": "layauto_v2.domain.evidence.hashlib", "fault": "KeyboardInterrupt", "calls": 82, "received": "KeyboardInterrupt", "same_object": true, "context": "LookupError", "suppression": true}
+{"name": "second-auth-reached-readback", "passed": true}
+{"name": "real-policy-second-auth-readback", "passed": true, "target": "layauto_v2.domain.evidence.hashlib", "fault": "SystemExit", "calls": 82, "received": "SystemExit", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "second-auth-reached-readback", "passed": true}
+{"name": "real-policy-second-auth-readback", "passed": true, "target": "layauto_v2.domain.evidence.hashlib", "fault": "SystemExit", "calls": 82, "received": "SystemExit", "same_object": true, "context": "LookupError", "suppression": true}
+{"name": "second-auth-reached-readback", "passed": true}
+{"name": "real-policy-second-auth-readback", "passed": true, "target": "layauto_v2.normalization.contracts.content_ref", "fault": "ValueError", "calls": 13, "received": "ValueError", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "second-auth-reached-readback", "passed": true}
+{"name": "real-policy-second-auth-readback", "passed": true, "target": "layauto_v2.normalization.contracts.content_ref", "fault": "ValueError", "calls": 13, "received": "ValueError", "same_object": true, "context": "LookupError", "suppression": true}
+{"name": "second-auth-reached-readback", "passed": true}
+{"name": "real-policy-second-auth-readback", "passed": true, "target": "layauto_v2.normalization.contracts.content_ref", "fault": "TypeError", "calls": 13, "received": "TypeError", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "second-auth-reached-readback", "passed": true}
+{"name": "real-policy-second-auth-readback", "passed": true, "target": "layauto_v2.normalization.contracts.content_ref", "fault": "TypeError", "calls": 13, "received": "TypeError", "same_object": true, "context": "LookupError", "suppression": true}
+{"name": "second-auth-reached-readback", "passed": true}
+{"name": "real-policy-second-auth-readback", "passed": true, "target": "layauto_v2.normalization.contracts.content_ref", "fault": "KeyboardInterrupt", "calls": 13, "received": "KeyboardInterrupt", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "second-auth-reached-readback", "passed": true}
+{"name": "real-policy-second-auth-readback", "passed": true, "target": "layauto_v2.normalization.contracts.content_ref", "fault": "KeyboardInterrupt", "calls": 13, "received": "KeyboardInterrupt", "same_object": true, "context": "LookupError", "suppression": true}
+{"name": "second-auth-reached-readback", "passed": true}
+{"name": "real-policy-second-auth-readback", "passed": true, "target": "layauto_v2.normalization.contracts.content_ref", "fault": "SystemExit", "calls": 13, "received": "SystemExit", "same_object": true, "context": "LookupError", "suppression": false}
+{"name": "second-auth-reached-readback", "passed": true}
+{"name": "real-policy-second-auth-readback", "passed": true, "target": "layauto_v2.normalization.contracts.content_ref", "fault": "SystemExit", "calls": 13, "received": "SystemExit", "same_object": true, "context": "LookupError", "suppression": true}
+{"name": "second-auth-reached-readback", "passed": true}
+{"name": "native-snapshot-nodes", "passed": true}
+{"name": "native-snapshot-edges", "passed": true}
+{"name": "native-snapshot-audits", "passed": true}
+{"name": "native-snapshot-components", "passed": true}
+{"name": "native-snapshot-endpoints", "passed": true}
+{"name": "native-snapshot-members", "passed": true}
+{"name": "native-snapshot-issues", "passed": true}
+{"name": "native-snapshot-completed", "passed": true}
+{"name": "inherited-single-snapshot-valid", "passed": true}
+{"name": "inherited-single-snapshot-invalid", "passed": true}
+{"name": "new-subclass-rejected-before-iteration", "passed": true, "exception": "ValueError", "message": "invalid local connectivity nodes"}
+{"name": "new-subclass-no-iteration", "passed": true}
+{"name": "recursive-alias-encode", "passed": true, "exception": "ValueError", "message": "foreign or mutable value in effective geometry graph"}
+{"name": "recursive-alias-captured-success", "passed": true, "exception": "ValueError", "message": "foreign or mutable value in effective geometry graph"}
+{"name": "wire-LocalRef-missing", "passed": true, "exception": "ValueError", "message": "unknown/missing local connectivity wire fields"}
+{"name": "wire-LocalRef-extra", "passed": true, "exception": "ValueError", "message": "unknown/missing local connectivity wire fields"}
+{"name": "wire-LocalContactBinding-missing", "passed": true, "exception": "ValueError", "message": "unknown/missing local connectivity wire fields"}
+{"name": "wire-LocalContactBinding-extra", "passed": true, "exception": "ValueError", "message": "unknown/missing local connectivity wire fields"}
+{"name": "wire-ContactNode-missing", "passed": true, "exception": "ValueError", "message": "unknown/missing local connectivity wire fields"}
+{"name": "wire-ContactNode-extra", "passed": true, "exception": "ValueError", "message": "unknown/missing local connectivity wire fields"}
+{"name": "wire-ContactEdge-missing", "passed": true, "exception": "ValueError", "message": "unknown/missing local connectivity wire fields"}
+{"name": "wire-ContactEdge-extra", "passed": true, "exception": "ValueError", "message": "unknown/missing local connectivity wire fields"}
+{"name": "wire-EnclosureSide-missing", "passed": true, "exception": "ValueError", "message": "unknown/missing local connectivity wire fields"}
+{"name": "wire-EnclosureSide-extra", "passed": true, "exception": "ValueError", "message": "unknown/missing local connectivity wire fields"}
+{"name": "wire-ContactComponent-missing", "passed": true, "exception": "ValueError", "message": "unknown/missing local connectivity wire fields"}
+{"name": "wire-ContactComponent-extra", "passed": true, "exception": "ValueError", "message": "unknown/missing local connectivity wire fields"}
+{"name": "wire-LocalConnectivityDraft-missing", "passed": true, "exception": "ValueError", "message": "unknown/missing local connectivity wire fields"}
+{"name": "wire-LocalConnectivityDraft-extra", "passed": true, "exception": "ValueError", "message": "unknown/missing local connectivity wire fields"}
+{"name": "wire-LocalConnectivityResult-missing", "passed": true, "exception": "ValueError", "message": "unknown/missing local connectivity wire fields"}
+{"name": "wire-LocalConnectivityResult-extra", "passed": true, "exception": "ValueError", "message": "unknown/missing local connectivity wire fields"}
+{"name": "nested-omission-nodes", "passed": true, "exception": "ValueError", "message": "local graph omitted/added nodes, edges, components or independent enclosure facts"}
+{"name": "constructor-omission-nodes", "passed": true, "exception": "ValueError", "message": "local graph omitted/added nodes, edges, components or independent enclosure facts"}
+{"name": "nested-omission-edges", "passed": true, "exception": "ValueError", "message": "local graph omitted/added nodes, edges, components or independent enclosure facts"}
+{"name": "constructor-omission-edges", "passed": true, "exception": "ValueError", "message": "local graph omitted/added nodes, edges, components or independent enclosure facts"}
+{"name": "nested-omission-audits", "passed": true, "exception": "ValueError", "message": "local graph omitted/added nodes, edges, components or independent enclosure facts"}
+{"name": "constructor-omission-audits", "passed": true, "exception": "ValueError", "message": "local graph omitted/added nodes, edges, components or independent enclosure facts"}
+{"name": "nested-omission-components", "passed": true, "exception": "ValueError", "message": "local graph omitted/added nodes, edges, components or independent enclosure facts"}
+{"name": "constructor-omission-components", "passed": true, "exception": "ValueError", "message": "local graph omitted/added nodes, edges, components or independent enclosure facts"}
+{"name": "malformed-nested-effective-wire", "passed": true, "exception": "ValueError", "message": "invalid exact wire value"}
+{"status": "passed", "checks": 260, "failures": []}

@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/workspace/Layauto-w010/docs/tasks/W010/independent-premerge-review/source-probe.py", line 235, in <module>
+    main()
+  File "/workspace/Layauto-w010/docs/tasks/W010/independent-premerge-review/source-probe.py", line 221, in main
+    assert renamed.value.ref != direct.value.ref
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

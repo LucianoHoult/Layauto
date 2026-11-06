@@ -1,0 +1,24 @@
+{
+  "command": [
+    "/workspace/.venvs/layauto/bin/python",
+    "-B",
+    "/workspace/Layauto-w010/docs/tasks/W010/independent-premerge-review/source-probe.py"
+  ],
+  "cwd": "/workspace/Layauto-w010",
+  "head": "c4909ab679d0c0806200fcb132db8a5de1ad3e75",
+  "started_utc": "2026-11-06T03:18:32.443091+00:00",
+  "script_sha256": "7149d5bc6e57ea8bab1f1e2d4f23e80b40ce07072ca2dc6cd12e34cd41855938",
+  "env_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONPATH": "/workspace/Layauto-w010",
+    "XDG_CACHE_HOME": "/tmp/w010-source-cache",
+    "MPLCONFIGDIR": "/tmp/w010-source-mpl"
+  },
+  "exit_code": 1,
+  "elapsed_seconds": 136.08214289100005,
+  "completed_utc": "2026-11-06T03:20:48.525380+00:00",
+  "outputs": {
+    "source-probe.stdout.json": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source-probe.stderr.txt": "0ea8c50de7d456ea23afda5ec4c408c9571fa5da7beee4ba389a48c7334c9b60"
+  }
+}
