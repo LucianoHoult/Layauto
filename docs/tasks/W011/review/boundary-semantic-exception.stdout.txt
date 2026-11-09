@@ -1,0 +1,62 @@
+[
+  {
+    "injected": "TypeError",
+    "raised": "ValueError",
+    "same_object": false,
+    "same_cause": false,
+    "same_context": false,
+    "suppression": true,
+    "original_object_cause_kept": true,
+    "original_context_kept": true
+  },
+  {
+    "injected": "KeyError",
+    "raised": "ValueError",
+    "same_object": false,
+    "same_cause": false,
+    "same_context": false,
+    "suppression": true,
+    "original_object_cause_kept": true,
+    "original_context_kept": true
+  },
+  {
+    "injected": "AttributeError",
+    "raised": "ValueError",
+    "same_object": false,
+    "same_cause": false,
+    "same_context": false,
+    "suppression": true,
+    "original_object_cause_kept": true,
+    "original_context_kept": true
+  },
+  {
+    "injected": "UnicodeError",
+    "raised": "ValueError",
+    "same_object": false,
+    "same_cause": false,
+    "same_context": false,
+    "suppression": true,
+    "original_object_cause_kept": true,
+    "original_context_kept": true
+  },
+  {
+    "injected": "ValueError",
+    "raised": "ValueError",
+    "same_object": true,
+    "same_cause": true,
+    "same_context": true,
+    "suppression": false,
+    "original_object_cause_kept": true,
+    "original_context_kept": true
+  },
+  {
+    "injected": "KeyboardInterrupt",
+    "raised": "KeyboardInterrupt",
+    "same_object": true,
+    "same_cause": true,
+    "same_context": true,
+    "suppression": false,
+    "original_object_cause_kept": true,
+    "original_context_kept": true
+  }
+]

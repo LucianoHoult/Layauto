@@ -1,0 +1,4 @@
+device DeviceId(cell=CellId(name='INV_M1_SYNTH'), name='MN0')
+field_sources.record_id FrozenMap(_entries=(('derivation', 'author ordinal label, not a raw identity'), ('sources', (FrozenMap(_entries=(('path', 'query/requests.json'), ('sha256', '57f5f38cb3ec450fd1815ef88c618c03a9703690672348b313fa35fbce97bc62'), ('json_pointer', '/requests/0/record_ids/0'), ('lexeme', 'D0'))),))))
+seed_source SourceRef(uri='query/requests.json', sha256='57f5f38cb3ec450fd1815ef88c618c03a9703690672348b313fa35fbce97bc62', field='/requests/0/record_ids/0', line=None, column=None, byte_offset=None, record_index=None)
+CR05 helper corrected: PASS

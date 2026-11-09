@@ -1,0 +1,65 @@
+{
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "executable": "/workspace/work/w011-engineering/dev312/bin/python",
+  "package": "/workspace/work/w011-engineering/preliminary-smoke-01/source/layauto_v2/__init__.py",
+  "distribution_version": "uninstalled-source-preflight",
+  "execution_kind": "source_preflight_not_clean_install",
+  "direct": {
+    "counts": {
+      "MN0": 5,
+      "MP0": 7
+    },
+    "wire_sha256": "d8a5067967d183675b087daad4ecd6d6eb2e3277d927fba76e7e31dbeb8e2a68",
+    "wire_bytes": 54056361,
+    "encode_seconds": 2.2307656810000935,
+    "decode_seconds": 102.61175462000006,
+    "raw_FIN_records": 18,
+    "comparison_status": "equal",
+    "difference_count": 0,
+    "local_enclosure_status": "pass",
+    "local_nodes": 14,
+    "local_edges": 8,
+    "local_components": 6,
+    "body_shapes": 6
+  },
+  "readback": {
+    "counts": {
+      "MN0": 5,
+      "MP0": 7
+    },
+    "wire_sha256": "f2fb40c4c4a782ff49ed799ff0ecf15882f6f272361ae1a9747c917261bdc123",
+    "wire_bytes": 136548381,
+    "encode_seconds": 9.444580128000098,
+    "decode_seconds": 193.13010156099995,
+    "raw_FIN_records": 18,
+    "comparison_status": "equal",
+    "difference_count": 0,
+    "local_enclosure_status": "pass",
+    "local_nodes": 14,
+    "local_edges": 8,
+    "local_components": 6,
+    "body_shapes": 6
+  },
+  "extraction_mismatch": {
+    "counts": {
+      "MN0": 4,
+      "MP0": 7
+    },
+    "wire_sha256": "8dabda84157214944c40198b8fe28ab6761dfefc9868927cde5d54acf008aea0",
+    "wire_bytes": 54051810,
+    "encode_seconds": 6.116241407999951,
+    "decode_seconds": 128.92223931700005,
+    "raw_FIN_records": 18,
+    "comparison_status": "mismatch",
+    "difference_count": 1,
+    "local_enclosure_status": "pass",
+    "local_nodes": 14,
+    "local_edges": 8,
+    "local_components": 6,
+    "body_shapes": 6
+  },
+  "attempt_unchanged": true,
+  "limitations": [
+    "Finite synthetic smoke, not full net/body/model equivalence or run completion."
+  ]
+}

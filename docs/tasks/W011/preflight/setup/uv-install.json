@@ -1,0 +1,16 @@
+{
+  "command": [
+    "uv",
+    "python",
+    "install",
+    "3.10"
+  ],
+  "cwd": "/workspace",
+  "environment_overrides": {
+    "UV_CACHE_DIR": "/workspace/work/w011-engineering/uv-cache",
+    "UV_PYTHON_INSTALL_DIR": "/workspace/work/w011-engineering/pythons"
+  },
+  "exit_code": 0,
+  "tool_combined_output": "Downloading cpython-3.10.22-linux-x86_64-gnu (download) (28.0MiB)\n Downloaded cpython-3.10.22-linux-x86_64-gnu (download)\nInstalled Python 3.10.22 in 1.33s\n + cpython-3.10.22-linux-x86_64-gnu\nwarning: Failed to install executable for cpython-3.10.22-linux-x86_64-gnu\n  cause: Failed to create Python executable link\n  cause: failed to symlink file from /home/agent/.local/bin/python3.10 to /workspace/work/w011-engineering/pythons/cpython-3.10-linux-x86_64-gnu/bin/python3.10: Read-only file system (os error 30)\n",
+  "capture_note": "Combined tool output retained; stdout/stderr were not separated for this bootstrap command. No home shortcut is required."
+}

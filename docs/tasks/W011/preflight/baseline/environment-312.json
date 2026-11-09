@@ -1,0 +1,26 @@
+{
+  "command": [
+    "/workspace/.venvs/layauto/bin/python",
+    "-c",
+    "import sys,platform,importlib.metadata as m,json,layauto_v2,resource; print(json.dumps({\"executable\":sys.executable,\"version\":sys.version,\"platform\":platform.platform(),\"source_package\":layauto_v2.__file__,\"rlimits\":{n:resource.getrlimit(getattr(resource,n)) for n in (\"RLIMIT_AS\",\"RLIMIT_CPU\",\"RLIMIT_DATA\",\"RLIMIT_NOFILE\",\"RLIMIT_STACK\")},\"packages\":{d.metadata[\"Name\"]:d.version for d in m.distributions()}},indent=2))"
+  ],
+  "cwd": "/workspace/work/w011-engineering/baseline-source",
+  "exit_code": 0,
+  "elapsed_seconds": 0.06879496574401855,
+  "environment_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PIP_CACHE_DIR": "/workspace/work/w011-engineering/pip-cache",
+    "MYPY_CACHE_DIR": "/workspace/work/w011-engineering/mypy-312",
+    "MPLCONFIGDIR": "/workspace/work/w011-engineering/mplconfig"
+  },
+  "outputs": {
+    "stdout": {
+      "path": "environment-312.stdout.txt",
+      "sha256": "b215219e4d66b8174e88fe8ea774c4af1842e52ef43c30207896cc06026adcd3"
+    },
+    "stderr": {
+      "path": "environment-312.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  }
+}

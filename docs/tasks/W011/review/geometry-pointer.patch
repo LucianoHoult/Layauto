@@ -1,0 +1,15 @@
+diff --git a/layauto_v2/annotation/channel_identity.py b/layauto_v2/annotation/channel_identity.py
+index 74a662f..81a8b0c 100644
+--- a/layauto_v2/annotation/channel_identity.py
++++ b/layauto_v2/annotation/channel_identity.py
+@@ -75,8 +75,8 @@ def locate_channels(devices: tuple[Device, ...], channels: tuple[ExactRegion, ..
+         if len(intersections) != 1:
+             code = 'MissingSeedChannel' if not intersections else 'AmbiguousSeedChannel'
+             issues.append(EvidenceIssue('unsupported', code,
+-                          f'device seed has {len(intersections)} positive-area channel candidates',
+-                          replace(seed_source(seed), field='/recognized_channel_intersection')))
++                          f'device seed {seed.record["record_id"]} has {len(intersections)} positive-area channel candidates '
++                          'under recognized_channel_intersection', seed_source(seed)))
+     by_seed = {location.seed_ref: location for location in locations}
+     proposed: dict[DeviceId, ChannelAssociation] = {}
+     known_devices = {device.id for device in devices}

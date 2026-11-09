@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/workspace/work/w011-review/source_probe.py", line 67, in <module>
+    tr=build_channel_identity(local(root/'site_config.yaml'))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/w011-review/source_probe.py", line 23, in local
+    check(str(site)+':read',parsed.status=='success')
+  File "/workspace/work/w011-review/source_probe.py", line 19, in check
+    assert condition, name
+           ^^^^^^^^^
+AssertionError: /workspace/work/w011-review/tmptirjgwkn/target/site_config.yaml:read

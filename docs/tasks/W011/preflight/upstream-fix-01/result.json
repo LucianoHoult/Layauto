@@ -1,0 +1,16 @@
+{
+  "argv": [
+    "/workspace/work/w011-engineering/dev312/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-p",
+    "no:cacheprovider",
+    "tests/contracts/test_w007_contracts.py",
+    "tests/contracts/test_w007_inputs.py",
+    "-q"
+  ],
+  "cwd": "/workspace/Layauto",
+  "exit_code": 0,
+  "elapsed_seconds": 345.7278473377228
+}

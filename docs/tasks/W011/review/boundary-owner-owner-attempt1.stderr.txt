@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/workspace/work/w011-review-boundary-owner/probe_owner.py", line 17, in <module>
+    tech=next(record for record in geometry_input.completed if record.kind=='tech')
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'GeometryInput' object has no attribute 'completed'

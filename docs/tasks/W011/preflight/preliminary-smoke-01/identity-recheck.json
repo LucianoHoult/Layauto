@@ -1,0 +1,9 @@
+{
+  "snapshot_file_count": 258,
+  "changed_files": [],
+  "source_unchanged": true,
+  "source_manifest_sha256": "f163d26d25a4a07c776d3348a70a1083fc4f34fc8a53615e050f3b5d458be3ec",
+  "source_snapshot_sha256": "df4e81f4516e6f74c8e8894d1e0bd86a578d5167ba6e4bbf215405449bf43148",
+  "preflight_smoke_sha256": "8bbed23e066e6102c1b64e6382b73e15b36b45d0e8a2ad4d5338656e4bce5f98",
+  "formal_smoke_at_preflight_start_sha256": "07e1a81d686340a47f36db7bf7f719170b9aca451c5ca934050c386a60cfe131"
+}

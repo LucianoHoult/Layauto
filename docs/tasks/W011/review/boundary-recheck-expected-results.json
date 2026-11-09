@@ -1,0 +1,29 @@
+{
+  "review_head": "975852d3b9ea946aca24f727071cf26a7dce8bc7",
+  "results": [
+    {
+      "case": "admission",
+      "expected_issue": "UnsupportedFingerCount",
+      "status": "error",
+      "exception_type": "TypeError",
+      "same_object": true,
+      "same_cause": true,
+      "same_context": true,
+      "suppression": false,
+      "actual_context_type": "LookupError",
+      "actual_context_text": "original context"
+    },
+    {
+      "case": "identity",
+      "expected_issue": "UnknownDeviceIdentity",
+      "status": "error",
+      "exception_type": "TypeError",
+      "same_object": true,
+      "same_cause": true,
+      "same_context": true,
+      "suppression": false,
+      "actual_context_type": "LookupError",
+      "actual_context_text": "original context"
+    }
+  ]
+}

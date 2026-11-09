@@ -1,0 +1,116 @@
+{
+  "reviewer": "/root/code_review/geometry_review",
+  "python": "/workspace/work/w011-engineering/dev312/bin/python",
+  "version": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "commands": [
+    {
+      "script": "geometry-probe-original.py",
+      "cwd": "/workspace/Layauto",
+      "stdout_stderr": "geometry-probe-original.log",
+      "exit_code": 1,
+      "reason": "reviewer harness applied failure overlay after deleting cache; product normal completed"
+    },
+    {
+      "script": "geometry-seed-source-original.py",
+      "cwd": "/workspace/Layauto",
+      "stdout_stderr": "geometry-seed-source-original.log",
+      "exit_code": 1,
+      "reason": "confirmed CR-05 actual W007 seed source wrapper ValueError"
+    },
+    {
+      "script": "geometry-probe-retry.py",
+      "cwd": "/workspace/Layauto",
+      "stdout_stderr": "geometry-probe-retry.log",
+      "exit_code": 1,
+      "reason": "6 actual combinations and 300 union probes passed; reviewer neutral seed rational format error stopped later probes"
+    },
+    {
+      "script": "geometry-seed-source-fixed.py",
+      "cwd": "/workspace/Layauto",
+      "stdout_stderr": "geometry-seed-source-fixed.log",
+      "exit_code": 0,
+      "frozen_source_commit": "975852d3b9ea946aca24f727071cf26a7dce8bc7"
+    },
+    {
+      "script": "geometry-fixed-probe.py",
+      "cwd": "/workspace/work/w011-review-geometry/fixed975",
+      "stdout_stderr": "geometry-fixed-probe.log",
+      "exit_code": 0,
+      "frozen_source_commit": "975852d3b9ea946aca24f727071cf26a7dce8bc7"
+    },
+    {
+      "script": "geometry-pointer-probe.py",
+      "arguments": [
+        "/workspace/work/w011-review-geometry/fixed975",
+        "975852d3b9ea946aca24f727071cf26a7dce8bc7"
+      ],
+      "cwd": "/workspace/Layauto",
+      "stdout_stderr": "geometry-pointer-original.log",
+      "exit_code": 1,
+      "reason": "CR-05 remaining issue pointer overwrite reproduced"
+    },
+    {
+      "script": "geometry-pointer-probe.py",
+      "arguments": [
+        "/workspace/work/w011-review-geometry/fixed589",
+        "5894399d7b79d655a4a278e78419c4d21eea828e"
+      ],
+      "cwd": "/workspace/Layauto",
+      "stdout_stderr": "geometry-pointer-589-original.log",
+      "exit_code": 1,
+      "reason": "589 commit predates working-tree pointer fix"
+    },
+    {
+      "script": "geometry-pointer-probe.py",
+      "arguments": [
+        "/workspace/work/w011-review-geometry/fixed-pointer-candidate",
+        "5894399d7b79d655a4a278e78419c4d21eea828e-plus-pointer-patch"
+      ],
+      "cwd": "/workspace/Layauto",
+      "stdout_stderr": "geometry-pointer-fixed.log",
+      "exit_code": 0,
+      "base_commit": "5894399d7b79d655a4a278e78419c4d21eea828e",
+      "patch": "geometry-pointer.patch",
+      "replacement_file": "geometry-pointer-annotation.py"
+    },
+    {
+      "script": "geometry-pointer-probe.py",
+      "arguments": [
+        "/workspace/work/w011-review-geometry/fixed891",
+        "8917d38d916c914bfa785cb116982f3f299b38de"
+      ],
+      "cwd": "/workspace/Layauto",
+      "stdout_stderr": "geometry-pointer-891.log",
+      "exit_code": 0,
+      "reason": "final committed explicit str message differs in bytes from earlier patch; independently rerun"
+    }
+  ],
+  "artifacts_sha256": {
+    "geometry-fixed-probe.log": "7955a4aa35fe338e655c0b8e657c8e778e7e3ac8bf650701756850fe70a80b01",
+    "geometry-fixed-probe.py": "40efe1e97587146a61e088a16066f1daa60d3d67006b0bee29287758734691a4",
+    "geometry-pointer-589-original.log": "efd4b5a5726ded043512b3b795a26c528cc3f0a9b0efdfa7c49476af9e78fee7",
+    "geometry-pointer-891.log": "4393c0bd639ef9645e2226ca5ee44d32c35b26a18e76e184131fb5dfe470756a",
+    "geometry-pointer-annotation.py": "ca5ba85e59f6da055d85fc8777ed5f44e21e324d0698626cdc6028be4f62bbcd",
+    "geometry-pointer-commit.json": "28e0ce39e89b74caf7f2be3f02f6a0e2b303f754160f1825289e9f457681854f",
+    "geometry-pointer-fixed.log": "51e87cc194c47ed1ac7f5278b18b6a86cae5053fc8463a0bf65bea715a749ca5",
+    "geometry-pointer-original.log": "3aa16a7cd477a0d4ad30f4256ab92ae80cc5b67ff6d568253916e16b86a94240",
+    "geometry-pointer-probe.py": "2e248adb09100e6e3e09ce532ae573c6c7fe265fd2ce01fbd18109dcc0402efc",
+    "geometry-pointer.patch": "35983d078866938b877f4ee2076240b95afbf28d3ea63f201cb85ce2b38a910f",
+    "geometry-probe-original.log": "0bcd73e5bb9ad037f4d648939d0532a34bb7dc350652a2b4c8a029410c63f088",
+    "geometry-probe-original.py": "7b2cd6ff6bb4865d2372f782e188e07a0be2bd6a77c0daa7452c3c00c56c4de2",
+    "geometry-probe-retry.log": "4bd1e2e3c994cbf7194e1d7ff34f8c1c886b413ebadc59c0262a02a3be6aee55",
+    "geometry-probe-retry.py": "a1a3ecdb4dbbd6da9c12933e575c8ef2a0417571e5de34623704c50ea534a00a",
+    "geometry-retry-identity.json": "1be2070bb8632f7d8cd6a6087e0ea8fc625cce2f3711f4c903f45db50ab9ed90",
+    "geometry-retry-source.tar.gz": "f62919134d54ae5cc97ca7d0cd78d78b828dde031689811ba5f413277f83c87c",
+    "geometry-seed-source-fixed.log": "6fc25f0edadeee4b868ab1898d771ca861de0c35f3565209c3ed08b7522aec5b",
+    "geometry-seed-source-fixed.py": "eabe6a3f8a15cc8c2cf88baada7ead8ee3c8b5e1b79f10b40387b65462d2f892",
+    "geometry-seed-source-original.log": "624ad62108d55a1716bec0f1711a55c2c4efa3b744c253f3a1cefd21654eb110",
+    "geometry-seed-source-original.py": "d53e537ef695eb6201d28ce3c51beebf91b44ac2ba65010797a427c240ef668b"
+  },
+  "limitations": [
+    "Not complete A1-A8/full regression/dual-interpreter/build/install/readback verification",
+    "Per-case times are shared-host observations, not limits; reviewer did not independently measure peak RSS or maximum supported input",
+    "Fixed probe uses actual W009 channels and actual W007 raw variants for neutral locator; complete captured W011 mutation paths belong to formal suite and parent review"
+  ],
+  "pointer_final_commit": "8917d38d916c914bfa785cb116982f3f299b38de"
+}

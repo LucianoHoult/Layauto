@@ -1,0 +1,22 @@
+{
+  "review_head": "f49323311bd817f066cb3e2411cad45219764f04",
+  "results": [
+    {
+      "case": "direct_invalid_leaf_constructor",
+      "rejected": true,
+      "exception": "ValueError",
+      "message": "channel values require exact Fraction scalars"
+    },
+    {
+      "case": "forged_nested_leaf_public_measurement",
+      "forged_width_type": "int",
+      "equal_to_original": true,
+      "uses_object_setattr_bypass": true,
+      "public_constructor_accepted": true,
+      "retained_width_type": "int",
+      "codec_rejected": true,
+      "exception": "ValueError",
+      "message": "channel values require exact Fraction scalars"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "commit": "8917d38d916c914bfa785cb116982f3f299b38de",
+  "path": "layauto_v2/annotation/channel_identity.py",
+  "sha256": "b30ad5ed83f111de23307ccbdba8d82789eb73b5cb72334fbd668a91f03f7451",
+  "earlier_patch_file": "geometry-pointer-annotation.py",
+  "earlier_patch_sha256": "ca5ba85e59f6da055d85fc8777ed5f44e21e324d0698626cdc6028be4f62bbcd",
+  "byte_equal": false,
+  "difference": "message explicitly calls str(record_id); ChannelSeed requires exact str",
+  "diff": "--- tested-pointer-patch\n+++ 8917d38d916c914bfa785cb116982f3f299b38de\n@@ -75,7 +75,7 @@\n         if len(intersections) != 1:\n             code = 'MissingSeedChannel' if not intersections else 'AmbiguousSeedChannel'\n             issues.append(EvidenceIssue('unsupported', code,\n-                          f'device seed {seed.record[\"record_id\"]} has {len(intersections)} positive-area channel candidates '\n+                          f'device seed {str(seed.record[\"record_id\"])} has {len(intersections)} positive-area channel candidates '\n                           'under recognized_channel_intersection', seed_source(seed)))\n     by_seed = {location.seed_ref: location for location in locations}\n     proposed: dict[DeviceId, ChannelAssociation] = {}\n",
+  "validation": "same independent pointer probe rerun on complete git archive of final commit",
+  "output": "geometry-pointer-891.log",
+  "exit_code": 0
+}

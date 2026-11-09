@@ -1,0 +1,43 @@
+{
+  "phase": "interim-fixed-leaf-review",
+  "reviewer": "/root/code_review/boundary_review",
+  "head": "975852d3b9ea946aca24f727071cf26a7dce8bc7",
+  "source_snapshot": "/workspace/work/w011-review-boundary-fixed",
+  "python": "Python 3.12.14",
+  "cwd": "/workspace/Layauto",
+  "source_sha256": {
+    "layauto_v2/domain/channel_identity.py": "802dcf80f5de28971eb7002a5aed15e0eb03ee750e960097258dca07636e65f4",
+    "layauto_v2/domain/source_location.py": "ab7a21b202144b626bd91d50947596551410d9404002ad258989dfdf90eb5d43",
+    "layauto_v2/derive/channel_identity.py": "c7a1f866135f43362493d45bdccac81b060daa649f9cbabc37ae8c751e84ce56",
+    "layauto_v2/normalization/channel_identity.py": "f9b3c5e069261767f7f89da033bfe42ae166bfe706415fc4ac899c2fed81b944",
+    "layauto_v2/normalization/channel_identity_codec.py": "ef7f6188a15512d832fe8c92f9a55fb76c6012126c40f1050b51a8c6cdb9c161",
+    "layauto_v2/normalization/codec.py": "b4ee23a44725414c709c0b834cf6bce539c65bc58c9ab7387815b596efebed7d",
+    "layauto_v2/normalization/component.py": "7eaef9bfb41e2ee14e65444d37066bd14388f56aaedb725bf9571982a8b96c69"
+  },
+  "artifact_sha256": {
+    "boundary-recheck-leaf.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "boundary-recheck-leaf.stdout.txt": "c52402dbb91b143c79347fcb2fb1e8485882050081ddf32670016285096b364b",
+    "boundary-recheck-malformed.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "boundary-recheck-malformed.stdout.txt": "a89580a561142d4df00bbc381d2bf6210f76c49687cdd9a8e4e08b73136be74e",
+    "boundary-recheck-probe_leaf.py": "437297752eafb576393522afaccc5a6558e5dd0323ca061cd75b1044c7e7b210",
+    "boundary-recheck-probe_malformed.py": "4e68c9e76185d145959e61dd100e3abcd0a70cb5937075903d6df3a9b325ee8b",
+    "boundary-recheck-probe_semantic_exception.py": "b08a7afc285be96c4cb2d18786c8e1a6b67a26c9fa15459cfca445977a321903",
+    "boundary-recheck-semantic-exception.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "boundary-recheck-semantic-exception.stdout.txt": "90bc48d85ca92162ad67910f927a2c332277e8d16bd5b929603ad3b417e21ec6"
+  },
+  "commands": [
+    {
+      "shell": "/workspace/work/w011-engineering/dev312/bin/python /workspace/work/w011-review-boundary-fixed/probe_leaf.py > /workspace/work/w011-review-boundary-fixed/leaf.stdout.txt 2> /workspace/work/w011-review-boundary-fixed/leaf.stderr.txt\n/workspace/work/w011-engineering/dev312/bin/python /workspace/work/w011-review-boundary-fixed/probe_semantic_exception.py > /workspace/work/w011-review-boundary-fixed/semantic-exception.stdout.txt 2> /workspace/work/w011-review-boundary-fixed/semantic-exception.stderr.txt\ncat /workspace/work/w011-review-boundary-fixed/leaf.stdout.txt /workspace/work/w011-review-boundary-fixed/semantic-exception.stdout.txt",
+      "shell_exit_code": 0
+    },
+    {
+      "shell": "/workspace/work/w011-engineering/dev312/bin/python /workspace/work/w011-review-boundary-fixed/probe_malformed.py > /workspace/work/w011-review-boundary-fixed/malformed.stdout.txt 2> /workspace/work/w011-review-boundary-fixed/malformed.stderr.txt",
+      "exit_code": 0
+    }
+  ],
+  "limits": {
+    "memory_max": "17179869184",
+    "cpu_max": "400000 100000",
+    "full_w011_wire_not_run": true
+  }
+}

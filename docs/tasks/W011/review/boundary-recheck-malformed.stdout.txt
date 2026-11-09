@@ -1,0 +1,107 @@
+{
+  "review_head": "975852d3b9ea946aca24f727071cf26a7dce8bc7",
+  "normal_seed_roundtrip": true,
+  "normal_neutral_roundtrips": [
+    "Cell",
+    "CellId",
+    "Device",
+    "DeviceAnnotationSeed",
+    "DeviceId",
+    "DeviceIdentity",
+    "Membership",
+    "Net",
+    "NetAnnotationSeed",
+    "NetId",
+    "NetIdentity",
+    "Parameter",
+    "QueryKey",
+    "SemanticCircuitDraft",
+    "TargetCircuit",
+    "Terminal"
+  ],
+  "field_mutations_count": 384,
+  "results": {
+    "ValueError": 369,
+    "accepted": 15
+  },
+  "unexpected_non_value_errors": [],
+  "accepted_mutations_not_claimed_invalid": [
+    {
+      "record": "SemanticCircuitDraft",
+      "field": "profile_id",
+      "mutation": "text"
+    },
+    {
+      "record": "Cell",
+      "field": "globals",
+      "mutation": "tuple"
+    },
+    {
+      "record": "Terminal",
+      "field": "role",
+      "mutation": "text"
+    },
+    {
+      "record": "Parameter",
+      "field": "axis",
+      "mutation": "text"
+    },
+    {
+      "record": "Net",
+      "field": "port_indices",
+      "mutation": "tuple"
+    },
+    {
+      "record": "Net",
+      "field": "global_net",
+      "mutation": "bool"
+    },
+    {
+      "record": "Net",
+      "field": "memberships",
+      "mutation": "tuple"
+    },
+    {
+      "record": "Membership",
+      "field": "terminal",
+      "mutation": "text"
+    },
+    {
+      "record": "TargetCircuit",
+      "field": "profile_id",
+      "mutation": "text"
+    },
+    {
+      "record": "QueryKey",
+      "field": "header_id",
+      "mutation": "text"
+    },
+    {
+      "record": "QueryKey",
+      "field": "query_run_id",
+      "mutation": "text"
+    },
+    {
+      "record": "QueryKey",
+      "field": "database_id",
+      "mutation": "null"
+    },
+    {
+      "record": "QueryKey",
+      "field": "database_id",
+      "mutation": "text"
+    },
+    {
+      "record": "QueryKey",
+      "field": "identity",
+      "mutation": "text"
+    },
+    {
+      "record": "QueryKey",
+      "field": "index",
+      "mutation": "null"
+    }
+  ],
+  "elapsed_seconds": 21.158618152000145,
+  "maxrss_kib": 25464
+}

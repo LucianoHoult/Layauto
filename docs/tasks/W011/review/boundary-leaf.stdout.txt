@@ -1,0 +1,17 @@
+[
+  {
+    "case": "metadata_wrong_type",
+    "constructor_accepted": true,
+    "decode_accepted": true
+  },
+  {
+    "case": "record_source_fields_not_locations",
+    "constructor_accepted": true,
+    "decode_accepted": true
+  },
+  {
+    "case": "xref_source_fields_not_locations",
+    "constructor_accepted": true,
+    "decode_accepted": true
+  }
+]

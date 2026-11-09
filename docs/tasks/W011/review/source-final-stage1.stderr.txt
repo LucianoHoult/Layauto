@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/workspace/work/w011-review-final-probe/probe_final.py", line 76, in <module>
+    reject('foreign_draft',lambda:replace(result,value=tr.value))
+  File "/workspace/work/w011-review-final-probe/probe_final.py", line 25, in reject
+    else: raise AssertionError(name+' unexpectedly accepted')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: foreign_draft unexpectedly accepted

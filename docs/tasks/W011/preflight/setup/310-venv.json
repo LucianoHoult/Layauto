@@ -1,0 +1,15 @@
+{
+  "command": [
+    "/workspace/work/w011-engineering/pythons/cpython-3.10-linux-x86_64-gnu/bin/python3.10",
+    "-m",
+    "venv",
+    "/workspace/work/w011-engineering/dev310"
+  ],
+  "cwd": "/workspace/work/w011-engineering",
+  "exit_code": 0,
+  "elapsed_seconds": 3.3004751205444336,
+  "outputs": {
+    "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}
