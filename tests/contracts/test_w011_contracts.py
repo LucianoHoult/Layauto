@@ -251,3 +251,22 @@ def test_cr01_seed_leaf_rejects_untyped_opaque_and_provenance_fields(accepted, c
     with pytest.raises(ValueError): replace(seed, **changes)
     forged = unchecked_replace(seed, **changes)
     with pytest.raises(ValueError): decode_record(encode_record(forged))
+
+
+@pytest.mark.parametrize('change', ('width_int', 'count_fraction'))
+def test_cr04_equal_numeric_values_cannot_bypass_nested_representation_validation(accepted, change):
+    draft = accepted.value
+    measurement = draft.measurements[0]
+    if change == 'width_int':
+        original = measurement.evaluations[0]
+        forged = unchecked_replace(original, width_nm=int(original.width_nm))
+        assert forged == original and type(forged.width_nm) is int
+        invalid_measurement = unchecked_replace(measurement, evaluations=(forged,) + measurement.evaluations[1:])
+    else:
+        invalid_measurement = unchecked_replace(measurement, count=Fraction(measurement.count))
+        assert invalid_measurement == measurement and type(invalid_measurement.count) is Fraction
+    invalid_draft = unchecked_replace(draft, measurements=(invalid_measurement,) + draft.measurements[1:])
+    invalid_result = unchecked_replace(accepted, value=invalid_draft)
+    for record in (invalid_measurement, invalid_draft, invalid_result):
+        with pytest.raises(ValueError): replace(record)
+        with pytest.raises(ValueError): decode_record(encode_record(record))
