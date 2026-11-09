@@ -196,3 +196,30 @@ def test_nested_parameter_malformed_controls_still_raise_value_error(captures, c
     else: fields['source'] = {'scalar': None}
     tree['record']['fields']['declared']['semantic_record'] = canonical_bytes(parameter)
     with pytest.raises(ValueError): decode_record(canonical_bytes(tree))
+
+
+@pytest.mark.parametrize('case,hook', (('admission', 'NormalizationResult'), ('identity', 'replace')))
+def test_cr03_actual_w007_expected_failure_then_completion_fault_keeps_history(tmp_path, monkeypatch, case, hook):
+    from layauto_v2.normalization import component as semantic_component
+    from w005_cases import rebind
+    from w007_cases import ready_copy
+    from w010_cases import build_local
+    from w011_cases import change_cdl
+    root = ready_copy(tmp_path)
+    if case == 'admission':
+        change_cdl(root, 'source', 'NF=1', 'NF=2')
+    else:
+        path = root / 'query/raw/iXref.temp'
+        path.write_text(path.read_text().replace('MN0', 'UNDECLARED'))
+        rebind(root)
+    local = build_local(root)
+    control = semantic_component.normalize(local.input.input.input.semantic_input)
+    assert control.status == 'error' and control.issues
+    failure = TypeError('unexpected W007 ' + hook + ' after actual expected failure')
+    cause, context = RuntimeError('existing cause'), LookupError('existing context')
+    failure.__cause__, failure.__context__, failure.__suppress_context__ = cause, context, False
+    def broken(*args, **kwargs): raise failure
+    monkeypatch.setattr(semantic_component, hook, broken)
+    with pytest.raises(TypeError) as raised:
+        build_channel_identity(local)
+    assert_same_history(raised, failure, cause, context)
