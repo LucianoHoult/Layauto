@@ -411,3 +411,25 @@ def test_actual_geometry_length_and_width_are_not_backfilled_from_profile_or_cdl
     assert len(widths) == 1 and widths[0].measured == Fraction(3, 10**9)
     assert widths[0].declared.exact == Fraction(2, 10**9) and widths[0].device_id.name == 'MN0'
     assert all(row.coverage_fraction == Fraction(4, 5) for row in result.value.associations)
+
+
+def test_cr05_multiple_bad_seed_diagnostics_keep_actual_query_pointer_and_record_id(tmp_path):
+    from w005_cases import sha
+    root = ready_copy(tmp_path)
+    change_seeds(root, 'Q17', ((58, 70, 62, 80), (58, 20, 62, 180)))
+    result = build(root)
+    assert result.status == 'error' and result.value is not None
+    issues = [row for row in result.issues if row.code in ('MissingSeedChannel', 'AmbiguousSeedChannel')]
+    assert len(issues) == 2
+    ids = set()
+    for issue in issues:
+        source = issue.source
+        assert source.uri == 'query/requests.json' and source.sha256 == sha(root / source.uri)
+        assert source.field.startswith('/requests/') and '/record_ids/' in source.field
+        resolved = read_json(root / source.uri)
+        for piece in source.field[1:].split('/'):
+            key = piece.replace('~1', '/').replace('~0', '~')
+            resolved = resolved[int(key)] if isinstance(resolved, list) else resolved[key]
+        assert type(resolved) is str and resolved in issue.message
+        ids.add(resolved)
+    assert ids == {'D0', 'D0_extra_1'}

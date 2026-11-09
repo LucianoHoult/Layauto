@@ -283,3 +283,44 @@ def test_cr04_completed_capture_payload_uses_typed_canonical_equality(accepted):
     assert completed[index] == original  # Python bool/int equality is insufficient for a receipt.
     assert type(completed[index].payload['owners']['physical']['fin_count_profile']['finger_count_required']) is bool
     with pytest.raises(ValueError): replace(accepted, completed=tuple(completed))
+
+
+def test_cr06_seed_owner_operand_must_match_retained_derived_payload(accepted):
+    from layauto_v2.domain.codec import FrozenMap
+    draft = accepted.value
+    seed = draft.seeds[0]
+    location = seed.record['field_sources']['derived_layer']['sources'][1]
+    changed = FrozenMap(dict(location, lexeme=dict(location['lexeme'], target_layer='METAL')))
+    assert all(changed[key] == location[key] for key in ('path', 'sha256', 'json_pointer'))
+    assert changed['lexeme']['target_layer'] != location['lexeme']['target_layer']
+    def mutate(value):
+        if type(value) is FrozenMap:
+            if value == location: return changed
+            return FrozenMap({key: mutate(child) for key, child in value.items()})
+        if type(value) is tuple: return tuple(mutate(child) for child in value)
+        return value
+    with pytest.raises(ValueError):
+        changed_seed = replace(seed, record=mutate(seed.record))
+        seeds = (changed_seed,) + draft.seeds[1:]
+        build_channel_identity_draft(draft.local, draft.source, seeds, draft.derived)
+
+
+def test_cr04_full_result_rebuilds_unmeasured_source_provenance_beyond_projection(accepted):
+    draft = accepted.value
+    source = draft.source
+    cell = next(row for row in source.cells if row.id == source.selected_cell)
+    device = cell.devices[0]
+    parameter = next(row for row in device.parameters if row.axis == 'finger_count')
+    forged_parameter = unchecked_replace(parameter, source=replace(parameter.source, line=999))
+    forged_device = unchecked_replace(device, parameters=tuple(
+        forged_parameter if row is parameter else row for row in device.parameters))
+    forged_cell = unchecked_replace(cell, devices=tuple(
+        forged_device if row is device else row for row in cell.devices))
+    forged_source = unchecked_replace(source, cells=tuple(
+        forged_cell if row is cell else row for row in source.cells))
+    forged_draft = unchecked_replace(draft, source=forged_source)
+    assert forged_draft != draft
+    assert canonical_bytes(forged_draft.to_value()) == canonical_bytes(draft.to_value())
+    with pytest.raises(ValueError): replace(forged_draft)
+    with pytest.raises(ValueError): replace(accepted, value=forged_draft)
+    with pytest.raises(ValueError): decode_record(encode_record(forged_draft))
