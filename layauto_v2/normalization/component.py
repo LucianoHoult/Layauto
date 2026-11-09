@@ -22,7 +22,10 @@ def normalize(input: NormalizationInput) -> NormalizationResult:
                         device_seeds=device_seeds, net_seeds=net_seeds)
         return NormalizationResult('success', facts, (), facts, input)
     except NormalizationError as exc:
-        if exc.progress is not None:
-            facts = replace(facts, device_identities=tuple(exc.progress.devices), net_identities=tuple(exc.progress.nets),
-                            device_seeds=tuple(exc.progress.device_seeds), net_seeds=tuple(exc.progress.net_seeds))
-        return NormalizationResult('error', None, (exc.issue,), facts, input)
+        problem = exc
+    # Reconstruction can fail unexpectedly. Keep it outside the handled input
+    # error so the original exception's context/cause/suppression survive.
+    if problem.progress is not None:
+        facts = replace(facts, device_identities=tuple(problem.progress.devices), net_identities=tuple(problem.progress.nets),
+                        device_seeds=tuple(problem.progress.device_seeds), net_seeds=tuple(problem.progress.net_seeds))
+    return NormalizationResult('error', None, (problem.issue,), facts, input)

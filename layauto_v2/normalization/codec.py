@@ -94,15 +94,10 @@ def _unpack(value: Value) -> object:
     # decoder may raise an unexpected exception which must retain its identity
     # through every enclosing record, including NormalizationResult.
     decoded = {field: _unpack(value['fields'][field]) for field in fields}
-    if value['record'] in ('NormalizationInput', 'ReadbackBinding'):
-        # These receipt constructors validate their shapes before using their
-        # children. Their internal reconstruction failures retain identity.
-        result = constructor(**decoded)
-    else:
-        try:
-            result = constructor(**decoded)
-        except (TypeError, KeyError, AttributeError, UnicodeError) as exc:
-            raise ValueError('invalid normalization record fields') from exc
+    # Constructors own explicit malformed-field validation. Blanket translation
+    # of TypeError/KeyError/AttributeError/UnicodeError hides unexpected faults
+    # in semantic leaves newly embedded by the W011 public result chain.
+    result = constructor(**decoded)
     if _pack(result) != value:
         raise ValueError('noncanonical normalization record')
     return result
