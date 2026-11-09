@@ -96,10 +96,16 @@ def _owners(local: LocalConnectivityDraft, source: SemanticCircuitDraft,
     physical = local.binding.physical
     drawn = local.binding.drawn
     for owner, kind in ((physical, 'physical'), (drawn, 'drawn'), (derived, 'derived')):
+        schema_error: SchemaError | None = None
         try:
             validate_payload(owner.payload, kind)
         except SchemaError as exc:
-            raise problem(owner.sources[0], exc.path or '/', 'invalid channel policy owner: ' + str(exc)) from exc
+            schema_error = exc
+        if schema_error is not None:
+            # Construct outside the handler: an unexpected diagnostic failure
+            # must not acquire this handled input error as its implicit context.
+            raise problem(owner.sources[0], schema_error.path or '/',
+                          'invalid channel policy owner: ' + str(schema_error)) from schema_error
     profile = mapping(physical.payload['fin_count_profile'])
     for key, expected in CONSUMED_PROFILE.items():
         if profile.get(key) != expected:
