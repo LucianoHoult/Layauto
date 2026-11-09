@@ -134,6 +134,12 @@ def _owners(local: LocalConnectivityDraft, source: SemanticCircuitDraft,
         if len(matches) != 1:
             raise problem(derived.sources[0], '/derived_registry', 'device seed registry must resolve uniquely')
         index, declaration = matches[0]
+        operand = mapping(sequence(mapping(mapping(seed.record['field_sources'])['derived_layer'])['sources'])[1])
+        owner_location = ref_from_location(operand)
+        if (canonical_bytes(operand['lexeme']) != canonical_bytes(declaration)
+                or (owner_location.uri, owner_location.sha256, owner_location.field)
+                != (derived.sources[0].uri, derived.sources[0].sha256, f'/derived_registry/{index}')):
+            raise ValueError('seed derived operand contradicts its retained owner/source role')
         for key, expected in CONSUMED_DERIVED.items():
             if declaration.get(key) != expected:
                 raise problem(derived.sources[0], f'/derived_registry/{index}/{key}', 'unsupported consumed seed localization policy')

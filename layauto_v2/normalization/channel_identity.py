@@ -6,7 +6,7 @@ Neither outcome establishes complete extraction or publication assurance.
 """
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from typing import Literal
 
 from layauto_v2.domain.channel_identity import CHANNEL_TYPES, ChannelProblem, ChannelSeed
@@ -116,11 +116,17 @@ class ChannelIdentityResult:
             if type(self.value) is not ChannelIdentityDraft:
                 raise ValueError('channel result requires a typed draft')
             validate_closed_graph(self.value, DRAFT_TYPES + CHANNEL_TYPES)
+            # Re-enter the public constructor for every retained field, including
+            # source parameters outside the measured-axis projection.
+            replace(self.value)
         semantic, draft, issues = _evaluate(self.input)
         status = 'error' if issues else 'success'
+        # Import after module initialization; encoding a draft does not construct
+        # another captured result. Compare the full DTO, not its summary digest.
+        from .channel_identity_codec import encode_record
         same_draft = (self.value is None and draft is None) or (
             self.value is not None and draft is not None
-            and canonical_bytes(self.value.to_value()) == canonical_bytes(draft.to_value()))
+            and encode_record(self.value) == encode_record(draft))
         if (self.semantic != semantic
                 or semantic_codec.encode_record(self.semantic) != semantic_codec.encode_record(semantic)
                 or not same_draft or self.issues != issues
