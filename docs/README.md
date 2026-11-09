@@ -18,6 +18,7 @@
 | 几何与占用做到哪里？ | [W008](tasks/W008-geometry-base-occupancy.md)：已形成全部本地图形及精确base occupancy；[PM最终验收与集成](tasks/W008-geometry-base-occupancy.md#pm2-integration-20261103)已完成。内部索引不代表完整工艺坐标或physical connectivity |
 | 有效图形解释做到哪里？ | [W009](tasks/W009-effective-geometry-terminals.md#pm4-integration-20261104)：CUT差集、channel与OD端区草稿已验收集成，63项组合验证通过；局部连接图、body、标注、提取及规则执行后续完成 |
 | 局部物理连通做到哪里？ | [W010](tasks/W010-local-contact-connectivity.md#pm2-integration-20261106)：本地contact/connector/component及独立局部T05 audit已验收集成，15项定向组合及direct/readback通过；外部body/完整规则及运行发布后续完成 |
+| 下一步为何做 FIN 计量？ | [W011](tasks/W011-channel-identity-fin-count.md)：准备将 query 器件身份定位到实际 channel，计算有效 FIN 并与 source CDL 有限参数核对；任务要求/准备review与执行prompt归该文件，尚无产品实现 |
 | 整体开发顺序怎样安排？ | [roadmap.md](roadmap.md)：首版里程碑、依赖、架构要求到验收的覆盖；规划已 review 并由 PM 接收，产品能力未验收 |
 | 如何准备与运行环境？ | [environment/local-setup.md](environment/local-setup.md)：Python、安装、测试及历史环境记录 |
 | 如何跨机器工作？ | [environment/remote-development.md](environment/remote-development.md)：运行位置、环境准备与代码交接 |
