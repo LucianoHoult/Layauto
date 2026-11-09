@@ -1,0 +1,226 @@
+{
+  "schema": "layauto-w011-independent-a8-audit/1",
+  "status": "passed",
+  "audited_at_utc": "2026-11-09T16:12:45.942304+00:00",
+  "reviewer": "/root/code_review",
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "docs/tasks/W011/review/final-a8-audit.py"
+  ],
+  "cwd": "/workspace/Layauto",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "audit_script_sha256": "b199efc59cbee9cf5a4456992d28b643e763296ed6d69492d44e57f537f5cf18",
+  "source_commit": "e89bdaa6a091f56cfaf7862dced7232d34e22514",
+  "runtime_equivalent_to": "8917d38d916c914bfa785cb116982f3f299b38de",
+  "source_files": 262,
+  "runtime_files": 100,
+  "source_manifest_sha256": "dd463fa402a8469ba7212f4781cd2082eb86466b1484810ed89dbc02211bb475",
+  "source_snapshot_sha256": "26a7d52f195c7b6b1b6b0d0b0a78f9386d740902d2187b3c7b8d0c98e85e2095",
+  "verification_receipt_sha256": "e963c6e787dcd3d1c5c5cf6c54afce9b9f659e7d2df58214cb661d724321c930",
+  "verification_index": {
+    "sha256": "91fc8869f2b1cb3f15d76334f9577f6902f14c6b90e900a1b25f735311c4f077",
+    "indexed_files": 83
+  },
+  "resources_receipt_sha256": "3a87be1c54c0468959c8f9509b1953ca3158dd2006c4a0d80b886f66468906e2",
+  "resources_index": {
+    "sha256": "2bdf899cf8d52e61aca4941b5f240a76379149f2837f7ea9ba56e27f5a6c6459",
+    "indexed_files": 16
+  },
+  "old_failed_attempt_index": {
+    "sha256": "5321bc2a7e21c903f4d951ef5eb7bea197b8de9d6d30b84d0d54f3f5a73c1e99",
+    "indexed_files": 31
+  },
+  "preflight_index_at_audit": {
+    "sha256": "3bdb2ae0b7ca67ff52bae29f3f300790af5ee48d527806910bc6aceb1771575d",
+    "indexed_files": 105
+  },
+  "matrix": {
+    "310": {
+      "tests": 1605,
+      "pytest_seconds": 12905.97,
+      "command_seconds": 12908.836,
+      "gate_wait_seconds": 2603.347384
+    },
+    "312": {
+      "tests": 1605,
+      "pytest_seconds": 7310.82,
+      "command_seconds": 7313.363,
+      "gate_wait_seconds": 0.000139
+    }
+  },
+  "smokes": {
+    "310": {
+      "command_seconds": 620.633,
+      "cases": {
+        "direct": {
+          "counts": {
+            "MN0": 5,
+            "MP0": 7
+          },
+          "wire_sha256": "30694f27be49814631086d830f532196e4698760c3771ba8e4d62d1f68f3abf9",
+          "wire_bytes": 54053625,
+          "encode_seconds": 2.072900651000964,
+          "decode_seconds": 66.72033527099848,
+          "raw_FIN_records": 18,
+          "comparison_status": "equal",
+          "difference_count": 0,
+          "local_enclosure_status": "pass",
+          "local_nodes": 14,
+          "local_edges": 8,
+          "local_components": 6,
+          "body_shapes": 6
+        },
+        "readback": {
+          "counts": {
+            "MN0": 5,
+            "MP0": 7
+          },
+          "wire_sha256": "5f45e88b8040e682b9a9f6b6c54f8bcc45002e3c3fc90995d85c79063ab88e2b",
+          "wire_bytes": 136510077,
+          "encode_seconds": 3.770764821998455,
+          "decode_seconds": 155.19504847700227,
+          "raw_FIN_records": 18,
+          "comparison_status": "equal",
+          "difference_count": 0,
+          "local_enclosure_status": "pass",
+          "local_nodes": 14,
+          "local_edges": 8,
+          "local_components": 6,
+          "body_shapes": 6
+        },
+        "extraction_mismatch": {
+          "counts": {
+            "MN0": 4,
+            "MP0": 7
+          },
+          "wire_sha256": "915e4b278479e7a22be2eadad84960ea15ff4cede6f9f294494fad2df8dc9491",
+          "wire_bytes": 54050082,
+          "encode_seconds": 2.3179229999987,
+          "decode_seconds": 75.30849710199982,
+          "raw_FIN_records": 18,
+          "comparison_status": "mismatch",
+          "difference_count": 1,
+          "local_enclosure_status": "pass",
+          "local_nodes": 14,
+          "local_edges": 8,
+          "local_components": 6,
+          "body_shapes": 6
+        }
+      }
+    },
+    "312": {
+      "command_seconds": 450.631,
+      "cases": {
+        "direct": {
+          "counts": {
+            "MN0": 5,
+            "MP0": 7
+          },
+          "wire_sha256": "30694f27be49814631086d830f532196e4698760c3771ba8e4d62d1f68f3abf9",
+          "wire_bytes": 54053625,
+          "encode_seconds": 1.5859396749983716,
+          "decode_seconds": 51.29294294600186,
+          "raw_FIN_records": 18,
+          "comparison_status": "equal",
+          "difference_count": 0,
+          "local_enclosure_status": "pass",
+          "local_nodes": 14,
+          "local_edges": 8,
+          "local_components": 6,
+          "body_shapes": 6
+        },
+        "readback": {
+          "counts": {
+            "MN0": 5,
+            "MP0": 7
+          },
+          "wire_sha256": "5f45e88b8040e682b9a9f6b6c54f8bcc45002e3c3fc90995d85c79063ab88e2b",
+          "wire_bytes": 136510077,
+          "encode_seconds": 2.896498711001186,
+          "decode_seconds": 106.49124539100012,
+          "raw_FIN_records": 18,
+          "comparison_status": "equal",
+          "difference_count": 0,
+          "local_enclosure_status": "pass",
+          "local_nodes": 14,
+          "local_edges": 8,
+          "local_components": 6,
+          "body_shapes": 6
+        },
+        "extraction_mismatch": {
+          "counts": {
+            "MN0": 4,
+            "MP0": 7
+          },
+          "wire_sha256": "164b6e9f85bdaad1781305898a6511bc2b95f484ed55ac72296b47e8bb552c6c",
+          "wire_bytes": 54050082,
+          "encode_seconds": 1.8379408020009578,
+          "decode_seconds": 52.979914141000336,
+          "raw_FIN_records": 18,
+          "comparison_status": "mismatch",
+          "difference_count": 1,
+          "local_enclosure_status": "pass",
+          "local_nodes": 14,
+          "local_edges": 8,
+          "local_components": 6,
+          "body_shapes": 6
+        }
+      }
+    }
+  },
+  "resource_cases": {
+    "normal-direct": {
+      "command_seconds": 101.15421000900096,
+      "wall_seconds": {
+        "W005_read_inputs": 0.8201535750013136,
+        "W008_adapter_and_build": 0.4091517359993304,
+        "W009_build": 0.694169193997368,
+        "W010_build": 13.30807964899941,
+        "W011_build": 37.2087455410001,
+        "W011_result_encode": 1.5223439580004197,
+        "W011_result_decode": 46.75885565600038
+      },
+      "wire_bytes": 54050313,
+      "wire_sha256": "4d07033687223809e542ea661138fe0566ed162f6eab17fb7d4f806745377f16",
+      "peak_rss_kib": 2847416
+    },
+    "normal-readback": {
+      "command_seconds": 211.57665307099887,
+      "wall_seconds": {
+        "W006_prepare_inputs": 1.5397864440019475,
+        "W008_adapter_and_build": 0.8661693460016977,
+        "W009_build": 1.469529195001087,
+        "W010_build": 25.746205015002488,
+        "W011_build": 74.94776512400131,
+        "W011_result_encode": 3.0640132799999265,
+        "W011_result_decode": 101.86079596499985
+      },
+      "wire_bytes": 136461405,
+      "wire_sha256": "7dddd7f10a7320df76cee184f29bba64ccd3f267791ea2c1c7117fb4b5a32504",
+      "peak_rss_kib": 7322828
+    },
+    "extraction-mismatch": {
+      "command_seconds": 95.96902353099722,
+      "wall_seconds": {
+        "W005_read_inputs": 0.6189960730007442,
+        "W008_adapter_and_build": 0.3651001189973613,
+        "W009_build": 0.6424338139986503,
+        "W010_build": 11.969838978999178,
+        "W011_build": 35.41877592200035,
+        "W011_result_encode": 1.3971216310019372,
+        "W011_result_decode": 45.17853329300124
+      },
+      "wire_bytes": 54049506,
+      "wire_sha256": "55b4d479e507e310d9c554f4166040d51b78d6c2b62af74b11ee9194065a5012",
+      "peak_rss_kib": 2854456
+    }
+  },
+  "observer_sample_count": 1399,
+  "observer_raw_sha256": "dc1e64d763e0e1779e1b419598b866821d4a53fe4455ede0efc43964e2833c22",
+  "limitations": [
+    "Read-only evidence audit, no product imports or heavy rerun.",
+    "Wire bytes are measured by archived successful probes; audit does not rerun codecs.",
+    "Live install file audit depends on this workspace; package archives and manifests are durable.",
+    "Final Git commit/push and PM acceptance remain execution/PM actions."
+  ]
+}

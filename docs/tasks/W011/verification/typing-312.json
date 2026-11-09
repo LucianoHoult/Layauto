@@ -1,0 +1,22 @@
+{
+  "command": [
+    "/workspace/work/w011-engineering/dev312/bin/python",
+    "-m",
+    "mypy"
+  ],
+  "cwd": "/workspace/work/w011-final-e89bdaa/source",
+  "exit_code": 0,
+  "environment_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PIP_CACHE_DIR": "/workspace/work/w011-final-e89bdaa/pip-cache",
+    "MYPY_CACHE_DIR": "/workspace/work/w011-final-e89bdaa/mypy-typing-312",
+    "MPLCONFIGDIR": "/workspace/work/w011-final-e89bdaa/mplconfig"
+  },
+  "started_at_utc": "2026-11-09T14:09:31.220895+00:00",
+  "finished_at_utc": "2026-11-09T14:09:33.311243+00:00",
+  "elapsed_seconds": 2.09,
+  "stdout": "typing-312.stdout.txt",
+  "stdout_sha256": "80244665c7088b2cce8820f63a43e8138804ae2a8a670798bf2704dd2a9a50a9",
+  "stderr": "typing-312.stderr.txt",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

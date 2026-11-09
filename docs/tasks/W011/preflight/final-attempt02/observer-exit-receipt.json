@@ -1,0 +1,15 @@
+{
+  "command": [
+    "/workspace/work/w011-engineering/dev312/bin/python",
+    "-B",
+    "/workspace/work/w011-engineering/final-attempt02/observe_resources.py"
+  ],
+  "cwd": "/workspace",
+  "exit_code": 0,
+  "exit_observed_at_utc": "2026-11-09T16:01:36.843948+00:00",
+  "observer_started_at_utc": "2026-11-09T12:08:03.555075+00:00",
+  "observer_finished_at_utc": "2026-11-09T16:01:11.130687+00:00",
+  "scope": "Actual execution-tool exit code; observer timestamps come from its original summary. Full interpreter flags are preserved in observer-plan.json; summary command is the reconstructed Python argv.",
+  "stdout_sha256": "2d6b89fd6b9a1fd03a99ee15408b78a2581b52f143a011489776f8af0114407e",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

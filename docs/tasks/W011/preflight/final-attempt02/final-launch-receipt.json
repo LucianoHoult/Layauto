@@ -1,0 +1,52 @@
+{
+  "command": [
+    "/workspace/work/w011-engineering/dev312/bin/python",
+    "/workspace/Layauto/docs/tasks/W011/prepare_final.py",
+    "--root",
+    "/workspace/Layauto",
+    "--out",
+    "/workspace/Layauto/docs/tasks/W011/verification",
+    "--work",
+    "/workspace/work/w011-final-e89bdaa",
+    "--smoke",
+    "/workspace/Layauto/docs/tasks/W011/installed_smoke.py",
+    "--python310",
+    "/workspace/work/w011-engineering/dev310/bin/python",
+    "--python312",
+    "/workspace/work/w011-engineering/dev312/bin/python",
+    "--baseline-collection",
+    "/workspace/Layauto/docs/tasks/W011/preflight/baseline-collection312.txt",
+    "--expected-tests",
+    "1605",
+    "--matrix-workers",
+    "2",
+    "--resource-gate",
+    "/workspace/Layauto/docs/tasks/W011/w011_resource_gate.py"
+  ],
+  "cwd": "/workspace/Layauto",
+  "source_commit_at_launch": "e89bdaa6a091f56cfaf7862dced7232d34e22514",
+  "started_at_utc": "2026-11-09T12:07:35.745096+00:00",
+  "pid": 21364,
+  "scripts": [
+    {
+      "path": "/workspace/Layauto/docs/tasks/W011/prepare_final.py",
+      "sha256": "66456ce9659d2ad2481ab0f8b4309054caf19a41057f1a86b01531f3dd914794"
+    },
+    {
+      "path": "/workspace/Layauto/docs/tasks/W011/installed_smoke.py",
+      "sha256": "173b95ec81082b5eb2d33aba1334f08730a04160b69353377b593d5956ea51ce"
+    },
+    {
+      "path": "/workspace/Layauto/docs/tasks/W011/w011_resource_gate.py",
+      "sha256": "1c78c2066736f0f56d80f3353da133a1d23407b0675a0a8f5e471b1337469d70"
+    }
+  ],
+  "environment_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "finished_at_utc": "2026-11-09T16:01:10.567227+00:00",
+  "elapsed_seconds": 14014.822286136001,
+  "exit_code": 0,
+  "stdout_sha256": "da6e56ba882a29f2c138e512f3c2eb3a9d1364c36306618cfd2a118add64aa6e",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

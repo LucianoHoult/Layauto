@@ -1,0 +1,26 @@
+{
+  "case": "extraction-mismatch",
+  "command": [
+    "/workspace/work/w011-engineering/dev312/bin/python",
+    "-B",
+    "/workspace/Layauto/docs/tasks/W011/resource_probe.py",
+    "--root",
+    "/workspace/Layauto",
+    "--case",
+    "extraction-mismatch",
+    "--output",
+    "/workspace/Layauto/docs/tasks/W011/resources/extraction-mismatch.json",
+    "--work",
+    "/workspace/work/w011-final-resources-e89bdaa"
+  ],
+  "cwd": "/workspace/work/w011-final-resources-e89bdaa",
+  "started_at_utc": "2026-11-09T16:07:14.273685+00:00",
+  "finished_at_utc": "2026-11-09T16:08:50.242695+00:00",
+  "elapsed_seconds": 95.96902353099722,
+  "exit_code": 0,
+  "live_git_head_at_launch": "e89bdaa6a091f56cfaf7862dced7232d34e22514",
+  "tested_source_commit": "e89bdaa6a091f56cfaf7862dced7232d34e22514",
+  "stdout_sha256": "a51968c05a4476f575e5bef60e5948bedf37b5a20e778ba1f325c0457efb9e34",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "runtime_matches_verified_snapshot_before_and_after": true
+}

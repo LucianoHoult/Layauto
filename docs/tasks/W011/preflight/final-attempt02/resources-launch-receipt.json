@@ -1,0 +1,44 @@
+{
+  "command": [
+    "/workspace/work/w011-engineering/dev312/bin/python",
+    "/workspace/work/w011-engineering/run_resources_v2.py",
+    "--root",
+    "/workspace/Layauto",
+    "--verification",
+    "/workspace/Layauto/docs/tasks/W011/verification",
+    "--out",
+    "/workspace/Layauto/docs/tasks/W011/resources",
+    "--work",
+    "/workspace/work/w011-final-resources-e89bdaa",
+    "--python",
+    "/workspace/work/w011-engineering/dev312/bin/python",
+    "--probe",
+    "/workspace/Layauto/docs/tasks/W011/resource_probe.py",
+    "--expected-source-commit",
+    "e89bdaa6a091f56cfaf7862dced7232d34e22514",
+    "--expected-tests",
+    "1605"
+  ],
+  "cwd": "/workspace/Layauto",
+  "tested_source_commit": "e89bdaa6a091f56cfaf7862dced7232d34e22514",
+  "started_at_utc": "2026-11-09T16:02:01.442440+00:00",
+  "pid": 23758,
+  "scripts": [
+    {
+      "path": "/workspace/work/w011-engineering/run_resources_v2.py",
+      "sha256": "7ceee310f124fdab33500820a0e1ed1c09a6df153b08c4356414161dcfd79510"
+    },
+    {
+      "path": "/workspace/Layauto/docs/tasks/W011/resource_probe.py",
+      "sha256": "5c9d2b82653f86095626ecad7fdedc32953cf9c99ce4089cfca99dc7c14606dc"
+    }
+  ],
+  "environment_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "finished_at_utc": "2026-11-09T16:08:50.263488+00:00",
+  "elapsed_seconds": 408.8210541999979,
+  "exit_code": 0,
+  "stdout_sha256": "759ea82262224179d4d3d48cfb7ee49284bf2ca5d8935dbb565e004ec5d6797f",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

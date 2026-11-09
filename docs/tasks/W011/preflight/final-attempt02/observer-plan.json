@@ -1,0 +1,13 @@
+{
+  "command": [
+    "/workspace/work/w011-engineering/dev312/bin/python",
+    "-B",
+    "/workspace/work/w011-engineering/final-attempt02/observe_resources.py"
+  ],
+  "cwd": "/workspace",
+  "script_sha256": "ecf78a197a12aac99856e2660b2fe4c7c8587d8670cd45ab3630298a07e913d2",
+  "prepared_at_utc": "2026-11-09T12:08:03.521767+00:00",
+  "stdout": "observer.stdout.txt",
+  "stderr": "observer.stderr.txt",
+  "scope": "Read-only process/cgroup observation; raw stdout/stderr retained."
+}

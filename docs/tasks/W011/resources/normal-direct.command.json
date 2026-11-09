@@ -1,0 +1,26 @@
+{
+  "case": "normal-direct",
+  "command": [
+    "/workspace/work/w011-engineering/dev312/bin/python",
+    "-B",
+    "/workspace/Layauto/docs/tasks/W011/resource_probe.py",
+    "--root",
+    "/workspace/Layauto",
+    "--case",
+    "normal-direct",
+    "--output",
+    "/workspace/Layauto/docs/tasks/W011/resources/normal-direct.json",
+    "--work",
+    "/workspace/work/w011-final-resources-e89bdaa"
+  ],
+  "cwd": "/workspace/work/w011-final-resources-e89bdaa",
+  "started_at_utc": "2026-11-09T16:02:01.514698+00:00",
+  "finished_at_utc": "2026-11-09T16:03:42.668899+00:00",
+  "elapsed_seconds": 101.15421000900096,
+  "exit_code": 0,
+  "live_git_head_at_launch": "e89bdaa6a091f56cfaf7862dced7232d34e22514",
+  "tested_source_commit": "e89bdaa6a091f56cfaf7862dced7232d34e22514",
+  "stdout_sha256": "db9ffa2c4bf9f2467c6674c14fcea1de14f9ccb824b7e6bd06284b3fcd8481b1",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "runtime_matches_verified_snapshot_before_and_after": true
+}

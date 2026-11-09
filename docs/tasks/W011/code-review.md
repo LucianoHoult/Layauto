@@ -2,7 +2,9 @@
 
 Reviewer：`/root/code_review`；独立专项 `/root/code_review/geometry_review`、`/root/code_review/boundary_review`。各 reviewer 未承担本变更设计、实现或正式测试编写。日期：2026-11-09。
 
-**产品代码必须修正项 0（`8917d38d916c914bfa785cb116982f3f299b38de`）；A8 最终工程交付仍待复核，不能作为最终交付通过或 PM 验收。** 产品候选开始于 `a8d3987bc3295c84ff2aa62be0350af51955fbeb`，随后各次修正身份及独立验证记录如下；受审 base 为 PM 准备 `81e01da1e5a6ce8e7132f3cebf8ee92bc237246f`。正式新增回归已冻结至 `02725e2e90be6b3145be915be699aa64ce998ed7`（runtime 与 `8917d38` 相同），双完整矩阵、包与安装证据仍由执行侧完成，最终结论将在本报告追加。
+**最终代码与 A8 工程证据独立 review 完成，剩余必须修正项 0；可交 PM 复核，不代替 PM 验收。** 最终被测源码、测试及配置为 `e89bdaa6a091f56cfaf7862dced7232d34e22514`，100 个 runtime 文件与已独立复核的产品修正 `8917d38d916c914bfa785cb116982f3f299b38de` 相同。工程索引身份与完整结论见本报告末尾“最终 A8 独立复核”。最终提交、推送及远端完整 SHA 仍由执行者交接记录。
+
+历史范围保留：产品候选开始于 `a8d3987bc3295c84ff2aa62be0350af51955fbeb`，受审 base 为 PM 准备 `81e01da1e5a6ce8e7132f3cebf8ee92bc237246f`；首轮正式回归冻结为 `02725e2e90be6b3145be915be699aa64ce998ed7`。产品复核完成时，工程证据仍 pending；下文各阶段的待完成说明、原 findings、修后残留、探针自身失败和撤回记录均保留其当时范围，最终状态以末尾结论为准。
 
 ## 范围与方法
 
@@ -101,3 +103,56 @@ CR-05 的 wrapper 与定位 pointer 两层问题均关闭：专项从最终 `891
 `review/source-probe-initial.py` 在 `f493233` 产品导入后顺序执行实际 normal direct、W006 caller-read readback、禁 `Path.read_bytes/read_text/open` 与 `repo.read` 下 W011 构造和完整 readback result codec，随后核 attempt 等值且 unsealed。原 stderr 停于后续临时 target 的 `read_inputs` assert，故以上前置 assertions 均已执行通过；由于原 probe 只在末尾打印 checks，不将空 stdout 冒记为完整成功 receipt。命令、原脚本/stdout/stderr、身份依据和限制见 `review/source-probe-initial-receipt.json`。
 
 失败原因是 reviewer 将 target VT 改成既有 literal grammar 不支持的 `alternate`，轻量解析重现 `InvalidCdlValue('unsupported literal for VT')`；这是 probe 使用范围错误，不是产品 finding。后续 target witness 使用现有支持的 NFIN/L/W/NF/M 变化，不修改 fixture/owner 以接受新 VT。尚未执行的 target/source/cross-capture assertions 不由这次退出 1 推断通过。
+
+## 最终 A8 独立复核（2026-11-09）
+
+主 reviewer 完成全部工程证据核验，边界专项另核实际包/安装与三项资源证据。该阶段只读原产物、重算 hash、解析归档和核对公开脚本，不重跑重型测试或 codec，也不把执行者的 `status=passed` 单字段当成结论。[独立审计脚本](review/final-a8-audit.py)实际 exit 0，[完整审计结果](review/final-a8-audit.stdout.json)保存审计解释器、命令、UTC、源身份、索引、计数与资源；stderr 为空。原 CR-01–CR-06 全部按前文原实证及修后重跑关闭，HG-01 和两项测试 setup 补修亦关闭，**剩余必须项 0**。
+
+[资源边界专项审计](review/a8-resource-boundary.json)另对 93 条捕获记录逐项核 bytes/SHA 与冻结 fixture／五个已批准 mismatch 替换位置，确认 mismatch 保持原 source CDL 的 MN0 NFIN=5；没有运行产品重建。该附件的原证据 hash 与范围限制一并保留。
+
+### 冻结身份与证据完整性
+
+受审 source 为 `e89bdaa6a091f56cfaf7862dced7232d34e22514`。逐文件核对 262 项 source/tests/config live 字节与完整 tar、100 项 runtime 与已审 `8917d38`、新 wheel/sdist 和双实际 site-packages；均一致。两个测试补修原提交与执行分支 `75c846fb1d0d75a392f3a2eeacb87b98ddd0c008`、`6ea8b0a933650633e0c4ee1d3ca1bc21e9f9c6ff` 的补丁逐字相同，未因补修改变 runtime/schema/fixture。
+
+| 原证据 | SHA-256 |
+| --- | --- |
+| [source manifest](verification/source-manifest.json) | `dd463fa402a8469ba7212f4781cd2082eb86466b1484810ed89dbc02211bb475` |
+| [完整 source snapshot](verification/source-snapshot.tar.gz) | `26a7d52f195c7b6b1b6b0d0b0a78f9386d740902d2187b3c7b8d0c98e85e2095` |
+| [工程 receipt](verification/receipt.json) | `e963c6e787dcd3d1c5c5cf6c54afce9b9f659e7d2df58214cb661d724321c930` |
+| [工程索引，83 项](verification/evidence-manifest.json) | `91fc8869f2b1cb3f15d76334f9577f6902f14c6b90e900a1b25f735311c4f077` |
+| [资源 receipt](resources/receipt.json) | `3a87be1c54c0468959c8f9509b1953ca3158dd2006c4a0d80b886f66468906e2` |
+| [资源索引，16 项](resources/evidence-manifest.json) | `2bdf899cf8d52e61aca4941b5f240a76379149f2837f7ea9ba56e27f5a6c6459` |
+
+以上索引与其完整实际文件集合相同，所有单命令 stdout/stderr hash、命令回执与 aggregate 的 21 条记录一致，外层 runner 原 JSON 行亦一致。preflight 当时 105 项索引及旧失败 attempt 的 31 项原文件逐 hash 核实。首轮完整 3.10 的 `2 failed, 1603 passed in 9500.70s` 原输出仍保留，旧 3.12 不冒记 full 通过；新双矩阵含这两项修正后原 ID。
+
+### 双矩阵、门控与双安装
+
+Python 3.10.22 和 3.12.14 均实际完成 1605 passed，分别为 pytest 12905.97s、7310.82s（命令边界 12908.836s、7313.363s）。两份 collection 各 1605 个唯一 ID，前 1465 项恰为原 baseline 集合，后 140 项全属 W011；没有跳过或遗漏原回归。两解释器 mypy 2.4.1 均按冻结 strict 配置检查 54 source files，工程与安装环境 pip check 均 exit 0。
+
+正式 gate 的原 JSONL 四事件、首个 W011 node、插件 hash、同一 lock inode、非继承 fd 和进程结束观察均核对一致。3.10 等锁 2603.347384s，3.12 等锁 0.000139s；这些时间已经包含在 pytest/命令时长中，不是纯计算基准。3.12 的 session finish 后，3.10 才取得锁；父进程 `RELEASED` 观察可略晚于另一进程 `ACQUIRED`，不将观察时刻伪装为内核释放时刻。构建在两矩阵、typing、pip-check 全部结束后开始，两套安装 smoke 串行完成。
+
+新 wheel SHA 为 `7ba118f36d864b7097fc3c87de43fc398cd93ef215a24be87e764096162540d8`，sdist SHA 为 `1e6219a2fc82525ea9efc94bd3d4dc770b5a2742f668490979e639d6ad2f1b2b`；各实际解包 100 项 runtime，无重复成员。clean 3.10 从 sdist 安装、clean 3.12 从 wheel 安装，独立 venv 禁用 system-site-packages；实际 100 项 runtime 无 symlink 且逐 hash 等于冻结源码。`-I -B`、源码/快照之外 cwd、site-packages 来源及安装报告均已实核。
+
+双 installed smoke 分别 exit 0、620.633s / 450.631s；两个解释器都实际执行 direct/readback 正常 5/7 和原 extraction_mismatch 的 4/7，后者明确断言 measured 4 对 source CDL 5，只有这一项差异。完整 crossing、18 FIN、局部 14 nodes/8 edges/6 components、原 T05 audits/body 事实及 unchanged/unsealed attempt 均由归档脚本的成功路径验证。三个分支在 W011 构造和完整 Result codec 阶段禁 IO；完整 encode/decode、对象相等、稳定 wire/digest 和公开不完整 draft 拒绝均通过，不用中立摘要代替完整结果。
+
+安装 smoke 的 full wire 分别为 54,053,625 / 136,510,077 / 54,050,082 bytes；正常 direct/readback 的各自 digest 跨解释器相同。mismatch 每次使用不同临时捕获根，reader 保留 normalized cache 的绝对来源 URI，故不同次完整 wire digest 不要求相同。资源 probe 使用另一输入根和 RunRequest，也不冒称其 wire 与安装 smoke 是同一捕获。
+
+### 完整结果资源与限制
+
+最终三项由独立 fresh process 串行完成，均 exit 0；实际 argv/cwd、开始/结束 UTC、原输出 hash、runtime/配置来源和工程 receipt 绑定均核实。每项含 31 份捕获、280,706 acquisition bytes、40 原始 records / 18 FIN、36 次 FIN 判定；结果为正常 5/7 equal、readback 5/7 equal、mismatch 4/7 mismatch。完整 Result decode 的公开重建相等，原 T05 16 audits 和局部结构仍保留。
+
+| 独立进程样本 | W011 build / encode / decode（秒） | 完整 wire（bytes） | 整进程峰值 RSS（KiB） |
+| --- | --- | ---: | ---: |
+| normal-direct | 37.209 / 1.522 / 46.759 | 54,050,313 | 2,847,416 |
+| normal-readback | 74.948 / 3.064 / 101.861 | 136,461,405 | 7,322,828 |
+| extraction-mismatch | 35.419 / 1.397 / 45.179 | 54,049,506 | 2,854,456 |
+
+constructor 认证包含在 build/decode 中，未独立计时；RSS 包含 imports、上游捕获/重建及完整 wire，不是 W011 的增量分配。完整 W010/W009/W008/W007 捕获链重复保留，wire 远大于一次 acquisition bytes；审查未要求为此改变已有 wire 合同。资源 probe 本身断言实际 count 与 full roundtrip，明确 source 4 对 5 的比较由双 installed smoke 与正式回归证明。
+
+共享 cgroup 为 16 GiB，CPU quota 为 `400000 100000`（可见 CPU 数 5），其余 rlimits 按原记录。1399 条约 10 秒观察已从原 JSONL 重算：最高共享 cgroup 采样 12,299,743,232 bytes；矩阵 3.10/3.12 的采样 RSS 为 9,257,804 / 6,248,624 KiB，双安装 smoke 为 9,119,696 / 6,927,912 KiB。这些是采样值；observer 在 launcher 后约 28 秒开始，不能作精确进程最大值。既有 `memory.peak=13762666496` 前后未变，不能归因本次；memory.events 原记录全零未变。最终 fresh-process `ru_maxrss` 与这些共享观察分别披露，不把有限 synthetic 样本当最大输入、多片段压力、并发或生产保证。
+
+### 交回执行者与 PM
+
+任务 E2 的源码身份、结果和资源限制已只读交叉核对；方案阶段 PR-N01/02 的不完整计量摘要和完整资源提示已由当前实现/证据落实。新增关键解释及具体重复/重叠 FIN、seed 定位样本在执行记录交 PM；本 review 不修改 fixture/答案冻结扩展语义。完整 net/body/模型、全部 T02/规则、工艺坐标、发布/no_change/Stage6 及 U06 仍按任务边界后置。
+
+最终结论仅是独立代码与工程 review：**A1–A8 对应证据已复核，剩余必须修正项 0，可交 PM。** 执行者仍须将证据连同两个实际分发包纳入最终原分支提交，核对 262 项冻结内容未变，再使用既有 noreply 身份推送并实核远端完整 SHA。后续只改文档/证据的提交不冒记为另一份跑过双矩阵的源码；不由 reviewer 自行验收、合 main、改 current-work 或启动下一任务。

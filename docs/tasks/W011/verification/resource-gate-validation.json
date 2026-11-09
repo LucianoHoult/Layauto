@@ -1,0 +1,109 @@
+{
+  "status": "passed",
+  "events": {
+    "310": [
+      {
+        "event": "WAIT",
+        "first_gated_node": "tests/contracts/test_w011_contracts.py::test_all_public_records_roundtrip_are_frozen_and_rebuild_stably",
+        "lock_device": 27,
+        "lock_fd_inheritable": false,
+        "lock_inode": 1186698,
+        "lock_path": "/workspace/work/w011-final-e89bdaa/pytest-w011.lock",
+        "observed_at_utc": "2026-11-09T13:26:07.867311+00:00",
+        "pid": 21383,
+        "plugin_sha256": "1c78c2066736f0f56d80f3353da133a1d23407b0675a0a8f5e471b1337469d70"
+      },
+      {
+        "event": "ACQUIRED",
+        "first_gated_node": "tests/contracts/test_w011_contracts.py::test_all_public_records_roundtrip_are_frozen_and_rebuild_stably",
+        "lock_device": 27,
+        "lock_fd_inheritable": false,
+        "lock_inode": 1186698,
+        "lock_path": "/workspace/work/w011-final-e89bdaa/pytest-w011.lock",
+        "observed_at_utc": "2026-11-09T14:09:31.214695+00:00",
+        "pid": 21383,
+        "plugin_sha256": "1c78c2066736f0f56d80f3353da133a1d23407b0675a0a8f5e471b1337469d70"
+      },
+      {
+        "event": "SESSION_FINISH_LOCK_RETAINED",
+        "first_gated_node": "tests/contracts/test_w011_contracts.py::test_all_public_records_roundtrip_are_frozen_and_rebuild_stably",
+        "lock_device": 27,
+        "lock_fd_inheritable": false,
+        "lock_inode": 1186698,
+        "lock_path": "/workspace/work/w011-final-e89bdaa/pytest-w011.lock",
+        "observed_at_utc": "2026-11-09T15:42:44.091040+00:00",
+        "pid": 21383,
+        "plugin_sha256": "1c78c2066736f0f56d80f3353da133a1d23407b0675a0a8f5e471b1337469d70"
+      },
+      {
+        "event": "RELEASED",
+        "first_gated_node": "tests/contracts/test_w011_contracts.py::test_all_public_records_roundtrip_are_frozen_and_rebuild_stably",
+        "lock_device": 27,
+        "lock_fd_inheritable": false,
+        "lock_inode": 1186698,
+        "lock_path": "/workspace/work/w011-final-e89bdaa/pytest-w011.lock",
+        "meaning": "Parent observed subprocess completion; OS already released the lock. This observation can follow the other process ACQUIRED timestamp.",
+        "observed_at_utc": "2026-11-09T15:42:46.794101+00:00",
+        "observer_pid": 21364,
+        "pid": 21383,
+        "plugin_sha256": "1c78c2066736f0f56d80f3353da133a1d23407b0675a0a8f5e471b1337469d70",
+        "subprocess_exit_code": 0
+      }
+    ],
+    "312": [
+      {
+        "event": "WAIT",
+        "first_gated_node": "tests/contracts/test_w011_contracts.py::test_all_public_records_roundtrip_are_frozen_and_rebuild_stably",
+        "lock_device": 27,
+        "lock_fd_inheritable": false,
+        "lock_inode": 1186698,
+        "lock_path": "/workspace/work/w011-final-e89bdaa/pytest-w011.lock",
+        "observed_at_utc": "2026-11-09T13:04:44.671199+00:00",
+        "pid": 21382,
+        "plugin_sha256": "1c78c2066736f0f56d80f3353da133a1d23407b0675a0a8f5e471b1337469d70"
+      },
+      {
+        "event": "ACQUIRED",
+        "first_gated_node": "tests/contracts/test_w011_contracts.py::test_all_public_records_roundtrip_are_frozen_and_rebuild_stably",
+        "lock_device": 27,
+        "lock_fd_inheritable": false,
+        "lock_inode": 1186698,
+        "lock_path": "/workspace/work/w011-final-e89bdaa/pytest-w011.lock",
+        "observed_at_utc": "2026-11-09T13:04:44.671338+00:00",
+        "pid": 21382,
+        "plugin_sha256": "1c78c2066736f0f56d80f3353da133a1d23407b0675a0a8f5e471b1337469d70"
+      },
+      {
+        "event": "SESSION_FINISH_LOCK_RETAINED",
+        "first_gated_node": "tests/contracts/test_w011_contracts.py::test_all_public_records_roundtrip_are_frozen_and_rebuild_stably",
+        "lock_device": 27,
+        "lock_fd_inheritable": false,
+        "lock_inode": 1186698,
+        "lock_path": "/workspace/work/w011-final-e89bdaa/pytest-w011.lock",
+        "observed_at_utc": "2026-11-09T14:09:28.863568+00:00",
+        "pid": 21382,
+        "plugin_sha256": "1c78c2066736f0f56d80f3353da133a1d23407b0675a0a8f5e471b1337469d70"
+      },
+      {
+        "event": "RELEASED",
+        "first_gated_node": "tests/contracts/test_w011_contracts.py::test_all_public_records_roundtrip_are_frozen_and_rebuild_stably",
+        "lock_device": 27,
+        "lock_fd_inheritable": false,
+        "lock_inode": 1186698,
+        "lock_path": "/workspace/work/w011-final-e89bdaa/pytest-w011.lock",
+        "meaning": "Parent observed subprocess completion; OS already released the lock. This observation can follow the other process ACQUIRED timestamp.",
+        "observed_at_utc": "2026-11-09T14:09:31.218944+00:00",
+        "observer_pid": 21364,
+        "pid": 21382,
+        "plugin_sha256": "1c78c2066736f0f56d80f3353da133a1d23407b0675a0a8f5e471b1337469d70",
+        "subprocess_exit_code": 0
+      }
+    ]
+  },
+  "shared_lock_inode": [
+    "/workspace/work/w011-final-e89bdaa/pytest-w011.lock",
+    27,
+    1186698
+  ],
+  "release_time_meaning": "Kernel unlock is at process exit. Parent RELEASED records are observations and may follow the next ACQUIRED; they are not exact kernel unlock timestamps."
+}

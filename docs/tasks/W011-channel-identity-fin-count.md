@@ -67,15 +67,27 @@
 
 ### E2 实现、代码复核与最终验证（2026-11-09，执行）
 
-产品修正提交为 `8917d38d916c914bfa785cb116982f3f299b38de`；新增 140 项回归，总计 1605 项。原双解释器基线均为 1465 passed。首轮冻结 `02725e2e90be6b3145be915be699aa64ce998ed7` 的完整 Python 3.10 结果是 2 failed / 1603 passed，两项测试准备/边界错误及所有原输出保存在 [verification-attempt-01](W011/verification-attempt-01/pytest-310.stdout.txt)。两项已最小修正并分别实际得到 1 passed、4 passed，独立增量 review 均为必须项 0；runtime、schema、fixture 未变。
+产品修正提交为 `8917d38d916c914bfa785cb116982f3f299b38de`；最终被测源码、测试和配置冻结于 `e89bdaa6a091f56cfaf7862dced7232d34e22514`。新增 140 项回归，总计 1605 项，原 1465 项 ID 全部保留。262 文件的[清单](W011/verification/source-manifest.json)与[完整快照](W011/verification/source-snapshot.tar.gz)逐项一致，所有工程命令结束后再次核对；后续交付提交只补充执行、review 和证据文档，不把文档提交冒记为另一份直接跑过的源码。
 
-将按修后身份重跑两份完整 1605 矩阵，最终 262 文件源码/测试/配置快照与清单见 [verification/source-manifest.json](W011/verification/source-manifest.json)。新版资源门控已独立审查：两解释器可并行旧段，W011 fixture/重建独占锁保持到进程退出；包、双干净安装 smoke 和资源采样仍后置串行，不省略任何测试。实现、A1–A8 映射、全部原 findings、两次测试补修、具体 PM 扩展样本及证据入口见[执行记录](W011/execution.md)和[代码 review](W011/code-review.md)。A8 仍待最终实测；本节不变更 PM 阶段或验收。
+最终 Python 3.10.22 / 3.12.14 全量分别为 **1605 passed / 12905.97s**、**1605 passed / 7310.82s**，命令均 exit 0；3.10 命令总耗时含 2603.347s 的 W011 互斥锁等待。双 strict mypy 均成功检查 54 个源文件，双工程及安装环境 pip check 通过。新 wheel/sdist 构建成功，分别从 sdist 建立 clean 3.10、从 wheel 建立 clean 3.12；100 个实际安装运行时文件与冻结源一致，源码目录外 `-I -B` 完整组合 smoke 分别以 620.633s、450.631s 通过。命令、UTC、环境、包身份、原输出及索引见[最终工程回执](W011/verification/receipt.json)。
+
+两条实际捕获路径均由 exact geometry 得到 MN0=5、MP0=7，完整 crossing、来源、局部拓扑、T05/body scope 及 unsealed attempt 保留。原 extraction_mismatch 实算 MN0=4，对 source CDL 5 保留一项差异；target-only 变化不改变 source 计量。closed/immutable DTO、完整公开重建、全部可判差异与嵌套异常链由最终双完整矩阵覆盖。实现及 A1–A8 对应证据见[执行记录](W011/execution.md)。
+
+三个独立进程的完整 Result 资源样本均完成，见[资源回执](W011/resources/receipt.json)。readback wire 为 136,461,405 bytes，整进程峰值 RSS 为 7,322,828 KiB；双矩阵/安装的 10s 观察另见[归档](W011/preflight/final-attempt02/)，其中最高采样 RSS 为 9,257,804 KiB。这些是 16 GiB cgroup、4 CPU quota 下的有限 synthetic 实测；constructor 认证包含在 build/decode 中，未单独计时，RSS 不是 W011 增量内存，也不构成最大输入或生产性能保证。
+
+首轮冻结 `02725e2e90be6b3145be915be699aa64ce998ed7` 的 Python 3.10 完整结果是 **2 failed / 1603 passed**，旧 3.12 仅启动 collect 后中断、full 未运行；[原输出](W011/verification-attempt-01/pytest-310.stdout.txt)、[结束事实](W011/verification-attempt-01/attempt-closure.json)及[索引](W011/verification-attempt-01/evidence-manifest.json)完整保留。两项测试准备/入口边界错误已最小修正并在最终双完整矩阵通过，runtime/schema/fixture 未因它们改变。原 CR-01–CR-06、HG-01 及各阶段残留/修正复核保留在[独立代码 review](W011/code-review.md)及其附件，最终结论由 reviewer 自行记录。
+
+重复/重叠 FIN 的独立物理解释、身份定位不足时仍可保留的 channel 几何计量等具体样本已交 PM，未修改 fixture/答案冻结新语义。交付范围仍为原 W011 分支；使用既有 noreply 身份提交推送后核对远端完整 SHA，以 Git 与交接回复记录最终交付身份。本节不更改 PM 阶段或验收，不合 main、不改 current-work、不删除分支或启动下一任务。
 
 ## Review 结论（reviewer）
 
 2026-11-09，未参与调查、设计或实现的 `/root/plan_review` 完成[独立方案 review](W011/plan-review.md)，**必须修正项 0，方案可进入实现**。受审方案 SHA-256 为 `24a4d3b4c1f95851f35f77a0e6744af3c6618590741976882e7e2010ae38e94e`；PR-N01/02 为不完整计量摘要和完整结果资源测量的非阻塞核验提示，原文保留于报告。
 
-代码 review 尚待实现及工程证据完成后独立执行；本方案结论不替代代码 review、A1–A8 实测、PM 验收或用户另行要求的专门合并前 review。[交接要求 review](W011/handoff-review.md)仍保留其原准备范围。
+方案阶段原记录（历史范围）：代码 review 尚待实现及工程证据完成后独立执行；本方案结论不替代代码 review、A1–A8 实测、PM 验收或用户另行要求的专门合并前 review。[交接要求 review](W011/handoff-review.md)仍保留其原准备范围。
+
+2026-11-09，未承担设计、实现或正式测试编写的 `/root/code_review` 及独立几何/边界专项完成[代码与最终工程 review](W011/code-review.md)。最终被审源码、测试和配置为 `e89bdaa6a091f56cfaf7862dced7232d34e22514`，100 个 runtime 文件与产品修正 `8917d38d916c914bfa785cb116982f3f299b38de` 相同；262 文件 live/快照、双 1605 全量及原 1465 IDs、双 strict 54 files、新 wheel/sdist、双干净安装源码外完整组合 smoke、三项完整 Result 资源和实际门控证据均独立核实。[只读审计结果](W011/review/final-a8-audit.stdout.json)记录工程索引 SHA-256 `91fc8869f2b1cb3f15d76334f9577f6902f14c6b90e900a1b25f735311c4f077` 与资源索引 `2bdf899cf8d52e61aca4941b5f240a76379149f2837f7ea9ba56e27f5a6c6459`，原 CR-01–CR-06、HG-01、修后残留及失败/补修历史全部保留。
+
+**独立 review 剩余必须修正项 0，A1–A8 对应代码和工程证据可交 PM 复核。** 此结论不代替 PM 验收或最终 Git 交接；执行者仍按原 W011 分支提交推送并核远端完整 SHA。资源数据仅为记录环境中的有限 synthetic 样本，constructor 包含于 build/decode、RSS 非增量内存；完整 net/body/模型、全部规则/工艺坐标、发布/no_change/Stage6 和 U06 继续后置。
 
 ## PM 验收与交接（PM）
 
