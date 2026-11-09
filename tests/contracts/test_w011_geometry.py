@@ -154,8 +154,8 @@ def test_source_l_and_w_mismatches_are_all_retained_and_target_is_separate(tmp_p
 
 def test_target_only_multiple_axes_do_not_change_source_geometry(tmp_path, accepted):
     root = ready_copy(tmp_path)
-    change_cdl(root, 'target', 'NFIN=5 NF=1 M=1 L=4n W=2n VT=toy',
-               'NFIN=3 NF=1 M=1 L=6n W=3n VT=toy')
+    change_cdl(root, 'target', 'VT=toy W=2n L=4n M=1 NF=1 NFIN=5',
+               'VT=toy W=3n L=6n M=1 NF=1 NFIN=3')
     result = build(root)
     assert result.status == 'success' and result.value.comparison_status == 'equal'
     assert not result.value.differences and len(result.semantic.value.differences) == 3
