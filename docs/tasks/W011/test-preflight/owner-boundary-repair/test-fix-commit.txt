@@ -1,0 +1,10 @@
+commit 1cb7e1bc654c61690427ac22481b985156d9c9e6
+Author:     LucianoHoult <LucianoHoult@users.noreply.github.com>
+AuthorDate: Mon Nov 9 11:54:49 2026 +0000
+Commit:     LucianoHoult <LucianoHoult@users.noreply.github.com>
+CommitDate: Mon Nov 9 11:54:49 2026 +0000
+
+    test: preserve existing owner schema rejection boundary
+
+ tests/contracts/test_w011_geometry.py | 24 ++++++++++++++++++++++++
+ 1 file changed, 24 insertions(+)
