@@ -162,6 +162,7 @@ def _binding(local: LocalConnectivityDraft, source: SemanticCircuitDraft,
              seeds: tuple[ChannelSeed, ...], derived: EvidenceRecord) -> ChannelRef:
     return ChannelRef('binding', digest({'schema': VERSION, 'scope': SCOPE,
         'local_ref': local.ref.to_value(), 'source_semantics': semantic_value(source),
+        'selected_source_cell': identity_value(source.selected_cell),
         'source_evidence': evidence_value(source.preservation),
         'seeds': tuple(seed.to_value() for seed in seeds), 'derived': evidence_value(derived),
         'unit_ref': local.effective.base.layout.units.ref.to_value(),
