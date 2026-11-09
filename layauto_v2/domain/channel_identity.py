@@ -18,6 +18,7 @@ from .identifiers import CellId, DeviceId, QueryKey, identity_value
 from .local_connectivity import LocalRef
 from .regions import RegionRef, validate_closed_graph
 from .results import EvidenceIssue
+from .source_location import ref_from_location
 
 VERSION = 'layauto-channel-identity/1'
 SCOPE = 'local_channel_identity_fin_measurement/1'
@@ -147,6 +148,105 @@ class RationalRect(_Record):
         return RationalRect(x0, y0, x1, y1) if x0 < x1 and y0 < y1 else None
 
 
+def _field_locations(row: FrozenMap) -> dict[str, tuple[FrozenMap, ...]]:
+    """Validate neutral query derivations without claiming captured-byte trust."""
+    result: dict[str, tuple[FrozenMap, ...]] = {}
+    hashes: dict[str, str] = {}
+    for field, value in mapping(row['field_sources']).items():
+        definition = mapping(value)
+        if (set(definition) != {'derivation', 'sources'}
+                or type(definition['derivation']) is not str or not definition['derivation']):
+            raise ValueError('seed field requires a closed named source derivation')
+        locations = tuple(mapping(item) for item in sequence(definition['sources']))
+        if not locations:
+            raise ValueError('seed field requires nonempty source operands')
+        for location in locations:
+            keys = set(location)
+            if keys == {'path', 'sha256', 'line_1based', 'token_0based', 'lexeme'}:
+                line, token, lexeme = location['line_1based'], location['token_0based'], location['lexeme']
+                if (type(line) is not int or line <= 0
+                        or token is not None and (type(token) is not int or token < 0)
+                        or type(lexeme) is not str or not lexeme or '\n' in lexeme or '\r' in lexeme):
+                    raise ValueError('seed text source requires exact line/token/lexeme fields')
+            elif keys == {'path', 'sha256', 'json_pointer', 'lexeme'}:
+                pointer = location['json_pointer']
+                if (type(pointer) is not str or not pointer.startswith('/')
+                        or re.search(r'~(?![01])', pointer) is not None):
+                    raise ValueError('seed owner source requires an exact JSON pointer')
+            else:
+                raise ValueError('seed source location has unknown or missing fields')
+            reference = ref_from_location(location)
+            if reference.sha256 is None:
+                raise ValueError('seed source requires captured content identity')
+            previous = hashes.setdefault(reference.uri, reference.sha256)
+            if previous != reference.sha256:
+                raise ValueError('seed field operands disagree on source content identity')
+        result[field] = locations
+    return result
+
+
+def _seed_operands(row: FrozenMap, identity: FrozenMap) -> None:
+    fields = _field_locations(row)
+    xref = _field_locations(identity)
+    metadata = row['metadata_opaque']
+    if type(metadata) is not tuple or any(type(item) is not str for item in metadata):
+        raise ValueError('opaque seed metadata requires an immutable text tuple')
+    if tuple(location['lexeme'] for location in fields['metadata_opaque']) != metadata:
+        raise ValueError('opaque seed metadata differs from its source operands')
+    for name in ('record_id', 'section_header_opaque'):
+        if len(fields[name]) != 1 or fields[name][0]['lexeme'] != row[name]:
+            raise ValueError('seed author/opaque value differs from source operand')
+    for name in ('layout_instance', 'schematic_instance'):
+        if (len(xref[name]) != 1 or xref[name][0]['lexeme'] != identity[name]
+                or len(fields[name]) < 2 or fields[name][1:] != xref[name]
+                or fields[name][0]['lexeme'] != row['layout_instance']):
+            raise ValueError('seed identity differs from complete xref operands')
+    if fields['layout_instance'][0] != fields['schematic_instance'][0] or len(xref['sd_swap']) != 1:
+        raise ValueError('seed identities require one common request and swap operand')
+    swap = xref['sd_swap'][0]
+    line = swap['lexeme']
+    expected = ('0', identity['layout_instance'], '0', identity['schematic_instance'])
+    if type(line) is not str or tuple(line.split()) != expected + (('X',) if identity['sd_swap'] else ()):
+        raise ValueError('seed swap declaration differs from its source row')
+    for name, token in (('layout_instance', 1), ('schematic_instance', 3)):
+        location = xref[name][0]
+        if (tuple(location.get(key) for key in ('path', 'sha256', 'line_1based'))
+                != tuple(swap.get(key) for key in ('path', 'sha256', 'line_1based'))
+                or location.get('token_0based') != token or swap.get('token_0based') is not None):
+            raise ValueError('seed xref operands do not belong to one source row')
+    # These checks establish operand self-consistency. The outer component still
+    # authenticates each operand against the actual captured source role/bytes.
+    vertices = fields['vertices_nm']
+    layers = fields['derived_layer']
+    if len(vertices) != 10 or len(layers) != 2 or layers[0]['lexeme'] != row['derived_layer']:
+        raise ValueError('seed geometry requires precision, eight coordinate and owner operands')
+    precision, geometry = vertices[0], vertices[-1]
+    coords = vertices[1:-1]
+    if (precision['lexeme'] != str(row['precision'])
+            or fields['bbox_nm'] != vertices or fields['precision'] != (precision, geometry)
+            or fields['unit'] != (precision, geometry)
+            or fields['geometry_kind'] != (*coords, layers[1]) or fields['quality'] != (*coords, layers[1])):
+        raise ValueError('seed geometry fields omit or alter their declared operands')
+    registry = mapping(layers[1]['lexeme'])
+    if registry.get('id') != row['derived_layer'] or registry.get('quality') != row['quality']:
+        raise ValueError('seed derived declaration differs from registry operand')
+    actual_vertices = sequence(row['vertices_nm'])
+    for index in range(4):
+        y, x = coords[index * 2:index * 2 + 2]
+        xy: list[Fraction] = []
+        for coordinate, token in ((x, 1), (y, 0)):
+            lexeme = coordinate['lexeme']
+            if (type(lexeme) is not str or re.fullmatch(r'(?:0|-?[1-9][0-9]*)', lexeme) is None
+                    or coordinate.get('token_0based') != token
+                    or tuple(coordinate.get(key) for key in ('path', 'sha256'))
+                    != tuple(layers[0].get(key) for key in ('path', 'sha256'))):
+                raise ValueError('seed coordinate source is not an exact raw coordinate operand')
+            xy.append(Fraction(lexeme) * 1000 / cast(int, row['precision']))
+        if (x.get('line_1based') != y.get('line_1based')
+                or tuple(xy) != tuple(rational(mapping(actual_vertices[index])[axis]) for axis in ('x', 'y'))):
+            raise ValueError('seed exact vertices disagree with coordinate source lexemes')
+
+
 @dataclass(frozen=True)
 class ChannelSeed(_Record):
     device_id: DeviceId
@@ -194,6 +294,7 @@ class ChannelSeed(_Record):
                             (expected.x1, expected.y0), (expected.x1, expected.y1)}
                 or any((a[0] == b[0]) == (a[1] == b[1]) for a, b in zip(coords, (*coords[1:], coords[0])))):
             raise ValueError('seed polygon differs from exact rectangle')
+        _seed_operands(row, provenance)
 
     @property
     def rectangle(self) -> RationalRect:

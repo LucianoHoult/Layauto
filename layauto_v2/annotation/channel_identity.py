@@ -9,7 +9,7 @@ from layauto_v2.domain.channel_identity import (
 )
 from layauto_v2.domain.circuit import Device
 from layauto_v2.domain.evidence import SourceRef
-from layauto_v2.domain.geometry import mapping
+from layauto_v2.domain.geometry import mapping, sequence
 from layauto_v2.domain.identifiers import DeviceId
 from layauto_v2.domain.regions import ExactRegion, RegionRef
 from layauto_v2.domain.results import EvidenceIssue
@@ -47,7 +47,8 @@ def channel_rectangle(channel: ExactRegion, tick_nm: int) -> RationalRect:
 
 
 def seed_source(seed: ChannelSeed) -> SourceRef:
-    return ref_from_location(mapping(mapping(seed.record['field_sources'])['record_id']))
+    derivation = mapping(mapping(seed.record['field_sources'])['record_id'])
+    return ref_from_location(mapping(sequence(derivation['sources'])[0]))
 
 
 def locate_channels(devices: tuple[Device, ...], channels: tuple[ExactRegion, ...],
