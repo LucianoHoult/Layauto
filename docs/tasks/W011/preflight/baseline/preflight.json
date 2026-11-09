@@ -1,0 +1,38 @@
+{
+  "baseline_count": {
+    "310": 1465,
+    "312": 1465
+  },
+  "collection_sets_equal": true,
+  "only_310": [],
+  "only_312": [],
+  "cgroup": {
+    "memory.max": "17179869184",
+    "cpu.max": "400000 100000",
+    "memory.swap.max": "max"
+  },
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "cpu_count": 5,
+  "rlimits": {
+    "RLIMIT_AS": [
+      -1,
+      -1
+    ],
+    "RLIMIT_CPU": [
+      -1,
+      -1
+    ],
+    "RLIMIT_DATA": [
+      -1,
+      -1
+    ],
+    "RLIMIT_NOFILE": [
+      16384,
+      16384
+    ],
+    "RLIMIT_STACK": [
+      8388608,
+      -1
+    ]
+  }
+}

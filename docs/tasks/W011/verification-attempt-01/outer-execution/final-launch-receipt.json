@@ -1,0 +1,31 @@
+{
+  "command": [
+    "/workspace/work/w011-engineering/dev312/bin/python",
+    "/workspace/Layauto/docs/tasks/W011/prepare_final.py",
+    "--root",
+    "/workspace/Layauto",
+    "--out",
+    "/workspace/Layauto/docs/tasks/W011/verification",
+    "--work",
+    "/workspace/work/w011-final-02725e2",
+    "--smoke",
+    "/workspace/Layauto/docs/tasks/W011/installed_smoke.py",
+    "--python310",
+    "/workspace/work/w011-engineering/dev310/bin/python",
+    "--python312",
+    "/workspace/work/w011-engineering/dev312/bin/python",
+    "--baseline-collection",
+    "/workspace/Layauto/docs/tasks/W011/preflight/baseline-collection312.txt",
+    "--expected-tests",
+    "1605",
+    "--matrix-workers",
+    "1"
+  ],
+  "cwd": "/workspace/Layauto",
+  "source_commit_at_launch": "02725e2e90be6b3145be915be699aa64ce998ed7",
+  "started_at_utc": "2026-11-09T09:22:58.829275+00:00",
+  "exit_code": -15,
+  "elapsed_seconds": 9506.379404783249,
+  "stdout_sha256": "f33276b5bc5ada45905090155408b5b8e1f9d9ad6605dc1078bd6883d542a35e",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

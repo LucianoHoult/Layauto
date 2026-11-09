@@ -1,0 +1,14 @@
+{
+  "schema": "layauto-harness-switch/1",
+  "switched_at_utc": "2026-11-09T12:03:50.505993+00:00",
+  "old_attempt": "verification-attempt-01/attempt-closure.json",
+  "old_runner_sha256": "347c0017bc27b09d7ca135d6aaa92f58733a8f0dab078cc2ab5e8b576ca15050",
+  "new_runner_sha256": "66456ce9659d2ad2481ab0f8b4309054caf19a41057f1a86b01531f3dd914794",
+  "resource_gate_sha256": "1c78c2066736f0f56d80f3353da133a1d23407b0675a0a8f5e471b1337469d70",
+  "old_pytest310_result": "2 failed, 1603 passed in 9500.70s (2:38:20)",
+  "old_pytest310_exit_code": 1,
+  "old_runner_return_code": -15,
+  "old_312_phase": "Environment command completed; collect-only process PID 21205 was sent SIGTERM and observed zombie; no full 312 pytest was started. Child wait status was not available to this observer.",
+  "new_full_matrix_started": false,
+  "scope": "Only engineering harness files switched after the old process completed/was stopped and original artifacts were archived. Runtime/tests unchanged by this switch."
+}

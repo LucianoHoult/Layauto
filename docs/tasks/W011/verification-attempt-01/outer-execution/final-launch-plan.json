@@ -1,0 +1,29 @@
+{
+  "expected_source_commit": "02725e2e90be6b3145be915be699aa64ce998ed7",
+  "command": [
+    "/workspace/work/w011-engineering/dev312/bin/python",
+    "/workspace/Layauto/docs/tasks/W011/prepare_final.py",
+    "--root",
+    "/workspace/Layauto",
+    "--out",
+    "/workspace/Layauto/docs/tasks/W011/verification",
+    "--work",
+    "/workspace/work/w011-final-02725e2",
+    "--smoke",
+    "/workspace/Layauto/docs/tasks/W011/installed_smoke.py",
+    "--python310",
+    "/workspace/work/w011-engineering/dev310/bin/python",
+    "--python312",
+    "/workspace/work/w011-engineering/dev312/bin/python",
+    "--baseline-collection",
+    "/workspace/Layauto/docs/tasks/W011/preflight/baseline-collection312.txt",
+    "--expected-tests",
+    "1605",
+    "--matrix-workers",
+    "1"
+  ],
+  "cwd": "/workspace/Layauto",
+  "runner_sha256": "347c0017bc27b09d7ca135d6aaa92f58733a8f0dab078cc2ab5e8b576ca15050",
+  "smoke_sha256": "173b95ec81082b5eb2d33aba1334f08730a04160b69353377b593d5956ea51ce",
+  "status": "prepared_not_started"
+}

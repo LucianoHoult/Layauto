@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import argparse
 from concurrent.futures import ThreadPoolExecutor
+from datetime import datetime, timezone
 import hashlib
 import io
 import json
@@ -41,7 +42,11 @@ def main() -> None:
     parser.add_argument('--baseline-collection', type=Path)
     parser.add_argument('--matrix-workers', type=int, choices=(1, 2), default=1,
                         help='Default 1 avoids overlapping full captured-wire decode peaks; packaging runs after both matrices.')
+    parser.add_argument('--resource-gate', type=Path,
+                        help='Required with two workers: archived pytest plugin holds the W011 lock until process exit.')
     args = parser.parse_args()
+    if args.matrix_workers == 2 and args.resource_gate is None:
+        parser.error('--matrix-workers 2 requires --resource-gate')
     root, out, work, smoke = (getattr(args, name).resolve() for name in ('root', 'out', 'work', 'smoke'))
     pythons = {'310': args.python310.absolute(), '312': args.python312.absolute()}
     if out.exists() and any(out.iterdir()):
@@ -74,13 +79,16 @@ def main() -> None:
         if extra:
             overrides.update(extra)
         env = dict(os.environ, **overrides)
-        started = time.time()
+        started = time.perf_counter()
+        started_at = datetime.now(timezone.utc).isoformat()
         with (out / (name + '.stdout.txt')).open('wb') as stdout, (out / (name + '.stderr.txt')).open('wb') as stderr:
             completed = subprocess.run([str(item) for item in command], cwd=cwd, env=env,
                                        stdout=stdout, stderr=stderr)
+        finished_at = datetime.now(timezone.utc).isoformat()
         row = {'command': [str(item) for item in command], 'cwd': str(cwd), 'exit_code': completed.returncode,
                'environment_overrides': overrides,
-               'elapsed_seconds': round(time.time() - started, 3),
+               'started_at_utc': started_at, 'finished_at_utc': finished_at,
+               'elapsed_seconds': round(time.perf_counter() - started, 3),
                'stdout': name + '.stdout.txt', 'stdout_sha256': sha((out / (name + '.stdout.txt')).read_bytes()),
                'stderr': name + '.stderr.txt', 'stderr_sha256': sha((out / (name + '.stderr.txt')).read_bytes())}
         write(name + '.json', row)
@@ -88,6 +96,41 @@ def main() -> None:
         if completed.returncode:
             raise RuntimeError(name + ' failed; inspect stdout/stderr in ' + str(out))
         return row
+
+    gate_source = args.resource_gate.resolve() if args.resource_gate is not None else None
+    gate_identity: dict[str, object] | None = None
+    gate_directory = work / 'pytest-plugins'
+    gate_lock = work / 'pytest-w011.lock'
+    if gate_source is not None:
+        gate_directory.mkdir()
+        gate_bytes = gate_source.read_bytes()
+        (gate_directory / 'w011_resource_gate.py').write_bytes(gate_bytes)
+        (out / 'w011_resource_gate.py').write_bytes(gate_bytes)
+        gate_identity = {'source': str(gate_source), 'sha256': sha(gate_bytes),
+                         'module': 'w011_resource_gate', 'module_directory': str(gate_directory),
+                         'shared_lock': str(gate_lock), 'lock_release': 'OS at pytest process exit',
+                         'start': 'tryfirst setup hookwrapper before fixtures for first test_w011_* file',
+                         'effect': 'Only waiting and logging; no test selection, reordering, fixture or outcome changes.',
+                         'memory_basis': 'Observed W011 process peak about 7 GiB and legacy phase about 1-1.7 GiB under a 16 GiB cgroup; finite observations, not a proven maximum.'}
+        write('resource-gate.json', gate_identity)
+
+    def gate_release_observation(tag: str) -> None:
+        log = out / ('resource-gate-' + tag + '.jsonl')
+        command_receipt = out / ('pytest-' + tag + '.json')
+        if gate_identity is None or not log.exists() or not command_receipt.exists():
+            return
+        records = [json.loads(line) for line in log.read_text().splitlines()]
+        acquired = [row for row in records if row['event'] == 'ACQUIRED']
+        if not acquired:
+            return
+        assert len(acquired) == 1
+        row = {**acquired[0], 'event': 'RELEASED',
+               'observed_at_utc': datetime.now(timezone.utc).isoformat(),
+               'meaning': 'Parent observed subprocess completion; OS already released the lock. This observation can follow the other process ACQUIRED timestamp.',
+               'observer_pid': os.getpid(),
+               'subprocess_exit_code': json.loads(command_receipt.read_text())['exit_code']}
+        with log.open('a') as stream:
+            stream.write(json.dumps(row, sort_keys=True) + '\n')
 
     # Existing W006 independently compares the accepted RunAttempt example.
     # This is a test-only sample and is never a runtime smoke input.
@@ -107,6 +150,8 @@ def main() -> None:
           'matrix_workers': args.matrix_workers,
           'phase_order': ['interpreter matrices', 'build', '3.10 clean installation and smoke', '3.12 clean installation and smoke'],
           'heavy_package_smokes_overlap_matrices': False,
+          'w011_exclusive_until_pytest_process_exit': gate_identity is not None,
+          'resource_gate': gate_identity,
           'limits': ['Sample timings and process RSS are not maximal input or production resource guarantees.']})
     source_meta = {'git_head': subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=root, text=True).strip(),
                    'git_status': subprocess.check_output(['git', 'status', '--short'], cwd=root, text=True),
@@ -150,7 +195,17 @@ def main() -> None:
               'missing_baseline_ids': missing})
         if missing or len(current_ids) != args.expected_tests:
             raise RuntimeError('The final matrix must retain all original baseline tests')
-        rows.append(run('pytest-' + tag, [py, '-m', 'pytest', '-p', 'no:cacheprovider', 'tests/unit', 'tests/contracts', '-q'], source))
+        pytest_command: list[object] = [py, '-m', 'pytest', '-p', 'no:cacheprovider']
+        pytest_environment: dict[str, str] = {}
+        if gate_identity is not None:
+            pytest_command.extend(['-p', 'w011_resource_gate', '--w011-resource-lock', gate_lock,
+                                   '--w011-resource-log', out / ('resource-gate-' + tag + '.jsonl')])
+            pytest_environment['PYTHONPATH'] = os.pathsep.join(filter(None, (str(gate_directory), os.environ.get('PYTHONPATH', ''))))
+        pytest_command.extend(['tests/unit', 'tests/contracts', '-q'])
+        try:
+            rows.append(run('pytest-' + tag, pytest_command, source, extra=pytest_environment))
+        finally:
+            gate_release_observation(tag)
         count = re.findall(r'^(\d+) passed', (out / ('pytest-' + tag + '.stdout.txt')).read_text(), re.MULTILINE)
         if len(count) != 1 or int(count[0]) != args.expected_tests:
             raise RuntimeError('Unexpected full regression result/count for ' + tag)
@@ -209,10 +264,39 @@ def main() -> None:
         # W011 complete nested receipts have materially larger memory peaks
         # than W010. Do not overlap package smoke with a full test matrix.
         # The 16 GiB session uses the default single matrix worker.
-        with ThreadPoolExecutor(max_workers=args.matrix_workers) as pool:
-            jobs = [pool.submit(matrix, tag) for tag in pythons]
-            for job in jobs:
-                commands.extend(job.result())
+        if args.matrix_workers == 1:
+            # Stop immediately on the first failed matrix; do not queue the next
+            # interpreter while a known failed attempt is being preserved.
+            for tag in pythons:
+                commands.extend(matrix(tag))
+        else:
+            with ThreadPoolExecutor(max_workers=args.matrix_workers) as pool:
+                jobs = [pool.submit(matrix, tag) for tag in pythons]
+                for job in jobs:
+                    commands.extend(job.result())
+        if gate_identity is not None:
+            assert gate_source is not None
+            if sha(gate_source.read_bytes()) != gate_identity['sha256'] or sha((gate_directory / 'w011_resource_gate.py').read_bytes()) != gate_identity['sha256']:
+                raise RuntimeError('Resource gate changed during verification')
+            gate_rows = {}
+            for tag in pythons:
+                records = [json.loads(line) for line in (out / ('resource-gate-' + tag + '.jsonl')).read_text().splitlines()]
+                if [row['event'] for row in records] != ['WAIT', 'ACQUIRED', 'SESSION_FINISH_LOCK_RETAINED', 'RELEASED']:
+                    raise RuntimeError('Resource gate events do not prove complete guarded execution')
+                collection = (out / ('collection-' + tag + '.stdout.txt')).read_text().splitlines()
+                first = next(line for line in collection if line.startswith('tests/') and '/test_w011_' in line)
+                if any(row['first_gated_node'] != first or row['plugin_sha256'] != gate_identity['sha256'] for row in records):
+                    raise RuntimeError('Resource gate did not guard the first W011 item with the captured plugin')
+                gate_rows[tag] = records
+            identities = {(row['lock_path'], row['lock_device'], row['lock_inode']) for rows in gate_rows.values() for row in rows}
+            if len(identities) != 1:
+                raise RuntimeError('Interpreters did not share one resource lock inode')
+            ordered = sorted(gate_rows.values(), key=lambda rows: rows[1]['observed_at_utc'])
+            if ordered[0][2]['observed_at_utc'] > ordered[1][1]['observed_at_utc']:
+                raise RuntimeError('W011 guarded phases overlapped before session finish')
+            write('resource-gate-validation.json', {'status': 'passed', 'events': gate_rows,
+                  'shared_lock_inode': list(identities)[0],
+                  'release_time_meaning': 'Kernel unlock is at process exit. Parent RELEASED records are observations and may follow the next ACQUIRED; they are not exact kernel unlock timestamps.'})
         commands.extend(package())
         if files_manifest(root, names) != original or files_manifest(source, names) != original:
             raise RuntimeError('Original or snapshot source/tests/config changed during verification')
@@ -222,7 +306,7 @@ def main() -> None:
             raise RuntimeError('Source/tests/config path selection changed during verification')
         if sha(smoke.read_bytes()) != smoke_sha:
             raise RuntimeError('Installed smoke source changed during verification')
-        write('receipt.json', {'status': 'passed', 'matrix_workers': args.matrix_workers,
+        write('receipt.json', {'status': 'passed', 'matrix_workers': args.matrix_workers, 'resource_gate': gate_identity,
               'package_smokes_after_matrices': True, 'runner_command': [sys.executable, *sys.argv], 'runner_sha256': runner_sha,
               'smoke_sha256': smoke_sha, 'commands': commands, 'actual_test_counts': counts, 'expected_test_count': args.expected_tests,
               'retained_baseline_test_count': len(baseline_ids),

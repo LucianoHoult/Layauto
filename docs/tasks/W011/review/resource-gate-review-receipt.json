@@ -1,0 +1,12 @@
+{
+  "scope": "Independent static review only; no reviewer gate probe or heavy test execution",
+  "reviewer": "/root/code_review",
+  "second_static_reviewer": "/root/code_review/boundary_review",
+  "files": {
+    "prepare_final_gate.py": "66456ce9659d2ad2481ab0f8b4309054caf19a41057f1a86b01531f3dd914794",
+    "w011_resource_gate.py": "1c78c2066736f0f56d80f3353da133a1d23407b0675a0a8f5e471b1337469d70"
+  },
+  "engineering_demo_receipt_sha256": "1921130110d6343cb0e5fd7ef7f96821bd57275be4b7cb116419fa6e63e8b801",
+  "harness_must_fix_remaining": 0,
+  "A8": "pending actual final matrix/package/install/resource evidence"
+}

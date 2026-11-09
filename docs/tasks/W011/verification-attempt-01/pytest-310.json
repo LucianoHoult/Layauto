@@ -1,0 +1,25 @@
+{
+  "command": [
+    "/workspace/work/w011-engineering/dev310/bin/python",
+    "-m",
+    "pytest",
+    "-p",
+    "no:cacheprovider",
+    "tests/unit",
+    "tests/contracts",
+    "-q"
+  ],
+  "cwd": "/workspace/work/w011-final-02725e2/source",
+  "exit_code": 1,
+  "environment_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PIP_CACHE_DIR": "/workspace/work/w011-final-02725e2/pip-cache",
+    "MYPY_CACHE_DIR": "/workspace/work/w011-final-02725e2/mypy-pytest-310",
+    "MPLCONFIGDIR": "/workspace/work/w011-final-02725e2/mplconfig"
+  },
+  "elapsed_seconds": 9503.634,
+  "stdout": "pytest-310.stdout.txt",
+  "stdout_sha256": "ee90b4878f5fe9274af4933bbac0f059cc322b206e4d94022ac737224df502aa",
+  "stderr": "pytest-310.stderr.txt",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

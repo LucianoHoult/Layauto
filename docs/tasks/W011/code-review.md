@@ -88,6 +88,14 @@ CR-05 的 wrapper 与定位 pointer 两层问题均关闭：专项从最终 `891
 
 最终独立 source/target 补证：只改 target 的 NFIN/L/W/NF/M 五轴，仍得到 source comparison equal、几何 5/7，并保留五轴 target differences；把该变体的 semantic receipt 混入原 Result 被拒绝。该次 probe 随后错误要求拒绝 target-only 来源的中立 draft，实际上所有 consumed source/geometry/seed/owner 与完整中立 DTO 均相同，可以替换；此 harness 退出 1 与解释原样保留，不列产品 finding，也不把捕获真实性强加到中立对象。未执行的 source 段随后独立续跑（`source-final-continuation.*`，退出 0）：source NFIN/L/W 同时变更保留全部 15 项 mismatch（1 count、2 L、12 W），实测仍为 5/7、4 nm、2 nm；漏 comparison、丢 local audit、假 error status 均拒绝。续跑 72.47s、peak RSS 1,410,952 KiB；完整最终 result codec/双安装仍由 A8 矩阵证明，未以此小范围 probe 替代。
 
+### A8 矩阵发现的测试 setup 补修
+
+`02725e2` 的 3.10 完整矩阵暴露 target-only 测试按 source 参数词序寻找 target 文本，在 helper 的 `assert before in text` 失败，尚未计算该 target 变体。执行者最小补修 `27f885497634d0f2ed50d293e00603309d34c0cd` 只调整 before/after 两行词序，全部业务断言、runtime、fixture 均未改。主 reviewer 独立轻量读取/normalize 核对实际三轴 delta 和保留字节，并审计原定向失败、修后 3.10 单项 `1 passed in 136.82s` 与提交字节一致性；增量必须项 0，详见 [增量 review](review/target-order-review.md)。旧失败/旧矩阵不能算最终通过，修改后须重新冻结双完整矩阵；A8 继续 pending。
+
+新矩阵拟使用执行侧资源 gate，让两个解释器的旧阶段可并行、W011 从 fixture setup 前至进程退出保持互斥。独立[静态 harness review](review/resource-gate-review.md)保留 HG-01 原失败路径与修正，当前 gate/runner 必须项 0；完整 1605/原1465 门槛、测试及 fixture 均未削减。该结论只允许按记录条件运行，真实双矩阵、锁事件、包/安装/资源结果仍待 A8 核验，不能以门控小样替代正式回归。
+
+旧矩阵第二个 setup 失败将 schema 已禁止的 `effective_fin_operator='foreign'` 交给 success-only helper，实际在 W005 reader 已返回 located InvalidSchema。补修 `1cb7e1bc654c61690427ac22481b985156d9c9e6` 保留四个原参数 ID：该项核实际 reader 的 typed error、精确来源与捕获/completed，其余三项仍完整运行 W011，并加强拒绝 issue 的来源断言。独立轻量实际读取确认既有边界，静态核对 tests-only 24 行增加、runtime/fixture 不变，再核正式 3.10 原四项 `4 passed in 182.45s` 与提交字节一致性；增量必须项 0，详见 [入口层级增量 review](review/operator-admission-review.md)。原失败保留，最终新冻结双矩阵仍 pending。
+
 ### 独立来源组合 probe 的原执行与 harness 更正
 
 `review/source-probe-initial.py` 在 `f493233` 产品导入后顺序执行实际 normal direct、W006 caller-read readback、禁 `Path.read_bytes/read_text/open` 与 `repo.read` 下 W011 构造和完整 readback result codec，随后核 attempt 等值且 unsealed。原 stderr 停于后续临时 target 的 `read_inputs` assert，故以上前置 assertions 均已执行通过；由于原 probe 只在末尾打印 checks，不将空 stdout 冒记为完整成功 receipt。命令、原脚本/stdout/stderr、身份依据和限制见 `review/source-probe-initial-receipt.json`。

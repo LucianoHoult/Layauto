@@ -1,0 +1,41 @@
+{
+  "schema": "layauto-command-observations/1",
+  "monitor_started_at_utc": "2026-11-09T09:30:25.083852+00:00",
+  "meaning": "First observed completed command receipt, not the command exact start/end UTC. Receipt records retain actual command elapsed seconds.",
+  "observations": [
+    {
+      "receipt": "collection-310.json",
+      "first_observed_at_utc": "2026-11-09T09:30:25.084189+00:00",
+      "receipt_mtime_ns": 1794216181173013943,
+      "command_elapsed_seconds": 2.016,
+      "exit_code": 0
+    },
+    {
+      "receipt": "environment-310.json",
+      "first_observed_at_utc": "2026-11-09T09:30:25.084463+00:00",
+      "receipt_mtime_ns": 1794216179156199152,
+      "command_elapsed_seconds": 0.09,
+      "exit_code": 0
+    },
+    {
+      "receipt": "environment-312.json",
+      "first_observed_at_utc": "2026-11-09T12:01:26.470297+00:00",
+      "receipt_mtime_ns": 1794225684876891815,
+      "command_elapsed_seconds": 0.067,
+      "exit_code": 0
+    },
+    {
+      "receipt": "pytest-310.json",
+      "first_observed_at_utc": "2026-11-09T12:01:26.470797+00:00",
+      "receipt_mtime_ns": 1794225684809012832,
+      "command_elapsed_seconds": 9503.634,
+      "exit_code": 1
+    }
+  ],
+  "state": "completed_receipt_observed",
+  "runner_observed_completion_at_utc": "2026-11-09T12:01:26.471565+00:00",
+  "runner_receipt_mtime_ns": 1794225685209947220,
+  "runner_started_at_utc_from_launcher": "2026-11-09T09:22:58.829275+00:00",
+  "runner_elapsed_seconds": 9506.379404783249,
+  "runner_exit_code": -15
+}

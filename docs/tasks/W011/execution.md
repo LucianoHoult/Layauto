@@ -1,6 +1,6 @@
 # W011 执行记录（工程结果待补齐）
 
-执行负责人：`/root`；核心实现辅助：`/root/contract_survey`；测试辅助：`/root/geometry_survey`。本稿于 2026-11-09 按产品修正提交 `8917d38d916c914bfa785cb116982f3f299b38de`、含最终回归的冻结提交 `02725e2e90be6b3145be915be699aa64ce998ed7` 核对。它记录已实现内容、已有定向实证及尚待完成的交付检查，**不是 A1–A8 最终通过、独立 review 结论或 PM 验收**。
+执行负责人：`/root`；核心实现辅助：`/root/contract_survey`；测试辅助：`/root/geometry_survey`。本稿于 2026-11-09 按产品修正提交 `8917d38d916c914bfa785cb116982f3f299b38de`、首轮回归冻结提交 `02725e2e90be6b3145be915be699aa64ce998ed7`；两项测试准备/边界修正已集成至 `6ea8b0a`，最终冻结身份以 [verification/source-manifest.json](verification/source-manifest.json) 为准 核对。它记录已实现内容、已有定向实证及尚待完成的交付检查，**不是 A1–A8 最终通过、独立 review 结论或 PM 验收**。
 
 ## 恢复、授权与读取
 
@@ -68,7 +68,20 @@ G/S/D 只引用同一 W009/W010 的 region/node/component；多个相同 POLY re
 
 这些是交 PM 的未来能力扩展反例，不是需要用户确认才能完成当前 conservative unsupported 的门槛。测试只验证现有“证据保留/不能默计”的边界，未修改 fixture、oracle 或答案以冻结新的物理计数语义。
 
+## 首轮完整矩阵及测试补修（原记录保留）
+
+首轮冻结 `02725e2e90be6b3145be915be699aa64ce998ed7` 的 Python 3.10 全量实际为 **2 failed, 1603 passed / 9500.70s**，命令 exit 1；[原输出](verification-attempt-01/pytest-310.stdout.txt)和[实际命令回执](verification-attempt-01/pytest-310.json)均完整保留。这不是通过记录。旧 runner 在该完整回执后被停止，刚启动的 Python 3.12 collect-only 被终止，旧版 3.12 full 未运行；信号、PID、外层时间和原输出见该尝试的归档。
+
+两项均为正式回归的准备/边界错误，未修改 runtime、schema、fixture 或原断言中的几何答案：
+
+- target CDL 故意使用反序参数；旧测试以 source 词序替换，失败于 helper 的 `assert before in text`，尚未进入目标变体计算。修正匹配词序后同一单项实际 **1 passed / 136.82s**，独立 read+W007 验证仅 MN0 target 的 NFIN/L/W 三轴改变；原失败与修后证据见 [target-only-repair](test-preflight/target-only-repair/README.md)，独立结论见 [target-order-review](review/target-order-review.md)。
+- `effective_fin_operator=foreign` 已被现有 schema 在 reader 入口以 `config/InvalidSchema` 拒绝；旧 helper 却要求先有成功 W010。原参数 ID 保留，改为精确验证该入口的字段位置、坏 owner bytes/SHA、五份捕获和 config completed；其它三个 schema 合法但语义不支持的变体仍完整运行 W011 并检查 located unsupported。修后原四项实际 **4 passed / 182.45s**；证据见 [owner-boundary-repair](test-preflight/owner-boundary-repair/README.md)，独立结论见 [operator-admission-review](review/operator-admission-review.md)。
+
+修后总数仍为 1605，原 1465 ID 不变；将重新执行两解释器完整矩阵。新版工程 harness 允许两个旧回归段并行，首个 `test_w011_*` 的 fixture setup 前取得共享 `flock`，raw 非继承 fd 持到进程退出；W011 重型重建互斥，构建、双安装 smoke 和资源采样仍后置串行。脚本仅协调执行，未跳过、重排或改写断言；[独立 gate review](review/resource-gate-review.md)保留 HG-01 原 finding 和修正，剩余 harness 必须项 0。小样只证明门控，不算正式回归；最终并发/内存观察和未测上限随最终工程记录保存。
+
 ## 最终工程、资源与 Git 交接（pending）
+
+原 1465 项双基线已完成：Python 3.10.22 为 1465 passed / 5084.47s，Python 3.12.14 为 1465 passed / 3874.19s，均 exit 0；252 个基线文件及双 collection ID 核对一致。完整来源与原命令输出见 [baseline/receipt.json](preflight/baseline/receipt.json)，这不替代最终新增回归矩阵。
 
 最终交付必须以同一可重建源码/测试/配置身份绑定真实命令输出；当前工程任务仍在执行。以下字段只能在实测后补录，不从正在运行、旧候选通过、文件存在或测试数量推断成功。
 

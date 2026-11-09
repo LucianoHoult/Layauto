@@ -65,6 +65,12 @@
 
 先完成独立方案 review，再按分离 worktree 实施 core 与测试，由本执行者集成 normalization/codec。双解释器基线与工程环境由独立执行辅助保存命令/输出；最终 A1–A8、测试/包及独立代码 review 结论在完成后追加。本记录不代写 PM 阶段、验收或集成事实。
 
+### E2 实现、代码复核与最终验证（2026-11-09，执行）
+
+产品修正提交为 `8917d38d916c914bfa785cb116982f3f299b38de`；新增 140 项回归，总计 1605 项。原双解释器基线均为 1465 passed。首轮冻结 `02725e2e90be6b3145be915be699aa64ce998ed7` 的完整 Python 3.10 结果是 2 failed / 1603 passed，两项测试准备/边界错误及所有原输出保存在 [verification-attempt-01](W011/verification-attempt-01/pytest-310.stdout.txt)。两项已最小修正并分别实际得到 1 passed、4 passed，独立增量 review 均为必须项 0；runtime、schema、fixture 未变。
+
+将按修后身份重跑两份完整 1605 矩阵，最终 262 文件源码/测试/配置快照与清单见 [verification/source-manifest.json](W011/verification/source-manifest.json)。新版资源门控已独立审查：两解释器可并行旧段，W011 fixture/重建独占锁保持到进程退出；包、双干净安装 smoke 和资源采样仍后置串行，不省略任何测试。实现、A1–A8 映射、全部原 findings、两次测试补修、具体 PM 扩展样本及证据入口见[执行记录](W011/execution.md)和[代码 review](W011/code-review.md)。A8 仍待最终实测；本节不变更 PM 阶段或验收。
+
 ## Review 结论（reviewer）
 
 2026-11-09，未参与调查、设计或实现的 `/root/plan_review` 完成[独立方案 review](W011/plan-review.md)，**必须修正项 0，方案可进入实现**。受审方案 SHA-256 为 `24a4d3b4c1f95851f35f77a0e6744af3c6618590741976882e7e2010ae38e94e`；PR-N01/02 为不完整计量摘要和完整结果资源测量的非阻塞核验提示，原文保留于报告。
