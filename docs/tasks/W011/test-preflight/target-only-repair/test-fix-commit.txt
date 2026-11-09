@@ -1,0 +1,10 @@
+commit 27f885497634d0f2ed50d293e00603309d34c0cd
+Author:     LucianoHoult <LucianoHoult@users.noreply.github.com>
+AuthorDate: Mon Nov 9 11:28:34 2026 +0000
+Commit:     LucianoHoult <LucianoHoult@users.noreply.github.com>
+CommitDate: Mon Nov 9 11:28:34 2026 +0000
+
+    test: use actual target CDL parameter order in W011 witness
+
+ tests/contracts/test_w011_geometry.py | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
