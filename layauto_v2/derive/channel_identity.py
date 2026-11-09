@@ -118,6 +118,10 @@ def _owners(local: LocalConnectivityDraft, source: SemanticCircuitDraft,
     for key, expected in (('role', 'fin'), ('purpose', 'drawing')):
         if fin.get(key) != expected:
             raise problem(drawn.sources[0], f'/layers/{index}/{key}', 'unsupported FIN layer semantics')
+    for index, row in enumerate(rows):
+        if row.get('role') == 'fin' and row.get('name') != 'FIN':
+            raise problem(drawn.sources[0], f'/layers/{index}/role',
+                          'additional FIN layer is outside the identity-FIN profile subset')
     registry = tuple(mapping(row) for row in sequence(derived.payload['derived_registry']))
     for seed in seeds:
         matches = tuple((index, row) for index, row in enumerate(registry) if row.get('id') == seed.record['derived_layer'])
