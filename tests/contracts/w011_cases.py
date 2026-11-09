@@ -83,10 +83,10 @@ def independent_fin_verdict(active, channel, fin):
             and active[1] <= fin[1] and fin[3] <= active[3] else 'partial')
 
 
-def unchecked_replace(record, **changes):
+def unchecked_replace(instance, **changes):
     """External tampering must be rejected when a public aggregate is rebuilt."""
     from dataclasses import fields
-    value = object.__new__(type(record))
-    for field in fields(record):
-        object.__setattr__(value, field.name, changes.get(field.name, getattr(record, field.name)))
+    value = object.__new__(type(instance))
+    for field in fields(instance):
+        object.__setattr__(value, field.name, changes.get(field.name, getattr(instance, field.name)))
     return value
