@@ -55,15 +55,21 @@
 
 ## 方案与决定（执行准备，PM 接收）
 
-尚未执行。先记录模块 owner、同源认证、seed 候选/唯一关联/coverage、FIN 资格与重复证据、有限参数差异、公开 DTO/错误和资源方案，交独立方案 review。调查 legacy 的相关候选，只迁入符合当前 owner/物理语义的纯逻辑；fixture helper 只能作独立材料，不能成为产品依赖或唯一 oracle。关键语义仍缺依据时先交 PM，独立工作继续。
+执行细化已记录于[方案](W011/plan.md)，未参与设计的 reviewer 完成[独立方案 review](W011/plan-review.md)，必须修正项 0；方案/报告提交 `1b3c409`。方案明确唯一定位与 exact coverage 分离、逐 channel/FIN 几何资格、重复/重叠 FIN 独立性不明则保留诊断、source 比较与 target intent 分离，以及完整公开重建。旧 stored fin-track/query-count 逻辑调查后不迁用。具体未决重复 FIN 扩展样本随方案交 PM，不改已验收 fixture/答案。
 
 ## 执行结果（执行）
 
-未实现、未运行产品测试。本节由执行者填写实际 checkout/base/head、既有改动保护、A1–A8 的命令/环境/结果/未执行项，以及最终可访问交付身份。
+### E1 恢复与实施准备（2026-11-09，执行）
+
+`/root` 从 `/workspace/Layauto` 干净的 `work@61775e8fde6e9ea247ec08a32067c44c3be48ff8` 恢复；实核远端 main 同 SHA，W011 准备 head 为 `81e01da1e5a6ce8e7132f3cebf8ee92bc237246f`，已 fetch 并切回原 W011 分支。读根/协作/环境/current-work、W011 引用的架构/owner/fixture及 W007–W010 合同；无局部 AGENTS。提交身份沿用项目 noreply。
+
+先完成独立方案 review，再按分离 worktree 实施 core 与测试，由本执行者集成 normalization/codec。双解释器基线与工程环境由独立执行辅助保存命令/输出；最终 A1–A8、测试/包及独立代码 review 结论在完成后追加。本记录不代写 PM 阶段、验收或集成事实。
 
 ## Review 结论（reviewer）
 
-产品方案/代码 review 未执行。交接要求 review 单独保存在 W011 附件，不替代上述两项 review 或后续用户要求的专门合并前 review。
+2026-11-09，未参与调查、设计或实现的 `/root/plan_review` 完成[独立方案 review](W011/plan-review.md)，**必须修正项 0，方案可进入实现**。受审方案 SHA-256 为 `24a4d3b4c1f95851f35f77a0e6744af3c6618590741976882e7e2010ae38e94e`；PR-N01/02 为不完整计量摘要和完整结果资源测量的非阻塞核验提示，原文保留于报告。
+
+代码 review 尚待实现及工程证据完成后独立执行；本方案结论不替代代码 review、A1–A8 实测、PM 验收或用户另行要求的专门合并前 review。[交接要求 review](W011/handoff-review.md)仍保留其原准备范围。
 
 ## PM 验收与交接（PM）
 

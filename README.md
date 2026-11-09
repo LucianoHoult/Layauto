@@ -78,7 +78,8 @@ python -m build
 ```
 
 The strict checker targets input reading, pre-context audit, semantic normalization
-and drawn-base geometry/occupancy with their neutral contracts and Python 3.10 syntax. Execution, independent reviews and supported
+drawn-base/effective geometry, local connectivity and channel identity/FIN measurements
+with their neutral contracts and Python 3.10 syntax. Execution, independent reviews and supported
 interpreter/build evidence are linked from [W005](docs/tasks/W005-input-reading-binding.md).
 
 ## Pre-context run entry
@@ -289,6 +290,45 @@ unexpected exceptions and interrupts propagate unchanged. It does not create
 external body edges, verified net/device labels, a complete coordinate model,
 all mandatory checks, a baseline or a run terminal. Scope, reviews and engineering
 evidence are recorded in [W010](docs/tasks/W010-local-contact-connectivity.md).
+
+## Channel identity and FIN measurements
+
+W011 combines the same captured W007 identities with W009 channels and W010's
+local graph:
+
+```python
+from layauto_v2.normalization import build_channel_identity
+
+if local.status == "success":
+    channels = build_channel_identity(local)
+    draft = channels.value
+    if draft is not None:
+        measurements = draft.measurements
+        source_differences = draft.differences
+```
+
+Query seeds supply exact localization evidence. Each seed retains its complete
+candidate intersections and coverage; a unique partial seed can locate a channel
+without claiming full region annotation. Source devices and recognized channels
+must form a complete one-to-one association. Shared POLY nodes remain shared.
+
+FIN qualification and counts come from drawn geometry: positive-area crossing,
+full channel X span, and full active Y containment. Every FIN record and decision
+is retained. Partial crossings or unexplained duplicate/overlapping FIN records
+produce located issues and unknown affected counts. Exact channel length and
+per-crossing FIN widths are compared with source CDL axes; all decidable
+mismatches remain visible. Target intent and its complete differences stay separate.
+
+A successful component result can contain source parameter mismatches. An error
+can retain a diagnostic draft in `value`; its issues and unknown counts must be
+checked before consuming measurements. Owner/admission errors can have no draft.
+The complete source receipt, local topology, T05 audits, body evidence and
+unsealed readback attempt remain available. Neither result is complete device,
+net, model, body, mandatory-rule or run assurance.
+
+The closed, versioned `normalization.channel_identity_codec` reconstructs complete
+observations and capture bindings. Scope, reviews and verification are recorded in
+[W011](docs/tasks/W011-channel-identity-fin-count.md).
 
 ## Legacy MVP archive
 
