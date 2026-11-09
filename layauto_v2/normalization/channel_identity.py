@@ -10,6 +10,7 @@ from dataclasses import dataclass
 from typing import Literal
 
 from layauto_v2.domain.channel_identity import CHANNEL_TYPES, ChannelProblem, ChannelSeed
+from layauto_v2.domain.codec import canonical_bytes
 from layauto_v2.domain.evidence import EvidenceRecord, SourceRef
 from layauto_v2.domain.geometry import evidence_value, mapping, source_value
 from layauto_v2.domain.local_connectivity import record_tuple
@@ -19,6 +20,7 @@ from layauto_v2.derive.channel_identity import (
     DRAFT_TYPES, ChannelIdentityDraft, build_channel_identity_draft,
 )
 from . import local_connectivity_codec
+from . import codec as semantic_codec
 from .component import normalize
 from .contracts import NormalizationResult
 from .local_connectivity import LocalConnectivityResult
@@ -108,8 +110,12 @@ class ChannelIdentityResult:
             validate_closed_graph(self.value, DRAFT_TYPES + CHANNEL_TYPES)
         semantic, draft, issues = _evaluate(self.input)
         status = 'error' if issues else 'success'
-        if (self.semantic != semantic or self.value != draft or self.issues != issues
-                or self.status != status):
+        same_draft = (self.value is None and draft is None) or (
+            self.value is not None and draft is not None
+            and canonical_bytes(self.value.to_value()) == canonical_bytes(draft.to_value()))
+        if (self.semantic != semantic
+                or semantic_codec.encode_record(self.semantic) != semantic_codec.encode_record(semantic)
+                or not same_draft or self.issues != issues or self.status != status):
             raise ValueError('channel result differs from complete same-capture reconstruction')
 
     @property

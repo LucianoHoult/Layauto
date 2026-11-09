@@ -13,7 +13,7 @@ from typing import Literal, cast
 from layauto_v2.annotation.channel_identity import locate_channels
 from layauto_v2.domain.channel_identity import (
     CHANNEL_TYPES, SCOPE, VERSION, ChannelAssociation, ChannelMeasurement, ChannelRef, ChannelSeed,
-    ChannelTopology, FinRelation, ParameterComparison, SeedLocation, problem, records,
+    ChannelTopology, FinRelation, ParameterComparison, SeedLocation, problem, records, validate_members,
 )
 from layauto_v2.domain.circuit import (
     Cell, Device, Membership, Net, Parameter, SemanticCircuitDraft, Terminal, semantic_value,
@@ -251,6 +251,8 @@ class ChannelIdentityDraft:
                           ('comparisons', ParameterComparison), ('issues', EvidenceIssue)):
             object.__setattr__(self, name, records(getattr(self, name), cls, name))
         validate_closed_graph(self, DRAFT_TYPES)
+        for name in ('locations', 'associations', 'topology', 'measurements', 'fin_relations', 'comparisons', 'issues'):
+            validate_members(getattr(self, name))
         expected = _analyze(self.local, self.source, self.seeds, self.derived)
         actual = self.locations, self.associations, self.topology, self.measurements, self.fin_relations, self.comparisons, self.issues
         if actual != expected:
@@ -305,6 +307,7 @@ class ChannelIdentityDraft:
                            'fin': None if item.fin_id is None else fin_boxes[item.fin_id]}) for item in self.comparisons)
         return digest({'schema': VERSION, 'scope': SCOPE, 'local_semantic': self.local.semantic_digest,
                        'source_semantics': semantic_value(self.source),
+                       'selected_source_cell': identity_value(self.source.selected_cell),
                        'locations': tuple(sorted(locations, key=canonical_bytes)),
                        'measurements': tuple(sorted(measurements, key=canonical_bytes)),
                        'comparisons': tuple(sorted(comparisons, key=canonical_bytes))})

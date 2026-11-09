@@ -8,6 +8,7 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass, fields, is_dataclass, replace
 from fractions import Fraction
+from collections.abc import Callable
 from typing import Literal, TypeVar, cast
 
 from .codec import FrozenMap, Value, digest, rational
@@ -58,6 +59,26 @@ def _ref(value: object, cls: type[object], kind: str) -> None:
 def _common(value: object) -> None:
     _version(getattr(value, 'schema_version'))
     validate_closed_graph(value, CHANNEL_TYPES)
+    # Validate retained leaves even if an already-created dataclass was altered
+    # through object.__setattr__. Python numeric equality is not type identity.
+    if not is_dataclass(value):
+        raise ValueError('channel record requires a dataclass value')
+    for field in fields(value):
+        validate_members(getattr(value, field.name))
+
+
+def validate_members(value: object) -> None:
+    """Reconstruct neutral members before an aggregate trusts their equality."""
+    if type(value) is tuple:
+        for item in value:
+            validate_members(item)
+    elif any(type(value) is cls for cls in CHANNEL_TYPES) and is_dataclass(value):
+        for field in fields(value):
+            validate_members(getattr(value, field.name))
+        constructor = cast(Callable[..., object], type(value))
+        rebuilt = constructor(**{field.name: getattr(value, field.name) for field in fields(value)})
+        if rebuilt != value:
+            raise ValueError('channel member differs from its validated reconstruction')
 
 
 def _value(value: object) -> Value:
