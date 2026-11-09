@@ -9,6 +9,7 @@ from pathlib import Path
 import pytest
 
 from layauto_v2.domain.publication import InputsReady
+from layauto_v2.importers import read_inputs
 from layauto_v2.normalization import build_effective_geometry, build_geometry, build_local_connectivity
 from layauto_v2.normalization.channel_identity import build_channel_identity
 from layauto_v2.normalization.channel_identity_codec import record_digest
@@ -306,9 +307,32 @@ def test_consumed_operator_changes_fail_at_located_component_boundary(tmp_path, 
         target = document['fin_count_profile'] if owner == 'physical' else document['derived_registry'][0]
         target[field] = value
     change_owner(root, owner, mutate)
+    if owner == 'physical' and field == 'effective_fin_operator':
+        # This field is already a literal in the input schema; it cannot yield a
+        # successful W010 receipt on which the W011 boundary may operate.
+        parsed = read_inputs(root / 'site_config.yaml')
+        assert parsed.status == 'error' and parsed.value is None and len(parsed.issues) == 1
+        issue = parsed.issues[0]
+        assert (issue.category, issue.code) == ('config', 'InvalidSchema')
+        captured = {source.uri: source for source in parsed.sources}
+        assert set(captured) == {'site_config.yaml', 'tech.json', 'tech/drawn.json',
+                                 'tech/derived.json', 'tech/physical.json'}
+        assert all(source.data == (root / source.uri).read_bytes() for source in parsed.sources)
+        assert issue.source == captured['tech/physical.json'].ref(
+            field='/fin_count_profile/effective_fin_operator')
+        assert tuple(record.kind for record in parsed.completed) == ('config',)
+        assert parsed.completed[0].sources == (captured['site_config.yaml'].ref(),)
+        return
     result = build(root)
     assert result.status == 'error' and result.value is None and result.issues
     assert result.completed == result.input.completed
+    assert len(result.issues) == 1 and result.issues[0].code == 'UnsupportedChannelOperator'
+    issue = result.issues[0]
+    section = '/fin_count_profile/' if owner == 'physical' else '/derived_registry/0/'
+    assert issue.source.uri == f'tech/{owner}.json' and issue.source.field == section + field
+    captured_owner = next(source for record in result.completed for source in record.sources
+                          if source.uri == f'tech/{owner}.json')
+    assert issue.source.sha256 == captured_owner.sha256
 
 
 def test_unconsumed_t02_profile_numbers_are_retained_without_claiming_rule_execution(tmp_path):
