@@ -1,0 +1,26 @@
+{
+  "cwd": "/workspace/work/w011-tests",
+  "executable": "/workspace/work/w011-engineering/dev312/bin/python",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "argv": [
+    "-B",
+    "-m",
+    "pytest",
+    "tests/contracts/test_w011_geometry.py",
+    "-x",
+    "-q"
+  ],
+  "files": {
+    "layauto_v2/annotation/channel_identity.py": "bf9b8530b411ef0c6661059a8ca15df01f79c47e68fe8f40f7e3b671a0fce2fa",
+    "layauto_v2/domain/channel_identity.py": "31c38827dfeb0a1938a9ae2c267259705312569309cc60bd9d4c96a8f1c9f37b",
+    "layauto_v2/normalization/channel_identity.py": "f6978e8354702fcf13159b230b8c41b5c27523e79795c02a785f0f2d267f92e0",
+    "layauto_v2/normalization/channel_identity_codec.py": "ef7f6188a15512d832fe8c92f9a55fb76c6012126c40f1050b51a8c6cdb9c161",
+    "layauto_v2/derive/channel_identity.py": "b1dc94377496ca15a2cda1a4efd7263a8f296dbbb965f893c74343bf3bdaffa5",
+    "layauto_v2/derive/fin_count.py": "f2c625d1f92d0f64e9b8cd066895c839e57b270de5ef71612ac0427a16bb6508",
+    "tests/contracts/test_w011_contracts.py": "ffe8b87bb6e4b92049052bf2924431749c838429ee4ed81b5d4b776b121c8b48",
+    "tests/contracts/test_w011_geometry.py": "1d74b0ce964c5c3f1969ea5dc1a8b5d4ffc9e3936d415b8964a02261411715ed",
+    "tests/contracts/w011_cases.py": "bab646a35ebc5874bfe59b5ff8adef7aa07718f36f4a3b30085ff98f3284f390",
+    "tests/contracts/test_w011_exceptions.py": "ba9c38cd39e05db3cbd264f0283c794fa644f46c87a36da6c513ff0973d90e17"
+  }
+}

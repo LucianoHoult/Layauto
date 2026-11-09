@@ -1,0 +1,70 @@
+FFF
+=================================== FAILURES ===================================
+_ test_cr01_seed_leaf_rejects_untyped_opaque_and_provenance_fields[metadata_wrong_type] _
+
+accepted = ChannelIdentityResult(status='success', value=ChannelIdentityDraft(local=LocalConnectivityDraft(effective=EffectiveDra...yauto-normalization/1'), schema_version='layauto-normalization/1'), schema_version='layauto-channel-identity-result/1')
+change = 'metadata_wrong_type'
+
+    @pytest.mark.parametrize('change', ('metadata_wrong_type', 'record_source_fields_not_locations', 'xref_source_fields_not_locations'))
+    def test_cr01_seed_leaf_rejects_untyped_opaque_and_provenance_fields(accepted, change):
+        from layauto_v2.domain.codec import FrozenMap
+        seed = accepted.value.seeds[0]
+        record, provenance = dict(seed.record), dict(seed.identity_provenance)
+        if change == 'metadata_wrong_type': record['metadata_opaque'] = 7
+        elif change == 'record_source_fields_not_locations': record['field_sources'] = {key: 0 for key in seed.record['field_sources']}
+        else: provenance['field_sources'] = {key: 0 for key in seed.identity_provenance['field_sources']}
+        changes = {'record': FrozenMap(record), 'identity_provenance': FrozenMap(provenance)}
+        with pytest.raises(ValueError): replace(seed, **changes)
+>       forged = unchecked_replace(seed, **changes)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: unchecked_replace() got multiple values for argument 'record'
+
+tests/contracts/test_w011_contracts.py:252: TypeError
+_ test_cr01_seed_leaf_rejects_untyped_opaque_and_provenance_fields[record_source_fields_not_locations] _
+
+accepted = ChannelIdentityResult(status='success', value=ChannelIdentityDraft(local=LocalConnectivityDraft(effective=EffectiveDra...yauto-normalization/1'), schema_version='layauto-normalization/1'), schema_version='layauto-channel-identity-result/1')
+change = 'record_source_fields_not_locations'
+
+    @pytest.mark.parametrize('change', ('metadata_wrong_type', 'record_source_fields_not_locations', 'xref_source_fields_not_locations'))
+    def test_cr01_seed_leaf_rejects_untyped_opaque_and_provenance_fields(accepted, change):
+        from layauto_v2.domain.codec import FrozenMap
+        seed = accepted.value.seeds[0]
+        record, provenance = dict(seed.record), dict(seed.identity_provenance)
+        if change == 'metadata_wrong_type': record['metadata_opaque'] = 7
+        elif change == 'record_source_fields_not_locations': record['field_sources'] = {key: 0 for key in seed.record['field_sources']}
+        else: provenance['field_sources'] = {key: 0 for key in seed.identity_provenance['field_sources']}
+        changes = {'record': FrozenMap(record), 'identity_provenance': FrozenMap(provenance)}
+        with pytest.raises(ValueError): replace(seed, **changes)
+>       forged = unchecked_replace(seed, **changes)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: unchecked_replace() got multiple values for argument 'record'
+
+tests/contracts/test_w011_contracts.py:252: TypeError
+_ test_cr01_seed_leaf_rejects_untyped_opaque_and_provenance_fields[xref_source_fields_not_locations] _
+
+accepted = ChannelIdentityResult(status='success', value=ChannelIdentityDraft(local=LocalConnectivityDraft(effective=EffectiveDra...yauto-normalization/1'), schema_version='layauto-normalization/1'), schema_version='layauto-channel-identity-result/1')
+change = 'xref_source_fields_not_locations'
+
+    @pytest.mark.parametrize('change', ('metadata_wrong_type', 'record_source_fields_not_locations', 'xref_source_fields_not_locations'))
+    def test_cr01_seed_leaf_rejects_untyped_opaque_and_provenance_fields(accepted, change):
+        from layauto_v2.domain.codec import FrozenMap
+        seed = accepted.value.seeds[0]
+        record, provenance = dict(seed.record), dict(seed.identity_provenance)
+        if change == 'metadata_wrong_type': record['metadata_opaque'] = 7
+        elif change == 'record_source_fields_not_locations': record['field_sources'] = {key: 0 for key in seed.record['field_sources']}
+        else: provenance['field_sources'] = {key: 0 for key in seed.identity_provenance['field_sources']}
+        changes = {'record': FrozenMap(record), 'identity_provenance': FrozenMap(provenance)}
+        with pytest.raises(ValueError): replace(seed, **changes)
+>       forged = unchecked_replace(seed, **changes)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: unchecked_replace() got multiple values for argument 'record'
+
+tests/contracts/test_w011_contracts.py:252: TypeError
+=========================== short test summary info ============================
+FAILED tests/contracts/test_w011_contracts.py::test_cr01_seed_leaf_rejects_untyped_opaque_and_provenance_fields[metadata_wrong_type]
+FAILED tests/contracts/test_w011_contracts.py::test_cr01_seed_leaf_rejects_untyped_opaque_and_provenance_fields[record_source_fields_not_locations]
+FAILED tests/contracts/test_w011_contracts.py::test_cr01_seed_leaf_rejects_untyped_opaque_and_provenance_fields[xref_source_fields_not_locations]
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! KeyboardInterrupt !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+/workspace/work/w011-tests/layauto_v2/domain/codec.py:25: KeyboardInterrupt
+(to show a full traceback on KeyboardInterrupt use --full-trace)
+3 failed, 72 deselected in 140.95s (0:02:20)

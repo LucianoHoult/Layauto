@@ -1,0 +1,32 @@
+{
+  "cwd": "/workspace/work/w011-tests",
+  "argv": [
+    "/workspace/work/w011-engineering/dev312/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-p",
+    "no:cacheprovider",
+    "tests/contracts/test_w011_exceptions.py",
+    "-q"
+  ],
+  "files": {
+    "layauto_v2/annotation/channel_identity.py": "bf9b8530b411ef0c6661059a8ca15df01f79c47e68fe8f40f7e3b671a0fce2fa",
+    "layauto_v2/domain/channel_identity.py": "31c38827dfeb0a1938a9ae2c267259705312569309cc60bd9d4c96a8f1c9f37b",
+    "layauto_v2/normalization/channel_identity.py": "f9b3c5e069261767f7f89da033bfe42ae166bfe706415fc4ac899c2fed81b944",
+    "layauto_v2/normalization/channel_identity_codec.py": "ef7f6188a15512d832fe8c92f9a55fb76c6012126c40f1050b51a8c6cdb9c161",
+    "layauto_v2/derive/channel_identity.py": "2ab5d774e58205f13117a754cd7f01ab912c44b0ada29006e890524790aba4cd",
+    "layauto_v2/derive/fin_count.py": "f2c625d1f92d0f64e9b8cd066895c839e57b270de5ef71612ac0427a16bb6508",
+    "tests/contracts/test_w011_contracts.py": "e5d96bdb1eb9d70661f2567009c94ce0bc0516c9cd9337d90799649f2b2cc999",
+    "tests/contracts/test_w011_geometry.py": "f5805090665653d0197501c745362417ea7eef4feadab79904fa56768660ef9e",
+    "tests/contracts/w011_cases.py": "bab646a35ebc5874bfe59b5ff8adef7aa07718f36f4a3b30085ff98f3284f390",
+    "tests/contracts/test_w011_exceptions.py": "ba9c38cd39e05db3cbd264f0283c794fa644f46c87a36da6c513ff0973d90e17"
+  },
+  "started_utc": "2026-11-09T08:51:14Z",
+  "exit_code": -15,
+  "elapsed_seconds": 832.234503030777,
+  "outputs": {
+    ".stdout.txt": "c75bbdfbbfd3ec4436b2111bf5804164f661e8a7de450c3eddfb4bd41eb57ed5",
+    ".stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

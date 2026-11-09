@@ -1,0 +1,6 @@
+{
+  "signal": "SIGINT",
+  "reason": "Stop after observed CR01 test helper argument collision; retain three actual failures and fix helper before rerun",
+  "not_a_pass": true,
+  "utc": "2026-11-09T09:08:51Z"
+}
