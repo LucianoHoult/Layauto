@@ -10,7 +10,7 @@ from dataclasses import dataclass
 from typing import Literal
 
 from layauto_v2.domain.channel_identity import CHANNEL_TYPES, ChannelProblem, ChannelSeed
-from layauto_v2.domain.codec import canonical_bytes
+from layauto_v2.domain.codec import FrozenMap, canonical_bytes
 from layauto_v2.domain.evidence import EvidenceRecord, SourceRef
 from layauto_v2.domain.geometry import evidence_value, mapping, source_value
 from layauto_v2.domain.local_connectivity import record_tuple
@@ -73,6 +73,12 @@ def _evaluate(input: LocalConnectivityResult) -> tuple[
     return semantic, None, issues
 
 
+def _issue_bytes(issues: tuple[EvidenceIssue, ...]) -> bytes:
+    return canonical_bytes(tuple(FrozenMap({'category': issue.category, 'code': issue.code,
+                                            'message': issue.message, 'source': source_value(issue.source)})
+                                 for issue in issues))
+
+
 @dataclass(frozen=True)
 class ChannelIdentityResult:
     status: Literal['success', 'error']
@@ -99,7 +105,9 @@ class ChannelIdentityResult:
             if any(type(text) is not str for text in (issue.category, issue.code, issue.message)):
                 raise ValueError('channel issues require exact text')
             source_value(issue.source)
-        if self.completed != self.input.completed:
+        if (self.completed != self.input.completed
+                or canonical_bytes(tuple(evidence_value(item) for item in self.completed))
+                != canonical_bytes(tuple(evidence_value(item) for item in self.input.completed))):
             raise ValueError('channel result must retain all captured completed facts')
         if type(self.semantic) is not NormalizationResult:
             raise ValueError('channel result requires its same-capture semantic result')
@@ -115,7 +123,8 @@ class ChannelIdentityResult:
             and canonical_bytes(self.value.to_value()) == canonical_bytes(draft.to_value()))
         if (self.semantic != semantic
                 or semantic_codec.encode_record(self.semantic) != semantic_codec.encode_record(semantic)
-                or not same_draft or self.issues != issues or self.status != status):
+                or not same_draft or self.issues != issues
+                or _issue_bytes(self.issues) != _issue_bytes(issues) or self.status != status):
             raise ValueError('channel result differs from complete same-capture reconstruction')
 
     @property
