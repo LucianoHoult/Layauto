@@ -270,3 +270,16 @@ def test_cr04_equal_numeric_values_cannot_bypass_nested_representation_validatio
     for record in (invalid_measurement, invalid_draft, invalid_result):
         with pytest.raises(ValueError): replace(record)
         with pytest.raises(ValueError): decode_record(encode_record(record))
+
+
+def test_cr04_completed_capture_payload_uses_typed_canonical_equality(accepted):
+    completed = list(accepted.completed)
+    index = next(index for index, row in enumerate(completed) if row.kind == 'tech')
+    original = completed[index]
+    payload = mutable(original.payload)
+    assert payload['owners']['physical']['fin_count_profile']['finger_count_required'] == 1
+    payload['owners']['physical']['fin_count_profile']['finger_count_required'] = True
+    completed[index] = replace(original, payload=payload)
+    assert completed[index] == original  # Python bool/int equality is insufficient for a receipt.
+    assert type(completed[index].payload['owners']['physical']['fin_count_profile']['finger_count_required']) is bool
+    with pytest.raises(ValueError): replace(accepted, completed=tuple(completed))
