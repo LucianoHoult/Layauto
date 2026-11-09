@@ -166,3 +166,33 @@ def test_expected_owner_schema_error_then_diagnostic_fault_preserves_history(cap
     with pytest.raises(failure_type) as raised:
         derive.build_channel_identity_draft(draft.local, draft.source, draft.seeds, draft.derived)
     assert_same_history(raised, failure, cause, context)
+
+
+@pytest.mark.parametrize('scope', ('leaf', 'result'))
+@pytest.mark.parametrize('failure_type', (TypeError, KeyError, AttributeError, UnicodeError))
+def test_cr02_nested_parameter_constructor_keeps_original_exception_history(captures, monkeypatch, scope, failure_type):
+    from layauto_v2.domain.circuit import Parameter
+    direct, _, wires = captures
+    wire = encode_record(direct.value.comparisons[0]) if scope == 'leaf' else wires['direct']
+    failure = failure_type('unexpected nested Parameter constructor failure')
+    cause, context = RuntimeError('existing cause'), LookupError('existing context')
+    failure.__cause__, failure.__context__, failure.__suppress_context__ = cause, context, False
+    def broken(*args, **kwargs): raise failure
+    monkeypatch.setattr(Parameter, '__post_init__', broken)
+    with pytest.raises(failure_type) as raised:
+        decode_record(wire)
+    assert_same_history(raised, failure, cause, context)
+
+
+@pytest.mark.parametrize('change', ('missing_unit', 'extra_field', 'wrong_exact', 'missing_source'))
+def test_nested_parameter_malformed_controls_still_raise_value_error(captures, change):
+    direct, _, _ = captures
+    tree = mutable(decode(encode_record(direct.value.comparisons[0])))
+    parameter = mutable(decode(tree['record']['fields']['declared']['semantic_record']))
+    fields = parameter['record']['fields']
+    if change == 'missing_unit': del fields['unit']
+    elif change == 'extra_field': fields['foreign'] = {'scalar': True}
+    elif change == 'wrong_exact': fields['exact'] = {'scalar': None}
+    else: fields['source'] = {'scalar': None}
+    tree['record']['fields']['declared']['semantic_record'] = canonical_bytes(parameter)
+    with pytest.raises(ValueError): decode_record(canonical_bytes(tree))

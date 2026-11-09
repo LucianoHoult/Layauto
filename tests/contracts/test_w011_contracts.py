@@ -237,3 +237,17 @@ def test_complete_input_chain_rejects_grouped_payload_forgery(accepted, owner):
     borrowed_effective = unchecked_replace(effective, input=borrowed_geometry, completed=parsed.completed)
     borrowed_local = unchecked_replace(local, input=borrowed_effective, completed=parsed.completed)
     with pytest.raises(ValueError): build_channel_identity(borrowed_local)
+
+
+@pytest.mark.parametrize('change', ('metadata_wrong_type', 'record_source_fields_not_locations', 'xref_source_fields_not_locations'))
+def test_cr01_seed_leaf_rejects_untyped_opaque_and_provenance_fields(accepted, change):
+    from layauto_v2.domain.codec import FrozenMap
+    seed = accepted.value.seeds[0]
+    record, provenance = dict(seed.record), dict(seed.identity_provenance)
+    if change == 'metadata_wrong_type': record['metadata_opaque'] = 7
+    elif change == 'record_source_fields_not_locations': record['field_sources'] = {key: 0 for key in seed.record['field_sources']}
+    else: provenance['field_sources'] = {key: 0 for key in seed.identity_provenance['field_sources']}
+    changes = {'record': FrozenMap(record), 'identity_provenance': FrozenMap(provenance)}
+    with pytest.raises(ValueError): replace(seed, **changes)
+    forged = unchecked_replace(seed, **changes)
+    with pytest.raises(ValueError): decode_record(encode_record(forged))
