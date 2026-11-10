@@ -79,7 +79,7 @@ W011 原资源测量每个 case 含 31 份捕获、共 280,706 B，40 条 drawn 
 
 ## Review 结论（reviewer）
 
-本任务的方案/代码/性能验收 review 未执行。
+独立 reviewer `/root/independent_review`（未承担测量工具/方案设计）已完成[PP1–PP5调查与方案复核](W012/independent-review.md)，受审base `f3698b7ffda3b0737a2eb61ca85dbf3b40bc89fe`、执行冻结 `4aad0169c47f17c2c97bae541b6bc38bb6aaf489`及单行修复 `27280c4ef243a96578b78e9794ff52407be86eff`。实际1521项独立轻量身份/原输出/统计/观测器核验通过，未重复重型矩阵。新增必须修正项1（R01：mismatch外层bytes事件数217而非222），已由执行修正、reviewer复核关闭；剩余必须项0。原finding/失败stderr、可选pattern类型过滤建议及复核处置均保留。调查与具体方案可交PM接收；目标降幅及新wire格式仍是建议，未批准实施、未作产品性能验收或main集成。
 
 ## PM 验收与交接（PM）
 

@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "/workspace/w012-review/docs/tasks/W012/review-evidence/check.py", line 161, in <module>
+    main()
+  File "/workspace/w012-review/docs/tasks/W012/review-evidence/check.py", line 86, in main
+    check(outer['calls'] == 222 and outer['hex_characters'] == 2 * outer['payload_bytes'], 'actual outer hex accounting: ' + case)
+  File "/workspace/w012-review/docs/tasks/W012/review-evidence/check.py", line 29, in check
+    assert condition, label
+           ^^^^^^^^^
+AssertionError: actual outer hex accounting: extraction-mismatch
