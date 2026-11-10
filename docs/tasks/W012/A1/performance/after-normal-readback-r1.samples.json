@@ -1,0 +1,367 @@
+[
+  {
+    "elapsed_seconds": 0.000865490999785834,
+    "VmRSS": "88 kB",
+    "VmHWM": "88 kB"
+  },
+  {
+    "elapsed_seconds": 2.001229441999385,
+    "VmRSS": "31780 kB",
+    "VmHWM": "38540 kB"
+  },
+  {
+    "elapsed_seconds": 4.001640557999053,
+    "VmRSS": "36120 kB",
+    "VmHWM": "38540 kB"
+  },
+  {
+    "elapsed_seconds": 6.002121441999407,
+    "VmRSS": "104340 kB",
+    "VmHWM": "160484 kB"
+  },
+  {
+    "elapsed_seconds": 8.002499266000086,
+    "VmRSS": "128908 kB",
+    "VmHWM": "160484 kB"
+  },
+  {
+    "elapsed_seconds": 10.00294728100016,
+    "VmRSS": "133600 kB",
+    "VmHWM": "160484 kB"
+  },
+  {
+    "elapsed_seconds": 12.003345748000356,
+    "VmRSS": "133980 kB",
+    "VmHWM": "160484 kB"
+  },
+  {
+    "elapsed_seconds": 14.00378829500005,
+    "VmRSS": "142804 kB",
+    "VmHWM": "160484 kB"
+  },
+  {
+    "elapsed_seconds": 16.004192496999167,
+    "VmRSS": "149328 kB",
+    "VmHWM": "198888 kB"
+  },
+  {
+    "elapsed_seconds": 18.004614642999513,
+    "VmRSS": "149328 kB",
+    "VmHWM": "198888 kB"
+  },
+  {
+    "elapsed_seconds": 20.00500813600047,
+    "VmRSS": "151480 kB",
+    "VmHWM": "198888 kB"
+  },
+  {
+    "elapsed_seconds": 22.00544248799997,
+    "VmRSS": "151084 kB",
+    "VmHWM": "198888 kB"
+  },
+  {
+    "elapsed_seconds": 24.005874061000213,
+    "VmRSS": "95856 kB",
+    "VmHWM": "198888 kB"
+  },
+  {
+    "elapsed_seconds": 26.007184482999946,
+    "VmRSS": "166504 kB",
+    "VmHWM": "292152 kB"
+  },
+  {
+    "elapsed_seconds": 28.007622518000062,
+    "VmRSS": "200720 kB",
+    "VmHWM": "302164 kB"
+  },
+  {
+    "elapsed_seconds": 30.008021010999073,
+    "VmRSS": "200720 kB",
+    "VmHWM": "302164 kB"
+  },
+  {
+    "elapsed_seconds": 32.008413641000516,
+    "VmRSS": "202824 kB",
+    "VmHWM": "302164 kB"
+  },
+  {
+    "elapsed_seconds": 34.00887605400021,
+    "VmRSS": "203512 kB",
+    "VmHWM": "302164 kB"
+  },
+  {
+    "elapsed_seconds": 36.009245056999134,
+    "VmRSS": "204380 kB",
+    "VmHWM": "302164 kB"
+  },
+  {
+    "elapsed_seconds": 38.00963170899922,
+    "VmRSS": "241772 kB",
+    "VmHWM": "302164 kB"
+  },
+  {
+    "elapsed_seconds": 40.00999808300003,
+    "VmRSS": "246972 kB",
+    "VmHWM": "302164 kB"
+  },
+  {
+    "elapsed_seconds": 42.01037423100024,
+    "VmRSS": "250756 kB",
+    "VmHWM": "302164 kB"
+  },
+  {
+    "elapsed_seconds": 44.01075825299995,
+    "VmRSS": "251224 kB",
+    "VmHWM": "302164 kB"
+  },
+  {
+    "elapsed_seconds": 46.01135629199962,
+    "VmRSS": "250384 kB",
+    "VmHWM": "302164 kB"
+  },
+  {
+    "elapsed_seconds": 48.01176992500041,
+    "VmRSS": "163804 kB",
+    "VmHWM": "302164 kB"
+  },
+  {
+    "elapsed_seconds": 50.01215824999963,
+    "VmRSS": "104756 kB",
+    "VmHWM": "401248 kB"
+  },
+  {
+    "elapsed_seconds": 52.01256213099987,
+    "VmRSS": "139232 kB",
+    "VmHWM": "401248 kB"
+  },
+  {
+    "elapsed_seconds": 54.01292871499936,
+    "VmRSS": "207132 kB",
+    "VmHWM": "401248 kB"
+  },
+  {
+    "elapsed_seconds": 56.0133025110008,
+    "VmRSS": "207132 kB",
+    "VmHWM": "401248 kB"
+  },
+  {
+    "elapsed_seconds": 58.01371790700068,
+    "VmRSS": "207132 kB",
+    "VmHWM": "401248 kB"
+  },
+  {
+    "elapsed_seconds": 60.014099832000284,
+    "VmRSS": "209136 kB",
+    "VmHWM": "401248 kB"
+  },
+  {
+    "elapsed_seconds": 62.014451910999924,
+    "VmRSS": "245344 kB",
+    "VmHWM": "401248 kB"
+  },
+  {
+    "elapsed_seconds": 64.01482908199978,
+    "VmRSS": "245344 kB",
+    "VmHWM": "401248 kB"
+  },
+  {
+    "elapsed_seconds": 66.01519740299955,
+    "VmRSS": "251324 kB",
+    "VmHWM": "401248 kB"
+  },
+  {
+    "elapsed_seconds": 68.01565816699986,
+    "VmRSS": "251972 kB",
+    "VmHWM": "401248 kB"
+  },
+  {
+    "elapsed_seconds": 70.0160240389996,
+    "VmRSS": "251996 kB",
+    "VmHWM": "401248 kB"
+  },
+  {
+    "elapsed_seconds": 72.01637948499956,
+    "VmRSS": "166444 kB",
+    "VmHWM": "401248 kB"
+  },
+  {
+    "elapsed_seconds": 74.01678152800014,
+    "VmRSS": "105344 kB",
+    "VmHWM": "428372 kB"
+  },
+  {
+    "elapsed_seconds": 76.01716179399955,
+    "VmRSS": "105344 kB",
+    "VmHWM": "428372 kB"
+  },
+  {
+    "elapsed_seconds": 78.0175642260001,
+    "VmRSS": "350192 kB",
+    "VmHWM": "428372 kB"
+  },
+  {
+    "elapsed_seconds": 80.0179907870006,
+    "VmRSS": "284596 kB",
+    "VmHWM": "633024 kB"
+  },
+  {
+    "elapsed_seconds": 82.0183765820002,
+    "VmRSS": "362684 kB",
+    "VmHWM": "633024 kB"
+  },
+  {
+    "elapsed_seconds": 84.01877533900006,
+    "VmRSS": "352000 kB",
+    "VmHWM": "633024 kB"
+  },
+  {
+    "elapsed_seconds": 86.01915777999966,
+    "VmRSS": "352000 kB",
+    "VmHWM": "633024 kB"
+  },
+  {
+    "elapsed_seconds": 88.01966237600027,
+    "VmRSS": "352000 kB",
+    "VmHWM": "633024 kB"
+  },
+  {
+    "elapsed_seconds": 90.02005706199998,
+    "VmRSS": "296696 kB",
+    "VmHWM": "633024 kB"
+  },
+  {
+    "elapsed_seconds": 92.02074221099974,
+    "VmRSS": "354428 kB",
+    "VmHWM": "633024 kB"
+  },
+  {
+    "elapsed_seconds": 94.02111011899979,
+    "VmRSS": "393820 kB",
+    "VmHWM": "633024 kB"
+  },
+  {
+    "elapsed_seconds": 96.02148869700068,
+    "VmRSS": "397856 kB",
+    "VmHWM": "633024 kB"
+  },
+  {
+    "elapsed_seconds": 98.02367149699967,
+    "VmRSS": "400440 kB",
+    "VmHWM": "633024 kB"
+  },
+  {
+    "elapsed_seconds": 100.0259970370007,
+    "VmRSS": "400944 kB",
+    "VmHWM": "633024 kB"
+  },
+  {
+    "elapsed_seconds": 102.02826492900022,
+    "VmRSS": "401136 kB",
+    "VmHWM": "633024 kB"
+  },
+  {
+    "elapsed_seconds": 104.0286700380002,
+    "VmRSS": "342772 kB",
+    "VmHWM": "633024 kB"
+  },
+  {
+    "elapsed_seconds": 106.02900940499967,
+    "VmRSS": "431656 kB",
+    "VmHWM": "633024 kB"
+  },
+  {
+    "elapsed_seconds": 108.0293829179991,
+    "VmRSS": "300272 kB",
+    "VmHWM": "633024 kB"
+  },
+  {
+    "elapsed_seconds": 110.02978949799945,
+    "VmRSS": "304120 kB",
+    "VmHWM": "633024 kB"
+  },
+  {
+    "elapsed_seconds": 112.03017407299922,
+    "VmRSS": "399440 kB",
+    "VmHWM": "633024 kB"
+  },
+  {
+    "elapsed_seconds": 114.03058901300028,
+    "VmRSS": "361192 kB",
+    "VmHWM": "633024 kB"
+  },
+  {
+    "elapsed_seconds": 116.03097255399916,
+    "VmRSS": "429596 kB",
+    "VmHWM": "633024 kB"
+  },
+  {
+    "elapsed_seconds": 118.03135742700033,
+    "VmRSS": "438772 kB",
+    "VmHWM": "633024 kB"
+  },
+  {
+    "elapsed_seconds": 120.03184159199918,
+    "VmRSS": "439236 kB",
+    "VmHWM": "633024 kB"
+  },
+  {
+    "elapsed_seconds": 122.03221743200083,
+    "VmRSS": "440136 kB",
+    "VmHWM": "633024 kB"
+  },
+  {
+    "elapsed_seconds": 124.03264292499989,
+    "VmRSS": "384788 kB",
+    "VmHWM": "633024 kB"
+  },
+  {
+    "elapsed_seconds": 126.03304071899947,
+    "VmRSS": "468300 kB",
+    "VmHWM": "633024 kB"
+  },
+  {
+    "elapsed_seconds": 128.03346832600073,
+    "VmRSS": "478312 kB",
+    "VmHWM": "633024 kB"
+  },
+  {
+    "elapsed_seconds": 130.03385384300054,
+    "VmRSS": "478336 kB",
+    "VmHWM": "633024 kB"
+  },
+  {
+    "elapsed_seconds": 132.03425268799947,
+    "VmRSS": "478860 kB",
+    "VmHWM": "633024 kB"
+  },
+  {
+    "elapsed_seconds": 134.03464323700064,
+    "VmRSS": "422548 kB",
+    "VmHWM": "633024 kB"
+  },
+  {
+    "elapsed_seconds": 136.03507670199906,
+    "VmRSS": "375688 kB",
+    "VmHWM": "633024 kB"
+  },
+  {
+    "elapsed_seconds": 138.03553782199924,
+    "VmRSS": "315608 kB",
+    "VmHWM": "633024 kB"
+  },
+  {
+    "elapsed_seconds": 140.03592709999975,
+    "VmRSS": "314584 kB",
+    "VmHWM": "633024 kB"
+  },
+  {
+    "elapsed_seconds": 142.0363152739992,
+    "VmRSS": "295288 kB",
+    "VmHWM": "633024 kB"
+  },
+  {
+    "elapsed_seconds": 144.03674958199917,
+    "VmRSS": "608276 kB",
+    "VmHWM": "633024 kB"
+  }
+]

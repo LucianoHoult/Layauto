@@ -1,0 +1,41 @@
+{
+  "argv": [
+    "/workspace/.venvs/layauto/bin/python",
+    "-B",
+    "/workspace/Layauto/docs/tasks/W012/A1/probe.py",
+    "--runtime-root",
+    "/workspace/Layauto",
+    "--input-root",
+    "/workspace/Layauto",
+    "--case",
+    "extraction-mismatch",
+    "--mode",
+    "baseline",
+    "--output",
+    "/workspace/Layauto/docs/tasks/W012/A1/performance/after-extraction-mismatch-r3.json",
+    "--wire-output",
+    "/workspace/w012-a1-performance/wires/baseline/after-extraction-mismatch-r3.bin"
+  ],
+  "cwd": "/workspace/Layauto",
+  "started_at_utc": "2026-11-10T06:55:03.651875+00:00",
+  "side": "after",
+  "case": "extraction-mismatch",
+  "rep": 3,
+  "tools": {
+    "probe.py": "5dc3d2417e2f45486648730151e9150f444041b6eae1a35730783bbb88909f1a",
+    "run_performance.py": "aca026ad28711ec161d848b7f249c33ac723de7da7f821ec0c8c66643b77627c"
+  },
+  "environment_override": {
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "finished_at_utc": "2026-11-10T06:56:27.877029+00:00",
+  "elapsed_seconds": 84.22526560000006,
+  "exit_code": 0,
+  "stdout_sha256": "dd949208b7cee401ab515871fe881300a0fc1e701dae0008c0a0cf37fac468f5",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "actual_complete_wire_byte_comparison": {
+    "reference": "/workspace/w012-a1-performance/wires/baseline/before-extraction-mismatch-r1.bin",
+    "bytes": 54045042,
+    "equal": true
+  }
+}

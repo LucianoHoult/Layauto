@@ -1,0 +1,17 @@
+{
+  "argv": [
+    "/workspace/.venvs/layauto/bin/python",
+    "-B",
+    "/workspace/Layauto/docs/tasks/W012/A1/run_performance.py",
+    "--stage",
+    "profile"
+  ],
+  "cwd": "/workspace/Layauto",
+  "started_at_utc": "2026-11-10T06:56:27.966292+00:00",
+  "git_head": "d9d68475fefbeb420e738ad2ee5c2b6e92e7c5ec",
+  "finished_at_utc": "2026-11-10T07:13:20.630584+00:00",
+  "elapsed_seconds": 1012.6643136699986,
+  "exit_code": 0,
+  "stdout_sha256": "cdffd909a8f7c8536ff5a47c7d7c7b86362d198e01ddefa9ee33c1d05e3ab304",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

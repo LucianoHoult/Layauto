@@ -1,0 +1,43 @@
+{
+  "utc_recorded_after_resume": "2026-11-10T07:24:09.198971+00:00",
+  "environment_id": "ccarenv_b64_Y2NhcmVudl8zZjNmYzY5N2VmM2M4MTkxYjczMDU4NTcxZmMxNzM5MQ",
+  "observed": "Environment entered starting then ready. All measurement/matrix Python processes absent after resume; write_stdin session66915 returned Unknown process id. No completed final verification receipt or pytest exit records exist.",
+  "cause": "Environment interruption; process exit status unavailable. Local memory.events reports oom=0/oom_kill=0, no claim of product failure or OOM.",
+  "archive": "/workspace/Layauto/docs/tasks/W012/A1/verification-attempt-01",
+  "original_output_path": "/workspace/Layauto/docs/tasks/W012/A1/verification",
+  "files": {
+    "environment-310.stdout.txt": "9e38918275f9a236ddff67acd476575804920c33b5fedce98927b8e3f43b881f",
+    "source-manifest.json": "e1cea3d19fa375bdc1ece1ece23f9df6aa4a6def6424718d594f374d3e387602",
+    "environment-310.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "environment-312.json": "24568ac35445d4e70401887d50825a84fe4140a9c54ed32226681421089b8e37",
+    "environment-310.json": "2aebcf575eadf505ffe8d5869c2c573a8b726438d476207ff831e573d6b79915",
+    "pytest-310.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "collection-312.json": "9dfcb6aeaf7ca2b6e38e0f457d2dfb8a558d321a5846b882b6f85fd77a0d7d0e",
+    "baseline-collection.txt": "56a495878e2aec34a31c103a94fd7511fb44aa5dd866afd092d1f49940b70d3d",
+    "w011_resource_gate.py": "1c78c2066736f0f56d80f3353da133a1d23407b0675a0a8f5e471b1337469d70",
+    "source-snapshot.tar.gz": "ccf5d42c79734e5c776ff19694ada385a17bdcbabb6fdc1b319edef82dd40736",
+    "pytest-312.stdout.txt": "a13f81d813b4323a4202db4e9aa586717b7c2eea4a18b2ca0f297c9063ae4e14",
+    "prepare_final.py": "2a796148c68616894d1fafbfb5832765121e3bb7873a08f2e3cd10d0df641e53",
+    "resource-gate.json": "7c873480a1f4f5454321371bec0117e498b5f41764f0d1fdcafe5d653e5eb487",
+    "pytest-312.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "collection-310.stdout.txt": "3ee6113a86dee17de499dc3d55d68322a13d201bfef913fe18787b410fdd1a8e",
+    "pytest-scope-310.json": "cfd026fbca5e1eea411373eb68f3dacf5fd6645ac7d1903fe5f393c6063aa012",
+    "environment-312.stdout.txt": "b9b551d89f216a39629be0a340720a27710aa5f09c66f6b779841e70940fb169",
+    "environment-312.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "resource-limits.json": "d145190a68e075da0ecf44ff97a94ed0ca8665bd0d9da94b0e0d61206cc631df",
+    "installed_smoke.py": "471401c6f64d78c236d640bf15dbdeaed23dee5a62fc6a325e8192e480361960",
+    "collection-312.stdout.txt": "5c1ab0c4ccb65ae59f898e874dc8d934d8eb8083fc6e93d7b11e76be359c4961",
+    "pytest-scope-312.json": "cfd026fbca5e1eea411373eb68f3dacf5fd6645ac7d1903fe5f393c6063aa012",
+    "collection-310.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "pytest-310.stdout.txt": "5110b68156af5dc725fc9d763a5aa1f9b919dd346245e81517d5a2e2d4a6e9f0",
+    "collection-312.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "collection-310.json": "b2afac4f5251cb7b076972287f258ae06c7602486113e937119cfb0b1c730e13"
+  },
+  "current_source_matches_all_frozen_after_files": true,
+  "performance_18_and_profiles_completed_before_interruption": true,
+  "not_claimed_passed": [
+    "partial pytest310 approximately39%",
+    "partial pytest312 approximately43%"
+  ],
+  "recovery": "New final verification attempt, same runtime/test source; retain all old output and snapshots, do not rerun completed performance comparisons."
+}

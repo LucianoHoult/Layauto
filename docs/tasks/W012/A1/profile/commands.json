@@ -1,0 +1,79 @@
+[
+  {
+    "argv": [
+      "/workspace/.venvs/layauto/bin/python",
+      "-B",
+      "/workspace/Layauto/docs/tasks/W012/A1/probe.py",
+      "--runtime-root",
+      "/workspace/w012-a1-before",
+      "--input-root",
+      "/workspace/Layauto",
+      "--case",
+      "normal-readback",
+      "--mode",
+      "profile",
+      "--output",
+      "/workspace/Layauto/docs/tasks/W012/A1/profile/before-normal-readback-r1.json",
+      "--wire-output",
+      "/workspace/w012-a1-performance/wires/profile/before-normal-readback-r1.bin"
+    ],
+    "cwd": "/workspace/Layauto",
+    "started_at_utc": "2026-11-10T06:56:28.058132+00:00",
+    "side": "before",
+    "case": "normal-readback",
+    "rep": 1,
+    "tools": {
+      "probe.py": "5dc3d2417e2f45486648730151e9150f444041b6eae1a35730783bbb88909f1a",
+      "run_performance.py": "aca026ad28711ec161d848b7f249c33ac723de7da7f821ec0c8c66643b77627c"
+    },
+    "environment_override": {
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "finished_at_utc": "2026-11-10T07:05:08.310558+00:00",
+    "elapsed_seconds": 520.2524862669998,
+    "exit_code": 0,
+    "stdout_sha256": "68051a362598a6c3e7f6482a54197cb1ebb6091691302d20d90ecca3aa31de9c",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "actual_complete_wire_byte_comparison": {
+      "reference": "/workspace/w012-a1-performance/wires/baseline/before-normal-readback-r1.bin",
+      "bytes": 136471701,
+      "equal": true
+    }
+  },
+  {
+    "argv": [
+      "/workspace/.venvs/layauto/bin/python",
+      "-B",
+      "/workspace/Layauto/docs/tasks/W012/A1/probe.py",
+      "--runtime-root",
+      "/workspace/Layauto",
+      "--input-root",
+      "/workspace/Layauto",
+      "--case",
+      "normal-readback",
+      "--mode",
+      "profile",
+      "--output",
+      "/workspace/Layauto/docs/tasks/W012/A1/profile/after-normal-readback-r1.json",
+      "--wire-output",
+      "/workspace/w012-a1-performance/wires/profile/after-normal-readback-r1.bin"
+    ],
+    "cwd": "/workspace/Layauto",
+    "started_at_utc": "2026-11-10T07:05:08.412138+00:00",
+    "side": "after",
+    "case": "normal-readback",
+    "rep": 1,
+    "tools": {
+      "probe.py": "5dc3d2417e2f45486648730151e9150f444041b6eae1a35730783bbb88909f1a",
+      "run_performance.py": "aca026ad28711ec161d848b7f249c33ac723de7da7f821ec0c8c66643b77627c"
+    },
+    "environment_override": {
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "finished_at_utc": "2026-11-10T07:13:20.532215+00:00",
+    "elapsed_seconds": 492.120107196999,
+    "exit_code": 0,
+    "stdout_sha256": "ca18346e1401aef987f4d0e133a74eb906b3e3739265a2c57c0e4c0bcc739bde",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+]

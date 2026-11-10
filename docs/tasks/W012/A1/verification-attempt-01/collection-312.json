@@ -1,0 +1,28 @@
+{
+  "command": [
+    "/workspace/w012-a1-env/dev312/bin/python",
+    "-m",
+    "pytest",
+    "-p",
+    "no:cacheprovider",
+    "--collect-only",
+    "tests/unit",
+    "tests/contracts",
+    "-q"
+  ],
+  "cwd": "/workspace/w012-a1-final/source",
+  "exit_code": 0,
+  "environment_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PIP_CACHE_DIR": "/workspace/w012-a1-final/pip-cache",
+    "MYPY_CACHE_DIR": "/workspace/w012-a1-final/mypy-collection-312",
+    "MPLCONFIGDIR": "/workspace/w012-a1-final/mplconfig"
+  },
+  "started_at_utc": "2026-11-10T07:13:21.094184+00:00",
+  "finished_at_utc": "2026-11-10T07:13:23.481445+00:00",
+  "elapsed_seconds": 2.387,
+  "stdout": "collection-312.stdout.txt",
+  "stdout_sha256": "5c1ab0c4ccb65ae59f898e874dc8d934d8eb8083fc6e93d7b11e76be359c4961",
+  "stderr": "collection-312.stderr.txt",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

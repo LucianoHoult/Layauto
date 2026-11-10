@@ -46,8 +46,10 @@ def main() -> None:
                         help='Default 1 avoids overlapping full captured-wire decode peaks; packaging runs after both matrices.')
     parser.add_argument('--resource-gate', type=Path,
                         help='Required with two workers: archived pytest plugin holds the W011 lock until process exit.')
+    parser.add_argument('--allow-parallel-without-gate', action='store_true',
+                        help='Explicit A1 engineering scheduling choice after complete low-memory measurements; never a performance result.')
     args = parser.parse_args()
-    if args.matrix_workers == 2 and args.resource_gate is None:
+    if args.matrix_workers == 2 and args.resource_gate is None and not args.allow_parallel_without_gate:
         parser.error('--matrix-workers 2 requires --resource-gate')
     root, out, work, smoke = (getattr(args, name).resolve() for name in ('root', 'out', 'work', 'smoke'))
     pythons = {'310': args.python310.absolute(), '312': args.python312.absolute()}
