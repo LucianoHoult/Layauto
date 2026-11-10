@@ -1,0 +1,23 @@
+{
+  "command": [
+    "/workspace/work/w011-engineering/dev312/bin/python",
+    "-m",
+    "venv",
+    "/workspace/work/w011-final-e89bdaa/clean-312"
+  ],
+  "cwd": "/workspace/work/w011-final-e89bdaa/installed-cwd",
+  "exit_code": 0,
+  "environment_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PIP_CACHE_DIR": "/workspace/work/w011-final-e89bdaa/pip-cache",
+    "MYPY_CACHE_DIR": "/workspace/work/w011-final-e89bdaa/mypy-create-install-312",
+    "MPLCONFIGDIR": "/workspace/work/w011-final-e89bdaa/mplconfig"
+  },
+  "started_at_utc": "2026-11-09T15:53:28.340326+00:00",
+  "finished_at_utc": "2026-11-09T15:53:30.464249+00:00",
+  "elapsed_seconds": 2.124,
+  "stdout": "create-install-312.stdout.txt",
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr": "create-install-312.stderr.txt",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

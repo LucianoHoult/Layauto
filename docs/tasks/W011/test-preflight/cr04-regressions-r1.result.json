@@ -1,0 +1,43 @@
+{
+  "cwd": "/workspace/work/w011-tests",
+  "argv": [
+    "/workspace/work/w011-engineering/dev312/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-p",
+    "no:cacheprovider",
+    "tests/contracts/test_w011_contracts.py",
+    "-k",
+    "cr04",
+    "-x",
+    "-q"
+  ],
+  "files": {
+    "layauto_v2/annotation/channel_identity.py": "5f0c5668627f749b84929a727ec9e00882bc657d0c8081b418c755a0ce362c4c",
+    "layauto_v2/domain/channel_identity.py": "a1e50130590575120f2493ffe1c80a98e7318c185c36cf6e46b894006adf6412",
+    "layauto_v2/normalization/channel_identity.py": "d7d4ed91e256e522b6b39bfee2953d730e5ae14886db574211280e74d36ec25b",
+    "layauto_v2/normalization/channel_identity_codec.py": "ef7f6188a15512d832fe8c92f9a55fb76c6012126c40f1050b51a8c6cdb9c161",
+    "layauto_v2/derive/channel_identity.py": "5b6eeca4e5dce3a13cdfd4484c8c02f2999404a142285754da12d0e6601acf6c",
+    "layauto_v2/derive/fin_count.py": "f2c625d1f92d0f64e9b8cd066895c839e57b270de5ef71612ac0427a16bb6508",
+    "layauto_v2/domain/source_location.py": "ab7a21b202144b626bd91d50947596551410d9404002ad258989dfdf90eb5d43",
+    "layauto_v2/normalization/codec.py": "b4ee23a44725414c709c0b834cf6bce539c65bc58c9ab7387815b596efebed7d",
+    "layauto_v2/normalization/component.py": "7eaef9bfb41e2ee14e65444d37066bd14388f56aaedb725bf9571982a8b96c69",
+    "tests/contracts/test_w011_contracts.py": "ac20ec1365521fdd95bfdd697255c6f2e262e5348e97cbb748080f3b9abc25fc",
+    "tests/contracts/test_w011_geometry.py": "b272efad1542b7984fdb1ea3120b934877b35e480e91cc43745ef87d2f0d3a1d",
+    "tests/contracts/w011_cases.py": "77740bb6be25119da10c7128a7fce9a0109b81d7016e813b24a51e42c27c7a92",
+    "tests/contracts/test_w011_exceptions.py": "92eae5afd587d0d4b5f1d0b862cc4e8d8f5e8290f97bb473aa38a96637103c5b"
+  },
+  "git_head": "6d94c742965d0a6736dcb79cf0c5074524004cbf",
+  "git_tree": "f6ff919972b0772574f302e30b64b8952e63a637",
+  "git_status": "",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "started_utc": "2026-11-09T09:16:02Z",
+  "exit_code": 0,
+  "elapsed_seconds": 120.16460704803467,
+  "max_rss_kib": 2861900,
+  "outputs": {
+    ".stdout.txt": "d366beff0b95596b5e6b78aad7f61ddd72b7ece4bda745e67fc4739a3cd5f669",
+    ".stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

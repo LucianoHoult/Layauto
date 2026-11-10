@@ -1,0 +1,22 @@
+[
+  {
+    "label": "geometry-r2",
+    "missing": [],
+    "snapshot_saved": true
+  },
+  {
+    "label": "contracts-r1",
+    "missing": [],
+    "snapshot_saved": true
+  },
+  {
+    "label": "exceptions-r1",
+    "missing": [],
+    "snapshot_saved": true
+  },
+  {
+    "label": "review-regressions-r1",
+    "missing": [],
+    "snapshot_saved": true
+  }
+]

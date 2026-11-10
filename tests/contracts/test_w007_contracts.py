@@ -364,7 +364,13 @@ def test_normalization_and_new_domain_keep_pure_dependency_boundaries():
                                                           or (node.module == 'layauto_v2.state.regions'
                                                               and {alias.name for alias in node.names} == {
                                                                   'EffectiveDraft'})))))
-            if not (allowed_decoder or allowed_geometry_decoder or allowed_geometry_state
+            # W011 reads this immutable local draft in its closed codec only.
+            allowed_channel_local = (path.parent.name == 'normalization'
+                                     and path.name == 'channel_identity_codec.py'
+                                     and isinstance(node, ast.ImportFrom)
+                                     and node.module == 'layauto_v2.state.local_connectivity'
+                                     and {alias.name for alias in node.names} == {'LocalConnectivityDraft'})
+            if not (allowed_channel_local or allowed_decoder or allowed_geometry_decoder or allowed_geometry_state
                     or allowed_effective_state or allowed_local_contact_state):
                 violations.extend((str(path), module) for module in modules if module.startswith(forbidden))
         for node in ast.walk(tree):

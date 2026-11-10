@@ -1,0 +1,77 @@
+{
+  "schema": "layauto-superseded-run/1",
+  "watcher_started_at_utc": "2026-11-09T11:24:16.081144+00:00",
+  "failure_receipt_first_observed_at_utc": "2026-11-09T12:01:25.203809+00:00",
+  "trigger_receipt": "/workspace/Layauto/docs/tasks/W011/verification/pytest-310.json",
+  "trigger": {
+    "command": [
+      "/workspace/work/w011-engineering/dev310/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "no:cacheprovider",
+      "tests/unit",
+      "tests/contracts",
+      "-q"
+    ],
+    "cwd": "/workspace/work/w011-final-02725e2/source",
+    "exit_code": 1,
+    "environment_overrides": {
+      "PYTHONDONTWRITEBYTECODE": "1",
+      "PIP_CACHE_DIR": "/workspace/work/w011-final-02725e2/pip-cache",
+      "MYPY_CACHE_DIR": "/workspace/work/w011-final-02725e2/mypy-pytest-310",
+      "MPLCONFIGDIR": "/workspace/work/w011-final-02725e2/mplconfig"
+    },
+    "elapsed_seconds": 9503.634,
+    "stdout": "pytest-310.stdout.txt",
+    "stdout_sha256": "ee90b4878f5fe9274af4933bbac0f059cc322b206e4d94022ac737224df502aa",
+    "stderr": "pytest-310.stderr.txt",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "reason": "Final attempt 01 uses frozen 02725e2. target-only regression setup has wrong CDL token order and asserts before measurement; parent authorized preserving complete failed 310 and terminating superseded queued/running 312 after the failure receipt. Source/runtime is unchanged; replacement complete dual matrix will use independently reviewed corrected test setup.",
+  "runner": {
+    "pid": 12362,
+    "ppid": 12353,
+    "state": "S",
+    "command": "/workspace/work/w011-engineering/dev312/bin/python /workspace/Layauto/docs/tasks/W011/prepare_final.py --root /workspace/Layauto --out /workspace/Layauto/docs/tasks/W011/verification --work /workspace/work/w011-final-02725e2 --smoke /workspace/Layauto/docs/tasks/W011/installed_smoke.py --python310 /workspace/work/w011-engineering/dev310/bin/python --python312 /workspace/work/w011-engineering/dev312/bin/python --baseline-collection /workspace/Layauto/docs/tasks/W011/preflight/baseline-collection312.txt --expected-tests 1605 --matrix-workers 1"
+  },
+  "signals": [
+    {
+      "pid": 12362,
+      "signal": "SIGSTOP",
+      "sent_at_utc": "2026-11-09T12:01:25.204009+00:00"
+    },
+    {
+      "pid": 21205,
+      "signal": "SIGTERM",
+      "sent_at_utc": "2026-11-09T12:01:25.206495+00:00"
+    },
+    {
+      "pid": 12362,
+      "signal": "SIGTERM",
+      "sent_at_utc": "2026-11-09T12:01:25.206506+00:00"
+    },
+    {
+      "pid": 12362,
+      "signal": "SIGCONT",
+      "sent_at_utc": "2026-11-09T12:01:25.206541+00:00"
+    }
+  ],
+  "descendants_before_stop": [
+    {
+      "pid": 21205,
+      "ppid": 12362,
+      "state": "R",
+      "command": "/workspace/work/w011-engineering/dev312/bin/python -m pytest -p no:cacheprovider --collect-only tests/unit tests/contracts -q"
+    }
+  ],
+  "observed_after_signals_at_utc": "2026-11-09T12:01:27.206685+00:00",
+  "remaining_processes": [
+    {
+      "pid": 21205,
+      "ppid": 1,
+      "state": "Z",
+      "command": ""
+    }
+  ]
+}

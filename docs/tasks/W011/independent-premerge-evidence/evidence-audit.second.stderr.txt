@@ -1,0 +1,14 @@
+fatal: bad object 27f885497634d0f2ed50d293e00603309d34c0cd
+Traceback (most recent call last):
+  File "/workspace/Layauto-w011-review/docs/tasks/W011/independent-premerge-evidence/evidence-audit.py", line 159, in <module>
+    check("repair patch equivalence " + integrated[:7], git("show", "--format=", original, "--", "tests") == git("show", "--format=", integrated, "--", "tests"))
+                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/Layauto-w011-review/docs/tasks/W011/independent-premerge-evidence/evidence-audit.py", line 34, in git
+    return subprocess.check_output(["git", *args], cwd=ROOT)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 466, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['git', 'show', '--format=', '27f885497634d0f2ed50d293e00603309d34c0cd', '--', 'tests']' returned non-zero exit status 128.

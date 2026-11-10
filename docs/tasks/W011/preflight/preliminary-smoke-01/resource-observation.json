@@ -1,0 +1,19 @@
+{
+  "observed_at_utc": "2026-11-09T09:00:46.424128+00:00",
+  "pid": 4306,
+  "command": [
+    "/workspace/work/w011-engineering/dev312/bin/python",
+    "-B",
+    "/workspace/work/w011-engineering/preliminary-smoke-01/preflight_smoke.py",
+    "/workspace/work/w011-engineering/preliminary-smoke-01/source/tests/fixtures/w003_m1"
+  ],
+  "proc_status": {
+    "Name": "python",
+    "State": "R (running)",
+    "VmHWM": "7351044 kB",
+    "VmRSS": "244704 kB",
+    "Threads": "1"
+  },
+  "cgroup_memory_current": "8067198976",
+  "scope": "Source preflight, not final resource measurement. VmHWM is cumulative whole-process watermark."
+}

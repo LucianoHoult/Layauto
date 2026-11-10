@@ -1,0 +1,37 @@
+{
+  "cwd": "/workspace/work/w011-tests",
+  "argv": [
+    "/workspace/work/w011-engineering/dev312/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-p",
+    "no:cacheprovider",
+    "tests/contracts/test_w011_contracts.py",
+    "tests/contracts/test_w011_exceptions.py",
+    "-k",
+    "cr01 or cr02 or cr03 or nested_parameter_malformed_controls or expected_owner_schema_error",
+    "-x",
+    "-q"
+  ],
+  "files": {
+    "layauto_v2/annotation/channel_identity.py": "5f0c5668627f749b84929a727ec9e00882bc657d0c8081b418c755a0ce362c4c",
+    "layauto_v2/domain/channel_identity.py": "802dcf80f5de28971eb7002a5aed15e0eb03ee750e960097258dca07636e65f4",
+    "layauto_v2/normalization/channel_identity.py": "f9b3c5e069261767f7f89da033bfe42ae166bfe706415fc4ac899c2fed81b944",
+    "layauto_v2/normalization/channel_identity_codec.py": "ef7f6188a15512d832fe8c92f9a55fb76c6012126c40f1050b51a8c6cdb9c161",
+    "layauto_v2/derive/channel_identity.py": "c7a1f866135f43362493d45bdccac81b060daa649f9cbabc37ae8c751e84ce56",
+    "layauto_v2/derive/fin_count.py": "f2c625d1f92d0f64e9b8cd066895c839e57b270de5ef71612ac0427a16bb6508",
+    "layauto_v2/domain/source_location.py": "ab7a21b202144b626bd91d50947596551410d9404002ad258989dfdf90eb5d43",
+    "layauto_v2/normalization/codec.py": "b4ee23a44725414c709c0b834cf6bce539c65bc58c9ab7387815b596efebed7d",
+    "layauto_v2/normalization/component.py": "7eaef9bfb41e2ee14e65444d37066bd14388f56aaedb725bf9571982a8b96c69",
+    "tests/contracts/test_w011_contracts.py": "5143b2dcab95e072728079e62664ea734dd313364c4cecbf37a0a2bcbc56e46c",
+    "tests/contracts/test_w011_geometry.py": "b272efad1542b7984fdb1ea3120b934877b35e480e91cc43745ef87d2f0d3a1d",
+    "tests/contracts/w011_cases.py": "77740bb6be25119da10c7128a7fce9a0109b81d7016e813b24a51e42c27c7a92",
+    "tests/contracts/test_w011_exceptions.py": "92eae5afd587d0d4b5f1d0b862cc4e8d8f5e8290f97bb473aa38a96637103c5b"
+  },
+  "git_head": "a272a34e27a182c7886cc01d0586a109b91aa0c3",
+  "git_tree": "87550f2ee81741609a154429e252ffaaad5f2637",
+  "git_status": "",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "started_utc": "2026-11-09T09:08:51Z"
+}

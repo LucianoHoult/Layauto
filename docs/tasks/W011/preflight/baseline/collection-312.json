@@ -1,0 +1,32 @@
+{
+  "command": [
+    "/workspace/.venvs/layauto/bin/python",
+    "-m",
+    "pytest",
+    "-p",
+    "no:cacheprovider",
+    "--collect-only",
+    "tests/unit",
+    "tests/contracts",
+    "-q"
+  ],
+  "cwd": "/workspace/work/w011-engineering/baseline-source",
+  "exit_code": 0,
+  "elapsed_seconds": 1.2266573905944824,
+  "environment_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PIP_CACHE_DIR": "/workspace/work/w011-engineering/pip-cache",
+    "MYPY_CACHE_DIR": "/workspace/work/w011-engineering/mypy-312",
+    "MPLCONFIGDIR": "/workspace/work/w011-engineering/mplconfig"
+  },
+  "outputs": {
+    "stdout": {
+      "path": "collection-312.stdout.txt",
+      "sha256": "3da63a28aa26fc1308d1ee05252dd42e060832b4110c2df62dbaa3d558cee92e"
+    },
+    "stderr": {
+      "path": "collection-312.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  }
+}

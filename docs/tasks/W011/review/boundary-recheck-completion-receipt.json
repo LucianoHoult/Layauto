@@ -1,0 +1,62 @@
+{
+  "phase": "expected-completion-and-members-recheck",
+  "reviewer": "/root/code_review/boundary_review",
+  "snapshots": [
+    {
+      "head": "975852d3b9ea946aca24f727071cf26a7dce8bc7",
+      "source_root": "/workspace/work/w011-review-boundary-fixed",
+      "source_sha256": {
+        "layauto_v2/domain/channel_identity.py": "802dcf80f5de28971eb7002a5aed15e0eb03ee750e960097258dca07636e65f4",
+        "layauto_v2/derive/channel_identity.py": "c7a1f866135f43362493d45bdccac81b060daa649f9cbabc37ae8c751e84ce56",
+        "layauto_v2/normalization/channel_identity.py": "f9b3c5e069261767f7f89da033bfe42ae166bfe706415fc4ac899c2fed81b944",
+        "layauto_v2/normalization/component.py": "7eaef9bfb41e2ee14e65444d37066bd14388f56aaedb725bf9571982a8b96c69",
+        "layauto_v2/normalization/codec.py": "b4ee23a44725414c709c0b834cf6bce539c65bc58c9ab7387815b596efebed7d"
+      }
+    },
+    {
+      "head": "88fefa7c550993ed0d53d4ae073419a36a7b200b",
+      "source_root": "/workspace/work/w011-review-boundary-members",
+      "source_sha256": {
+        "layauto_v2/domain/channel_identity.py": "a1e50130590575120f2493ffe1c80a98e7318c185c36cf6e46b894006adf6412",
+        "layauto_v2/derive/channel_identity.py": "5b6eeca4e5dce3a13cdfd4484c8c02f2999404a142285754da12d0e6601acf6c",
+        "layauto_v2/normalization/channel_identity.py": "a8dc158c20574180ff135ed6260fa3eed13b8f4b9df5e1be63fff436622311fb",
+        "layauto_v2/normalization/component.py": "7eaef9bfb41e2ee14e65444d37066bd14388f56aaedb725bf9571982a8b96c69",
+        "layauto_v2/normalization/codec.py": "b4ee23a44725414c709c0b834cf6bce539c65bc58c9ab7387815b596efebed7d"
+      }
+    }
+  ],
+  "python": "Python 3.12.14",
+  "cwd": "/workspace/Layauto",
+  "commands": [
+    {
+      "shell": "/usr/bin/time -v /workspace/work/w011-engineering/dev312/bin/python /workspace/work/w011-review-boundary-fixed/probe_expected.py > /workspace/work/w011-review-boundary-fixed/expected.stdout.txt 2> /workspace/work/w011-review-boundary-fixed/expected.stderr.txt",
+      "exit_code": 127,
+      "note": "/usr/bin/time absent; failure stderr retained as expected-time-tool.stderr.txt; probe did not execute"
+    },
+    {
+      "shell": "/workspace/work/w011-engineering/dev312/bin/python /workspace/work/w011-review-boundary-fixed/probe_expected.py > /workspace/work/w011-review-boundary-fixed/expected.stdout.txt 2> /workspace/work/w011-review-boundary-fixed/expected.stderr.txt",
+      "exit_code": 0
+    },
+    {
+      "shell": "/workspace/work/w011-engineering/dev312/bin/python /workspace/work/w011-review-boundary-members/probe_equality.py > /workspace/work/w011-review-boundary-members/equality.stdout.txt 2> /workspace/work/w011-review-boundary-members/equality.stderr.txt",
+      "exit_code": 0
+    }
+  ],
+  "artifact_sha256": {
+    "boundary-members-equality.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "boundary-members-equality.stdout.txt": "15e54074f0fa18d2d247ae755b1e8a28bf720547900c6222fea4010d25fef766",
+    "boundary-members-probe_equality.py": "7421281b85bb33df8c14be7c9b77507d6573673ee22615e67dd5ad8977b7f91c",
+    "boundary-recheck-expected-results.json": "589d14bb3021d6505ecc48f80b33c3b29a15406edcee8c425c8768463f59a39b",
+    "boundary-recheck-expected-time-tool.stderr.txt": "3e737f6a9117cec194b02103b357f8668fae9adb86a8a8cd0bf25efab8948548",
+    "boundary-recheck-expected.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "boundary-recheck-expected.stdout.txt": "ea929f2e29f86a2cc3937b3e5a2eae7ff5a730540e0075c4f29ddf2db533f748",
+    "boundary-recheck-probe_expected.py": "feba066dd21296f71ff0222dc330bb6a6b184e33afdb4806c7acf4356a8e5c00"
+  },
+  "limits": {
+    "memory_max": "17179869184",
+    "cpu_max": "400000 100000",
+    "full_w011_wire_not_run": true,
+    "sample_actual_builder_rss_kib": 131964,
+    "sample_is_not_peak": true
+  }
+}

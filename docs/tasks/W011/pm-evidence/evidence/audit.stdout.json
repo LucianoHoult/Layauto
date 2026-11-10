@@ -1,0 +1,68 @@
+{
+  "checks": 150,
+  "must_fix": [],
+  "resource_cases": {
+    "normal-direct": {
+      "wire_bytes": 54050313,
+      "peak_rss_kib": 2847416,
+      "peak_rss_gib": 2.7155075073242188,
+      "wall_seconds": {
+        "W005_read_inputs": 0.8201535750013136,
+        "W008_adapter_and_build": 0.4091517359993304,
+        "W009_build": 0.694169193997368,
+        "W010_build": 13.30807964899941,
+        "W011_build": 37.2087455410001,
+        "W011_result_encode": 1.5223439580004197,
+        "W011_result_decode": 46.75885565600038
+      },
+      "command_seconds": 101.15421000900096,
+      "raw_capture_bytes": 280706
+    },
+    "normal-readback": {
+      "wire_bytes": 136461405,
+      "peak_rss_kib": 7322828,
+      "peak_rss_gib": 6.983592987060547,
+      "wall_seconds": {
+        "W006_prepare_inputs": 1.5397864440019475,
+        "W008_adapter_and_build": 0.8661693460016977,
+        "W009_build": 1.469529195001087,
+        "W010_build": 25.746205015002488,
+        "W011_build": 74.94776512400131,
+        "W011_result_encode": 3.0640132799999265,
+        "W011_result_decode": 101.86079596499985
+      },
+      "command_seconds": 211.57665307099887,
+      "raw_capture_bytes": 280706
+    },
+    "extraction-mismatch": {
+      "wire_bytes": 54049506,
+      "peak_rss_kib": 2854456,
+      "peak_rss_gib": 2.7222213745117188,
+      "wall_seconds": {
+        "W005_read_inputs": 0.6189960730007442,
+        "W008_adapter_and_build": 0.3651001189973613,
+        "W009_build": 0.6424338139986503,
+        "W010_build": 11.969838978999178,
+        "W011_build": 35.41877592200035,
+        "W011_result_encode": 1.3971216310019372,
+        "W011_result_decode": 45.17853329300124
+      },
+      "command_seconds": 95.96902353099722,
+      "raw_capture_bytes": 280706
+    }
+  },
+  "installations": {
+    "310": {
+      "actual_tree_exists_here": false,
+      "archived_runtime_files": 100,
+      "package": "/workspace/work/w011-final-e89bdaa/clean-310/lib/python3.10/site-packages/layauto_v2",
+      "new_installation_performed": false
+    },
+    "312": {
+      "actual_tree_exists_here": false,
+      "archived_runtime_files": 100,
+      "package": "/workspace/work/w011-final-e89bdaa/clean-312/lib/python3.12/site-packages/layauto_v2",
+      "new_installation_performed": false
+    }
+  }
+}

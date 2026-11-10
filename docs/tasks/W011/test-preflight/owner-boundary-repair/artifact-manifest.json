@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "source_commit": "05009b8c57b88d4dc051df2711db79cb8fae5346",
+  "test_fix_commit": "1cb7e1bc654c61690427ac22481b985156d9c9e6",
+  "scope": "four original consumed-owner cases; original reader-boundary failure retained",
+  "files": {
+    "README.md": {
+      "bytes": 3720,
+      "sha256": "f86055bbec2fcac24d062830dad4273425cb50d8e28a1c3cadf539f089f517e1"
+    },
+    "corrected-manifest.json": {
+      "bytes": 32643,
+      "sha256": "f5121f9bd5da553b5a340f41a96700ce1556b4f6014c028fee74ee9ebb8f81b6"
+    },
+    "corrected-pytest.txt": {
+      "bytes": 110,
+      "sha256": "5ddd2fd0cb32c743ec6e418732d9731c8cd1cb243fa34b0eb35312c4044d825a"
+    },
+    "corrected-test.patch.gz": {
+      "bytes": 1073,
+      "sha256": "ee67b6b79229b91dee95f875d6c40443a1399f4f2694d56acb2a4534e8e3d538"
+    },
+    "environment.json": {
+      "bytes": 2860,
+      "sha256": "a904917808243a49bce1b391f11c065d6374c3f86a96d48feebb259ad430235d"
+    },
+    "original-05009b8-source-tests.tar.gz": {
+      "bytes": 347896,
+      "sha256": "f008ebe6bda2decc8557a262dd2db0009dba2d630c8d5431cf0ba0797e89ef2d"
+    },
+    "original-manifest.json": {
+      "bytes": 32603,
+      "sha256": "af60c406e87460861f769c5d6396042b7ab57798d87c6c899f8861a38fe27db0"
+    },
+    "original-pytest.txt": {
+      "bytes": 1179,
+      "sha256": "ba06c073ca5a401d3cf49e716c659484bc732b95f087af5c640f8fd18d53cf4e"
+    },
+    "run_owner.py": {
+      "bytes": 2572,
+      "sha256": "2863b4aede60ee7253b051808f1151797d2e6027cb05b93a966dca13746a0637"
+    },
+    "test-fix-commit.txt": {
+      "bytes": 427,
+      "sha256": "e7bf706aba791d86d20f55859fbd545536a55eff2c663bef75b898e3d333305f"
+    }
+  }
+}

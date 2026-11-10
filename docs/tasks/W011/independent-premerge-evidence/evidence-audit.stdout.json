@@ -1,0 +1,1437 @@
+{
+  "started_at_utc": "2026-11-10T02:01:11.416717+00:00",
+  "finished_at_utc": "2026-11-10T02:01:14.178672+00:00",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "-B",
+    "docs/tasks/W011/independent-premerge-evidence/evidence-audit.py"
+  ],
+  "cwd": "/workspace/Layauto-w011-review",
+  "base": "61775e8fde6e9ea247ec08a32067c44c3be48ff8",
+  "review_head": "8452027e57fb1c58607640d7eb755b38ffc70716",
+  "frozen_tested_source": "e89bdaa6a091f56cfaf7862dced7232d34e22514",
+  "status": "passed",
+  "check_count": 297,
+  "checks": [
+    {
+      "check": "ancestry 61775e8 -> 81e01da",
+      "details": null
+    },
+    {
+      "check": "ancestry 81e01da -> 8917d38",
+      "details": null
+    },
+    {
+      "check": "ancestry 8917d38 -> e89bdaa",
+      "details": null
+    },
+    {
+      "check": "ancestry e89bdaa -> 3c464ba",
+      "details": null
+    },
+    {
+      "check": "ancestry 3c464ba -> 8452027",
+      "details": null
+    },
+    {
+      "check": "checkout reviewed head",
+      "details": null
+    },
+    {
+      "check": "262 source entries",
+      "details": null
+    },
+    {
+      "check": "complete frozen tracked source selection",
+      "details": null
+    },
+    {
+      "check": "unique tar members: source-snapshot.tar.gz",
+      "details": null
+    },
+    {
+      "check": "no links: source-snapshot.tar.gz",
+      "details": null
+    },
+    {
+      "check": "complete tar snapshot equals manifest",
+      "details": null
+    },
+    {
+      "check": "all source bytes at e89bdaa",
+      "details": null
+    },
+    {
+      "check": "all source bytes at 3c464ba",
+      "details": null
+    },
+    {
+      "check": "all source bytes at 8452027",
+      "details": null
+    },
+    {
+      "check": "all live source bytes",
+      "details": null
+    },
+    {
+      "check": "100 runtime entries",
+      "details": null
+    },
+    {
+      "check": "runtime unchanged since product correction",
+      "details": null
+    },
+    {
+      "check": "post-freeze changes only docs",
+      "details": [
+        "docs/README.md",
+        "docs/collaboration/rules.md",
+        "docs/current-work.md",
+        "docs/roadmap.md",
+        "docs/tasks/W011-channel-identity-fin-count.md",
+        "docs/tasks/W011/code-review.md",
+        "docs/tasks/W011/execution.md",
+        "docs/tasks/W011/independent-premerge-prompt.md",
+        "docs/tasks/W011/pm-evidence/coverage-probe.stderr.txt",
+        "docs/tasks/W011/pm-evidence/coverage-probe.stdout.json",
+        "docs/tasks/W011/pm-evidence/coverage_probe.py",
+        "docs/tasks/W011/pm-evidence/evidence/audit-result.json",
+        "docs/tasks/W011/pm-evidence/evidence/audit.py",
+        "docs/tasks/W011/pm-evidence/evidence/audit.stderr.txt",
+        "docs/tasks/W011/pm-evidence/evidence/audit.stdout.json",
+        "docs/tasks/W011/pm-evidence/evidence/report.md",
+        "docs/tasks/W011/pm-evidence/run_checks.py",
+        "docs/tasks/W011/pm-evidence/scope/coverage-result.json",
+        "docs/tasks/W011/pm-evidence/scope/coverage-stderr.txt",
+        "docs/tasks/W011/pm-evidence/scope/coverage_probe.py",
+        "docs/tasks/W011/pm-evidence/scope/report.md",
+        "docs/tasks/W011/pm-evidence/scope/static-result.json",
+        "docs/tasks/W011/pm-evidence/targeted.json",
+        "docs/tasks/W011/pm-evidence/targeted.stderr.txt",
+        "docs/tasks/W011/pm-evidence/targeted.stdout.txt",
+        "docs/tasks/W011/pm-evidence/typing.json",
+        "docs/tasks/W011/pm-evidence/typing.stderr.txt",
+        "docs/tasks/W011/pm-evidence/typing.stdout.txt",
+        "docs/tasks/W011/pm-receipt.json",
+        "docs/tasks/W011/pm-receipt.md",
+        "docs/tasks/W011/preflight/archive-manifest.json",
+        "docs/tasks/W011/preflight/final-attempt02/final-launch-plan.json",
+        "docs/tasks/W011/preflight/final-attempt02/final-launch-receipt.json",
+        "docs/tasks/W011/preflight/final-attempt02/final-runner.stderr.txt",
+        "docs/tasks/W011/preflight/final-attempt02/final-runner.stdout.txt",
+        "docs/tasks/W011/preflight/final-attempt02/gate-collection-audit.json",
+        "docs/tasks/W011/preflight/final-attempt02/launch-start.json",
+        "docs/tasks/W011/preflight/final-attempt02/observe_resources.py",
+        "docs/tasks/W011/preflight/final-attempt02/observer-exit-receipt.json",
+        "docs/tasks/W011/preflight/final-attempt02/observer-plan.json",
+        "docs/tasks/W011/preflight/final-attempt02/observer.stderr.txt",
+        "docs/tasks/W011/preflight/final-attempt02/observer.stdout.txt",
+        "docs/tasks/W011/preflight/final-attempt02/resource-observations-summary.json",
+        "docs/tasks/W011/preflight/final-attempt02/resource-observations.jsonl",
+        "docs/tasks/W011/preflight/final-attempt02/resources-launch-plan.json",
+        "docs/tasks/W011/preflight/final-attempt02/resources-launch-receipt.json",
+        "docs/tasks/W011/preflight/final-attempt02/resources-launch-start.json",
+        "docs/tasks/W011/preflight/final-attempt02/resources-runner.stderr.txt",
+        "docs/tasks/W011/preflight/final-attempt02/resources-runner.stdout.txt",
+        "docs/tasks/W011/preflight/final-attempt02/run_final.py",
+        "docs/tasks/W011/preflight/final-attempt02/run_resources_launcher.py",
+        "docs/tasks/W011/resources/evidence-manifest.json",
+        "docs/tasks/W011/resources/extraction-mismatch.command.json",
+        "docs/tasks/W011/resources/extraction-mismatch.json",
+        "docs/tasks/W011/resources/extraction-mismatch.stderr.txt",
+        "docs/tasks/W011/resources/extraction-mismatch.stdout.txt",
+        "docs/tasks/W011/resources/normal-direct.command.json",
+        "docs/tasks/W011/resources/normal-direct.json",
+        "docs/tasks/W011/resources/normal-direct.stderr.txt",
+        "docs/tasks/W011/resources/normal-direct.stdout.txt",
+        "docs/tasks/W011/resources/normal-readback.command.json",
+        "docs/tasks/W011/resources/normal-readback.json",
+        "docs/tasks/W011/resources/normal-readback.stderr.txt",
+        "docs/tasks/W011/resources/normal-readback.stdout.txt",
+        "docs/tasks/W011/resources/receipt.json",
+        "docs/tasks/W011/resources/resource_probe.py",
+        "docs/tasks/W011/resources/run_resources.py",
+        "docs/tasks/W011/resources/source-identity.json",
+        "docs/tasks/W011/review/a8-resource-boundary.json",
+        "docs/tasks/W011/review/final-a8-audit.py",
+        "docs/tasks/W011/review/final-a8-audit.stderr.txt",
+        "docs/tasks/W011/review/final-a8-audit.stdout.json",
+        "docs/tasks/W011/verification/baseline-collection.txt",
+        "docs/tasks/W011/verification/build.json",
+        "docs/tasks/W011/verification/build.stderr.txt",
+        "docs/tasks/W011/verification/build.stdout.txt",
+        "docs/tasks/W011/verification/collection-310.json",
+        "docs/tasks/W011/verification/collection-310.stderr.txt",
+        "docs/tasks/W011/verification/collection-310.stdout.txt",
+        "docs/tasks/W011/verification/collection-312.json",
+        "docs/tasks/W011/verification/collection-312.stderr.txt",
+        "docs/tasks/W011/verification/collection-312.stdout.txt",
+        "docs/tasks/W011/verification/create-install-310.json",
+        "docs/tasks/W011/verification/create-install-310.stderr.txt",
+        "docs/tasks/W011/verification/create-install-310.stdout.txt",
+        "docs/tasks/W011/verification/create-install-312.json",
+        "docs/tasks/W011/verification/create-install-312.stderr.txt",
+        "docs/tasks/W011/verification/create-install-312.stdout.txt",
+        "docs/tasks/W011/verification/dist/layauto-0.2.0-py3-none-any.whl",
+        "docs/tasks/W011/verification/dist/layauto-0.2.0.tar.gz",
+        "docs/tasks/W011/verification/environment-310.json",
+        "docs/tasks/W011/verification/environment-310.stderr.txt",
+        "docs/tasks/W011/verification/environment-310.stdout.txt",
+        "docs/tasks/W011/verification/environment-312.json",
+        "docs/tasks/W011/verification/environment-312.stderr.txt",
+        "docs/tasks/W011/verification/environment-312.stdout.txt",
+        "docs/tasks/W011/verification/evidence-manifest.json",
+        "docs/tasks/W011/verification/install-310-report.json",
+        "docs/tasks/W011/verification/install-310.json",
+        "docs/tasks/W011/verification/install-310.stderr.txt",
+        "docs/tasks/W011/verification/install-310.stdout.txt",
+        "docs/tasks/W011/verification/install-312-report.json",
+        "docs/tasks/W011/verification/install-312.json",
+        "docs/tasks/W011/verification/install-312.stderr.txt",
+        "docs/tasks/W011/verification/install-312.stdout.txt",
+        "docs/tasks/W011/verification/installation-identity.json",
+        "docs/tasks/W011/verification/installed-identity-310.json",
+        "docs/tasks/W011/verification/installed-identity-310.stderr.txt",
+        "docs/tasks/W011/verification/installed-identity-310.stdout.txt",
+        "docs/tasks/W011/verification/installed-identity-312.json",
+        "docs/tasks/W011/verification/installed-identity-312.stderr.txt",
+        "docs/tasks/W011/verification/installed-identity-312.stdout.txt",
+        "docs/tasks/W011/verification/installed-pip-check-310.json",
+        "docs/tasks/W011/verification/installed-pip-check-310.stderr.txt",
+        "docs/tasks/W011/verification/installed-pip-check-310.stdout.txt",
+        "docs/tasks/W011/verification/installed-pip-check-312.json",
+        "docs/tasks/W011/verification/installed-pip-check-312.stderr.txt",
+        "docs/tasks/W011/verification/installed-pip-check-312.stdout.txt",
+        "docs/tasks/W011/verification/installed-smoke-310.json",
+        "docs/tasks/W011/verification/installed-smoke-310.stderr.txt",
+        "docs/tasks/W011/verification/installed-smoke-310.stdout.txt",
+        "docs/tasks/W011/verification/installed-smoke-312.json",
+        "docs/tasks/W011/verification/installed-smoke-312.stderr.txt",
+        "docs/tasks/W011/verification/installed-smoke-312.stdout.txt",
+        "docs/tasks/W011/verification/installed_smoke.py",
+        "docs/tasks/W011/verification/package-identity.json",
+        "docs/tasks/W011/verification/pip-check-310.json",
+        "docs/tasks/W011/verification/pip-check-310.stderr.txt",
+        "docs/tasks/W011/verification/pip-check-310.stdout.txt",
+        "docs/tasks/W011/verification/pip-check-312.json",
+        "docs/tasks/W011/verification/pip-check-312.stderr.txt",
+        "docs/tasks/W011/verification/pip-check-312.stdout.txt",
+        "docs/tasks/W011/verification/prepare_final.py",
+        "docs/tasks/W011/verification/pytest-310.json",
+        "docs/tasks/W011/verification/pytest-310.stderr.txt",
+        "docs/tasks/W011/verification/pytest-310.stdout.txt",
+        "docs/tasks/W011/verification/pytest-312.json",
+        "docs/tasks/W011/verification/pytest-312.stderr.txt",
+        "docs/tasks/W011/verification/pytest-312.stdout.txt",
+        "docs/tasks/W011/verification/pytest-scope-310.json",
+        "docs/tasks/W011/verification/pytest-scope-312.json",
+        "docs/tasks/W011/verification/receipt.json",
+        "docs/tasks/W011/verification/resource-gate-310.jsonl",
+        "docs/tasks/W011/verification/resource-gate-312.jsonl",
+        "docs/tasks/W011/verification/resource-gate-validation.json",
+        "docs/tasks/W011/verification/resource-gate.json",
+        "docs/tasks/W011/verification/resource-limits.json",
+        "docs/tasks/W011/verification/source-manifest.json",
+        "docs/tasks/W011/verification/source-snapshot.tar.gz",
+        "docs/tasks/W011/verification/typing-310.json",
+        "docs/tasks/W011/verification/typing-310.stderr.txt",
+        "docs/tasks/W011/verification/typing-310.stdout.txt",
+        "docs/tasks/W011/verification/typing-312.json",
+        "docs/tasks/W011/verification/typing-312.stderr.txt",
+        "docs/tasks/W011/verification/typing-312.stdout.txt",
+        "docs/tasks/W011/verification/w011_resource_gate.py",
+        "docs/tasks/W012-capture-wire-performance.md"
+      ]
+    },
+    {
+      "check": "fixtures unmodified from main",
+      "details": null
+    },
+    {
+      "check": "wheel artifact hash",
+      "details": "7ba118f36d864b7097fc3c87de43fc398cd93ef215a24be87e764096162540d8"
+    },
+    {
+      "check": "unique wheel members",
+      "details": null
+    },
+    {
+      "check": "wheel actual 100 runtime bytes",
+      "details": null
+    },
+    {
+      "check": "sdist artifact hash",
+      "details": "1e6219a2fc82525ea9efc94bd3d4dc770b5a2742f668490979e639d6ad2f1b2b"
+    },
+    {
+      "check": "unique tar members: layauto-0.2.0.tar.gz",
+      "details": null
+    },
+    {
+      "check": "no links: layauto-0.2.0.tar.gz",
+      "details": null
+    },
+    {
+      "check": "sdist actual 100 runtime bytes",
+      "details": null
+    },
+    {
+      "check": "index hashes: verification",
+      "details": 83
+    },
+    {
+      "check": "index complete: verification",
+      "details": null
+    },
+    {
+      "check": "engineering index",
+      "details": null
+    },
+    {
+      "check": "index hashes: resources",
+      "details": 16
+    },
+    {
+      "check": "index complete: resources",
+      "details": null
+    },
+    {
+      "check": "resource index",
+      "details": null
+    },
+    {
+      "check": "index hashes: verification-attempt-01",
+      "details": 31
+    },
+    {
+      "check": "index complete: verification-attempt-01",
+      "details": null
+    },
+    {
+      "check": "failed-attempt index",
+      "details": null
+    },
+    {
+      "check": "index hashes: preflight",
+      "details": 105
+    },
+    {
+      "check": "receipt binds source manifest and snapshot",
+      "details": null
+    },
+    {
+      "check": "21 archived command records",
+      "details": null
+    },
+    {
+      "check": "command exit/UTC: environment-310.stdout.txt",
+      "details": null
+    },
+    {
+      "check": "raw environment-310.stdout.txt",
+      "details": null
+    },
+    {
+      "check": "raw environment-310.stderr.txt",
+      "details": null
+    },
+    {
+      "check": "command record equals aggregate: environment-310.stdout.txt",
+      "details": null
+    },
+    {
+      "check": "command exit/UTC: collection-310.stdout.txt",
+      "details": null
+    },
+    {
+      "check": "raw collection-310.stdout.txt",
+      "details": null
+    },
+    {
+      "check": "raw collection-310.stderr.txt",
+      "details": null
+    },
+    {
+      "check": "command record equals aggregate: collection-310.stdout.txt",
+      "details": null
+    },
+    {
+      "check": "command exit/UTC: pytest-310.stdout.txt",
+      "details": null
+    },
+    {
+      "check": "raw pytest-310.stdout.txt",
+      "details": null
+    },
+    {
+      "check": "raw pytest-310.stderr.txt",
+      "details": null
+    },
+    {
+      "check": "command record equals aggregate: pytest-310.stdout.txt",
+      "details": null
+    },
+    {
+      "check": "command exit/UTC: typing-310.stdout.txt",
+      "details": null
+    },
+    {
+      "check": "raw typing-310.stdout.txt",
+      "details": null
+    },
+    {
+      "check": "raw typing-310.stderr.txt",
+      "details": null
+    },
+    {
+      "check": "command record equals aggregate: typing-310.stdout.txt",
+      "details": null
+    },
+    {
+      "check": "command exit/UTC: pip-check-310.stdout.txt",
+      "details": null
+    },
+    {
+      "check": "raw pip-check-310.stdout.txt",
+      "details": null
+    },
+    {
+      "check": "raw pip-check-310.stderr.txt",
+      "details": null
+    },
+    {
+      "check": "command record equals aggregate: pip-check-310.stdout.txt",
+      "details": null
+    },
+    {
+      "check": "command exit/UTC: environment-312.stdout.txt",
+      "details": null
+    },
+    {
+      "check": "raw environment-312.stdout.txt",
+      "details": null
+    },
+    {
+      "check": "raw environment-312.stderr.txt",
+      "details": null
+    },
+    {
+      "check": "command record equals aggregate: environment-312.stdout.txt",
+      "details": null
+    },
+    {
+      "check": "command exit/UTC: collection-312.stdout.txt",
+      "details": null
+    },
+    {
+      "check": "raw collection-312.stdout.txt",
+      "details": null
+    },
+    {
+      "check": "raw collection-312.stderr.txt",
+      "details": null
+    },
+    {
+      "check": "command record equals aggregate: collection-312.stdout.txt",
+      "details": null
+    },
+    {
+      "check": "command exit/UTC: pytest-312.stdout.txt",
+      "details": null
+    },
+    {
+      "check": "raw pytest-312.stdout.txt",
+      "details": null
+    },
+    {
+      "check": "raw pytest-312.stderr.txt",
+      "details": null
+    },
+    {
+      "check": "command record equals aggregate: pytest-312.stdout.txt",
+      "details": null
+    },
+    {
+      "check": "command exit/UTC: typing-312.stdout.txt",
+      "details": null
+    },
+    {
+      "check": "raw typing-312.stdout.txt",
+      "details": null
+    },
+    {
+      "check": "raw typing-312.stderr.txt",
+      "details": null
+    },
+    {
+      "check": "command record equals aggregate: typing-312.stdout.txt",
+      "details": null
+    },
+    {
+      "check": "command exit/UTC: pip-check-312.stdout.txt",
+      "details": null
+    },
+    {
+      "check": "raw pip-check-312.stdout.txt",
+      "details": null
+    },
+    {
+      "check": "raw pip-check-312.stderr.txt",
+      "details": null
+    },
+    {
+      "check": "command record equals aggregate: pip-check-312.stdout.txt",
+      "details": null
+    },
+    {
+      "check": "command exit/UTC: build.stdout.txt",
+      "details": null
+    },
+    {
+      "check": "raw build.stdout.txt",
+      "details": null
+    },
+    {
+      "check": "raw build.stderr.txt",
+      "details": null
+    },
+    {
+      "check": "command record equals aggregate: build.stdout.txt",
+      "details": null
+    },
+    {
+      "check": "command exit/UTC: create-install-310.stdout.txt",
+      "details": null
+    },
+    {
+      "check": "raw create-install-310.stdout.txt",
+      "details": null
+    },
+    {
+      "check": "raw create-install-310.stderr.txt",
+      "details": null
+    },
+    {
+      "check": "command record equals aggregate: create-install-310.stdout.txt",
+      "details": null
+    },
+    {
+      "check": "command exit/UTC: install-310.stdout.txt",
+      "details": null
+    },
+    {
+      "check": "raw install-310.stdout.txt",
+      "details": null
+    },
+    {
+      "check": "raw install-310.stderr.txt",
+      "details": null
+    },
+    {
+      "check": "command record equals aggregate: install-310.stdout.txt",
+      "details": null
+    },
+    {
+      "check": "command exit/UTC: installed-pip-check-310.stdout.txt",
+      "details": null
+    },
+    {
+      "check": "raw installed-pip-check-310.stdout.txt",
+      "details": null
+    },
+    {
+      "check": "raw installed-pip-check-310.stderr.txt",
+      "details": null
+    },
+    {
+      "check": "command record equals aggregate: installed-pip-check-310.stdout.txt",
+      "details": null
+    },
+    {
+      "check": "command exit/UTC: installed-identity-310.stdout.txt",
+      "details": null
+    },
+    {
+      "check": "raw installed-identity-310.stdout.txt",
+      "details": null
+    },
+    {
+      "check": "raw installed-identity-310.stderr.txt",
+      "details": null
+    },
+    {
+      "check": "command record equals aggregate: installed-identity-310.stdout.txt",
+      "details": null
+    },
+    {
+      "check": "command exit/UTC: installed-smoke-310.stdout.txt",
+      "details": null
+    },
+    {
+      "check": "raw installed-smoke-310.stdout.txt",
+      "details": null
+    },
+    {
+      "check": "raw installed-smoke-310.stderr.txt",
+      "details": null
+    },
+    {
+      "check": "command record equals aggregate: installed-smoke-310.stdout.txt",
+      "details": null
+    },
+    {
+      "check": "command exit/UTC: create-install-312.stdout.txt",
+      "details": null
+    },
+    {
+      "check": "raw create-install-312.stdout.txt",
+      "details": null
+    },
+    {
+      "check": "raw create-install-312.stderr.txt",
+      "details": null
+    },
+    {
+      "check": "command record equals aggregate: create-install-312.stdout.txt",
+      "details": null
+    },
+    {
+      "check": "command exit/UTC: install-312.stdout.txt",
+      "details": null
+    },
+    {
+      "check": "raw install-312.stdout.txt",
+      "details": null
+    },
+    {
+      "check": "raw install-312.stderr.txt",
+      "details": null
+    },
+    {
+      "check": "command record equals aggregate: install-312.stdout.txt",
+      "details": null
+    },
+    {
+      "check": "command exit/UTC: installed-pip-check-312.stdout.txt",
+      "details": null
+    },
+    {
+      "check": "raw installed-pip-check-312.stdout.txt",
+      "details": null
+    },
+    {
+      "check": "raw installed-pip-check-312.stderr.txt",
+      "details": null
+    },
+    {
+      "check": "command record equals aggregate: installed-pip-check-312.stdout.txt",
+      "details": null
+    },
+    {
+      "check": "command exit/UTC: installed-identity-312.stdout.txt",
+      "details": null
+    },
+    {
+      "check": "raw installed-identity-312.stdout.txt",
+      "details": null
+    },
+    {
+      "check": "raw installed-identity-312.stderr.txt",
+      "details": null
+    },
+    {
+      "check": "command record equals aggregate: installed-identity-312.stdout.txt",
+      "details": null
+    },
+    {
+      "check": "command exit/UTC: installed-smoke-312.stdout.txt",
+      "details": null
+    },
+    {
+      "check": "raw installed-smoke-312.stdout.txt",
+      "details": null
+    },
+    {
+      "check": "raw installed-smoke-312.stderr.txt",
+      "details": null
+    },
+    {
+      "check": "command record equals aggregate: installed-smoke-312.stdout.txt",
+      "details": null
+    },
+    {
+      "check": "outer runner preserves all 21 command records",
+      "details": null
+    },
+    {
+      "check": "runner/smoke bytes bound",
+      "details": null
+    },
+    {
+      "check": "1465 baseline unique IDs",
+      "details": null
+    },
+    {
+      "check": "baseline preserved from preflight",
+      "details": null
+    },
+    {
+      "check": "310 full ID coverage",
+      "details": null
+    },
+    {
+      "check": "310 full pytest raw summary",
+      "details": null
+    },
+    {
+      "check": "310 strict typing54",
+      "details": null
+    },
+    {
+      "check": "310 interpreter version",
+      "details": null
+    },
+    {
+      "check": "310 archived installed runtime hashes",
+      "details": null
+    },
+    {
+      "check": "310 archived artifact identity",
+      "details": null
+    },
+    {
+      "check": "310 archived import identity",
+      "details": null
+    },
+    {
+      "check": "310 pip report artifact",
+      "details": null
+    },
+    {
+      "check": "310 source-external isolated smoke command",
+      "details": null
+    },
+    {
+      "check": "310 archived smoke import",
+      "details": null
+    },
+    {
+      "check": "310 direct/readback full set smoke",
+      "details": null
+    },
+    {
+      "check": "312 full ID coverage",
+      "details": null
+    },
+    {
+      "check": "312 full pytest raw summary",
+      "details": null
+    },
+    {
+      "check": "312 strict typing54",
+      "details": null
+    },
+    {
+      "check": "312 interpreter version",
+      "details": null
+    },
+    {
+      "check": "312 archived installed runtime hashes",
+      "details": null
+    },
+    {
+      "check": "312 archived artifact identity",
+      "details": null
+    },
+    {
+      "check": "312 archived import identity",
+      "details": null
+    },
+    {
+      "check": "312 pip report artifact",
+      "details": null
+    },
+    {
+      "check": "312 source-external isolated smoke command",
+      "details": null
+    },
+    {
+      "check": "312 archived smoke import",
+      "details": null
+    },
+    {
+      "check": "312 direct/readback full set smoke",
+      "details": null
+    },
+    {
+      "check": "dual collection identical",
+      "details": null
+    },
+    {
+      "check": "direct cross-interpreter wire stable",
+      "details": null
+    },
+    {
+      "check": "readback cross-interpreter wire stable",
+      "details": null
+    },
+    {
+      "check": "build follows both matrices",
+      "details": null
+    },
+    {
+      "check": "smokes serialized",
+      "details": null
+    },
+    {
+      "check": "gate unchanged archived copy",
+      "details": null
+    },
+    {
+      "check": "310 four lock events",
+      "details": null
+    },
+    {
+      "check": "312 four lock events",
+      "details": null
+    },
+    {
+      "check": "same lock inode",
+      "details": null
+    },
+    {
+      "check": "lock W011 intervals separate",
+      "details": null
+    },
+    {
+      "check": "old failure retained",
+      "details": null
+    },
+    {
+      "check": "old 312 full not claimed",
+      "details": null
+    },
+    {
+      "check": "two setup repairs tests-only",
+      "details": null
+    },
+    {
+      "check": "repair archived original identity 75c846f",
+      "details": null
+    },
+    {
+      "check": "repair archived patch equivalence 75c846f",
+      "details": null
+    },
+    {
+      "check": "repair archived original identity 6ea8b0a",
+      "details": null
+    },
+    {
+      "check": "repair archived patch equivalence 6ea8b0a",
+      "details": null
+    },
+    {
+      "check": "resources bound engineering identity",
+      "details": null
+    },
+    {
+      "check": "normal-direct resource command",
+      "details": null
+    },
+    {
+      "check": "normal-direct resource raw stdout",
+      "details": null
+    },
+    {
+      "check": "normal-direct resource raw stderr",
+      "details": null
+    },
+    {
+      "check": "normal-direct probe/runtime identity",
+      "details": null
+    },
+    {
+      "check": "normal-direct capture site_config.yaml",
+      "details": null
+    },
+    {
+      "check": "normal-direct capture tech.json",
+      "details": null
+    },
+    {
+      "check": "normal-direct capture tech/drawn.json",
+      "details": null
+    },
+    {
+      "check": "normal-direct capture tech/derived.json",
+      "details": null
+    },
+    {
+      "check": "normal-direct capture tech/physical.json",
+      "details": null
+    },
+    {
+      "check": "normal-direct capture tech/formats.json",
+      "details": null
+    },
+    {
+      "check": "normal-direct capture tech/coordinate.json",
+      "details": null
+    },
+    {
+      "check": "normal-direct capture tech/rules.json",
+      "details": null
+    },
+    {
+      "check": "normal-direct capture export_policy.json",
+      "details": null
+    },
+    {
+      "check": "normal-direct capture validation_policy.json",
+      "details": null
+    },
+    {
+      "check": "normal-direct capture limitations.json",
+      "details": null
+    },
+    {
+      "check": "normal-direct capture source.gds",
+      "details": null
+    },
+    {
+      "check": "normal-direct capture source.cdl",
+      "details": null
+    },
+    {
+      "check": "normal-direct capture target.cdl",
+      "details": null
+    },
+    {
+      "check": "normal-direct capture query/header.json",
+      "details": null
+    },
+    {
+      "check": "normal-direct capture body/context.json",
+      "details": null
+    },
+    {
+      "check": "normal-direct capture query/dialect.json",
+      "details": null
+    },
+    {
+      "check": "normal-direct capture query/requests.json",
+      "details": null
+    },
+    {
+      "check": "normal-direct capture query/raw/iXref.temp",
+      "details": null
+    },
+    {
+      "check": "normal-direct capture query/raw/nXref.temp",
+      "details": null
+    },
+    {
+      "check": "normal-direct capture query/raw/net_names.txt",
+      "details": null
+    },
+    {
+      "check": "normal-direct capture query/raw/device_info_Q17.txt",
+      "details": null
+    },
+    {
+      "check": "normal-direct capture query/raw/device_info_Q93.txt",
+      "details": null
+    },
+    {
+      "check": "normal-direct capture query/raw/net_shapes_n_a.txt",
+      "details": null
+    },
+    {
+      "check": "normal-direct capture query/raw/net_shapes_n_y.txt",
+      "details": null
+    },
+    {
+      "check": "normal-direct capture query/raw/net_shapes_n_lo.txt",
+      "details": null
+    },
+    {
+      "check": "normal-direct capture query/raw/net_shapes_n_hi.txt",
+      "details": null
+    },
+    {
+      "check": "normal-direct capture query/normalized/instance_xref.yaml",
+      "details": null
+    },
+    {
+      "check": "normal-direct capture query/normalized/net_xref.yaml",
+      "details": null
+    },
+    {
+      "check": "normal-direct capture query/normalized/device_regions.yaml",
+      "details": null
+    },
+    {
+      "check": "normal-direct capture query/normalized/net_regions.yaml",
+      "details": null
+    },
+    {
+      "check": "normal-direct finite input and full result",
+      "details": null
+    },
+    {
+      "check": "normal-readback resource command",
+      "details": null
+    },
+    {
+      "check": "normal-readback resource serial",
+      "details": null
+    },
+    {
+      "check": "normal-readback resource raw stdout",
+      "details": null
+    },
+    {
+      "check": "normal-readback resource raw stderr",
+      "details": null
+    },
+    {
+      "check": "normal-readback probe/runtime identity",
+      "details": null
+    },
+    {
+      "check": "normal-readback capture site_config.yaml",
+      "details": null
+    },
+    {
+      "check": "normal-readback capture tech.json",
+      "details": null
+    },
+    {
+      "check": "normal-readback capture tech/drawn.json",
+      "details": null
+    },
+    {
+      "check": "normal-readback capture tech/derived.json",
+      "details": null
+    },
+    {
+      "check": "normal-readback capture tech/physical.json",
+      "details": null
+    },
+    {
+      "check": "normal-readback capture tech/formats.json",
+      "details": null
+    },
+    {
+      "check": "normal-readback capture tech/coordinate.json",
+      "details": null
+    },
+    {
+      "check": "normal-readback capture tech/rules.json",
+      "details": null
+    },
+    {
+      "check": "normal-readback capture export_policy.json",
+      "details": null
+    },
+    {
+      "check": "normal-readback capture validation_policy.json",
+      "details": null
+    },
+    {
+      "check": "normal-readback capture limitations.json",
+      "details": null
+    },
+    {
+      "check": "normal-readback capture source.gds",
+      "details": null
+    },
+    {
+      "check": "normal-readback capture source.cdl",
+      "details": null
+    },
+    {
+      "check": "normal-readback capture target.cdl",
+      "details": null
+    },
+    {
+      "check": "normal-readback capture query/header.json",
+      "details": null
+    },
+    {
+      "check": "normal-readback capture body/context.json",
+      "details": null
+    },
+    {
+      "check": "normal-readback capture query/dialect.json",
+      "details": null
+    },
+    {
+      "check": "normal-readback capture query/requests.json",
+      "details": null
+    },
+    {
+      "check": "normal-readback capture query/raw/iXref.temp",
+      "details": null
+    },
+    {
+      "check": "normal-readback capture query/raw/nXref.temp",
+      "details": null
+    },
+    {
+      "check": "normal-readback capture query/raw/net_names.txt",
+      "details": null
+    },
+    {
+      "check": "normal-readback capture query/raw/device_info_Q17.txt",
+      "details": null
+    },
+    {
+      "check": "normal-readback capture query/raw/device_info_Q93.txt",
+      "details": null
+    },
+    {
+      "check": "normal-readback capture query/raw/net_shapes_n_a.txt",
+      "details": null
+    },
+    {
+      "check": "normal-readback capture query/raw/net_shapes_n_y.txt",
+      "details": null
+    },
+    {
+      "check": "normal-readback capture query/raw/net_shapes_n_lo.txt",
+      "details": null
+    },
+    {
+      "check": "normal-readback capture query/raw/net_shapes_n_hi.txt",
+      "details": null
+    },
+    {
+      "check": "normal-readback capture query/normalized/instance_xref.yaml",
+      "details": null
+    },
+    {
+      "check": "normal-readback capture query/normalized/net_xref.yaml",
+      "details": null
+    },
+    {
+      "check": "normal-readback capture query/normalized/device_regions.yaml",
+      "details": null
+    },
+    {
+      "check": "normal-readback capture query/normalized/net_regions.yaml",
+      "details": null
+    },
+    {
+      "check": "normal-readback finite input and full result",
+      "details": null
+    },
+    {
+      "check": "extraction-mismatch resource command",
+      "details": null
+    },
+    {
+      "check": "extraction-mismatch resource serial",
+      "details": null
+    },
+    {
+      "check": "extraction-mismatch resource raw stdout",
+      "details": null
+    },
+    {
+      "check": "extraction-mismatch resource raw stderr",
+      "details": null
+    },
+    {
+      "check": "extraction-mismatch probe/runtime identity",
+      "details": null
+    },
+    {
+      "check": "extraction-mismatch capture site_config.yaml",
+      "details": null
+    },
+    {
+      "check": "extraction-mismatch capture tech.json",
+      "details": null
+    },
+    {
+      "check": "extraction-mismatch capture tech/drawn.json",
+      "details": null
+    },
+    {
+      "check": "extraction-mismatch capture tech/derived.json",
+      "details": null
+    },
+    {
+      "check": "extraction-mismatch capture tech/physical.json",
+      "details": null
+    },
+    {
+      "check": "extraction-mismatch capture tech/formats.json",
+      "details": null
+    },
+    {
+      "check": "extraction-mismatch capture tech/coordinate.json",
+      "details": null
+    },
+    {
+      "check": "extraction-mismatch capture tech/rules.json",
+      "details": null
+    },
+    {
+      "check": "extraction-mismatch capture export_policy.json",
+      "details": null
+    },
+    {
+      "check": "extraction-mismatch capture validation_policy.json",
+      "details": null
+    },
+    {
+      "check": "extraction-mismatch capture limitations.json",
+      "details": null
+    },
+    {
+      "check": "extraction-mismatch capture source.gds",
+      "details": null
+    },
+    {
+      "check": "extraction-mismatch capture source.cdl",
+      "details": null
+    },
+    {
+      "check": "extraction-mismatch capture target.cdl",
+      "details": null
+    },
+    {
+      "check": "extraction-mismatch capture query/header.json",
+      "details": null
+    },
+    {
+      "check": "extraction-mismatch capture body/context.json",
+      "details": null
+    },
+    {
+      "check": "extraction-mismatch capture query/dialect.json",
+      "details": null
+    },
+    {
+      "check": "extraction-mismatch capture query/requests.json",
+      "details": null
+    },
+    {
+      "check": "extraction-mismatch capture query/raw/iXref.temp",
+      "details": null
+    },
+    {
+      "check": "extraction-mismatch capture query/raw/nXref.temp",
+      "details": null
+    },
+    {
+      "check": "extraction-mismatch capture query/raw/net_names.txt",
+      "details": null
+    },
+    {
+      "check": "extraction-mismatch capture query/raw/device_info_Q17.txt",
+      "details": null
+    },
+    {
+      "check": "extraction-mismatch capture query/raw/device_info_Q93.txt",
+      "details": null
+    },
+    {
+      "check": "extraction-mismatch capture query/raw/net_shapes_n_a.txt",
+      "details": null
+    },
+    {
+      "check": "extraction-mismatch capture query/raw/net_shapes_n_y.txt",
+      "details": null
+    },
+    {
+      "check": "extraction-mismatch capture query/raw/net_shapes_n_lo.txt",
+      "details": null
+    },
+    {
+      "check": "extraction-mismatch capture query/raw/net_shapes_n_hi.txt",
+      "details": null
+    },
+    {
+      "check": "extraction-mismatch capture query/normalized/instance_xref.yaml",
+      "details": null
+    },
+    {
+      "check": "extraction-mismatch capture query/normalized/net_xref.yaml",
+      "details": null
+    },
+    {
+      "check": "extraction-mismatch capture query/normalized/device_regions.yaml",
+      "details": null
+    },
+    {
+      "check": "extraction-mismatch capture query/normalized/net_regions.yaml",
+      "details": null
+    },
+    {
+      "check": "extraction-mismatch finite input and full result",
+      "details": null
+    },
+    {
+      "check": "readback size/RSS observed values",
+      "details": null
+    },
+    {
+      "check": "raw sample hash/count",
+      "details": null
+    },
+    {
+      "check": "every per-process sampled maximum",
+      "details": null
+    },
+    {
+      "check": "peak timestamp within original sample interval 21364",
+      "details": null
+    },
+    {
+      "check": "peak timestamp within original sample interval 21382",
+      "details": null
+    },
+    {
+      "check": "peak timestamp within original sample interval 21383",
+      "details": null
+    },
+    {
+      "check": "peak timestamp within original sample interval 21488",
+      "details": null
+    },
+    {
+      "check": "peak timestamp within original sample interval 21553",
+      "details": null
+    },
+    {
+      "check": "peak timestamp within original sample interval 21806",
+      "details": null
+    },
+    {
+      "check": "peak timestamp within original sample interval 21833",
+      "details": null
+    },
+    {
+      "check": "peak timestamp within original sample interval 22143",
+      "details": null
+    },
+    {
+      "check": "peak timestamp within original sample interval 22144",
+      "details": null
+    },
+    {
+      "check": "peak timestamp within original sample interval 23313",
+      "details": null
+    },
+    {
+      "check": "peak timestamp within original sample interval 23319",
+      "details": null
+    },
+    {
+      "check": "peak timestamp within original sample interval 23341",
+      "details": null
+    },
+    {
+      "check": "peak timestamp within original sample interval 23364",
+      "details": null
+    },
+    {
+      "check": "peak timestamp within original sample interval 23670",
+      "details": null
+    },
+    {
+      "check": "peak timestamp within original sample interval 23681",
+      "details": null
+    },
+    {
+      "check": "shared sampled maximum",
+      "details": null
+    },
+    {
+      "check": "310 sampled RSS",
+      "details": null
+    },
+    {
+      "check": "memory events unchanged zero",
+      "details": null
+    }
+  ],
+  "original_installation_paths_present_now": {
+    "310": false,
+    "312": false
+  },
+  "resource_samples_archived": {
+    "normal-direct": {
+      "wire_bytes": 54050313,
+      "process_peak_rss_kib": 2847416,
+      "wall_seconds": {
+        "W005_read_inputs": 0.8201535750013136,
+        "W008_adapter_and_build": 0.4091517359993304,
+        "W009_build": 0.694169193997368,
+        "W010_build": 13.30807964899941,
+        "W011_build": 37.2087455410001,
+        "W011_result_encode": 1.5223439580004197,
+        "W011_result_decode": 46.75885565600038
+      }
+    },
+    "normal-readback": {
+      "wire_bytes": 136461405,
+      "process_peak_rss_kib": 7322828,
+      "wall_seconds": {
+        "W006_prepare_inputs": 1.5397864440019475,
+        "W008_adapter_and_build": 0.8661693460016977,
+        "W009_build": 1.469529195001087,
+        "W010_build": 25.746205015002488,
+        "W011_build": 74.94776512400131,
+        "W011_result_encode": 3.0640132799999265,
+        "W011_result_decode": 101.86079596499985
+      }
+    },
+    "extraction-mismatch": {
+      "wire_bytes": 54049506,
+      "process_peak_rss_kib": 2854456,
+      "wall_seconds": {
+        "W005_read_inputs": 0.6189960730007442,
+        "W008_adapter_and_build": 0.3651001189973613,
+        "W009_build": 0.6424338139986503,
+        "W010_build": 11.969838978999178,
+        "W011_build": 35.41877592200035,
+        "W011_result_encode": 1.3971216310019372,
+        "W011_result_decode": 45.17853329300124
+      }
+    }
+  },
+  "resource_gate_wait_seconds": {
+    "310": 2603.347384,
+    "312": 0.000139
+  },
+  "sampled_process_rss_kib": {
+    "21364": 17276,
+    "21382": 6248624,
+    "21383": 9257804,
+    "21488": 22968,
+    "21553": 24556,
+    "21806": 77060,
+    "21833": 81632,
+    "22143": 94108,
+    "22144": 94176,
+    "23313": 19344,
+    "23319": 25440,
+    "23341": 90124,
+    "23364": 9119696,
+    "23670": 39884,
+    "23681": 6927912
+  },
+  "max_sampled_cgroup_bytes": 12299743232,
+  "limits": [
+    "This run reads Git, archives, packages, manifests and original outputs. It does not rerun full matrices, build/install, product readback/codec or resource benchmarks.",
+    "Absent original installation trees are archival observations, not freshly observed site-packages.",
+    "Sampled maxima are not exact peaks; ru_maxrss is whole-process including upstream and wire; constructors are included in build/decode."
+  ]
+}

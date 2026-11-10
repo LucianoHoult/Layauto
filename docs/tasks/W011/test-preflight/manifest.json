@@ -1,0 +1,364 @@
+{
+  "schema": "w011-test-preflight/1",
+  "role": "execution-side regression author; not an independent reviewer or PM acceptance",
+  "test_source_commit": "739a51154b8e692b8d096dc73ae9278e40858338",
+  "new_test_collection": 140,
+  "expected_final_collection": 1605,
+  "final_collection_note": "Original 1465 plus 140 additions; final execution owns actual collection and both full interpreter runs.",
+  "environment_boundary": "These targeted probes used the recorded Python 3.12 development interpreter. They are not evidence for the final Python 3.10/3.12 full matrix, wheel installation, or production performance.",
+  "snapshots": "Each full-snapshots archive contains all tracked layauto_v2, tests including immutable fixtures/support, and pyproject.toml from the recorded basis commit, overlaid with the exact captured W011 source/test bytes. Overlay hashes were verified against each invocation input manifest. Snapshots reconstructed after execution are not additional test runs. Task documentation is intentionally outside this tested-code snapshot.",
+  "scope_limits": "Expected input failures and test setup failures remain distinct from injected unexpected exception checks. Interrupted progress is never promoted to pass. Reviewer findings and closures remain in their independently authored reports.",
+  "final_matrix_pending_tests": [
+    "test_cr06_seed_owner_operand_must_match_retained_derived_payload",
+    "test_cr04_full_result_rebuilds_unmeasured_source_provenance_beyond_projection",
+    "test_cr05_multiple_bad_seed_diagnostics_keep_actual_query_pointer_and_record_id"
+  ],
+  "pending_boundary": "The final three permanent regressions were collected but not separately run in this preflight directory, per integration/resource coordination. The root final matrix must run them on the final source. Remaining earlier matrix cases likewise rely on the final complete runs, not the stopped probes.",
+  "probes": [
+    {
+      "id": "geometry-r1",
+      "outcome": "failed_setup",
+      "observed": "3 passed, 1 failed in 272.72s",
+      "exit_code": 1,
+      "records": [
+        "geometry-r1-input.json",
+        "geometry-r1-result.json",
+        "geometry-r1.log"
+      ],
+      "boundary": "actual direct/readback and complete normal crossing set passed on this earlier snapshot; existing extraction_mismatch overlay then failed because the test had removed its normalized target directory",
+      "resolution": "test setup changed to copy_input -> apply_case -> without_cache; original failure and snapshot retained",
+      "complete_code_fixture_snapshot": "full-snapshots/geometry-r1.tar.gz",
+      "snapshot_file_manifest": "full-snapshots/geometry-r1.manifest.json"
+    },
+    {
+      "id": "contracts-r1",
+      "outcome": "passed",
+      "observed": "36 passed in 826.24s",
+      "exit_code": 0,
+      "records": [
+        "contracts-r1.input.json",
+        "contracts-r1.result.json",
+        "contracts-r1.stdout.txt",
+        "contracts-r1.stderr.txt"
+      ],
+      "boundary": "earlier public-contract matrix only; later independent review regressions and product fixes are not retroactively attributed to this result",
+      "complete_code_fixture_snapshot": "full-snapshots/contracts-r1.tar.gz",
+      "snapshot_file_manifest": "full-snapshots/contracts-r1.manifest.json"
+    },
+    {
+      "id": "exceptions-r1",
+      "outcome": "aborted_superseded",
+      "exit_code": -15,
+      "records": [
+        "exceptions-r1.input.json",
+        "exceptions-r1.result.json",
+        "exceptions-r1.stdout.txt",
+        "exceptions-r1.stderr.txt",
+        "superseded-probe-termination.json"
+      ],
+      "boundary": "SIGTERM after reviewed fixes superseded the snapshot and to limit concurrent heavy reconstruction in the 16 GiB environment; progress output is not a completed test result",
+      "complete_code_fixture_snapshot": "full-snapshots/exceptions-r1.tar.gz",
+      "snapshot_file_manifest": "full-snapshots/exceptions-r1.manifest.json"
+    },
+    {
+      "id": "geometry-r2",
+      "outcome": "aborted_superseded",
+      "exit_code": -15,
+      "records": [
+        "geometry-r2.input.json",
+        "geometry-r2.result.json",
+        "geometry-r2.stdout.txt",
+        "geometry-r2.stderr.txt",
+        "superseded-probe-termination.json"
+      ],
+      "boundary": "SIGTERM under the same resource/snapshot decision. Partial progress contains F, but no terminal pytest failure report was emitted. Source inspection found the target-only VT witness outside the declared VT=toy literal subset; it was changed to legal target-only NFIN/L/W deltas. No pass count is inferred from progress dots",
+      "complete_code_fixture_snapshot": "full-snapshots/geometry-r2.tar.gz",
+      "snapshot_file_manifest": "full-snapshots/geometry-r2.manifest.json"
+    },
+    {
+      "id": "review-regressions-r1",
+      "outcome": "failed_setup_then_interrupted",
+      "observed": "3 failed, 72 deselected in 140.95s",
+      "exit_code": 2,
+      "records": [
+        "review-regressions-r1.input.json",
+        "review-regressions-r1.result.json",
+        "review-regressions-r1.stdout.txt",
+        "review-regressions-r1.stderr.txt",
+        "review-regressions-r1.interruption.json"
+      ],
+      "boundary": "the three CR01 constructor controls correctly rejected, but the test tamper helper parameter record collided with the record payload keyword; SIGINT obtained and preserved the failure reports before retry",
+      "resolution": "helper parameter renamed instance in a272a34; the following probe reruns these controls",
+      "complete_code_fixture_snapshot": "full-snapshots/review-regressions-r1.tar.gz",
+      "snapshot_file_manifest": "full-snapshots/review-regressions-r1.manifest.json"
+    },
+    {
+      "id": "review-regressions-r2",
+      "outcome": "passed",
+      "observed": "20 passed, 72 deselected in 331.19s",
+      "exit_code": 0,
+      "records": [
+        "review-regressions-r2.input.json",
+        "review-regressions-r2.result.json",
+        "review-regressions-r2.stdout.txt",
+        "review-regressions-r2.stderr.txt"
+      ],
+      "boundary": "CR01 seed leaves; CR02 Parameter constructor faults through leaf/full result and malformed controls; CR03 actual W007 admission/identity completion faults; expected owner-schema diagnostic faults. Later CR04/CR06 changes require the final matrix",
+      "complete_code_fixture_snapshot": "full-snapshots/review-regressions-r2.tar.gz",
+      "snapshot_file_manifest": "full-snapshots/review-regressions-r2.manifest.json"
+    },
+    {
+      "id": "cr04-regressions-r1",
+      "outcome": "passed",
+      "observed": "3 passed, 39 deselected in 119.92s",
+      "exit_code": 0,
+      "records": [
+        "cr04-regressions-r1.input.json",
+        "cr04-regressions-r1.result.json",
+        "cr04-regressions-r1.stdout.txt",
+        "cr04-regressions-r1.stderr.txt"
+      ],
+      "boundary": "equal-valued int/Fraction nested forgeries through Measurement/Draft/Result and codecs; native bool/int completed-capture substitution. This predates the final unmeasured-parameter provenance/owner reconciliation additions",
+      "complete_code_fixture_snapshot": "full-snapshots/cr04-regressions-r1.tar.gz",
+      "snapshot_file_manifest": "full-snapshots/cr04-regressions-r1.manifest.json"
+    }
+  ],
+  "files": {
+    "collection-final.txt": {
+      "bytes": 18258,
+      "sha256": "527075f55b146304cb244f2b52a31ad82e60fb5e75a82315b17b0096e4c94227"
+    },
+    "collection-r1.txt": {
+      "bytes": 15192,
+      "sha256": "a61422938c268e0baa48dbb82995afe768ce6e12a34eb063d8a5c8a3865e3521"
+    },
+    "collection-r2.txt": {
+      "bytes": 17547,
+      "sha256": "7a336a65242706d5f63844801dab9d990c840ee68f66d4a678333f5b6c11cea7"
+    },
+    "contracts-r1.input.json": {
+      "bytes": 1440,
+      "sha256": "4c423e42871455edc11428e9d2a762287cd54f0def1bbc8cfe99f14f588095ca"
+    },
+    "contracts-r1.input.tar.gz": {
+      "bytes": 25984,
+      "sha256": "30c60cb34b4e3950462eb22449f42a3df992c6739a81e62a9c6334ebaf17bea2"
+    },
+    "contracts-r1.result.json": {
+      "bytes": 1691,
+      "sha256": "7cb03ffdd2b36669e0acc3b9342b173a60a79028ccb7000ec41a34118f42b859"
+    },
+    "contracts-r1.stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "contracts-r1.stdout.txt": {
+      "bytes": 111,
+      "sha256": "f05db7c68f88bb64f2dacf50ad0c4e07f31a5a4a938ddcf0d7f021d6d58558f0"
+    },
+    "cr04-regressions-r1.input.json": {
+      "bytes": 2011,
+      "sha256": "40c07af0ce176292cf7b0167e44caf4787e3433dd85dbae5ff9f77f6e8a35e05"
+    },
+    "cr04-regressions-r1.input.tar.gz": {
+      "bytes": 31651,
+      "sha256": "d292bdb91e8e0eff8d183e4be497ab0e7296e0ccb18170491fafff7cea4e41e8"
+    },
+    "cr04-regressions-r1.result.json": {
+      "bytes": 2289,
+      "sha256": "046a237ba099382fdfd960dfa03c38adba608c38b863f1c2b00ea27f5988eaac"
+    },
+    "cr04-regressions-r1.stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "cr04-regressions-r1.stdout.txt": {
+      "bytes": 125,
+      "sha256": "d366beff0b95596b5e6b78aad7f61ddd72b7ece4bda745e67fc4739a3cd5f669"
+    },
+    "exceptions-r1.input.json": {
+      "bytes": 1441,
+      "sha256": "8c43c3d1fb696a95a9aa12608438225b1c8e0e87f016525d781fc13f2ed059dd"
+    },
+    "exceptions-r1.input.tar.gz": {
+      "bytes": 25985,
+      "sha256": "6e7d65e5a7ea8bc8a7ebb8be23678a28fb046c8719d638112ad818299908b5a1"
+    },
+    "exceptions-r1.result.json": {
+      "bytes": 1693,
+      "sha256": "fcaaef9ca8ae65d1f144d064e3bce9cfd2e14194dc3b5aa9d1786815b6ca0f9a"
+    },
+    "exceptions-r1.stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "exceptions-r1.stdout.txt": {
+      "bytes": 23,
+      "sha256": "c75bbdfbbfd3ec4436b2111bf5804164f661e8a7de450c3eddfb4bd41eb57ed5"
+    },
+    "full-snapshots/contracts-r1.manifest.json": {
+      "bytes": 31803,
+      "sha256": "1d6b538ccc3509f771b132a0dbe390da743dcc7de3c13cfaee43e69eead22aac"
+    },
+    "full-snapshots/contracts-r1.tar.gz": {
+      "bytes": 333245,
+      "sha256": "8c8c056c5213ce3c4ecc30315c97e6720002445cbce29e3aa43b5b57535fda2b"
+    },
+    "full-snapshots/cr04-regressions-r1.manifest.json": {
+      "bytes": 31817,
+      "sha256": "a59352787646177684c3459623827051b9b7b100273bd24895d17263023d0465"
+    },
+    "full-snapshots/cr04-regressions-r1.tar.gz": {
+      "bytes": 337216,
+      "sha256": "f9d249f27db181e4fdd8df959fe6fe1f3b8641f520d439ade2af3f6fdf70df43"
+    },
+    "full-snapshots/exceptions-r1.manifest.json": {
+      "bytes": 31805,
+      "sha256": "8caf9b29973932207f9bb425018b373be0d89856771d4e298f97870141178223"
+    },
+    "full-snapshots/exceptions-r1.tar.gz": {
+      "bytes": 333246,
+      "sha256": "9e7b5af6fa6db27effa5f543192437b9f4bb7c7f2f2d1ffc6f830036feb49d6c"
+    },
+    "full-snapshots/geometry-r1.manifest.json": {
+      "bytes": 31801,
+      "sha256": "031b0353f8a7feef5e7ecc9c86fde506de6cf7ee02dabf90141a57148ab4aa33"
+    },
+    "full-snapshots/geometry-r1.tar.gz": {
+      "bytes": 332176,
+      "sha256": "482ef729f0bf6cac8af0945ede9f7f22d1ecb4de790ada0fed445f5f7465852c"
+    },
+    "full-snapshots/geometry-r2.manifest.json": {
+      "bytes": 31801,
+      "sha256": "841e7f4225090bf78fe0bcab1aba49dc6a5a3fb450398f9d95533f712d9f062a"
+    },
+    "full-snapshots/geometry-r2.tar.gz": {
+      "bytes": 333529,
+      "sha256": "9fe3a5639d47143549ef7987147b56b493f17c7174348df84d19378d20967548"
+    },
+    "full-snapshots/review-regressions-r1.manifest.json": {
+      "bytes": 31821,
+      "sha256": "e0741ad3cb15c666bbe4029a7af5d2887b3092a1d76d5b2cbcd0d922130c4c26"
+    },
+    "full-snapshots/review-regressions-r1.tar.gz": {
+      "bytes": 336191,
+      "sha256": "edc93d58b4dd31e68f9023a17b0e79024ad5253f186b03f19a305bf74bffb49f"
+    },
+    "full-snapshots/review-regressions-r2.manifest.json": {
+      "bytes": 31821,
+      "sha256": "176e1de3c23db2ae1592a6c4490ed1c0d6d8782e477df2ceffb1ecef81cc4ec0"
+    },
+    "full-snapshots/review-regressions-r2.tar.gz": {
+      "bytes": 336190,
+      "sha256": "478544be23a942fffc9b1c345a89f2ca13f22824191f7ed50e60c04915361c1b"
+    },
+    "full-snapshots-index.json": {
+      "bytes": 1381,
+      "sha256": "68739e74274be9d72273786bbdb78f0fba6c5cd02051603e559b7ee5cb1c7f57"
+    },
+    "geometry-r1-input.json": {
+      "bytes": 1508,
+      "sha256": "43e391f5b6055753da0ef902719602b3fb2421f6305859e7a8f68b45f6b8f4a7"
+    },
+    "geometry-r1-input.tar.gz": {
+      "bytes": 25193,
+      "sha256": "e73bb56764dae4a20ecbafcb774b80116fc46c3082be92cec4907277f92635f2"
+    },
+    "geometry-r1-result.json": {
+      "bytes": 1831,
+      "sha256": "20cc3a2e75ddfb7c051351b034a451b7d20f90c75b672ca925cf0e4a014e8cd9"
+    },
+    "geometry-r1.log": {
+      "bytes": 2958,
+      "sha256": "8125dd6609e2606f34905f4f48d5bd592176ceb0626a463e0b0db032f5d04d36"
+    },
+    "geometry-r2.input.json": {
+      "bytes": 1516,
+      "sha256": "56180c1225a927daa24416caff04c89d6ac160459d03f0a4cc03378a21f0bed4"
+    },
+    "geometry-r2.input.tar.gz": {
+      "bytes": 26313,
+      "sha256": "324861580589f9609cc5488d9833f1e91c03189a16f5b5284672be285b418884"
+    },
+    "geometry-r2.result.json": {
+      "bytes": 1769,
+      "sha256": "7bd887aef2b70e2e36432b24652625c3be63b9cb27c1fb79717f371e21ca4469"
+    },
+    "geometry-r2.stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "geometry-r2.stdout.txt": {
+      "bytes": 5,
+      "sha256": "18f1f41ac24c02976e23c3e0c1fd3283ecb1181ae5c5fd69352aa099f7e92141"
+    },
+    "input-snapshot-reconstruction.json": {
+      "bytes": 348,
+      "sha256": "8f97e9d29fe37eadeb71d4b7818549a4fa82d050ecf0f850cf0f73fe480b51ef"
+    },
+    "package_preflight.py": {
+      "bytes": 3168,
+      "sha256": "5d2164b6bdcb172a1e79aaba9564346257683f0d4082fbde5604b59661d8d886"
+    },
+    "parallel-r1-input.tar.gz": {
+      "bytes": 26099,
+      "sha256": "20266841740791bac597b35fe75ebf36a02fcb59a006d4bf2427d9979f78cc77"
+    },
+    "reconstruct_probe_inputs.py": {
+      "bytes": 2290,
+      "sha256": "6dc7b175b40c1eee787f88cdd92ff519364c737d432b2009d57f4628de978209"
+    },
+    "review-regressions-r1.input.json": {
+      "bytes": 2134,
+      "sha256": "a0121d22dc3796a5b2dbf73327f47f2f217506b93fd9f8fbe76f8e0df731ce90"
+    },
+    "review-regressions-r1.input.tar.gz": {
+      "bytes": 31547,
+      "sha256": "192afef5454c7fefba8f364bb721c272a48735eb2eb4d5a3828006e87f129401"
+    },
+    "review-regressions-r1.interruption.json": {
+      "bytes": 209,
+      "sha256": "457b8d313befa49407400ea18db666284b804bbed37c5ba63b950c0a08a9ef22"
+    },
+    "review-regressions-r1.result.json": {
+      "bytes": 2411,
+      "sha256": "21694969e0c9d73ef248abe43f39d51099c9b037902edb67b313a9aae29d25a3"
+    },
+    "review-regressions-r1.stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "review-regressions-r1.stdout.txt": {
+      "bytes": 5392,
+      "sha256": "dd793729a002e17a3c368ae7e52fe218bbe61ff37d23c2a5772b6e25c0475e20"
+    },
+    "review-regressions-r2.input.json": {
+      "bytes": 2144,
+      "sha256": "bdabd9152a300b3c49fea3ea010ed898d38fa89b03eae53e3bde68b0ed76398a"
+    },
+    "review-regressions-r2.input.tar.gz": {
+      "bytes": 31547,
+      "sha256": "86346dce4d822b869d775bce46beb5895d4700bc90274f3ed8bcca6c074096f7"
+    },
+    "review-regressions-r2.result.json": {
+      "bytes": 2422,
+      "sha256": "dc9aa4894bbbe0a920b8beaab1f897745ec22aca2febf00614891b5d85b7a61f"
+    },
+    "review-regressions-r2.stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "review-regressions-r2.stdout.txt": {
+      "bytes": 126,
+      "sha256": "2a7c9bf6728356cd158eaaba9066f23982ec9096a64645e7deecc8b8cac753c6"
+    },
+    "run_probe.py": {
+      "bytes": 1880,
+      "sha256": "094c8b212540da7e079ce9e87d10b27e7d424bf85730986c96b8bb438f951456"
+    },
+    "superseded-probe-termination.json": {
+      "bytes": 957,
+      "sha256": "5a9f3e6adc4fda14a6f3422e7d82ece647046e3052b2b79eadc5137ccd4b2b4b"
+    }
+  }
+}

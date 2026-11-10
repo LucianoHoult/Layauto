@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/workspace/work/w011-review-source-fixed/probe_completed.py", line 29, in <module>
+    assert canonical_bytes(evidence_value(bad))!=canonical_bytes(evidence_value(tech))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

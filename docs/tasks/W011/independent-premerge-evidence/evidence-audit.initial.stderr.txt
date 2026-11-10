@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/workspace/Layauto-w011-review/docs/tasks/W011/independent-premerge-evidence/evidence-audit.py", line 130, in <module>
+    check(tag + " pip report artifact", len(installed) == 1 and installed[0]["download_info"]["archive_info"]["hashes"]["sha256"] == identity["artifact_sha256"])
+                                                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+KeyError: 'hashes'

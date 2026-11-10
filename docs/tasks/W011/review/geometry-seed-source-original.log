@@ -1,0 +1,28 @@
+device DeviceId(cell=CellId(name='INV_M1_SYNTH'), name='MN0')
+field_sources.record_id FrozenMap(_entries=(('derivation', 'author ordinal label, not a raw identity'), ('sources', (FrozenMap(_entries=(('path', 'query/requests.json'), ('sha256', '57f5f38cb3ec450fd1815ef88c618c03a9703690672348b313fa35fbce97bc62'), ('json_pointer', '/requests/0/record_ids/0'), ('lexeme', 'D0'))),))))
+Traceback (most recent call last):
+  File "/workspace/work/w011-review-geometry/probe_seed_source.py", line 16, in <module>
+    print('seed_source',seed_source(seed),flush=True)
+                        ^^^^^^^^^^^^^^^^^
+  File "/workspace/Layauto/layauto_v2/annotation/channel_identity.py", line 50, in seed_source
+    return ref_from_location(mapping(mapping(seed.record['field_sources'])['record_id']))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/Layauto/layauto_v2/domain/source_location.py", line 25, in ref_from_location
+    return SourceRef(_string(uri), _string(value.get('sha256')),
+                     ^^^^^^^^^^^^
+  File "/workspace/Layauto/layauto_v2/domain/source_location.py", line 12, in _string
+    raise ValueError('source location requires nonempty text')
+ValueError: source location requires nonempty text
+Traceback (most recent call last):
+  File "/workspace/work/w011-review-geometry/probe_seed_source.py", line 16, in <module>
+    print('seed_source',seed_source(seed),flush=True)
+                        ^^^^^^^^^^^^^^^^^
+  File "/workspace/Layauto/layauto_v2/annotation/channel_identity.py", line 50, in seed_source
+    return ref_from_location(mapping(mapping(seed.record['field_sources'])['record_id']))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/Layauto/layauto_v2/domain/source_location.py", line 25, in ref_from_location
+    return SourceRef(_string(uri), _string(value.get('sha256')),
+                     ^^^^^^^^^^^^
+  File "/workspace/Layauto/layauto_v2/domain/source_location.py", line 12, in _string
+    raise ValueError('source location requires nonempty text')
+ValueError: source location requires nonempty text

@@ -1,0 +1,24 @@
+{
+  "phase": "complete-draft-projection-counterexample",
+  "reviewer": "/root/code_review/boundary_review",
+  "head": "c37eecf844e27787b478bccddfdb8fdaba18bc06",
+  "source_root": "/workspace/work/w011-review-boundary-owner",
+  "source_receipt": "boundary-owner-receipt.json",
+  "command": "/workspace/work/w011-engineering/dev312/bin/python /workspace/work/w011-review-boundary-owner/probe_projection.py > /workspace/work/w011-review-boundary-owner/projection.stdout.txt 2> /workspace/work/w011-review-boundary-owner/projection.stderr.txt",
+  "exit_code": 0,
+  "artifacts": {
+    "boundary-projection-probe_projection.py": "5736b9280259b5e4b8721857b9b31252fc32e95b1e52fdec25dc0b3a0a95646e",
+    "boundary-projection-projection.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "boundary-projection-projection.stdout.txt": "e20da270f5e92c84d0c312e9217cf6a04f9d19d2257d23df60b0094744874871"
+  },
+  "dependency_script": {
+    "file": "boundary-owner-probe_owner.py",
+    "sha256": "5f14198743190e06d9ee4d7b549061d59ccc56aaea73f5402684be7a3021a6f7"
+  },
+  "limits": {
+    "full_w011_result_not_built": true,
+    "full_w011_wire_not_run": true,
+    "elapsed_seconds": 15.538530584,
+    "maxrss_kib": 677928
+  }
+}

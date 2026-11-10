@@ -1,0 +1,61 @@
+...F
+=================================== FAILURES ===================================
+_____ test_existing_extraction_mismatch_is_actual_four_against_source_five _____
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-2/test_existing_extraction_misma0')
+
+    def test_existing_extraction_mismatch_is_actual_four_against_source_five(tmp_path):
+        root = copy_input(tmp_path)
+>       apply_case(root, 'extraction_mismatch')
+
+tests/contracts/test_w011_geometry.py:124: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/contracts/w005_cases.py:38: in apply_case
+    shutil.copyfile(FIXTURE / 'failures' / source, root / target)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+src = PosixPath('/workspace/work/w011-tests/tests/fixtures/w003_m1/failures/extraction_mismatch/query/normalized/device_regions.yaml')
+dst = PosixPath('/tmp/pytest-of-agent/pytest-2/test_existing_extraction_misma0/input/query/normalized/device_regions.yaml')
+follow_symlinks = True
+
+    def copyfile(src, dst, *, follow_symlinks=True):
+        """Copy data from src to dst in the most efficient way possible.
+    
+        If follow_symlinks is not set and src is a symbolic link, a new
+        symlink will be created instead of copying the file it points to.
+    
+        """
+        sys.audit("shutil.copyfile", src, dst)
+    
+        if _samefile(src, dst):
+            raise SameFileError("{!r} and {!r} are the same file".format(src, dst))
+    
+        file_size = 0
+        for i, fn in enumerate([src, dst]):
+            try:
+                st = _stat(fn)
+            except OSError:
+                # File most likely does not exist
+                pass
+            else:
+                # XXX What about other special files? (sockets, devices...)
+                if stat.S_ISFIFO(st.st_mode):
+                    fn = fn.path if isinstance(fn, os.DirEntry) else fn
+                    raise SpecialFileError("`%s` is a named pipe" % fn)
+                if _WINDOWS and i == 0:
+                    file_size = st.st_size
+    
+        if not follow_symlinks and _islink(src):
+            os.symlink(os.readlink(src), dst)
+        else:
+            with open(src, 'rb') as fsrc:
+                try:
+>                   with open(dst, 'wb') as fdst:
+                         ^^^^^^^^^^^^^^^
+E                   FileNotFoundError: [Errno 2] No such file or directory: '/tmp/pytest-of-agent/pytest-2/test_existing_extraction_misma0/input/query/normalized/device_regions.yaml'
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/shutil.py:262: FileNotFoundError
+=========================== short test summary info ============================
+FAILED tests/contracts/test_w011_geometry.py::test_existing_extraction_mismatch_is_actual_four_against_source_five
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+1 failed, 3 passed in 272.72s (0:04:32)

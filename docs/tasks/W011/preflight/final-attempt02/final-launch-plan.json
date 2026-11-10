@@ -1,0 +1,46 @@
+{
+  "expected_source_commit": "e89bdaa6a091f56cfaf7862dced7232d34e22514",
+  "cwd": "/workspace/Layauto",
+  "command": [
+    "/workspace/work/w011-engineering/dev312/bin/python",
+    "/workspace/Layauto/docs/tasks/W011/prepare_final.py",
+    "--root",
+    "/workspace/Layauto",
+    "--out",
+    "/workspace/Layauto/docs/tasks/W011/verification",
+    "--work",
+    "/workspace/work/w011-final-e89bdaa",
+    "--smoke",
+    "/workspace/Layauto/docs/tasks/W011/installed_smoke.py",
+    "--python310",
+    "/workspace/work/w011-engineering/dev310/bin/python",
+    "--python312",
+    "/workspace/work/w011-engineering/dev312/bin/python",
+    "--baseline-collection",
+    "/workspace/Layauto/docs/tasks/W011/preflight/baseline-collection312.txt",
+    "--expected-tests",
+    "1605",
+    "--matrix-workers",
+    "2",
+    "--resource-gate",
+    "/workspace/Layauto/docs/tasks/W011/w011_resource_gate.py"
+  ],
+  "expected_test_count": 1605,
+  "matrix_workers": 2,
+  "scripts": [
+    {
+      "path": "/workspace/Layauto/docs/tasks/W011/prepare_final.py",
+      "sha256": "66456ce9659d2ad2481ab0f8b4309054caf19a41057f1a86b01531f3dd914794"
+    },
+    {
+      "path": "/workspace/Layauto/docs/tasks/W011/installed_smoke.py",
+      "sha256": "173b95ec81082b5eb2d33aba1334f08730a04160b69353377b593d5956ea51ce"
+    },
+    {
+      "path": "/workspace/Layauto/docs/tasks/W011/w011_resource_gate.py",
+      "sha256": "1c78c2066736f0f56d80f3353da133a1d23407b0675a0a8f5e471b1337469d70"
+    }
+  ],
+  "status": "prepared_for_immediate_launch",
+  "scope": "Both complete 1605-test interpreter suites with all original 1465 IDs; first W011 test fixture guarded exclusively through process exit; package and clean smokes only after both full matrices pass."
+}

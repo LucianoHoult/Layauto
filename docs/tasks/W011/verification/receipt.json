@@ -1,0 +1,586 @@
+{
+  "status": "passed",
+  "matrix_workers": 2,
+  "resource_gate": {
+    "source": "/workspace/Layauto/docs/tasks/W011/w011_resource_gate.py",
+    "sha256": "1c78c2066736f0f56d80f3353da133a1d23407b0675a0a8f5e471b1337469d70",
+    "module": "w011_resource_gate",
+    "module_directory": "/workspace/work/w011-final-e89bdaa/pytest-plugins",
+    "shared_lock": "/workspace/work/w011-final-e89bdaa/pytest-w011.lock",
+    "lock_release": "OS at pytest process exit",
+    "start": "tryfirst setup hookwrapper before fixtures for first test_w011_* file",
+    "effect": "Only waiting and logging; no test selection, reordering, fixture or outcome changes.",
+    "memory_basis": "Observed W011 process peak about 7 GiB and legacy phase about 1-1.7 GiB under a 16 GiB cgroup; finite observations, not a proven maximum."
+  },
+  "package_smokes_after_matrices": true,
+  "runner_command": [
+    "/workspace/work/w011-engineering/dev312/bin/python",
+    "/workspace/Layauto/docs/tasks/W011/prepare_final.py",
+    "--root",
+    "/workspace/Layauto",
+    "--out",
+    "/workspace/Layauto/docs/tasks/W011/verification",
+    "--work",
+    "/workspace/work/w011-final-e89bdaa",
+    "--smoke",
+    "/workspace/Layauto/docs/tasks/W011/installed_smoke.py",
+    "--python310",
+    "/workspace/work/w011-engineering/dev310/bin/python",
+    "--python312",
+    "/workspace/work/w011-engineering/dev312/bin/python",
+    "--baseline-collection",
+    "/workspace/Layauto/docs/tasks/W011/preflight/baseline-collection312.txt",
+    "--expected-tests",
+    "1605",
+    "--matrix-workers",
+    "2",
+    "--resource-gate",
+    "/workspace/Layauto/docs/tasks/W011/w011_resource_gate.py"
+  ],
+  "runner_sha256": "66456ce9659d2ad2481ab0f8b4309054caf19a41057f1a86b01531f3dd914794",
+  "smoke_sha256": "173b95ec81082b5eb2d33aba1334f08730a04160b69353377b593d5956ea51ce",
+  "commands": [
+    {
+      "command": [
+        "/workspace/work/w011-engineering/dev310/bin/python",
+        "-c",
+        "import sys,platform,importlib.metadata as m,json,layauto_v2; from pathlib import Path; p=Path(layauto_v2.__file__).resolve(); assert p.parent==Path.cwd()/\"layauto_v2\", p; print(json.dumps({\"executable\":sys.executable,\"version\":sys.version,\"platform\":platform.platform(),\"source_package\":str(p),\"packages\":{d.metadata[\"Name\"]:d.version for d in m.distributions()}},indent=2))"
+      ],
+      "cwd": "/workspace/work/w011-final-e89bdaa/source",
+      "exit_code": 0,
+      "environment_overrides": {
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PIP_CACHE_DIR": "/workspace/work/w011-final-e89bdaa/pip-cache",
+        "MYPY_CACHE_DIR": "/workspace/work/w011-final-e89bdaa/mypy-environment-310",
+        "MPLCONFIGDIR": "/workspace/work/w011-final-e89bdaa/mplconfig"
+      },
+      "started_at_utc": "2026-11-09T12:07:36.029921+00:00",
+      "finished_at_utc": "2026-11-09T12:07:36.155453+00:00",
+      "elapsed_seconds": 0.126,
+      "stdout": "environment-310.stdout.txt",
+      "stdout_sha256": "ae1792608760023a643eb254b44ed8686719e5893e2743253eb0569330ee4bd5",
+      "stderr": "environment-310.stderr.txt",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "/workspace/work/w011-engineering/dev310/bin/python",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "--collect-only",
+        "tests/unit",
+        "tests/contracts",
+        "-q"
+      ],
+      "cwd": "/workspace/work/w011-final-e89bdaa/source",
+      "exit_code": 0,
+      "environment_overrides": {
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PIP_CACHE_DIR": "/workspace/work/w011-final-e89bdaa/pip-cache",
+        "MYPY_CACHE_DIR": "/workspace/work/w011-final-e89bdaa/mypy-collection-310",
+        "MPLCONFIGDIR": "/workspace/work/w011-final-e89bdaa/mplconfig"
+      },
+      "started_at_utc": "2026-11-09T12:07:36.155773+00:00",
+      "finished_at_utc": "2026-11-09T12:07:37.955259+00:00",
+      "elapsed_seconds": 1.8,
+      "stdout": "collection-310.stdout.txt",
+      "stdout_sha256": "834a4d4727a87ec47762b0223add03e53655fd82d627a08c4f6c1ec6bc4a7298",
+      "stderr": "collection-310.stderr.txt",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "/workspace/work/w011-engineering/dev310/bin/python",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "-p",
+        "w011_resource_gate",
+        "--w011-resource-lock",
+        "/workspace/work/w011-final-e89bdaa/pytest-w011.lock",
+        "--w011-resource-log",
+        "/workspace/Layauto/docs/tasks/W011/verification/resource-gate-310.jsonl",
+        "tests/unit",
+        "tests/contracts",
+        "-q"
+      ],
+      "cwd": "/workspace/work/w011-final-e89bdaa/source",
+      "exit_code": 0,
+      "environment_overrides": {
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PIP_CACHE_DIR": "/workspace/work/w011-final-e89bdaa/pip-cache",
+        "MYPY_CACHE_DIR": "/workspace/work/w011-final-e89bdaa/mypy-pytest-310",
+        "MPLCONFIGDIR": "/workspace/work/w011-final-e89bdaa/mplconfig",
+        "PYTHONPATH": "/workspace/work/w011-final-e89bdaa/pytest-plugins"
+      },
+      "started_at_utc": "2026-11-09T12:07:37.957123+00:00",
+      "finished_at_utc": "2026-11-09T15:42:46.793380+00:00",
+      "elapsed_seconds": 12908.836,
+      "stdout": "pytest-310.stdout.txt",
+      "stdout_sha256": "e262f21d14164dbebece377adf9453af08863e11e613c8a0ccd72c6af0188a3e",
+      "stderr": "pytest-310.stderr.txt",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "/workspace/work/w011-engineering/dev310/bin/python",
+        "-m",
+        "mypy"
+      ],
+      "cwd": "/workspace/work/w011-final-e89bdaa/source",
+      "exit_code": 0,
+      "environment_overrides": {
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PIP_CACHE_DIR": "/workspace/work/w011-final-e89bdaa/pip-cache",
+        "MYPY_CACHE_DIR": "/workspace/work/w011-final-e89bdaa/mypy-typing-310",
+        "MPLCONFIGDIR": "/workspace/work/w011-final-e89bdaa/mplconfig"
+      },
+      "started_at_utc": "2026-11-09T15:42:46.794317+00:00",
+      "finished_at_utc": "2026-11-09T15:42:48.602651+00:00",
+      "elapsed_seconds": 1.808,
+      "stdout": "typing-310.stdout.txt",
+      "stdout_sha256": "80244665c7088b2cce8820f63a43e8138804ae2a8a670798bf2704dd2a9a50a9",
+      "stderr": "typing-310.stderr.txt",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "/workspace/work/w011-engineering/dev310/bin/python",
+        "-m",
+        "pip",
+        "check"
+      ],
+      "cwd": "/workspace/work/w011-final-e89bdaa/source",
+      "exit_code": 0,
+      "environment_overrides": {
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PIP_CACHE_DIR": "/workspace/work/w011-final-e89bdaa/pip-cache",
+        "MYPY_CACHE_DIR": "/workspace/work/w011-final-e89bdaa/mypy-pip-check-310",
+        "MPLCONFIGDIR": "/workspace/work/w011-final-e89bdaa/mplconfig"
+      },
+      "started_at_utc": "2026-11-09T15:42:48.603146+00:00",
+      "finished_at_utc": "2026-11-09T15:42:49.101490+00:00",
+      "elapsed_seconds": 0.499,
+      "stdout": "pip-check-310.stdout.txt",
+      "stdout_sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09",
+      "stderr": "pip-check-310.stderr.txt",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "/workspace/work/w011-engineering/dev312/bin/python",
+        "-c",
+        "import sys,platform,importlib.metadata as m,json,layauto_v2; from pathlib import Path; p=Path(layauto_v2.__file__).resolve(); assert p.parent==Path.cwd()/\"layauto_v2\", p; print(json.dumps({\"executable\":sys.executable,\"version\":sys.version,\"platform\":platform.platform(),\"source_package\":str(p),\"packages\":{d.metadata[\"Name\"]:d.version for d in m.distributions()}},indent=2))"
+      ],
+      "cwd": "/workspace/work/w011-final-e89bdaa/source",
+      "exit_code": 0,
+      "environment_overrides": {
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PIP_CACHE_DIR": "/workspace/work/w011-final-e89bdaa/pip-cache",
+        "MYPY_CACHE_DIR": "/workspace/work/w011-final-e89bdaa/mypy-environment-312",
+        "MPLCONFIGDIR": "/workspace/work/w011-final-e89bdaa/mplconfig"
+      },
+      "started_at_utc": "2026-11-09T12:07:36.030214+00:00",
+      "finished_at_utc": "2026-11-09T12:07:36.149900+00:00",
+      "elapsed_seconds": 0.12,
+      "stdout": "environment-312.stdout.txt",
+      "stdout_sha256": "9bc1eb65ef8256d328883ec03eca7ab4a9d06f2b410d18aaef522467c2732823",
+      "stderr": "environment-312.stderr.txt",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "/workspace/work/w011-engineering/dev312/bin/python",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "--collect-only",
+        "tests/unit",
+        "tests/contracts",
+        "-q"
+      ],
+      "cwd": "/workspace/work/w011-final-e89bdaa/source",
+      "exit_code": 0,
+      "environment_overrides": {
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PIP_CACHE_DIR": "/workspace/work/w011-final-e89bdaa/pip-cache",
+        "MYPY_CACHE_DIR": "/workspace/work/w011-final-e89bdaa/mypy-collection-312",
+        "MPLCONFIGDIR": "/workspace/work/w011-final-e89bdaa/mplconfig"
+      },
+      "started_at_utc": "2026-11-09T12:07:36.150536+00:00",
+      "finished_at_utc": "2026-11-09T12:07:37.851853+00:00",
+      "elapsed_seconds": 1.701,
+      "stdout": "collection-312.stdout.txt",
+      "stdout_sha256": "56a495878e2aec34a31c103a94fd7511fb44aa5dd866afd092d1f49940b70d3d",
+      "stderr": "collection-312.stderr.txt",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "/workspace/work/w011-engineering/dev312/bin/python",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "-p",
+        "w011_resource_gate",
+        "--w011-resource-lock",
+        "/workspace/work/w011-final-e89bdaa/pytest-w011.lock",
+        "--w011-resource-log",
+        "/workspace/Layauto/docs/tasks/W011/verification/resource-gate-312.jsonl",
+        "tests/unit",
+        "tests/contracts",
+        "-q"
+      ],
+      "cwd": "/workspace/work/w011-final-e89bdaa/source",
+      "exit_code": 0,
+      "environment_overrides": {
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PIP_CACHE_DIR": "/workspace/work/w011-final-e89bdaa/pip-cache",
+        "MYPY_CACHE_DIR": "/workspace/work/w011-final-e89bdaa/mypy-pytest-312",
+        "MPLCONFIGDIR": "/workspace/work/w011-final-e89bdaa/mplconfig",
+        "PYTHONPATH": "/workspace/work/w011-final-e89bdaa/pytest-plugins"
+      },
+      "started_at_utc": "2026-11-09T12:07:37.853692+00:00",
+      "finished_at_utc": "2026-11-09T14:09:31.215976+00:00",
+      "elapsed_seconds": 7313.363,
+      "stdout": "pytest-312.stdout.txt",
+      "stdout_sha256": "55a8f6d7401d77e1b02e2a5ebecef6130fca2406374804aa0f3bf989b7a6fb32",
+      "stderr": "pytest-312.stderr.txt",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "/workspace/work/w011-engineering/dev312/bin/python",
+        "-m",
+        "mypy"
+      ],
+      "cwd": "/workspace/work/w011-final-e89bdaa/source",
+      "exit_code": 0,
+      "environment_overrides": {
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PIP_CACHE_DIR": "/workspace/work/w011-final-e89bdaa/pip-cache",
+        "MYPY_CACHE_DIR": "/workspace/work/w011-final-e89bdaa/mypy-typing-312",
+        "MPLCONFIGDIR": "/workspace/work/w011-final-e89bdaa/mplconfig"
+      },
+      "started_at_utc": "2026-11-09T14:09:31.220895+00:00",
+      "finished_at_utc": "2026-11-09T14:09:33.311243+00:00",
+      "elapsed_seconds": 2.09,
+      "stdout": "typing-312.stdout.txt",
+      "stdout_sha256": "80244665c7088b2cce8820f63a43e8138804ae2a8a670798bf2704dd2a9a50a9",
+      "stderr": "typing-312.stderr.txt",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "/workspace/work/w011-engineering/dev312/bin/python",
+        "-m",
+        "pip",
+        "check"
+      ],
+      "cwd": "/workspace/work/w011-final-e89bdaa/source",
+      "exit_code": 0,
+      "environment_overrides": {
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PIP_CACHE_DIR": "/workspace/work/w011-final-e89bdaa/pip-cache",
+        "MYPY_CACHE_DIR": "/workspace/work/w011-final-e89bdaa/mypy-pip-check-312",
+        "MPLCONFIGDIR": "/workspace/work/w011-final-e89bdaa/mplconfig"
+      },
+      "started_at_utc": "2026-11-09T14:09:33.311824+00:00",
+      "finished_at_utc": "2026-11-09T14:09:33.580694+00:00",
+      "elapsed_seconds": 0.269,
+      "stdout": "pip-check-312.stdout.txt",
+      "stdout_sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09",
+      "stderr": "pip-check-312.stderr.txt",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "/workspace/work/w011-engineering/dev312/bin/python",
+        "-m",
+        "build",
+        "--outdir",
+        "/workspace/Layauto/docs/tasks/W011/verification/dist"
+      ],
+      "cwd": "/workspace/work/w011-final-e89bdaa/source",
+      "exit_code": 0,
+      "environment_overrides": {
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PIP_CACHE_DIR": "/workspace/work/w011-final-e89bdaa/pip-cache",
+        "MYPY_CACHE_DIR": "/workspace/work/w011-final-e89bdaa/mypy-build",
+        "MPLCONFIGDIR": "/workspace/work/w011-final-e89bdaa/mplconfig"
+      },
+      "started_at_utc": "2026-11-09T15:42:49.112585+00:00",
+      "finished_at_utc": "2026-11-09T15:42:52.728234+00:00",
+      "elapsed_seconds": 3.616,
+      "stdout": "build.stdout.txt",
+      "stdout_sha256": "ceeed62b54a78d91a1bc1f8ddbbcd8dccbed65dabd4214495644fe11d4d875bf",
+      "stderr": "build.stderr.txt",
+      "stderr_sha256": "7b2888f78d7fa636ed83e6385e6be3fdaf145831d191ec5b2a189ea147e86505"
+    },
+    {
+      "command": [
+        "/workspace/work/w011-engineering/dev310/bin/python",
+        "-m",
+        "venv",
+        "/workspace/work/w011-final-e89bdaa/clean-310"
+      ],
+      "cwd": "/workspace/work/w011-final-e89bdaa/installed-cwd",
+      "exit_code": 0,
+      "environment_overrides": {
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PIP_CACHE_DIR": "/workspace/work/w011-final-e89bdaa/pip-cache",
+        "MYPY_CACHE_DIR": "/workspace/work/w011-final-e89bdaa/mypy-create-install-310",
+        "MPLCONFIGDIR": "/workspace/work/w011-final-e89bdaa/mplconfig"
+      },
+      "started_at_utc": "2026-11-09T15:42:52.749679+00:00",
+      "finished_at_utc": "2026-11-09T15:42:55.513238+00:00",
+      "elapsed_seconds": 2.764,
+      "stdout": "create-install-310.stdout.txt",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr": "create-install-310.stderr.txt",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "/workspace/work/w011-final-e89bdaa/clean-310/bin/python",
+        "-m",
+        "pip",
+        "install",
+        "--report",
+        "/workspace/Layauto/docs/tasks/W011/verification/install-310-report.json",
+        "/workspace/Layauto/docs/tasks/W011/verification/dist/layauto-0.2.0.tar.gz"
+      ],
+      "cwd": "/workspace/work/w011-final-e89bdaa/installed-cwd",
+      "exit_code": 0,
+      "environment_overrides": {
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PIP_CACHE_DIR": "/workspace/work/w011-final-e89bdaa/pip-cache",
+        "MYPY_CACHE_DIR": "/workspace/work/w011-final-e89bdaa/mypy-install-310",
+        "MPLCONFIGDIR": "/workspace/work/w011-final-e89bdaa/mplconfig"
+      },
+      "started_at_utc": "2026-11-09T15:42:55.513808+00:00",
+      "finished_at_utc": "2026-11-09T15:43:07.325055+00:00",
+      "elapsed_seconds": 11.811,
+      "stdout": "install-310.stdout.txt",
+      "stdout_sha256": "78e852cea01e71fc62f4f0f29202b3bde20b3766d93eddb19eafe2c05cc0c3e3",
+      "stderr": "install-310.stderr.txt",
+      "stderr_sha256": "fded2b8ce6f51ee4f6db1b06470427f675141c46b54f104eb85a504ccec71a65"
+    },
+    {
+      "command": [
+        "/workspace/work/w011-final-e89bdaa/clean-310/bin/python",
+        "-m",
+        "pip",
+        "check"
+      ],
+      "cwd": "/workspace/work/w011-final-e89bdaa/installed-cwd",
+      "exit_code": 0,
+      "environment_overrides": {
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PIP_CACHE_DIR": "/workspace/work/w011-final-e89bdaa/pip-cache",
+        "MYPY_CACHE_DIR": "/workspace/work/w011-final-e89bdaa/mypy-installed-pip-check-310",
+        "MPLCONFIGDIR": "/workspace/work/w011-final-e89bdaa/mplconfig"
+      },
+      "started_at_utc": "2026-11-09T15:43:07.325568+00:00",
+      "finished_at_utc": "2026-11-09T15:43:07.680100+00:00",
+      "elapsed_seconds": 0.355,
+      "stdout": "installed-pip-check-310.stdout.txt",
+      "stdout_sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09",
+      "stderr": "installed-pip-check-310.stderr.txt",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "/workspace/work/w011-final-e89bdaa/clean-310/bin/python",
+        "-I",
+        "-B",
+        "-c",
+        "import layauto_v2,sys,json; print(json.dumps({\"package\":layauto_v2.__file__,\"executable\":sys.executable,\"version\":sys.version,\"isolated\":sys.flags.isolated}))"
+      ],
+      "cwd": "/workspace/work/w011-final-e89bdaa/installed-cwd",
+      "exit_code": 0,
+      "environment_overrides": {
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PIP_CACHE_DIR": "/workspace/work/w011-final-e89bdaa/pip-cache",
+        "MYPY_CACHE_DIR": "/workspace/work/w011-final-e89bdaa/mypy-installed-identity-310",
+        "MPLCONFIGDIR": "/workspace/work/w011-final-e89bdaa/mplconfig"
+      },
+      "started_at_utc": "2026-11-09T15:43:07.680747+00:00",
+      "finished_at_utc": "2026-11-09T15:43:07.697988+00:00",
+      "elapsed_seconds": 0.017,
+      "stdout": "installed-identity-310.stdout.txt",
+      "stdout_sha256": "f48d21fe7505f2d24947bf2f7c05f866b2e3b587029e91b56379036f0640ac1c",
+      "stderr": "installed-identity-310.stderr.txt",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "/workspace/work/w011-final-e89bdaa/clean-310/bin/python",
+        "-I",
+        "-B",
+        "/workspace/Layauto/docs/tasks/W011/verification/installed_smoke.py",
+        "/workspace/work/w011-final-e89bdaa/source/tests/fixtures/w003_m1"
+      ],
+      "cwd": "/workspace/work/w011-final-e89bdaa/installed-cwd",
+      "exit_code": 0,
+      "environment_overrides": {
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PIP_CACHE_DIR": "/workspace/work/w011-final-e89bdaa/pip-cache",
+        "MYPY_CACHE_DIR": "/workspace/work/w011-final-e89bdaa/mypy-installed-smoke-310",
+        "MPLCONFIGDIR": "/workspace/work/w011-final-e89bdaa/mplconfig"
+      },
+      "started_at_utc": "2026-11-09T15:43:07.706793+00:00",
+      "finished_at_utc": "2026-11-09T15:53:28.339397+00:00",
+      "elapsed_seconds": 620.633,
+      "stdout": "installed-smoke-310.stdout.txt",
+      "stdout_sha256": "91a81541bbe3084ea3e682dcb5da44f76843b38b0eb1ee75cf33f0c35e6f577e",
+      "stderr": "installed-smoke-310.stderr.txt",
+      "stderr_sha256": "064eca221b50eb0d419235e9076cae0a3fc82a951dfe66921adbff672fdfe659"
+    },
+    {
+      "command": [
+        "/workspace/work/w011-engineering/dev312/bin/python",
+        "-m",
+        "venv",
+        "/workspace/work/w011-final-e89bdaa/clean-312"
+      ],
+      "cwd": "/workspace/work/w011-final-e89bdaa/installed-cwd",
+      "exit_code": 0,
+      "environment_overrides": {
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PIP_CACHE_DIR": "/workspace/work/w011-final-e89bdaa/pip-cache",
+        "MYPY_CACHE_DIR": "/workspace/work/w011-final-e89bdaa/mypy-create-install-312",
+        "MPLCONFIGDIR": "/workspace/work/w011-final-e89bdaa/mplconfig"
+      },
+      "started_at_utc": "2026-11-09T15:53:28.340326+00:00",
+      "finished_at_utc": "2026-11-09T15:53:30.464249+00:00",
+      "elapsed_seconds": 2.124,
+      "stdout": "create-install-312.stdout.txt",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr": "create-install-312.stderr.txt",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "/workspace/work/w011-final-e89bdaa/clean-312/bin/python",
+        "-m",
+        "pip",
+        "install",
+        "--report",
+        "/workspace/Layauto/docs/tasks/W011/verification/install-312-report.json",
+        "/workspace/Layauto/docs/tasks/W011/verification/dist/layauto-0.2.0-py3-none-any.whl"
+      ],
+      "cwd": "/workspace/work/w011-final-e89bdaa/installed-cwd",
+      "exit_code": 0,
+      "environment_overrides": {
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PIP_CACHE_DIR": "/workspace/work/w011-final-e89bdaa/pip-cache",
+        "MYPY_CACHE_DIR": "/workspace/work/w011-final-e89bdaa/mypy-install-312",
+        "MPLCONFIGDIR": "/workspace/work/w011-final-e89bdaa/mplconfig"
+      },
+      "started_at_utc": "2026-11-09T15:53:30.465919+00:00",
+      "finished_at_utc": "2026-11-09T15:53:39.661202+00:00",
+      "elapsed_seconds": 9.195,
+      "stdout": "install-312.stdout.txt",
+      "stdout_sha256": "11f431c49de14f1abcffce054d717aa5cb162ebba5e668bfc5baa44ed2e74f3b",
+      "stderr": "install-312.stderr.txt",
+      "stderr_sha256": "f96a57a6d17645d3d9eb401b9cead41a648edf2499f2ca4bc3f9364d677b6080"
+    },
+    {
+      "command": [
+        "/workspace/work/w011-final-e89bdaa/clean-312/bin/python",
+        "-m",
+        "pip",
+        "check"
+      ],
+      "cwd": "/workspace/work/w011-final-e89bdaa/installed-cwd",
+      "exit_code": 0,
+      "environment_overrides": {
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PIP_CACHE_DIR": "/workspace/work/w011-final-e89bdaa/pip-cache",
+        "MYPY_CACHE_DIR": "/workspace/work/w011-final-e89bdaa/mypy-installed-pip-check-312",
+        "MPLCONFIGDIR": "/workspace/work/w011-final-e89bdaa/mplconfig"
+      },
+      "started_at_utc": "2026-11-09T15:53:39.661798+00:00",
+      "finished_at_utc": "2026-11-09T15:53:39.850321+00:00",
+      "elapsed_seconds": 0.189,
+      "stdout": "installed-pip-check-312.stdout.txt",
+      "stdout_sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09",
+      "stderr": "installed-pip-check-312.stderr.txt",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "/workspace/work/w011-final-e89bdaa/clean-312/bin/python",
+        "-I",
+        "-B",
+        "-c",
+        "import layauto_v2,sys,json; print(json.dumps({\"package\":layauto_v2.__file__,\"executable\":sys.executable,\"version\":sys.version,\"isolated\":sys.flags.isolated}))"
+      ],
+      "cwd": "/workspace/work/w011-final-e89bdaa/installed-cwd",
+      "exit_code": 0,
+      "environment_overrides": {
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PIP_CACHE_DIR": "/workspace/work/w011-final-e89bdaa/pip-cache",
+        "MYPY_CACHE_DIR": "/workspace/work/w011-final-e89bdaa/mypy-installed-identity-312",
+        "MPLCONFIGDIR": "/workspace/work/w011-final-e89bdaa/mplconfig"
+      },
+      "started_at_utc": "2026-11-09T15:53:39.850876+00:00",
+      "finished_at_utc": "2026-11-09T15:53:39.866116+00:00",
+      "elapsed_seconds": 0.015,
+      "stdout": "installed-identity-312.stdout.txt",
+      "stdout_sha256": "8c764bb1f12071ee653786b631404183279962d097e41d056d65ba743ca2e6d3",
+      "stderr": "installed-identity-312.stderr.txt",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "/workspace/work/w011-final-e89bdaa/clean-312/bin/python",
+        "-I",
+        "-B",
+        "/workspace/Layauto/docs/tasks/W011/verification/installed_smoke.py",
+        "/workspace/work/w011-final-e89bdaa/source/tests/fixtures/w003_m1"
+      ],
+      "cwd": "/workspace/work/w011-final-e89bdaa/installed-cwd",
+      "exit_code": 0,
+      "environment_overrides": {
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PIP_CACHE_DIR": "/workspace/work/w011-final-e89bdaa/pip-cache",
+        "MYPY_CACHE_DIR": "/workspace/work/w011-final-e89bdaa/mypy-installed-smoke-312",
+        "MPLCONFIGDIR": "/workspace/work/w011-final-e89bdaa/mplconfig"
+      },
+      "started_at_utc": "2026-11-09T15:53:39.873457+00:00",
+      "finished_at_utc": "2026-11-09T16:01:10.504287+00:00",
+      "elapsed_seconds": 450.631,
+      "stdout": "installed-smoke-312.stdout.txt",
+      "stdout_sha256": "5ca27dc77bc16537a02674acf6635f91112b8261598dda57d334c1ca6002b988",
+      "stderr": "installed-smoke-312.stderr.txt",
+      "stderr_sha256": "064eca221b50eb0d419235e9076cae0a3fc82a951dfe66921adbff672fdfe659"
+    }
+  ],
+  "actual_test_counts": {
+    "312": 1605,
+    "310": 1605
+  },
+  "expected_test_count": 1605,
+  "retained_baseline_test_count": 1465,
+  "baseline_collection_sha256": "3da63a28aa26fc1308d1ee05252dd42e060832b4110c2df62dbaa3d558cee92e",
+  "python_environments": {
+    "310": "/workspace/work/w011-engineering/dev310/bin/python",
+    "312": "/workspace/work/w011-engineering/dev312/bin/python"
+  },
+  "source_manifest_sha256": "dd463fa402a8469ba7212f4781cd2082eb86466b1484810ed89dbc02211bb475",
+  "source_snapshot_sha256": "26a7d52f195c7b6b1b6b0d0b0a78f9386d740902d2187b3c7b8d0c98e85e2095",
+  "source_identity_rechecked_after_all_commands": true,
+  "source_file_count": 262,
+  "runtime_file_count": 100,
+  "limitations": [
+    "Synthetic W003/W004 local geometry scope only; no EDA/production performance or admission claim.",
+    "Complete coordinate model, external body/full device/net annotation/rule/lifecycle/publication closure remain deferred."
+  ]
+}

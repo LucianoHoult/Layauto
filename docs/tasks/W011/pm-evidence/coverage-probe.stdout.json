@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "cases": 384,
+  "independent_atom_membership_checks": 6144,
+  "permutation_duplicate_and_subdivision_controls": 384,
+  "scales": "1/20 with offsets 0,+/-2**80",
+  "elapsed_seconds": 0.14895626899669878,
+  "probe_sha256": "a96a6861a3036576d94b8a0796e237f10e4e7f68dfee45689843d052dbc5b6c7"
+}

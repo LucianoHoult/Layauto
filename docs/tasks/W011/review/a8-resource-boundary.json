@@ -1,0 +1,210 @@
+{
+  "schema": "layauto-w011-independent-resource-boundary-audit/1",
+  "reviewer": "/root/code_review/boundary_review",
+  "audited_at_utc": "2026-11-09T16:12:47.402672+00:00",
+  "status": "passed_with_scope_limits",
+  "tested_source_commit": "e89bdaa6a091f56cfaf7862dced7232d34e22514",
+  "method": "Read-only Python stdlib JSON/hash audit of completed evidence and captured fixture bytes; no product imports, rebuilds, probes, tests or smoke reruns. Only this new audit attachment is written.",
+  "evidence_identity": {
+    "resource_manifest_sha256": "2bdf899cf8d52e61aca4941b5f240a76379149f2837f7ea9ba56e27f5a6c6459",
+    "resource_evidence_files_checked": 16,
+    "resource_original_artifact_sha256": {
+      "extraction-mismatch.command.json": "2651a39f45dc59d8030cb0d2bef656e5a151f051951c8630b4c212cca4a6c300",
+      "extraction-mismatch.json": "ae1b60bd6d7629639607b596fdc389218f40993d0d2279bdefb0d1426e3502ca",
+      "extraction-mismatch.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "extraction-mismatch.stdout.txt": "a51968c05a4476f575e5bef60e5948bedf37b5a20e778ba1f325c0457efb9e34",
+      "normal-direct.command.json": "2a8129dd4e7dc714cca435b686165379b8ef755278d6d75f961eb72aa86cc8c7",
+      "normal-direct.json": "a0c1357939b478a022f5a3de390e8b25b1b73e81220a69f84f7adc4cedae422e",
+      "normal-direct.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "normal-direct.stdout.txt": "db9ffa2c4bf9f2467c6674c14fcea1de14f9ccb824b7e6bd06284b3fcd8481b1",
+      "normal-readback.command.json": "36342416e50214993f8f785d89dfb2c94aac2040fdc4e457ff5c58d61dfd20f7",
+      "normal-readback.json": "2df5b7920c78260f09db1def71e2b6e11ca1377ad76f253b5fae4c2dcd91e669",
+      "normal-readback.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "normal-readback.stdout.txt": "bf6e50a0491850f651cf97f6adedeb3cc2518b9a507e8cfdf1288e3ac14e161e",
+      "receipt.json": "3a87be1c54c0468959c8f9509b1953ca3158dd2006c4a0d80b886f66468906e2",
+      "resource_probe.py": "5c9d2b82653f86095626ecad7fdedc32953cf9c99ce4089cfca99dc7c14606dc",
+      "run_resources.py": "7ceee310f124fdab33500820a0e1ed1c09a6df153b08c4356414161dcfd79510",
+      "source-identity.json": "4e2582d298b2707bb3e822fdf0d5188ce836609764d3f10bb776d7aad42ba0ee"
+    },
+    "verification_source_manifest_sha256": "dd463fa402a8469ba7212f4781cd2082eb86466b1484810ed89dbc02211bb475",
+    "verification_receipt_sha256": "e963c6e787dcd3d1c5c5cf6c54afce9b9f659e7d2df58214cb661d724321c930",
+    "resource_launch_receipt_sha256": "2fb7f43dc2952facee4da02e14b08b7959de3c67b0fe2172fde2eb8a5092e45e",
+    "verified_source_files_rechecked": 262,
+    "runtime_files": 100
+  },
+  "verified_checks": [
+    "All 16 resource evidence entries match the sealed index, and index covers all resource files except itself.",
+    "Three individual command receipts equal outer receipt entries; stdout/stderr hashes and stdout JSON values match original result JSON.",
+    "All three source manifests bind the 100 verified runtime files plus pyproject.toml; current complete selected source/tests/config bytes still match verification.",
+    "All 93 recorded captures match the verified normal fixture or the five approved extraction_mismatch replacement roles, byte length and SHA-256.",
+    "Mismatch retains the identical source.cdl SHA and the original MN0 NFIN=5 declaration while recording measured count 4 and exactly one source difference.",
+    "Each case completed full Result encode/decode and reported public_roundtrip_equal=true; original archived probe code runs this within W011 IO guards.",
+    "Cases execute sequentially after both installed smokes. Archived launcher invokes and waits for a fresh subprocess.run for each case.",
+    "Resource limits and whole-process high watermarks are recorded for all cases; no maximum-input or production guarantee is inferred."
+  ],
+  "cases": [
+    {
+      "case": "normal-direct",
+      "command_receipt_sha256": "2a8129dd4e7dc714cca435b686165379b8ef755278d6d75f961eb72aa86cc8c7",
+      "probe_result_sha256": "a0c1357939b478a022f5a3de390e8b25b1b73e81220a69f84f7adc4cedae422e",
+      "exit_code": 0,
+      "counts": {
+        "MN0": 5,
+        "MP0": 7
+      },
+      "source_comparison": "equal",
+      "difference_count": 0,
+      "complete_result_public_roundtrip_equal": true,
+      "wire_bytes": 54050313,
+      "wire_sha256": "4d07033687223809e542ea661138fe0566ed162f6eab17fb7d4f806745377f16",
+      "installed_smoke_wire_bytes": 54053625,
+      "wire_size_delta_from_installed_smoke": -3312,
+      "process_peak_rss_kib": 2847416,
+      "wall_seconds": {
+        "W005_read_inputs": 0.8201535750013136,
+        "W008_adapter_and_build": 0.4091517359993304,
+        "W009_build": 0.694169193997368,
+        "W010_build": 13.30807964899941,
+        "W011_build": 37.2087455410001,
+        "W011_result_encode": 1.5223439580004197,
+        "W011_result_decode": 46.75885565600038
+      },
+      "command_elapsed_seconds": 101.15421000900096,
+      "started_at_utc": "2026-11-09T16:02:01.514698+00:00",
+      "finished_at_utc": "2026-11-09T16:03:42.668899+00:00",
+      "capture_records_checked": 31,
+      "capture_bytes_checked": 280706,
+      "capture_roles_sha256": "3995fb26afcd087e3a2d606b10023e688c7a65a36821d4c3659d7692ab97786d",
+      "cache_source_uris": [
+        "/workspace/Layauto/tests/fixtures/w003_m1/query/normalized/instance_xref.yaml",
+        "/workspace/Layauto/tests/fixtures/w003_m1/query/normalized/net_xref.yaml",
+        "/workspace/Layauto/tests/fixtures/w003_m1/query/normalized/device_regions.yaml",
+        "/workspace/Layauto/tests/fixtures/w003_m1/query/normalized/net_regions.yaml"
+      ]
+    },
+    {
+      "case": "normal-readback",
+      "command_receipt_sha256": "36342416e50214993f8f785d89dfb2c94aac2040fdc4e457ff5c58d61dfd20f7",
+      "probe_result_sha256": "2df5b7920c78260f09db1def71e2b6e11ca1377ad76f253b5fae4c2dcd91e669",
+      "exit_code": 0,
+      "counts": {
+        "MN0": 5,
+        "MP0": 7
+      },
+      "source_comparison": "equal",
+      "difference_count": 0,
+      "complete_result_public_roundtrip_equal": true,
+      "wire_bytes": 136461405,
+      "wire_sha256": "7dddd7f10a7320df76cee184f29bba64ccd3f267791ea2c1c7117fb4b5a32504",
+      "installed_smoke_wire_bytes": 136510077,
+      "wire_size_delta_from_installed_smoke": -48672,
+      "process_peak_rss_kib": 7322828,
+      "wall_seconds": {
+        "W006_prepare_inputs": 1.5397864440019475,
+        "W008_adapter_and_build": 0.8661693460016977,
+        "W009_build": 1.469529195001087,
+        "W010_build": 25.746205015002488,
+        "W011_build": 74.94776512400131,
+        "W011_result_encode": 3.0640132799999265,
+        "W011_result_decode": 101.86079596499985
+      },
+      "command_elapsed_seconds": 211.57665307099887,
+      "started_at_utc": "2026-11-09T16:03:42.683856+00:00",
+      "finished_at_utc": "2026-11-09T16:07:14.260494+00:00",
+      "capture_records_checked": 31,
+      "capture_bytes_checked": 280706,
+      "capture_roles_sha256": "3995fb26afcd087e3a2d606b10023e688c7a65a36821d4c3659d7692ab97786d",
+      "cache_source_uris": [
+        "/workspace/Layauto/tests/fixtures/w003_m1/query/normalized/instance_xref.yaml",
+        "/workspace/Layauto/tests/fixtures/w003_m1/query/normalized/net_xref.yaml",
+        "/workspace/Layauto/tests/fixtures/w003_m1/query/normalized/device_regions.yaml",
+        "/workspace/Layauto/tests/fixtures/w003_m1/query/normalized/net_regions.yaml"
+      ]
+    },
+    {
+      "case": "extraction-mismatch",
+      "command_receipt_sha256": "2651a39f45dc59d8030cb0d2bef656e5a151f051951c8630b4c212cca4a6c300",
+      "probe_result_sha256": "ae1b60bd6d7629639607b596fdc389218f40993d0d2279bdefb0d1426e3502ca",
+      "exit_code": 0,
+      "counts": {
+        "MN0": 4,
+        "MP0": 7
+      },
+      "source_comparison": "mismatch",
+      "difference_count": 1,
+      "complete_result_public_roundtrip_equal": true,
+      "wire_bytes": 54049506,
+      "wire_sha256": "55b4d479e507e310d9c554f4166040d51b78d6c2b62af74b11ee9194065a5012",
+      "installed_smoke_wire_bytes": 54050082,
+      "wire_size_delta_from_installed_smoke": -576,
+      "process_peak_rss_kib": 2854456,
+      "wall_seconds": {
+        "W005_read_inputs": 0.6189960730007442,
+        "W008_adapter_and_build": 0.3651001189973613,
+        "W009_build": 0.6424338139986503,
+        "W010_build": 11.969838978999178,
+        "W011_build": 35.41877592200035,
+        "W011_result_encode": 1.3971216310019372,
+        "W011_result_decode": 45.17853329300124
+      },
+      "command_elapsed_seconds": 95.96902353099722,
+      "started_at_utc": "2026-11-09T16:07:14.273685+00:00",
+      "finished_at_utc": "2026-11-09T16:08:50.242695+00:00",
+      "capture_records_checked": 31,
+      "capture_bytes_checked": 280706,
+      "capture_roles_sha256": "ef6d7d4beba11807b5f85384c89f74f6d3bb1dea2075f9d996a1665f4372c8d0",
+      "cache_source_uris": [
+        "/workspace/work/w011-final-resources-e89bdaa/w011-resource-po27qkk0/input/query/normalized/instance_xref.yaml",
+        "/workspace/work/w011-final-resources-e89bdaa/w011-resource-po27qkk0/input/query/normalized/net_xref.yaml",
+        "/workspace/work/w011-final-resources-e89bdaa/w011-resource-po27qkk0/input/query/normalized/device_regions.yaml",
+        "/workspace/work/w011-final-resources-e89bdaa/w011-resource-po27qkk0/input/query/normalized/net_regions.yaml"
+      ]
+    }
+  ],
+  "resource_limits": {
+    "cpu_count": 5,
+    "cgroup": {
+      "memory.max": "17179869184",
+      "cpu.max": "400000 100000",
+      "memory.swap.max": "max"
+    },
+    "rlimits": {
+      "RLIMIT_AS": [
+        -1,
+        -1
+      ],
+      "RLIMIT_CPU": [
+        -1,
+        -1
+      ],
+      "RLIMIT_DATA": [
+        -1,
+        -1
+      ],
+      "RLIMIT_NOFILE": [
+        16384,
+        16384
+      ],
+      "RLIMIT_STACK": [
+        8388608,
+        -1
+      ]
+    }
+  },
+  "wire_size_explanation": {
+    "scope": "Static explanation backed by recorded cache URIs and hash-bound original scripts; full wire bytes were not regenerated or separately saved by the probes.",
+    "normal_direct": "Resource capture uses /workspace/Layauto/tests/fixtures/w003_m1; installed smoke uses /workspace/work/w011-final-e89bdaa/source/tests/fixtures/w003_m1. reader._parse_inputs retains absolute normalized-cache URIs, so complete capture wire sizes/hashes differ despite identical original capture file bytes.",
+    "normal_readback": "The input roots differ as above, and resource_probe RunRequest uses w011-resource-run / w011-resource-lineage / create-resource while installed_smoke uses w011-installed-run / w011-installed-lineage / create-w011-installed. Complete readback receipts preserve these distinct run/capture identities.",
+    "extraction_mismatch": "The original approved replacement bytes are equal, but resource_probe creates w011-resource-* beneath the resource work directory and installed_smoke creates w011-mismatch-* beneath installed-cwd. Absolute normalized-cache source URIs preserve those distinct temporary capture roots.",
+    "not_required": "Byte equality between distinct input-root or RunRequest captures is not claimed."
+  },
+  "limitations": [
+    "This audit checks saved execution evidence, not a rerun or PM acceptance.",
+    "Whole-process peak RSS includes imports and all upstream acquisition/build/reconstruction; it is not incremental W011 allocation.",
+    "Fresh-process evidence is archived subprocess.run code plus non-overlapping command/result timestamps; per-case child PIDs were not recorded.",
+    "Full wire hashes are values produced and checked by the executed probe; no full wire artifact exists to independently rehash without reconstruction.",
+    "Exact measured4/declared5 assertion is present in the separately verified installed smoke; resource receipt reports counts, source comparison and capture hashes.",
+    "Full net/body/model/T02/all-rule matching, complete coordinates, publication/no_change/Stage6/U06 remain deferred."
+  ],
+  "remaining_must_items": []
+}

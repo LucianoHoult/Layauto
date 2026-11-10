@@ -1,0 +1,63 @@
+{
+  "created_utc": "2026-11-10T02:01:49.475591+00:00",
+  "review_head": "8452027e57fb1c58607640d7eb755b38ffc70716",
+  "cwd": "/workspace/Layauto-w011-review",
+  "commands": [
+    {
+      "argv": [
+        "/workspace/.venvs/layauto/bin/python",
+        "-B",
+        "docs/tasks/W011/independent-premerge-evidence/geometry-probe.py"
+      ],
+      "env_delta": {
+        "PYTHONPATH": "."
+      },
+      "exit_code": 0,
+      "stdout": "geometry-probe.stdout.json",
+      "stderr": "geometry-probe.stderr.txt"
+    },
+    {
+      "argv": [
+        "/workspace/.venvs/layauto/bin/python",
+        "-B",
+        "docs/tasks/W011/independent-premerge-evidence/geometry-location-probe.py"
+      ],
+      "env_delta": {
+        "PYTHONPATH": "."
+      },
+      "exit_code": 0,
+      "stdout": "geometry-location-probe.stdout.json",
+      "stderr": "geometry-location-probe.stderr.txt"
+    }
+  ],
+  "files": {
+    "geometry-location-probe.py": {
+      "sha256": "55943bb6f2869e105ae831e8132e4d8c32d5977b115621425479052b71e52f4b",
+      "bytes": 3508
+    },
+    "geometry-location-probe.stderr.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "geometry-location-probe.stdout.json": {
+      "sha256": "d632a7649b0a0cd6e39ad989922b3f7a5ea1707cfb68760351bd9e72d3c559c5",
+      "bytes": 1291
+    },
+    "geometry-probe.py": {
+      "sha256": "7da15460ad0716619a46bd521fc6206dbb7dd5bae16f99cb62a0ebf65ae95709",
+      "bytes": 13004
+    },
+    "geometry-probe.stderr.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "geometry-probe.stdout.json": {
+      "sha256": "4e0e70bb2e74791f0d67a99e135c0ae54bd87d8a620b44614186fc2baa0e936d",
+      "bytes": 4335
+    },
+    "geometry-report.md": {
+      "sha256": "856ae1494324acfe0417f03ee7329e5f3b13fb74f87d8bb4d8adc313c381bdf1",
+      "bytes": 7826
+    }
+  }
+}

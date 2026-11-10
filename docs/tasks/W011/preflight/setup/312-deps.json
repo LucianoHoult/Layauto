@@ -1,0 +1,24 @@
+{
+  "command": [
+    "/workspace/work/w011-engineering/dev312/bin/python",
+    "-m",
+    "pip",
+    "install",
+    "pytest",
+    "mypy",
+    "types-PyYAML",
+    "build",
+    "numpy",
+    "matplotlib",
+    "pyyaml",
+    "gdstk",
+    "klayout"
+  ],
+  "cwd": "/workspace/work/w011-engineering",
+  "exit_code": 0,
+  "elapsed_seconds": 12.79580307006836,
+  "outputs": {
+    "stdout": "c6c4f8523cd89eedab068a408e0acdf524d6dbc1593dfd80d0b43e6bd6b39392",
+    "stderr": "f96a57a6d17645d3d9eb401b9cead41a648edf2499f2ca4bc3f9364d677b6080"
+  }
+}

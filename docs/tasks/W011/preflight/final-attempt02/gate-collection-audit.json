@@ -1,0 +1,26 @@
+{
+  "observed_at_utc": "2026-11-09T12:08:31.797340+00:00",
+  "source_commit": "e89bdaa6a091f56cfaf7862dced7232d34e22514",
+  "source_manifest_sha256": "dd463fa402a8469ba7212f4781cd2082eb86466b1484810ed89dbc02211bb475",
+  "scope": {
+    "310": {
+      "collection_sha256": "834a4d4727a87ec47762b0223add03e53655fd82d627a08c4f6c1ec6bc4a7298",
+      "full_count": 1605,
+      "before_gate_count": 1465,
+      "before_gate_exactly_original_baseline": true,
+      "after_gate_count": 140,
+      "all_after_gate_items_w011": true,
+      "first_gated_node": "tests/contracts/test_w011_contracts.py::test_all_public_records_roundtrip_are_frozen_and_rebuild_stably"
+    },
+    "312": {
+      "collection_sha256": "56a495878e2aec34a31c103a94fd7511fb44aa5dd866afd092d1f49940b70d3d",
+      "full_count": 1605,
+      "before_gate_count": 1465,
+      "before_gate_exactly_original_baseline": true,
+      "after_gate_count": 140,
+      "all_after_gate_items_w011": true,
+      "first_gated_node": "tests/contracts/test_w011_contracts.py::test_all_public_records_roundtrip_are_frozen_and_rebuild_stably"
+    }
+  },
+  "meaning": "Read-only collection audit: all original 1465 tests precede the first W011 item and all new 140 tests fall under the process-exclusive gate. No item order or selection is changed."
+}

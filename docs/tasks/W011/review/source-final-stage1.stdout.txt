@@ -1,0 +1,14 @@
+{"cwd": "/workspace/Layauto", "executable": "/workspace/work/w011-engineering/dev312/bin/python", "head": "8917d38d916c914bfa785cb116982f3f299b38de", "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]", "source_manifest": "source-manifest.json", "stage": "identity"}
+{"check": "normal_pure_builder", "result": "PASS", "seconds": 45.449838731}
+{"check": "normal_counts_and_all_comparisons", "result": "PASS", "seconds": 45.449929478000286}
+{"check": "original_topology_audits_body", "result": "PASS", "seconds": 45.449967474999994}
+{"check": "projection_omits_changed_line", "result": "PASS", "seconds": 45.61824999700002}
+{"check": "complete_public_result_changed_line", "message": "field evidence location disagrees with source reference", "result": "REJECTED", "seconds": 61.15020560300036}
+{"check": "projection_omits_equal_fraction_line", "result": "PASS", "seconds": 61.280417166999996}
+{"check": "complete_public_result_equal_fraction_line", "message": "invalid line", "result": "REJECTED", "seconds": 77.23529596100025}
+{"check": "completed_python_equal_but_wire_diff", "result": "PASS", "seconds": 77.24508056200011}
+{"check": "completed_wrong_scalar_type", "message": "channel result must retain all captured completed facts", "result": "REJECTED", "seconds": 93.32686860400008}
+{"check": "target_source_comparison_separate", "result": "PASS", "seconds": 143.70851652800002}
+{"check": "target_five_axes_preserved", "result": "PASS", "seconds": 143.70858568200038}
+{"check": "target_measured_counts_unchanged", "result": "PASS", "seconds": 143.70859769000026}
+{"check": "foreign_semantic_result", "message": "channel result differs from complete same-capture reconstruction", "result": "REJECTED", "seconds": 161.1677721140004}

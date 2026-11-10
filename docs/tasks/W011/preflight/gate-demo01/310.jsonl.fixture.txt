@@ -1,0 +1,5 @@
+session_fixture_setup_guarded
+module_fixture_setup_guarded
+test_body_guarded
+module_fixture_teardown_guarded
+session_fixture_teardown_guarded

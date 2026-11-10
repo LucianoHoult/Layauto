@@ -1,0 +1,15 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+    "-m",
+    "venv",
+    "/workspace/work/w011-engineering/dev312"
+  ],
+  "cwd": "/workspace/work/w011-engineering",
+  "exit_code": 0,
+  "elapsed_seconds": 1.8419017791748047,
+  "outputs": {
+    "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

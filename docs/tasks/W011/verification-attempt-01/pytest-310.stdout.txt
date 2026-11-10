@@ -1,0 +1,90 @@
+........................................................................ [  4%]
+........................................................................ [  8%]
+........................................................................ [ 13%]
+........................................................................ [ 17%]
+........................................................................ [ 22%]
+........................................................................ [ 26%]
+........................................................................ [ 31%]
+........................................................................ [ 35%]
+........................................................................ [ 40%]
+........................................................................ [ 44%]
+........................................................................ [ 49%]
+........................................................................ [ 53%]
+........................................................................ [ 58%]
+........................................................................ [ 62%]
+........................................................................ [ 67%]
+........................................................................ [ 71%]
+........................................................................ [ 76%]
+........................................................................ [ 80%]
+........................................................................ [ 85%]
+........................................................................ [ 89%]
+........................................................................ [ 94%]
+.......................................................F................ [ 98%]
+..F..................                                                    [100%]
+=================================== FAILURES ===================================
+_________ test_target_only_multiple_axes_do_not_change_source_geometry _________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-8/test_target_only_multiple_axes0')
+accepted = ChannelIdentityResult(status='success', value=ChannelIdentityDraft(local=LocalConnectivityDraft(effective=EffectiveDra...yauto-normalization/1'), schema_version='layauto-normalization/1'), schema_version='layauto-channel-identity-result/1')
+
+    def test_target_only_multiple_axes_do_not_change_source_geometry(tmp_path, accepted):
+        root = ready_copy(tmp_path)
+>       change_cdl(root, 'target', 'NFIN=5 NF=1 M=1 L=4n W=2n VT=toy',
+                   'NFIN=3 NF=1 M=1 L=6n W=3n VT=toy')
+
+tests/contracts/test_w011_geometry.py:157: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-agent/pytest-8/test_target_only_multiple_axes0/input')
+which = 'target', before = 'NFIN=5 NF=1 M=1 L=4n W=2n VT=toy'
+after = 'NFIN=3 NF=1 M=1 L=6n W=3n VT=toy'
+
+    def change_cdl(root, which, before, after):
+        path = root / (which + '.cdl')
+        text = path.read_text()
+>       assert before in text
+E       AssertionError
+
+tests/contracts/w011_cases.py:64: AssertionError
+_ test_consumed_operator_changes_fail_at_located_component_boundary[physical-effective_fin_operator-foreign] _
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-8/test_consumed_operator_changes0')
+owner = 'physical', field = 'effective_fin_operator', value = 'foreign'
+
+    @pytest.mark.parametrize('owner,field,value', [
+        ('physical', 'effective_fin_operator', 'foreign'),
+        ('physical', 'qualification', 'positive overlap only'),
+        ('derived', 'trim_operator', 'identity'),
+        ('derived', 'annotation_match_tolerance_nm', 1),
+    ])
+    def test_consumed_operator_changes_fail_at_located_component_boundary(tmp_path, owner, field, value):
+        root = ready_copy(tmp_path)
+        def mutate(document):
+            target = document['fin_count_profile'] if owner == 'physical' else document['derived_registry'][0]
+            target[field] = value
+        change_owner(root, owner, mutate)
+>       result = build(root)
+
+tests/contracts/test_w011_geometry.py:309: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/contracts/w011_cases.py:24: in build
+    return build_channel_identity(build_local(root))
+tests/contracts/w010_cases.py:26: in build_local
+    result = build_local_connectivity(build_effective(root))
+tests/contracts/w010_cases.py:17: in build_effective
+    geometry = build_geometry(geometry_from_parse_result(read(root)))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-agent/pytest-8/test_consumed_operator_changes0/input')
+
+    def read(root):
+        from layauto_v2.importers import read_inputs
+        result = read_inputs(root / 'site_config.yaml')
+>       assert result.status == 'success', [(i.code, i.message) for i in result.issues]
+E       AssertionError: [('InvalidSchema', "expected 'identity'")]
+
+tests/contracts/w007_cases.py:60: AssertionError
+=========================== short test summary info ============================
+FAILED tests/contracts/test_w011_geometry.py::test_target_only_multiple_axes_do_not_change_source_geometry
+FAILED tests/contracts/test_w011_geometry.py::test_consumed_operator_changes_fail_at_located_component_boundary[physical-effective_fin_operator-foreign]
+2 failed, 1603 passed in 9500.70s (2:38:20)

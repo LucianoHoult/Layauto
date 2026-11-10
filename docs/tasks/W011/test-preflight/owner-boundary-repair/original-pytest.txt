@@ -1,0 +1,17 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_ test_consumed_operator_changes_fail_at_located_component_boundary[physical-effective_fin_operator-foreign] _
+tests/contracts/test_w011_geometry.py:309: in test_consumed_operator_changes_fail_at_located_component_boundary
+    result = build(root)
+tests/contracts/w011_cases.py:24: in build
+    return build_channel_identity(build_local(root))
+tests/contracts/w010_cases.py:26: in build_local
+    result = build_local_connectivity(build_effective(root))
+tests/contracts/w010_cases.py:17: in build_effective
+    geometry = build_geometry(geometry_from_parse_result(read(root)))
+tests/contracts/w007_cases.py:60: in read
+    assert result.status == 'success', [(i.code, i.message) for i in result.issues]
+E   AssertionError: [('InvalidSchema', "expected 'identity'")]
+=========================== short test summary info ============================
+FAILED tests/contracts/test_w011_geometry.py::test_consumed_operator_changes_fail_at_located_component_boundary[physical-effective_fin_operator-foreign]
+1 failed in 0.42s

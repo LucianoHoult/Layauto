@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "source_commit": "02725e2e90be6b3145be915be699aa64ce998ed7",
+  "test_fix_commit": "27f885497634d0f2ed50d293e00603309d34c0cd",
+  "scope": "single target-only regression setup repair; original failure retained",
+  "files": {
+    "README.md": {
+      "bytes": 3073,
+      "sha256": "7b901a450568f479b942b59202798270f83dcd1cc6a0c69c8d98a823a499f3b6"
+    },
+    "corrected-manifest.json": {
+      "bytes": 32638,
+      "sha256": "356bb224f9f131b97c2b192047ce7ebd1eccd09970c75f3123399d8fe31713eb"
+    },
+    "corrected-pytest.txt": {
+      "bytes": 110,
+      "sha256": "c3f671bf67085641366896169b01b5eff38ed349ed4bc740049f0bbf7c2837a5"
+    },
+    "corrected-test.patch.gz": {
+      "bytes": 426,
+      "sha256": "e00918a53e275fe39cd4ac7813c3f27a8447cb6f481a60bde7731d31b78c4e2c"
+    },
+    "environment.json": {
+      "bytes": 2852,
+      "sha256": "45a39e422215ecf660a147b0f96edd74210715f112a58c0e3f08f91162dcad40"
+    },
+    "original-02725e2-source-tests.tar.gz": {
+      "bytes": 347901,
+      "sha256": "06acd4b11c6518c7603fa4db62db4f8a2608c3f9ef6a94c21391b70d29565142"
+    },
+    "original-manifest.json": {
+      "bytes": 32558,
+      "sha256": "dfd21df3c2036394d5ecf96c8789a51062820e8d3684a0cf41dd68f1413d8c5d"
+    },
+    "original-pytest.txt": {
+      "bytes": 726,
+      "sha256": "cd4f42c1770df5985f32f310e175b4094d503c4fb9b41c86091ec697e18d163b"
+    },
+    "run_target.py": {
+      "bytes": 2476,
+      "sha256": "ff3dda5d0e2758985f10a5e9757627284ce6b4785010208cec22ba514e737f84"
+    },
+    "test-fix-commit.txt": {
+      "bytes": 425,
+      "sha256": "274c5456de6726ceb269a4490698e79085d2c0483d46915bc85d275036505c6c"
+    }
+  }
+}

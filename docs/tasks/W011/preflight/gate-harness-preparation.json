@@ -1,0 +1,21 @@
+{
+  "schema": "layauto-gate-harness-preparation/1",
+  "prepared_at_utc": "2026-11-09T11:40:24.072789+00:00",
+  "status": "reviewed_prepared_not_started",
+  "original_runner_sha256": "347c0017bc27b09d7ca135d6aaa92f58733a8f0dab078cc2ab5e8b576ca15050",
+  "new_scripts": {
+    "prepare_final_gate.py": "66456ce9659d2ad2481ab0f8b4309054caf19a41057f1a86b01531f3dd914794",
+    "w011_resource_gate.py": "1c78c2066736f0f56d80f3353da133a1d23407b0675a0a8f5e471b1337469d70",
+    "run_resources_v2.py": "7ceee310f124fdab33500820a0e1ed1c09a6df153b08c4356414161dcfd79510"
+  },
+  "changes": [
+    "Record actual per-command start/end UTC and monotonic elapsed.",
+    "Single-worker path invokes matrices directly without queuing a known failed next interpreter.",
+    "Two-worker mode requires an explicit archived resource gate; first W011 setup is guarded before fixture execution through process exit.",
+    "Resource launcher takes source commit and all paths as arguments and binds to the completed verification source manifest."
+  ],
+  "independent_review": "/root/code_review reviewed these exact runner/plugin hashes; must-fix count zero after retaining and fixing the premature descriptor publication finding. See W011 code review record.",
+  "gate_probe": "gate-demo01/receipt.json",
+  "gate_probe_scope": "Two tiny engineering-only tests outside official tests; does not substitute for either full 1605-test run.",
+  "resource_scope": "Observed finite memory peaks under 16 GiB, not a proof of maximal supported input. Product/source/tests unchanged by this engineering gate."
+}

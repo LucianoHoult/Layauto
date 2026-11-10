@@ -1,0 +1,171 @@
+{
+  "source_commit": "8917d38d916c914bfa785cb116982f3f299b38de",
+  "source_manifest": "source-final-manifest.json",
+  "source_manifest_sha256": "b2f94ff62847440e02cb2da21025cae2e9097dc57425e2531671d787a250fd79",
+  "runs": [
+    {
+      "tag": "stage1",
+      "argv": [
+        "/workspace/work/w011-engineering/dev312/bin/python",
+        "-B",
+        "/workspace/work/w011-review-final-probe/probe_final.py"
+      ],
+      "cwd": "/workspace/Layauto",
+      "exit": 1,
+      "output_records": [
+        {
+          "cwd": "/workspace/Layauto",
+          "executable": "/workspace/work/w011-engineering/dev312/bin/python",
+          "head": "8917d38d916c914bfa785cb116982f3f299b38de",
+          "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+          "source_manifest": "source-manifest.json",
+          "stage": "identity"
+        },
+        {
+          "check": "normal_pure_builder",
+          "result": "PASS",
+          "seconds": 45.449838731
+        },
+        {
+          "check": "normal_counts_and_all_comparisons",
+          "result": "PASS",
+          "seconds": 45.449929478000286
+        },
+        {
+          "check": "original_topology_audits_body",
+          "result": "PASS",
+          "seconds": 45.449967474999994
+        },
+        {
+          "check": "projection_omits_changed_line",
+          "result": "PASS",
+          "seconds": 45.61824999700002
+        },
+        {
+          "check": "complete_public_result_changed_line",
+          "message": "field evidence location disagrees with source reference",
+          "result": "REJECTED",
+          "seconds": 61.15020560300036
+        },
+        {
+          "check": "projection_omits_equal_fraction_line",
+          "result": "PASS",
+          "seconds": 61.280417166999996
+        },
+        {
+          "check": "complete_public_result_equal_fraction_line",
+          "message": "invalid line",
+          "result": "REJECTED",
+          "seconds": 77.23529596100025
+        },
+        {
+          "check": "completed_python_equal_but_wire_diff",
+          "result": "PASS",
+          "seconds": 77.24508056200011
+        },
+        {
+          "check": "completed_wrong_scalar_type",
+          "message": "channel result must retain all captured completed facts",
+          "result": "REJECTED",
+          "seconds": 93.32686860400008
+        },
+        {
+          "check": "target_source_comparison_separate",
+          "result": "PASS",
+          "seconds": 143.70851652800002
+        },
+        {
+          "check": "target_five_axes_preserved",
+          "result": "PASS",
+          "seconds": 143.70858568200038
+        },
+        {
+          "check": "target_measured_counts_unchanged",
+          "result": "PASS",
+          "seconds": 143.70859769000026
+        },
+        {
+          "check": "foreign_semantic_result",
+          "message": "channel result differs from complete same-capture reconstruction",
+          "result": "REJECTED",
+          "seconds": 161.1677721140004
+        }
+      ],
+      "artifacts": {
+        "source-final-stage1.py": "52bb05098e62619837e696419c8ef3fd8a66f0b903b32a1f9b0c8134b8647c05",
+        "source-final-stage1.stderr.txt": "9401a151c1eb2ad2fb9649ad14a927906b55af70e9e2ca5edae6667eb512e8dc",
+        "source-final-stage1.stdout.txt": "0582d298f8cf70c1d7282ecdda525c726e8297b53e0a9e83205f9e96e3628b7c"
+      }
+    },
+    {
+      "tag": "continuation",
+      "argv": [
+        "/workspace/work/w011-engineering/dev312/bin/python",
+        "-B",
+        "/workspace/work/w011-review-final-probe/probe_source_continuation.py"
+      ],
+      "cwd": "/workspace/Layauto",
+      "exit": 0,
+      "output_records": [
+        {
+          "cwd": "/workspace/Layauto",
+          "executable": "/workspace/work/w011-engineering/dev312/bin/python",
+          "head": "8917d38d916c914bfa785cb116982f3f299b38de",
+          "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+          "source_manifest": "source-manifest.json",
+          "stage": "identity"
+        },
+        {
+          "check": "source_mismatch_success",
+          "result": "PASS",
+          "seconds": 54.04234043800034
+        },
+        {
+          "check": "all_15_source_differences",
+          "result": "PASS",
+          "seconds": 54.04241825500003
+        },
+        {
+          "check": "exact_measured_source_values",
+          "result": "PASS",
+          "seconds": 54.042477665000206
+        },
+        {
+          "check": "source_not_used_to_fill_geometry",
+          "result": "PASS",
+          "seconds": 54.0424958020003
+        },
+        {
+          "check": "drop_comparison",
+          "message": "channel draft omitted/added/altered localization, geometry, topology, comparisons or issues",
+          "result": "REJECTED",
+          "seconds": 54.25622185400016
+        },
+        {
+          "check": "drop_local_audit",
+          "message": "local graph omitted/added nodes, edges, components or independent enclosure facts",
+          "result": "REJECTED",
+          "seconds": 54.35749725300002
+        },
+        {
+          "check": "fake_error_status",
+          "message": "channel result differs from complete same-capture reconstruction",
+          "result": "REJECTED",
+          "seconds": 72.46767967699998
+        },
+        {
+          "peak_rss_kib": 1410952,
+          "seconds": 72.47122879800008,
+          "stage": "done"
+        }
+      ],
+      "artifacts": {
+        "source-final-continuation.py": "b390765dbc29ec48f0d2712c652653ad53ddad0478d07c67f749d45403f72317",
+        "source-final-continuation.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "source-final-continuation.stdout.txt": "cc60abde2de6da8b75d273b17479000be31a8921c9898511ed25c1a0ec085684"
+      }
+    }
+  ],
+  "stage1_harness_failure": "After CR04 actual Result checks and target-only five-axis checks passed, reviewer incorrectly demanded rejection of target-only-origin neutral draft although all consumed source/geometry/seed/owner bytes and complete neutral DTO are identical. This is valid neutral replacement, not cross-capture semantic acceptance; semantic substitution was separately rejected. The false harness expectation is preserved, not a product finding. Source-only remaining checks were run in continuation, without rerunning the successful heavy prefix.",
+  "limitations": "No full W011 result codec in these final probes; actual installed direct/readback full codec remains final engineering obligation. No max-input or production resource guarantee; same shared 4CPU/16GiB environment."
+}

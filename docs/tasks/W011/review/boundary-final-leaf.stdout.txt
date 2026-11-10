@@ -1,0 +1,17 @@
+[
+  {
+    "case": "metadata_wrong_type",
+    "exception": "ValueError",
+    "message": "opaque seed metadata requires an immutable text tuple"
+  },
+  {
+    "case": "record_source_fields_not_locations",
+    "exception": "ValueError",
+    "message": "geometry requires an immutable map"
+  },
+  {
+    "case": "xref_source_fields_not_locations",
+    "exception": "ValueError",
+    "message": "geometry requires an immutable map"
+  }
+]

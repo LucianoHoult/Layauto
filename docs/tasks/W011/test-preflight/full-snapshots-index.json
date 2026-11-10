@@ -1,0 +1,44 @@
+[
+  {
+    "probe": "geometry-r1",
+    "archive": "full-snapshots/geometry-r1.tar.gz",
+    "files": 260,
+    "sha256": "482ef729f0bf6cac8af0945ede9f7f22d1ecb4de790ada0fed445f5f7465852c"
+  },
+  {
+    "probe": "contracts-r1",
+    "archive": "full-snapshots/contracts-r1.tar.gz",
+    "files": 260,
+    "sha256": "8c8c056c5213ce3c4ecc30315c97e6720002445cbce29e3aa43b5b57535fda2b"
+  },
+  {
+    "probe": "exceptions-r1",
+    "archive": "full-snapshots/exceptions-r1.tar.gz",
+    "files": 260,
+    "sha256": "9e7b5af6fa6db27effa5f543192437b9f4bb7c7f2f2d1ffc6f830036feb49d6c"
+  },
+  {
+    "probe": "geometry-r2",
+    "archive": "full-snapshots/geometry-r2.tar.gz",
+    "files": 260,
+    "sha256": "9fe3a5639d47143549ef7987147b56b493f17c7174348df84d19378d20967548"
+  },
+  {
+    "probe": "review-regressions-r1",
+    "archive": "full-snapshots/review-regressions-r1.tar.gz",
+    "files": 260,
+    "sha256": "edc93d58b4dd31e68f9023a17b0e79024ad5253f186b03f19a305bf74bffb49f"
+  },
+  {
+    "probe": "review-regressions-r2",
+    "archive": "full-snapshots/review-regressions-r2.tar.gz",
+    "files": 260,
+    "sha256": "478544be23a942fffc9b1c345a89f2ca13f22824191f7ed50e60c04915361c1b"
+  },
+  {
+    "probe": "cr04-regressions-r1",
+    "archive": "full-snapshots/cr04-regressions-r1.tar.gz",
+    "files": 260,
+    "sha256": "f9d249f27db181e4fdd8df959fe6fe1f3b8641f520d439ade2af3f6fdf70df43"
+  }
+]

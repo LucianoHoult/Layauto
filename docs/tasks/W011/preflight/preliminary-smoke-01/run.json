@@ -1,0 +1,20 @@
+{
+  "command": [
+    "/workspace/work/w011-engineering/dev312/bin/python",
+    "-B",
+    "/workspace/work/w011-engineering/preliminary-smoke-01/preflight_smoke.py",
+    "/workspace/work/w011-engineering/preliminary-smoke-01/source/tests/fixtures/w003_m1"
+  ],
+  "cwd": "/workspace/work/w011-engineering/preliminary-smoke-01/source",
+  "environment_overrides": {
+    "PYTHONPATH": "/workspace/work/w011-engineering/preliminary-smoke-01/source",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "execution_kind": "source_preflight_not_clean_install",
+  "exit_code": 0,
+  "elapsed_seconds": 768.1680703163147,
+  "outputs": {
+    "stdout": "11578c4598b8a2f19520861e69f2c71443adc96b176626040b8404b8d25f0736",
+    "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

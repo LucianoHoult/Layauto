@@ -1,0 +1,20 @@
+{
+  "command": [
+    "/workspace/work/w011-engineering/dev310/bin/python",
+    "-c",
+    "import sys,platform,importlib.metadata as m,json,layauto_v2; from pathlib import Path; p=Path(layauto_v2.__file__).resolve(); assert p.parent==Path.cwd()/\"layauto_v2\", p; print(json.dumps({\"executable\":sys.executable,\"version\":sys.version,\"platform\":platform.platform(),\"source_package\":str(p),\"packages\":{d.metadata[\"Name\"]:d.version for d in m.distributions()}},indent=2))"
+  ],
+  "cwd": "/workspace/work/w011-final-02725e2/source",
+  "exit_code": 0,
+  "environment_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PIP_CACHE_DIR": "/workspace/work/w011-final-02725e2/pip-cache",
+    "MYPY_CACHE_DIR": "/workspace/work/w011-final-02725e2/mypy-environment-310",
+    "MPLCONFIGDIR": "/workspace/work/w011-final-02725e2/mplconfig"
+  },
+  "elapsed_seconds": 0.09,
+  "stdout": "environment-310.stdout.txt",
+  "stdout_sha256": "cc51643e55b2db8bc8b8f1feec95771457d7ce22d6aebce8b546e8e42da728eb",
+  "stderr": "environment-310.stderr.txt",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

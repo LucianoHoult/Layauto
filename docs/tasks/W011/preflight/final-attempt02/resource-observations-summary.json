@@ -1,0 +1,147 @@
+{
+  "schema": "layauto-resource-observations/1",
+  "command": [
+    "/workspace/work/w011-engineering/dev312/bin/python",
+    "/workspace/work/w011-engineering/final-attempt02/observe_resources.py"
+  ],
+  "cwd": "/workspace",
+  "started_at_utc": "2026-11-09T12:08:03.555075+00:00",
+  "finished_at_utc": "2026-11-09T16:01:11.130687+00:00",
+  "sample_count": 1399,
+  "sampling_interval_seconds": 10,
+  "scope": "Shared session cgroup and runner descendant processes, sampled only; sampled RSS is not a guaranteed maximum. No test, fixture or process scheduling is changed.",
+  "initial_limits_and_cumulative_events": {
+    "memory.max": "17179869184",
+    "cpu.max": "400000 100000",
+    "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0\noom_group_kill 0",
+    "memory.peak": "13762666496"
+  },
+  "final_cumulative_events": {
+    "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0\noom_group_kill 0",
+    "memory.peak": "13762666496"
+  },
+  "max_sampled_cgroup_memory_bytes": 12299743232,
+  "max_sampled_process_rss_by_pid": {
+    "21364": {
+      "pid": 21364,
+      "ppid": 21348,
+      "state": "S",
+      "rss_kib": 17276,
+      "command": "/workspace/work/w011-engineering/dev312/bin/python /workspace/Layauto/docs/tasks/W011/prepare_final.py --root /workspace/Layauto --out /workspace/Layauto/docs/tasks/W011/verification --work /workspace/work/w011-final-e89bdaa --smoke /workspace/Layauto/docs/tasks/W011/installed_smoke.py --python310 /workspace/work/w011-engineering/dev310/bin/python --python312 /workspace/work/w011-engineering/dev312/bin/python --baseline-collection /workspace/Layauto/docs/tasks/W011/preflight/baseline-collection312.txt --expected-tests 1605 --matrix-workers 2 --resource-gate /workspace/Layauto/docs/tasks/W011/w011_resource_gate.py",
+      "observed_at_utc": "2026-11-09T14:09:37.502878+00:00"
+    },
+    "21382": {
+      "pid": 21382,
+      "ppid": 21364,
+      "state": "R",
+      "rss_kib": 6248624,
+      "command": "/workspace/work/w011-engineering/dev312/bin/python -m pytest -p no:cacheprovider -p w011_resource_gate --w011-resource-lock /workspace/work/w011-final-e89bdaa/pytest-w011.lock --w011-resource-log /workspace/Layauto/docs/tasks/W011/verification/resource-gate-312.jsonl tests/unit tests/contracts -q",
+      "observed_at_utc": "2026-11-09T13:21:16.056015+00:00"
+    },
+    "21383": {
+      "pid": 21383,
+      "ppid": 21364,
+      "state": "R",
+      "rss_kib": 9257804,
+      "command": "/workspace/work/w011-engineering/dev310/bin/python -m pytest -p no:cacheprovider -p w011_resource_gate --w011-resource-lock /workspace/work/w011-final-e89bdaa/pytest-w011.lock --w011-resource-log /workspace/Layauto/docs/tasks/W011/verification/resource-gate-310.jsonl tests/unit tests/contracts -q",
+      "observed_at_utc": "2026-11-09T14:33:08.277882+00:00"
+    },
+    "21488": {
+      "pid": 21488,
+      "ppid": 21383,
+      "state": "R",
+      "rss_kib": 22968,
+      "command": "/workspace/work/w011-engineering/dev310/bin/python -B -c \nfrom pathlib import Path\nfrom layauto_v2.importers import read_inputs\nfrom layauto_v2.normalization import from_parse_result, normalize\nfrom layauto_v2.normalization.codec import record_digest\nfrom layauto_v2.domain.circuit import semantic_digest\nresult = normalize(from_parse_result(read_inputs(Path('/workspace/work/w011-final-e89bdaa/source/tests/fixtures/w003_m1/site_config.yaml'))))\nprint(record_digest(result))\nprint(semantic_digest(result.value.source))\nprint(semantic_digest(result.value.target))",
+      "observed_at_utc": "2026-11-09T12:11:43.673961+00:00"
+    },
+    "21553": {
+      "pid": 21553,
+      "ppid": 21383,
+      "state": "R",
+      "rss_kib": 24556,
+      "command": "/workspace/work/w011-engineering/dev310/bin/python -B -c \nfrom pathlib import Path\nfrom layauto_v2.importers import read_inputs\nfrom layauto_v2.normalization.geometry_input import geometry_from_parse_result\nfrom layauto_v2.normalization.geometry import build_geometry\nfrom layauto_v2.normalization.effective import build_effective_geometry\nfrom layauto_v2.normalization.effective_codec import record_digest\nr = build_effective_geometry(build_geometry(geometry_from_parse_result(read_inputs(Path('/workspace/work/w011-final-e89bdaa/source/tests/fixtures/w003_m1/site_config.yaml')))))\nprint(record_digest(r), r.value.semantic_digest, r.value.ref.sha256)",
+      "observed_at_utc": "2026-11-09T12:24:54.087220+00:00"
+    },
+    "21806": {
+      "pid": 21806,
+      "ppid": 21382,
+      "state": "R",
+      "rss_kib": 77060,
+      "command": "/workspace/work/w011-engineering/dev312/bin/python -B -c \nfrom pathlib import Path\nfrom layauto_v2.importers import read_inputs\nfrom layauto_v2.normalization import build_geometry, geometry_from_parse_result, build_effective_geometry, build_local_connectivity\nfrom layauto_v2.normalization.local_connectivity_codec import record_digest\nr = build_local_connectivity(build_effective_geometry(build_geometry(geometry_from_parse_result(read_inputs(Path('/workspace/work/w011-final-e89bdaa/source/tests/fixtures/w003_m1/site_config.yaml'))))))\nprint(record_digest(r), r.value.ref.sha256, r.value.semantic_digest)",
+      "observed_at_utc": "2026-11-09T12:30:54.285920+00:00"
+    },
+    "21833": {
+      "pid": 21833,
+      "ppid": 21382,
+      "state": "R",
+      "rss_kib": 81632,
+      "command": "/workspace/work/w011-engineering/dev312/bin/python -B -c \nfrom pathlib import Path\nfrom layauto_v2.importers import read_inputs\nfrom layauto_v2.normalization import build_geometry, geometry_from_parse_result, build_effective_geometry, build_local_connectivity\nfrom layauto_v2.normalization.local_connectivity_codec import record_digest\nr = build_local_connectivity(build_effective_geometry(build_geometry(geometry_from_parse_result(read_inputs(Path('/workspace/work/w011-final-e89bdaa/source/tests/fixtures/w003_m1/site_config.yaml'))))))\nprint(record_digest(r), r.value.ref.sha256, r.value.semantic_digest)",
+      "observed_at_utc": "2026-11-09T12:31:04.290731+00:00"
+    },
+    "22143": {
+      "pid": 22143,
+      "ppid": 21383,
+      "state": "R",
+      "rss_kib": 94108,
+      "command": "/workspace/work/w011-engineering/dev310/bin/python -B -c \nfrom pathlib import Path\nfrom layauto_v2.importers import read_inputs\nfrom layauto_v2.normalization import build_geometry, geometry_from_parse_result, build_effective_geometry, build_local_connectivity\nfrom layauto_v2.normalization.local_connectivity_codec import record_digest\nr = build_local_connectivity(build_effective_geometry(build_geometry(geometry_from_parse_result(read_inputs(Path('/workspace/work/w011-final-e89bdaa/source/tests/fixtures/w003_m1/site_config.yaml'))))))\nprint(record_digest(r), r.value.ref.sha256, r.value.semantic_digest)",
+      "observed_at_utc": "2026-11-09T12:39:54.612068+00:00"
+    },
+    "22144": {
+      "pid": 22144,
+      "ppid": 21383,
+      "state": "R",
+      "rss_kib": 94176,
+      "command": "/workspace/work/w011-engineering/dev310/bin/python -B -c \nfrom pathlib import Path\nfrom layauto_v2.importers import read_inputs\nfrom layauto_v2.normalization import build_geometry, geometry_from_parse_result, build_effective_geometry, build_local_connectivity\nfrom layauto_v2.normalization.local_connectivity_codec import record_digest\nr = build_local_connectivity(build_effective_geometry(build_geometry(geometry_from_parse_result(read_inputs(Path('/workspace/work/w011-final-e89bdaa/source/tests/fixtures/w003_m1/site_config.yaml'))))))\nprint(record_digest(r), r.value.ref.sha256, r.value.semantic_digest)",
+      "observed_at_utc": "2026-11-09T12:40:14.629242+00:00"
+    },
+    "23313": {
+      "pid": 23313,
+      "ppid": 21364,
+      "state": "S",
+      "rss_kib": 19344,
+      "command": "/workspace/work/w011-engineering/dev312/bin/python -m build --outdir /workspace/Layauto/docs/tasks/W011/verification/dist",
+      "observed_at_utc": "2026-11-09T15:42:50.463558+00:00"
+    },
+    "23319": {
+      "pid": 23319,
+      "ppid": 23313,
+      "state": "R",
+      "rss_kib": 25440,
+      "command": "/tmp/build-env-gn32jvdi/bin/python /workspace/work/w011-engineering/dev312/lib/python3.12/site-packages/pyproject_hooks/_in_process/_in_process.py get_requires_for_build_sdist /tmp/tmpn6ojjstd",
+      "observed_at_utc": "2026-11-09T15:42:50.463571+00:00"
+    },
+    "23341": {
+      "pid": 23341,
+      "ppid": 21364,
+      "state": "R",
+      "rss_kib": 90124,
+      "command": "/workspace/work/w011-final-e89bdaa/clean-310/bin/python -m pip install --report /workspace/Layauto/docs/tasks/W011/verification/install-310-report.json /workspace/Layauto/docs/tasks/W011/verification/dist/layauto-0.2.0.tar.gz",
+      "observed_at_utc": "2026-11-09T15:43:00.475681+00:00"
+    },
+    "23364": {
+      "pid": 23364,
+      "ppid": 21364,
+      "state": "R",
+      "rss_kib": 9119696,
+      "command": "/workspace/work/w011-final-e89bdaa/clean-310/bin/python -I -B /workspace/Layauto/docs/tasks/W011/verification/installed_smoke.py /workspace/work/w011-final-e89bdaa/source/tests/fixtures/w003_m1",
+      "observed_at_utc": "2026-11-09T15:49:40.720571+00:00"
+    },
+    "23670": {
+      "pid": 23670,
+      "ppid": 21364,
+      "state": "S",
+      "rss_kib": 39884,
+      "command": "/workspace/work/w011-final-e89bdaa/clean-312/bin/python -m pip install --report /workspace/Layauto/docs/tasks/W011/verification/install-312-report.json /workspace/Layauto/docs/tasks/W011/verification/dist/layauto-0.2.0-py3-none-any.whl",
+      "observed_at_utc": "2026-11-09T15:53:30.848589+00:00"
+    },
+    "23681": {
+      "pid": 23681,
+      "ppid": 21364,
+      "state": "R",
+      "rss_kib": 6927912,
+      "command": "/workspace/work/w011-final-e89bdaa/clean-312/bin/python -I -B /workspace/Layauto/docs/tasks/W011/verification/installed_smoke.py /workspace/work/w011-final-e89bdaa/source/tests/fixtures/w003_m1",
+      "observed_at_utc": "2026-11-09T15:58:21.029712+00:00"
+    }
+  },
+  "raw_sha256": "dc1e64d763e0e1779e1b419598b866821d4a53fe4455ede0efc43964e2833c22"
+}

@@ -1,0 +1,18 @@
+{
+  "status": "passed",
+  "observed_at_utc": "2026-11-09T10:02:58.820344+00:00",
+  "source_head": "81e01da1e5a6ce8e7132f3cebf8ee92bc237246f",
+  "python312": {
+    "status": "passed",
+    "count": 1465,
+    "receipt": "baseline/pytest-312.json"
+  },
+  "python310": {
+    "status": "passed",
+    "count": 1465,
+    "receipt": "baseline/pytest-310.json"
+  },
+  "scope": "Original 1465 regression baseline only; not final W011 verification.",
+  "aggregate_receipt": "baseline/receipt.json",
+  "source_snapshot": "baseline/source-snapshot.tar.gz"
+}

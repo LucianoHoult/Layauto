@@ -1,0 +1,9 @@
+{"cwd": "/workspace/Layauto", "executable": "/workspace/work/w011-engineering/dev312/bin/python", "head": "8917d38d916c914bfa785cb116982f3f299b38de", "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]", "source_manifest": "source-manifest.json", "stage": "identity"}
+{"check": "source_mismatch_success", "result": "PASS", "seconds": 54.04234043800034}
+{"check": "all_15_source_differences", "result": "PASS", "seconds": 54.04241825500003}
+{"check": "exact_measured_source_values", "result": "PASS", "seconds": 54.042477665000206}
+{"check": "source_not_used_to_fill_geometry", "result": "PASS", "seconds": 54.0424958020003}
+{"check": "drop_comparison", "message": "channel draft omitted/added/altered localization, geometry, topology, comparisons or issues", "result": "REJECTED", "seconds": 54.25622185400016}
+{"check": "drop_local_audit", "message": "local graph omitted/added nodes, edges, components or independent enclosure facts", "result": "REJECTED", "seconds": 54.35749725300002}
+{"check": "fake_error_status", "message": "channel result differs from complete same-capture reconstruction", "result": "REJECTED", "seconds": 72.46767967699998}
+{"peak_rss_kib": 1410952, "seconds": 72.47122879800008, "stage": "done"}

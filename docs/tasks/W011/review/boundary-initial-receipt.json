@@ -1,0 +1,63 @@
+{
+  "phase": "initial_boundary_findings",
+  "review_head": "f49323311bd817f066cb3e2411cad45219764f04",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "executable": "/workspace/work/w011-engineering/dev312/bin/python",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "source_manifest": {
+    "domain/channel_identity.py": "31c38827dfeb0a1938a9ae2c267259705312569309cc60bd9d4c96a8f1c9f37b",
+    "annotation/channel_identity.py": "bf9b8530b411ef0c6661059a8ca15df01f79c47e68fe8f40f7e3b671a0fce2fa",
+    "derive/fin_count.py": "f2c625d1f92d0f64e9b8cd066895c839e57b270de5ef71612ac0427a16bb6508",
+    "derive/channel_identity.py": "a737519aa52b2ca33561fb7b881056409b4a308a20716d428b4bef1e39d6f155",
+    "normalization/channel_identity.py": "f9b3c5e069261767f7f89da033bfe42ae166bfe706415fc4ac899c2fed81b944",
+    "normalization/channel_identity_codec.py": "ef7f6188a15512d832fe8c92f9a55fb76c6012126c40f1050b51a8c6cdb9c161",
+    "normalization/component.py": "ac294f26f99932a1d2f6aa1050c73f16b8628b910655262fa05f5420fdb71a4b",
+    "normalization/codec.py": "23bee58336a8d76698e702e1d3da0d9af639d8744b6ca7ff05eb4fcd2c54d36f"
+  },
+  "artifact_manifest": {
+    "boundary-expected-results.json": "6b52749b17d71356ae5eda794a1b12f811061e128fdd3bfcb92015b6f92fb032",
+    "boundary-expected.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "boundary-expected.stdout.txt": "3477cca3d4b1a43d8f3a911b456bd75142029ac9cd71af95ce47f4587013698a",
+    "boundary-initial-review.md": "ac35ff8874a5fabb8512de95a59f894e9e0342bb82c482847f9b4bbf2d41981f",
+    "boundary-leaf.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "boundary-leaf.stdout.txt": "367e8dd46eb55d316e46f62b7295ffce302f38a3a37bc8541ce0ecb6398ca175",
+    "boundary-probe-expected.py": "c6f1f5a4c7c5c850940c920e5e8d70a645681b239dd2d0753f8e744c49ee5b4c",
+    "boundary-probe-leaf.py": "f6dbfc28edd96cde22c635c8a006d198e8a347bb79d27e5285f7dea8e8356409",
+    "boundary-probe-semantic-exception.py": "ddf69339bf893c784e9312b4f10cddd2297dd092c827476cfa6d2c23f6af618b",
+    "boundary-semantic-exception.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "boundary-semantic-exception.stdout.txt": "5dd0ba73947f2f53bb49207457afd97b468c7eba2c0b7caf27ffd03c6a7eb7b1"
+  },
+  "runs": [
+    {
+      "command": [
+        "/workspace/work/w011-engineering/dev312/bin/python",
+        "-B",
+        "/workspace/work/w011-review-boundary/probe_leaf.py"
+      ],
+      "cwd": "/workspace/Layauto",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "/workspace/work/w011-engineering/dev312/bin/python",
+        "-B",
+        "/workspace/work/w011-review-boundary/probe_semantic_exception.py"
+      ],
+      "cwd": "/workspace/Layauto",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "/workspace/work/w011-engineering/dev312/bin/python",
+        "-B",
+        "/workspace/work/w011-review-boundary/probe_expected.py"
+      ],
+      "cwd": "/workspace/Layauto",
+      "exit_code": 0
+    }
+  ],
+  "limitations": [
+    "Probe exits report findings, not product pass.",
+    "No full matrix, build, clean-install or performance claim."
+  ]
+}

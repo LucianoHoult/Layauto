@@ -1,0 +1,47 @@
+{"phase": "leaf", "result": {"head": "c37eecf844e27787b478bccddfdb8fdaba18bc06", "seed_constructor_accepted": true, "source_copies_replaced": 3, "source_path": "tech/derived.json", "source_sha256": "0806468843e018c9dda461dc7c6c583773f63453392143ce6b6a92259a7ec1d9", "source_json_pointer": "/derived_registry/0", "derived_uri": "tech/derived.json", "derived_sha256": "0806468843e018c9dda461dc7c6c583773f63453392143ce6b6a92259a7ec1d9", "original_seed_target_layer": "POLY", "mutated_seed_target_layer": "METAL", "derived_target_layer": "POLY"}}
+{
+  "phase": "aggregate",
+  "result": {
+    "head": "c37eecf844e27787b478bccddfdb8fdaba18bc06",
+    "seed_constructor_accepted": true,
+    "source_copies_replaced": 3,
+    "source_path": "tech/derived.json",
+    "source_sha256": "0806468843e018c9dda461dc7c6c583773f63453392143ce6b6a92259a7ec1d9",
+    "source_json_pointer": "/derived_registry/0",
+    "derived_uri": "tech/derived.json",
+    "derived_sha256": "0806468843e018c9dda461dc7c6c583773f63453392143ce6b6a92259a7ec1d9",
+    "original_seed_target_layer": "POLY",
+    "mutated_seed_target_layer": "METAL",
+    "derived_target_layer": "POLY",
+    "public_draft_constructor_accepted": true,
+    "issues": [],
+    "counts": [
+      5,
+      7
+    ],
+    "control_counts": [
+      5,
+      7
+    ],
+    "elapsed_seconds": 15.218562067999756,
+    "maxrss_kib": 677928
+  }
+}
+{
+  "phase": "projection",
+  "result": {
+    "head": "c37eecf844e27787b478bccddfdb8fdaba18bc06",
+    "case": "unmeasured_source_parameter_provenance_projection",
+    "uses_object_setattr_bypass": true,
+    "axis": "finger_count",
+    "original_line": 3,
+    "forged_line": 999,
+    "draft_equal": false,
+    "canonical_to_value_equal": true,
+    "public_draft_reconstruction_rejected": true,
+    "exception": "ValueError",
+    "message": "field evidence location disagrees with source reference",
+    "elapsed_seconds": 15.538530584,
+    "maxrss_kib": 677928
+  }
+}

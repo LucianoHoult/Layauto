@@ -1,0 +1,11 @@
+{
+  "source": "/workspace/Layauto/docs/tasks/W011/w011_resource_gate.py",
+  "sha256": "1c78c2066736f0f56d80f3353da133a1d23407b0675a0a8f5e471b1337469d70",
+  "module": "w011_resource_gate",
+  "module_directory": "/workspace/work/w011-final-e89bdaa/pytest-plugins",
+  "shared_lock": "/workspace/work/w011-final-e89bdaa/pytest-w011.lock",
+  "lock_release": "OS at pytest process exit",
+  "start": "tryfirst setup hookwrapper before fixtures for first test_w011_* file",
+  "effect": "Only waiting and logging; no test selection, reordering, fixture or outcome changes.",
+  "memory_basis": "Observed W011 process peak about 7 GiB and legacy phase about 1-1.7 GiB under a 16 GiB cgroup; finite observations, not a proven maximum."
+}

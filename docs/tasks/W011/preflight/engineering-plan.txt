@@ -1,0 +1,49 @@
+W011 engineering preparation (execution support; no product edits)
+
+Prepared from /workspace/Layauto, 81e01da1e5a6ce8e7132f3cebf8ee92bc237246f.
+Initial package: /workspace/.venvs/layauto/bin/python (3.12.14), editable Layauto.
+Fresh development environments: /workspace/work/w011-engineering/dev310 and dev312.
+No editable install is needed for final frozen-source execution; cwd imports exact source.
+
+Baseline snapshot copied tracked layauto_v2, tests, pyproject.toml, README and
+W003/examples/records.json (the W006 sample dependency). 252 files are hashed.
+No repository source, docs, fixture or test file was changed.
+Original 1465 collected IDs retained in baseline/collection-312.stdout.txt.
+The new final matrix must preserve every ID (plus all newly added regressions).
+
+Final runner is prepare_final.py, adapted from W010 verification/prepare_final.py.
+It freezes tracked+untracked selected files, stores exact snapshot/hash manifest,
+runs both collections/full pytest/strict mypy/pip check, builds a fresh sdist+wheel,
+validates every runtime member, installs sdist with 3.10 and wheel with 3.12 into
+new venvs, asserts installed path+bytes, and runs smoke with -I -B outside source.
+Pass --baseline-collection explicitly when publishing evidence so no temporary
+path is relied on. It needs a W011 installed_smoke.py supplied by main execution.
+Use --expected-tests from actual final collect count after source freeze.
+
+Proposed final invocation (paths are examples; use a fresh unique work/out):
+python prepare_final.py --root /workspace/Layauto \
+  --out /workspace/Layauto/docs/tasks/W011/verification \
+  --work /workspace/work/w011-final-CANDIDATE \
+  --smoke /workspace/Layauto/docs/tasks/W011/installed_smoke.py \
+  --python310 /workspace/work/w011-engineering/dev310/bin/python \
+  --python312 /workspace/work/w011-engineering/dev312/bin/python \
+  --baseline-collection /workspace/work/w011-engineering/baseline/collection-312.stdout.txt \
+  --expected-tests ACTUAL
+
+Resource observation: cgroup memory.max=17179869184 bytes (16 GiB),
+cpu.max='400000 100000' (4 CPU quota), no swap. Historical W010 full 3.12
+1465 tests took 2614.99 seconds. Original public receipts duplicate captures:
+normal cached direct wire 22789218 bytes; readback 59422834 bytes. W011 must
+measure its own complete result wire and derive cost. These sample values
+are not maximum-input or production guarantees. W011 preflight observed a roughly 7 GiB process high watermark during full
+nested codec reconstruction. The final runner therefore defaults to one
+interpreter matrix worker, then builds and performs both clean installation
+smokes sequentially; package smoke never overlaps full matrices. The optional
+--matrix-workers 2 is explicit opt-in and will not be used for this 16 GiB run.
+Resource probes run afterwards, one fresh process per case. Shared-executor
+wall time and process RSS remain observations, not production bounds.
+
+Network/tools: inherited proxy/CA retained; no host or credential changes.
+uv downloaded CPython 3.10.22 under this work directory. Optional shortcut
+creation under /home/agent/.local/bin failed read-only; actual interpreter
+install succeeded and all use is via the absolute path under work.

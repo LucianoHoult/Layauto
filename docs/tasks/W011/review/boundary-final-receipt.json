@@ -1,0 +1,76 @@
+{
+  "phase": "final-boundary-specialty-review",
+  "reviewer": "/root/code_review/boundary_review",
+  "head": "8917d38d916c914bfa785cb116982f3f299b38de",
+  "source_root": "/workspace/work/w011-review-boundary-final",
+  "source_sha256": {
+    "layauto_v2/domain/channel_identity.py": "a1e50130590575120f2493ffe1c80a98e7318c185c36cf6e46b894006adf6412",
+    "layauto_v2/domain/source_location.py": "ab7a21b202144b626bd91d50947596551410d9404002ad258989dfdf90eb5d43",
+    "layauto_v2/annotation/channel_identity.py": "b30ad5ed83f111de23307ccbdba8d82789eb73b5cb72334fbd668a91f03f7451",
+    "layauto_v2/derive/channel_identity.py": "5b379e73da889b95aa3adeebc1450a3cfa4f96e8f893f2a0af2a35adebe273a3",
+    "layauto_v2/derive/fin_count.py": "f2c625d1f92d0f64e9b8cd066895c839e57b270de5ef71612ac0427a16bb6508",
+    "layauto_v2/normalization/channel_identity.py": "d721b1ba8e5f2708eb82b3729253ccc7358f7efc2174146f32d2be09340ef1ac",
+    "layauto_v2/normalization/channel_identity_codec.py": "ef7f6188a15512d832fe8c92f9a55fb76c6012126c40f1050b51a8c6cdb9c161",
+    "layauto_v2/normalization/component.py": "7eaef9bfb41e2ee14e65444d37066bd14388f56aaedb725bf9571982a8b96c69",
+    "layauto_v2/normalization/codec.py": "b4ee23a44725414c709c0b834cf6bce539c65bc58c9ab7387815b596efebed7d"
+  },
+  "fixture_file_count": 116,
+  "fixture_manifest_sha256": "c66f4c4bd6558bd8679ba1818a480ddadbaba8b14b3388d050d801f35e786e4c",
+  "python": "Python 3.12.14",
+  "cwd": "/workspace/Layauto",
+  "commands": [
+    {
+      "shell": "/workspace/work/w011-engineering/dev312/bin/python /workspace/work/w011-review-boundary-final/probe_projection.py > /workspace/work/w011-review-boundary-final/projection.stdout.txt 2> /workspace/work/w011-review-boundary-final/projection.stderr.txt",
+      "exit_code": 0
+    },
+    {
+      "shell": "/workspace/work/w011-engineering/dev312/bin/python /workspace/work/w011-review-boundary-final/probe_leaf.py > /workspace/work/w011-review-boundary-final/leaf.stdout.txt 2> /workspace/work/w011-review-boundary-final/leaf.stderr.txt",
+      "exit_code": 0
+    },
+    {
+      "shell": "/workspace/work/w011-engineering/dev312/bin/python /workspace/work/w011-review-boundary-final/probe_semantic_exception.py > /workspace/work/w011-review-boundary-final/semantic-exception.stdout.txt 2> /workspace/work/w011-review-boundary-final/semantic-exception.stderr.txt",
+      "exit_code": 0
+    },
+    {
+      "shell": "/workspace/work/w011-engineering/dev312/bin/python /workspace/work/w011-review-boundary-final/probe_malformed.py > /workspace/work/w011-review-boundary-final/malformed.stdout.txt 2> /workspace/work/w011-review-boundary-final/malformed.stderr.txt",
+      "exit_code": 0
+    },
+    {
+      "shell": "/workspace/work/w011-engineering/dev312/bin/python /workspace/work/w011-review-boundary-final/probe_equality.py > /workspace/work/w011-review-boundary-final/equality.stdout.txt 2> /workspace/work/w011-review-boundary-final/equality.stderr.txt",
+      "exit_code": 0
+    }
+  ],
+  "artifact_sha256": {
+    "boundary-final-equality.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "boundary-final-equality.stdout.txt": "2fd03dad23c140a74c0f0f6032fe9fe59b255340284562c9764561870daf82b8",
+    "boundary-final-leaf.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "boundary-final-leaf.stdout.txt": "c52402dbb91b143c79347fcb2fb1e8485882050081ddf32670016285096b364b",
+    "boundary-final-malformed.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "boundary-final-malformed.stdout.txt": "b95521846deea76e4772f61a582a3fcd9df4ed242c4256e25d0c579f752cabd4",
+    "boundary-final-probe_equality.py": "924d2273b283e3e8b64c1ccdc65d0ff4fe863e44a289ac4d74c839684cc01b5d",
+    "boundary-final-probe_leaf.py": "b7c054179db89e3bf858d8f034a984c221e537d7fe0d3db4fad7de7342422554",
+    "boundary-final-probe_malformed.py": "4024a6f554bf68646d87846eff378e988474c56b7399cce6242b8fa159a2b217",
+    "boundary-final-probe_owner.py": "e79cf5de06b333c32690895194251bb2b0b8bf6fe85429cc07af5e2700fb0f8d",
+    "boundary-final-probe_projection.py": "f5f0e8d1ddf94898cd19669ad59199e9730e2a6fda2c2b3bc21d91f0428767da",
+    "boundary-final-probe_semantic_exception.py": "d0f4ba91c6f9d5ae487c84517790510237c9e8ce2eb9ec3cae17a94ae93ed635",
+    "boundary-final-projection.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "boundary-final-projection.stdout.txt": "632f9eee2f8229c2a6580fe9a0ef6d43ffa0a0dd6d701a2ceee6423c9da834e6",
+    "boundary-final-semantic-exception.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "boundary-final-semantic-exception.stdout.txt": "90bc48d85ca92162ad67910f927a2c332277e8d16bd5b929603ad3b417e21ec6"
+  },
+  "cr03_code_unchanged_since_independently_tested_975852d": {
+    "layauto_v2/normalization/component.py": true,
+    "layauto_v2/normalization/codec.py": true
+  },
+  "limits": {
+    "memory_max": "17179869184",
+    "cpu_max": "400000 100000",
+    "actual_neutral_builder_elapsed_seconds": 14.429009059000236,
+    "actual_neutral_builder_maxrss_kib": 679076,
+    "malformed_scan_elapsed_seconds": 6.738573372000246,
+    "malformed_scan_maxrss_kib": 25468,
+    "full_w011_result_and_codec_not_run_by_this_specialty": true,
+    "full_result_closure_delegated_to_parent_independent_reviewer": true,
+    "A8_engineering_matrix_not_certified_by_this_specialty": true
+  }
+}

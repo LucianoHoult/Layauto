@@ -1,0 +1,991 @@
+{
+  "schema": "w011-pm-static-evidence-audit/1",
+  "at_utc": "2026-11-10T01:36:14.589278+00:00",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "/workspace/work/w011-pm-check/evidence/audit.py"
+  ],
+  "script_sha256": "41c13c64979bb45ffdba6a6db09585ebd1da74aa601b122d54c37fd185f73c8f",
+  "delivery_head": "3c464baade7b6ea8c712cfb84265490b8e3f754e",
+  "frozen_source": "e89bdaa6a091f56cfaf7862dced7232d34e22514",
+  "checks": [
+    {
+      "name": "head identity",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source manifest count/version",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "all262 current bytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "all262 frozen Git bytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "all262 delivery Git bytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "snapshot262 exact unique",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "runtime unchanged since repaired product",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "fixture and current-work unchanged by execution",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "engineering commands count",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "receipt identity source-manifest.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "receipt identity source-snapshot.tar.gz",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "receipt identity baseline-collection.txt",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "receipt identity prepare_final.py",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "receipt identity installed_smoke.py",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "verification: environment-310.stdout.txt exit/times",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "environment-310.stdout.txt bytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "environment-310.stderr.txt bytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "command index environment-310.stdout.txt",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "verification: collection-310.stdout.txt exit/times",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "collection-310.stdout.txt bytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "collection-310.stderr.txt bytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "command index collection-310.stdout.txt",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "verification: pytest-310.stdout.txt exit/times",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "pytest-310.stdout.txt bytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "pytest-310.stderr.txt bytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "command index pytest-310.stdout.txt",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "verification: typing-310.stdout.txt exit/times",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "typing-310.stdout.txt bytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "typing-310.stderr.txt bytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "command index typing-310.stdout.txt",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "verification: pip-check-310.stdout.txt exit/times",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "pip-check-310.stdout.txt bytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "pip-check-310.stderr.txt bytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "command index pip-check-310.stdout.txt",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "verification: environment-312.stdout.txt exit/times",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "environment-312.stdout.txt bytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "environment-312.stderr.txt bytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "command index environment-312.stdout.txt",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "verification: collection-312.stdout.txt exit/times",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "collection-312.stdout.txt bytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "collection-312.stderr.txt bytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "command index collection-312.stdout.txt",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "verification: pytest-312.stdout.txt exit/times",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "pytest-312.stdout.txt bytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "pytest-312.stderr.txt bytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "command index pytest-312.stdout.txt",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "verification: typing-312.stdout.txt exit/times",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "typing-312.stdout.txt bytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "typing-312.stderr.txt bytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "command index typing-312.stdout.txt",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "verification: pip-check-312.stdout.txt exit/times",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "pip-check-312.stdout.txt bytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "pip-check-312.stderr.txt bytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "command index pip-check-312.stdout.txt",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "verification: build.stdout.txt exit/times",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "build.stdout.txt bytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "build.stderr.txt bytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "command index build.stdout.txt",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "verification: create-install-310.stdout.txt exit/times",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "create-install-310.stdout.txt bytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "create-install-310.stderr.txt bytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "command index create-install-310.stdout.txt",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "verification: install-310.stdout.txt exit/times",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "install-310.stdout.txt bytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "install-310.stderr.txt bytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "command index install-310.stdout.txt",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "verification: installed-pip-check-310.stdout.txt exit/times",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "installed-pip-check-310.stdout.txt bytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "installed-pip-check-310.stderr.txt bytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "command index installed-pip-check-310.stdout.txt",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "verification: installed-identity-310.stdout.txt exit/times",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "installed-identity-310.stdout.txt bytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "installed-identity-310.stderr.txt bytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "command index installed-identity-310.stdout.txt",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "verification: installed-smoke-310.stdout.txt exit/times",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "installed-smoke-310.stdout.txt bytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "installed-smoke-310.stderr.txt bytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "command index installed-smoke-310.stdout.txt",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "verification: create-install-312.stdout.txt exit/times",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "create-install-312.stdout.txt bytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "create-install-312.stderr.txt bytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "command index create-install-312.stdout.txt",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "verification: install-312.stdout.txt exit/times",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "install-312.stdout.txt bytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "install-312.stderr.txt bytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "command index install-312.stdout.txt",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "verification: installed-pip-check-312.stdout.txt exit/times",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "installed-pip-check-312.stdout.txt bytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "installed-pip-check-312.stderr.txt bytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "command index installed-pip-check-312.stdout.txt",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "verification: installed-identity-312.stdout.txt exit/times",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "installed-identity-312.stdout.txt bytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "installed-identity-312.stderr.txt bytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "command index installed-identity-312.stdout.txt",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "verification: installed-smoke-312.stdout.txt exit/times",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "installed-smoke-312.stdout.txt bytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "installed-smoke-312.stderr.txt bytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "command index installed-smoke-312.stdout.txt",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "verification index exact",
+      "passed": true,
+      "detail": {
+        "files": 83,
+        "sha256": "91fc8869f2b1cb3f15d76334f9577f6902f14c6b90e900a1b25f735311c4f077"
+      }
+    },
+    {
+      "name": "matrix IDs 310",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "all extra IDs W011 310",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "actual pytest stdout 310",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "actual typing stdout 310",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "actual gate events 310",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "matrix IDs 312",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "all extra IDs W011 312",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "actual pytest stdout 312",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "actual typing stdout 312",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "actual gate events 312",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "gate correct source",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "gate W011 serialized",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "artifact bytes wheel",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "artifact100 exact wheel",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "artifact bytes sdist",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "artifact100 exact sdist",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "archived install100 provenance 310",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "archived isolated source-external smoke 310",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "archived smoke facts 310 direct",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "archived smoke facts 310 readback",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "archived smoke facts 310 extraction_mismatch",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "archived install100 provenance 312",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "archived isolated source-external smoke 312",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "archived smoke facts 312 direct",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "archived smoke facts 312 readback",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "archived smoke facts 312 extraction_mismatch",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "resource proof same frozen source",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "resource scripts",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "resource process scope",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "resources: normal-direct exit/times",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "normal-direct.stdout.txt bytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "normal-direct.stderr.txt bytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "resource same source normal-direct",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "resource result actual normal-direct",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "resources: normal-readback exit/times",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "normal-readback.stdout.txt bytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "normal-readback.stderr.txt bytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "resource same source normal-readback",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "resource result actual normal-readback",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "resources: extraction-mismatch exit/times",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "extraction-mismatch.stdout.txt bytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "extraction-mismatch.stderr.txt bytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "resource same source extraction-mismatch",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "resource result actual extraction-mismatch",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "resources index exact",
+      "passed": true,
+      "detail": {
+        "files": 16,
+        "sha256": "2bdf899cf8d52e61aca4941b5f240a76379149f2837f7ea9ba56e27f5a6c6459"
+      }
+    },
+    {
+      "name": "resource observer original bytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "observer sample count",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "observer maximum cgroup",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "observer maximum process recomputed",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "old failed matrix retained honestly",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "verification-attempt-01 index exact",
+      "passed": true,
+      "detail": {
+        "files": 31,
+        "sha256": "5321bc2a7e21c903f4d951ef5eb7bea197b8de9d6d30b84d0d54f3f5a73c1e99"
+      }
+    }
+  ],
+  "must_fix": [],
+  "source_files": 262,
+  "runtime_files": 100,
+  "source_manifest_sha256": "dd463fa402a8469ba7212f4781cd2082eb86466b1484810ed89dbc02211bb475",
+  "matrix": {
+    "310": {
+      "test_count": 1605,
+      "baseline_count": 1465,
+      "extra_count": 140,
+      "pytest_seconds": 12905.97,
+      "command_seconds": 12908.836,
+      "gate_wait_seconds": 2603.347384
+    },
+    "312": {
+      "test_count": 1605,
+      "baseline_count": 1465,
+      "extra_count": 140,
+      "pytest_seconds": 7310.82,
+      "command_seconds": 7313.363,
+      "gate_wait_seconds": 0.000139
+    }
+  },
+  "installations": {
+    "310": {
+      "actual_tree_exists_here": false,
+      "archived_runtime_files": 100,
+      "package": "/workspace/work/w011-final-e89bdaa/clean-310/lib/python3.10/site-packages/layauto_v2",
+      "new_installation_performed": false
+    },
+    "312": {
+      "actual_tree_exists_here": false,
+      "archived_runtime_files": 100,
+      "package": "/workspace/work/w011-final-e89bdaa/clean-312/lib/python3.12/site-packages/layauto_v2",
+      "new_installation_performed": false
+    }
+  },
+  "resource_cases": {
+    "normal-direct": {
+      "wire_bytes": 54050313,
+      "peak_rss_kib": 2847416,
+      "peak_rss_gib": 2.7155075073242188,
+      "wall_seconds": {
+        "W005_read_inputs": 0.8201535750013136,
+        "W008_adapter_and_build": 0.4091517359993304,
+        "W009_build": 0.694169193997368,
+        "W010_build": 13.30807964899941,
+        "W011_build": 37.2087455410001,
+        "W011_result_encode": 1.5223439580004197,
+        "W011_result_decode": 46.75885565600038
+      },
+      "command_seconds": 101.15421000900096,
+      "raw_capture_bytes": 280706
+    },
+    "normal-readback": {
+      "wire_bytes": 136461405,
+      "peak_rss_kib": 7322828,
+      "peak_rss_gib": 6.983592987060547,
+      "wall_seconds": {
+        "W006_prepare_inputs": 1.5397864440019475,
+        "W008_adapter_and_build": 0.8661693460016977,
+        "W009_build": 1.469529195001087,
+        "W010_build": 25.746205015002488,
+        "W011_build": 74.94776512400131,
+        "W011_result_encode": 3.0640132799999265,
+        "W011_result_decode": 101.86079596499985
+      },
+      "command_seconds": 211.57665307099887,
+      "raw_capture_bytes": 280706
+    },
+    "extraction-mismatch": {
+      "wire_bytes": 54049506,
+      "peak_rss_kib": 2854456,
+      "peak_rss_gib": 2.7222213745117188,
+      "wall_seconds": {
+        "W005_read_inputs": 0.6189960730007442,
+        "W008_adapter_and_build": 0.3651001189973613,
+        "W009_build": 0.6424338139986503,
+        "W010_build": 11.969838978999178,
+        "W011_build": 35.41877592200035,
+        "W011_result_encode": 1.3971216310019372,
+        "W011_result_decode": 45.17853329300124
+      },
+      "command_seconds": 95.96902353099722,
+      "raw_capture_bytes": 280706
+    }
+  },
+  "observer": {
+    "sample_count": 1399,
+    "max_sampled_cgroup_bytes": 12299743232,
+    "max_sampled_processes": {
+      "21364": {
+        "pid": 21364,
+        "ppid": 21348,
+        "state": "S",
+        "rss_kib": 17276,
+        "command": "/workspace/work/w011-engineering/dev312/bin/python /workspace/Layauto/docs/tasks/W011/prepare_final.py --root /workspace/Layauto --out /workspace/Layauto/docs/tasks/W011/verification --work /workspace/work/w011-final-e89bdaa --smoke /workspace/Layauto/docs/tasks/W011/installed_smoke.py --python310 /workspace/work/w011-engineering/dev310/bin/python --python312 /workspace/work/w011-engineering/dev312/bin/python --baseline-collection /workspace/Layauto/docs/tasks/W011/preflight/baseline-collection312.txt --expected-tests 1605 --matrix-workers 2 --resource-gate /workspace/Layauto/docs/tasks/W011/w011_resource_gate.py",
+        "observed_at_utc": "2026-11-09T14:09:37.502878+00:00"
+      },
+      "21382": {
+        "pid": 21382,
+        "ppid": 21364,
+        "state": "R",
+        "rss_kib": 6248624,
+        "command": "/workspace/work/w011-engineering/dev312/bin/python -m pytest -p no:cacheprovider -p w011_resource_gate --w011-resource-lock /workspace/work/w011-final-e89bdaa/pytest-w011.lock --w011-resource-log /workspace/Layauto/docs/tasks/W011/verification/resource-gate-312.jsonl tests/unit tests/contracts -q",
+        "observed_at_utc": "2026-11-09T13:21:16.056015+00:00"
+      },
+      "21383": {
+        "pid": 21383,
+        "ppid": 21364,
+        "state": "R",
+        "rss_kib": 9257804,
+        "command": "/workspace/work/w011-engineering/dev310/bin/python -m pytest -p no:cacheprovider -p w011_resource_gate --w011-resource-lock /workspace/work/w011-final-e89bdaa/pytest-w011.lock --w011-resource-log /workspace/Layauto/docs/tasks/W011/verification/resource-gate-310.jsonl tests/unit tests/contracts -q",
+        "observed_at_utc": "2026-11-09T14:33:08.277882+00:00"
+      },
+      "21488": {
+        "pid": 21488,
+        "ppid": 21383,
+        "state": "R",
+        "rss_kib": 22968,
+        "command": "/workspace/work/w011-engineering/dev310/bin/python -B -c \nfrom pathlib import Path\nfrom layauto_v2.importers import read_inputs\nfrom layauto_v2.normalization import from_parse_result, normalize\nfrom layauto_v2.normalization.codec import record_digest\nfrom layauto_v2.domain.circuit import semantic_digest\nresult = normalize(from_parse_result(read_inputs(Path('/workspace/work/w011-final-e89bdaa/source/tests/fixtures/w003_m1/site_config.yaml'))))\nprint(record_digest(result))\nprint(semantic_digest(result.value.source))\nprint(semantic_digest(result.value.target))",
+        "observed_at_utc": "2026-11-09T12:11:43.673961+00:00"
+      },
+      "21553": {
+        "pid": 21553,
+        "ppid": 21383,
+        "state": "R",
+        "rss_kib": 24556,
+        "command": "/workspace/work/w011-engineering/dev310/bin/python -B -c \nfrom pathlib import Path\nfrom layauto_v2.importers import read_inputs\nfrom layauto_v2.normalization.geometry_input import geometry_from_parse_result\nfrom layauto_v2.normalization.geometry import build_geometry\nfrom layauto_v2.normalization.effective import build_effective_geometry\nfrom layauto_v2.normalization.effective_codec import record_digest\nr = build_effective_geometry(build_geometry(geometry_from_parse_result(read_inputs(Path('/workspace/work/w011-final-e89bdaa/source/tests/fixtures/w003_m1/site_config.yaml')))))\nprint(record_digest(r), r.value.semantic_digest, r.value.ref.sha256)",
+        "observed_at_utc": "2026-11-09T12:24:54.087220+00:00"
+      },
+      "21806": {
+        "pid": 21806,
+        "ppid": 21382,
+        "state": "R",
+        "rss_kib": 77060,
+        "command": "/workspace/work/w011-engineering/dev312/bin/python -B -c \nfrom pathlib import Path\nfrom layauto_v2.importers import read_inputs\nfrom layauto_v2.normalization import build_geometry, geometry_from_parse_result, build_effective_geometry, build_local_connectivity\nfrom layauto_v2.normalization.local_connectivity_codec import record_digest\nr = build_local_connectivity(build_effective_geometry(build_geometry(geometry_from_parse_result(read_inputs(Path('/workspace/work/w011-final-e89bdaa/source/tests/fixtures/w003_m1/site_config.yaml'))))))\nprint(record_digest(r), r.value.ref.sha256, r.value.semantic_digest)",
+        "observed_at_utc": "2026-11-09T12:30:54.285920+00:00"
+      },
+      "21833": {
+        "pid": 21833,
+        "ppid": 21382,
+        "state": "R",
+        "rss_kib": 81632,
+        "command": "/workspace/work/w011-engineering/dev312/bin/python -B -c \nfrom pathlib import Path\nfrom layauto_v2.importers import read_inputs\nfrom layauto_v2.normalization import build_geometry, geometry_from_parse_result, build_effective_geometry, build_local_connectivity\nfrom layauto_v2.normalization.local_connectivity_codec import record_digest\nr = build_local_connectivity(build_effective_geometry(build_geometry(geometry_from_parse_result(read_inputs(Path('/workspace/work/w011-final-e89bdaa/source/tests/fixtures/w003_m1/site_config.yaml'))))))\nprint(record_digest(r), r.value.ref.sha256, r.value.semantic_digest)",
+        "observed_at_utc": "2026-11-09T12:31:04.290731+00:00"
+      },
+      "22143": {
+        "pid": 22143,
+        "ppid": 21383,
+        "state": "R",
+        "rss_kib": 94108,
+        "command": "/workspace/work/w011-engineering/dev310/bin/python -B -c \nfrom pathlib import Path\nfrom layauto_v2.importers import read_inputs\nfrom layauto_v2.normalization import build_geometry, geometry_from_parse_result, build_effective_geometry, build_local_connectivity\nfrom layauto_v2.normalization.local_connectivity_codec import record_digest\nr = build_local_connectivity(build_effective_geometry(build_geometry(geometry_from_parse_result(read_inputs(Path('/workspace/work/w011-final-e89bdaa/source/tests/fixtures/w003_m1/site_config.yaml'))))))\nprint(record_digest(r), r.value.ref.sha256, r.value.semantic_digest)",
+        "observed_at_utc": "2026-11-09T12:39:54.612068+00:00"
+      },
+      "22144": {
+        "pid": 22144,
+        "ppid": 21383,
+        "state": "R",
+        "rss_kib": 94176,
+        "command": "/workspace/work/w011-engineering/dev310/bin/python -B -c \nfrom pathlib import Path\nfrom layauto_v2.importers import read_inputs\nfrom layauto_v2.normalization import build_geometry, geometry_from_parse_result, build_effective_geometry, build_local_connectivity\nfrom layauto_v2.normalization.local_connectivity_codec import record_digest\nr = build_local_connectivity(build_effective_geometry(build_geometry(geometry_from_parse_result(read_inputs(Path('/workspace/work/w011-final-e89bdaa/source/tests/fixtures/w003_m1/site_config.yaml'))))))\nprint(record_digest(r), r.value.ref.sha256, r.value.semantic_digest)",
+        "observed_at_utc": "2026-11-09T12:40:14.629242+00:00"
+      },
+      "23313": {
+        "pid": 23313,
+        "ppid": 21364,
+        "state": "S",
+        "rss_kib": 19344,
+        "command": "/workspace/work/w011-engineering/dev312/bin/python -m build --outdir /workspace/Layauto/docs/tasks/W011/verification/dist",
+        "observed_at_utc": "2026-11-09T15:42:50.463558+00:00"
+      },
+      "23319": {
+        "pid": 23319,
+        "ppid": 23313,
+        "state": "R",
+        "rss_kib": 25440,
+        "command": "/tmp/build-env-gn32jvdi/bin/python /workspace/work/w011-engineering/dev312/lib/python3.12/site-packages/pyproject_hooks/_in_process/_in_process.py get_requires_for_build_sdist /tmp/tmpn6ojjstd",
+        "observed_at_utc": "2026-11-09T15:42:50.463571+00:00"
+      },
+      "23341": {
+        "pid": 23341,
+        "ppid": 21364,
+        "state": "R",
+        "rss_kib": 90124,
+        "command": "/workspace/work/w011-final-e89bdaa/clean-310/bin/python -m pip install --report /workspace/Layauto/docs/tasks/W011/verification/install-310-report.json /workspace/Layauto/docs/tasks/W011/verification/dist/layauto-0.2.0.tar.gz",
+        "observed_at_utc": "2026-11-09T15:43:00.475681+00:00"
+      },
+      "23364": {
+        "pid": 23364,
+        "ppid": 21364,
+        "state": "R",
+        "rss_kib": 9119696,
+        "command": "/workspace/work/w011-final-e89bdaa/clean-310/bin/python -I -B /workspace/Layauto/docs/tasks/W011/verification/installed_smoke.py /workspace/work/w011-final-e89bdaa/source/tests/fixtures/w003_m1",
+        "observed_at_utc": "2026-11-09T15:49:40.720571+00:00"
+      },
+      "23670": {
+        "pid": 23670,
+        "ppid": 21364,
+        "state": "S",
+        "rss_kib": 39884,
+        "command": "/workspace/work/w011-final-e89bdaa/clean-312/bin/python -m pip install --report /workspace/Layauto/docs/tasks/W011/verification/install-312-report.json /workspace/Layauto/docs/tasks/W011/verification/dist/layauto-0.2.0-py3-none-any.whl",
+        "observed_at_utc": "2026-11-09T15:53:30.848589+00:00"
+      },
+      "23681": {
+        "pid": 23681,
+        "ppid": 21364,
+        "state": "R",
+        "rss_kib": 6927912,
+        "command": "/workspace/work/w011-final-e89bdaa/clean-312/bin/python -I -B /workspace/Layauto/docs/tasks/W011/verification/installed_smoke.py /workspace/work/w011-final-e89bdaa/source/tests/fixtures/w003_m1",
+        "observed_at_utc": "2026-11-09T15:58:21.029712+00:00"
+      }
+    }
+  },
+  "limitations": [
+    "Static bytes/archive/log/provenance audit only, no product imports, no heavy codec, pytest, build or reinstall.",
+    "Archived installation manifests and smoke output audited; absent original installation trees cannot be re-observed.",
+    "Fresh-process ru_maxrss covers whole process, not incremental W011 allocations; long-running matrix/smoke discrete samples have different scope.",
+    "Finite resource observations are not production input or concurrency bounds."
+  ]
+}

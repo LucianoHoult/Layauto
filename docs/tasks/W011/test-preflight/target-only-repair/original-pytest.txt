@@ -1,0 +1,11 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_________ test_target_only_multiple_axes_do_not_change_source_geometry _________
+tests/contracts/test_w011_geometry.py:157: in test_target_only_multiple_axes_do_not_change_source_geometry
+    change_cdl(root, 'target', 'NFIN=5 NF=1 M=1 L=4n W=2n VT=toy',
+tests/contracts/w011_cases.py:64: in change_cdl
+    assert before in text
+E   AssertionError
+=========================== short test summary info ============================
+FAILED tests/contracts/test_w011_geometry.py::test_target_only_multiple_axes_do_not_change_source_geometry
+1 failed in 72.55s (0:01:12)

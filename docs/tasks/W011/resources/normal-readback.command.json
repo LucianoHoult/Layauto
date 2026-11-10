@@ -1,0 +1,26 @@
+{
+  "case": "normal-readback",
+  "command": [
+    "/workspace/work/w011-engineering/dev312/bin/python",
+    "-B",
+    "/workspace/Layauto/docs/tasks/W011/resource_probe.py",
+    "--root",
+    "/workspace/Layauto",
+    "--case",
+    "normal-readback",
+    "--output",
+    "/workspace/Layauto/docs/tasks/W011/resources/normal-readback.json",
+    "--work",
+    "/workspace/work/w011-final-resources-e89bdaa"
+  ],
+  "cwd": "/workspace/work/w011-final-resources-e89bdaa",
+  "started_at_utc": "2026-11-09T16:03:42.683856+00:00",
+  "finished_at_utc": "2026-11-09T16:07:14.260494+00:00",
+  "elapsed_seconds": 211.57665307099887,
+  "exit_code": 0,
+  "live_git_head_at_launch": "e89bdaa6a091f56cfaf7862dced7232d34e22514",
+  "tested_source_commit": "e89bdaa6a091f56cfaf7862dced7232d34e22514",
+  "stdout_sha256": "bf6e50a0491850f651cf97f6adedeb3cc2518b9a507e8cfdf1288e3ac14e161e",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "runtime_matches_verified_snapshot_before_and_after": true
+}

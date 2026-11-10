@@ -1,0 +1,150 @@
+{
+  "created_utc": "2026-11-10T02:06:17.712594+00:00",
+  "base": "61775e8fde6e9ea247ec08a32067c44c3be48ff8",
+  "reviewed_head": "8452027e57fb1c58607640d7eb755b38ffc70716",
+  "frozen_tested_source": "e89bdaa6a091f56cfaf7862dced7232d34e22514",
+  "checks": {
+    "report_links": "all exist",
+    "frozen_source_entries_unchanged": 262,
+    "probe_receipt_hashes": "all match",
+    "selected_regression": "9 passed / exit0",
+    "tracked_write_scope": [
+      "docs/tasks/W011-channel-identity-fin-count.md"
+    ]
+  },
+  "files": {
+    "docs/tasks/W011/independent-premerge-evidence/boundary-owner-probe.py": {
+      "sha256": "1a74a87c8b05bd2d2bbd02eab6db97d4eb72d6be6ae4cbed987b498696b2bd36",
+      "bytes": 5108
+    },
+    "docs/tasks/W011/independent-premerge-evidence/boundary-owner-probe.stderr.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "docs/tasks/W011/independent-premerge-evidence/boundary-owner-probe.stdout.json": {
+      "sha256": "7d2427d606e243ce48af93ffc996b418c9438ff4a56a5efc5ba9a76e5bd93778",
+      "bytes": 2756
+    },
+    "docs/tasks/W011/independent-premerge-evidence/boundary-probe.py": {
+      "sha256": "b4347a64db7f657bc51bba65713c03c0940eadc1a2075dc0b4c50bfa7ef719de",
+      "bytes": 10454
+    },
+    "docs/tasks/W011/independent-premerge-evidence/boundary-probe.stderr.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "docs/tasks/W011/independent-premerge-evidence/boundary-probe.stdout.json": {
+      "sha256": "4026b97803cf2be448cf755d55e3f3671435d3bef508312cd26bfbf554ac469b",
+      "bytes": 9424
+    },
+    "docs/tasks/W011/independent-premerge-evidence/boundary-receipt.json": {
+      "sha256": "004476062cd720d4b2070b73f2ffffd0aa891f1de4244f4268e55b840e436993",
+      "bytes": 4934
+    },
+    "docs/tasks/W011/independent-premerge-evidence/boundary-review.md": {
+      "sha256": "882f2e05b57190e51f30ba5291f8ff42da317ab9d6094523e24fc3d6789c6533",
+      "bytes": 8851
+    },
+    "docs/tasks/W011/independent-premerge-evidence/boundary-w007-regression.stderr.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "docs/tasks/W011/independent-premerge-evidence/boundary-w007-regression.stdout.txt": {
+      "sha256": "7d0459da13c3c2bfb62600e9f7bdd501966ec991be68d04a5099b7109d7ccfc2",
+      "bytes": 114
+    },
+    "docs/tasks/W011/independent-premerge-evidence/environment.json": {
+      "sha256": "9c8c285813814405f4c4df49cf7a3edc85acfae72c57d7c8c9662c2a4b99bcb5",
+      "bytes": 1107
+    },
+    "docs/tasks/W011/independent-premerge-evidence/evidence-audit.fourth.stderr.txt": {
+      "sha256": "d3ed539dd421f3423b0fbcdd221d2dfd3260b29199da4023ec172442f5008106",
+      "bytes": 504
+    },
+    "docs/tasks/W011/independent-premerge-evidence/evidence-audit.initial.stderr.txt": {
+      "sha256": "b8c21f4182aa33928fbbc11b0c284030c5c5c22e69ad821050ff03a68673b54c",
+      "bytes": 463
+    },
+    "docs/tasks/W011/independent-premerge-evidence/evidence-audit.py": {
+      "sha256": "5141007ba6f60685d240e588d5292e58cc83a6f8182b582b1f2989dcaf05d26d",
+      "bytes": 17878
+    },
+    "docs/tasks/W011/independent-premerge-evidence/evidence-audit.second.stderr.txt": {
+      "sha256": "865a0553071f92a1279e04ab6811e393b0f3f2eee1db3c15d2ceb4ff883bbd8e",
+      "bytes": 1331
+    },
+    "docs/tasks/W011/independent-premerge-evidence/evidence-audit.stderr.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "docs/tasks/W011/independent-premerge-evidence/evidence-audit.stdout.json": {
+      "sha256": "2ae1dca915f14e2b5ed8783af09025edf7a1a5522bab31ba22b1e95a5e8e510e",
+      "bytes": 40801
+    },
+    "docs/tasks/W011/independent-premerge-evidence/evidence-audit.third.stderr.txt": {
+      "sha256": "d3ed539dd421f3423b0fbcdd221d2dfd3260b29199da4023ec172442f5008106",
+      "bytes": 504
+    },
+    "docs/tasks/W011/independent-premerge-evidence/evidence-report.md": {
+      "sha256": "7b219362c6ccc4bb3d1d8d297a3dcac02100d43db66cc79d5ae52bf44056a0b2",
+      "bytes": 9419
+    },
+    "docs/tasks/W011/independent-premerge-evidence/geometry-location-probe.py": {
+      "sha256": "55943bb6f2869e105ae831e8132e4d8c32d5977b115621425479052b71e52f4b",
+      "bytes": 3508
+    },
+    "docs/tasks/W011/independent-premerge-evidence/geometry-location-probe.stderr.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "docs/tasks/W011/independent-premerge-evidence/geometry-location-probe.stdout.json": {
+      "sha256": "d632a7649b0a0cd6e39ad989922b3f7a5ea1707cfb68760351bd9e72d3c559c5",
+      "bytes": 1291
+    },
+    "docs/tasks/W011/independent-premerge-evidence/geometry-probe.py": {
+      "sha256": "7da15460ad0716619a46bd521fc6206dbb7dd5bae16f99cb62a0ebf65ae95709",
+      "bytes": 13004
+    },
+    "docs/tasks/W011/independent-premerge-evidence/geometry-probe.stderr.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "docs/tasks/W011/independent-premerge-evidence/geometry-probe.stdout.json": {
+      "sha256": "4e0e70bb2e74791f0d67a99e135c0ae54bd87d8a620b44614186fc2baa0e936d",
+      "bytes": 4335
+    },
+    "docs/tasks/W011/independent-premerge-evidence/geometry-receipt.json": {
+      "sha256": "0ca02c1514431a7ef080b8cc2dc8e8d68e519ead2c315ef8752827a9568e7dc8",
+      "bytes": 1931
+    },
+    "docs/tasks/W011/independent-premerge-evidence/geometry-report.md": {
+      "sha256": "856ae1494324acfe0417f03ee7329e5f3b13fb74f87d8bb4d8adc313c381bdf1",
+      "bytes": 7826
+    },
+    "docs/tasks/W011/independent-premerge-evidence/regression.json": {
+      "sha256": "145f2637e57ea3b9efed7d19c91e7431d8f065a308c7a0d8268ce779d92be626",
+      "bytes": 1930
+    },
+    "docs/tasks/W011/independent-premerge-evidence/regression.stderr.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "docs/tasks/W011/independent-premerge-evidence/regression.stdout.txt": {
+      "sha256": "37bc6ae5bf0a1ef9ced5e7e5310a826793be1eb1561c9cd32595ee2b6599981c",
+      "bytes": 110
+    },
+    "docs/tasks/W011/independent-premerge-evidence/run_regression.py": {
+      "sha256": "b6844587a65824c2af46de524865894121db92d812c967f56d6c855198eb128c",
+      "bytes": 2719
+    },
+    "docs/tasks/W011/independent-premerge-review.md": {
+      "sha256": "1ac9fc8eda5271f4c0d5b8d96ed7e1ebc385d845c70a5209b0d4f16447644e8d",
+      "bytes": 17039
+    },
+    "docs/tasks/W011-channel-identity-fin-count.md": {
+      "sha256": "124dea5def8e26717623273da64231051bcbd3bd326ab163448ec88c6d2d5ea6",
+      "bytes": 25331
+    }
+  },
+  "note": "Only review artifacts and W011 reviewer append; excludes this manifest itself and future commit identity."
+}

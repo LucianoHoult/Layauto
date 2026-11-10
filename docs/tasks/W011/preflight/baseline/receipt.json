@@ -1,0 +1,78 @@
+{
+  "status": "passed",
+  "scope": "Original 1465-test baseline only; not final W011 verification",
+  "git_head": "81e01da1e5a6ce8e7132f3cebf8ee92bc237246f",
+  "source_file_count": 252,
+  "test_counts": {
+    "310": 1465,
+    "312": 1465
+  },
+  "collection_ids_equal": true,
+  "source_unchanged": true,
+  "commands": {
+    "310": {
+      "command": [
+        "/workspace/work/w011-engineering/dev310/bin/python",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "tests/unit",
+        "tests/contracts",
+        "-q"
+      ],
+      "cwd": "/workspace/work/w011-engineering/baseline-source",
+      "exit_code": 0,
+      "elapsed_seconds": 5087.539597034454,
+      "environment_overrides": {
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PIP_CACHE_DIR": "/workspace/work/w011-engineering/pip-cache",
+        "MYPY_CACHE_DIR": "/workspace/work/w011-engineering/mypy-310",
+        "MPLCONFIGDIR": "/workspace/work/w011-engineering/mplconfig"
+      },
+      "outputs": {
+        "stdout": {
+          "path": "pytest-310.stdout.txt",
+          "sha256": "c532a93e787489702a88b08b453646d4f5bea925211269cbfb7a8172b750010f"
+        },
+        "stderr": {
+          "path": "pytest-310.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    "312": {
+      "command": [
+        "/workspace/.venvs/layauto/bin/python",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "tests/unit",
+        "tests/contracts",
+        "-q"
+      ],
+      "cwd": "/workspace/work/w011-engineering/baseline-source",
+      "exit_code": 0,
+      "elapsed_seconds": 3876.750373840332,
+      "environment_overrides": {
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PIP_CACHE_DIR": "/workspace/work/w011-engineering/pip-cache",
+        "MYPY_CACHE_DIR": "/workspace/work/w011-engineering/mypy-312",
+        "MPLCONFIGDIR": "/workspace/work/w011-engineering/mplconfig"
+      },
+      "outputs": {
+        "stdout": {
+          "path": "pytest-312.stdout.txt",
+          "sha256": "e9bcebc3433bfc62ba23140ca80296f4ffb5a28f00401404c06bee841c7c3721"
+        },
+        "stderr": {
+          "path": "pytest-312.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    }
+  },
+  "source_manifest_sha256": "77ccee7674d9519a732fabce544af2e34700b2caafe1353e844dc1a4d511efac",
+  "source_snapshot_sha256": "0bb37076dc176c31ff4d0fdf72e40a93e8a0427fc36acbc8b9cc51834e25563c"
+}

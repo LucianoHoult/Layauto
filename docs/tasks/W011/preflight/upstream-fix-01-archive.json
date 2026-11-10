@@ -1,0 +1,12 @@
+{
+  "original_location": "/workspace/Layauto/work/w011-upstream-fix-01",
+  "archive_location": "upstream-fix-01",
+  "files": {
+    "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "result.json": "abe31fe51cad35a7b3b1cc9469a26cccea32a8d3f8cfc9ce76b82da4e3845b89",
+    "stdout.txt": "9ad6784016e466921b9c069299b6f675b693756b5ccbd48c16a878348fd71d57",
+    "source-manifest.json": "fbae8b5989768931b2fcc0a806b2d404dc071042efc466d9dcd082c1aea6e2aa"
+  },
+  "copied_bytes_equal": true,
+  "original_retained_at_archive_time": true
+}

@@ -1,0 +1,7 @@
+W011 installed smoke: acquire direct/readback captures
+W011 installed smoke: build direct
+W011 installed smoke: build readback
+W011 installed smoke: build extraction mismatch
+W011 installed smoke: reconstruct direct
+W011 installed smoke: reconstruct readback
+W011 installed smoke: reconstruct extraction mismatch

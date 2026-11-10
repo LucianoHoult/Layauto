@@ -1,0 +1,23 @@
+[
+  {
+    "pid": 4662,
+    "label": "contracts-r1",
+    "state": "already exited"
+  },
+  {
+    "pid": 4663,
+    "label": "exceptions-r1",
+    "signal": "SIGTERM",
+    "command": "/workspace/work/w011-engineering/dev312/bin/python -B -m pytest -p no:cacheprovider tests/contracts/test_w011_exceptions.py -q ",
+    "reason": "review fixes supersede this snapshot; limit concurrent heavy reconstruction within 16 GiB environment; interrupted, not a pass",
+    "utc": "2026-11-09T09:05:06Z"
+  },
+  {
+    "pid": 5140,
+    "label": "geometry-r2",
+    "signal": "SIGTERM",
+    "command": "/workspace/work/w011-engineering/dev312/bin/python -B -m pytest -p no:cacheprovider tests/contracts/test_w011_geometry.py -k not actual_direct and not actual_w006 and not normal_result -q ",
+    "reason": "review fixes supersede this snapshot; limit concurrent heavy reconstruction within 16 GiB environment; interrupted, not a pass",
+    "utc": "2026-11-09T09:05:06Z"
+  }
+]

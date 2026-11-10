@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/workspace/Layauto-w011-review/docs/tasks/W011/independent-premerge-evidence/evidence-audit.py", line 200, in <module>
+    check("every per-process sampled maximum", peaks == summary["max_sampled_process_rss_by_pid"])
+  File "/workspace/Layauto-w011-review/docs/tasks/W011/independent-premerge-evidence/evidence-audit.py", line 28, in check
+    assert condition, (label, details)
+           ^^^^^^^^^
+AssertionError: ('every per-process sampled maximum', None)

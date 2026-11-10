@@ -1,0 +1,96 @@
+{
+  "schema_version": "w011-pm-receipt/1",
+  "recorded_at_utc": "2026-11-10T01:39:19.241981+00:00",
+  "reviewed_delivery": "3c464baade7b6ea8c712cfb84265490b8e3f754e",
+  "preparation": "81e01da1e5a6ce8e7132f3cebf8ee92bc237246f",
+  "accepted_main": "61775e8fde6e9ea247ec08a32067c44c3be48ff8",
+  "runtime_fixed": "8917d38d916c914bfa785cb116982f3f299b38de",
+  "engineering_frozen": "e89bdaa6a091f56cfaf7862dced7232d34e22514",
+  "conclusion": "branch_technical_receipt_passed_not_final_acceptance",
+  "new_must_fix_findings": 0,
+  "actual_pm_checks": {
+    "targeted": {
+      "receipt": "pm-evidence/targeted.json",
+      "result": "12 passed, 31 deselected, 1 external pytest plugin warning",
+      "elapsed_seconds": 129.306606225,
+      "coverage": [
+        "actual direct composition with IO forbidden/input unchanged",
+        "complete independent normal crossing sets",
+        "original extraction mismatch actual 4 against declared 5",
+        "exact FIN geometry boundary witnesses"
+      ]
+    },
+    "typing": {
+      "receipt": "pm-evidence/typing.json",
+      "result": "Success: no issues found in 54 source files"
+    },
+    "coverage": {
+      "result": "pm-evidence/coverage-probe.stdout.json",
+      "cases": 384,
+      "independent_atom_membership_checks": 6144,
+      "controls": "permutation, duplicate, exact subdivision; 1/20 scale and +/-2**80 offsets"
+    },
+    "scope": {
+      "report": "pm-evidence/scope/report.md",
+      "must_fix": 0,
+      "cases": 256,
+      "independent_atom_membership_checks": 5981
+    },
+    "engineering": {
+      "report": "pm-evidence/evidence/report.md",
+      "checks_passed": 150,
+      "must_fix": 0,
+      "source_files": 262,
+      "runtime_files_per_package": 100,
+      "final_commands": 21
+    }
+  },
+  "adopted_same_source_evidence": {
+    "python_310": "1605 passed; strict typing54; clean sdist installation and isolated smoke",
+    "python_312": "1605 passed; strict typing54; clean wheel installation and isolated smoke",
+    "original_ids_retained": 1465,
+    "new_ids": 140,
+    "source_manifest_sha256": "dd463fa402a8469ba7212f4781cd2082eb86466b1484810ed89dbc02211bb475",
+    "limits": "Original installation/test trees are absent on this host. Package, archived install file manifests, command output identity and original independent review are adopted; not a new observation, rebuild or installation."
+  },
+  "resource_observations_adopted": {
+    "fresh_readback_wire_bytes": 136461405,
+    "fresh_readback_process_ru_maxrss_kib": 7322828,
+    "long_python_310_test_sampled_rss_kib": 9257804,
+    "shared_cgroup_sampled_bytes_max": 12299743232,
+    "limits": "Fresh-process whole-process high water, long-process samples and shared cgroup samples have distinct scopes. None is W011 incremental allocation or a maximum-input/production bound. No new resource benchmark was run by PM."
+  },
+  "next": {
+    "role": "dedicated independent premerge reviewer",
+    "prompt": "independent-premerge-prompt.md",
+    "then": "If no must-fix remains, PM evaluates main integration and actual merged-version combination checks. Consider evidence/receipt authentication cost before expanding the slice."
+  },
+  "not_done": [
+    "dedicated independent premerge session",
+    "main integration or final PM acceptance",
+    "repeat full dual matrix, build, installation, full readback codec or resource benchmark",
+    "real EDA/production and deferred W011 capabilities"
+  ],
+  "evidence_files": {
+    "coverage-probe.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "coverage-probe.stdout.json": "4073584b67ec9ab9af4d63c5095d61d66c0b3087fd2a2eec1eeade90d6271c2a",
+    "coverage_probe.py": "a96a6861a3036576d94b8a0796e237f10e4e7f68dfee45689843d052dbc5b6c7",
+    "evidence/audit-result.json": "4172f2603aee89af23b03b93c93a3ff734223adbc55338a0eb16e9eeda9a3729",
+    "evidence/audit.py": "41c13c64979bb45ffdba6a6db09585ebd1da74aa601b122d54c37fd185f73c8f",
+    "evidence/audit.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/audit.stdout.json": "d6a18736f1f454f85adb38a44df7fb326cb05b4ac255c0d312d7617078cf91ed",
+    "evidence/report.md": "d0ce544b9e6d9ee09deb1f52e3d3bf66860fedcb5dbd07a171927d56f344e952",
+    "run_checks.py": "a58511dc2f1deddc76e56d2e5fa0fcfdfe737a127e8e6aefb1c8faf69ce88dff",
+    "scope/coverage-result.json": "c5709e5649f97ffc19d17a1af12210c93f8eb8aa534e13f39d57267873f9f6ee",
+    "scope/coverage-stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scope/coverage_probe.py": "f2096527fe017add020200ffa57480dd3e2cbba00336b007241efc2cb07cff17",
+    "scope/report.md": "fd0aecf447b33453e62fa455c602575d1eb8d8bfca9f63c550e5202b242afed8",
+    "scope/static-result.json": "99fcdc1b1413f3e470815ac1459d9e7441f6e3c69a36b01f43e40cbfd5d7559e",
+    "targeted.json": "4562bef67b73eccc721528eb03b42bddf5b3dce18a45a03f8ddd7d33311ca4f9",
+    "targeted.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "targeted.stdout.txt": "6d5b1764a2c13c8704d78f19ecbfb798e69c4797a1062ae31c2086b12e1bcbc7",
+    "typing.json": "51ffe28af881283cf117a1bb25fcaab2f7673b06208bc34cedb7cecc0594feb8",
+    "typing.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "typing.stdout.txt": "80244665c7088b2cce8820f63a43e8138804ae2a8a670798bf2704dd2a9a50a9"
+  }
+}
