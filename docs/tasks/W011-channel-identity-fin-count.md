@@ -7,7 +7,7 @@
 | ID / 目标 | W011；将实际沟道与已认证的器件身份关联，从精确 FIN/active/channel 几何计算有效 fin 数，给出与 source CDL 的有限参数核对及可追溯差异 |
 | 里程碑 / 依赖 | M1 内的 Stage 2 组件。W005–W010 已验收集成；起点 main `61775e8fde6e9ea247ec08a32067c44c3be48ff8`，W010 集成与组合证据见其 [PM2](W010-local-contact-connectivity.md#pm2-integration-20261106) |
 | 授权依据与范围 | 用户 2026-11-09 要求继续推进并说明整体位置。沿用 PM 准备、独立执行 session、独立 review、PM 集成验收的分工；本次先准备任务，不执行产品实现 |
-| 当前阶段 / 阻塞 | 可执行；交接要求独立复核必须修正项 0，PM 已接收。没有需要用户立即选择的新产品预期；下列语义边界须在执行方案中给出明确解释，不得猜测 |
+| 当前阶段 / 阻塞 | 待验收；执行交付、独立代码 review 及 PM 分支技术接收通过，新增/剩余必须修正项 0。专门合并前 review、main 集成与实际组合验证尚待；见 [PM1](#pm1-receipt) |
 | 恢复位置 | 从上述 main 建立 `codex/w011-channel-identity-fin-count`；接手本任务及准备 review 所在的远端提交，核对完整 SHA 和工作区 |
 | 允许修改 | 必要中立 DTO/refs/codec、`annotation/` 的有限 device-channel 定位、`derive/` 或其它符合架构 owner 的只读 FIN 计量、`normalization/` 同源组合；必要 tests、typing/build 配置、README 与 W011 附件。具体模块/算法由执行者决定 |
 | 非目标 | 不修改已验收 fixture/答案，不启用 resize；不做完整 net overlay、body 外部证明/U06、完整器件模型/VT/端子匹配、全部 T02/T03/T08 或 mandatory rules、完整工艺坐标/region occupancy、可变状态/lineage、baseline/seal/no_change/terminal/Stage 6、真实 EDA/生产适配 |
@@ -93,7 +93,17 @@
 
 2026-11-09：W010 已验收集成，本轮只准备 W011。接收未参与调查/起草的 reviewer `/root/w011_handoff_review` 及只读上游专项的[派发要求独立复核](W011/handoff-review.md)，必须修正项 0。受审准备稿 SHA-256 `faf0a6a31d1d4acb0772ad0d328a6726e050fdb58c737c6c34c76daa8d6be3dc`；本次仅追加阶段与 PM 接收记录，未改行为要求/A1–A8。partial seed 和重复/重叠 FIN 的具体输入→结果表属于执行方案及其独立 review 的必读落实提示，不是新的用户决策门。
 
-**W011 可执行，交独立执行 session 先做方案 review 后实现。** 尚无 W011 产品实现、测试或验收结论；本轮只做文档链接、diff、范围与恢复身份检查，未运行产品测试/生成器。准备文档及review提交推送上述 W011 分支，完整发布 SHA 以 Git 与交接回复为准；main 保留已验收版本，未开启下一开发任务。
+最初派发时 **W011 可执行，交独立执行 session 先做方案 review 后实现。** 当时尚无 W011 产品实现、测试或验收结论；该次只做文档链接、diff、范围与恢复身份检查，未运行产品测试/生成器。准备文档及review已由 `81e01da` 提交推送上述 W011 分支；此处保留准备阶段事实，最新接收以下文为准。
+
+<a id="pm1-receipt"></a>
+
+### PM1 分支技术接收
+
+核实远端交付 `3c464baade7b6ea8c712cfb84265490b8e3f754e`、冻结源 `e89bdaa6a091f56cfaf7862dced7232d34e22514`、A1–A8 及独立 findings 处置。PM 本机 Python3.12 实际 **12 passed / 128.69s** 定向回归、strict typing **54 文件通过**；新增 384 例/6,144 项独立 exact coverage 对照通过，另有独立范围/coverage专项及150项工程身份检查通过。262源/快照、两包100runtime、双1605包含原1465及新140、21命令及原输出均已核对。**分支技术接收通过，本次新增必须修正项0；尚未最终验收。**
+
+原双完整矩阵、构建/双安装及更广异常/readback证据按相同源采信；本机没有原安装/测试树，未重建/重装或重复完整矩阵与资源实跑。完整readback原wire为136,461,405 B，fresh-process峰值约6.984GiB；长矩阵另有约8.83GiB的采样高点，不能混称统一7GiB峰值。见[PM接收说明](W011/pm-receipt.md)、[机器回执](W011/pm-receipt.json)及原资源限制。
+
+下一步交专门独立session做[合并前review](W011/independent-premerge-prompt.md)，重点包含当前资源成本是否影响受限集成及后续扩展。通过后再由PM安排main集成/实际组合验证；本轮不合main、不最终验收或启动下一开发任务。W011的partial定位/未知计量不扩大为完整提取或生产能力，U06保留。
 
 ### 独立执行 session prompt
 

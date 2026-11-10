@@ -1,0 +1,15 @@
+{
+  "status": "passed",
+  "cases": 256,
+  "open_atom_membership_checks": 5981,
+  "per_case": [
+    "membership-preserved",
+    "non-overlapping",
+    "exact-area",
+    "order-invariant",
+    "idempotent"
+  ],
+  "elapsed_seconds": 0.12850937899202108,
+  "head": "3c464baade7b6ea8c712cfb84265490b8e3f754e",
+  "probe_sha256": "f2096527fe017add020200ffa57480dd3e2cbba00336b007241efc2cb07cff17"
+}

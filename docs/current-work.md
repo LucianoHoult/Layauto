@@ -1,10 +1,10 @@
 # 当前工作入口
 
-更新：2026-11-09。详细决定、证据与review结论归任务文件。
+最近更新见 W011 PM1。详细决定、证据与review结论归任务文件。
 
 ## 当前节点
 
-**[W011 — 沟道身份匹配与 FIN 计数草稿](tasks/W011-channel-identity-fin-count.md)已准备为可执行。** 从已验收 main `61775e8fde6e9ea247ec08a32067c44c3be48ff8` 建立 `codex/w011-channel-identity-fin-count`；[派发要求独立复核](tasks/W011/handoff-review.md)必须修正项 0，交独立执行 session 先方案 review 后实现。目标是将实际 channel 与 query 器件身份对应，从精确几何计算有效 FIN 并核对 source CDL；正常 MN0=5、MP0=7。没有 W011 产品实现或验证结论，完整 net/body/模型匹配和运行闭环继续保留。
+**[W011 — 沟道身份匹配与 FIN 计数草稿](tasks/W011-channel-identity-fin-count.md)分支技术接收通过，待最终验收。** 原分支 `codex/w011-channel-identity-fin-count` 交付 `3c464baade7b6ea8c712cfb84265490b8e3f754e`，PM实际12项回归/typing54及来源、范围、exact coverage专项通过，新增必须项0，见[PM1](tasks/W011-channel-identity-fin-count.md#pm1-receipt)。已能同源使用query定位channel、几何实算正常5/7及mismatch 4对5；[专门合并前review prompt](tasks/W011/independent-premerge-prompt.md)已准备，尚未合main。完整readback约136.5MB/独立进程约6.984GiB、长矩阵约8.83GiB采样高点是必读限制，扩大组合前须评估捕获保留/重复认证成本。
 
 **[W010 — 局部接触与物理连通草稿](tasks/W010-local-contact-connectivity.md)已验收，并通过[PR #64](https://github.com/LucianoHoult/Layauto/pull/64)合入main `84c54857a1b20b9fb29c9b5a73e7b8d686b6e736`。** 合并tree与已审head一致，PM实际15项定向组合及direct/readback主probe通过，剩余必须修正项0，见[PM2](tasks/W010-local-contact-connectivity.md#pm2-integration-20261106)。原双1465/typing48、包及独立review证据继续适用；P3资源摘要已[澄清](tasks/W010/resource-summary.md)。下一开发任务为上方W011；完整坐标、外部body/完整器件标注与运行发布继续后置。
 
@@ -30,7 +30,7 @@
 
 | 用途 | 恢复依据 |
 | --- | --- |
-| W011 准备 | `codex/w011-channel-identity-fin-count`，基于已验收 main `61775e8fde6e9ea247ec08a32067c44c3be48ff8`；准备要求/交接与review身份见 [W011](tasks/W011-channel-identity-fin-count.md)，无产品交付 |
+| W011 分支技术接收 | `codex/w011-channel-identity-fin-count`，原交付`3c464baade7b6ea8c712cfb84265490b8e3f754e`、冻结源`e89bdaa6a091f56cfaf7862dced7232d34e22514`；[PM1](tasks/W011-channel-identity-fin-count.md#pm1-receipt)及[证据回执](tasks/W011/pm-receipt.json)，接手含PM补记的最新原分支；main仍为已验收W010 |
 | 原已验收实物 | `633e3feef8062565019838f2d270e89b7f81c4ed`，原路径fixture/support/合同/报告及[交付附件](tasks/W003/delivery/w004-20261031/)齐全；helper后续补修见下行 |
 | REQ-01补修 | 在`06821ef64ac710963dcc947861a374cd0fe9dd6d`上修复body helper并新增持久回归；[独立定向复核](tasks/W003/reviews/w004-req01-fix-review.md)绑定修复文件身份。原633e3fe包保留，不冒记其已含本补修 |
 | 原始包身份 | SHA-256 `3cd7bc497391d76656e0327b415ec5c77ce26aa827423dc2b054654977173b39`；8,988项manifest、149路径重建、155文件snapshot及145项r3受审身份已核对 |
@@ -61,11 +61,11 @@
 | 几何事实与基础占用索引 | W008已验收并集成 |
 | CUT有效几何与channel/端区 | W009已验收集成，63项组合验证通过 |
 | 局部接触/connector/component及局部T05 | W010已验收集成；实际15项定向组合及direct/readback通过；外部body与完整mandatory规则未完成 |
-| channel 器件定位与 FIN 实测/有限参数核对 | W011 可执行；将 query 身份线索关联到真实 channel，FIN count/L/width 从几何计算，尚未实现 |
+| channel 器件定位与 FIN 实测/有限参数核对 | W011 分支技术接收通过；正常5/7、mismatch 4对5及来源/范围已核，专门合并前review与main集成待完成 |
 | 完整工艺坐标/annotation/连通/body/提取状态与原子baseline | 后续Stage2任务保留；W008索引及W009区域草稿不替代这些义务 |
 | 无变化的完整判定、只读GDS/CDL/JSON及报告/terminal | 后续Stage3–6组合；通过后才验收M1 |
 
-W010已验收集成，具有明确scope的局部物理图及独立包围事实；示例coordinate与32×16见证仍不能充当完整运行坐标。下一步 W011 先完成 channel 身份与 FIN 计量这一可核对切片，再收敛剩余标注/外部body、完整坐标与规则、原子baseline及运行输出的组合任务；W011不把计数相等提升为完整提取相等或no_change。原drawn及W008 raw occupancy保持，外部body图形独立；生产输入/body任务派发前必须回查U06。
+W010已验收集成，具有明确scope的局部物理图及独立包围事实；示例coordinate与32×16见证仍不能充当完整运行坐标。下一步 W011 专门合并前review，再安排集成；须单列资源成本结论，扩大状态链/输入前优先收敛重复保留与重复认证问题。之后继续剩余标注/外部body、完整坐标与规则、原子baseline及运行输出组合；W011不把计数相等提升为完整提取相等或no_change。原drawn及W008 raw occupancy保持，外部body图形独立；生产输入/body任务派发前必须回查U06。
 
 正常输入在W006仅交接unsealed attempt，不产生成功terminal；W007组件也不推进attempt或宣称整轮成功。C08/09/10和C13的正式终结阶段仍需后续组合验证。完整Stage2/baseline/no_change与Stage6文件闭环仍是M1硬门；真实工具与配置机制后置项保持，新增关键预期带实例交PM/用户。W007验收不等同完整Stage2/M1通过。
 

@@ -1,0 +1,33 @@
+{
+  "argv": [
+    "/workspace/work/w005-pm-check-env/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-p",
+    "no:cacheprovider",
+    "-q",
+    "tests/contracts/test_w011_geometry.py",
+    "-k",
+    "actual_direct_composition_is_pure or normal_result_matches_all_independent or existing_extraction_mismatch_is_actual or exact_fin_geometry_against_independent"
+  ],
+  "cwd": "/workspace/Layauto",
+  "started_utc": "2026-11-10T01:35:56.460894+00:00",
+  "finished_utc": "2026-11-10T01:38:05.767491+00:00",
+  "elapsed_seconds": 129.306606225,
+  "returncode": 0,
+  "head": "3c464baade7b6ea8c712cfb84265490b8e3f754e",
+  "environment_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONPATH": "/workspace/Layauto"
+  },
+  "interpreter": "Python 3.12.14",
+  "stdout.txt": {
+    "bytes": 825,
+    "sha256": "6d5b1764a2c13c8704d78f19ecbfb798e69c4797a1062ae31c2086b12e1bcbc7"
+  },
+  "stderr.txt": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}
