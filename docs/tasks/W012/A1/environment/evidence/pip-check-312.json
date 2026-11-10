@@ -1,0 +1,23 @@
+{
+  "argv": [
+    "/workspace/w012-a1-env/dev312/bin/python",
+    "-m",
+    "pip",
+    "check"
+  ],
+  "cwd": "/workspace/w012-a1-env",
+  "overrides": {
+    "UV_NATIVE_TLS": "true",
+    "UV_CACHE_DIR": "/workspace/w012-a1-env/uv-cache",
+    "UV_PYTHON_INSTALL_DIR": "/workspace/w012-a1-env/python",
+    "PIP_CACHE_DIR": "/workspace/w012-a1-env/pip-cache",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "MPLCONFIGDIR": "/workspace/w012-a1-env/mplconfig"
+  },
+  "started_at_utc": "2026-11-10T06:01:24.251472+00:00",
+  "finished_at_utc": "2026-11-10T06:01:24.535040+00:00",
+  "elapsed_seconds": 0.28358738499991887,
+  "exit_code": 0,
+  "stdout_sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

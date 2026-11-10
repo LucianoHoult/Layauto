@@ -1,0 +1,5 @@
+warning: The `UV_NATIVE_TLS` environment variable is deprecated and will be removed in a future release. Use `UV_SYSTEM_CERTS` instead.
+Downloading cpython-3.10.22-linux-x86_64-gnu (download) (28.0MiB)
+ Downloaded cpython-3.10.22-linux-x86_64-gnu (download)
+Installed Python 3.10.22 in 3.09s
+ + cpython-3.10.22-linux-x86_64-gnu (python3.10)

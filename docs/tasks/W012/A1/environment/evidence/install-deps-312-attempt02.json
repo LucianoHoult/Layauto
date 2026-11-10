@@ -1,0 +1,30 @@
+{
+  "argv": [
+    "/workspace/w012-a1-env/dev312/bin/python",
+    "-m",
+    "pip",
+    "install",
+    "--retries",
+    "1",
+    "--timeout",
+    "10",
+    "--report",
+    "/workspace/w012-a1-env/evidence/pip-report-312.json",
+    "-r",
+    "/workspace/w012-a1-env/requirements-312.txt"
+  ],
+  "cwd": "/workspace/w012-a1-env",
+  "overrides": {
+    "UV_NATIVE_TLS": "true",
+    "UV_CACHE_DIR": "/workspace/w012-a1-env/uv-cache",
+    "UV_PYTHON_INSTALL_DIR": "/workspace/w012-a1-env/python",
+    "PIP_CACHE_DIR": "/workspace/w012-a1-env/pip-cache",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "started_at_utc": "2026-11-10T05:59:31.715041+00:00",
+  "finished_at_utc": "2026-11-10T05:59:53.503389+00:00",
+  "elapsed_seconds": 21.788374449999537,
+  "exit_code": 0,
+  "stdout_sha256": "651c25850c5f1e98c8fafeb2a2eec688372a78635f1b7e19a465567a0996904c",
+  "stderr_sha256": "f96a57a6d17645d3d9eb401b9cead41a648edf2499f2ca4bc3f9364d677b6080"
+}

@@ -1,0 +1,1 @@
+A1 serial runner lightweight selfcheck passed

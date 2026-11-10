@@ -1,0 +1,23 @@
+{
+  "argv": [
+    "/workspace/w012-a1-env/dev312/bin/python",
+    "-B",
+    "-c",
+    "import sys,platform,json,importlib.metadata as m,numpy,matplotlib,yaml,pytest,mypy.version,build;print(json.dumps({\"executable\":sys.executable,\"base_executable\":sys._base_executable,\"version\":sys.version,\"platform\":platform.platform(),\"distributions\":{d.metadata[\"Name\"]:d.version for d in m.distributions()},\"product_not_installed\":all(d.metadata[\"Name\"].lower()!=\"layauto\" for d in m.distributions())},indent=2,sort_keys=True))"
+  ],
+  "cwd": "/workspace/w012-a1-env",
+  "overrides": {
+    "UV_NATIVE_TLS": "true",
+    "UV_CACHE_DIR": "/workspace/w012-a1-env/uv-cache",
+    "UV_PYTHON_INSTALL_DIR": "/workspace/w012-a1-env/python",
+    "PIP_CACHE_DIR": "/workspace/w012-a1-env/pip-cache",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "MPLCONFIGDIR": "/workspace/w012-a1-env/mplconfig"
+  },
+  "started_at_utc": "2026-11-10T06:01:25.364960+00:00",
+  "finished_at_utc": "2026-11-10T06:01:25.817681+00:00",
+  "elapsed_seconds": 0.4527461719990242,
+  "exit_code": 0,
+  "stdout_sha256": "6bb0cfa2f36a9695c1d8d7f939e14498db1301b74350aa33fbc0b4b9b7e9a0da",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

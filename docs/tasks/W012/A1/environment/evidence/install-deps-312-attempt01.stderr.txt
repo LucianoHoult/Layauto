@@ -1,0 +1,3 @@
+WARNING: Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ProxyError('Cannot connect to proxy.', NewConnectionError('<pip._vendor.urllib3.connection.HTTPSConnection object at 0x7f972230a900>: Failed to establish a new connection: [Errno 1] Operation not permitted'))': /simple/numpy/
+ERROR: Could not find a version that satisfies the requirement numpy==2.5.4 (from versions: none)
+ERROR: No matching distribution found for numpy==2.5.4

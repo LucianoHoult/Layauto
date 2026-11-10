@@ -1,0 +1,5 @@
+cpython-3.13.5-linux-x86_64-gnu     /usr/bin/python3.13
+cpython-3.13.5-linux-x86_64-gnu     /usr/bin/python3 -> python3.13
+cpython-3.12.14-linux-x86_64-gnu    /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12
+cpython-3.12.14-linux-x86_64-gnu    /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3 -> python3.12
+cpython-3.12.14-linux-x86_64-gnu    /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python -> python3.12

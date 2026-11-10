@@ -1,0 +1,22 @@
+{
+  "argv": [
+    "/workspace/w012-a1-env/python/cpython-3.10-linux-x86_64-gnu/bin/python3.10",
+    "-m",
+    "venv",
+    "/workspace/w012-a1-env/dev310"
+  ],
+  "cwd": "/workspace/w012-a1-env",
+  "overrides": {
+    "UV_NATIVE_TLS": "true",
+    "UV_CACHE_DIR": "/workspace/w012-a1-env/uv-cache",
+    "UV_PYTHON_INSTALL_DIR": "/workspace/w012-a1-env/python",
+    "PIP_CACHE_DIR": "/workspace/w012-a1-env/pip-cache",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "started_at_utc": "2026-11-10T05:59:02.732254+00:00",
+  "finished_at_utc": "2026-11-10T05:59:06.836606+00:00",
+  "elapsed_seconds": 4.104377507999743,
+  "exit_code": 0,
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

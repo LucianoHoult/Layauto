@@ -1,0 +1,8 @@
+error: Failed to install cpython-3.10.22-linux-x86_64-gnu
+  cause: Request failed after 3 retries in 8.2s
+  cause: Failed to download `https://github.com/astral-sh/python-build-standalone/releases/download/20261003/cpython-3.10.22%2B20261003-x86_64-unknown-linux-gnu-install_only_stripped.tar.gz`
+  cause: error sending request for url (https://github.com/astral-sh/python-build-standalone/releases/download/20261003/cpython-3.10.22%2B20261003-x86_64-unknown-linux-gnu-install_only_stripped.tar.gz)
+  cause: client error (Connect)
+  cause: tunnel error: failed to create underlying connection
+  cause: tcp open error
+  cause: Operation not permitted (os error 1)

@@ -1,0 +1,7 @@
+Original command: /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/uv python list --only-installed
+Original cwd: /workspace/Layauto
+Exit code: 2
+Original stderr:
+error: Failed to initialize cache at `/home/agent/.cache/uv`
+  cause: failed to open file `/home/agent/.cache/uv/CACHEDIR.TAG`: Read-only file system (os error 30)
+Disposition: use task-specific UV_CACHE_DIR, preserving read-only home and existing shared venv.
