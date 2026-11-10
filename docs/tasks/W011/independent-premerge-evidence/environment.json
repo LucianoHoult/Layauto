@@ -1,0 +1,27 @@
+{
+  "observed_utc": "2026-11-10T01:58:50.469047+00:00",
+  "cwd": "/workspace/Layauto-w011-review",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "branch": "codex/w011-channel-identity-fin-count",
+  "head": "8452027e57fb1c58607640d7eb755b38ffc70716",
+  "original_checkout": {
+    "path": "/workspace/Layauto",
+    "branch": "work",
+    "head": "61775e8fde6e9ea247ec08a32067c44c3be48ff8",
+    "status": ""
+  },
+  "memory": {
+    "memory.max": "17179869184",
+    "memory.current": "293355520",
+    "memory.swap.max": "max",
+    "cpu.max": "400000 100000"
+  },
+  "local_AGENTS": [
+    "AGENTS.md"
+  ],
+  "tools": {
+    "mypy_available": false
+  },
+  "note": "Existing 3.12 environment; no installation performed. Initial pre-fetch work checkout was clean. Current memory observation occurs during the selected direct regression; not a benchmark. Initial free reported ~16 GiB available and no test/codec processes. Network Git retried with authorized sandbox escalation after proxy connect failure; remote SHA recorded in report."
+}

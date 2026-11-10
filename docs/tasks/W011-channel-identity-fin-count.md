@@ -89,6 +89,14 @@
 
 **独立 review 剩余必须修正项 0，A1–A8 对应代码和工程证据可交 PM 复核。** 此结论不代替 PM 验收或最终 Git 交接；执行者仍按原 W011 分支提交推送并核远端完整 SHA。资源数据仅为记录环境中的有限 synthetic 样本，constructor 包含于 build/decode、RSS 非增量内存；完整 net/body/模型、全部规则/工艺坐标、发布/no_change/Stage6 和 U06 继续后置。
 
+### R2 独立合并前复核（2026-11-10，reviewer）
+
+本次独立 session `/root` 及几何、边界、工程/资源专项未参与 W011 原设计、实现或正式测试编写；实核 main `61775e8fde6e9ea247ec08a32067c44c3be48ff8` → 含 PM 接收的原分支最新待审 head `8452027e57fb1c58607640d7eb755b38ffc70716` 全部交付。准备、产品修正、冻结、执行交付与待审 head 的祖先及字节等价关系闭合；262 项源码/测试/配置、100 项 runtime 与原双矩阵冻结身份一致，PM 后续文档不冒记为新受测源码。原 checkout 干净并保留，本次在独立 worktree 复核。
+
+**新增 finding 0，剩余必须修正项 0，建议 PM 进入 main 集成及实际合并版本的组合验证。** A1–A8、CR-01–CR-06 原问题/修正/关闭及范围限制见[完整报告](W011/independent-premerge-review.md)。本次 W011 定向真实组合/完整集合/mismatch/未知计量/拓扑/跨捕获/完整来源回归 **9 passed / 504.95s**，W007 原 malformed wire 回归 **6 passed / 8.67s**；另新编 325 个 FIN 独立判据、8种定位变体、300组 exact union/62,900成员点、两条真实错误 source pointer、新公开边界和异常历史探针均通过。工程专项297项核对通过，262源/完整快照、两包各100 runtime、原1465+新140的双1605完整IDs、双typing54、21命令原输出及双安装源码外smoke均按身份核实。原双全量/readback/安装采用归档证据，本机原安装树不存在；没有冒称重装、重跑双矩阵或完整 readback codec。原失败、tests-only修正、HG-01及本次审计脚本自身失败均保留其实际范围。
+
+资源单列判断：原完整 readback wire 136,461,405 B、整进程 ru_maxrss 7,322,828 KiB，长矩阵另有9,257,804 KiB采样高点，来源/测量边界独立核实；RSS非W011增量，采样非精确峰值，constructor包含于build/decode。当前16GiB/4 quota的有限串行M1路径没有已证实资源阻塞，但成本显著；建议保持重型互斥串行，扩大链/输入前由PM优先准备已登记W012，不以少跑测试替代单次产品成本优化，也不虚构最大规模/生产通过或新验收门。本轮仅写review材料和本段，未改产品/正式测试/fixture/历史报告/PM/current-work，未验收、合main、删分支或启动后续任务；沿用项目noreply身份提交推送原W011分支，最终远端完整SHA交接时实核。
+
 ## PM 验收与交接（PM）
 
 2026-11-09：W010 已验收集成，本轮只准备 W011。接收未参与调查/起草的 reviewer `/root/w011_handoff_review` 及只读上游专项的[派发要求独立复核](W011/handoff-review.md)，必须修正项 0。受审准备稿 SHA-256 `faf0a6a31d1d4acb0772ad0d328a6726e050fdb58c737c6c34c76daa8d6be3dc`；本次仅追加阶段与 PM 接收记录，未改行为要求/A1–A8。partial seed 和重复/重叠 FIN 的具体输入→结果表属于执行方案及其独立 review 的必读落实提示，不是新的用户决策门。
