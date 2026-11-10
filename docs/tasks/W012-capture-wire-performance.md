@@ -7,9 +7,9 @@
 | ID / 目标 | W012；降低真实组件组合中完整捕获保留、wire 编解码和重复认证/重建的耗时与内存，保持可审计来源及公开验证合同 |
 | 里程碑 / 依赖 | M1 工程支撑，关联 R13/R27/R28；承接 W011 的明确稳定版本，优先于继续扩大状态链/输入。W011已由PR #65验收集成，见其PM2；本次先派发P1/P2调查 |
 | 授权依据 | 用户明确要求：开发阶段先跑新增及受影响范围，最终交付再跑双全量；PM 单列完整捕获、wire 膨胀和重复重建优化任务，不能只减少测试数量 |
-| 当前阶段 / 阻塞 | **待准备：P1/P2、PP1–PP5调查阶段已验收，兼容A1实施待下一次明确派发。** 新增必须项0；产品优化未实施，B新格式与整体降幅/生产上界未批准，见 [PM1](#pm1-investigation) |
-| 恢复 / 分支 | W011 原交付 `3c464baade7b6ea8c712cfb84265490b8e3f754e`，工程冻结 `e89bdaa6a091f56cfaf7862dced7232d34e22514`；[PM1](W011-channel-identity-fin-count.md#pm1-receipt)记录核验。W011已由PR #65合入main `59f2cda44e30779bb3e82346d71a389831314506`，最终验收见其PM2；从含验收补记的main另建 `codex/w012-capture-wire-performance`，main起点 `0a3326aa363477724465886cd05874d0997fba3e`，接手含本派发记录的最新W012分支head |
-| 本次允许写入 | `docs/tasks/W012/` 下的测量工具、工具自检、命令/环境/源码与输入身份、原输出、成本分析、实施方案和独立review；执行者更新本任务的方案/执行区，reviewer更新review区。产品runtime、正式测试、fixture/答案、架构、历史附件及current-work不改 |
+| 当前阶段 / 阻塞 | **可执行：仅兼容A1实施，派发要求独立复核必须项0，PM已接收。** P1/P2已验收，产品优化未实施；不批准B新格式、writer/reader/memo或整体降幅承诺，见 [PM1](#pm1-investigation)及[A1](#a1-implementation) |
+| 恢复 / 分支 | A1从调查接收提交 `9b573c99d5f4021636f498292f42b53540bff1a1` 建立 `codex/w012-compatible-hex-validation`；接手含A1派发记录的最新head。原调查分支`codex/w012-capture-wire-performance`保留，产品runtime仍等同已验收main `0a3326aa363477724465886cd05874d0997fba3e`/W011冻结源；本轮准备不合main |
+| 本次允许写入 | A1仅 `layauto_v2/domain/codec.py` 的bytes hex校验及直接必要的tests；本任务执行/方案区、W012下新的A1方案/验证/性能/review附件。不要覆盖P1/P2原测量工具、原输出、报告或finding；不改其它runtime、正式fixture/答案、架构或current-work。PM维护阶段/范围，reviewer维护其结论 |
 | 约束 / 非目标 | 保留原始 bytes、来源/单位/owner/run 绑定、不可变性、公开 constructor/codec 完整验证和异常历史；不修改 fixture/答案、语义计量或生产输入要求，不扩展 body/U06 或物理能力。测试调度/并发 gate 本身不算本任务的性能成果 |
 | 架构依据 | [architecture](../architecture.md) §2.2–2.3、§2.6、§3.7–3.8、§11.2/11.9/11.15；[协作规则](../collaboration/rules.md)的最终验证与证据要求；W005–W011 的来源、不可变 DTO、codec 和错误合同 |
 | 分工 | PM 收敛目标与派发；执行者提供 profile/方案和实现；未承担设计/实现者分别复核方案与最终正确性、性能证据 |
@@ -37,11 +37,11 @@ W011 原资源测量每个 case 含 31 份捕获、共 280,706 B，40 条 drawn 
 | A3 性能实证 | 同条件前后分别运行完整 direct、完整 readback、原 mismatch，报告时间、wire、峰值、重复工作变化及退化；审查改善是否来自实际减少冗余。原脚本/数据/版本保留，不能把中立 draft、热缓存、不同捕获 URI 或不同对象保留范围冒充同条件完整 Result 对照 |
 | A4 工程交付 | 开发时先新增及受影响范围；最终冻结后双解释器全量、typing、构建/干净安装与来源/异常负例按实际接口完成。记录选择依据和最终源身份；不将少跑测试、删断言或并发门控当成单次成本下降 |
 
-当前没有新的输入使用预期需用户立即决定。尚未选定优化算法、wire 合同或数值验收目标；后续准备按实际证据收敛。
+当前没有新的输入使用预期需用户立即决定。A1只更换既有bytes hex校验的内部算法，不改变wire合同；20%/50%仍为整体兼容包建议而非A1硬门，新格式B须另备具体兼容/身份/迁移材料后再决定。
 
-### 本次 P1/P2 派发与完成判据
+### 原 P1/P2 派发与完成判据（已交付并接收）
 
-本次交付是调查和可实施方案。优化实现须等 PM 接收调查及独立 review 后再明确派发；上表 A1–A4 约束未来实施，不能把本次只完成调查写成产品优化完成。
+原阶段交付是调查和可实施方案，已由PM1接收；上表A1–A4为整体兼容优化方向。以下保留原PP1–PP5要求，本次实施范围以末尾的A1实施验收I1–I6为准。
 
 | 项 | 本次须交付的证据 |
 | --- | --- |
@@ -93,6 +93,29 @@ W011已验收集成后，PM首次派发本任务的P1/P2调查阶段；本次可
 接收交付 `5085f994f0bd4b0c39f7ac1ccdbcacc43d281720`：PP1–PP5及独立review原R01修正/关闭成立，新增必须项0。PM实际1048项证据/工具核验、18项观测器透明性/异常小检查及原probe轻量selfcheck通过；262源/100runtime未改，原双全量/typing/包安装按同源证据采信，未重复重型基线/profile。详见[PM接收说明](W012/pm-receipt.md)及[机器回执](W012/pm-receipt.json)。本机固定mismatch目录不存在，35项origin/清单及原测量capture身份已核，后续同条件比较前须重建；不冒称本次重测。
 
 **P1/P2调查阶段验收通过，W012产品优化尚未完成。** 先准备兼容A1，仅处理已定位的hex matcher瞬时内存成本，保持现有格式/字节/hash/ref、公开验证和异常合同。原20%/50%为完整兼容包的未验证目标建议，不自动成为A1硬门；必须实际报告完整三路前后峰值与耗时及退化。writer/reader/memo按A1实测再细化，B新wire另备具体兼容/身份/迁移材料后给用户决定，不让B阻塞A1。调查材料本轮保存原分支，未合main；下一实施另建分支并给独立执行prompt，原派发记录如下保留。
+
+<a id="a1-implementation"></a>
+
+### A1 实施要求（PM派发准备）
+
+目标是消除现有 `domain.codec._decode` 的重复分组hex matcher造成的瞬时大内存成本，先验证最小兼容改动。算法可采用等价的不重复分组校验加偶数长度检查或有界扫描，由执行者给最小方案并经独立review；不把实施建议的某段正则当唯一可用实现。
+
+| 项 | 输入/条件 → 预期与证据 |
+| --- | --- |
+| I1 接受语言和错误合同 | 空hex仍表示空bytes；只接受偶数长度的小写ASCII hex。大小写/奇数/空白/换行/Unicode近似字符及畸形tag/JSON/canonical表示的拒绝合同保持，不能只用宽松fromhex准入或顺手收紧公开类型。用独立有限语言对照和边界/生成见证证明等价 |
+| I2 完整身份保持 | `/1` schema、公开签名、canonical bytes/wire大小、record_digest/content refs及所有源/run/owner关系不变；完整三路径wire/hash与同捕获原版逐字节一致。最终canonical重编码检查、原始bytes及完整Result不删减，不引入trusted/cache或改认证/constructor次数 |
+| I3 失败与嵌套边界 | 已有公开decode/constructor错误及异常object/cause/context/suppression保持，包含matcher/fromhex、各层codec及预期错误后二次认证故障；不宽捕获/重包意外异常。保留原findings及回归，不通过删断言/降覆盖消除失败 |
+| I4 完整性能证据 | 同机/解释器/依赖、固定输入URI/RunRequest/cache/保留roots/GC条件，优化前后完整direct/readback/原mismatch各fresh串行测量。开发先单组筛选，最终两侧各3次，用各次及中位数报告耗时、wire、整进程峰值和退化，可复用本轮已满足同条件身份的样本；历史不同环境单次不充当前before。核是否消除已定位的matcher峰值；若残余成本不明或需越界改动，交PM，不自行扩成writer/memo。新profile/窗口诊断与无插桩baseline分开，不能以microbenchmark或少跑测试代替完整结果 |
+| I5 原产品行为 | 正常5/7、原mismatch实测4对source5/恰一项差异、完整FIN/crossing/来源、局部图/T05/body、readback attempt/checkpoint不变/unsealed/无terminal及target独立保持；更广受影响来源/错型等值/别名/异常负例按影响验证。输入目录与runtime导入位置分开，比较前按P1清单重建核对固定mismatch目录 |
+| I6 工程与review | 开发新增/受影响优先；最终新冻结源双解释器全量、strict typing、构建和双干净安装源码外完整组合smoke。源码/测试/配置、工具/输入、原输出/失败和前后包身份可访问。独立方案/代码/正确性/性能review必须项0后交PM；不自行验收/合main、改入口或启动下一子项 |
+
+I4要求完整路径实证，不承诺20%/50%降幅或生产上界。兼容A1的wire减幅必须为0；解决瞬时峰值后，剩余wire膨胀/重复重建按数据再安排。新格式B的公开范围、默认兼容、hash/ref及历史迁移均不在本次授权内。
+
+### PM2 兼容A1派发
+
+未参与调查/设计/起草的 `/root/w012_a1_handoff_review` 完成[派发要求独立复核](W012/A1-handoff-review.md)，必须修正项0；受审task SHA-256 `c9ab53287f654dcd26e4e5d4f5eea7abc1a29ee19695681e331076ec4774e105`、prompt SHA-256 `70ab51c2e5395d1d62c69ad88664decd7253a88c442997f624f6ec200ddd1c3a`。本补记仅更新阶段/PM接收，不改I1–I6或prompt。**A1可执行，交独立执行session先最小方案review后实现。** 没有新性能结果或A1验收结论；本次只做文档/来源/恢复检查，未运行新算法或重型矩阵。
+
+下一执行session使用 [A1完整prompt](W012/A1-execution-prompt.md)，从含本记录的 `codex/w012-compatible-hex-validation` 最新PM准备提交恢复，最终SHA由Git与交接回复给出；原调查分支与PM1记录保留，main未合入本次准备。实施范围、B未批准及交PM停止边界按上文执行。原P1/P2 prompt仅为历史记录。
 
 ### 独立执行 session prompt（原P1/P2派发，已交付）
 
