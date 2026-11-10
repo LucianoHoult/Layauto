@@ -1,0 +1,393 @@
+{
+  "status": "passed",
+  "review_commit": "0c698bdb2a1a57c2b06d3417b44f64d880b93c41",
+  "product_test_freeze": "ca1f810c3c97376f71089d8b4054760ff198012f",
+  "changed_paths_in_authorized_scope": 432,
+  "source_test_config_equal_to_freeze": true,
+  "pm_section_unchanged": true,
+  "handwritten_and_structured_diff_whitespace_check": "passed; raw text outputs preserved separately",
+  "local_markdown_links_checked": 88,
+  "accessible_git_artifacts": [
+    {
+      "side": "before",
+      "kind": "wheel",
+      "git_path": "docs/tasks/W012/A1/before-package/dist/layauto-0.2.0-py3-none-any.whl",
+      "sha256": "ffff7cd43c4680024fda7efdc9f1fc912e2273b0405c9fb1645f2cb8e9212441"
+    },
+    {
+      "side": "before",
+      "kind": "sdist",
+      "git_path": "docs/tasks/W012/A1/before-package/dist/layauto-0.2.0.tar.gz",
+      "sha256": "afb9db801fd45801a8e0ec69485ee65178b707ac21fde1b2ed5d44f067b98a94"
+    },
+    {
+      "side": "after",
+      "kind": "wheel",
+      "git_path": "docs/tasks/W012/A1/verification-r2/dist/layauto-0.2.0-py3-none-any.whl",
+      "sha256": "1f1cb417fdf810156a4af7a75d9cf5561151e13cc80f1b524b274ba64962e3d4"
+    },
+    {
+      "side": "after",
+      "kind": "sdist",
+      "git_path": "docs/tasks/W012/A1/verification-r2/dist/layauto-0.2.0.tar.gz",
+      "sha256": "4ee7262bb4133623bf6013aaf966156ebbc9fba8117ff874d05e41853a47b46c"
+    }
+  ],
+  "all_new_authors_and_committers_use_project_noreply": true,
+  "engineering_receipt_sha256": "c9b35fb1e4b658b7058882ecbfbfaff7ee44fc6980aa13145d5ac44aaf211898",
+  "review_report": "independent-review.md",
+  "links": [
+    {
+      "from": "docs/tasks/W012-capture-wire-performance.md",
+      "to": "../architecture.md"
+    },
+    {
+      "from": "docs/tasks/W012-capture-wire-performance.md",
+      "to": "../collaboration/rules.md"
+    },
+    {
+      "from": "docs/tasks/W012-capture-wire-performance.md",
+      "to": "W011/resources/receipt.json"
+    },
+    {
+      "from": "docs/tasks/W012-capture-wire-performance.md",
+      "to": "W011/pm-receipt.md"
+    },
+    {
+      "from": "docs/tasks/W012-capture-wire-performance.md",
+      "to": "W012/measurement-plan.md"
+    },
+    {
+      "from": "docs/tasks/W012-capture-wire-performance.md",
+      "to": "W012/cost-analysis.md"
+    },
+    {
+      "from": "docs/tasks/W012-capture-wire-performance.md",
+      "to": "W012/implementation-proposal.md"
+    },
+    {
+      "from": "docs/tasks/W012-capture-wire-performance.md",
+      "to": "W012/preflight.json"
+    },
+    {
+      "from": "docs/tasks/W012-capture-wire-performance.md",
+      "to": "W012/selfcheck.json"
+    },
+    {
+      "from": "docs/tasks/W012-capture-wire-performance.md",
+      "to": "W012/measurement-receipt.json"
+    },
+    {
+      "from": "docs/tasks/W012-capture-wire-performance.md",
+      "to": "W012/cost-summary.json"
+    },
+    {
+      "from": "docs/tasks/W012-capture-wire-performance.md",
+      "to": "W012/memory-profile-normal-readback.json"
+    },
+    {
+      "from": "docs/tasks/W012-capture-wire-performance.md",
+      "to": "W012/implementation-proposal.md"
+    },
+    {
+      "from": "docs/tasks/W012-capture-wire-performance.md",
+      "to": "W012/validation.json"
+    },
+    {
+      "from": "docs/tasks/W012-capture-wire-performance.md",
+      "to": "W012/A1/plan.md"
+    },
+    {
+      "from": "docs/tasks/W012-capture-wire-performance.md",
+      "to": "W012/A1/plan-review.md"
+    },
+    {
+      "from": "docs/tasks/W012-capture-wire-performance.md",
+      "to": "W012/A1/execution.md"
+    },
+    {
+      "from": "docs/tasks/W012-capture-wire-performance.md",
+      "to": "W012/A1/development-commands.json"
+    },
+    {
+      "from": "docs/tasks/W012-capture-wire-performance.md",
+      "to": "W012/A1/performance/receipt.json"
+    },
+    {
+      "from": "docs/tasks/W012-capture-wire-performance.md",
+      "to": "W012/A1/performance-analysis.md"
+    },
+    {
+      "from": "docs/tasks/W012-capture-wire-performance.md",
+      "to": "W012/A1/preflight.json"
+    },
+    {
+      "from": "docs/tasks/W012-capture-wire-performance.md",
+      "to": "W012/A1/verification-r2/receipt.json"
+    },
+    {
+      "from": "docs/tasks/W012-capture-wire-performance.md",
+      "to": "W012/A1/package-comparison.json"
+    },
+    {
+      "from": "docs/tasks/W012-capture-wire-performance.md",
+      "to": "W012/independent-review.md"
+    },
+    {
+      "from": "docs/tasks/W012-capture-wire-performance.md",
+      "to": "W012/A1/plan-review.md"
+    },
+    {
+      "from": "docs/tasks/W012-capture-wire-performance.md",
+      "to": "W012/A1/independent-review.md"
+    },
+    {
+      "from": "docs/tasks/W012-capture-wire-performance.md",
+      "to": "W012/handoff-review.md"
+    },
+    {
+      "from": "docs/tasks/W012-capture-wire-performance.md",
+      "to": "W012/pm-receipt.md"
+    },
+    {
+      "from": "docs/tasks/W012-capture-wire-performance.md",
+      "to": "W012/pm-receipt.json"
+    },
+    {
+      "from": "docs/tasks/W012-capture-wire-performance.md",
+      "to": "W012/A1-handoff-review.md"
+    },
+    {
+      "from": "docs/tasks/W012-capture-wire-performance.md",
+      "to": "W012/A1-execution-prompt.md"
+    },
+    {
+      "from": "docs/tasks/W012/A1/baseline-review.md",
+      "to": "baseline-review-evidence/check.py"
+    },
+    {
+      "from": "docs/tasks/W012/A1/baseline-review.md",
+      "to": "baseline-review-evidence/stdout.txt"
+    },
+    {
+      "from": "docs/tasks/W012/A1/baseline-review.md",
+      "to": "baseline-review-evidence/stderr.txt"
+    },
+    {
+      "from": "docs/tasks/W012/A1/baseline-review.md",
+      "to": "baseline-review-evidence/result.json"
+    },
+    {
+      "from": "docs/tasks/W012/A1/baseline-review.md",
+      "to": "baseline-review-evidence/hook_check.py"
+    },
+    {
+      "from": "docs/tasks/W012/A1/baseline-review.md",
+      "to": "baseline-review-evidence/hook-result.json"
+    },
+    {
+      "from": "docs/tasks/W012/A1/early-review.md",
+      "to": "early-review-evidence/reproduce_runner.py"
+    },
+    {
+      "from": "docs/tasks/W012/A1/early-review.md",
+      "to": "early-review-evidence/run_performance-before-R01.py.txt"
+    },
+    {
+      "from": "docs/tasks/W012/A1/early-review.md",
+      "to": "early-review-evidence/runner-R01-reproduction.json"
+    },
+    {
+      "from": "docs/tasks/W012/A1/early-review.md",
+      "to": "early-review-evidence/verify_runner_fix.py"
+    },
+    {
+      "from": "docs/tasks/W012/A1/early-review.md",
+      "to": "early-review-evidence/runner-R01-fix-verification.json"
+    },
+    {
+      "from": "docs/tasks/W012/A1/early-review.md",
+      "to": "recovery-review-evidence/check.py"
+    },
+    {
+      "from": "docs/tasks/W012/A1/execution.md",
+      "to": "plan-review.md"
+    },
+    {
+      "from": "docs/tasks/W012/A1/execution.md",
+      "to": "development-commands.json"
+    },
+    {
+      "from": "docs/tasks/W012/A1/execution.md",
+      "to": "preflight.json"
+    },
+    {
+      "from": "docs/tasks/W012/A1/execution.md",
+      "to": "performance-analysis.md"
+    },
+    {
+      "from": "docs/tasks/W012/A1/execution.md",
+      "to": "verification-attempt-01/"
+    },
+    {
+      "from": "docs/tasks/W012/A1/execution.md",
+      "to": "interruption-01.json"
+    },
+    {
+      "from": "docs/tasks/W012/A1/execution.md",
+      "to": "verification-r2/"
+    },
+    {
+      "from": "docs/tasks/W012/A1/execution.md",
+      "to": "recovery-plan.json"
+    },
+    {
+      "from": "docs/tasks/W012/A1/execution.md",
+      "to": "reconnect-02.json"
+    },
+    {
+      "from": "docs/tasks/W012/A1/execution.md",
+      "to": "post-reconnect-samples.jsonl"
+    },
+    {
+      "from": "docs/tasks/W012/A1/execution.md",
+      "to": "verification-r2/receipt.json"
+    },
+    {
+      "from": "docs/tasks/W012/A1/execution.md",
+      "to": "completion-observation.json"
+    },
+    {
+      "from": "docs/tasks/W012/A1/execution.md",
+      "to": "package-comparison.json"
+    },
+    {
+      "from": "docs/tasks/W012/A1/execution.md",
+      "to": "independent-review.md"
+    },
+    {
+      "from": "docs/tasks/W012/A1/independent-review.md",
+      "to": "final-review-evidence/reviewed-manifest.json"
+    },
+    {
+      "from": "docs/tasks/W012/A1/independent-review.md",
+      "to": "plan-review.md"
+    },
+    {
+      "from": "docs/tasks/W012/A1/independent-review.md",
+      "to": "early-review.md"
+    },
+    {
+      "from": "docs/tasks/W012/A1/independent-review.md",
+      "to": "early-review-evidence/runner-R01-reproduction.json"
+    },
+    {
+      "from": "docs/tasks/W012/A1/independent-review.md",
+      "to": "early-review-evidence/runner-R01-fix-verification.json"
+    },
+    {
+      "from": "docs/tasks/W012/A1/independent-review.md",
+      "to": "plan-review.md"
+    },
+    {
+      "from": "docs/tasks/W012/A1/independent-review.md",
+      "to": "performance-analysis.md"
+    },
+    {
+      "from": "docs/tasks/W012/A1/independent-review.md",
+      "to": "plan-review-evidence/result.json"
+    },
+    {
+      "from": "docs/tasks/W012/A1/independent-review.md",
+      "to": "baseline-review-evidence/result.json"
+    },
+    {
+      "from": "docs/tasks/W012/A1/independent-review.md",
+      "to": "baseline-review-evidence/hook-result.json"
+    },
+    {
+      "from": "docs/tasks/W012/A1/independent-review.md",
+      "to": "profile-package-review-evidence/result.json"
+    },
+    {
+      "from": "docs/tasks/W012/A1/independent-review.md",
+      "to": "recovery-review-evidence/result.json"
+    },
+    {
+      "from": "docs/tasks/W012/A1/independent-review.md",
+      "to": "engineering-review-evidence/result.json"
+    },
+    {
+      "from": "docs/tasks/W012/A1/independent-review.md",
+      "to": "final-review-evidence/result.json"
+    },
+    {
+      "from": "docs/tasks/W012/A1/performance-analysis.md",
+      "to": "performance/"
+    },
+    {
+      "from": "docs/tasks/W012/A1/performance-analysis.md",
+      "to": "performance-summary.json"
+    },
+    {
+      "from": "docs/tasks/W012/A1/performance-analysis.md",
+      "to": "performance/receipt.json"
+    },
+    {
+      "from": "docs/tasks/W012/A1/performance-analysis.md",
+      "to": "profile-summary.json"
+    },
+    {
+      "from": "docs/tasks/W012/A1/performance-analysis.md",
+      "to": "verification-r2/receipt.json"
+    },
+    {
+      "from": "docs/tasks/W012/A1/performance-analysis.md",
+      "to": "package-comparison.json"
+    },
+    {
+      "from": "docs/tasks/W012/A1/performance-analysis.md",
+      "to": "execution.md"
+    },
+    {
+      "from": "docs/tasks/W012/A1/performance-analysis.md",
+      "to": "independent-review.md"
+    },
+    {
+      "from": "docs/tasks/W012/A1/plan-review.md",
+      "to": "plan-review-evidence/check.py"
+    },
+    {
+      "from": "docs/tasks/W012/A1/plan-review.md",
+      "to": "plan-review-evidence/command.json"
+    },
+    {
+      "from": "docs/tasks/W012/A1/plan-review.md",
+      "to": "plan-review-evidence/stdout.txt"
+    },
+    {
+      "from": "docs/tasks/W012/A1/plan-review.md",
+      "to": "plan-review-evidence/stderr.txt"
+    },
+    {
+      "from": "docs/tasks/W012/A1/plan-review.md",
+      "to": "plan-review-evidence/result.json"
+    },
+    {
+      "from": "docs/tasks/W012/A1/profile-package-review.md",
+      "to": "profile-package-review-evidence/check.py"
+    },
+    {
+      "from": "docs/tasks/W012/A1/profile-package-review.md",
+      "to": "profile-package-review-evidence/stdout.txt"
+    },
+    {
+      "from": "docs/tasks/W012/A1/profile-package-review.md",
+      "to": "profile-package-review-evidence/stderr.txt"
+    },
+    {
+      "from": "docs/tasks/W012/A1/profile-package-review.md",
+      "to": "profile-package-review-evidence/result.json"
+    }
+  ]
+}
