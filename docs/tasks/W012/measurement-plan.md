@@ -12,3 +12,7 @@
 - profile 后才遍历对象图：按id去重及按bytes内容分组，另计算按所有引用路径展开的bytes总量。区分共享引用、同内容独立对象、wire按值展开。shallow size不是RSS（不含实例字典、allocator/native）；id只作进程内诊断。wire长度由已有返回值取得，hex占比由真实 _wire 事件取得，不重新编码大对象。
 - 三路径断言均包含：完整36项FIN evaluation/全部crossing与手写矩形见证、正常5/7，mismatch4/7且恰一项 measured4/source5，touch FIN保留；原40图形/18FIN、8edge/6component、T05 pass、body/completed来源完整、same-capture source语义、完整公开DTO roundtrip相等。原对象local/body identity保持；readback attempt/checkpoint保持unsealed且无terminal。完整roundtrip比较同时覆盖恢复后来源/局部图/T05/body。partial/未知等广泛负例沿用同源W011，不宣称三条固定输入覆盖这些攻击路径。
 - 所有命令保留 argv/cwd/UTC/exit/stdout/stderr/hash，失败不删。不提交巨大wire本体，仅记录实际bytes/hash。每case一次有限样本，无资源上界/生产保证；W011原URI、RunRequest、环境与本轮不完全相同，其数字仅为历史参照。未来前后对照必须原样复用本计划，目标待实测收敛。
+
+## 首条profile后的限定补测（运行前补记）
+
+normal direct的bytes驻留与进程峰值相差很大，现有hex校验正则为候选瞬时内存来源。六条原计划全部结束后，额外串行运行一条完整normal readback的 `memory_probe.py`；同一输入/RunRequest/保留顺序和原probe断言。只观察原 `re.fullmatch` 的既有exact hex pattern、原生str且len≥1MB的调用，读长度、/proc RSS和ru_maxrss前后/原matcher时间；不额外编码、不复制参数或造大型输入、不替换原算法。hash及轻量自检另存memory-probe-selfcheck.json，补测不列为无插桩baseline。HWM变化仅说明新峰值在该call期间发生，不能当净分配，也不把多call峰值相加。独立reviewer已初审此补测边界。

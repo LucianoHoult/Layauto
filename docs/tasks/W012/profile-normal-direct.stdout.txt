@@ -1,0 +1,15 @@
+START W005_read_inputs
+DONE W005_read_inputs 2.7298698199999762
+START W008_adapter_and_build
+DONE W008_adapter_and_build 1.4874916810000514
+START W009_build
+DONE W009_build 2.273285595000061
+START W010_build
+DONE W010_build 38.037404046999995
+START W011_build
+DONE W011_build 104.00320682999995
+START W011_result_encode
+DONE W011_result_encode 4.317432899000096
+START W011_result_decode
+DONE W011_result_decode 125.79901249299996
+{"case": "normal-direct", "mode": "profile", "wall_seconds": {"W005_read_inputs": 2.7298698199999762, "W008_adapter_and_build": 1.4874916810000514, "W009_build": 2.273285595000061, "W010_build": 38.037404046999995, "W011_build": 104.00320682999995, "W011_result_encode": 4.317432899000096, "W011_result_decode": 125.79901249299996}, "wire_bytes": 54050313, "wire_sha256": "4d07033687223809e542ea661138fe0566ed162f6eab17fb7d4f806745377f16", "process_peak_rss_kib": 2849744}

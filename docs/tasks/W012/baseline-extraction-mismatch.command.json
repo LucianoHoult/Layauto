@@ -1,0 +1,28 @@
+{
+  "argv": [
+    "/workspace/.venvs/layauto/bin/python",
+    "-B",
+    "/workspace/Layauto/docs/tasks/W012/probe.py",
+    "--case",
+    "extraction-mismatch",
+    "--mode",
+    "baseline",
+    "--output",
+    "/workspace/Layauto/docs/tasks/W012/baseline-extraction-mismatch.json"
+  ],
+  "cwd": "/workspace/Layauto",
+  "started_at_utc": "2026-11-10T03:24:23.865748+00:00",
+  "git_head": "cfaf85e195fcbedb99fbd26b19787afb0577862d",
+  "tools": {
+    "probe.py": "321b84da8f8f8c9f2e8abda1b181f3a7ae9481d474643795de452b21a974cd7e",
+    "run.py": "e91ac30ac1964a9a64cbc74bb368a32bac928debafd084740345068629d83737"
+  },
+  "environment_override": {
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "finished_at_utc": "2026-11-10T03:25:53.888523+00:00",
+  "elapsed_seconds": 90.019935304,
+  "exit_code": 0,
+  "stdout_sha256": "e4001f0b8d046d87fb18922710110c11bad8e4498dd780257f1c6889ba150a7a",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

@@ -61,11 +61,21 @@ W011 原资源测量每个 case 含 31 份捕获、共 280,706 B，40 条 drawn 
 
 ## 方案与决定（执行准备，PM 接收）
 
-调查与实施方案尚未执行。先完成测量计划/轻量工具自检，基线及profile后形成具体方案并独立review；关键外部格式/行为或架构变化仍带实例交PM/用户。不得用中立helper结果替代完整公开组合路径。
+本轮P1/P2调查已实际执行，产品优化未实施。[冻结测量计划](W012/measurement-plan.md)、[成本分析](W012/cost-analysis.md)及[具体实施方案/目标建议](W012/implementation-proposal.md)已形成；独立review结论归下段及其报告，不由执行者代写。推荐先处理保留 `/1` 格式的hex校验峰值和canonical/typed pack临时复制，保留公开constructor/codec认证及异常历史；新的自包含表格式单列待PM/用户决定，附旧decoder拒绝及digest/ref迁移实例，不默认批准。
 
 ## 执行结果（执行）
 
-未实现、未运行本任务 profiling 或产品测试。原 W011 资源数据仅为调查起点。
+独立执行session从远端PM准备 `f3698b7ffda3b0737a2eb61ca85dbf3b40bc89fe` 恢复，main起点 `0a3326aa363477724465886cd05874d0997fba3e`。262源/100runtime与W011冻结 `e89bdaa6a091f56cfaf7862dced7232d34e22514` 逐项一致；按身份采信原双1605、typing54及构建/双安装，本次未重跑小时级矩阵。仅W012工具/证据/方案与本执行区改动；runtime、公开DTO/codec、正式测试、fixture/答案、架构和current-work不改。
+
+| 判据 | 本轮实际证据与结果 |
+| --- | --- |
+| PP1 | [preflight](W012/preflight.json)及轻量[selfcheck](W012/selfcheck.json)通过；固定输入URI、原cache模式、RunRequest、GC与保留顺序。原工具冻结 `cfaf85e195fcbedb99fbd26b19787afb0577862d`，后续诊断工具独立hash/自检。原轻量自检错误预期与一次轮询transport中断均保留，未覆盖失败 |
+| PP2 | 三条fresh、串行完整公开构造/encode/decode全部通过，见[六路命令回执](W012/measurement-receipt.json)。正常5/7、mismatch实际4对source5且一项差异、完整36项evaluation/crossing、来源/局部图/T05/body、readback unsealed/checkpoint不变/无terminal均核验。无插桩阶段总计91.922/187.952/88.231s，wire54,050,313/136,471,701/54,045,042B，峰值2,859,772/7,327,952/2,850,888KiB |
+| PP3 | 独立profile三路全部通过，wire/captures与基线相同，详见[原始分解](W012/cost-summary.json)。区分唯一/同内容/逻辑展开bytes，outer hex约99.9%，W011 build两次完整认证累计约92–94%但与下层时间嵌套；domain.codec disjoint exclusive约51–52%。另完整readback[内存补测](W012/memory-profile-normal-readback.json)将最终7,319,108KiB峰值定位到既有118,841,892字符hex正则调用窗口，不当净分配；未额外编码大对象 |
+| PP4 | [具体方案](W012/implementation-proposal.md)列owner/实施顺序、作用域/key/失效、来源/不可变/异常防线、攻击面、退化和wire兼容/digest影响。建议兼容A总耗时至少降20%/峰值至少降50%且 `/1` bytes/hash不变；可选B完整wire≤20MB/45MB/20MB。均为有依据的目标建议，未批准、未实现、未作收益承诺 |
+| PP5 | 交未参与工具/方案设计的 `/root/independent_review` 独立复核，受审快照及最终findings由reviewer记录在下段。PM接收后再决定实施，本轮不验收/合main/改current-work/启动后续任务 |
+
+[轻量证据核验](W012/validation.json)396项通过（非产品回归数量）；原W011工程证据21条命令原输出hash、262源、六路串行/工具/输出身份、补测身份和完整wire相等均实际核对。更广partial/未知、T05 violation、来源/异常攻击负例按同源W011采信，三条固定输入不冒记覆盖所有负例。所有原输出/失败、工具和命令随W012目录交付，最终提交/远端完整SHA在Git交接中实核。下一步仅交PM接收P1/P2。
 
 ## Review 结论（reviewer）
 

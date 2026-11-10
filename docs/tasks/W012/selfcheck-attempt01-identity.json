@@ -1,0 +1,12 @@
+{
+  "reconstructed_from": "cfaf85e probe.py by reverting only documented selfcheck expectation fix; no heavy sample ran this revision",
+  "sha256": "59418fd5a6de384307c6485598ff3f7c0d5c5a1f5558086d250803b2adab55f8",
+  "exit_code": 1,
+  "argv": [
+    "/workspace/.venvs/layauto/bin/python",
+    "-B",
+    "docs/tasks/W012/probe.py",
+    "--selfcheck"
+  ],
+  "cwd": "/workspace/Layauto"
+}

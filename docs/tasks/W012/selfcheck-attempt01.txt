@@ -12,5 +12,7 @@ AssertionError
 
 Disposition: tool assertion expected one encode, but domain.decode itself canonically
 re-encodes. Correct lightweight expectation is two calls / six payload bytes.
-No heavy combination had started. Original tool revision retained by this patch history
-and the assertion above; no product failure or discarded performance sample.
+No heavy combination had started. The original tool is reconstructed by reversing
+only this three-line assertion fix in selfcheck-attempt01-probe.py.txt; its explicit
+identity/reconstruction limitation is in selfcheck-attempt01-identity.json.
+No product failure or discarded performance sample.

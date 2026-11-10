@@ -1,0 +1,7 @@
+{
+  "event": "exec-server transport disconnected during a read-only progress poll",
+  "error": "exec_command failed: CreateProcess { message: Rejected(Failed to create unified exec process: exec-server transport disconnected) }",
+  "effect": "No measurement was restarted or overwritten. Environment status remained running/connected; immediate pwd and log/process reads succeeded. Serial runner continued: profile normal-readback exited 0 and profile extraction-mismatch started.",
+  "environment_id": "ccarenv_b64_Y2NhcmVudl8zZjNmYzY5N2VmM2M4MTkxYjczMDU4NTcxZmMxNzM5MQ",
+  "classification": "Tool transport polling failure, not a product or measurement failure; preserved to distinguish it from missing samples."
+}

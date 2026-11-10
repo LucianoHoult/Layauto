@@ -1,0 +1,912 @@
+[
+  {
+    "after": {
+      "VmRSS": "141292 kB",
+      "ru_maxrss_kib": 1774880
+    },
+    "before": {
+      "VmRSS": "141284 kB",
+      "ru_maxrss_kib": 141216
+    },
+    "caller": "/workspace/Layauto/layauto_v2/domain/codec.py",
+    "caller_function": "_decode",
+    "hex_characters": 27882860,
+    "matcher_seconds": 1.1581693789999008
+  },
+  {
+    "after": {
+      "VmRSS": "161352 kB",
+      "ru_maxrss_kib": 1774880
+    },
+    "before": {
+      "VmRSS": "141292 kB",
+      "ru_maxrss_kib": 1774880
+    },
+    "caller": "/workspace/Layauto/layauto_v2/domain/codec.py",
+    "caller_function": "_decode",
+    "hex_characters": 13236386,
+    "matcher_seconds": 0.5199295820000316
+  },
+  {
+    "after": {
+      "VmRSS": "127260 kB",
+      "ru_maxrss_kib": 1774880
+    },
+    "before": {
+      "VmRSS": "125804 kB",
+      "ru_maxrss_kib": 1774880
+    },
+    "caller": "/workspace/Layauto/layauto_v2/domain/codec.py",
+    "caller_function": "_decode",
+    "hex_characters": 2039102,
+    "matcher_seconds": 0.08796980700003587
+  },
+  {
+    "after": {
+      "VmRSS": "127260 kB",
+      "ru_maxrss_kib": 1774880
+    },
+    "before": {
+      "VmRSS": "127260 kB",
+      "ru_maxrss_kib": 1774880
+    },
+    "caller": "/workspace/Layauto/layauto_v2/domain/codec.py",
+    "caller_function": "_decode",
+    "hex_characters": 2040028,
+    "matcher_seconds": 0.08053901699986454
+  },
+  {
+    "after": {
+      "VmRSS": "127260 kB",
+      "ru_maxrss_kib": 1774880
+    },
+    "before": {
+      "VmRSS": "127260 kB",
+      "ru_maxrss_kib": 1774880
+    },
+    "caller": "/workspace/Layauto/layauto_v2/domain/codec.py",
+    "caller_function": "_decode",
+    "hex_characters": 1171318,
+    "matcher_seconds": 0.04792023100003462
+  },
+  {
+    "after": {
+      "VmRSS": "179040 kB",
+      "ru_maxrss_kib": 1812624
+    },
+    "before": {
+      "VmRSS": "147716 kB",
+      "ru_maxrss_kib": 1774880
+    },
+    "caller": "/workspace/Layauto/layauto_v2/domain/codec.py",
+    "caller_function": "_decode",
+    "hex_characters": 27882860,
+    "matcher_seconds": 1.4934253630001422
+  },
+  {
+    "after": {
+      "VmRSS": "167776 kB",
+      "ru_maxrss_kib": 1812624
+    },
+    "before": {
+      "VmRSS": "146744 kB",
+      "ru_maxrss_kib": 1812624
+    },
+    "caller": "/workspace/Layauto/layauto_v2/domain/codec.py",
+    "caller_function": "_decode",
+    "hex_characters": 13236386,
+    "matcher_seconds": 0.7507003340001575
+  },
+  {
+    "after": {
+      "VmRSS": "134060 kB",
+      "ru_maxrss_kib": 1812624
+    },
+    "before": {
+      "VmRSS": "131756 kB",
+      "ru_maxrss_kib": 1812624
+    },
+    "caller": "/workspace/Layauto/layauto_v2/domain/codec.py",
+    "caller_function": "_decode",
+    "hex_characters": 2039102,
+    "matcher_seconds": 0.08802664600011667
+  },
+  {
+    "after": {
+      "VmRSS": "134060 kB",
+      "ru_maxrss_kib": 1812624
+    },
+    "before": {
+      "VmRSS": "134060 kB",
+      "ru_maxrss_kib": 1812624
+    },
+    "caller": "/workspace/Layauto/layauto_v2/domain/codec.py",
+    "caller_function": "_decode",
+    "hex_characters": 2040028,
+    "matcher_seconds": 0.08920941800010951
+  },
+  {
+    "after": {
+      "VmRSS": "134060 kB",
+      "ru_maxrss_kib": 1812624
+    },
+    "before": {
+      "VmRSS": "134060 kB",
+      "ru_maxrss_kib": 1812624
+    },
+    "caller": "/workspace/Layauto/layauto_v2/domain/codec.py",
+    "caller_function": "_decode",
+    "hex_characters": 1171318,
+    "matcher_seconds": 0.05096890100003293
+  },
+  {
+    "after": {
+      "VmRSS": "197704 kB",
+      "ru_maxrss_kib": 3581872
+    },
+    "before": {
+      "VmRSS": "176780 kB",
+      "ru_maxrss_kib": 1812624
+    },
+    "caller": "/workspace/Layauto/layauto_v2/domain/codec.py",
+    "caller_function": "_decode",
+    "hex_characters": 57757844,
+    "matcher_seconds": 2.3508572169998843
+  },
+  {
+    "after": {
+      "VmRSS": "218072 kB",
+      "ru_maxrss_kib": 3581872
+    },
+    "before": {
+      "VmRSS": "197704 kB",
+      "ru_maxrss_kib": 3581872
+    },
+    "caller": "/workspace/Layauto/layauto_v2/domain/codec.py",
+    "caller_function": "_decode",
+    "hex_characters": 1062112,
+    "matcher_seconds": 0.0514261069999975
+  },
+  {
+    "after": {
+      "VmRSS": "217612 kB",
+      "ru_maxrss_kib": 3581872
+    },
+    "before": {
+      "VmRSS": "186288 kB",
+      "ru_maxrss_kib": 3581872
+    },
+    "caller": "/workspace/Layauto/layauto_v2/domain/codec.py",
+    "caller_function": "_decode",
+    "hex_characters": 27882860,
+    "matcher_seconds": 1.1138410439998552
+  },
+  {
+    "after": {
+      "VmRSS": "219960 kB",
+      "ru_maxrss_kib": 3581872
+    },
+    "before": {
+      "VmRSS": "199496 kB",
+      "ru_maxrss_kib": 3581872
+    },
+    "caller": "/workspace/Layauto/layauto_v2/domain/codec.py",
+    "caller_function": "_decode",
+    "hex_characters": 13236386,
+    "matcher_seconds": 0.5306218170001102
+  },
+  {
+    "after": {
+      "VmRSS": "211912 kB",
+      "ru_maxrss_kib": 3581872
+    },
+    "before": {
+      "VmRSS": "190972 kB",
+      "ru_maxrss_kib": 3581872
+    },
+    "caller": "/workspace/Layauto/layauto_v2/domain/codec.py",
+    "caller_function": "_decode",
+    "hex_characters": 2039102,
+    "matcher_seconds": 0.09834202399997594
+  },
+  {
+    "after": {
+      "VmRSS": "211912 kB",
+      "ru_maxrss_kib": 3581872
+    },
+    "before": {
+      "VmRSS": "211912 kB",
+      "ru_maxrss_kib": 3581872
+    },
+    "caller": "/workspace/Layauto/layauto_v2/domain/codec.py",
+    "caller_function": "_decode",
+    "hex_characters": 2040028,
+    "matcher_seconds": 0.0849881199999345
+  },
+  {
+    "after": {
+      "VmRSS": "211912 kB",
+      "ru_maxrss_kib": 3581872
+    },
+    "before": {
+      "VmRSS": "211912 kB",
+      "ru_maxrss_kib": 3581872
+    },
+    "caller": "/workspace/Layauto/layauto_v2/domain/codec.py",
+    "caller_function": "_decode",
+    "hex_characters": 1171318,
+    "matcher_seconds": 0.04866567199997007
+  },
+  {
+    "after": {
+      "VmRSS": "270812 kB",
+      "ru_maxrss_kib": 3581872
+    },
+    "before": {
+      "VmRSS": "239488 kB",
+      "ru_maxrss_kib": 3581872
+    },
+    "caller": "/workspace/Layauto/layauto_v2/domain/codec.py",
+    "caller_function": "_decode",
+    "hex_characters": 27882860,
+    "matcher_seconds": 1.1257574229998681
+  },
+  {
+    "after": {
+      "VmRSS": "259548 kB",
+      "ru_maxrss_kib": 3581872
+    },
+    "before": {
+      "VmRSS": "238516 kB",
+      "ru_maxrss_kib": 3581872
+    },
+    "caller": "/workspace/Layauto/layauto_v2/domain/codec.py",
+    "caller_function": "_decode",
+    "hex_characters": 13236386,
+    "matcher_seconds": 0.5234301150001102
+  },
+  {
+    "after": {
+      "VmRSS": "225940 kB",
+      "ru_maxrss_kib": 3581872
+    },
+    "before": {
+      "VmRSS": "224048 kB",
+      "ru_maxrss_kib": 3581872
+    },
+    "caller": "/workspace/Layauto/layauto_v2/domain/codec.py",
+    "caller_function": "_decode",
+    "hex_characters": 2039102,
+    "matcher_seconds": 0.08634033099997396
+  },
+  {
+    "after": {
+      "VmRSS": "225940 kB",
+      "ru_maxrss_kib": 3581872
+    },
+    "before": {
+      "VmRSS": "225940 kB",
+      "ru_maxrss_kib": 3581872
+    },
+    "caller": "/workspace/Layauto/layauto_v2/domain/codec.py",
+    "caller_function": "_decode",
+    "hex_characters": 2040028,
+    "matcher_seconds": 0.07922226499999852
+  },
+  {
+    "after": {
+      "VmRSS": "225940 kB",
+      "ru_maxrss_kib": 3581872
+    },
+    "before": {
+      "VmRSS": "225940 kB",
+      "ru_maxrss_kib": 3581872
+    },
+    "caller": "/workspace/Layauto/layauto_v2/domain/codec.py",
+    "caller_function": "_decode",
+    "hex_characters": 1171318,
+    "matcher_seconds": 0.04471519999992779
+  },
+  {
+    "after": {
+      "VmRSS": "204980 kB",
+      "ru_maxrss_kib": 3589092
+    },
+    "before": {
+      "VmRSS": "184056 kB",
+      "ru_maxrss_kib": 3581872
+    },
+    "caller": "/workspace/Layauto/layauto_v2/domain/codec.py",
+    "caller_function": "_decode",
+    "hex_characters": 57757844,
+    "matcher_seconds": 2.3769189590000224
+  },
+  {
+    "after": {
+      "VmRSS": "225348 kB",
+      "ru_maxrss_kib": 3589092
+    },
+    "before": {
+      "VmRSS": "204980 kB",
+      "ru_maxrss_kib": 3589092
+    },
+    "caller": "/workspace/Layauto/layauto_v2/domain/codec.py",
+    "caller_function": "_decode",
+    "hex_characters": 1062112,
+    "matcher_seconds": 0.054855604999829666
+  },
+  {
+    "after": {
+      "VmRSS": "224888 kB",
+      "ru_maxrss_kib": 3589092
+    },
+    "before": {
+      "VmRSS": "193564 kB",
+      "ru_maxrss_kib": 3589092
+    },
+    "caller": "/workspace/Layauto/layauto_v2/domain/codec.py",
+    "caller_function": "_decode",
+    "hex_characters": 27882860,
+    "matcher_seconds": 1.0717842920000749
+  },
+  {
+    "after": {
+      "VmRSS": "227236 kB",
+      "ru_maxrss_kib": 3589092
+    },
+    "before": {
+      "VmRSS": "206772 kB",
+      "ru_maxrss_kib": 3589092
+    },
+    "caller": "/workspace/Layauto/layauto_v2/domain/codec.py",
+    "caller_function": "_decode",
+    "hex_characters": 13236386,
+    "matcher_seconds": 0.518245147000016
+  },
+  {
+    "after": {
+      "VmRSS": "219188 kB",
+      "ru_maxrss_kib": 3589092
+    },
+    "before": {
+      "VmRSS": "198248 kB",
+      "ru_maxrss_kib": 3589092
+    },
+    "caller": "/workspace/Layauto/layauto_v2/domain/codec.py",
+    "caller_function": "_decode",
+    "hex_characters": 2039102,
+    "matcher_seconds": 0.09699586100009583
+  },
+  {
+    "after": {
+      "VmRSS": "219188 kB",
+      "ru_maxrss_kib": 3589092
+    },
+    "before": {
+      "VmRSS": "219188 kB",
+      "ru_maxrss_kib": 3589092
+    },
+    "caller": "/workspace/Layauto/layauto_v2/domain/codec.py",
+    "caller_function": "_decode",
+    "hex_characters": 2040028,
+    "matcher_seconds": 0.08317056799978673
+  },
+  {
+    "after": {
+      "VmRSS": "219188 kB",
+      "ru_maxrss_kib": 3589092
+    },
+    "before": {
+      "VmRSS": "219188 kB",
+      "ru_maxrss_kib": 3589092
+    },
+    "caller": "/workspace/Layauto/layauto_v2/domain/codec.py",
+    "caller_function": "_decode",
+    "hex_characters": 1171318,
+    "matcher_seconds": 0.04876264099993932
+  },
+  {
+    "after": {
+      "VmRSS": "256748 kB",
+      "ru_maxrss_kib": 3589092
+    },
+    "before": {
+      "VmRSS": "256748 kB",
+      "ru_maxrss_kib": 3589092
+    },
+    "caller": "/workspace/Layauto/layauto_v2/domain/codec.py",
+    "caller_function": "_decode",
+    "hex_characters": 27882860,
+    "matcher_seconds": 1.139755378000018
+  },
+  {
+    "after": {
+      "VmRSS": "278472 kB",
+      "ru_maxrss_kib": 3589092
+    },
+    "before": {
+      "VmRSS": "256748 kB",
+      "ru_maxrss_kib": 3589092
+    },
+    "caller": "/workspace/Layauto/layauto_v2/domain/codec.py",
+    "caller_function": "_decode",
+    "hex_characters": 13236386,
+    "matcher_seconds": 0.5172622800000681
+  },
+  {
+    "after": {
+      "VmRSS": "278472 kB",
+      "ru_maxrss_kib": 3589092
+    },
+    "before": {
+      "VmRSS": "278472 kB",
+      "ru_maxrss_kib": 3589092
+    },
+    "caller": "/workspace/Layauto/layauto_v2/domain/codec.py",
+    "caller_function": "_decode",
+    "hex_characters": 2039102,
+    "matcher_seconds": 0.10668967099991278
+  },
+  {
+    "after": {
+      "VmRSS": "278472 kB",
+      "ru_maxrss_kib": 3589092
+    },
+    "before": {
+      "VmRSS": "278472 kB",
+      "ru_maxrss_kib": 3589092
+    },
+    "caller": "/workspace/Layauto/layauto_v2/domain/codec.py",
+    "caller_function": "_decode",
+    "hex_characters": 2040028,
+    "matcher_seconds": 0.09989347700002327
+  },
+  {
+    "after": {
+      "VmRSS": "278472 kB",
+      "ru_maxrss_kib": 3589092
+    },
+    "before": {
+      "VmRSS": "278472 kB",
+      "ru_maxrss_kib": 3589092
+    },
+    "caller": "/workspace/Layauto/layauto_v2/domain/codec.py",
+    "caller_function": "_decode",
+    "hex_characters": 1171318,
+    "matcher_seconds": 0.0581546129999424
+  },
+  {
+    "after": {
+      "VmRSS": "355960 kB",
+      "ru_maxrss_kib": 7319108
+    },
+    "before": {
+      "VmRSS": "340640 kB",
+      "ru_maxrss_kib": 3589092
+    },
+    "caller": "/workspace/Layauto/layauto_v2/domain/codec.py",
+    "caller_function": "_decode",
+    "hex_characters": 118841892,
+    "matcher_seconds": 14.520988504000115
+  },
+  {
+    "after": {
+      "VmRSS": "413992 kB",
+      "ru_maxrss_kib": 7319108
+    },
+    "before": {
+      "VmRSS": "413992 kB",
+      "ru_maxrss_kib": 7319108
+    },
+    "caller": "/workspace/Layauto/layauto_v2/domain/codec.py",
+    "caller_function": "_decode",
+    "hex_characters": 14403680,
+    "matcher_seconds": 1.5854960629999368
+  },
+  {
+    "after": {
+      "VmRSS": "413992 kB",
+      "ru_maxrss_kib": 7319108
+    },
+    "before": {
+      "VmRSS": "413992 kB",
+      "ru_maxrss_kib": 7319108
+    },
+    "caller": "/workspace/Layauto/layauto_v2/domain/codec.py",
+    "caller_function": "_decode",
+    "hex_characters": 2396190,
+    "matcher_seconds": 0.5251767969998582
+  },
+  {
+    "after": {
+      "VmRSS": "297932 kB",
+      "ru_maxrss_kib": 7319108
+    },
+    "before": {
+      "VmRSS": "297932 kB",
+      "ru_maxrss_kib": 7319108
+    },
+    "caller": "/workspace/Layauto/layauto_v2/domain/codec.py",
+    "caller_function": "_decode",
+    "hex_characters": 1062112,
+    "matcher_seconds": 0.07362507599987111
+  },
+  {
+    "after": {
+      "VmRSS": "354340 kB",
+      "ru_maxrss_kib": 7319108
+    },
+    "before": {
+      "VmRSS": "354340 kB",
+      "ru_maxrss_kib": 7319108
+    },
+    "caller": "/workspace/Layauto/layauto_v2/domain/codec.py",
+    "caller_function": "_decode",
+    "hex_characters": 57757844,
+    "matcher_seconds": 6.0306115710000086
+  },
+  {
+    "after": {
+      "VmRSS": "381744 kB",
+      "ru_maxrss_kib": 7319108
+    },
+    "before": {
+      "VmRSS": "354340 kB",
+      "ru_maxrss_kib": 7319108
+    },
+    "caller": "/workspace/Layauto/layauto_v2/domain/codec.py",
+    "caller_function": "_decode",
+    "hex_characters": 1062112,
+    "matcher_seconds": 0.08584240599998338
+  },
+  {
+    "after": {
+      "VmRSS": "380764 kB",
+      "ru_maxrss_kib": 7319108
+    },
+    "before": {
+      "VmRSS": "349440 kB",
+      "ru_maxrss_kib": 7319108
+    },
+    "caller": "/workspace/Layauto/layauto_v2/domain/codec.py",
+    "caller_function": "_decode",
+    "hex_characters": 27882860,
+    "matcher_seconds": 3.016972631000044
+  },
+  {
+    "after": {
+      "VmRSS": "369500 kB",
+      "ru_maxrss_kib": 7319108
+    },
+    "before": {
+      "VmRSS": "348468 kB",
+      "ru_maxrss_kib": 7319108
+    },
+    "caller": "/workspace/Layauto/layauto_v2/domain/codec.py",
+    "caller_function": "_decode",
+    "hex_characters": 13236386,
+    "matcher_seconds": 1.5226694590000989
+  },
+  {
+    "after": {
+      "VmRSS": "361012 kB",
+      "ru_maxrss_kib": 7319108
+    },
+    "before": {
+      "VmRSS": "339944 kB",
+      "ru_maxrss_kib": 7319108
+    },
+    "caller": "/workspace/Layauto/layauto_v2/domain/codec.py",
+    "caller_function": "_decode",
+    "hex_characters": 2039102,
+    "matcher_seconds": 0.2485933620000651
+  },
+  {
+    "after": {
+      "VmRSS": "361012 kB",
+      "ru_maxrss_kib": 7319108
+    },
+    "before": {
+      "VmRSS": "361012 kB",
+      "ru_maxrss_kib": 7319108
+    },
+    "caller": "/workspace/Layauto/layauto_v2/domain/codec.py",
+    "caller_function": "_decode",
+    "hex_characters": 2040028,
+    "matcher_seconds": 0.13611892700009776
+  },
+  {
+    "after": {
+      "VmRSS": "361012 kB",
+      "ru_maxrss_kib": 7319108
+    },
+    "before": {
+      "VmRSS": "361012 kB",
+      "ru_maxrss_kib": 7319108
+    },
+    "caller": "/workspace/Layauto/layauto_v2/domain/codec.py",
+    "caller_function": "_decode",
+    "hex_characters": 1171318,
+    "matcher_seconds": 0.0674058290001085
+  },
+  {
+    "after": {
+      "VmRSS": "422580 kB",
+      "ru_maxrss_kib": 7319108
+    },
+    "before": {
+      "VmRSS": "391256 kB",
+      "ru_maxrss_kib": 7319108
+    },
+    "caller": "/workspace/Layauto/layauto_v2/domain/codec.py",
+    "caller_function": "_decode",
+    "hex_characters": 27882860,
+    "matcher_seconds": 2.0825718940000115
+  },
+  {
+    "after": {
+      "VmRSS": "390284 kB",
+      "ru_maxrss_kib": 7319108
+    },
+    "before": {
+      "VmRSS": "390284 kB",
+      "ru_maxrss_kib": 7319108
+    },
+    "caller": "/workspace/Layauto/layauto_v2/domain/codec.py",
+    "caller_function": "_decode",
+    "hex_characters": 13236386,
+    "matcher_seconds": 0.9639764840001135
+  },
+  {
+    "after": {
+      "VmRSS": "390284 kB",
+      "ru_maxrss_kib": 7319108
+    },
+    "before": {
+      "VmRSS": "390284 kB",
+      "ru_maxrss_kib": 7319108
+    },
+    "caller": "/workspace/Layauto/layauto_v2/domain/codec.py",
+    "caller_function": "_decode",
+    "hex_characters": 2039102,
+    "matcher_seconds": 0.12791639000010946
+  },
+  {
+    "after": {
+      "VmRSS": "390284 kB",
+      "ru_maxrss_kib": 7319108
+    },
+    "before": {
+      "VmRSS": "390284 kB",
+      "ru_maxrss_kib": 7319108
+    },
+    "caller": "/workspace/Layauto/layauto_v2/domain/codec.py",
+    "caller_function": "_decode",
+    "hex_characters": 2040028,
+    "matcher_seconds": 0.10652902700007871
+  },
+  {
+    "after": {
+      "VmRSS": "390284 kB",
+      "ru_maxrss_kib": 7319108
+    },
+    "before": {
+      "VmRSS": "390284 kB",
+      "ru_maxrss_kib": 7319108
+    },
+    "caller": "/workspace/Layauto/layauto_v2/domain/codec.py",
+    "caller_function": "_decode",
+    "hex_characters": 1171318,
+    "matcher_seconds": 0.08111622299998089
+  },
+  {
+    "after": {
+      "VmRSS": "317888 kB",
+      "ru_maxrss_kib": 7319108
+    },
+    "before": {
+      "VmRSS": "297268 kB",
+      "ru_maxrss_kib": 7319108
+    },
+    "caller": "/workspace/Layauto/layauto_v2/domain/codec.py",
+    "caller_function": "_decode",
+    "hex_characters": 2039102,
+    "matcher_seconds": 0.10193219199982195
+  },
+  {
+    "after": {
+      "VmRSS": "317888 kB",
+      "ru_maxrss_kib": 7319108
+    },
+    "before": {
+      "VmRSS": "317888 kB",
+      "ru_maxrss_kib": 7319108
+    },
+    "caller": "/workspace/Layauto/layauto_v2/domain/codec.py",
+    "caller_function": "_decode",
+    "hex_characters": 2040028,
+    "matcher_seconds": 0.08833281699980944
+  },
+  {
+    "after": {
+      "VmRSS": "317888 kB",
+      "ru_maxrss_kib": 7319108
+    },
+    "before": {
+      "VmRSS": "317888 kB",
+      "ru_maxrss_kib": 7319108
+    },
+    "caller": "/workspace/Layauto/layauto_v2/domain/codec.py",
+    "caller_function": "_decode",
+    "hex_characters": 1171318,
+    "matcher_seconds": 0.057188949999954275
+  },
+  {
+    "after": {
+      "VmRSS": "419200 kB",
+      "ru_maxrss_kib": 7319108
+    },
+    "before": {
+      "VmRSS": "406108 kB",
+      "ru_maxrss_kib": 7319108
+    },
+    "caller": "/workspace/Layauto/layauto_v2/domain/codec.py",
+    "caller_function": "_decode",
+    "hex_characters": 57757844,
+    "matcher_seconds": 3.5638416710003185
+  },
+  {
+    "after": {
+      "VmRSS": "447400 kB",
+      "ru_maxrss_kib": 7319108
+    },
+    "before": {
+      "VmRSS": "419200 kB",
+      "ru_maxrss_kib": 7319108
+    },
+    "caller": "/workspace/Layauto/layauto_v2/domain/codec.py",
+    "caller_function": "_decode",
+    "hex_characters": 1062112,
+    "matcher_seconds": 0.05367822999960481
+  },
+  {
+    "after": {
+      "VmRSS": "446420 kB",
+      "ru_maxrss_kib": 7319108
+    },
+    "before": {
+      "VmRSS": "415096 kB",
+      "ru_maxrss_kib": 7319108
+    },
+    "caller": "/workspace/Layauto/layauto_v2/domain/codec.py",
+    "caller_function": "_decode",
+    "hex_characters": 27882860,
+    "matcher_seconds": 1.884964318999664
+  },
+  {
+    "after": {
+      "VmRSS": "448772 kB",
+      "ru_maxrss_kib": 7319108
+    },
+    "before": {
+      "VmRSS": "427740 kB",
+      "ru_maxrss_kib": 7319108
+    },
+    "caller": "/workspace/Layauto/layauto_v2/domain/codec.py",
+    "caller_function": "_decode",
+    "hex_characters": 13236386,
+    "matcher_seconds": 0.9910784570001852
+  },
+  {
+    "after": {
+      "VmRSS": "413796 kB",
+      "ru_maxrss_kib": 7319108
+    },
+    "before": {
+      "VmRSS": "413796 kB",
+      "ru_maxrss_kib": 7319108
+    },
+    "caller": "/workspace/Layauto/layauto_v2/domain/codec.py",
+    "caller_function": "_decode",
+    "hex_characters": 2039102,
+    "matcher_seconds": 0.10773473699964597
+  },
+  {
+    "after": {
+      "VmRSS": "414480 kB",
+      "ru_maxrss_kib": 7319108
+    },
+    "before": {
+      "VmRSS": "413796 kB",
+      "ru_maxrss_kib": 7319108
+    },
+    "caller": "/workspace/Layauto/layauto_v2/domain/codec.py",
+    "caller_function": "_decode",
+    "hex_characters": 2040028,
+    "matcher_seconds": 0.08250618800002485
+  },
+  {
+    "after": {
+      "VmRSS": "415476 kB",
+      "ru_maxrss_kib": 7319108
+    },
+    "before": {
+      "VmRSS": "414480 kB",
+      "ru_maxrss_kib": 7319108
+    },
+    "caller": "/workspace/Layauto/layauto_v2/domain/codec.py",
+    "caller_function": "_decode",
+    "hex_characters": 1171318,
+    "matcher_seconds": 0.09427216599988242
+  },
+  {
+    "after": {
+      "VmRSS": "499044 kB",
+      "ru_maxrss_kib": 7319108
+    },
+    "before": {
+      "VmRSS": "467720 kB",
+      "ru_maxrss_kib": 7319108
+    },
+    "caller": "/workspace/Layauto/layauto_v2/domain/codec.py",
+    "caller_function": "_decode",
+    "hex_characters": 27882860,
+    "matcher_seconds": 1.1534416449999298
+  },
+  {
+    "after": {
+      "VmRSS": "487780 kB",
+      "ru_maxrss_kib": 7319108
+    },
+    "before": {
+      "VmRSS": "466748 kB",
+      "ru_maxrss_kib": 7319108
+    },
+    "caller": "/workspace/Layauto/layauto_v2/domain/codec.py",
+    "caller_function": "_decode",
+    "hex_characters": 13236386,
+    "matcher_seconds": 0.521978775000207
+  },
+  {
+    "after": {
+      "VmRSS": "451760 kB",
+      "ru_maxrss_kib": 7319108
+    },
+    "before": {
+      "VmRSS": "451760 kB",
+      "ru_maxrss_kib": 7319108
+    },
+    "caller": "/workspace/Layauto/layauto_v2/domain/codec.py",
+    "caller_function": "_decode",
+    "hex_characters": 2039102,
+    "matcher_seconds": 0.08727652000015951
+  },
+  {
+    "after": {
+      "VmRSS": "452444 kB",
+      "ru_maxrss_kib": 7319108
+    },
+    "before": {
+      "VmRSS": "451760 kB",
+      "ru_maxrss_kib": 7319108
+    },
+    "caller": "/workspace/Layauto/layauto_v2/domain/codec.py",
+    "caller_function": "_decode",
+    "hex_characters": 2040028,
+    "matcher_seconds": 0.07842783900014183
+  },
+  {
+    "after": {
+      "VmRSS": "453440 kB",
+      "ru_maxrss_kib": 7319108
+    },
+    "before": {
+      "VmRSS": "452444 kB",
+      "ru_maxrss_kib": 7319108
+    },
+    "caller": "/workspace/Layauto/layauto_v2/domain/codec.py",
+    "caller_function": "_decode",
+    "hex_characters": 1171318,
+    "matcher_seconds": 0.0471670950000771
+  }
+]

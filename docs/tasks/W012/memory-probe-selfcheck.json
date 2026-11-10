@@ -1,0 +1,53 @@
+{
+  "status": "passed",
+  "tool_sha256": "c1d8176c1faa9ceef442d7599b22373d47f140cad41d3dc86ea2716caaf60b86",
+  "checks": [
+    "existing match/invalid match unchanged",
+    "length-only metadata",
+    "original exception object/cause/context/suppression propagated"
+  ],
+  "events": [
+    {
+      "hex_characters": 4,
+      "before": {
+        "VmRSS": "9688 kB",
+        "ru_maxrss_kib": 9472
+      },
+      "after": {
+        "VmRSS": "9700 kB",
+        "ru_maxrss_kib": 9600
+      },
+      "matcher_seconds": 5.4856999895491754e-05,
+      "caller": "/workspace/Layauto/docs/tasks/W012/memory_probe.py",
+      "caller_function": "selfcheck"
+    },
+    {
+      "hex_characters": 3,
+      "before": {
+        "VmRSS": "9700 kB",
+        "ru_maxrss_kib": 9600
+      },
+      "after": {
+        "VmRSS": "9700 kB",
+        "ru_maxrss_kib": 9600
+      },
+      "matcher_seconds": 2.7159999262948986e-06,
+      "caller": "/workspace/Layauto/docs/tasks/W012/memory_probe.py",
+      "caller_function": "selfcheck"
+    },
+    {
+      "hex_characters": 2,
+      "before": {
+        "VmRSS": "9708 kB",
+        "ru_maxrss_kib": 9600
+      },
+      "after": {
+        "VmRSS": "9708 kB",
+        "ru_maxrss_kib": 9600
+      },
+      "matcher_seconds": 1.1229999472561758e-06,
+      "caller": "/workspace/Layauto/docs/tasks/W012/memory_probe.py",
+      "caller_function": "selfcheck"
+    }
+  ]
+}
