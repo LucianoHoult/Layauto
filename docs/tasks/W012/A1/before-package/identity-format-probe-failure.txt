@@ -1,0 +1,9 @@
+Before package construction, a lightweight discovery probe incorrectly read frozen-identity.json['before']; the actual owner is ['sources']['before'].
+Original command body:
+  d=json.loads(Path('docs/tasks/W012/A1/performance/frozen-identity.json').read_text()); print(d.keys()); b=d['before']
+Original output:
+  Traceback (most recent call last):
+    File "<stdin>", line 3, in <module>
+  KeyError: 'before'
+  dict_keys(['sources', 'tools', 'differences', 'python', 'input_root', 'mismatch'])
+Disposition: corrected the read-only probe to sources.before; no build/runtime/test source was changed and no performance sample failed or restarted.

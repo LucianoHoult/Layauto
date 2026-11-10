@@ -63,4 +63,8 @@
 
 ## 验证与交接
 
-开发新增/受影响检查已通过，最终双1656、strict typing、构建和双干净安装源码外完整组合smoke尚待长流程完成；独立代码/正确性/性能review随后收口。没有据此自行验收、合main、改current-work或启动下一子项。
+开发新增/受影响检查通过；最终新源双3.10/3.12全量各1656项、strict typing各54源文件、构建、两套全新安装的源码外`-I -B`完整组合smoke全部通过，21条原命令exit0，见[工程完整回执](verification-r2/receipt.json)。全部原1605项保留，263源/测试/配置与受测after身份一致，100runtime只有codec的最小改动。[四份实际包](package-comparison.json)均可访问，runtime payload唯一差异为`domain/codec.py`；不把构建metadata/包blob身份混作wire身份。
+
+源码外smoke的输入URI指向工程冻结snapshot，完整wire/hash按各自原stdout保存，不与上表固定URI基准混比。首轮工程中断及第二次轮询断连均保留，最终完成依据为内部21条原命令及闭合receipt，不将partial或外层started记为通过，详见[执行记录](execution.md)。
+
+独立代码/正确性/性能review见[reviewer报告](independent-review.md)。本次仅交PM核验A1，不自行验收、合main、改current-work或启动下一子项；剩余峰值/重复序列化若需深入，由PM另派范围，新wire的公开范围、默认兼容、digest/ref和历史迁移仍需独立具体决定材料。

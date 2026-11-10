@@ -77,6 +77,21 @@ W011 原资源测量每个 case 含 31 份捕获、共 280,706 B，40 条 drawn 
 
 [轻量证据核验](W012/validation.json)396项通过（非产品回归数量）；原W011工程证据21条命令原输出hash、262源、六路串行/工具/输出身份、补测身份和完整wire相等均实际核对。更广partial/未知、T05 violation、来源/异常攻击负例按同源W011采信，三条固定输入不冒记覆盖所有负例。所有原输出/失败、工具和命令随W012目录交付，最终提交/远端完整SHA在Git交接中实核。下一步仅交PM接收P1/P2。
 
+### A1 执行结果（待PM核验）
+
+本独立执行session从PM准备 `7f7c1304bdafd941791421cef64864fb1616303c` 恢复，先核远端/身份/规则并形成[最小方案](W012/A1/plan.md)，经未参与设计者[方案review](W012/A1/plan-review.md)后实施。产品/测试冻结为 `ca1f810c3c97376f71089d8b4054760ff198012f`；after的263源/测试/配置随后未变。唯一产品改动是原bytes分支改用非重复分组hex校验并后判偶数长度，仍先调用matcher，原fromhex、canonical重编码与全部认证边界保留。详细原输出/中断与恢复定位见[执行记录](W012/A1/execution.md)。任务阶段与接收仍由PM维护。
+
+| 项 | 本轮实际结果与证据 |
+| --- | --- |
+| I1 | 空bytes、小写ASCII偶数hex接受语言及全部非法/canonical边界已核；新增51项正式合同测试，另有方案review的独立有限语言见证。见[开发原命令](W012/A1/development-commands.json)，原测试未改/删 |
+| I2 | 18个fresh完整公开三路径样本逐块比较实际wire，所有before/after bytes、大小、hash/ref一致；schema `/1`、公开签名、encoder和全部捕获不变。见[性能回执](W012/A1/performance/receipt.json)；新旧profile构造/认证调用次数相同 |
+| I3 | matcher/fromhex原异常object/cause/context/suppression、嵌套公开codec及W011二次故障、来源/错型等值/别名范围经开发273项及最终双全量验证；未扩大捕获/重包异常。原finding及本轮工具问题的复现/关闭均由独立review保留 |
+| I4 | 同机同环境、固定URI/RunRequest/cache/roots/GC，三路径每侧3个fresh串行无插桩样本全部完成。direct/readback/mismatch中位耗时下降19.72%/22.80%/14.66%，整进程峰值下降88.59%/90.35%/88.65%，各次/小阶段增幅见[完整分析](W012/A1/performance-analysis.md)。独立profile的65个大hex窗口长度/顺序一致，峰值刷新5→0；不将profile耗时混入基准 |
+| I5 | 固定mismatch35项按原清单重建核源，正常5/7、实际4对source5/恰一项差异、完整36项FIN/crossing、原图/来源/局部图/T05/body与target独立保持；readback unsealed、attempt/checkpoint不变且无terminal。见[preflight](W012/A1/preflight.json)、逐样本原输出及双安装smoke |
+| I6 | 最终双解释器各1656 passed，原1605个node ID全保留；双strict typing各54源文件、构建、sdist3.10/wheel3.12全新安装源码外完整组合smoke通过，21条命令exit0，见[工程回执](W012/A1/verification-r2/receipt.json)及[实际前后包](W012/A1/package-comparison.json)。代码/正确性/性能独立结论由reviewer维护于下段 |
+
+本轮wire减幅为0；20%/50%仍不是A1硬门或收益承诺。新版profile仍有720,336KiB整进程峰值，最后matcher窗口之后的余量未作allocator逐函数归因，具体边界已记录交PM；未扩到writer/memo或新格式。完成后仅推送原A1分支交PM，不自行验收/合main、改current-work或启动下一子项。
+
 ## Review 结论（reviewer）
 
 独立 reviewer `/root/independent_review`（未承担测量工具/方案设计）已完成[PP1–PP5调查与方案复核](W012/independent-review.md)，受审base `f3698b7ffda3b0737a2eb61ca85dbf3b40bc89fe`、执行冻结 `4aad0169c47f17c2c97bae541b6bc38bb6aaf489`及单行修复 `27280c4ef243a96578b78e9794ff52407be86eff`。实际1521项独立轻量身份/原输出/统计/观测器核验通过，未重复重型矩阵。新增必须修正项1（R01：mismatch外层bytes事件数217而非222），已由执行修正、reviewer复核关闭；剩余必须项0。原finding/失败stderr、可选pattern类型过滤建议及复核处置均保留。调查与具体方案可交PM接收；目标降幅及新wire格式仍是建议，未批准实施、未作产品性能验收或main集成。

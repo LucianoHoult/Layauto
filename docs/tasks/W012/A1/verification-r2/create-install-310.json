@@ -1,0 +1,23 @@
+{
+  "command": [
+    "/workspace/w012-a1-env/dev310/bin/python",
+    "-m",
+    "venv",
+    "/workspace/w012-a1-final-r2/clean-310"
+  ],
+  "cwd": "/workspace/w012-a1-final-r2/installed-cwd",
+  "exit_code": 0,
+  "environment_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PIP_CACHE_DIR": "/workspace/w012-a1-final-r2/pip-cache",
+    "MYPY_CACHE_DIR": "/workspace/w012-a1-final-r2/mypy-create-install-310",
+    "MPLCONFIGDIR": "/workspace/w012-a1-final-r2/mplconfig"
+  },
+  "started_at_utc": "2026-11-10T09:42:11.824851+00:00",
+  "finished_at_utc": "2026-11-10T09:42:15.054177+00:00",
+  "elapsed_seconds": 3.229,
+  "stdout": "create-install-310.stdout.txt",
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr": "create-install-310.stderr.txt",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

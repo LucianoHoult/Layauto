@@ -1,0 +1,1 @@
+{"package": "/workspace/w012-a1-final-r2/clean-312/lib/python3.12/site-packages/layauto_v2/__init__.py", "executable": "/workspace/w012-a1-final-r2/clean-312/bin/python", "version": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]", "isolated": 1}

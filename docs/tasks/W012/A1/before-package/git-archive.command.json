@@ -1,0 +1,23 @@
+{
+  "argv": [
+    "git",
+    "archive",
+    "--format=tar",
+    "7f7c1304bdafd941791421cef64864fb1616303c",
+    "layauto_v2",
+    "pyproject.toml",
+    "README.md"
+  ],
+  "cwd": "/workspace/Layauto",
+  "elapsed_seconds": 0.024886171999241924,
+  "environment_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "exit_code": 0,
+  "finished_at_utc": "2026-11-10T07:34:41.702886+00:00",
+  "started_at_utc": "2026-11-10T07:34:41.678002+00:00",
+  "stderr": "git-archive.stderr.txt",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout": "before-source.tar",
+  "stdout_sha256": "aa3beeb1c38a08dd804c48aae8149c0d74fcc38c5cc7656874e37866607a520a"
+}
