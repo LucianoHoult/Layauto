@@ -31,7 +31,7 @@ M1样本准备[W003](tasks/W003-m1-fixture-contracts.md#p10-w003-accepted)及[W0
 
 M0 分开交付“工程输入/合同准备”和“真实 profile 证据准入”。前者足以让 M1 在明确 synthetic profile 内开发；后者可以并行补证，但必须在 M2 接纳真实 profile 前完成。若真实材料不可得，M1 和相应合成测试可以继续，M2 保持有依据的阻塞，不通过把验收改成 dummy 成功消除阻塞。
 
-2026-11-09 近期切片：[W011](tasks/W011-channel-identity-fin-count.md)承接 W007 identity/seeds、W009 channel 和 W010 local graph，落实 R01/R06/R11/R12 的 channel 身份关联、FIN 几何计量与有限 source 参数核对；详细阶段归任务文件。它不关闭完整 R07 annotation、R12 body、R16 mandatory 或 R21 extraction-aware no_change。其后仍按依赖补齐 net/body/坐标与规则、baseline 及 Stage 6 文件/终态；不提前冻结更多任务编号。
+2026-11-09 准备的近期切片 [W011](tasks/W011-channel-identity-fin-count.md#pm2-integration)现已通过PR #65验收集成，承接 W007 identity/seeds、W009 channel 和 W010 local graph，落实 R01/R06/R11/R12 的 channel 身份关联、FIN 几何计量与有限 source 参数核对；详细阶段归任务文件。它不关闭完整 R07 annotation、R12 body、R16 mandatory 或 R21 extraction-aware no_change。其后仍按依赖补齐 net/body/坐标与规则、baseline 及 Stage 6 文件/终态；近期性能工作见下行W012，不提前冻结更远任务编号。
 
 用户随后明确要求将测试反馈效率与产品性能分别推进：[W012](tasks/W012-capture-wire-performance.md)已单列完整捕获/wire/重复重建成本，归R13/R27/R28的工程支撑；W011稳定基线确定后优先准备，扩大组合前处理。开发新增/受影响、最终双全量的安排归[协作规则](collaboration/rules.md)；少跑测试及互斥gate不能替代单次完整路径的性能改善。W012不新增物理能力或生产性能承诺，详细阶段/目标继续归任务文件。
 

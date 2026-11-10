@@ -1,0 +1,1724 @@
+{
+  "checked_at_utc": "2026-11-10T02:39:43.210859+00:00",
+  "base": "61775e8fde6e9ea247ec08a32067c44c3be48ff8",
+  "reviewed": "8452027e57fb1c58607640d7eb755b38ffc70716",
+  "delivery": "9791c1e9eb6c7e3e1878067f045abcad4e4d0b7d",
+  "reviewed_tree": "498cfd7b239c76629ee3c02919cb590347404f5c",
+  "status": "passed",
+  "must_fix": 0,
+  "checks": [
+    {
+      "check": "ancestry 61775e8 -> 8452027",
+      "details": null
+    },
+    {
+      "check": "ancestry e89bdaa -> 8452027",
+      "details": null
+    },
+    {
+      "check": "ancestry 3c464ba -> 8452027",
+      "details": null
+    },
+    {
+      "check": "ancestry 8452027 -> 9791c1e",
+      "details": null
+    },
+    {
+      "check": "review-only delivery paths",
+      "details": [
+        "docs/tasks/W011-channel-identity-fin-count.md",
+        "docs/tasks/W011/independent-premerge-evidence/boundary-owner-probe.py",
+        "docs/tasks/W011/independent-premerge-evidence/boundary-owner-probe.stderr.txt",
+        "docs/tasks/W011/independent-premerge-evidence/boundary-owner-probe.stdout.json",
+        "docs/tasks/W011/independent-premerge-evidence/boundary-probe.py",
+        "docs/tasks/W011/independent-premerge-evidence/boundary-probe.stderr.txt",
+        "docs/tasks/W011/independent-premerge-evidence/boundary-probe.stdout.json",
+        "docs/tasks/W011/independent-premerge-evidence/boundary-receipt.json",
+        "docs/tasks/W011/independent-premerge-evidence/boundary-review.md",
+        "docs/tasks/W011/independent-premerge-evidence/boundary-w007-regression.stderr.txt",
+        "docs/tasks/W011/independent-premerge-evidence/boundary-w007-regression.stdout.txt",
+        "docs/tasks/W011/independent-premerge-evidence/environment.json",
+        "docs/tasks/W011/independent-premerge-evidence/evidence-audit.fourth.stderr.txt",
+        "docs/tasks/W011/independent-premerge-evidence/evidence-audit.initial.stderr.txt",
+        "docs/tasks/W011/independent-premerge-evidence/evidence-audit.py",
+        "docs/tasks/W011/independent-premerge-evidence/evidence-audit.second.stderr.txt",
+        "docs/tasks/W011/independent-premerge-evidence/evidence-audit.stderr.txt",
+        "docs/tasks/W011/independent-premerge-evidence/evidence-audit.stdout.json",
+        "docs/tasks/W011/independent-premerge-evidence/evidence-audit.third.stderr.txt",
+        "docs/tasks/W011/independent-premerge-evidence/evidence-report.md",
+        "docs/tasks/W011/independent-premerge-evidence/geometry-location-probe.py",
+        "docs/tasks/W011/independent-premerge-evidence/geometry-location-probe.stderr.txt",
+        "docs/tasks/W011/independent-premerge-evidence/geometry-location-probe.stdout.json",
+        "docs/tasks/W011/independent-premerge-evidence/geometry-probe.py",
+        "docs/tasks/W011/independent-premerge-evidence/geometry-probe.stderr.txt",
+        "docs/tasks/W011/independent-premerge-evidence/geometry-probe.stdout.json",
+        "docs/tasks/W011/independent-premerge-evidence/geometry-receipt.json",
+        "docs/tasks/W011/independent-premerge-evidence/geometry-report.md",
+        "docs/tasks/W011/independent-premerge-evidence/regression.json",
+        "docs/tasks/W011/independent-premerge-evidence/regression.stderr.txt",
+        "docs/tasks/W011/independent-premerge-evidence/regression.stdout.txt",
+        "docs/tasks/W011/independent-premerge-evidence/review-manifest.json",
+        "docs/tasks/W011/independent-premerge-evidence/run_regression.py",
+        "docs/tasks/W011/independent-premerge-review.md"
+      ]
+    },
+    {
+      "check": "task only appends reviewer R2",
+      "details": null
+    },
+    {
+      "check": "source count",
+      "details": null
+    },
+    {
+      "check": "source archive unique members",
+      "details": null
+    },
+    {
+      "check": "source bytes README.md",
+      "details": null
+    },
+    {
+      "check": "source bytes docs/tasks/W003/examples/records.json",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/__init__.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/annotation/__init__.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/annotation/calibre_bundle.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/annotation/channel_identity.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/annotation/coverage.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/annotation/layer_map.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/annotation/layer_overlay.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/constraints/__init__.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/constraints/drc_context.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/constraints/engine.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/constraints/result.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/constraints/rules.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/derive/__init__.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/derive/channel_identity.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/derive/fin_count.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/derive/invalidation.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/derive/markings.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/derive/views.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/domain/__init__.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/domain/acquisition.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/domain/channel_identity.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/domain/circuit.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/domain/codec.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/domain/evidence.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/domain/geometry.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/domain/identifiers.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/domain/intent.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/domain/local_connectivity.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/domain/policy.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/domain/publication.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/domain/publication_codec.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/domain/regions.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/domain/results.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/domain/source_location.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/export/__init__.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/export/cdl.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/export/gds.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/export/json.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/export/reports.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/export/skill.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/export/visualization.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/importers/__init__.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/importers/_access.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/importers/_query_raw.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/importers/calibre.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/importers/cdl.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/importers/config.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/importers/gds.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/importers/reader.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/normalization/__init__.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/normalization/_validation.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/normalization/channel_identity.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/normalization/channel_identity_codec.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/normalization/codec.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/normalization/component.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/normalization/contracts.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/normalization/effective.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/normalization/effective_codec.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/normalization/geometry.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/normalization/geometry_codec.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/normalization/geometry_input.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/normalization/identity.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/normalization/input.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/normalization/local_connectivity.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/normalization/local_connectivity_codec.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/normalization/semantic.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/pipeline.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/planning/__init__.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/planning/candidate.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/planning/repair.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/planning/resize.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/planning/routing.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/planning/unsupported.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/py.typed",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/repository/__init__.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/repository/publication.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/state/__init__.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/state/connectivity.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/state/coordinate.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/state/layout_store.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/state/local_connectivity.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/state/mutation.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/state/occupancy.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/state/regions.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/state/snapshot.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/tech/__init__.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/tech/schema.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/tooling/__init__.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/tooling/fixture.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/transactions/__init__.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/transactions/change_set.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/transactions/commit_log.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/transactions/provenance.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/transactions/transaction.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/validation/__init__.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/validation/golden.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/validation/policy.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/validation/result.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/validation/self_consistency.py",
+      "details": null
+    },
+    {
+      "check": "source bytes layauto_v2/validation/signoff.py",
+      "details": null
+    },
+    {
+      "check": "source bytes pyproject.toml",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/contracts/test_w005_contracts.py",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/contracts/test_w005_inputs.py",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/contracts/test_w005_unicode_inputs.py",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/contracts/test_w006_boundaries.py",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/contracts/test_w006_ipmr01.py",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/contracts/test_w006_pipeline.py",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/contracts/test_w006_review_regressions.py",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/contracts/test_w007_contracts.py",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/contracts/test_w007_inputs.py",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/contracts/test_w008_capture_binding.py",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/contracts/test_w008_geometry.py",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/contracts/test_w008_geometry_wire.py",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/contracts/test_w009_captured_decode_exceptions.py",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/contracts/test_w009_contracts.py",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/contracts/test_w009_effective.py",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/contracts/test_w009_nested_base_decode.py",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/contracts/test_w009_nested_receipt_exceptions.py",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/contracts/test_w010_contracts.py",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/contracts/test_w010_exceptions.py",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/contracts/test_w010_geometry.py",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/contracts/test_w011_contracts.py",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/contracts/test_w011_exceptions.py",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/contracts/test_w011_geometry.py",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/contracts/w005_cases.py",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/contracts/w006_cases.py",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/contracts/w007_cases.py",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/contracts/w008_geometry_cases.py",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/contracts/w009_cases.py",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/contracts/w010_cases.py",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/contracts/w011_cases.py",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixture_support/test_w004_body.py",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/README.md",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/body/context-template.json",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/body/context.json",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/expected/layout.json",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/expected/output.cdl",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/expected/output.gds",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/expected/unit-provenance.json",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/export_policy.json",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/failures/body_ambiguous/body/context.json",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/failures/body_ambiguous/query/header.json",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/failures/body_disconnected/body/context.json",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/failures/body_disconnected/query/header.json",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/failures/body_enclosure/body/context.json",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/failures/body_enclosure/query/header.json",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/failures/body_wrong_binding/body/context.json",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/failures/body_wrong_binding/query/header.json",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/failures/body_wrong_rail/body/context.json",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/failures/body_wrong_rail/query/header.json",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/failures/body_wrong_type/body/context.json",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/failures/body_wrong_type/query/header.json",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/failures/cases.json",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/failures/cdl_expression/query/header.json",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/failures/cdl_expression/source.cdl",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/failures/cdl_include/query/header.json",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/failures/cdl_include/source.cdl",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/failures/count_correct_rule_wrong/body/context.json",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/failures/count_correct_rule_wrong/geometry_change.json",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/failures/count_correct_rule_wrong/query/header.json",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/failures/count_correct_rule_wrong/query/normalized/net_regions.yaml",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/failures/count_correct_rule_wrong/query/raw/net_shapes_n_y.txt",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/failures/count_correct_rule_wrong/source.gds",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/failures/device_reduction/query/header.json",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/failures/device_reduction/query/normalized/device_regions.yaml",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/failures/device_reduction/query/normalized/instance_xref.yaml",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/failures/device_reduction/query/raw/iXref.temp",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/failures/dialect_drift/query/header.json",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/failures/dialect_drift/query/raw/device_info_Q17.txt",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/failures/extraction_mismatch/body/context.json",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/failures/extraction_mismatch/geometry_change.json",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/failures/extraction_mismatch/query/header.json",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/failures/extraction_mismatch/query/normalized/device_regions.yaml",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/failures/extraction_mismatch/query/raw/device_info_Q17.txt",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/failures/extraction_mismatch/source.gds",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/failures/gds_nonrectangle/body/context.json",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/failures/gds_nonrectangle/query/header.json",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/failures/gds_nonrectangle/source.gds",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/failures/gds_text/body/context.json",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/failures/gds_text/query/header.json",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/failures/gds_text/source.gds",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/failures/header_top_mismatch/query/header.json",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/failures/mapping_many_to_one/query/header.json",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/failures/mapping_many_to_one/query/normalized/device_regions.yaml",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/failures/mapping_many_to_one/query/normalized/instance_xref.yaml",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/failures/mapping_many_to_one/query/raw/iXref.temp",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/failures/missing_body_context/query/header.json",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/failures/missing_body_operator/query/header.json",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/failures/missing_body_operator/tech/physical.json",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/failures/missing_terminator/query/header.json",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/failures/missing_terminator/query/raw/device_info_Q17.txt",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/failures/multifinger/query/header.json",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/failures/multifinger/source.cdl",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/failures/normalized_cache_drift/query/normalized/net_xref.yaml",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/failures/output_nonrepresentable/export_policy.json",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/failures/output_nonrepresentable/query/header.json",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/failures/output_overflow/export_policy.json",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/failures/output_overflow/query/header.json",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/failures/raw_byte_drift/query/raw/nXref.temp",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/failures/unit_mismatch/body/context.json",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/failures/unit_mismatch/query/header.json",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/failures/unit_mismatch/source.gds",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/failures/unknown_unit/query/header.json",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/failures/unknown_unit/query/raw/net_shapes_n_a.txt",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/failures/unsupported_target/query/header.json",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/failures/unsupported_target/target.cdl",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/failures/via_enclosure/body/context.json",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/failures/via_enclosure/geometry_change.json",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/failures/via_enclosure/query/header.json",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/failures/via_enclosure/source.gds",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/failures/wrong_count/query/header.json",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/failures/wrong_count/query/raw/net_names.txt",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/independent-design-answer.json",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/limitations.json",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/oracle.json",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/query/dialect.json",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/query/header.json",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/query/normalized/device_regions.yaml",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/query/normalized/instance_xref.yaml",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/query/normalized/net_regions.yaml",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/query/normalized/net_xref.yaml",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/query/raw/device_info_Q17.txt",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/query/raw/device_info_Q93.txt",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/query/raw/iXref.temp",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/query/raw/nXref.temp",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/query/raw/net_names.txt",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/query/raw/net_shapes_n_a.txt",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/query/raw/net_shapes_n_hi.txt",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/query/raw/net_shapes_n_lo.txt",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/query/raw/net_shapes_n_y.txt",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/query/requests.json",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/site_config.yaml",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/source.cdl",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/source.gds",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/sources.json",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/spec.json",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/special/cut_islands/oracle.json",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/special/cut_islands/source.gds",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/special/cut_islands/spec.json",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/target.cdl",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/tech.json",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/tech/coordinate.json",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/tech/derived.json",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/tech/drawn.json",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/tech/formats.json",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/tech/physical.json",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/tech/rules.json",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/fixtures/w003_m1/validation_policy.json",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/support/w003_generate.py",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/support/w003_plot.py",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/support/w003_record_examples.py",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/support/w003_verify.py",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/support/w004_body.py",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/support/w004_query.py",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/support/w004_support.py",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/unit/test_w005_config.py",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/unit/test_w005_formats.py",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/unit/test_w005_query.py",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/unit/test_w005_unicode.py",
+      "details": null
+    },
+    {
+      "check": "source bytes tests/unit/test_w006_publication.py",
+      "details": null
+    },
+    {
+      "check": "runtime count",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix __init__.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix annotation/__init__.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix annotation/calibre_bundle.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix annotation/channel_identity.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix annotation/coverage.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix annotation/layer_map.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix annotation/layer_overlay.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix constraints/__init__.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix constraints/drc_context.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix constraints/engine.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix constraints/result.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix constraints/rules.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix derive/__init__.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix derive/channel_identity.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix derive/fin_count.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix derive/invalidation.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix derive/markings.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix derive/views.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix domain/__init__.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix domain/acquisition.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix domain/channel_identity.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix domain/circuit.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix domain/codec.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix domain/evidence.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix domain/geometry.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix domain/identifiers.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix domain/intent.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix domain/local_connectivity.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix domain/policy.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix domain/publication.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix domain/publication_codec.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix domain/regions.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix domain/results.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix domain/source_location.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix export/__init__.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix export/cdl.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix export/gds.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix export/json.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix export/reports.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix export/skill.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix export/visualization.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix importers/__init__.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix importers/_access.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix importers/_query_raw.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix importers/calibre.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix importers/cdl.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix importers/config.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix importers/gds.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix importers/reader.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix normalization/__init__.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix normalization/_validation.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix normalization/channel_identity.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix normalization/channel_identity_codec.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix normalization/codec.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix normalization/component.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix normalization/contracts.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix normalization/effective.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix normalization/effective_codec.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix normalization/geometry.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix normalization/geometry_codec.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix normalization/geometry_input.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix normalization/identity.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix normalization/input.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix normalization/local_connectivity.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix normalization/local_connectivity_codec.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix normalization/semantic.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix pipeline.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix planning/__init__.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix planning/candidate.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix planning/repair.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix planning/resize.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix planning/routing.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix planning/unsupported.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix py.typed",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix repository/__init__.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix repository/publication.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix state/__init__.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix state/connectivity.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix state/coordinate.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix state/layout_store.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix state/local_connectivity.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix state/mutation.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix state/occupancy.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix state/regions.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix state/snapshot.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix tech/__init__.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix tech/schema.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix tooling/__init__.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix tooling/fixture.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix transactions/__init__.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix transactions/change_set.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix transactions/commit_log.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix transactions/provenance.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix transactions/transaction.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix validation/__init__.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix validation/golden.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix validation/policy.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix validation/result.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix validation/self_consistency.py",
+      "details": null
+    },
+    {
+      "check": "runtime equals product fix validation/signoff.py",
+      "details": null
+    },
+    {
+      "check": "review manifest binding",
+      "details": null
+    },
+    {
+      "check": "review manifest docs/tasks/W011/independent-premerge-evidence/boundary-owner-probe.py",
+      "details": null
+    },
+    {
+      "check": "review manifest docs/tasks/W011/independent-premerge-evidence/boundary-owner-probe.stderr.txt",
+      "details": null
+    },
+    {
+      "check": "review manifest docs/tasks/W011/independent-premerge-evidence/boundary-owner-probe.stdout.json",
+      "details": null
+    },
+    {
+      "check": "review manifest docs/tasks/W011/independent-premerge-evidence/boundary-probe.py",
+      "details": null
+    },
+    {
+      "check": "review manifest docs/tasks/W011/independent-premerge-evidence/boundary-probe.stderr.txt",
+      "details": null
+    },
+    {
+      "check": "review manifest docs/tasks/W011/independent-premerge-evidence/boundary-probe.stdout.json",
+      "details": null
+    },
+    {
+      "check": "review manifest docs/tasks/W011/independent-premerge-evidence/boundary-receipt.json",
+      "details": null
+    },
+    {
+      "check": "review manifest docs/tasks/W011/independent-premerge-evidence/boundary-review.md",
+      "details": null
+    },
+    {
+      "check": "review manifest docs/tasks/W011/independent-premerge-evidence/boundary-w007-regression.stderr.txt",
+      "details": null
+    },
+    {
+      "check": "review manifest docs/tasks/W011/independent-premerge-evidence/boundary-w007-regression.stdout.txt",
+      "details": null
+    },
+    {
+      "check": "review manifest docs/tasks/W011/independent-premerge-evidence/environment.json",
+      "details": null
+    },
+    {
+      "check": "review manifest docs/tasks/W011/independent-premerge-evidence/evidence-audit.fourth.stderr.txt",
+      "details": null
+    },
+    {
+      "check": "review manifest docs/tasks/W011/independent-premerge-evidence/evidence-audit.initial.stderr.txt",
+      "details": null
+    },
+    {
+      "check": "review manifest docs/tasks/W011/independent-premerge-evidence/evidence-audit.py",
+      "details": null
+    },
+    {
+      "check": "review manifest docs/tasks/W011/independent-premerge-evidence/evidence-audit.second.stderr.txt",
+      "details": null
+    },
+    {
+      "check": "review manifest docs/tasks/W011/independent-premerge-evidence/evidence-audit.stderr.txt",
+      "details": null
+    },
+    {
+      "check": "review manifest docs/tasks/W011/independent-premerge-evidence/evidence-audit.stdout.json",
+      "details": null
+    },
+    {
+      "check": "review manifest docs/tasks/W011/independent-premerge-evidence/evidence-audit.third.stderr.txt",
+      "details": null
+    },
+    {
+      "check": "review manifest docs/tasks/W011/independent-premerge-evidence/evidence-report.md",
+      "details": null
+    },
+    {
+      "check": "review manifest docs/tasks/W011/independent-premerge-evidence/geometry-location-probe.py",
+      "details": null
+    },
+    {
+      "check": "review manifest docs/tasks/W011/independent-premerge-evidence/geometry-location-probe.stderr.txt",
+      "details": null
+    },
+    {
+      "check": "review manifest docs/tasks/W011/independent-premerge-evidence/geometry-location-probe.stdout.json",
+      "details": null
+    },
+    {
+      "check": "review manifest docs/tasks/W011/independent-premerge-evidence/geometry-probe.py",
+      "details": null
+    },
+    {
+      "check": "review manifest docs/tasks/W011/independent-premerge-evidence/geometry-probe.stderr.txt",
+      "details": null
+    },
+    {
+      "check": "review manifest docs/tasks/W011/independent-premerge-evidence/geometry-probe.stdout.json",
+      "details": null
+    },
+    {
+      "check": "review manifest docs/tasks/W011/independent-premerge-evidence/geometry-receipt.json",
+      "details": null
+    },
+    {
+      "check": "review manifest docs/tasks/W011/independent-premerge-evidence/geometry-report.md",
+      "details": null
+    },
+    {
+      "check": "review manifest docs/tasks/W011/independent-premerge-evidence/regression.json",
+      "details": null
+    },
+    {
+      "check": "review manifest docs/tasks/W011/independent-premerge-evidence/regression.stderr.txt",
+      "details": null
+    },
+    {
+      "check": "review manifest docs/tasks/W011/independent-premerge-evidence/regression.stdout.txt",
+      "details": null
+    },
+    {
+      "check": "review manifest docs/tasks/W011/independent-premerge-evidence/run_regression.py",
+      "details": null
+    },
+    {
+      "check": "review manifest docs/tasks/W011/independent-premerge-review.md",
+      "details": null
+    },
+    {
+      "check": "review manifest docs/tasks/W011-channel-identity-fin-count.md",
+      "details": null
+    },
+    {
+      "check": "297 review audit checks",
+      "details": null
+    },
+    {
+      "check": "review audit binding",
+      "details": null
+    },
+    {
+      "check": "9 captured regression exit",
+      "details": null
+    },
+    {
+      "check": "regression output regression.stdout.txt",
+      "details": null
+    },
+    {
+      "check": "regression output regression.stderr.txt",
+      "details": null
+    },
+    {
+      "check": "9 captured regressions actual stdout",
+      "details": null
+    },
+    {
+      "check": "6 old malformed actual stdout",
+      "details": null
+    },
+    {
+      "check": "boundary commands passed",
+      "details": null
+    },
+    {
+      "check": "geometry commands passed",
+      "details": null
+    },
+    {
+      "check": "no must-fix review conclusion",
+      "details": null
+    },
+    {
+      "check": "resource scope explicit",
+      "details": null
+    },
+    {
+      "check": "historical adoption explicit",
+      "details": null
+    }
+  ],
+  "check_count": 417,
+  "changed_review_paths": 34,
+  "source_count": 262,
+  "runtime_count": 100,
+  "review_manifest_files": 33,
+  "limits": [
+    "Read-only identity/output checks; no rerun of 297 original audit operations or product tests.",
+    "No build, installation, full codec/readback execution or new resource benchmark.",
+    "Review resource judgment is for bounded serial synthetic M1; no production/maximum input bound."
+  ]
+}

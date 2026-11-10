@@ -1,0 +1,19 @@
+{
+  "checked_at_utc": "2026-11-10T02:39:43.210859+00:00",
+  "base": "61775e8fde6e9ea247ec08a32067c44c3be48ff8",
+  "reviewed": "8452027e57fb1c58607640d7eb755b38ffc70716",
+  "delivery": "9791c1e9eb6c7e3e1878067f045abcad4e4d0b7d",
+  "reviewed_tree": "498cfd7b239c76629ee3c02919cb590347404f5c",
+  "status": "passed",
+  "must_fix": 0,
+  "check_count": 417,
+  "changed_review_paths": 34,
+  "source_count": 262,
+  "runtime_count": 100,
+  "review_manifest_files": 33,
+  "limits": [
+    "Read-only identity/output checks; no rerun of 297 original audit operations or product tests.",
+    "No build, installation, full codec/readback execution or new resource benchmark.",
+    "Review resource judgment is for bounded serial synthetic M1; no production/maximum input bound."
+  ]
+}

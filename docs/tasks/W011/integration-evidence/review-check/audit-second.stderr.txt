@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/workspace/work/w011-integration/review-check/audit.py", line 74, in <module>
+    check('resource scope explicit',all(t in text for t in ('136,461,405','7,322,828','9,257,804','不是精确进程峰值','不是 W011 增量 RSS','当前受限集成未发现实际资源阻塞','W012')))
+  File "/workspace/work/w011-integration/review-check/audit.py", line 24, in check
+    if not condition:raise AssertionError(name+': '+str(details))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: resource scope explicit: None

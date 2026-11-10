@@ -1,0 +1,17 @@
+fatal: path '__init__.py' does not exist in '8917d38d916c914bfa785cb116982f3f299b38de'
+Traceback (most recent call last):
+  File "/workspace/work/w011-integration/review-check/audit.py", line 52, in <module>
+    check('runtime equals product fix '+path,sha(blob('8917d38d916c914bfa785cb116982f3f299b38de',path))==expected)
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/w011-integration/review-check/audit.py", line 19, in blob
+    def blob(ref,path):return git('show',ref+':'+path)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/w011-integration/review-check/audit.py", line 18, in git
+    def git(*args):return subprocess.check_output(['git',*args],cwd=ROOT)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 466, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['git', 'show', '8917d38d916c914bfa785cb116982f3f299b38de:__init__.py']' returned non-zero exit status 128.

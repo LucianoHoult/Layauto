@@ -1,0 +1,35 @@
+{
+  "argv": [
+    "/workspace/work/w005-pm-check-env/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-p",
+    "no:cacheprovider",
+    "-q",
+    "tests/contracts/test_w011_geometry.py",
+    "tests/contracts/test_w011_exceptions.py",
+    "-k",
+    "actual_w006_readback_preserves_unsealed_attempt or existing_extraction_mismatch_is_actual or target_only_multiple_axes_do_not_change_source or original_t05_violation_and_body_scope_remain_visible or cr03_actual_w007_expected_failure_then_completion_fault_keeps_history"
+  ],
+  "cwd": "/workspace/Layauto",
+  "started_utc": "2026-11-10T02:40:28.044968+00:00",
+  "finished_utc": "2026-11-10T02:46:12.221850+00:00",
+  "elapsed_seconds": 344.17689272700227,
+  "returncode": 0,
+  "tested_head": "59f2cda44e30779bb3e82346d71a389831314506",
+  "tested_tree": "498cfd7b239c76629ee3c02919cb590347404f5c",
+  "environment_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONPATH": "/workspace/Layauto"
+  },
+  "interpreter": "Python 3.12.14",
+  "combined.stdout.txt": {
+    "bytes": 824,
+    "sha256": "c7399b2186699a1329e9762b28e8538d6dba36c5ba4a63d3c07f46f186dcc227"
+  },
+  "combined.stderr.txt": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

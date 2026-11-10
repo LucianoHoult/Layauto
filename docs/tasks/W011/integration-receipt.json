@@ -1,0 +1,82 @@
+{
+  "schema_version": "w011-integration-receipt/1",
+  "recorded_at_utc": "2026-11-10T02:46:55.767491+00:00",
+  "pr": 65,
+  "pr_url": "https://github.com/LucianoHoult/Layauto/pull/65",
+  "accepted_main_parent": "61775e8fde6e9ea247ec08a32067c44c3be48ff8",
+  "reviewed_head": "9791c1e9eb6c7e3e1878067f045abcad4e4d0b7d",
+  "merge_commit": "59f2cda44e30779bb3e82346d71a389831314506",
+  "merge_and_review_tree": "498cfd7b239c76629ee3c02919cb590347404f5c",
+  "engineering_frozen": "e89bdaa6a091f56cfaf7862dced7232d34e22514",
+  "source_files_unchanged": 262,
+  "source_manifest_sha256": "dd463fa402a8469ba7212f4781cd2082eb86466b1484810ed89dbc02211bb475",
+  "status": "accepted_and_integrated_bounded_synthetic_m1_component",
+  "must_fix_remaining": 0,
+  "actual_postmerge_checks": {
+    "argv": [
+      "/workspace/work/w005-pm-check-env/bin/python",
+      "-B",
+      "-m",
+      "pytest",
+      "-p",
+      "no:cacheprovider",
+      "-q",
+      "tests/contracts/test_w011_geometry.py",
+      "tests/contracts/test_w011_exceptions.py",
+      "-k",
+      "actual_w006_readback_preserves_unsealed_attempt or existing_extraction_mismatch_is_actual or target_only_multiple_axes_do_not_change_source or original_t05_violation_and_body_scope_remain_visible or cr03_actual_w007_expected_failure_then_completion_fault_keeps_history"
+    ],
+    "cwd": "/workspace/Layauto",
+    "started_utc": "2026-11-10T02:40:28.044968+00:00",
+    "finished_utc": "2026-11-10T02:46:12.221850+00:00",
+    "elapsed_seconds": 344.17689272700227,
+    "returncode": 0,
+    "tested_head": "59f2cda44e30779bb3e82346d71a389831314506",
+    "tested_tree": "498cfd7b239c76629ee3c02919cb590347404f5c",
+    "environment_overrides": {
+      "PYTHONDONTWRITEBYTECODE": "1",
+      "PYTHONPATH": "/workspace/Layauto"
+    },
+    "interpreter": "Python 3.12.14",
+    "combined.stdout.txt": {
+      "bytes": 824,
+      "sha256": "c7399b2186699a1329e9762b28e8538d6dba36c5ba4a63d3c07f46f186dcc227"
+    },
+    "combined.stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "coverage": [
+    "W005 direct versus W006 caller-read readback; unchanged unsealed attempt and no terminal",
+    "original extraction mismatch measured4 against source5",
+    "target-only three-axis differences preserve source measurement",
+    "original T05 violation and body scope retained",
+    "actual W007 expected admission and identity failures followed by secondary failure retain exception history"
+  ],
+  "adopted_identity_checks": "417 integration prechecks plus actual merge parents/tree/262 source identity; independent premerge 297 engineering checks and 15 formal regressions",
+  "adopted_same_source_evidence": "dual1605/typing54/build/two clean installations/full readback codec and resources; PM12 and mathematical probes. Not repeated after identical-tree integration.",
+  "resource_arrangement": "Heavy checks serial; no new resource benchmark or input/production upper bound. W012 is next for P1/P2 cost investigation and concrete optimization proposal.",
+  "ci_limits": "GitHub returned empty commit status and PR workflow lists, not a CI pass.",
+  "not_claimed": [
+    "complete Stage2/M1",
+    "complete net/body/model extraction or all rules",
+    "baseline/no_change/Stage6/production",
+    "W012 optimization implemented"
+  ],
+  "evidence_files": {
+    "combined.json": "884496727f2c1258bc4d1932395e8ecc8321d82a0edb4fbb549481c0d7307fc7",
+    "combined.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "combined.stdout.txt": "c7399b2186699a1329e9762b28e8538d6dba36c5ba4a63d3c07f46f186dcc227",
+    "github-evidence.json": "bb84ee8eae7b48ae8015ebdcefc1956b1b76c080b30c5300481ea96ba16c7c85",
+    "review-check/audit-initial.stderr.txt": "6599be06b7c307a61d54c24269a3d93815d9f44fe0db5b51a38007c6ed7e1b71",
+    "review-check/audit-result.json": "fcf11de4cab79c215ff9b28ea5b159b00674ccaba5144194a4ed1d6d33543c0b",
+    "review-check/audit-second.stderr.txt": "357530e2a7852f26fd154681b31caa485046bcc488b6100d4ef539e65655c3cb",
+    "review-check/audit.py": "0b4322c3997f560a685f5ba583c6b4dae47c69b4d24595e83338b75e339f5744",
+    "review-check/audit.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "review-check/audit.stdout.json": "7fb2cea55cc0330126dae337b7137dc42db6402dc3dea19b67506e7bd4fbcd69",
+    "review-check/merge-check.json": "afbeb87f59aae498eb9f5c6b78da0193c198c4415061feb166ee10709a366549",
+    "review-check/report.md": "a6e2f35601165c06adb639dd968dac4a2ad6750cc27d476c8dc97b934bf25c28",
+    "run_combined.py": "62a9be7631eaf3f2760c8e65f8e9fb7beb5d15d22f96423bbe2ff9e6b075adcb"
+  }
+}

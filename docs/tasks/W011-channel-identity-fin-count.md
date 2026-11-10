@@ -7,8 +7,8 @@
 | ID / 目标 | W011；将实际沟道与已认证的器件身份关联，从精确 FIN/active/channel 几何计算有效 fin 数，给出与 source CDL 的有限参数核对及可追溯差异 |
 | 里程碑 / 依赖 | M1 内的 Stage 2 组件。W005–W010 已验收集成；起点 main `61775e8fde6e9ea247ec08a32067c44c3be48ff8`，W010 集成与组合证据见其 [PM2](W010-local-contact-connectivity.md#pm2-integration-20261106) |
 | 授权依据与范围 | 用户 2026-11-09 要求继续推进并说明整体位置。沿用 PM 准备、独立执行 session、独立 review、PM 集成验收的分工；本次先准备任务，不执行产品实现 |
-| 当前阶段 / 阻塞 | 待验收；执行交付、独立代码 review 及 PM 分支技术接收通过，新增/剩余必须修正项 0。专门合并前 review、main 集成与实际组合验证尚待；见 [PM1](#pm1-receipt) |
-| 恢复位置 | 从上述 main 建立 `codex/w011-channel-identity-fin-count`；接手本任务及准备 review 所在的远端提交，核对完整 SHA 和工作区 |
+| 当前阶段 / 阻塞 | 已验收；独立合并前review必须项0，PR #65合main，合并tree与已审head一致，实际6项组合通过；验收限本任务synthetic组件，见 [PM2](#pm2-integration) |
+| 恢复位置 | main合并 `59f2cda44e30779bb3e82346d71a389831314506`，接手含PM2的最新main；已审原分支head `9791c1e9eb6c7e3e1878067f045abcad4e4d0b7d`保留，下一任务另建分支 |
 | 允许修改 | 必要中立 DTO/refs/codec、`annotation/` 的有限 device-channel 定位、`derive/` 或其它符合架构 owner 的只读 FIN 计量、`normalization/` 同源组合；必要 tests、typing/build 配置、README 与 W011 附件。具体模块/算法由执行者决定 |
 | 非目标 | 不修改已验收 fixture/答案，不启用 resize；不做完整 net overlay、body 外部证明/U06、完整器件模型/VT/端子匹配、全部 T02/T03/T08 或 mandatory rules、完整工艺坐标/region occupancy、可变状态/lineage、baseline/seal/no_change/terminal/Stage 6、真实 EDA/生产适配 |
 | 架构依据 | 起点版本的 [architecture](../architecture.md) §1.4、§2.2–2.3、§3.1–3.8、§4.5–4.8、§5.3–5.9、§6.2、§8.1/8.3、§11.2/11.5/11.9/11.14–11.15、§12.3–12.5/12.8；[W003 合同](W003/contracts.md)与 [manual review](W003/manual-verification.md) 的 MR-006–009、MR-031/032.1；W007–W010 的来源、单位、公开结果合同 |
@@ -113,7 +113,19 @@
 
 下一步交专门独立session做[合并前review](W011/independent-premerge-prompt.md)，重点包含当前资源成本是否影响受限集成及后续扩展。通过后再由PM安排main集成/实际组合验证；本轮不合main、不最终验收或启动下一开发任务。W011的partial定位/未知计量不扩大为完整提取或生产能力，U06保留。
 
-### 独立执行 session prompt
+<a id="pm2-integration"></a>
+
+### PM2 最终验收与 main 集成
+
+接收专门独立session的[合并前复核](W011/independent-premerge-review.md)：新增及剩余必须修正项0，实际15项正式回归、新几何/定位/异常探针及297项工程检查通过。核对review交付 `9791c1e9eb6c7e3e1878067f045abcad4e4d0b7d` 仅追加review材料/记录，冻结源码身份不变；[集成前专项](W011/integration-evidence/review-check/report.md)417项核对通过，另核实际merge parents/tree/262源一致。
+
+通过 [PR #65](https://github.com/LucianoHoult/Layauto/pull/65) 合入 main `59f2cda44e30779bb3e82346d71a389831314506`，两parent为原main `61775e8fde6e9ea247ec08a32067c44c3be48ff8` 和上述review head。merge/已审tree均为 `498cfd7b239c76629ee3c02919cb590347404f5c`，262项最终源码/测试/配置hash全部匹配，未引入未审产品变化。
+
+在实际合并版本/Linux Python3.12.14上串行完成 **6 passed / 343.76s**（另90 deselected、1项外部pytest插件warning）：真实W005 direct与W006 caller-read readback相同、attempt/checkpoint不变/无terminal；原mismatch实际4对source5；target-only三轴差异不改source计量；原T05 violation/edge/body scope保留；真实W007 admission/identity预期错误后二次构造的异常历史保持。见[命令回执](W011/integration-evidence/combined.json)、[原输出](W011/integration-evidence/combined.stdout.txt)及[集成总回执](W011/integration-receipt.json)。原双1605/typing54、包/双安装、完整readback codec和资源及更广独立probe按相同源码继续适用，未重复双全量、构建安装或资源benchmark。GitHub返回空status/workflow列表，不称CI通过。
+
+**W011在声明的受限synthetic M1范围最终验收，main集成完成，剩余必须修正项0。** 原资源成本和串行重型安排继续适用，不扩成生产或最大输入承诺。下一步优先准备W012的P1/P2成本测量、具体方案与独立review，产品优化随后另行派发；完整net/body/model、规则/坐标、baseline/no_change/Stage6及U06仍后置。原W011分支保留。
+
+### 独立执行 session prompt（原始派发记录）
 
 ```text
 按 Layauto 项目规范，以执行角色完成 W011“沟道身份匹配与 FIN 计数草稿”。

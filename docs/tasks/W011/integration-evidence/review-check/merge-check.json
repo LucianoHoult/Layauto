@@ -1,0 +1,14 @@
+{
+  "checked_at_utc": "2026-11-10T02:41:01.071261+00:00",
+  "merge": "59f2cda44e30779bb3e82346d71a389831314506",
+  "parents": [
+    "61775e8fde6e9ea247ec08a32067c44c3be48ff8",
+    "9791c1e9eb6c7e3e1878067f045abcad4e4d0b7d"
+  ],
+  "merge_tree": "498cfd7b239c76629ee3c02919cb590347404f5c",
+  "review_tree": "498cfd7b239c76629ee3c02919cb590347404f5c",
+  "source_files": 262,
+  "status": "passed",
+  "must_fix": 0,
+  "scope": "Only merge parents/tree and source byte identity; no product tests or heavy commands"
+}

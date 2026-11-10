@@ -1,0 +1,51 @@
+{
+  "reviewed_head": "9791c1e9eb6c7e3e1878067f045abcad4e4d0b7d",
+  "pr": {
+    "url": "https://github.com/LucianoHoult/Layauto/pull/65",
+    "number": 65,
+    "state": "closed",
+    "merged": true,
+    "mergeable": false,
+    "draft": false,
+    "body": "W011 connects authenticated query device identities to exact channel regions and measures FIN crossings from layout geometry. The normal fixture yields MN0=5 and MP0=7; extraction_mismatch retains measured 4 versus source CDL 5. Exact seed coverage, unresolved FIN independence, source/target differences and existing local topology/T05 evidence remain explicit.\n\nIndependent implementation review, PM technical receipt and dedicated premerge review report zero remaining must-fix findings. Frozen-source evidence includes Python 3.10/3.12 each 1605 passed, strict typing for 54 modules, build and two isolated installation smokes. PM ran 12 targeted checks; dedicated premerge review ran 15, new geometry/boundary probes and 297 engineering checks. Post-merge combination checks will be recorded on the actual integration version.\n\nThis is a bounded synthetic M1 component. Full readback wire is about 136.5 MB and fresh-process peak about 6.984 GiB; heavy checks remain serial. W012 separately tracks capture/wire/reconstruction performance. Complete net/body/model extraction, mandatory checks, baseline/no_change/Stage 6 and production admission remain future scope.",
+    "title": "W011: associate channels with query identities and measure FIN counts",
+    "base": "main",
+    "base_sha": "61775e8fde6e9ea247ec08a32067c44c3be48ff8",
+    "head": "codex/w011-channel-identity-fin-count",
+    "head_sha": "9791c1e9eb6c7e3e1878067f045abcad4e4d0b7d",
+    "head_repo_id": 1144936784,
+    "head_repo_full_name": "LucianoHoult/Layauto",
+    "merge_commit_sha": "59f2cda44e30779bb3e82346d71a389831314506",
+    "user": {
+      "login": "LucianoHoult",
+      "name": "LucianoHoult",
+      "email": null,
+      "avatar_url": "https://avatars.githubusercontent.com/u/29163839?v=4",
+      "id": 29163839
+    },
+    "requested_reviewers": null,
+    "requested_team_reviewers": null,
+    "diff": null,
+    "comments": null,
+    "created_at": "2026-11-10T02:38:31Z",
+    "updated_at": "2026-11-10T02:40:31Z",
+    "closed_at": "2026-11-10T02:39:34Z",
+    "merged_at": "2026-11-10T02:39:34Z",
+    "commits": 31,
+    "changed_files": 530,
+    "additions": 48217,
+    "deletions": 24,
+    "display_url": "https://github.com/LucianoHoult/Layauto/pull/65",
+    "display_title": "W011: associate channels with query identities and measure FIN counts"
+  },
+  "combined_status": {
+    "statuses": []
+  },
+  "workflow_runs": {
+    "workflow_runs": []
+  },
+  "observed_utc": {
+    "current_time": "2026-11-10 02:40:59 UTC"
+  },
+  "limits": "Empty status/run lists are not a CI pass; workflow wrapper reports PR-associated first-page runs."
+}
