@@ -1,0 +1,32 @@
+{
+  "argv": [
+    "/workspace/.venvs/layauto/bin/python",
+    "-B",
+    "/workspace/Layauto/docs/tasks/W012/A1/verification-tools/prepare_final.py",
+    "--root",
+    "/workspace/Layauto",
+    "--out",
+    "/tmp/a1-review-recovery-us8kxn25/default-two-worker-guard",
+    "--work",
+    "/tmp/a1-review-recovery-us8kxn25/existing-work",
+    "--smoke",
+    "/workspace/Layauto/docs/tasks/W012/A1/verification-tools/installed_smoke.py",
+    "--python310",
+    "/workspace/.venvs/layauto/bin/python",
+    "--python312",
+    "/workspace/.venvs/layauto/bin/python",
+    "--expected-tests",
+    "1656",
+    "--baseline-test-count",
+    "1605",
+    "--matrix-workers",
+    "2"
+  ],
+  "cwd": "/workspace/Layauto",
+  "started_at_utc": "2026-11-10T07:27:43.920547+00:00",
+  "finished_at_utc": "2026-11-10T07:27:43.989855+00:00",
+  "exit_code": 2,
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "1a8395c947ab214677de314e7b8cb9359599f2d0607b4b0f60ce54ae4ab436a9",
+  "scope": "deliberate early parser/work-directory refusal; no matrix launched"
+}

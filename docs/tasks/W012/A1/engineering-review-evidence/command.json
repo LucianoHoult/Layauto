@@ -1,0 +1,14 @@
+{
+  "argv": [
+    "/workspace/.venvs/layauto/bin/python",
+    "-B",
+    "docs/tasks/W012/A1/engineering-review-evidence/check.py"
+  ],
+  "cwd": "/workspace/w012-a1-review",
+  "exit_code": 0,
+  "recorded_at_utc": "2026-11-10T10:06:13.225446+00:00",
+  "checker_sha256": "1f77c34d98fe8a88550adb68c0069e6ee679bdae53c684a4814e69f4b6d2bf52",
+  "stdout_sha256": "571cd151050d110d3fafb5c83a8059719fce0fc9ea75cb3ed7b5fb216d009be5",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "scope": "Actual earlier completed independent lightweight check; invocation UTC/duration not captured, metadata recorded after completion; not a product timing sample"
+}

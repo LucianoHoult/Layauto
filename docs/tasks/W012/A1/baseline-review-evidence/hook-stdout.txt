@@ -1,0 +1,6 @@
+{
+  "status": "passed",
+  "checks": 69,
+  "probe_sha256": "5dc3d2417e2f45486648730151e9150f444041b6eae1a35730783bbb88909f1a",
+  "scope": "Small actual frozen observers; original matches/flags/exception history/restoration, no large input or extra product encode"
+}

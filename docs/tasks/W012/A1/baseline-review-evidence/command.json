@@ -1,0 +1,14 @@
+{
+  "argv": [
+    "/workspace/.venvs/layauto/bin/python",
+    "-B",
+    "docs/tasks/W012/A1/baseline-review-evidence/check.py"
+  ],
+  "cwd": "/workspace/w012-a1-review",
+  "exit_code": 0,
+  "recorded_at_utc": "2026-11-10T07:05:25.780189+00:00",
+  "checker_sha256": "2e08761b2e0a9efb3b532a254739943de469589de87a464814c6f23d414c8223",
+  "stdout_sha256": "a0af62498079c60135da4971dd8f8274ec4a840bc28712c63a81709a22cd8e59",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "scope": "Actual completed command; review duration was not timed or used as a product metric"
+}

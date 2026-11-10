@@ -1,0 +1,9 @@
+usage: prepare_final.py [-h] --root ROOT --out OUT --work WORK --smoke SMOKE
+                        --python310 PYTHON310 --python312 PYTHON312
+                        --expected-tests EXPECTED_TESTS
+                        [--baseline-collection BASELINE_COLLECTION]
+                        [--baseline-test-count BASELINE_TEST_COUNT]
+                        [--matrix-workers {1,2}]
+                        [--resource-gate RESOURCE_GATE]
+                        [--allow-parallel-without-gate]
+prepare_final.py: error: --matrix-workers 2 requires --resource-gate

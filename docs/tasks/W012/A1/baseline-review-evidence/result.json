@@ -1,0 +1,131 @@
+{
+  "status": "passed",
+  "checks": 2642,
+  "baseline_artifact_identities": {
+    "performance/before-normal-direct-r1.json": "be0be0dfca6134917fc89caae2ea8fa647874b9ceb26b3d256f2eb3389ef91b6",
+    "performance/after-normal-direct-r1.json": "5839e5042aad20ea6cf1ccea26ad9846f227bb160e082aa8d67e2c7994027ca0",
+    "performance/before-normal-readback-r1.json": "dc0819b5c2240cc8b38f18a8666d111a36ebfd03b46bb7cad1e1adada4348387",
+    "performance/after-normal-readback-r1.json": "8d3df458f067b7971ffd7c54ca3c52dbda6098db7496da7f20c380ce5424e9be",
+    "performance/before-extraction-mismatch-r1.json": "41bddc6df5d335d8c19763426d0ea25af8ae10161145032fd703d1e7923c8cee",
+    "performance/after-extraction-mismatch-r1.json": "749801c33e23690c167fdafeceffbe984685ed89598536ec47cab92d5151e3d9",
+    "performance/before-normal-direct-r2.json": "44e58d90e5e3371b0d8d6c30c3c9c702d1e4e36ee7276790b246300e5d011c8c",
+    "performance/after-normal-direct-r2.json": "d57711c758738bf7b42710cbad1644016437c87a043a68966dbbed898914e187",
+    "performance/before-normal-readback-r2.json": "93341edfd8a63cecfef8f01378809ad4fe37295f9f6951aaf60f451564f8015d",
+    "performance/after-normal-readback-r2.json": "c956b11fb1e7026a6462566afa56b315104fdb02b488766302c856aa1f8253e4",
+    "performance/before-extraction-mismatch-r2.json": "77e15fa7d272a100d4a10aace130be61ae00386901c84ba27bfd8ff3c7279ccc",
+    "performance/after-extraction-mismatch-r2.json": "db5b872ea74293fb9238dfe17c01b1e250359dd313d9589cedc1fd16ea198cda",
+    "performance/before-normal-direct-r3.json": "f3f54d8ef24e758e9471cd35313e05869a257577914182654dcdcd732c40bd88",
+    "performance/after-normal-direct-r3.json": "5f39d9053efd2f2538c5c0e3252e2adbe4c740cc7c5d1a7a609fb3d934ed0015",
+    "performance/before-normal-readback-r3.json": "1eadb80362ee400f48141df8d2a8bd6e24d8974b26cf789de7bd8e06fa221122",
+    "performance/after-normal-readback-r3.json": "5704b8b6143c76aa580d0d35779befeae141c0600c10153495460b3a9ed1854d",
+    "performance/before-extraction-mismatch-r3.json": "2ebd45546b9b955d56c6087590de4087d5050fc7903f07a22c4c3ec319ae29c7",
+    "performance/after-extraction-mismatch-r3.json": "cfb9a24730fab097d00c10ac5eb3649ffe395e2e4e899c10844d523b016190cf"
+  },
+  "receipt_sha256": "8e0050c6a2ce2cd2dbfd2a2e12bdae5b89759592864e20437115a0736fa77ae3",
+  "summary_sha256": "6b6aa60ce964cc50bcccb721a26969f6eedb8f4c0ebf1b06ff5b952dfdbe5f32",
+  "recomputed": {
+    "normal-direct": {
+      "before": {
+        "total_median": 94.41892330200244,
+        "all_peaks_kib": [
+          2850796,
+          2851236,
+          2851076
+        ],
+        "peak_median_kib": 2851076
+      },
+      "after": {
+        "total_median": 75.79989128700072,
+        "all_peaks_kib": [
+          325192,
+          325520,
+          325436
+        ],
+        "peak_median_kib": 325436
+      },
+      "time_reduction_fraction": 0.1971959789823916,
+      "peak_reduction_fraction": 0.8858550245591489,
+      "median_stage_regressions": {
+        "W005_read_inputs": [
+          0.6963497020005889,
+          0.7215083030005189,
+          0.03612926224804891
+        ],
+        "W008_adapter_and_build": [
+          0.37233271799959766,
+          0.3814851669994823,
+          0.024581371868304558
+        ]
+      }
+    },
+    "normal-readback": {
+      "before": {
+        "total_median": 186.6251646560013,
+        "all_peaks_kib": [
+          7344896,
+          7344896,
+          7321284
+        ],
+        "peak_median_kib": 7344896
+      },
+      "after": {
+        "total_median": 144.06681701500202,
+        "all_peaks_kib": [
+          706668,
+          708860,
+          708536
+        ],
+        "peak_median_kib": 708536
+      },
+      "time_reduction_fraction": 0.2280418491227878,
+      "peak_reduction_fraction": 0.9035335558188979,
+      "median_stage_regressions": {
+        "W006_prepare_inputs": [
+          1.4775190370000928,
+          1.5475328530010302,
+          0.047386066945770855
+        ],
+        "W009_build": [
+          1.2327022120007314,
+          1.240679374001047,
+          0.006471280673187474
+        ]
+      }
+    },
+    "extraction-mismatch": {
+      "before": {
+        "total_median": 93.1704875409996,
+        "all_peaks_kib": [
+          2860508,
+          2860516,
+          2860924
+        ],
+        "peak_median_kib": 2860516
+      },
+      "after": {
+        "total_median": 79.51409700300064,
+        "all_peaks_kib": [
+          324668,
+          325432,
+          324424
+        ],
+        "peak_median_kib": 324668
+      },
+      "time_reduction_fraction": 0.14657420926330855,
+      "peak_reduction_fraction": 0.8865001978663989,
+      "median_stage_regressions": {
+        "W008_adapter_and_build": [
+          0.3928318529997341,
+          0.3961486890002561,
+          0.008443398810952019
+        ],
+        "W011_result_encode": [
+          1.4461780809997435,
+          1.4580061480010045,
+          0.00817884543865044
+        ]
+      }
+    }
+  },
+  "scope": "completed18 baseline samples only; no profile or final matrix claim"
+}

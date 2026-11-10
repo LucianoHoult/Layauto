@@ -96,6 +96,14 @@ W011 原资源测量每个 case 含 31 份捕获、共 280,706 B，40 条 drawn 
 
 独立 reviewer `/root/independent_review`（未承担测量工具/方案设计）已完成[PP1–PP5调查与方案复核](W012/independent-review.md)，受审base `f3698b7ffda3b0737a2eb61ca85dbf3b40bc89fe`、执行冻结 `4aad0169c47f17c2c97bae541b6bc38bb6aaf489`及单行修复 `27280c4ef243a96578b78e9794ff52407be86eff`。实际1521项独立轻量身份/原输出/统计/观测器核验通过，未重复重型矩阵。新增必须修正项1（R01：mismatch外层bytes事件数217而非222），已由执行修正、reviewer复核关闭；剩余必须项0。原finding/失败stderr、可选pattern类型过滤建议及复核处置均保留。调查与具体方案可交PM接收；目标降幅及新wire格式仍是建议，未批准实施、未作产品性能验收或main集成。
 
+### A1 最终独立 review
+
+未参与算法/测试/工具/执行方案设计的 `/root/a1_plan_review` 已完成[方案 review](W012/A1/plan-review.md)和[代码/正确性/性能最终 review](W012/A1/independent-review.md)。base `7f7c1304bdafd941791421cef64864fb1616303c`，最终受审提交 `44a91c472fdeba5bb4b8a6071c0580313336c379`，产品/测试仍为 `ca1f810c3c97376f71089d8b4054760ff198012f` 的冻结字节。唯一产品改动符合 I1–I6：matcher 先执行、小写ASCII偶数hex含空串语言相同；公开异常/canonical及`/1`字节/hash/ref、完整捕获和认证边界保持。
+
+本轮必须项1（A1-R01：中断后重跑可能覆写原证据）在正式测量前修复，独立复现及guard复核确认关闭；剩余必须项0。原finding、原runner、原失败/检查输出和关闭依据均保留，旧P1/P2记录未改。独立实际核对18个fresh串行样本及完整wire逐块相等、两侧profile的65个matcher窗口/调用次数、四份真实包各100成员、双1656全量/原1605节点保留、双typing54、21条工程命令及双源码外安装smoke；未重跑重型组合。受审372文件及263源/测试/配置身份清单闭合。
+
+三路径总耗时中位改善19.72%/22.80%/14.66%，峰值改善88.59%/90.35%/88.65%，wire减幅0。原各次峰值/六个小阶段增幅、单次profile decode约+0.82%及720,336KiB残余峰值的未归因边界均披露；不把profile、工程调度或20%/50%建议混作A1硬门。**最小A1复核通过，可交PM核验；不是PM验收或W012整体完成。** 不批准新格式/下一子项，不代改PM阶段、main或current-work。
+
 ## PM 验收与交接（PM）
 
 W011已验收集成后，PM首次派发本任务的P1/P2调查阶段；本次可执行不代表优化实施获批或性能目标已验收。未参与调查/起草的reviewer `/root/w012_handoff_review` 已完成[派发要求独立复核](W012/handoff-review.md)，必须修正项0；受审草稿SHA-256 `c448de9107f625cce700e81eb0584700202e2b47acfd79d94087556e78c04976`。本次只补实际main/分支/依赖状态及PM接收元数据，行为要求/PP1–PP5未改；最终发布身份由Git及交接回复给出。执行交PP1–PP5证据及review后停止，由PM决定实施范围和后续交接。

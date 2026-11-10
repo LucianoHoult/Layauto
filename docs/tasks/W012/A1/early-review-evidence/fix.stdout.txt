@@ -1,0 +1,8 @@
+{
+  "status": "passed",
+  "source_sha256": "aca026ad28711ec161d848b7f249c33ac723de7da7f821ec0c8c66643b77627c",
+  "refusal_message": "Stage contains prior evidence; do not overwrite or silently resume it",
+  "all_prior_stage_files_preserved": true,
+  "no_process_started": true,
+  "scope": "isolated tempfile guard check; no performance run"
+}

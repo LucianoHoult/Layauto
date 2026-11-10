@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/workspace/Layauto/docs/tasks/W012/A1/verification-tools/prepare_final.py", line 336, in <module>
+    main()
+  File "/workspace/Layauto/docs/tasks/W012/A1/verification-tools/prepare_final.py", line 59, in main
+    raise RuntimeError('Work directory must be absent; fresh environment/source identity required')
+RuntimeError: Work directory must be absent; fresh environment/source identity required

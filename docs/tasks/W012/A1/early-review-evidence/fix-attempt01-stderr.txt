@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/workspace/w012-a1-review/docs/tasks/W012/A1/early-review-evidence/verify_runner_fix.py", line 43, in <module>
+    module.main()
+  File "/workspace/Layauto/docs/tasks/W012/A1/run_performance.py", line 77, in main
+    raise RuntimeError('Stage contains prior evidence; do not overwrite or silently resume it')
+RuntimeError: Stage contains prior evidence; do not overwrite or silently resume it
