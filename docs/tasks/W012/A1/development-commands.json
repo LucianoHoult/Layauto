@@ -1,0 +1,69 @@
+{
+  "recorded_at_utc": "2026-11-10T06:21:46.152751+00:00",
+  "source_commit": "ca1f810c3c97376f71089d8b4054760ff198012f",
+  "commands": [
+    {
+      "argv": [
+        "/workspace/w012-a1-env/dev312/bin/python",
+        "-B",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "tests/contracts/test_w012_hex_validation.py",
+        "tests/contracts/test_w005_contracts.py",
+        "-q"
+      ],
+      "cwd": "/workspace/Layauto",
+      "exit_code": 0,
+      "passed": 89,
+      "pytest_reported_seconds": 0.64,
+      "timing_scope": "pytest-reported duration; command start UTC was not captured for these development runs",
+      "stdout_sha256": "a9d5147a0fd7f428fbbdf8dbc2d951459a553bd97121cb3d9ff342e42e4577cb",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "/workspace/w012-a1-env/dev310/bin/python",
+        "-B",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "tests/contracts/test_w012_hex_validation.py",
+        "-q"
+      ],
+      "cwd": "/workspace/Layauto",
+      "exit_code": 0,
+      "passed": 51,
+      "pytest_reported_seconds": 0.45,
+      "timing_scope": "pytest-reported duration; command start UTC was not captured for these development runs",
+      "stdout_sha256": "5be3c91d51044ffd888b83d0655e96b864f829b53fdb6911f642488a13c28631",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "/workspace/w012-a1-env/dev312/bin/python",
+        "-B",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "tests/contracts/test_w008_geometry_wire.py",
+        "tests/contracts/test_w009_nested_base_decode.py",
+        "tests/contracts/test_w009_captured_decode_exceptions.py",
+        "tests/contracts/test_w011_exceptions.py",
+        "tests/contracts/test_w011_contracts.py::test_complete_input_chain_rejects_grouped_payload_forgery",
+        "tests/contracts/test_w011_contracts.py::test_foreign_mutable_aliases_rejected_before_codec_can_copy_them",
+        "-q"
+      ],
+      "cwd": "/workspace/Layauto",
+      "exit_code": 0,
+      "passed": 273,
+      "pytest_reported_seconds": 1066.57,
+      "timing_scope": "pytest-reported duration; command start UTC was not captured for these development runs",
+      "stdout_sha256": "853c7811658c94e374b8b0a5b50502e1742e7a33411e5291a9f4e8e39f220c7c",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}
