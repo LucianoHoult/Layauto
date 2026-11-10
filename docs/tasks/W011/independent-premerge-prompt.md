@@ -21,7 +21,7 @@
 7. 实核 262 文件 source manifest/完整 snapshot、两实际包各 100 runtime、原 1465 IDs + 新 140 = 双 1605、双 typing54、双干净安装源码外 smoke、21 条命令和原输出。旧失败、两项 tests-only setup 修正及资源 gate 历史保留。原安装树不在本机时明确按归档证据采信，不能冒称重新观察或安装。
 8. 单独评估资源与集成可用性。原 fresh readback 完整 Result wire 136,461,405 B，整进程 ru_maxrss 7,322,828 KiB（约6.984GiB）；长矩阵另有 9,257,804 KiB（约8.83GiB）的采样高点。RSS 非 W011 增量、采样非精确峰值、constructor 包含在 build/decode。核对来源、测量边界、有限输入和当前受限 M1 集成是否存在实际阻塞，给出证据与建议；不能把成本自动忽略，也不能凭未测最大规模虚构通过或任意新验收门。
 
-资源执行安排：先检查本环境内存和已有进程。原环境16GiB；完整 Result codec/readback 重型命令应串行，避免与全量矩阵/其它 codec 并发。可以采用已按身份核验的原 readback/安装证据，说明本次未实跑的范围；不为复核重跑小时级双矩阵而跳过更有价值的边界检查。如资源阻塞必须路径，保留实际失败与缺口，交 PM 安排。
+资源执行安排：先检查本环境内存和已有进程。原环境16GiB；完整 Result codec/readback 重型命令应串行，避免与全量矩阵/其它 codec 并发。开发/修正阶段先跑新增项和受影响范围，最终冻结交付仍需双全量；本review可以采用已按身份核验的原全量/readback/安装证据，说明本次未实跑的范围。单次完整捕获/wire/重建的性能优化已单列W012（docs/tasks/W012-capture-wire-performance.md，待准备），本review核查成本与集成影响，不顺手重构；减少测试数量不能替代该优化。如资源阻塞必须路径，保留实际失败与缺口，交 PM 安排。
 
 写入与交付：
 - 只写 docs/tasks/W011/independent-premerge-review.md、必要独立复现/证据附件及 W011 任务 reviewer 区追加记录。

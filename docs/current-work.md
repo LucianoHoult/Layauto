@@ -6,6 +6,8 @@
 
 **[W011 — 沟道身份匹配与 FIN 计数草稿](tasks/W011-channel-identity-fin-count.md)分支技术接收通过，待最终验收。** 原分支 `codex/w011-channel-identity-fin-count` 交付 `3c464baade7b6ea8c712cfb84265490b8e3f754e`，PM实际12项回归/typing54及来源、范围、exact coverage专项通过，新增必须项0，见[PM1](tasks/W011-channel-identity-fin-count.md#pm1-receipt)。已能同源使用query定位channel、几何实算正常5/7及mismatch 4对5；[专门合并前review prompt](tasks/W011/independent-premerge-prompt.md)已准备，尚未合main。完整readback约136.5MB/独立进程约6.984GiB、长矩阵约8.83GiB采样高点是必读限制，扩大组合前须评估捕获保留/重复认证成本。
 
+**性能优化已单列 [W012 — 完整捕获、wire 与重复重建性能优化](tasks/W012-capture-wire-performance.md)，待准备。** 按用户建议，开发阶段先新增/受影响回归，最终冻结交付再双全量，执行规则已保存于[协作规则](collaboration/rules.md)。W012先定位完整捕获重复保留、wire膨胀及重复认证/重建的贡献，再收敛方案与量化目标；不能以少跑测试替代降低单次产品成本。W011专门review继续，稳定基线确定后优先准备W012，当前尚未实施。
+
 **[W010 — 局部接触与物理连通草稿](tasks/W010-local-contact-connectivity.md)已验收，并通过[PR #64](https://github.com/LucianoHoult/Layauto/pull/64)合入main `84c54857a1b20b9fb29c9b5a73e7b8d686b6e736`。** 合并tree与已审head一致，PM实际15项定向组合及direct/readback主probe通过，剩余必须修正项0，见[PM2](tasks/W010-local-contact-connectivity.md#pm2-integration-20261106)。原双1465/typing48、包及独立review证据继续适用；P3资源摘要已[澄清](tasks/W010/resource-summary.md)。下一开发任务为上方W011；完整坐标、外部body/完整器件标注与运行发布继续后置。
 
 **[W009 — 有效几何与沟道、端区草稿](tasks/W009-effective-geometry-terminals.md)已验收，并通过[PR #63](https://github.com/LucianoHoult/Layauto/pull/63)合入main `8c60f6c6183aed79a08ec8bb232a31f918837f68`。** 合并tree与已审head一致，PM实际63项组合验证通过，IPMR-01/FXR-01关闭，剩余必须修正项0；原最终矩阵/包及PM补修证据继续适用，见[PM4](tasks/W009-effective-geometry-terminals.md#pm4-integration-20261104)。局部精确接触及物理连通草稿现已由W010验收集成；完整坐标、body/完整提取、标注、规则与发布继续后置。
@@ -65,7 +67,7 @@
 | 完整工艺坐标/annotation/连通/body/提取状态与原子baseline | 后续Stage2任务保留；W008索引及W009区域草稿不替代这些义务 |
 | 无变化的完整判定、只读GDS/CDL/JSON及报告/terminal | 后续Stage3–6组合；通过后才验收M1 |
 
-W010已验收集成，具有明确scope的局部物理图及独立包围事实；示例coordinate与32×16见证仍不能充当完整运行坐标。下一步 W011 专门合并前review，再安排集成；须单列资源成本结论，扩大状态链/输入前优先收敛重复保留与重复认证问题。之后继续剩余标注/外部body、完整坐标与规则、原子baseline及运行输出组合；W011不把计数相等提升为完整提取相等或no_change。原drawn及W008 raw occupancy保持，外部body图形独立；生产输入/body任务派发前必须回查U06。
+W010已验收集成，具有明确scope的局部物理图及独立包围事实；示例coordinate与32×16见证仍不能充当完整运行坐标。下一步 W011 专门合并前review，再安排集成；资源成本单独判断，扩大状态链/输入前优先推进W012的成本调查与优化。之后继续剩余标注/外部body、完整坐标与规则、原子baseline及运行输出组合；W011不把计数相等提升为完整提取相等或no_change。原drawn及W008 raw occupancy保持，外部body图形独立；生产输入/body任务派发前必须回查U06。
 
 正常输入在W006仅交接unsealed attempt，不产生成功terminal；W007组件也不推进attempt或宣称整轮成功。C08/09/10和C13的正式终结阶段仍需后续组合验证。完整Stage2/baseline/no_change与Stage6文件闭环仍是M1硬门；真实工具与配置机制后置项保持，新增关键预期带实例交PM/用户。W007验收不等同完整Stage2/M1通过。
 
