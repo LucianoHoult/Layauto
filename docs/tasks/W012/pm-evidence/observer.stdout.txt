@@ -1,0 +1,2 @@
+W012 lightweight selfcheck passed
+{"status": "passed", "count": 18}

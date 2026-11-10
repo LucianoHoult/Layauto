@@ -1,0 +1,29 @@
+{
+  "status": "passed",
+  "checks": [
+    "matcher transparency 'ab01'",
+    "matcher transparency 'ABC'",
+    "matcher transparency 'a'",
+    "matcher transparency '00'",
+    "matcher transparency 'f0'",
+    "matcher transparency '\uff10\uff10'",
+    "matcher transparency 'aa\\n'",
+    "matcher transparency ' '",
+    "foreign pattern delegated without extra comparison",
+    "exception history TypeError suppression=False",
+    "exception history TypeError suppression=True",
+    "exception history KeyError suppression=False",
+    "exception history KeyError suppression=True",
+    "exception history KeyboardInterrupt suppression=False",
+    "exception history KeyboardInterrupt suppression=True",
+    "exception history SystemExit suppression=False",
+    "exception history SystemExit suppression=True",
+    "delivered probe lightweight selfcheck with output redirected"
+  ],
+  "count": 18,
+  "scope": "Diagnostic/tool transparency only; no heavy product capture, full baseline/profile, or candidate optimization",
+  "tool_hashes": {
+    "probe.py": "321b84da8f8f8c9f2e8abda1b181f3a7ae9481d474643795de452b21a974cd7e",
+    "memory_probe.py": "c1d8176c1faa9ceef442d7599b22373d47f140cad41d3dc86ea2716caaf60b86"
+  }
+}

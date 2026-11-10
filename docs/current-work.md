@@ -1,10 +1,10 @@
 # 当前工作入口
 
-最近更新见 W012 P1/P2 派发。详细决定、证据与review结论归任务文件。
+最近更新见 W012 PM1。详细决定、证据与review结论归任务文件。
 
 ## 当前节点
 
-**[W012 — 完整捕获、wire 与重复重建性能优化](tasks/W012-capture-wire-performance.md)的P1/P2调查阶段可执行。** 从已验收main `0a3326aa363477724465886cd05874d0997fba3e` 建立 `codex/w012-capture-wire-performance`；[派发要求独立复核](tasks/W012/handoff-review.md)必须项0。交独立执行session只做三条完整路径测量、成本分析、具体方案/目标建议及独立review，交付后停在PM接收，不直接改runtime/wire。开发先新增/受影响、最终产品冻结双全量的[规则](collaboration/rules.md)继续适用；本调查runtime不变，采信同源W011完整矩阵，实际测量与工具自检不可省。
+**[W012 — 完整捕获、wire 与重复重建性能优化](tasks/W012-capture-wire-performance.md)的P1/P2调查阶段已验收，兼容A1待准备。** 原交付 `5085f994f0bd4b0c39f7ac1ccdbcacc43d281720`，独立review剩余必须项0，PM1048项证据核验/18项工具检查通过，见[PM1](tasks/W012-capture-wire-performance.md#pm1-investigation)。已把readback约7GiB峰值定位到超长hex校验窗口，并量化嵌套wire/重复认证；产品尚未优化。下一步先明确派发保持 `/1` bytes/hash/ref的最小A1，writer/reader/memo和新B格式分别后续收敛，不等待B决定才开始兼容优化。
 
 **[W011 — 沟道身份匹配与 FIN 计数草稿](tasks/W011-channel-identity-fin-count.md)已验收，并通过[PR #65](https://github.com/LucianoHoult/Layauto/pull/65)合入main `59f2cda44e30779bb3e82346d71a389831314506`。** merge tree与已审head一致，实际6项组合通过，剩余必须项0，见[PM2](tasks/W011-channel-identity-fin-count.md#pm2-integration)。同源query定位channel、几何正常5/7及mismatch 4对5已完成；完整readback约136.5MB/独立进程约6.984GiB、长矩阵约8.83GiB采样高点继续为限制，扩大组合前优先推进W012。
 
@@ -32,7 +32,7 @@
 
 | 用途 | 恢复依据 |
 | --- | --- |
-| W012 P1/P2调查 | `codex/w012-capture-wire-performance`，起点main `0a3326aa363477724465886cd05874d0997fba3e`；[任务与执行prompt](tasks/W012-capture-wire-performance.md)及[要求review](tasks/W012/handoff-review.md)，尚无profile结果或优化实施 |
+| W012 P1/P2调查 | `codex/w012-capture-wire-performance`，原交付`5085f994f0bd4b0c39f7ac1ccdbcacc43d281720`，起点main `0a3326aa363477724465886cd05874d0997fba3e`；[PM1](tasks/W012-capture-wire-performance.md#pm1-investigation)、[成本分析](tasks/W012/cost-analysis.md)和[证据回执](tasks/W012/pm-receipt.json)；调查已验收，产品优化未实施 |
 | W011 最终集成 | main `59f2cda44e30779bb3e82346d71a389831314506`，已审head`9791c1e9eb6c7e3e1878067f045abcad4e4d0b7d`、冻结源`e89bdaa6a091f56cfaf7862dced7232d34e22514`；[PM2](tasks/W011-channel-identity-fin-count.md#pm2-integration)及[集成回执](tasks/W011/integration-receipt.json)，接手含验收补记的最新main；原分支保留 |
 | 原已验收实物 | `633e3feef8062565019838f2d270e89b7f81c4ed`，原路径fixture/support/合同/报告及[交付附件](tasks/W003/delivery/w004-20261031/)齐全；helper后续补修见下行 |
 | REQ-01补修 | 在`06821ef64ac710963dcc947861a374cd0fe9dd6d`上修复body helper并新增持久回归；[独立定向复核](tasks/W003/reviews/w004-req01-fix-review.md)绑定修复文件身份。原633e3fe包保留，不冒记其已含本补修 |
@@ -68,7 +68,7 @@
 | 完整工艺坐标/annotation/连通/body/提取状态与原子baseline | 后续Stage2任务保留；W008索引及W009区域草稿不替代这些义务 |
 | 无变化的完整判定、只读GDS/CDL/JSON及报告/terminal | 后续Stage3–6组合；通过后才验收M1 |
 
-W010/W011已验收集成，具有局部物理图及有限器件定位/FIN计量；示例coordinate与32×16见证仍不能充当完整运行坐标。下一步执行W012已派发的P1/P2成本调查、具体方案与独立review，再由PM接收并决定优化实施，扩大状态链/输入前处理资源成本。之后继续剩余标注/外部body、完整坐标与规则、原子baseline及运行输出组合；W011不把计数相等提升为完整提取相等或no_change。原drawn及W008 raw occupancy保持，外部body图形独立；生产输入/body任务派发前必须回查U06。
+W010/W011已验收集成，具有局部物理图及有限器件定位/FIN计量；示例coordinate与32×16见证仍不能充当完整运行坐标。W012调查已验收，下一步准备最小兼容A1实施，扩大状态链/输入前处理资源成本。之后继续剩余标注/外部body、完整坐标与规则、原子baseline及运行输出组合；W011不把计数相等提升为完整提取相等或no_change。原drawn及W008 raw occupancy保持，外部body图形独立；生产输入/body任务派发前必须回查U06。
 
 正常输入在W006仅交接unsealed attempt，不产生成功terminal；W007组件也不推进attempt或宣称整轮成功。C08/09/10和C13的正式终结阶段仍需后续组合验证。完整Stage2/baseline/no_change与Stage6文件闭环仍是M1硬门；真实工具与配置机制后置项保持，新增关键预期带实例交PM/用户。W007验收不等同完整Stage2/M1通过。
 

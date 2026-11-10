@@ -1,0 +1,92 @@
+{
+  "schema_version": "w012-pm-investigation-receipt/1",
+  "recorded_at_utc": "2026-11-10T05:32:26.458656+00:00",
+  "delivery": "5085f994f0bd4b0c39f7ac1ccdbcacc43d281720",
+  "preparation": "f3698b7ffda3b0737a2eb61ca85dbf3b40bc89fe",
+  "main_runtime_baseline": "0a3326aa363477724465886cd05874d0997fba3e",
+  "status": "P1_P2_PP1_PP5_accepted_no_product_optimization",
+  "new_must_fix": 0,
+  "actual_pm_checks": {
+    "evidence_checks": 1048,
+    "evidence_report": "pm-evidence/evidence/report.md",
+    "observer_tool_checks": 18,
+    "observer_report": "pm-evidence/observer-result.json",
+    "plan_report": "pm-evidence/plan/report.md"
+  },
+  "source_identity": {
+    "source_files": 262,
+    "runtime_files": 100,
+    "source_manifest_sha256": "dd463fa402a8469ba7212f4781cd2082eb86466b1484810ed89dbc02211bb475",
+    "runtime_unchanged": true
+  },
+  "measurements_adopted": {
+    "paths": [
+      "normal-direct",
+      "normal-readback",
+      "extraction-mismatch"
+    ],
+    "fresh_serial_baselines": 3,
+    "separate_profiles": 3,
+    "extra_readback_memory_diagnostic": 1,
+    "stage_seconds": [
+      91.92179701500004,
+      187.95163460400005,
+      88.23074711000015
+    ],
+    "wire_bytes": [
+      54050313,
+      136471701,
+      54045042
+    ],
+    "peak_rss_kib": [
+      2859772,
+      7327952,
+      2850888
+    ],
+    "limits": "Original complete measurement output/source/tool identity reviewed; PM did not rerun heavy samples. Fixed mismatch target directory absent on current host; all35 origin hashes and persistent capture manifest verified, reconstruct before future comparisons."
+  },
+  "attribution": {
+    "outer_hex": "about99.9% of outer wire, mostly nested serialized lower wire, not raw captures",
+    "readback_peak_window": {
+      "hex_characters": 118841892,
+      "process_hwm_kib": 7319108,
+      "post_call_rss_kib": 355960,
+      "scope": "Highest observed HWM occurred during original regex call; not net allocation/native allocation breakdown"
+    },
+    "profile_timing": "exclusive disjoint time and cumulative nested time distinguished"
+  },
+  "decisions": {
+    "next": "Prepare compatible A1 only: existing hex validation memory cost; preserve all /1 bytes/hash/ref and public validation/exception boundaries. Writer/reader/memo are subsequent candidates based on A1 data.",
+    "targets": "20% elapsed/50% RSS are unvalidated recommendations for compatible package, not binding A1 promises or approved production budgets.",
+    "new_wire": "B is deferred; public /2 entry/default/compatibility, exchange hash versus content identities and historical migration require concrete decision materials before implementation."
+  },
+  "not_done": [
+    "product optimization",
+    "new wire schema or content identity migration",
+    "heavy PM benchmark/profile or repeat full dual tests",
+    "main integration of this investigation stage"
+  ],
+  "evidence_files": {
+    "evidence/attempt01-check.py": "7340ae663ef4da35e0c85b042aa81b2ecf032c5423f0a2d690e51839e683948e",
+    "evidence/attempt01-command.json": "d18478922ab99b7904208a9fde11dfe12dabe9829fc662728449a089c7394868",
+    "evidence/attempt01-stderr.txt": "308396db4b2a7b952484610f6d830bdb1fa1f8b5a610d99cd00455eaedb19de3",
+    "evidence/attempt01-stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/attempt02-check.py": "c1086dc7d8b1a51fcb49ec3e8e0fc95334843fc7b565a4c133419a2034eeeb98",
+    "evidence/attempt02-command.json": "8ffbc204b649e5118dc5edf282a548c3a77b9ffa5537591c4e89d580caca5e5e",
+    "evidence/attempt02-stderr.txt": "ff70e9a0621bf269b244fe7f6ade9a4f5a5ca5383d1e78c20fc9eb0ff822ff6a",
+    "evidence/attempt02-stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/check.py": "f68297d122e58bcb65222564713d07b4bde017e93270a38ca3a1db3c6aefd54e",
+    "evidence/command.json": "3dc416a14c80d873646b6262501fff8501bc583477be0a9ff7e48f4b010d51bf",
+    "evidence/manifest.json": "31f1c2d4a23cf477efb7aae25e76a814ae880041d3bc79b34f5bbe4128505f76",
+    "evidence/report.md": "b30aef3e38501cf802c9d3a351f30fc42c961aaa94a7cef107129f586a2d2919",
+    "evidence/result.json": "5b9c5585ead2da084a69d651cab2808d40d41d5baba21c6afe25c8647791dd4a",
+    "evidence/stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/stdout.txt": "8f5119459b88f1a262a033b7523bde0f092230eab7c3e0790002b58859f51201",
+    "observer-result.json": "c68420350784acdc9cd2bbd678ee6a409c38cc840f32de796d829214983eaf51",
+    "observer.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "observer.stdout.txt": "6a3ed40c0a407227ab27de778ad49d65b06267f83e456767aa79349d6293cf20",
+    "observer_check.py": "d4d7b1c51d2f0c04d9451f8ff9de0590b36211d953472218cb2ff7963355156b",
+    "original-selfcheck/selfcheck.json": "d67483b6e577352ca9635491494a5f5e806bfd669ea1553c892369ca3d6fc6ac",
+    "plan/report.md": "a1e8cf9fa28bc7d089147327376c05f38e13ba8b402e1a3ff391995b85fb71b9"
+  }
+}

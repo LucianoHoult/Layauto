@@ -1,0 +1,20 @@
+{
+  "head": "5085f994f0bd4b0c39f7ac1ccdbcacc43d281720",
+  "scope": "PM read-only evidence audit; excludes self",
+  "files": {
+    "command.json": "3dc416a14c80d873646b6262501fff8501bc583477be0a9ff7e48f4b010d51bf",
+    "attempt01-check.py": "7340ae663ef4da35e0c85b042aa81b2ecf032c5423f0a2d690e51839e683948e",
+    "report.md": "b30aef3e38501cf802c9d3a351f30fc42c961aaa94a7cef107129f586a2d2919",
+    "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "attempt02-command.json": "8ffbc204b649e5118dc5edf282a548c3a77b9ffa5537591c4e89d580caca5e5e",
+    "attempt02-check.py": "c1086dc7d8b1a51fcb49ec3e8e0fc95334843fc7b565a4c133419a2034eeeb98",
+    "attempt01-command.json": "d18478922ab99b7904208a9fde11dfe12dabe9829fc662728449a089c7394868",
+    "check.py": "f68297d122e58bcb65222564713d07b4bde017e93270a38ca3a1db3c6aefd54e",
+    "attempt02-stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "attempt02-stderr.txt": "ff70e9a0621bf269b244fe7f6ade9a4f5a5ca5383d1e78c20fc9eb0ff822ff6a",
+    "attempt01-stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "result.json": "5b9c5585ead2da084a69d651cab2808d40d41d5baba21c6afe25c8647791dd4a",
+    "stdout.txt": "8f5119459b88f1a262a033b7523bde0f092230eab7c3e0790002b58859f51201",
+    "attempt01-stderr.txt": "308396db4b2a7b952484610f6d830bdb1fa1f8b5a610d99cd00455eaedb19de3"
+  }
+}
