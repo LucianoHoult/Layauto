@@ -108,7 +108,9 @@ def _decode(value: object) -> Value:
             return rational(value['$rational'])
         if set(value) == {'$bytes'} and isinstance(value['$bytes'], str):
             raw = value['$bytes']
-            if re.fullmatch(r'(?:[0-9a-f]{2})*', raw):
+            # A single-character repeat avoids per-pair matcher state. Keep
+            # matching first so unexpected matcher failures still propagate.
+            if re.fullmatch(r'[0-9a-f]*', raw) and len(raw) % 2 == 0:
                 return bytes.fromhex(raw)
     raise ValueError('invalid exact wire value')
 
