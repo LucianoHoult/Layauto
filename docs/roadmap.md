@@ -35,7 +35,7 @@ M0 分开交付“工程输入/合同准备”和“真实 profile 证据准入�
 
 用户随后明确要求将测试反馈效率与产品性能分别推进：[W012](tasks/W012-capture-wire-performance.md)已单列完整捕获/wire/重复重建成本，归R13/R27/R28的工程支撑；W011稳定基线确定后优先准备，扩大组合前处理。开发新增/受影响、最终双全量的安排归[协作规则](collaboration/rules.md)；少跑测试及互斥gate不能替代单次完整路径的性能改善。W012不新增物理能力或生产性能承诺，详细阶段/目标继续归任务文件。
 
-W012调查及[A1兼容hex优化](tasks/W012-capture-wire-performance.md#pm4-a1-integration)现已随PR #66验收集成。下一近期项只收敛兼容A2方案与独立review，依据build/decode残余成本选择最小共同序列化路径；没有可证收益/等价方案则回M1网络标注。A2不构成标注功能的新硬依赖，不启动新wire；R07/R12等M1能力义务继续保留。
+W012调查及[A1兼容hex优化](tasks/W012-capture-wire-performance.md#pm4-a1-integration)现已随PR #66验收集成。A2有限候选按[PM7](tasks/W012-capture-wire-performance.md#pm7-a2-stop)停止且不集成，返回[W013网络区域标注与覆盖](tasks/W013-net-annotation-coverage.md)，承接R06/R07与局部分量摘要。W013在方案/最早组合检查资源增长；残余结构成本不丢失、不把A2作为功能硬依赖，不启动新wire。完整body、坐标、mandatory规则、baseline和Stage6义务仍后续完成。
 
 | 里程碑 | 可观察能力与代表输入→结果 | 依赖 / 退出验收 |
 | --- | --- | --- |

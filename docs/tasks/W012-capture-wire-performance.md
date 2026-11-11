@@ -5,11 +5,11 @@
 | 字段 | 内容 |
 | --- | --- |
 | ID / 目标 | W012；降低真实组件组合中完整捕获保留、wire 编解码和重复认证/重建的耗时与内存，保持可审计来源及公开验证合同 |
-| 里程碑 / 依赖 | M1 工程支撑，关联 R13/R27/R28；承接 W011 的明确稳定版本，优先于继续扩大状态链/输入。W011已由PR #65验收集成，见其PM2；本次先派发P1/P2调查 |
+| 里程碑 / 依赖 | M1工程支撑R13/R27/R28；A1已验收集成，A2有限筛选后停止且不集成；返回W013网络标注。残余结构成本继续跟踪，不宣称W012性能问题全部解决 |
 | 授权依据 | 用户明确要求：开发阶段先跑新增及受影响范围，最终交付再跑双全量；PM 单列完整捕获、wire 膨胀和重复重建优化任务，不能只减少测试数量 |
-| 当前阶段 / 阻塞 | **兼容A1已验收并集成，剩余必须项0。** P1/P2已验收；W012整体不宣称完成，下一兼容A2方案待准备，未批准writer/reader/memo实施或B新格式，见 [PM4](#pm4-a1-integration) |
+| 当前阶段 / 阻塞 | **本轮收口：A1已验收，A2候选不集成。** 见[PM7](#pm7-a2-stop)；W013从A1 main继续，后续资源检查点跟踪wire/重复重建成本 |
 | 恢复 / 分支 | main合并 `08dd232139918dc97b0a6d255aad237eb844686a`，接手含PM4的最新main；已审head `1a1459e3179e7bd234e4971c1969a6a78f387fd2`，产品/测试冻结 `ca1f810c3c97376f71089d8b4054760ff198012f`。原调查与A1分支保留，下一阶段另建分支 |
-| 本次允许写入 | A1仅 `layauto_v2/domain/codec.py` 的bytes hex校验及直接必要的tests；本任务执行/方案区、W012下新的A1方案/验证/性能/review附件。不要覆盖P1/P2原测量工具、原输出、报告或finding；不改其它runtime、正式fixture/答案、架构或current-work。PM维护阶段/范围，reviewer维护其结论 |
+| 本次允许写入 | 当前无W012产品实施授权；保留原调查/A1/A2分支及证据，PM只记录停止取舍与后续成本跟踪。历史A1/A2范围不作为继续优化的派发 |
 | 约束 / 非目标 | 保留原始 bytes、来源/单位/owner/run 绑定、不可变性、公开 constructor/codec 完整验证和异常历史；不修改 fixture/答案、语义计量或生产输入要求，不扩展 body/U06 或物理能力。测试调度/并发 gate 本身不算本任务的性能成果 |
 | 架构依据 | [architecture](../architecture.md) §2.2–2.3、§2.6、§3.7–3.8、§11.2/11.9/11.15；[协作规则](../collaboration/rules.md)的最终验证与证据要求；W005–W011 的来源、不可变 DTO、codec 和错误合同 |
 | 分工 | PM 收敛目标与派发；执行者提供 profile/方案和实现；未承担设计/实现者分别复核方案与最终正确性、性能证据 |
@@ -183,3 +183,15 @@ I4要求完整路径实证，不承诺20%/50%降幅或生产上界。兼容A1的
 调查阶段按相同runtime身份采信W011双全量/typing/安装，不重复小时级双矩阵；本次工具自检和三条实际测量路径不可省。未来优化实施才按“开发新增/受影响、最终冻结双全量”验收。
 使用项目noreply身份提交推送原W012分支并核远端完整SHA，交PM；不自行验收、合main、改current-work或启动优化实施/下一任务。若方案需改变关键对外行为/格式或架构，给PM具体实例和影响，不能猜测批准。
 ```
+
+<a id="pm7-a2-stop"></a>
+
+### PM7 A2筛选停止与返回M1主线
+
+2026-11-11，用户同意继续网络标注。PM接收A2的停止建议，**不集成6045d8f候选，不要求为已停止候选补做最终双矩阵，也不宣称其产品验收。** 本轮性能工作收口，A1收益保留；wire膨胀与重复重建仍是后续结构成本，非已解决。
+
+实际fetch核原实施分支远端为6045d8f7e4d80e6d4bb794ed15717767a5e4cde0，阅读[交接](https://github.com/LucianoHoult/Layauto/blob/6045d8f7e4d80e6d4bb794ed15717767a5e4cde0/docs/tasks/W012/A2-implementation/delivery.md)与[独立review](https://github.com/LucianoHoult/Layauto/blob/6045d8f7e4d80e6d4bb794ed15717767a5e4cde0/docs/tasks/W012/A2-implementation/independent-review.md)，核产品差异限两codec及新测试。报告建议STOP、必须项0，三路wire/hash/ref相同；单组成对总耗时direct −6.08%、readback +24.18%、mismatch −3.64%，峰值基本持平且上游有波动，不能判定稳定因果。PM本次不重跑或冒称独立重比完整wire，记录身份/采信边界见[停止回执](W012/A2-stop-receipt.json)。
+
+原方案接收及实施派发记录保留在[0213c34](https://github.com/LucianoHoult/Layauto/blob/0213c346ac03b7b7282aae522c299155958ac8f6/docs/tasks/W012-capture-wire-performance.md)，后续产品/测试/失败/review均在原候选分支保留；未删除、改写或搬运为main已验收内容。最终双全量、构建/双安装和三次性能矩阵未完成，不以开发检查或review的0必须项替代。
+
+[W013](W013-net-annotation-coverage.md)从main2489b4609ae97d8211bf450d55cac9392492ac71准备，仅承接A1产品。默认验证复用归协作规则，不靠口头提醒；W013方案及最早组合要记录新增捕获/序列化成本，明显放大时在最终重型验证前交PM处理。没有启动新wire格式、认证删减或生产body变更。

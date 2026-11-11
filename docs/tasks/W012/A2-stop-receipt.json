@@ -1,0 +1,45 @@
+{
+  "date": "2026-11-11",
+  "decision": "stop_A2_do_not_integrate_candidate_continue_M1_W013",
+  "candidate_head": "6045d8f7e4d80e6d4bb794ed15717767a5e4cde0",
+  "baseline_main": "2489b4609ae97d8211bf450d55cac9392492ac71",
+  "remote_tracking_head_verified": true,
+  "reviewed_documents": {
+    "docs/tasks/W012/A2-implementation/delivery.md": {
+      "sha256": "c84acb6cf42bc0079d345b0bd5be6a8f29a4964579edaeecec8585f66b60fd65",
+      "url": "https://github.com/LucianoHoult/Layauto/blob/6045d8f7e4d80e6d4bb794ed15717767a5e4cde0/docs/tasks/W012/A2-implementation/delivery.md"
+    },
+    "docs/tasks/W012/A2-implementation/independent-review.md": {
+      "sha256": "e9d8faaae03875f6d6d92247032775d6a5f1d21440071914c9844c2650d49abf",
+      "url": "https://github.com/LucianoHoult/Layauto/blob/6045d8f7e4d80e6d4bb794ed15717767a5e4cde0/docs/tasks/W012/A2-implementation/independent-review.md"
+    }
+  },
+  "pm_actual_scope": "Fetched remote identity; read delivery and independent review; compared candidate product diff paths. No fresh test/benchmark/wire audit; not product acceptance.",
+  "product_paths_compared": [
+    "layauto_v2/normalization/channel_identity_codec.py",
+    "layauto_v2/normalization/local_connectivity_codec.py",
+    "tests/contracts/test_w012_typed_pack.py"
+  ],
+  "adopted_screening": {
+    "pairs_per_case": 1,
+    "direct_seconds": [
+      180.763609,
+      169.770337
+    ],
+    "readback_seconds": [
+      284.589928,
+      353.391652
+    ],
+    "mismatch_seconds": [
+      156.177652,
+      150.49617
+    ],
+    "wire_equal_as_reported": true,
+    "review_must_fix_remaining": 0
+  },
+  "limits": [
+    "Single pairs include upstream variation; no stable speed regression causality asserted",
+    "Final dual full tests/build/install/three-pair matrix not completed",
+    "A1 retained; A2 source and historical evidence remain on original branch"
+  ]
+}

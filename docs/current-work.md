@@ -1,10 +1,12 @@
 # 当前工作入口
 
-最近更新见 W012 PM4。详细决定、证据与review结论归任务文件。
+最近更新见[W012 PM7](tasks/W012-capture-wire-performance.md#pm7-a2-stop)及[W013](tasks/W013-net-annotation-coverage.md)。详细决定、证据与review结论归任务文件。
 
 ## 当前节点
 
-**[W012 兼容A1](tasks/W012-capture-wire-performance.md#pm4-a1-integration)已验收，通过[PR #66](https://github.com/LucianoHoult/Layauto/pull/66)合入main `08dd232139918dc97b0a6d255aad237eb844686a`。** merge与已审tree相同，实际合并版本89项合同及完整readback通过，wire/hash保持、峰值约694MiB，剩余必须项0。原三路峰值中位降约89%–90%、耗时降约15%–23%，136.5MB wire和重复重建继续保留。下一步仅准备兼容A2具体方案与独立方案review，未启动其产品实现或新格式。
+**当前推进W013网络区域标注与覆盖草稿。** 从A1 main准备，先具体方案及独立review再实施；[任务](tasks/W013-net-annotation-coverage.md)与[执行prompt](tasks/W013/execution-prompt.md)明确范围。A2按有限筛选结果停止、不集成，原候选和证据留在原分支。默认[验证复用规则](collaboration/rules.md#verification-reuse)适用于执行、review和PM；W013尚未实现或验收。
+
+**[W012 兼容A1](tasks/W012-capture-wire-performance.md#pm4-a1-integration)已验收，通过[PR #66](https://github.com/LucianoHoult/Layauto/pull/66)合入main `08dd232139918dc97b0a6d255aad237eb844686a`。** merge与已审tree相同，实际合并版本89项合同及完整readback通过，wire/hash保持、峰值约694MiB，剩余必须项0。原三路峰值中位降约89%–90%、耗时降约15%–23%，136.5MB wire和重复重建继续保留。A2后续候选现已按PM7停止，不集成；本分支产品仍为A1，下一步W013。
 
 **[W011 — 沟道身份匹配与 FIN 计数草稿](tasks/W011-channel-identity-fin-count.md)已验收，并通过[PR #65](https://github.com/LucianoHoult/Layauto/pull/65)合入main `59f2cda44e30779bb3e82346d71a389831314506`。** merge tree与已审head一致，实际6项组合通过，剩余必须项0，见[PM2](tasks/W011-channel-identity-fin-count.md#pm2-integration)。同源query定位channel、几何正常5/7及mismatch 4对5已完成；完整readback约136.5MB/独立进程约6.984GiB、长矩阵约8.83GiB采样高点继续为限制，扩大组合前优先推进W012。
 
@@ -32,6 +34,8 @@
 
 | 用途 | 恢复依据 |
 | --- | --- |
+| W013当前恢复 | codex/w013-net-annotation-coverage，基线main2489b4609ae97d8211bf450d55cac9392492ac71；接手本任务最新PM准备head。不能从A2候选派生；先方案review再实施，完成交PM |
+| W012 A2停止记录 | 原候选codex/w012-a2-private-typed-pack@6045d8f7e4d80e6d4bb794ed15717767a5e4cde0保留；[PM7](tasks/W012-capture-wire-performance.md#pm7-a2-stop)及停止回执，不作产品验收 |
 | W012 A1最终集成 | main `08dd232139918dc97b0a6d255aad237eb844686a`，已审head`1a1459e3179e7bd234e4971c1969a6a78f387fd2`，冻结源`ca1f810c3c97376f71089d8b4054760ff198012f`；[PM4](tasks/W012-capture-wire-performance.md#pm4-a1-integration)及[集成回执](tasks/W012/A1/integration-receipt.json)，接手含验收补记的最新main；原分支保留 |
 | W012 P1/P2调查 | 原分支`codex/w012-capture-wire-performance`、交付`5085f994f0bd4b0c39f7ac1ccdbcacc43d281720`及[PM1](tasks/W012-capture-wire-performance.md#pm1-investigation)/[证据回执](tasks/W012/pm-receipt.json)保留；调查本身已验收，现随PR #66集成，A1产品结果另见上行 |
 | W011 最终集成 | main `59f2cda44e30779bb3e82346d71a389831314506`，已审head`9791c1e9eb6c7e3e1878067f045abcad4e4d0b7d`、冻结源`e89bdaa6a091f56cfaf7862dced7232d34e22514`；[PM2](tasks/W011-channel-identity-fin-count.md#pm2-integration)及[集成回执](tasks/W011/integration-receipt.json)，接手含验收补记的最新main；原分支保留 |
@@ -69,7 +73,7 @@
 | 完整工艺坐标/annotation/连通/body/提取状态与原子baseline | 后续Stage2任务保留；W008索引及W009区域草稿不替代这些义务 |
 | 无变化的完整判定、只读GDS/CDL/JSON及报告/terminal | 后续Stage3–6组合；通过后才验收M1 |
 
-W010/W011及W012 A1已验收集成，具有局部物理图及有限器件定位/FIN计量，并已降低已定位的hex瞬时峰值；示例coordinate与32×16见证仍不能充当完整运行坐标。下一近期项仅兼容A2方案收敛及独立方案review，不直接实施writer/memo或新格式；若缺收益/等价依据，回M1网络标注，不无限延期功能主线。之后仍需剩余标注/外部body、完整坐标与规则、原子baseline及运行输出组合；不把A1效果或FIN计数相等提升为完整M1/no_change。原drawn及W008 raw occupancy保持，外部body图形独立；生产输入/body任务派发前必须回查U06。
+W010/W011及W012 A1已验收集成，具有局部物理图及有限器件定位/FIN计量，并已降低已定位的hex瞬时峰值；示例coordinate与32×16见证仍不能充当完整运行坐标。A2已停止、不集成，下一近期项为W013网络区域标注与覆盖；在方案及最早组合检查序列化/重建成本，资源明显放大时交PM，不无限扩大状态链。之后仍需剩余标注/外部body、完整坐标与规则、原子baseline及运行输出组合；不把A1效果或FIN计数相等提升为完整M1/no_change。原drawn及W008 raw occupancy保持，外部body图形独立；生产输入/body任务派发前必须回查U06。
 
 正常输入在W006仅交接unsealed attempt，不产生成功terminal；W007组件也不推进attempt或宣称整轮成功。C08/09/10和C13的正式终结阶段仍需后续组合验证。完整Stage2/baseline/no_change与Stage6文件闭环仍是M1硬门；真实工具与配置机制后置项保持，新增关键预期带实例交PM/用户。W007验收不等同完整Stage2/M1通过。
 
