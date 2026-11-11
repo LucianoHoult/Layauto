@@ -1,0 +1,270 @@
+"""Read-only PM receipt audit; all new output stays next to this script."""
+from __future__ import annotations
+
+import contextlib
+import hashlib
+import io
+import json
+import os
+import platform
+import re
+import runpy
+import shutil
+import statistics
+import subprocess
+import sys
+import traceback
+from datetime import datetime, timezone
+from pathlib import Path
+
+ROOT = Path('/workspace/Layauto')
+OUT = Path(__file__).resolve().parent
+A2 = ROOT / 'docs/tasks/W012/A2'
+A1 = ROOT / 'docs/tasks/W012/A1'
+BASE = '842c5c1ea8f1d01bb3f04e4703f105e11f94158c'
+DELIVERY = '71488d6034b40cb67970466b082298a8dc0d5eee'
+REVIEWED = 'cbf20807a85d8350928fc6a604612384cb2727fd'
+FROZEN = 'ca1f810c3c97376f71089d8b4054760ff198012f'
+MERGE = '08dd232139918dc97b0a6d255aad237eb844686a'
+TASK = 'docs/tasks/W012-capture-wire-performance.md'
+OUT.mkdir(parents=True, exist_ok=True)
+os.environ['PYTHONDONTWRITEBYTECODE'] = '1'
+sys.dont_write_bytecode = True
+
+
+def sha(data):
+    return hashlib.sha256(data).hexdigest()
+
+
+def git(*args):
+    return subprocess.check_output(['git', *args], cwd=ROOT)
+
+
+def read_json(path):
+    return json.loads(path.read_text())
+
+
+def write_json(path, value):
+    path.write_text(json.dumps(value, ensure_ascii=False, indent=2) + '\n')
+
+
+started = datetime.now(timezone.utc).isoformat()
+initial_status = git('status', '--porcelain=v1').decode()
+assert initial_status == '', initial_status
+assert git('rev-parse', 'HEAD').decode().strip() == DELIVERY
+paths = git('diff', '--name-only', BASE, DELIVERY).decode().splitlines()
+assert len(paths) == 35
+assert all(p == TASK or p.startswith('docs/tasks/W012/A2/') for p in paths)
+all_tracked = git('ls-files', '-z').decode().split('\0')[:-1]
+before = {p: sha((ROOT / p).read_bytes()) for p in all_tracked if (ROOT / p).is_file()}
+assert all((ROOT / p).read_bytes() == git('show', f'{DELIVERY}:{p}') for p in paths)
+task = (ROOT / TASK).read_bytes()
+start = task.index('### A2 兼容方案收敛执行交付（2026-11-11）'.encode())
+end = task.index('## PM 验收与交接（PM）'.encode(), start)
+assert task[:start] + task[end:] == git('show', f'{BASE}:{TASK}')
+assert git('diff', '--name-only', FROZEN, DELIVERY, '--', 'layauto_v2', 'tests', 'README.md', 'pyproject.toml', 'docs/tasks/W003/examples/records.json') == b''
+assert git('diff', '--name-only', BASE, DELIVERY, '--', 'docs/current-work.md', 'docs/architecture.md') == b''
+for name in ('plan.md', 'check.py', 'reference_pack.py'):
+    assert (A2 / name).read_bytes() == git('show', f'{REVIEWED}:docs/tasks/W012/A2/{name}')
+
+manifest_file = A1 / 'verification-r2/source-manifest.json'
+manifest = read_json(manifest_file)['files']
+assert len(manifest) == 263 and sum(p.startswith('layauto_v2/') for p in manifest) == 100
+for p, digest in manifest.items():
+    assert sha((ROOT / p).read_bytes()) == digest, p
+    for version in (FROZEN, MERGE, BASE, DELIVERY):
+        assert sha(git('show', f'{version}:{p}')) == digest, (version, p)
+
+samples = {}
+for case in ('normal-direct', 'normal-readback', 'extraction-mismatch'):
+    rows = [read_json(A1 / f'performance/after-{case}-r{i}.json') for i in (1, 2, 3)]
+    assert all(row['source_identity']['files'] == manifest for row in rows)
+    samples[case] = {stage: statistics.median(row['wall_seconds'][stage] for row in rows)
+                     for stage in ('W011_build', 'W011_result_decode', 'W011_result_encode')}
+    samples[case]['total_of_each_sample_median'] = statistics.median(sum(row['wall_seconds'].values()) for row in rows)
+assert read_json(A1 / 'profile/after-normal-readback-r1.json')['source_identity']['files'] == manifest
+assert sha((A1 / 'profile/after-normal-readback-r1.profile.json').read_bytes()) == '51e1b4dbc732dcb453b0d40687ba2203e5d2273a32bddb0d8130690263f6a7f3'
+
+check = read_json(A2 / 'check-result.json')
+for name, digest in check['attachment_sha256'].items():
+    assert sha((A2 / name).read_bytes()) == digest, name
+assert check['a1_wall_medians_seconds'] == samples
+assert check['status'] == 'passed' and check['source_manifest_count'] == 263 and check['runtime_count'] == 100
+assert len(check['small_roots']) == 6 and check['subvalues_per_owner'] == 11
+assert read_json(A2 / 'check.command.json')['git_head'] == BASE
+
+for prefix, script, expected in (
+    ('check', 'check.py', 0), ('delivery-check', 'delivery_check.py', 0),
+    ('delivery-check-initial', 'delivery_check.py', 0),
+    ('review-probe', 'review-probe.py', 0),
+    ('review-r01', 'review-r01-reproduce.py', 1),
+    ('review-r01-verify', 'review-r01-verify.py', 0),
+):
+    command = read_json(A2 / f'{prefix}.command.json')
+    assert command['exit_code'] == expected, prefix
+    assert Path(command['argv'][-1]).name == script, prefix
+    if 'script_sha256' in command:
+        assert command['script_sha256'] == sha((A2 / script).read_bytes()), prefix
+    assert datetime.fromisoformat(command['started_utc']) < datetime.fromisoformat(command['finished_utc'])
+    assert (A2 / f'{prefix}.stdout.txt').stat().st_size > 0, prefix
+    if expected == 0:
+        assert (A2 / f'{prefix}.stderr.txt').read_bytes() == b'', prefix
+    else:
+        assert b"AssertionError: ('delivery.md', 'delivery-check.command.json')" in (A2 / f'{prefix}.stderr.txt').read_bytes()
+
+delivery = read_json(A2 / 'delivery-check-result.json')
+assert delivery['status'] == 'passed' and delivery['scope'] == paths
+assert delivery['head_at_check'] == REVIEWED
+assert len(delivery['material_sha256']) == 27
+for p, digest in delivery['material_sha256'].items():
+    assert sha((ROOT / p).read_bytes()) == digest, p
+excluded = [p for p in paths if p not in delivery['material_sha256']]
+assert len(excluded) == 8 and all(Path(p).name.startswith('delivery-check') for p in excluded)
+initial_seal = read_json(A2 / 'delivery-check-initial-result.json')
+initial_hash_differences = [p for p, digest in initial_seal['material_sha256'].items()
+                            if sha((ROOT / p).read_bytes()) != digest]
+assert initial_hash_differences == ['docs/tasks/W012/A2/independent-review.md']
+for doc in ('plan.md', 'delivery.md'):
+    for link in re.findall(r'\[[^\]]+\]\(([^)]+)\)', (A2 / doc).read_text()):
+        if '://' not in link:
+            assert (A2 / link.split('#')[0]).exists(), (doc, link)
+
+probe = read_json(A2 / 'review-probe-result.json')
+assert probe['status'] == 'passed' and probe['reviewed_head'] == REVIEWED
+assert len(probe['private_subvalue_comparisons']) == 34
+for p, digest in probe['reviewed_files_sha256'].items():
+    assert sha(git('show', f'{REVIEWED}:{p}')) == digest, p
+r01 = read_json(A2 / 'review-r01-verify-result.json')
+assert r01['checker_sha256'] == sha((A2 / 'delivery_check.py').read_bytes())
+assert r01['original_checker_sha256'] == sha((A2 / 'delivery_check-before-R01.py.txt').read_bytes())
+assert r01['status'] == 'passed' and r01['ordinary_missing_link_still_rejected'] is True
+review = (A2 / 'independent-review.md').read_text()
+assert '剩余必须项0' in review and 'A2-R01关闭保持' in review
+for name in ('plan.md', 'reference_pack.py', 'check.py', 'check-result.json', 'check.command.json', 'check.stdout.txt', 'delivery.md', 'delivery_check.py'):
+    assert sha((A2 / name).read_bytes()) in review, name
+
+# Recheck accessible prior engineering receipts, without running their commands.
+engineering = read_json(A1 / 'verification-r2/receipt.json')
+integration = read_json(A1 / 'integration-receipt.json')
+assert engineering['status'] == 'passed' and engineering['actual_test_counts'] == {'310': 1656, '312': 1656}
+assert engineering['source_manifest_sha256'] == integration['source_manifest_sha256'] == sha(manifest_file.read_bytes())
+assert integration['product_and_tests_frozen'] == FROZEN and integration['merge_commit'] == MERGE
+for command in engineering['commands']:
+    assert command['exit_code'] == 0
+    for stream in ('stdout', 'stderr'):
+        assert sha((A1 / 'verification-r2' / command[stream]).read_bytes()) == command[f'{stream}_sha256']
+assert all('54 source files' in (A1 / f'verification-r2/typing-{v}.stdout.txt').read_text() for v in ('310', '312'))
+
+
+def rerun_main(script_name, directory, stdout_name):
+    """Run unchanged tool main; redirect only its attachment/output HERE global."""
+    directory.mkdir(parents=True, exist_ok=True)
+    module = runpy.run_path(str(A2 / script_name), run_name='pm_receipt_audit')
+    fn = module['main']
+    fn.__globals__['HERE'] = directory
+    stdout, stderr = io.StringIO(), io.StringIO()
+    command_started = datetime.now(timezone.utc).isoformat()
+    exit_code = 0
+    with contextlib.redirect_stdout(stdout), contextlib.redirect_stderr(stderr):
+        try:
+            fn()
+        except BaseException:
+            traceback.print_exc()
+            exit_code = 1
+    (directory / f'{stdout_name}.stdout.txt').write_text(stdout.getvalue())
+    (directory / f'{stdout_name}.stderr.txt').write_text(stderr.getvalue())
+    record = {'script': str(A2 / script_name), 'script_sha256': sha((A2 / script_name).read_bytes()),
+              'method': 'runpy load unchanged tool without __main__; run original main with only HERE output/attachment directory redirected',
+              'root_remains': str(ROOT), 'here_redirected_to': str(directory),
+              'started_utc': command_started, 'finished_utc': datetime.now(timezone.utc).isoformat(),
+              'exit_code': exit_code, 'python': sys.version, 'git_head': DELIVERY}
+    write_json(directory / f'{stdout_name}.command.json', record)
+    assert exit_code == 0, record
+    assert stderr.getvalue() == ''
+    return record
+
+
+finite_dir = OUT / 'finite-rerun'
+finite_dir.mkdir(exist_ok=True)
+for name in ('check.py', 'reference_pack.py'):
+    shutil.copyfile(A2 / name, finite_dir / name)
+finite_command = rerun_main('check.py', finite_dir, 'check')
+rerun_check = read_json(finite_dir / 'check-result.json')
+assert rerun_check == check
+assert (finite_dir / 'check.stdout.txt').read_bytes() == (A2 / 'check.stdout.txt').read_bytes()
+
+# Reviewer helper is also rerun without touching its original result.
+probe_dir = OUT / 'probe-rerun'
+probe_dir.mkdir(exist_ok=True)
+for name in ('check-result.json', 'check.py', 'reference_pack.py'):
+    shutil.copyfile(A2 / name, probe_dir / name)
+probe_command = rerun_main('review-probe.py', probe_dir, 'review-probe')
+rerun_probe = read_json(probe_dir / 'review-probe-result.json')
+assert rerun_probe['private_subvalue_comparisons'] == probe['private_subvalue_comparisons']
+
+# Full delivery checker starts with all four future outputs absent in a copied
+# attachment directory. Linked prior A1 evidence is read via external symlinks.
+delivery_dir = OUT / 'delivery-rerun/docs/tasks/W012/A2'
+shutil.copytree(A2, delivery_dir, dirs_exist_ok=True)
+(delivery_dir.parent / 'A1').symlink_to(A1, target_is_directory=True)
+(delivery_dir.parent / 'measurement-plan.md').symlink_to(ROOT / 'docs/tasks/W012/measurement-plan.md')
+generated = ('delivery-check.command.json', 'delivery-check-result.json', 'delivery-check.stdout.txt', 'delivery-check.stderr.txt')
+for name in generated:
+    (delivery_dir / name).unlink()
+assert not any((delivery_dir / name).exists() for name in generated)
+delivery_command = rerun_main('delivery_check.py', delivery_dir, 'delivery-check')
+rerun_delivery = read_json(delivery_dir / 'delivery-check-result.json')
+assert rerun_delivery['scope'] == paths and rerun_delivery['material_sha256'] == delivery['material_sha256']
+assert all((delivery_dir / name).exists() for name in generated)
+
+# R01's exact source is copied unchanged so its __file__ output points outside
+# the repository. Its fixture writes are created and cleaned under /workspace/work.
+r01_dir = OUT / 'r01-rerun'
+r01_dir.mkdir(exist_ok=True)
+r01_commands = []
+for filename, expected in (('review-r01-reproduce.py', 1), ('review-r01-verify.py', 0)):
+    copied = r01_dir / filename
+    shutil.copyfile(A2 / filename, copied)
+    result = subprocess.run([sys.executable, '-B', str(copied)], cwd=ROOT, capture_output=True)
+    (r01_dir / f'{filename}.stdout.txt').write_bytes(result.stdout)
+    (r01_dir / f'{filename}.stderr.txt').write_bytes(result.stderr)
+    record = {'argv': [sys.executable, '-B', str(copied)], 'exit_code': result.returncode,
+              'expected': expected, 'script_sha256': sha(copied.read_bytes())}
+    write_json(r01_dir / f'{filename}.command.json', record)
+    assert result.returncode == expected
+    r01_commands.append(record)
+assert read_json(r01_dir / 'review-r01-verify-result.json') == r01
+
+subprocess.run(['git', 'diff', '--check'], cwd=ROOT, check=True)
+after = {p: sha((ROOT / p).read_bytes()) for p in before}
+assert before == after
+assert git('status', '--porcelain=v1').decode() == initial_status
+summary = {
+    'status': 'passed', 'started_utc': started, 'finished_utc': datetime.now(timezone.utc).isoformat(),
+    'python': sys.version, 'platform': platform.platform(), 'repo': str(ROOT),
+    'branch': git('branch', '--show-current').decode().strip(),
+    'head': DELIVERY, 'main': git('rev-parse', 'main').decode().strip(), 'base': BASE,
+    'reviewed_plan_commit': REVIEWED, 'changed_path_count': len(paths), 'paths': paths,
+    'task_outside_insert_byte_identical_to_base': True, 'protected_source_and_other_paths_unchanged': True,
+    'manifest': {'files': 263, 'runtime': 100, 'disk_and_git_versions': [FROZEN, MERGE, BASE, DELIVERY]},
+    'after_receipts_same_source': 10, 'a1_wall_medians_seconds': samples,
+    'final_seal': {'materials_matched': len(delivery['material_sha256']), 'git_bound_excluded_generated_outputs': excluded,
+                   'scope_equals_actual_35_paths': True, 'head_at_check_is_prior_reviewed_commit': REVIEWED},
+    'initial_seal_historical_hash_differences': initial_hash_differences,
+    'check_rerun_result_and_stdout_exactly_match_original': True,
+    'probe_rerun_34_comparisons_match_original': True,
+    'full_delivery_rerun_passed_with_four_outputs_absent_at_start': True,
+    'A2_R01': {'original_preserved_reproduced_exit1': True, 'repaired_verified_exit0': True, 'remaining_must_fix': 0},
+    'adopted_A1': {'commands_with_logs_rehashed': len(engineering['commands']), 'dual_tests': engineering['actual_test_counts'],
+                   'typing_54_both': True, 'source_manifest_sha256': sha(manifest_file.read_bytes()),
+                   'actual_matrices_build_install_not_rerun': True},
+    'tracked_files_before_and_after_identical': len(before), 'repo_status_before_and_after': initial_status,
+    'reruns': {'finite': finite_command, 'review_probe': probe_command, 'delivery': delivery_command, 'R01': r01_commands},
+    'limits': ['No full product Result/build/readback, test matrix, benchmark, large wire comparison, installed-tree read, product implementation, commit or push.',
+               'Plan technical sufficiency belongs to the separate PM design audit. Same-source prior A1 receipts are adopted, not newly executed.',
+               'Reviewer independence is documented in committed records; original session execution history is not available for forensic reconstruction.'],
+}
+write_json(OUT / 'result.json', summary)
+print('PASS: 35 paths; 263/100 same source; 27 sealed materials plus 8 Git-bound outputs; AP/PM bytes unchanged')
+print('PASS: finite result/stdout exact match; independent 34-case probe; fresh-output full delivery checker; A2-R01 reproduce/fix')
+print('PASS: 21 prior A1 command logs rehashed; adopted only; repository bytes/status unchanged')

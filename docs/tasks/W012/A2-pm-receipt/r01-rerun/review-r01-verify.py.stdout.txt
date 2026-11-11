@@ -1,0 +1,3 @@
+PASS: repaired original link loop accepts four absent self-generated outputs without precreating them
+PASS: the same loop still rejects missing ordinary input link
+Original -> repaired checker: 596b202e94ed7585fa10d4451d5be5b9965f2275bf9478cc53dd407d44d2c29b -> 28d770778766992326ae4f20757d03580cd9932cfa8de0a17767385b2bd630ae

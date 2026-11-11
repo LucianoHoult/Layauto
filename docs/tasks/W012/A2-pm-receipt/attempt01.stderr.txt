@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/workspace/work/w012-a2-pm/receipt-audit/audit.py", line 126, in <module>
+    assert set(initial_hash_differences) == {TASK, 'docs/tasks/W012/A2/independent-review.md'}
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

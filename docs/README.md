@@ -19,7 +19,7 @@
 | 有效图形解释做到哪里？ | [W009](tasks/W009-effective-geometry-terminals.md#pm4-integration-20261104)：CUT差集、channel与OD端区草稿已验收集成，63项组合验证通过；局部连接图、body、标注、提取及规则执行后续完成 |
 | 局部物理连通做到哪里？ | [W010](tasks/W010-local-contact-connectivity.md#pm2-integration-20261106)：本地contact/connector/component及独立局部T05 audit已验收集成，15项定向组合及direct/readback通过；外部body/完整规则及运行发布后续完成 |
 | FIN 计量做到哪里？ | [W011 PM2](tasks/W011-channel-identity-fin-count.md#pm2-integration)：query器件身份→channel定位、真实FIN count/L/W有限核对已验收集成main；实际6项组合通过，资源限制继续保留 |
-| 完整捕获、wire 和重建为何成本高？ | [W012 PM4](tasks/W012-capture-wire-performance.md#pm4-a1-integration)：A1最小hex优化已验收集成；原峰值中位降约89%–90%、wire/hash保持，合并后89项合同及完整readback通过；下一步[A2要求](tasks/W012-capture-wire-performance.md#a2-plan)及[方案prompt](tasks/W012/A2-plan-prompt.md)，仅收敛最小兼容方案，不实施或改wire |
+| 完整捕获、wire 和重建为何成本高？ | [W012 PM4](tasks/W012-capture-wire-performance.md#pm4-a1-integration)：A1已验收集成；[PM6](tasks/W012-capture-wire-performance.md#pm6-a2-plan-receipt)仅接收A2两encoder私有typed pack方案，下一步[实施要求](tasks/W012-capture-wire-performance.md#a2-implementation)及[prompt](tasks/W012/A2-implementation-prompt.md)，先完整筛选再决定继续最终交付，尚无A2产品收益，wire保持 |
 | 整体开发顺序怎样安排？ | [roadmap.md](roadmap.md)：首版里程碑、依赖、架构要求到验收的覆盖；规划已 review 并由 PM 接收，产品能力未验收 |
 | 如何准备与运行环境？ | [environment/local-setup.md](environment/local-setup.md)：Python、安装、测试及历史环境记录 |
 | 如何跨机器工作？ | [environment/remote-development.md](environment/remote-development.md)：运行位置、环境准备与代码交接 |

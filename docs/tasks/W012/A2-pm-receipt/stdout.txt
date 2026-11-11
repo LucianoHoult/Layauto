@@ -1,0 +1,3 @@
+PASS: 35 paths; 263/100 same source; 27 sealed materials plus 8 Git-bound outputs; AP/PM bytes unchanged
+PASS: finite result/stdout exact match; independent 34-case probe; fresh-output full delivery checker; A2-R01 reproduce/fix
+PASS: 21 prior A1 command logs rehashed; adopted only; repository bytes/status unchanged

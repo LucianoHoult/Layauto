@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "-B",
+    "/workspace/work/w012-a2-pm/receipt-audit/audit.py"
+  ],
+  "cwd": "/workspace/Layauto",
+  "started_utc": "2026-11-11T07:02:08.301740+00:00",
+  "finished_utc": "2026-11-11T07:02:12.380224+00:00",
+  "exit_code": 0,
+  "script_sha256": "6c69975147608aa9621182e4c7e41b3757df86f40cc228fc2222ffaa44e1bc0e"
+}

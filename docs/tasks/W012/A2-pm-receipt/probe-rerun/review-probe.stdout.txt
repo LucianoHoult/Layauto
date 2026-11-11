@@ -1,0 +1,4 @@
+PASS: 263 manifest files; task outside execution insert byte-identical to base
+PASS: 34 bounded private subvalue results, including delegated tags/rejections
+PASS: distinct bool/int/rational bytes, immediate map snapshot, exact root preflight, old public leaf decode
+No full product entry, monkeypatch, timing or engineering matrix run

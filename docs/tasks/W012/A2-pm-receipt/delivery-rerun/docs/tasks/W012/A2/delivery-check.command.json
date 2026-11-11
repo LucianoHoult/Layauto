@@ -1,0 +1,12 @@
+{
+  "script": "/workspace/Layauto/docs/tasks/W012/A2/delivery_check.py",
+  "script_sha256": "28d770778766992326ae4f20757d03580cd9932cfa8de0a17767385b2bd630ae",
+  "method": "runpy load unchanged tool without __main__; run original main with only HERE output/attachment directory redirected",
+  "root_remains": "/workspace/Layauto",
+  "here_redirected_to": "/workspace/work/w012-a2-pm/receipt-audit/delivery-rerun/docs/tasks/W012/A2",
+  "started_utc": "2026-11-11T07:02:12.163377+00:00",
+  "finished_utc": "2026-11-11T07:02:12.183750+00:00",
+  "exit_code": 0,
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "git_head": "71488d6034b40cb67970466b082298a8dc0d5eee"
+}

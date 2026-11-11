@@ -1,0 +1,10 @@
+{
+  "argv": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "-B",
+    "/workspace/work/w012-a2-pm/receipt-audit/r01-rerun/review-r01-reproduce.py"
+  ],
+  "exit_code": 1,
+  "expected": 1,
+  "script_sha256": "f58fa7fa1a613fcce17b180b529565f0985be10a1d06c7b90118f6cfcf11f79a"
+}

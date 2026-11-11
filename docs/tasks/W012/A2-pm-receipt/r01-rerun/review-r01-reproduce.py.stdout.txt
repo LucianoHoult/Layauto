@@ -1,0 +1,2 @@
+Original checker SHA-256: 596b202e94ed7585fa10d4451d5be5b9965f2275bf9478cc53dd407d44d2c29b
+Ordinary links exist in fixture; all four generated output paths absent

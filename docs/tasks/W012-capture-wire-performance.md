@@ -5,14 +5,14 @@
 | 字段 | 内容 |
 | --- | --- |
 | ID / 目标 | W012；降低真实组件组合中完整捕获保留、wire 编解码和重复认证/重建的耗时与内存，保持可审计来源及公开验证合同 |
-| 里程碑 / 依赖 | M1 工程支撑，关联 R13/R27/R28；W011及W012 P1/P2、A1已验收集成。本次只派发A2方案收敛；不是M1网络标注的功能硬依赖，停止点见AP5 |
+| 里程碑 / 依赖 | M1 工程支撑，关联 R13/R27/R28；W011及W012 P1/P2、A1已验收集成。本次仅准备已审A2最小私有typed pack实施，非M1网络标注的功能硬依赖；收益不支持继续时交PM回主线 |
 | 授权依据 | 用户明确要求：开发阶段先跑新增及受影响范围，最终交付再跑双全量；PM 单列完整捕获、wire 膨胀和重复重建优化任务，不能只减少测试数量 |
-| 当前阶段 / 阻塞 | **可执行：仅A2方案收敛，AP1–AP5。** 派发要求已独立复核、剩余必须项0，见[PM5](#pm5-a2-plan-handoff)。A1及P1/P2已验收集成；本次不批准writer/reader/memo产品实施或B新格式，W012整体未完成 |
-| 恢复 / 分支 | 从含A1最终验收的main `2489b4609ae97d8211bf450d55cac9392492ac71` 建立 `codex/w012-a2-serialization-plan`，接手含本派发的最新head。runtime/测试仍等同A1冻结 `ca1f810c3c97376f71089d8b4054760ff198012f`，原调查及A1分支保留 |
-| 本次允许写入 | W012下新的A2方案/有限参考原型/工具/原输出/独立review附件和任务执行/方案区；reviewer写其结论。runtime、正式测试、fixture、架构、原P1/A1工具/输出/finding和current-work不改；本次不是产品实施，原A1范围仅保留为历史要求 |
+| 当前阶段 / 阻塞 | **可执行：A2两encoder最小私有typed pack，AI1–AI6。** 派发要求已独立复核、剩余必须项0；[方案已验收](#pm6-a2-plan-receipt)，产品尚未实施/验收。完整筛选收益不足交PM停止，不扩writer/reader/memo/B，W012整体未完成 |
+| 恢复 / 分支 | 从方案交付 `71488d6034b40cb67970466b082298a8dc0d5eee` 建立 `codex/w012-a2-private-typed-pack`，接手含本派发的最新head；main仍为A1验收 `2489b4609ae97d8211bf450d55cac9392492ac71`。当前runtime/测试等同A1冻结 `ca1f810c3c97376f71089d8b4054760ff198012f`；旧方案/调查/A1分支保留 |
+| 本次允许写入 | 实施可执行后仅两runtime owner：normalization/local_connectivity_codec.py、channel_identity_codec.py的编码helper/入口及直接必要的新/受影响测试；W012下新A2-implementation附件及任务执行/方案区。PM维护阶段/要求/current-work，reviewer写其结论；不改fixture/答案、架构、其他runtime或原P1/A1/A2工具/输出/finding |
 | 约束 / 非目标 | 保留原始 bytes、来源/单位/owner/run 绑定、不可变性、公开 constructor/codec 完整验证和异常历史；不修改 fixture/答案、语义计量或生产输入要求，不扩展 body/U06 或物理能力。测试调度/并发 gate 本身不算本任务的性能成果 |
 | 架构依据 | [architecture](../architecture.md) §2.2–2.3、§2.6、§3.7–3.8、§11.2/11.9/11.15；[协作规则](../collaboration/rules.md)的最终验证与证据要求；W005–W011 的来源、不可变 DTO、codec 和错误合同 |
-| 分工 | PM 收敛目标与派发；本次执行者提供A2方案及必要有限见证，产品实施另行派发；未承担设计者独立复核本次方案 |
+| 分工 | PM 核对A2方案交付、收敛本次实施范围并验收；执行者落实两owner最小实现及正确性/成本证据；未承担实现或测量工具设计者独立review |
 
 ### 已有基线与需要解释的成本
 
@@ -182,7 +182,7 @@ I4要求完整路径实证，不承诺20%/50%降幅或生产上界。兼容A1的
 
 <a id="a2-plan"></a>
 
-### A2 方案阶段要求（仅方案，可执行）
+### A2 方案阶段要求（原AP1–AP5，已交付）
 
 本阶段只收敛一个保持 `/1` 的最小共同序列化方案。A1后readback的build中位约51.427s、decode约66.115s、外层encode约2.616s；应解释候选对build/decode反复经过路径的作用，不能只改最后encode便推断显著总收益。A2不是M1网络标注的功能硬依赖；本轮有明确停止点，不以性能调查无限推迟功能主线。
 
@@ -205,6 +205,35 @@ I4要求完整路径实证，不承诺20%/50%降幅或生产上界。兼容A1的
 2026-11-11。A1最终验收补记已推main `2489b4609ae97d8211bf450d55cac9392492ac71`，本次从该版本建立 `codex/w012-a2-serialization-plan`。独立reviewer `/root/a2_handoff_independent_review` 完成[A2派发要求复核](W012/A2-handoff-review.md)，未参与起草/方案设计；顶部历史派发澄清项A2-HR01已修正复核，新增实质必须项0、剩余必须项0。最终受审task SHA-256 `4b73db46af8a023e8a0bb4dfc45cbe742a08d9e1d724b5381fb6c4e00d563cd3`，prompt SHA-256 `ed30768fbafc992b69d8fa96694a18dcb5466a33df3d46c06cf24d52b31ebd3b`；本补记只改阶段/标题/接收元数据，AP1–AP5及prompt行为要求未改。
 
 **A2仅方案阶段可执行。** 本次交付是具体兼容方案或有依据的no-go及独立方案review，不是A2实施或验收。仅做文档/链接/来源身份检查，263项源码/测试/配置保持A1冻结；未运行新产品算法、原型、完整矩阵或新性能实验，未产生A2收益结论。发布分支和最终提交身份由Git及交接回复给出；执行交回后由PM决定是否派发最小实施或回M1网络标注。
+
+<a id="pm6-a2-plan-receipt"></a>
+
+### PM6 A2 方案阶段验收与实施取舍
+
+2026-11-11。PM显式fetch核远端原方案分支head为 `71488d6034b40cb67970466b082298a8dc0d5eee`，干净fast-forward恢复；main仍为A1验收 `2489b4609ae97d8211bf450d55cac9392492ac71`。实际base→交付35 paths只含task执行段8行和34个A2附件，原PM/AP/阶段及其他文件保持。263项源码/测试/配置、100 runtime对A1冻结/实际merge/派发/交付内容相同；当前plan/check/reference等于独立方案受审cbf2080内容。完整核对见[PM接收回执](W012/A2-pm-receipt/receipt.json)及[材料导航](W012/A2-pm-receipt/README.md)。
+
+委派来源/收据专项与技术专项分别核验：27项最终seal hashes匹配，8项生成产物由交付Git绑定；外部输出目录有限check的完整result/stdout与原件相同，34项review探针、四输出未预造起步的完整delivery checker均通过，R01原问题实际exit1、修后exit0，关闭成立。原审计预期一次修正及输出保留，不改被审材料。技术专项实读两encoder/closed/freeze/canonical及builder/Result二次认证，方案能作用于build/decode内的共同路径；无新增必须项。既有A1双1656/typing54/构建/双安装只按同源已验收证据采信，未重跑完整产品或工程矩阵。
+
+**AP1–AP5方案阶段已验收，剩余必须项0；方案尚未单独合main。** 推荐按下节两owner最小范围实施，再用完整同条件三路结果决定是否值得集成。现有计数/profile不足以声称产品收益；wire降幅为0，原完整重建/认证、异常和快照不可删。收益依据不足时交PM回M1网络标注，不自动扩下层codec/writer/reader/memo/B。本接收不表示A2产品、W012或M1完成；旧方案分支保留，实施另支，原finding/报告不改。
+
+<a id="a2-implementation"></a>
+
+### A2 最小私有 typed pack 实施要求（可执行）
+
+承接[A2方案](W012/A2/plan.md)及其[独立review](W012/A2/independent-review.md)，仅做两encoder私有中间表示，完整认证和 `/1` 保持。预期减少重复包装/复制的实际成本；现有证据只支持候选选择，未证明完整收益，不能将全部freeze exclusive或有限小值计数当作可省秒数。
+
+| 项 | 实施交付与验收要求 |
+| --- | --- |
+| AI1 最小落点 | 仅local_connectivity_codec/channel_identity_codec两个owner新增各自私有编码helper并切换encode envelope的pack表达式；沿用原_SPEC/exact class/字段及delegate次序、原图closed检查在copy前。map/scalar原位置立即freeze，tuple按序物化，owned树不逃逸/缓存；原canonical全树freeze/_wire/JSON/UTF-8不改。附件示例上限不是产品限制 |
+| AI2 验证边界 | 原_pack代码留给decoder不动，_unpack/decode/公开DTO/完整来源重建/第二次认证/_evaluate不变；完整wire/hash/ref/签名/run/owner/原bytes保持。所有剩余调用的原异常object/cause/context/suppression、closed/exact scalar、可变别名及单次集合快照保持。仅删已识别的编码私有包装，不豁免原公开故障合同，不改domain/lower codec，不加trusted/memo |
+| AI3 开发检查 | 新增及受影响回归，覆盖两_SPEC所有字段/分支/delegates，真公开入口root/错型等值/别名/来源/run/owner，原decoder接受拒绝，Unicode/rational/bytes/大整数及异常历史、W009单次快照/W011二次认证。旧accepted pack/canonical与明确字节/类型不变量及既有独立判据相互印证；不以新helper生成golden作唯一依据，不删原断言/finding |
+| AI4 完整筛选/停止点 | baseline为本机A1原runtime，after为实际候选；固定同解释器/依赖/输入URI/RunRequest/cache/roots/GC，导入与输入路径分开、原mismatch逐字节重建。先三路各一组fresh before/after完整公开build/encode/decode，wire逐字节及全部来源/值/attempt边界不变。收益不支持继续时保留候选/原输出，明确最终矩阵尚未完成、无产品验收，交PM停止，不扩包 |
+| AI5 最终冻结/成本 | 筛选支持继续才完成新冻结源码/正式测试/配置的双3.10/3.12全量、strict typing、构建、双干净安装源码外完整smoke；相关源再变按规则重冻。完整三路两侧各3次fresh串行交替无插桩比较，可复用本轮同条件/身份样本；逐次/失败/中位及build/decode/总耗时/峰值/退化分列。完整wire/hash/ref不变，wire降幅0；无任意百分比硬门，不以micro/profile/少测代替收益 |
+| AI6 独立review/交PM | 未参与实现或测量工具设计者复核代码/合同/完整性及前后测量条件、完整wire和收益归因；必须项修正复核关闭，原finding/失败保留。完整推荐交PM待验收，或有依据的停止结论；不自行验收、合main、改入口、启动下一节点或把A2算完整M1 |
+
+正常5/7、mismatch实算4对source5恰一差异、36 FIN evaluations、来源/局部图/T05/body/独立target及readback unsealed/checkpoint/无terminal边界沿用原计划。完整筛选/最终测量前先自检新工具，原产物不覆盖；新身份覆盖实际源码/测试/配置与所有必要未提交内容。未来真正实施后的工程证据必须属于新冻结版本，不能采信A1双1656替代。
+
+完整执行交接见[A2实施prompt](W012/A2-implementation-prompt.md)。未参与起草/方案或工具设计的reviewer完成[实施派发要求独立复核](W012/A2-implementation-handoff-review.md)，新增/剩余必须项0。受审task SHA-256 `5363b9228962bb41b69eeff655827c4e30f8c3e35bf4e656046197d0f21fab72`，prompt `7cbd8821fcd0821826fae3ca24888bbf2081ad608f5fa6d2ad11df9fb2973876`；本补记只更新阶段/标题/接收句，AI1–AI6及prompt未改。**A2最小实施可执行**，不代表已实施或已获产品验收；开发新增/受影响、完整筛选和最终义务按上表，执行交PM后停止。
 
 ### 独立执行 session prompt（原P1/P2派发，已交付）
 

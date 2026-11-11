@@ -1,0 +1,12 @@
+{
+  "script": "/workspace/Layauto/docs/tasks/W012/A2/check.py",
+  "script_sha256": "efb941f8a815dd644cbda9e33c1ac76a0de6eb3c26627cb072be43cd9bf9edb5",
+  "method": "runpy load unchanged tool without __main__; run original main with only HERE output/attachment directory redirected",
+  "root_remains": "/workspace/Layauto",
+  "here_redirected_to": "/workspace/work/w012-a2-pm/receipt-audit/finite-rerun",
+  "started_utc": "2026-11-11T07:02:10.704068+00:00",
+  "finished_utc": "2026-11-11T07:02:12.141642+00:00",
+  "exit_code": 0,
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "git_head": "71488d6034b40cb67970466b082298a8dc0d5eee"
+}

@@ -1,0 +1,14 @@
+{
+  "status": "passed",
+  "checker_sha256": "28d770778766992326ae4f20757d03580cd9932cfa8de0a17767385b2bd630ae",
+  "original_checker_sha256": "596b202e94ed7585fa10d4451d5be5b9965f2275bf9478cc53dd407d44d2c29b",
+  "method": "Exact repaired AST assignment and for loop, executed only in throwaway link fixture",
+  "generated_output_paths_absent_and_not_precreated": [
+    "delivery-check-result.json",
+    "delivery-check.command.json",
+    "delivery-check.stderr.txt",
+    "delivery-check.stdout.txt"
+  ],
+  "ordinary_missing_link_still_rejected": true,
+  "not_run": "Full delivery checker; product runtime paths or matrix"
+}

@@ -1,0 +1,9 @@
+PASS: 263 source identities across disk + 3 Git versions; 9 after receipts + profile match
+A1 readback wall medians: {"W011_build": 51.42660638400048, "W011_result_decode": 66.11489627799892, "W011_result_encode": 2.6164734000012686, "total_of_each_sample_median": 144.06681701500202}
+ChannelRef 250 bytes; calls old -> reference: {'freeze': 19, '__init__': 11} -> {'freeze': 11, '__init__': 5}
+RationalRect 423 bytes; calls old -> reference: {'freeze': 31, '__init__': 17} -> {'freeze': 17, '__init__': 7}
+SeedIntersection 1611 bytes; calls old -> reference: {'freeze': 131, '__init__': 75} -> {'freeze': 65, '__init__': 31}
+SeedLocation 2163 bytes; calls old -> reference: {'freeze': 263, '__init__': 151} -> {'freeze': 91, '__init__': 43}
+LocalRef 255 bytes; calls old -> reference: {'freeze': 19, '__init__': 11} -> {'freeze': 11, '__init__': 5}
+ContactComponent 1875 bytes; calls old -> reference: {'freeze': 290, '__init__': 169} -> {'freeze': 91, '__init__': 41}
+PASS: finite pack/bytes/alias/closed/exception/UTF-8/bound witnesses; no product performance claim

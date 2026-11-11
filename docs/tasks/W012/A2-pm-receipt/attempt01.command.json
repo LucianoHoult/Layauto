@@ -1,0 +1,9 @@
+{
+  "argv": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "-B",
+    "/workspace/work/w012-a2-pm/receipt-audit/audit.py"
+  ],
+  "exit_code": 1,
+  "cause": "Audit harness incorrectly expected task hash drift in initial historical seal; actual drift is independent-review.md only."
+}

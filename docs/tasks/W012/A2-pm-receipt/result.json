@@ -1,0 +1,187 @@
+{
+  "status": "passed",
+  "started_utc": "2026-11-11T07:02:08.345181+00:00",
+  "finished_utc": "2026-11-11T07:02:12.360924+00:00",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "repo": "/workspace/Layauto",
+  "branch": "codex/w012-a2-serialization-plan",
+  "head": "71488d6034b40cb67970466b082298a8dc0d5eee",
+  "main": "2489b4609ae97d8211bf450d55cac9392492ac71",
+  "base": "842c5c1ea8f1d01bb3f04e4703f105e11f94158c",
+  "reviewed_plan_commit": "cbf20807a85d8350928fc6a604612384cb2727fd",
+  "changed_path_count": 35,
+  "paths": [
+    "docs/tasks/W012-capture-wire-performance.md",
+    "docs/tasks/W012/A2/check-result.json",
+    "docs/tasks/W012/A2/check.command.json",
+    "docs/tasks/W012/A2/check.py",
+    "docs/tasks/W012/A2/check.stderr.txt",
+    "docs/tasks/W012/A2/check.stdout.txt",
+    "docs/tasks/W012/A2/delivery-check-initial-result.json",
+    "docs/tasks/W012/A2/delivery-check-initial.command.json",
+    "docs/tasks/W012/A2/delivery-check-initial.stderr.txt",
+    "docs/tasks/W012/A2/delivery-check-initial.stdout.txt",
+    "docs/tasks/W012/A2/delivery-check-result.json",
+    "docs/tasks/W012/A2/delivery-check.command.json",
+    "docs/tasks/W012/A2/delivery-check.stderr.txt",
+    "docs/tasks/W012/A2/delivery-check.stdout.txt",
+    "docs/tasks/W012/A2/delivery.md",
+    "docs/tasks/W012/A2/delivery_check-before-R01.py.txt",
+    "docs/tasks/W012/A2/delivery_check.py",
+    "docs/tasks/W012/A2/independent-review.md",
+    "docs/tasks/W012/A2/plan.md",
+    "docs/tasks/W012/A2/reference_pack.py",
+    "docs/tasks/W012/A2/review-delivery-initial.json",
+    "docs/tasks/W012/A2/review-probe-result.json",
+    "docs/tasks/W012/A2/review-probe.command.json",
+    "docs/tasks/W012/A2/review-probe.py",
+    "docs/tasks/W012/A2/review-probe.stderr.txt",
+    "docs/tasks/W012/A2/review-probe.stdout.txt",
+    "docs/tasks/W012/A2/review-r01-reproduce.py",
+    "docs/tasks/W012/A2/review-r01-verify-result.json",
+    "docs/tasks/W012/A2/review-r01-verify.command.json",
+    "docs/tasks/W012/A2/review-r01-verify.py",
+    "docs/tasks/W012/A2/review-r01-verify.stderr.txt",
+    "docs/tasks/W012/A2/review-r01-verify.stdout.txt",
+    "docs/tasks/W012/A2/review-r01.command.json",
+    "docs/tasks/W012/A2/review-r01.stderr.txt",
+    "docs/tasks/W012/A2/review-r01.stdout.txt"
+  ],
+  "task_outside_insert_byte_identical_to_base": true,
+  "protected_source_and_other_paths_unchanged": true,
+  "manifest": {
+    "files": 263,
+    "runtime": 100,
+    "disk_and_git_versions": [
+      "ca1f810c3c97376f71089d8b4054760ff198012f",
+      "08dd232139918dc97b0a6d255aad237eb844686a",
+      "842c5c1ea8f1d01bb3f04e4703f105e11f94158c",
+      "71488d6034b40cb67970466b082298a8dc0d5eee"
+    ]
+  },
+  "after_receipts_same_source": 10,
+  "a1_wall_medians_seconds": {
+    "normal-direct": {
+      "W011_build": 27.860427937999702,
+      "W011_result_decode": 35.128252664000684,
+      "W011_result_encode": 1.4225330490007764,
+      "total_of_each_sample_median": 75.79989128700072
+    },
+    "normal-readback": {
+      "W011_build": 51.42660638400048,
+      "W011_result_decode": 66.11489627799892,
+      "W011_result_encode": 2.6164734000012686,
+      "total_of_each_sample_median": 144.06681701500202
+    },
+    "extraction-mismatch": {
+      "W011_build": 28.75785489199916,
+      "W011_result_decode": 37.50605481399907,
+      "W011_result_encode": 1.4580061480010045,
+      "total_of_each_sample_median": 79.51409700300064
+    }
+  },
+  "final_seal": {
+    "materials_matched": 27,
+    "git_bound_excluded_generated_outputs": [
+      "docs/tasks/W012/A2/delivery-check-initial-result.json",
+      "docs/tasks/W012/A2/delivery-check-initial.command.json",
+      "docs/tasks/W012/A2/delivery-check-initial.stderr.txt",
+      "docs/tasks/W012/A2/delivery-check-initial.stdout.txt",
+      "docs/tasks/W012/A2/delivery-check-result.json",
+      "docs/tasks/W012/A2/delivery-check.command.json",
+      "docs/tasks/W012/A2/delivery-check.stderr.txt",
+      "docs/tasks/W012/A2/delivery-check.stdout.txt"
+    ],
+    "scope_equals_actual_35_paths": true,
+    "head_at_check_is_prior_reviewed_commit": "cbf20807a85d8350928fc6a604612384cb2727fd"
+  },
+  "initial_seal_historical_hash_differences": [
+    "docs/tasks/W012/A2/independent-review.md"
+  ],
+  "check_rerun_result_and_stdout_exactly_match_original": true,
+  "probe_rerun_34_comparisons_match_original": true,
+  "full_delivery_rerun_passed_with_four_outputs_absent_at_start": true,
+  "A2_R01": {
+    "original_preserved_reproduced_exit1": true,
+    "repaired_verified_exit0": true,
+    "remaining_must_fix": 0
+  },
+  "adopted_A1": {
+    "commands_with_logs_rehashed": 21,
+    "dual_tests": {
+      "312": 1656,
+      "310": 1656
+    },
+    "typing_54_both": true,
+    "source_manifest_sha256": "d42efdb27b72973a8a6f5f738d57a2fcecdde7bfe89c7b944e7144b3b088915b",
+    "actual_matrices_build_install_not_rerun": true
+  },
+  "tracked_files_before_and_after_identical": 3239,
+  "repo_status_before_and_after": "",
+  "reruns": {
+    "finite": {
+      "script": "/workspace/Layauto/docs/tasks/W012/A2/check.py",
+      "script_sha256": "efb941f8a815dd644cbda9e33c1ac76a0de6eb3c26627cb072be43cd9bf9edb5",
+      "method": "runpy load unchanged tool without __main__; run original main with only HERE output/attachment directory redirected",
+      "root_remains": "/workspace/Layauto",
+      "here_redirected_to": "/workspace/work/w012-a2-pm/receipt-audit/finite-rerun",
+      "started_utc": "2026-11-11T07:02:10.704068+00:00",
+      "finished_utc": "2026-11-11T07:02:12.141642+00:00",
+      "exit_code": 0,
+      "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+      "git_head": "71488d6034b40cb67970466b082298a8dc0d5eee"
+    },
+    "review_probe": {
+      "script": "/workspace/Layauto/docs/tasks/W012/A2/review-probe.py",
+      "script_sha256": "3718af3af696c25e4bc830b93cbd8d5535c29aacc37233a96a7f2f48fe1fa83e",
+      "method": "runpy load unchanged tool without __main__; run original main with only HERE output/attachment directory redirected",
+      "root_remains": "/workspace/Layauto",
+      "here_redirected_to": "/workspace/work/w012-a2-pm/receipt-audit/probe-rerun",
+      "started_utc": "2026-11-11T07:02:12.145121+00:00",
+      "finished_utc": "2026-11-11T07:02:12.159840+00:00",
+      "exit_code": 0,
+      "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+      "git_head": "71488d6034b40cb67970466b082298a8dc0d5eee"
+    },
+    "delivery": {
+      "script": "/workspace/Layauto/docs/tasks/W012/A2/delivery_check.py",
+      "script_sha256": "28d770778766992326ae4f20757d03580cd9932cfa8de0a17767385b2bd630ae",
+      "method": "runpy load unchanged tool without __main__; run original main with only HERE output/attachment directory redirected",
+      "root_remains": "/workspace/Layauto",
+      "here_redirected_to": "/workspace/work/w012-a2-pm/receipt-audit/delivery-rerun/docs/tasks/W012/A2",
+      "started_utc": "2026-11-11T07:02:12.163377+00:00",
+      "finished_utc": "2026-11-11T07:02:12.183750+00:00",
+      "exit_code": 0,
+      "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+      "git_head": "71488d6034b40cb67970466b082298a8dc0d5eee"
+    },
+    "R01": [
+      {
+        "argv": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+          "-B",
+          "/workspace/work/w012-a2-pm/receipt-audit/r01-rerun/review-r01-reproduce.py"
+        ],
+        "exit_code": 1,
+        "expected": 1,
+        "script_sha256": "f58fa7fa1a613fcce17b180b529565f0985be10a1d06c7b90118f6cfcf11f79a"
+      },
+      {
+        "argv": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+          "-B",
+          "/workspace/work/w012-a2-pm/receipt-audit/r01-rerun/review-r01-verify.py"
+        ],
+        "exit_code": 0,
+        "expected": 0,
+        "script_sha256": "50f492d93743a2d1ed416aec3160ba7776babac5f02b4fb0fbdcac49594dd59f"
+      }
+    ]
+  },
+  "limits": [
+    "No full product Result/build/readback, test matrix, benchmark, large wire comparison, installed-tree read, product implementation, commit or push.",
+    "Plan technical sufficiency belongs to the separate PM design audit. Same-source prior A1 receipts are adopted, not newly executed.",
+    "Reviewer independence is documented in committed records; original session execution history is not available for forensic reconstruction."
+  ]
+}
