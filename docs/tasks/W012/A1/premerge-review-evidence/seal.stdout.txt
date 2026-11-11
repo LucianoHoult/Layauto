@@ -1,0 +1,30 @@
+{
+  "status": "passed",
+  "reviewed_head": "e4179dd42cc0de853df73bafd9140a363c8fa5be",
+  "new_formal_passed": 111,
+  "finite_candidates": 150728,
+  "new_mandatory_findings": 0,
+  "remaining_mandatory_findings": 0,
+  "root_command_exit_codes": {
+    "new-diff-check": 0,
+    "scope": 0,
+    "targeted-formal": 0,
+    "independent-probe": 1,
+    "reviewed-diff-check": 2,
+    "affected-formal": 0,
+    "independent-probe-r2": 1,
+    "affected-collection": 0,
+    "current-environment": 0,
+    "independent-probe-r3": 0
+  },
+  "manifest_files": 67,
+  "manifest_sha256": "44903ec18bce2a214f4c60243b7b51acf7404716c1e3b666c62f2a67a7ba0a4f",
+  "broken_local_links": [],
+  "probe_source_snapshots": {
+    "independent-probe": "7ddea7628b3d7c0f72a7e4fca9f27ba2050c68118714571dc45f898df196856d",
+    "independent-probe-r2": "02a1376e9bcc3f48f08e9597acf23d4372f34c5bf9206c34c9b8e71de6f61c2e",
+    "independent-probe-r3": "fb61dd56ee3aab15282f35dd485ffaf4ab3b48ae40829c92430112240379c73c"
+  },
+  "scope_note": "Only the reviewer addition to W012, the new report and independent review evidence; no source/formal-test/history/PM/current-work edits.",
+  "self_identity_note": "Manifest excludes the manifest, its result and still-open capture streams to avoid circular hashes; Git identifies final delivery."
+}

@@ -1,0 +1,2571 @@
+{
+  "base": "0a3326aa363477724465886cd05874d0997fba3e",
+  "head": "e4179dd42cc0de853df73bafd9140a363c8fa5be",
+  "remote_refs_observed": {
+    "refs/heads/codex/w012-compatible-hex-validation": "e4179dd42cc0de853df73bafd9140a363c8fa5be",
+    "refs/heads/main": "0a3326aa363477724465886cd05874d0997fba3e"
+  },
+  "worktree_list": "worktree /workspace/Layauto\nHEAD e4179dd42cc0de853df73bafd9140a363c8fa5be\nbranch refs/heads/codex/w012-compatible-hex-validation\n\n",
+  "ancestry_verified": [
+    "0a3326aa363477724465886cd05874d0997fba3e",
+    "7f7c1304bdafd941791421cef64864fb1616303c",
+    "ca1f810c3c97376f71089d8b4054760ff198012f",
+    "d9d68475fefbeb420e738ad2ee5c2b6e92e7c5ec",
+    "212554cdc402f6b86e92b8b81cd43752a01ff858",
+    "44a91c472fdeba5bb4b8a6071c0580313336c379",
+    "db07a16fb7cbbac030adae84a9eb88cc0c8aa650",
+    "e4179dd42cc0de853df73bafd9140a363c8fa5be"
+  ],
+  "complete_main_to_head_changes": [
+    {
+      "status": "M",
+      "path": "docs/README.md"
+    },
+    {
+      "status": "M",
+      "path": "docs/current-work.md"
+    },
+    {
+      "status": "M",
+      "path": "docs/tasks/W012-capture-wire-performance.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1-execution-prompt.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1-handoff-review.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/analyze_performance.py"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/analyze_profile.py"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/baseline-review-evidence/check.py"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/baseline-review-evidence/command.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/baseline-review-evidence/hook-command.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/baseline-review-evidence/hook-result.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/baseline-review-evidence/hook-stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/baseline-review-evidence/hook-stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/baseline-review-evidence/hook_check.py"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/baseline-review-evidence/result.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/baseline-review-evidence/stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/baseline-review-evidence/stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/baseline-review.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/before-package/README-handoff.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/before-package/before-source-identity.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/before-package/before-source.tar"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/before-package/build-environment.command.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/before-package/build-environment.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/before-package/build-environment.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/before-package/build.command.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/before-package/build.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/before-package/build.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/before-package/build_before.py"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/before-package/dist/layauto-0.2.0-py3-none-any.whl"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/before-package/dist/layauto-0.2.0.tar.gz"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/before-package/evidence-manifest.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/before-package/git-archive.command.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/before-package/git-archive.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/before-package/identity-format-probe-failure.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/before-package/package-identity.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/before-package/runner.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/before-package/runner.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/collection-310.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/collection-310.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/collection-312.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/collection-312.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/compare_packages.py"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/completion-observation.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/delivery-validation.command.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/delivery-validation.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/delivery-validation.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/delivery-validation.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/development-affected.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/development-affected.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/development-commands.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/development-initial.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/development-initial.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/development-new-310.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/development-new-310.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/early-review-evidence/fix-attempt01-check.py.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/early-review-evidence/fix-attempt01-command.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/early-review-evidence/fix-attempt01-stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/early-review-evidence/fix-attempt01-stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/early-review-evidence/fix.command.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/early-review-evidence/fix.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/early-review-evidence/fix.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/early-review-evidence/reproduce.command.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/early-review-evidence/reproduce.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/early-review-evidence/reproduce.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/early-review-evidence/reproduce_runner.py"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/early-review-evidence/run_performance-before-R01.py.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/early-review-evidence/runner-R01-fix-verification.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/early-review-evidence/runner-R01-reproduction.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/early-review-evidence/verify_runner_fix.py"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/early-review.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/engineering-review-evidence/check.py"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/engineering-review-evidence/command.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/engineering-review-evidence/result.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/engineering-review-evidence/stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/engineering-review-evidence/stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/environment/README-handoff.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/environment/evidence/create-310.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/environment/evidence/create-310.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/environment/evidence/create-310.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/environment/evidence/create-312.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/environment/evidence/create-312.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/environment/evidence/create-312.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/environment/evidence/freeze-310.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/environment/evidence/freeze-310.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/environment/evidence/freeze-310.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/environment/evidence/freeze-312.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/environment/evidence/freeze-312.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/environment/evidence/freeze-312.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/environment/evidence/identity-310.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/environment/evidence/identity-310.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/environment/evidence/identity-310.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/environment/evidence/identity-312.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/environment/evidence/identity-312.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/environment/evidence/identity-312.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/environment/evidence/initial-uv-cache-failure.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/environment/evidence/install-deps-310.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/environment/evidence/install-deps-310.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/environment/evidence/install-deps-310.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/environment/evidence/install-deps-312-attempt01.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/environment/evidence/install-deps-312-attempt01.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/environment/evidence/install-deps-312-attempt01.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/environment/evidence/install-deps-312-attempt02.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/environment/evidence/install-deps-312-attempt02.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/environment/evidence/install-deps-312-attempt02.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/environment/evidence/manifest.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/environment/evidence/pip-check-310.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/environment/evidence/pip-check-310.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/environment/evidence/pip-check-310.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/environment/evidence/pip-check-312.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/environment/evidence/pip-check-312.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/environment/evidence/pip-check-312.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/environment/evidence/pip-report-310.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/environment/evidence/pip-report-312.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/environment/evidence/python-inventory.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/environment/evidence/python-inventory.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/environment/evidence/python-inventory.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/environment/evidence/python310-install-attempt01.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/environment/evidence/python310-install-attempt01.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/environment/evidence/python310-install-attempt01.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/environment/evidence/python310-install-attempt02.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/environment/evidence/python310-install-attempt02.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/environment/evidence/python310-install-attempt02.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/environment/evidence/receipt.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/environment/evidence/runner-help-final.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/environment/evidence/runner-help-final.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/environment/evidence/runner-help-final.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/environment/evidence/runner-help.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/environment/evidence/runner-help.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/environment/evidence/runner-help.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/environment/evidence/tool-ast-check-310.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/environment/evidence/tool-ast-check-310.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/environment/evidence/tool-ast-check-310.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/environment/evidence/tool-ast-check.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/environment/evidence/tool-ast-check.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/environment/evidence/tool-ast-check.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/environment/requirements-310.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/environment/requirements-312.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/environment/run_command.py"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/environment/tools/installed_smoke.py"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/environment/tools/prepare_final.py"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/execution.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/final-r2-runner.command.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/final-r2-runner.samples.jsonl"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/final-r2-runner.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/final-r2-runner.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/final-review-evidence/check.py"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/final-review-evidence/command.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/final-review-evidence/result.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/final-review-evidence/reviewed-manifest.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/final-review-evidence/stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/final-review-evidence/stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/freeze-check.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/handoff-artifact-manifest.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/handoff-integrity.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/independent-premerge-prompt.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/independent-review.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/interruption-01.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/orchestrator.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/orchestrator.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/package-comparison.command.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/package-comparison.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/package-comparison.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/package-comparison.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance-analysis.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance-summary.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance-summary.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance-summary.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/after-extraction-mismatch-r1.command.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/after-extraction-mismatch-r1.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/after-extraction-mismatch-r1.samples.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/after-extraction-mismatch-r1.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/after-extraction-mismatch-r1.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/after-extraction-mismatch-r2.command.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/after-extraction-mismatch-r2.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/after-extraction-mismatch-r2.samples.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/after-extraction-mismatch-r2.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/after-extraction-mismatch-r2.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/after-extraction-mismatch-r3.command.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/after-extraction-mismatch-r3.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/after-extraction-mismatch-r3.samples.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/after-extraction-mismatch-r3.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/after-extraction-mismatch-r3.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/after-normal-direct-r1.command.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/after-normal-direct-r1.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/after-normal-direct-r1.samples.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/after-normal-direct-r1.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/after-normal-direct-r1.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/after-normal-direct-r2.command.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/after-normal-direct-r2.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/after-normal-direct-r2.samples.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/after-normal-direct-r2.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/after-normal-direct-r2.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/after-normal-direct-r3.command.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/after-normal-direct-r3.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/after-normal-direct-r3.samples.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/after-normal-direct-r3.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/after-normal-direct-r3.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/after-normal-readback-r1.command.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/after-normal-readback-r1.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/after-normal-readback-r1.samples.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/after-normal-readback-r1.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/after-normal-readback-r1.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/after-normal-readback-r2.command.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/after-normal-readback-r2.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/after-normal-readback-r2.samples.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/after-normal-readback-r2.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/after-normal-readback-r2.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/after-normal-readback-r3.command.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/after-normal-readback-r3.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/after-normal-readback-r3.samples.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/after-normal-readback-r3.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/after-normal-readback-r3.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/before-extraction-mismatch-r1.command.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/before-extraction-mismatch-r1.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/before-extraction-mismatch-r1.samples.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/before-extraction-mismatch-r1.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/before-extraction-mismatch-r1.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/before-extraction-mismatch-r2.command.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/before-extraction-mismatch-r2.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/before-extraction-mismatch-r2.samples.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/before-extraction-mismatch-r2.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/before-extraction-mismatch-r2.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/before-extraction-mismatch-r3.command.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/before-extraction-mismatch-r3.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/before-extraction-mismatch-r3.samples.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/before-extraction-mismatch-r3.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/before-extraction-mismatch-r3.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/before-normal-direct-r1.command.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/before-normal-direct-r1.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/before-normal-direct-r1.samples.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/before-normal-direct-r1.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/before-normal-direct-r1.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/before-normal-direct-r2.command.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/before-normal-direct-r2.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/before-normal-direct-r2.samples.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/before-normal-direct-r2.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/before-normal-direct-r2.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/before-normal-direct-r3.command.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/before-normal-direct-r3.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/before-normal-direct-r3.samples.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/before-normal-direct-r3.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/before-normal-direct-r3.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/before-normal-readback-r1.command.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/before-normal-readback-r1.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/before-normal-readback-r1.samples.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/before-normal-readback-r1.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/before-normal-readback-r1.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/before-normal-readback-r2.command.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/before-normal-readback-r2.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/before-normal-readback-r2.samples.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/before-normal-readback-r2.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/before-normal-readback-r2.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/before-normal-readback-r3.command.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/before-normal-readback-r3.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/before-normal-readback-r3.samples.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/before-normal-readback-r3.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/before-normal-readback-r3.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/commands.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/frozen-identity.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/performance/receipt.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/plan-review-evidence/check.py"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/plan-review-evidence/command.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/plan-review-evidence/result.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/plan-review-evidence/stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/plan-review-evidence/stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/plan-review.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/plan.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/pm-evidence/contract/check.py"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/pm-evidence/contract/command.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/pm-evidence/contract/result.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/pm-evidence/contract/review.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/pm-evidence/contract/source_delivered_after.py"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/pm-evidence/contract/source_original_before.py"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/pm-evidence/contract/stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/pm-evidence/contract/stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/pm-evidence/evidence/performance-attempt02-stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/pm-evidence/evidence/performance-attempt02-stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/pm-evidence/evidence/performance-check.py"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/pm-evidence/evidence/performance-command.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/pm-evidence/evidence/performance-result.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/pm-evidence/evidence/performance-stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/pm-evidence/evidence/performance-stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/pm-evidence/evidence/report.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/pm-evidence/evidence/result.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/pm-evidence/evidence/verification-payload/attempt01-stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/pm-evidence/evidence/verification-payload/attempt02-result.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/pm-evidence/evidence/verification-payload/attempt02-stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/pm-evidence/evidence/verification-payload/attempt02-stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/pm-evidence/evidence/verification-payload/check.py"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/pm-evidence/evidence/verification-payload/command.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/pm-evidence/evidence/verification-payload/report.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/pm-evidence/evidence/verification-payload/result.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/pm-evidence/evidence/verification-payload/stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/pm-evidence/evidence/verification-payload/stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/pm-evidence/index-tail-reconciliation.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/pm-evidence/readback-result.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/pm-evidence/readback.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/pm-evidence/readback.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/pm-evidence/readback.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/pm-evidence/run_checks.py"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/pm-evidence/targeted.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/pm-evidence/targeted.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/pm-evidence/targeted.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/pm-evidence/typing.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/pm-evidence/typing.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/pm-evidence/typing.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/pm-receipt.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/pm-receipt.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/post-reconnect-samples.jsonl"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/preflight.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/probe.py"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/profile-package-review-evidence/check.py"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/profile-package-review-evidence/command.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/profile-package-review-evidence/result.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/profile-package-review-evidence/stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/profile-package-review-evidence/stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/profile-package-review.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/profile-summary.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/profile-summary.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/profile-summary.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/profile/after-normal-readback-r1.command.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/profile/after-normal-readback-r1.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/profile/after-normal-readback-r1.profile.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/profile/after-normal-readback-r1.samples.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/profile/after-normal-readback-r1.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/profile/after-normal-readback-r1.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/profile/before-normal-readback-r1.command.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/profile/before-normal-readback-r1.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/profile/before-normal-readback-r1.profile.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/profile/before-normal-readback-r1.samples.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/profile/before-normal-readback-r1.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/profile/before-normal-readback-r1.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/profile/commands.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/profile/frozen-identity.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/profile/receipt.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/reconnect-02.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/recovery-plan.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/recovery-review-evidence/check.py"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/recovery-review-evidence/command.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/recovery-review-evidence/default-single-worker.command.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/recovery-review-evidence/default-single-worker.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/recovery-review-evidence/default-single-worker.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/recovery-review-evidence/default-two-worker-guard.command.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/recovery-review-evidence/default-two-worker-guard.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/recovery-review-evidence/default-two-worker-guard.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/recovery-review-evidence/explicit-two-worker-optin.command.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/recovery-review-evidence/explicit-two-worker-optin.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/recovery-review-evidence/explicit-two-worker-optin.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/recovery-review-evidence/result.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/recovery-review-evidence/stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/recovery-review-evidence/stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/review-evidence-manifest.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/run-final-01/commands.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/run-final-01/final-verification.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/run-final-01/final-verification.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/run-final-01/performance.command.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/run-final-01/performance.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/run-final-01/performance.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/run-final-01/profile.command.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/run-final-01/profile.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/run-final-01/profile.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/run_all.py"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/run_final_r2.py"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/run_performance.py"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/runner-selfcheck.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/runner-selfcheck.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/runner-selfcheck.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/selfcheck.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/selfcheck.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/selfcheck.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/validate_delivery.py"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-attempt-01/baseline-collection.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-attempt-01/collection-310.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-attempt-01/collection-310.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-attempt-01/collection-310.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-attempt-01/collection-312.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-attempt-01/collection-312.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-attempt-01/collection-312.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-attempt-01/environment-310.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-attempt-01/environment-310.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-attempt-01/environment-310.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-attempt-01/environment-312.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-attempt-01/environment-312.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-attempt-01/environment-312.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-attempt-01/installed_smoke.py"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-attempt-01/prepare_final.py"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-attempt-01/pytest-310.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-attempt-01/pytest-310.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-attempt-01/pytest-312.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-attempt-01/pytest-312.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-attempt-01/pytest-scope-310.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-attempt-01/pytest-scope-312.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-attempt-01/resource-gate.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-attempt-01/resource-limits.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-attempt-01/source-manifest.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-attempt-01/source-snapshot.tar.gz"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-attempt-01/w011_resource_gate.py"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/baseline-collection.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/build.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/build.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/build.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/collection-310.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/collection-310.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/collection-310.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/collection-312.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/collection-312.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/collection-312.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/create-install-310.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/create-install-310.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/create-install-310.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/create-install-312.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/create-install-312.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/create-install-312.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/dist/layauto-0.2.0-py3-none-any.whl"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/dist/layauto-0.2.0.tar.gz"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/environment-310.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/environment-310.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/environment-310.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/environment-312.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/environment-312.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/environment-312.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/evidence-manifest.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/install-310-report.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/install-310.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/install-310.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/install-310.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/install-312-report.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/install-312.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/install-312.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/install-312.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/installation-identity.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/installed-identity-310.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/installed-identity-310.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/installed-identity-310.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/installed-identity-312.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/installed-identity-312.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/installed-identity-312.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/installed-pip-check-310.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/installed-pip-check-310.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/installed-pip-check-310.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/installed-pip-check-312.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/installed-pip-check-312.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/installed-pip-check-312.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/installed-smoke-310.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/installed-smoke-310.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/installed-smoke-310.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/installed-smoke-312.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/installed-smoke-312.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/installed-smoke-312.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/installed_smoke.py"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/package-identity.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/pip-check-310.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/pip-check-310.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/pip-check-310.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/pip-check-312.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/pip-check-312.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/pip-check-312.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/prepare_final.py"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/pytest-310.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/pytest-310.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/pytest-310.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/pytest-312.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/pytest-312.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/pytest-312.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/pytest-scope-310.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/pytest-scope-312.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/receipt.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/resource-limits.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/source-manifest.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/source-snapshot.tar.gz"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/typing-310.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/typing-310.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/typing-310.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/typing-312.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/typing-312.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-r2/typing-312.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-tools/installed_smoke.py"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/A1/verification-tools/prepare_final.py"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/baseline-extraction-mismatch.command.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/baseline-extraction-mismatch.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/baseline-extraction-mismatch.samples.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/baseline-extraction-mismatch.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/baseline-extraction-mismatch.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/baseline-normal-direct.command.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/baseline-normal-direct.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/baseline-normal-direct.samples.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/baseline-normal-direct.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/baseline-normal-direct.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/baseline-normal-readback.command.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/baseline-normal-readback.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/baseline-normal-readback.samples.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/baseline-normal-readback.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/baseline-normal-readback.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/commands.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/cost-analysis.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/cost-summary.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/delivery-manifest.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/delivery.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/git-identity.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/git-identity.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/git-status.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/git-status.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/handoff-review.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/implementation-proposal.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/independent-review.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/measurement-plan.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/measurement-receipt.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/memory-probe-selfcheck.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/memory-probe-selfcheck.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/memory-probe-selfcheck.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/memory-profile-events.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/memory-profile-normal-readback.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/memory-profile.command.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/memory-profile.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/memory-profile.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/memory_probe.py"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/pip-check.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/pip-check.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/pm-evidence/evidence/attempt01-check.py"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/pm-evidence/evidence/attempt01-command.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/pm-evidence/evidence/attempt01-stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/pm-evidence/evidence/attempt01-stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/pm-evidence/evidence/attempt02-check.py"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/pm-evidence/evidence/attempt02-command.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/pm-evidence/evidence/attempt02-stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/pm-evidence/evidence/attempt02-stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/pm-evidence/evidence/check.py"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/pm-evidence/evidence/command.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/pm-evidence/evidence/manifest.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/pm-evidence/evidence/report.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/pm-evidence/evidence/result.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/pm-evidence/evidence/stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/pm-evidence/evidence/stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/pm-evidence/observer-result.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/pm-evidence/observer.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/pm-evidence/observer.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/pm-evidence/observer_check.py"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/pm-evidence/original-selfcheck/selfcheck.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/pm-evidence/plan/report.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/pm-receipt.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/pm-receipt.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/preflight.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/preflight.py"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/preflight.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/preflight.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/probe.py"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/processes.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/processes.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/profile-extraction-mismatch.command.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/profile-extraction-mismatch.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/profile-extraction-mismatch.profile.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/profile-extraction-mismatch.samples.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/profile-extraction-mismatch.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/profile-extraction-mismatch.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/profile-normal-direct.command.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/profile-normal-direct.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/profile-normal-direct.profile.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/profile-normal-direct.samples.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/profile-normal-direct.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/profile-normal-direct.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/profile-normal-readback.command.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/profile-normal-readback.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/profile-normal-readback.profile.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/profile-normal-readback.samples.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/profile-normal-readback.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/profile-normal-readback.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/review-evidence/attempt01-check.py.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/review-evidence/attempt01-stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/review-evidence/attempt01-stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/review-evidence/check.py"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/review-evidence/command.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/review-evidence/result.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/review-evidence/reviewed-manifest.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/review-evidence/stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/review-evidence/stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/run.py"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/runner.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/runner.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/selfcheck-attempt01-identity.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/selfcheck-attempt01-probe.py.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/selfcheck-attempt01.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/selfcheck.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/selfcheck.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/selfcheck.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/summarize.py"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/summarize.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/summarize.stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/tool-identity.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/transport-interruption.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/validate_evidence.py"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/validation.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/validation.stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/W012/validation.stdout.txt"
+    },
+    {
+      "status": "M",
+      "path": "layauto_v2/domain/codec.py"
+    },
+    {
+      "status": "A",
+      "path": "tests/contracts/test_w012_hex_validation.py"
+    }
+  ],
+  "scope_counts": {
+    "docs": 593,
+    "runtime": 1,
+    "tests": 1
+  },
+  "post_original_review_changes": [
+    "M\tdocs/README.md",
+    "M\tdocs/current-work.md",
+    "M\tdocs/tasks/W012-capture-wire-performance.md",
+    "A\tdocs/tasks/W012/A1/baseline-review-evidence/check.py",
+    "A\tdocs/tasks/W012/A1/baseline-review-evidence/command.json",
+    "A\tdocs/tasks/W012/A1/baseline-review-evidence/hook-command.json",
+    "A\tdocs/tasks/W012/A1/baseline-review-evidence/hook-result.json",
+    "A\tdocs/tasks/W012/A1/baseline-review-evidence/hook-stderr.txt",
+    "A\tdocs/tasks/W012/A1/baseline-review-evidence/hook-stdout.txt",
+    "A\tdocs/tasks/W012/A1/baseline-review-evidence/hook_check.py",
+    "A\tdocs/tasks/W012/A1/baseline-review-evidence/result.json",
+    "A\tdocs/tasks/W012/A1/baseline-review-evidence/stderr.txt",
+    "A\tdocs/tasks/W012/A1/baseline-review-evidence/stdout.txt",
+    "A\tdocs/tasks/W012/A1/baseline-review.md",
+    "A\tdocs/tasks/W012/A1/early-review-evidence/fix-attempt01-check.py.txt",
+    "A\tdocs/tasks/W012/A1/early-review-evidence/fix-attempt01-command.json",
+    "A\tdocs/tasks/W012/A1/early-review-evidence/fix-attempt01-stderr.txt",
+    "A\tdocs/tasks/W012/A1/early-review-evidence/fix-attempt01-stdout.txt",
+    "A\tdocs/tasks/W012/A1/early-review-evidence/fix.command.json",
+    "A\tdocs/tasks/W012/A1/early-review-evidence/fix.stderr.txt",
+    "A\tdocs/tasks/W012/A1/early-review-evidence/fix.stdout.txt",
+    "A\tdocs/tasks/W012/A1/early-review-evidence/reproduce.command.json",
+    "A\tdocs/tasks/W012/A1/early-review-evidence/reproduce.stderr.txt",
+    "A\tdocs/tasks/W012/A1/early-review-evidence/reproduce.stdout.txt",
+    "A\tdocs/tasks/W012/A1/early-review-evidence/reproduce_runner.py",
+    "A\tdocs/tasks/W012/A1/early-review-evidence/run_performance-before-R01.py.txt",
+    "A\tdocs/tasks/W012/A1/early-review-evidence/runner-R01-fix-verification.json",
+    "A\tdocs/tasks/W012/A1/early-review-evidence/runner-R01-reproduction.json",
+    "A\tdocs/tasks/W012/A1/early-review-evidence/verify_runner_fix.py",
+    "A\tdocs/tasks/W012/A1/early-review.md",
+    "A\tdocs/tasks/W012/A1/engineering-review-evidence/check.py",
+    "A\tdocs/tasks/W012/A1/engineering-review-evidence/command.json",
+    "A\tdocs/tasks/W012/A1/engineering-review-evidence/result.json",
+    "A\tdocs/tasks/W012/A1/engineering-review-evidence/stderr.txt",
+    "A\tdocs/tasks/W012/A1/engineering-review-evidence/stdout.txt",
+    "A\tdocs/tasks/W012/A1/final-review-evidence/check.py",
+    "A\tdocs/tasks/W012/A1/final-review-evidence/command.json",
+    "A\tdocs/tasks/W012/A1/final-review-evidence/result.json",
+    "A\tdocs/tasks/W012/A1/final-review-evidence/reviewed-manifest.json",
+    "A\tdocs/tasks/W012/A1/final-review-evidence/stderr.txt",
+    "A\tdocs/tasks/W012/A1/final-review-evidence/stdout.txt",
+    "A\tdocs/tasks/W012/A1/handoff-artifact-manifest.json",
+    "A\tdocs/tasks/W012/A1/handoff-integrity.json",
+    "A\tdocs/tasks/W012/A1/independent-premerge-prompt.md",
+    "A\tdocs/tasks/W012/A1/independent-review.md",
+    "A\tdocs/tasks/W012/A1/pm-evidence/contract/check.py",
+    "A\tdocs/tasks/W012/A1/pm-evidence/contract/command.json",
+    "A\tdocs/tasks/W012/A1/pm-evidence/contract/result.json",
+    "A\tdocs/tasks/W012/A1/pm-evidence/contract/review.md",
+    "A\tdocs/tasks/W012/A1/pm-evidence/contract/source_delivered_after.py",
+    "A\tdocs/tasks/W012/A1/pm-evidence/contract/source_original_before.py",
+    "A\tdocs/tasks/W012/A1/pm-evidence/contract/stderr.txt",
+    "A\tdocs/tasks/W012/A1/pm-evidence/contract/stdout.txt",
+    "A\tdocs/tasks/W012/A1/pm-evidence/evidence/performance-attempt02-stderr.txt",
+    "A\tdocs/tasks/W012/A1/pm-evidence/evidence/performance-attempt02-stdout.txt",
+    "A\tdocs/tasks/W012/A1/pm-evidence/evidence/performance-check.py",
+    "A\tdocs/tasks/W012/A1/pm-evidence/evidence/performance-command.json",
+    "A\tdocs/tasks/W012/A1/pm-evidence/evidence/performance-result.json",
+    "A\tdocs/tasks/W012/A1/pm-evidence/evidence/performance-stderr.txt",
+    "A\tdocs/tasks/W012/A1/pm-evidence/evidence/performance-stdout.txt",
+    "A\tdocs/tasks/W012/A1/pm-evidence/evidence/report.md",
+    "A\tdocs/tasks/W012/A1/pm-evidence/evidence/result.json",
+    "A\tdocs/tasks/W012/A1/pm-evidence/evidence/verification-payload/attempt01-stderr.txt",
+    "A\tdocs/tasks/W012/A1/pm-evidence/evidence/verification-payload/attempt02-result.json",
+    "A\tdocs/tasks/W012/A1/pm-evidence/evidence/verification-payload/attempt02-stderr.txt",
+    "A\tdocs/tasks/W012/A1/pm-evidence/evidence/verification-payload/attempt02-stdout.txt",
+    "A\tdocs/tasks/W012/A1/pm-evidence/evidence/verification-payload/check.py",
+    "A\tdocs/tasks/W012/A1/pm-evidence/evidence/verification-payload/command.json",
+    "A\tdocs/tasks/W012/A1/pm-evidence/evidence/verification-payload/report.md",
+    "A\tdocs/tasks/W012/A1/pm-evidence/evidence/verification-payload/result.json",
+    "A\tdocs/tasks/W012/A1/pm-evidence/evidence/verification-payload/stderr.txt",
+    "A\tdocs/tasks/W012/A1/pm-evidence/evidence/verification-payload/stdout.txt",
+    "A\tdocs/tasks/W012/A1/pm-evidence/index-tail-reconciliation.json",
+    "A\tdocs/tasks/W012/A1/pm-evidence/readback-result.json",
+    "A\tdocs/tasks/W012/A1/pm-evidence/readback.json",
+    "A\tdocs/tasks/W012/A1/pm-evidence/readback.stderr.txt",
+    "A\tdocs/tasks/W012/A1/pm-evidence/readback.stdout.txt",
+    "A\tdocs/tasks/W012/A1/pm-evidence/run_checks.py",
+    "A\tdocs/tasks/W012/A1/pm-evidence/targeted.json",
+    "A\tdocs/tasks/W012/A1/pm-evidence/targeted.stderr.txt",
+    "A\tdocs/tasks/W012/A1/pm-evidence/targeted.stdout.txt",
+    "A\tdocs/tasks/W012/A1/pm-evidence/typing.json",
+    "A\tdocs/tasks/W012/A1/pm-evidence/typing.stderr.txt",
+    "A\tdocs/tasks/W012/A1/pm-evidence/typing.stdout.txt",
+    "A\tdocs/tasks/W012/A1/pm-receipt.json",
+    "A\tdocs/tasks/W012/A1/pm-receipt.md",
+    "A\tdocs/tasks/W012/A1/profile-package-review-evidence/check.py",
+    "A\tdocs/tasks/W012/A1/profile-package-review-evidence/command.json",
+    "A\tdocs/tasks/W012/A1/profile-package-review-evidence/result.json",
+    "A\tdocs/tasks/W012/A1/profile-package-review-evidence/stderr.txt",
+    "A\tdocs/tasks/W012/A1/profile-package-review-evidence/stdout.txt",
+    "A\tdocs/tasks/W012/A1/profile-package-review.md",
+    "A\tdocs/tasks/W012/A1/recovery-review-evidence/check.py",
+    "A\tdocs/tasks/W012/A1/recovery-review-evidence/command.json",
+    "A\tdocs/tasks/W012/A1/recovery-review-evidence/default-single-worker.command.json",
+    "A\tdocs/tasks/W012/A1/recovery-review-evidence/default-single-worker.stderr.txt",
+    "A\tdocs/tasks/W012/A1/recovery-review-evidence/default-single-worker.stdout.txt",
+    "A\tdocs/tasks/W012/A1/recovery-review-evidence/default-two-worker-guard.command.json",
+    "A\tdocs/tasks/W012/A1/recovery-review-evidence/default-two-worker-guard.stderr.txt",
+    "A\tdocs/tasks/W012/A1/recovery-review-evidence/default-two-worker-guard.stdout.txt",
+    "A\tdocs/tasks/W012/A1/recovery-review-evidence/explicit-two-worker-optin.command.json",
+    "A\tdocs/tasks/W012/A1/recovery-review-evidence/explicit-two-worker-optin.stderr.txt",
+    "A\tdocs/tasks/W012/A1/recovery-review-evidence/explicit-two-worker-optin.stdout.txt",
+    "A\tdocs/tasks/W012/A1/recovery-review-evidence/result.json",
+    "A\tdocs/tasks/W012/A1/recovery-review-evidence/stderr.txt",
+    "A\tdocs/tasks/W012/A1/recovery-review-evidence/stdout.txt",
+    "A\tdocs/tasks/W012/A1/review-evidence-manifest.json"
+  ],
+  "applicable_agents": [
+    "AGENTS.md"
+  ],
+  "normative_file_sha256": {
+    "AGENTS.md": "6ebfef25c79379781ddcf02df45c03c869fc4e78a833678cd8ca8919042a48be",
+    "README.md": "154edcfabb0614a162c9bac68b2f3573a09e083120907282c00d31af270b4c5e",
+    "docs/README.md": "e20d59a89e11003aefd79aa6ac961bb7ff24133c1385f3d3f644ea9cf91c0c8f",
+    "docs/collaboration/rules.md": "d44881cb735fb3d352f22051b5dbfca508c2dc80398a45b0d298590326a68376",
+    "docs/environment/local-setup.md": "4ebf5c97d542fa71fba2c90544f5e5d6a658796650b08a1091764899c13f0272",
+    "docs/environment/remote-development.md": "6bc17ddc2dbcea16e1f5a5286d86ae69461fa61bde4b483395d5fe251044a96c",
+    "docs/architecture.md": "0a3ca52fed12af500d973deb3bddebac9a8f7f8f697769dc86827a59c07196c9"
+  },
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "executable": "/workspace/.venvs/layauto/bin/python",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "distributions": {
+    "contourpy": "1.4.0",
+    "cycler": "0.12.1",
+    "fonttools": "4.68.0",
+    "gdstk": "1.0.2",
+    "iniconfig": "2.3.1",
+    "kiwisolver": "1.5.1",
+    "klayout": "0.30.12",
+    "layauto": "0.2.0",
+    "matplotlib": "3.11.2",
+    "narwhals": "2.28.0",
+    "numpy": "2.5.4",
+    "packaging": "26.3",
+    "pillow": "13.0.0",
+    "pip": "25.0.1",
+    "plotly": "7.1.0",
+    "pluggy": "1.7.0",
+    "Pygments": "2.21.0",
+    "pyparsing": "3.3.3",
+    "pytest": "9.2.0",
+    "python-dateutil": "3.0.0",
+    "PyYAML": "6.0.3",
+    "six": "1.17.0",
+    "tzdata": "2026.6"
+  },
+  "current_process_memory": [
+    "    PID   RSS COMMAND",
+    "   2996 138024 python",
+    "    531 36488 codex",
+    "    206 35824 dockerd",
+    "    258 21444 containerd",
+    "   3031 16868 python",
+    "   3024 15196 codex-linux-san",
+    "   2984 15192 codex-linux-san",
+    "   2987 14616 codex",
+    "   3027 14612 codex",
+    "   2988 10500 python",
+    "   3028 10480 python"
+  ],
+  "memory_info": "MemTotal:       18440100 kB\nMemFree:        17798588 kB\nMemAvailable:   17645352 kB\nBuffers:            6052 kB\nCached:            59632 kB\nSwapCached:            0 kB\nActive:            28416 kB\nInactive:         224540 kB\nActive(anon):        136 kB\nInactive(anon):   217168 kB\nActive(file):      28280 kB\nInactive(file):     7372 kB\nUnevictable:       29944 kB\nMlocked:               0 kB\nSwapTotal:             0 kB\nSwapFree:              0 kB\nDirty:               268 kB\nWriteback:             0 kB\nAnonPages:        217284 kB\nMapped:            81336 kB\nShmem:               120 kB\nKReclaimable:      17416 kB\nSlab:              49584 kB\nSReclaimable:      17416 kB\nSUnreclaim:        32168 kB\nKernelStack:        2416 kB\nPageTables:         3752 kB\nSecPageTables:         0 kB\nNFS_Unstable:          0 kB\nBounce:                0 kB\nWritebackTmp:          0 kB\nCommitLimit:     9220048 kB\nCommitted_AS:     534824 kB\nVmallocTotal:   34359738367 kB\nVmallocUsed:        4676 kB\nVmallocChunk:          0 kB\nPercpu:             1296 kB\nAnonHugePages:         0 kB\nShmemHugePages:        0 kB\nShmemPmdMapped:        0 kB\nFileHugePages:         0 kB\nFilePmdMapped:         0 kB\nBalloon:               0 kB\nHugePages_Total:       0\nHugePages_Free:        0\nHugePages_Rsvd:        0\nHugePages_Surp:        0\nHugepagesize:       2048 kB\nHugetlb:               0 kB\nDirectMap4k:       59392 kB\nDirectMap2M:     6848512 kB\nDirectMap1G:    29360128 kB\n",
+  "note": "New risk-selected tests use the current 3.12 environment; no claim that it reproduces the historical benchmark machine/dependency timing."
+}

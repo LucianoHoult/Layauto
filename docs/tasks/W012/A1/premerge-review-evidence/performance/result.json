@@ -1,0 +1,325 @@
+{
+  "status": "passed",
+  "checks": 5973,
+  "reviewed_base": "0a3326aa363477724465886cd05874d0997fba3e",
+  "reviewed_head": "e4179dd42cc0de853df73bafd9140a363c8fa5be",
+  "scope": "Stored evidence hash reads, independent numeric recomputation and static identity/call-count checks; no product/benchmark run and no current large-wire byte comparison.",
+  "baseline_samples": 18,
+  "profile_samples": 2,
+  "calculations": {
+    "normal-direct": {
+      "before": {
+        "totals_seconds": [
+          94.41892330200244,
+          91.8680727789997,
+          94.42292097400059
+        ],
+        "median_total_seconds": 94.41892330200244,
+        "peaks_kib": [
+          2850796,
+          2851236,
+          2851076
+        ],
+        "median_peak_kib": 2851076,
+        "stage_medians_seconds": {
+          "W005_read_inputs": 0.6963497020005889,
+          "W008_adapter_and_build": 0.37233271799959766,
+          "W009_build": 0.6195684369995433,
+          "W010_build": 11.612688449000416,
+          "W011_build": 34.45362320000095,
+          "W011_result_decode": 43.86055603500063,
+          "W011_result_encode": 1.462698489000104
+        }
+      },
+      "after": {
+        "totals_seconds": [
+          75.79989128700072,
+          75.68078910099939,
+          80.27839801400114
+        ],
+        "median_total_seconds": 75.79989128700072,
+        "peaks_kib": [
+          325192,
+          325520,
+          325436
+        ],
+        "median_peak_kib": 325436,
+        "stage_medians_seconds": {
+          "W005_read_inputs": 0.7215083030005189,
+          "W008_adapter_and_build": 0.3814851669994823,
+          "W009_build": 0.6118310799993196,
+          "W010_build": 9.893272463001267,
+          "W011_build": 27.860427937999702,
+          "W011_result_decode": 35.128252664000684,
+          "W011_result_encode": 1.4225330490007764
+        }
+      },
+      "time_reduction_fraction": 0.1971959789823916,
+      "peak_reduction_fraction": 0.8858550245591489
+    },
+    "normal-readback": {
+      "before": {
+        "totals_seconds": [
+          186.6251646560013,
+          180.9991276920009,
+          191.27417996999975
+        ],
+        "median_total_seconds": 186.6251646560013,
+        "peaks_kib": [
+          7344896,
+          7344896,
+          7321284
+        ],
+        "median_peak_kib": 7344896,
+        "stage_medians_seconds": {
+          "W006_caller_reads": 1.221431414000108,
+          "W006_prepare_inputs": 1.4775190370000928,
+          "W008_adapter_and_build": 0.6113362300002336,
+          "W009_build": 1.2327022120007314,
+          "W010_build": 23.101992420999522,
+          "W011_build": 65.72041359600007,
+          "W011_result_decode": 88.46457938999993,
+          "W011_result_encode": 2.7532838610004546
+        }
+      },
+      "after": {
+        "totals_seconds": [
+          144.06681701500202,
+          141.5157024679993,
+          159.43399701700037
+        ],
+        "median_total_seconds": 144.06681701500202,
+        "peaks_kib": [
+          706668,
+          708860,
+          708536
+        ],
+        "median_peak_kib": 708536,
+        "stage_medians_seconds": {
+          "W006_caller_reads": 1.167539587999272,
+          "W006_prepare_inputs": 1.5475328530010302,
+          "W008_adapter_and_build": 0.6037162359989452,
+          "W009_build": 1.240679374001047,
+          "W010_build": 19.32688920200053,
+          "W011_build": 51.42660638400048,
+          "W011_result_decode": 66.11489627799892,
+          "W011_result_encode": 2.6164734000012686
+        }
+      },
+      "time_reduction_fraction": 0.2280418491227878,
+      "peak_reduction_fraction": 0.9035335558188979
+    },
+    "extraction-mismatch": {
+      "before": {
+        "totals_seconds": [
+          91.77305899800194,
+          93.99823823399856,
+          93.1704875409996
+        ],
+        "median_total_seconds": 93.1704875409996,
+        "peaks_kib": [
+          2860508,
+          2860516,
+          2860924
+        ],
+        "median_peak_kib": 2860516,
+        "stage_medians_seconds": {
+          "W005_read_inputs": 0.7404231400014396,
+          "W008_adapter_and_build": 0.3928318529997341,
+          "W009_build": 0.6474979269987671,
+          "W010_build": 11.749290805000783,
+          "W011_build": 34.17726697999933,
+          "W011_result_decode": 44.41517313999975,
+          "W011_result_encode": 1.4461780809997435
+        }
+      },
+      "after": {
+        "totals_seconds": [
+          79.51409700300064,
+          77.87229338699944,
+          83.33669364200068
+        ],
+        "median_total_seconds": 79.51409700300064,
+        "peaks_kib": [
+          324668,
+          325432,
+          324424
+        ],
+        "median_peak_kib": 324668,
+        "stage_medians_seconds": {
+          "W005_read_inputs": 0.7234463269996922,
+          "W008_adapter_and_build": 0.3961486890002561,
+          "W009_build": 0.6321940709985938,
+          "W010_build": 10.273377739000352,
+          "W011_build": 28.75785489199916,
+          "W011_result_decode": 37.50605481399907,
+          "W011_result_encode": 1.4580061480010045
+        }
+      },
+      "time_reduction_fraction": 0.14657420926330855,
+      "peak_reduction_fraction": 0.8865001978663989
+    }
+  },
+  "small_stage_increases": [
+    {
+      "case": "normal-direct",
+      "stage": "W005_read_inputs",
+      "before_seconds": 0.6963497020005889,
+      "after_seconds": 0.7215083030005189,
+      "increase_fraction": 0.03612926224804891
+    },
+    {
+      "case": "normal-direct",
+      "stage": "W008_adapter_and_build",
+      "before_seconds": 0.37233271799959766,
+      "after_seconds": 0.3814851669994823,
+      "increase_fraction": 0.024581371868304558
+    },
+    {
+      "case": "normal-readback",
+      "stage": "W006_prepare_inputs",
+      "before_seconds": 1.4775190370000928,
+      "after_seconds": 1.5475328530010302,
+      "increase_fraction": 0.047386066945770855
+    },
+    {
+      "case": "normal-readback",
+      "stage": "W009_build",
+      "before_seconds": 1.2327022120007314,
+      "after_seconds": 1.240679374001047,
+      "increase_fraction": 0.006471280673187474
+    },
+    {
+      "case": "extraction-mismatch",
+      "stage": "W008_adapter_and_build",
+      "before_seconds": 0.3928318529997341,
+      "after_seconds": 0.3961486890002561,
+      "increase_fraction": 0.008443398810952019
+    },
+    {
+      "case": "extraction-mismatch",
+      "stage": "W011_result_encode",
+      "before_seconds": 1.4461780809997435,
+      "after_seconds": 1.4580061480010045,
+      "increase_fraction": 0.00817884543865044
+    }
+  ],
+  "index_tail_omissions_reconciled_by_single_command_and_receipt": [
+    "performance/after-extraction-mismatch-r3",
+    "profile/after-normal-readback-r1"
+  ],
+  "profile": {
+    "matcher_windows_per_side": 65,
+    "maximum_hex_characters": 118841892,
+    "hwm_refreshes_before_after": [
+      5,
+      0
+    ],
+    "runtime_call_entries_per_side": 2333,
+    "decode_wall_seconds_before_after": [
+      221.04399531200033,
+      222.8497946589996
+    ],
+    "decode_change_fraction": 0.008169411453364361,
+    "new_profile_peak_kib": 720336,
+    "max_observed_matcher_hwm_kib": 648896
+  },
+  "missing_local_original_artifacts": [
+    "/workspace/w012-a1-performance/wires/baseline",
+    "/workspace/w012-a1-performance/wires/profile",
+    "/workspace/w012-a1-before",
+    "/workspace/w012-inputs/extraction-mismatch"
+  ],
+  "input_sha256": {
+    "docs/tasks/W012/A1/performance/frozen-identity.json": "eae82fb2a8435c9e74159b74ffce969c07724a511ae80aa60da7a45ee006c880",
+    "docs/tasks/W012/A1/probe.py": "5dc3d2417e2f45486648730151e9150f444041b6eae1a35730783bbb88909f1a",
+    "docs/tasks/W012/A1/run_performance.py": "aca026ad28711ec161d848b7f249c33ac723de7da7f821ec0c8c66643b77627c",
+    "docs/tasks/W012/A1/performance/receipt.json": "8e0050c6a2ce2cd2dbfd2a2e12bdae5b89759592864e20437115a0736fa77ae3",
+    "docs/tasks/W012/A1/profile/receipt.json": "41f7664e4baac46b6286082211fce4e504d212490e0048e42322c952a1c4a66f",
+    "docs/tasks/W012/A1/performance/commands.json": "78b8433d1628b6d8007289108d20c74302602b23e02c3e8097758cab4a39d028",
+    "docs/tasks/W012/A1/performance/before-normal-direct-r1.command.json": "936369ed07ab631012ae911cbf677bd7ba522e21e0fc53edc6fe732f92e84c69",
+    "docs/tasks/W012/A1/performance/before-normal-direct-r1.stdout.txt": "b8bbb78d4f41c6e636272e64e54fce4f5b75277c648b1313d9055e20c88881ac",
+    "docs/tasks/W012/A1/performance/before-normal-direct-r1.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/tasks/W012/A1/performance/before-normal-direct-r1.json": "be0be0dfca6134917fc89caae2ea8fa647874b9ceb26b3d256f2eb3389ef91b6",
+    "docs/tasks/W012/A1/performance/after-normal-direct-r1.command.json": "35c5efc181457dabc4800213964273d46723169e6cb07c200ba6406a1b87aa8d",
+    "docs/tasks/W012/A1/performance/after-normal-direct-r1.stdout.txt": "1cce9a54aaee1fb925cf133abfd3a84106ee81cfd92924adfef8798c9cd45903",
+    "docs/tasks/W012/A1/performance/after-normal-direct-r1.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/tasks/W012/A1/performance/after-normal-direct-r1.json": "5839e5042aad20ea6cf1ccea26ad9846f227bb160e082aa8d67e2c7994027ca0",
+    "docs/tasks/W012/A1/performance/before-normal-readback-r1.command.json": "35c065aadd8ff62a8fa33533dbbe4c9abf33fbe26fe56c65d346c5416b1d8267",
+    "docs/tasks/W012/A1/performance/before-normal-readback-r1.stdout.txt": "06ccdb3b0376e0f52b4c302ecd5a2ae48b1d4ed16327cfd3954fce8cc7f078d4",
+    "docs/tasks/W012/A1/performance/before-normal-readback-r1.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/tasks/W012/A1/performance/before-normal-readback-r1.json": "dc0819b5c2240cc8b38f18a8666d111a36ebfd03b46bb7cad1e1adada4348387",
+    "docs/tasks/W012/A1/performance/after-normal-readback-r1.command.json": "11ea278bc06257852b3fb54c3dbd61a25fd68faebd697ef8f70b59adf47026df",
+    "docs/tasks/W012/A1/performance/after-normal-readback-r1.stdout.txt": "ca01407b024b7aa4ee01a56364fff6651419131781f3c1488fe2a85fac00f7c7",
+    "docs/tasks/W012/A1/performance/after-normal-readback-r1.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/tasks/W012/A1/performance/after-normal-readback-r1.json": "8d3df458f067b7971ffd7c54ca3c52dbda6098db7496da7f20c380ce5424e9be",
+    "docs/tasks/W012/A1/performance/before-extraction-mismatch-r1.command.json": "a6a07937676bd51282386bbd6c3cfb787b0161c48af53d25d0f3ab2682a25dce",
+    "docs/tasks/W012/A1/performance/before-extraction-mismatch-r1.stdout.txt": "0d5bde5b72c2e246503aa0597adce781e267bc4f6f68211b8b48685d6316fd9f",
+    "docs/tasks/W012/A1/performance/before-extraction-mismatch-r1.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/tasks/W012/A1/performance/before-extraction-mismatch-r1.json": "41bddc6df5d335d8c19763426d0ea25af8ae10161145032fd703d1e7923c8cee",
+    "docs/tasks/W012/A1/performance/after-extraction-mismatch-r1.command.json": "820a74e7319cc34ba696566b7dd12fb3bc84ec25f6d8d473ac9debec04dee240",
+    "docs/tasks/W012/A1/performance/after-extraction-mismatch-r1.stdout.txt": "3652e8a4981b9210ad73f1410d8530a06d11026f6ba5ddb6832ecca157c37e7c",
+    "docs/tasks/W012/A1/performance/after-extraction-mismatch-r1.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/tasks/W012/A1/performance/after-extraction-mismatch-r1.json": "749801c33e23690c167fdafeceffbe984685ed89598536ec47cab92d5151e3d9",
+    "docs/tasks/W012/A1/performance/before-normal-direct-r2.command.json": "8e3eb74b66d609afbe15635af7512729d0372d0798172aa485ec721901ca1401",
+    "docs/tasks/W012/A1/performance/before-normal-direct-r2.stdout.txt": "aa17d52931f72be0c4e7fcfb76ea690f7649d0ed1f89e7196ebd40228491fa66",
+    "docs/tasks/W012/A1/performance/before-normal-direct-r2.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/tasks/W012/A1/performance/before-normal-direct-r2.json": "44e58d90e5e3371b0d8d6c30c3c9c702d1e4e36ee7276790b246300e5d011c8c",
+    "docs/tasks/W012/A1/performance/after-normal-direct-r2.command.json": "b080fd68d47e2c19f0af75671c841e25404884465e298aa49b2fee08086df343",
+    "docs/tasks/W012/A1/performance/after-normal-direct-r2.stdout.txt": "ec99e79f2a7c8862804521e85d532692bc43c6a159cb7a85daab35f8cc3925a6",
+    "docs/tasks/W012/A1/performance/after-normal-direct-r2.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/tasks/W012/A1/performance/after-normal-direct-r2.json": "d57711c758738bf7b42710cbad1644016437c87a043a68966dbbed898914e187",
+    "docs/tasks/W012/A1/performance/before-normal-readback-r2.command.json": "f41e9789565f32613003a9e315d5109621dc8072c635c854e20f449479f670b3",
+    "docs/tasks/W012/A1/performance/before-normal-readback-r2.stdout.txt": "5f906db98dafcee56b74f610f317591c1a0cd97e16242ea18910b7633f398de0",
+    "docs/tasks/W012/A1/performance/before-normal-readback-r2.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/tasks/W012/A1/performance/before-normal-readback-r2.json": "93341edfd8a63cecfef8f01378809ad4fe37295f9f6951aaf60f451564f8015d",
+    "docs/tasks/W012/A1/performance/after-normal-readback-r2.command.json": "5556097e7a526e2edf07824d4103bc14f1a6753fd688805929e4e75454a966c1",
+    "docs/tasks/W012/A1/performance/after-normal-readback-r2.stdout.txt": "3442336ac54e79b8ea18a70da6230fb38b131d5b4162a8960e000e653b020e35",
+    "docs/tasks/W012/A1/performance/after-normal-readback-r2.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/tasks/W012/A1/performance/after-normal-readback-r2.json": "c956b11fb1e7026a6462566afa56b315104fdb02b488766302c856aa1f8253e4",
+    "docs/tasks/W012/A1/performance/before-extraction-mismatch-r2.command.json": "a243a358152acf118d1a4d4faeb695c85ef6ab6efbb8b641056ea5bfd87938d4",
+    "docs/tasks/W012/A1/performance/before-extraction-mismatch-r2.stdout.txt": "8f4d07a1aa4477c7ddca9a8aa571b78e429e2c7169c5edcc6e3a55759440346b",
+    "docs/tasks/W012/A1/performance/before-extraction-mismatch-r2.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/tasks/W012/A1/performance/before-extraction-mismatch-r2.json": "77e15fa7d272a100d4a10aace130be61ae00386901c84ba27bfd8ff3c7279ccc",
+    "docs/tasks/W012/A1/performance/after-extraction-mismatch-r2.command.json": "7ad8530a260aa95d36746284ad55cc1f4cf931ede525f013b51eefc0e6936944",
+    "docs/tasks/W012/A1/performance/after-extraction-mismatch-r2.stdout.txt": "b17f15dff2cbc0e98d9caf030166ea92c38e8717d193940b0cac401685c813d3",
+    "docs/tasks/W012/A1/performance/after-extraction-mismatch-r2.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/tasks/W012/A1/performance/after-extraction-mismatch-r2.json": "db5b872ea74293fb9238dfe17c01b1e250359dd313d9589cedc1fd16ea198cda",
+    "docs/tasks/W012/A1/performance/before-normal-direct-r3.command.json": "2dddfc71ff3e0293990dabfd45ef450d1ad55fa511aa5de047a8c06f24b26a63",
+    "docs/tasks/W012/A1/performance/before-normal-direct-r3.stdout.txt": "eaa5d5bff5fb5357109d041a20c88477e56e785a553bc1007ed53dec051ae9ea",
+    "docs/tasks/W012/A1/performance/before-normal-direct-r3.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/tasks/W012/A1/performance/before-normal-direct-r3.json": "f3f54d8ef24e758e9471cd35313e05869a257577914182654dcdcd732c40bd88",
+    "docs/tasks/W012/A1/performance/after-normal-direct-r3.command.json": "0c78cafa8d9c47f778e63a7906d31834e953acd59d1ee0e857e512b64bad38ae",
+    "docs/tasks/W012/A1/performance/after-normal-direct-r3.stdout.txt": "b4bcfc2302ef6ce8b4d42bce6978bb91a51d695c1b9ae69f0b43c3bd8478318b",
+    "docs/tasks/W012/A1/performance/after-normal-direct-r3.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/tasks/W012/A1/performance/after-normal-direct-r3.json": "5f39d9053efd2f2538c5c0e3252e2adbe4c740cc7c5d1a7a609fb3d934ed0015",
+    "docs/tasks/W012/A1/performance/before-normal-readback-r3.command.json": "e7c1e6e1cfed624b7e6714612ebd32993604b8ae58ca529b128039033da3b04e",
+    "docs/tasks/W012/A1/performance/before-normal-readback-r3.stdout.txt": "b4fd01a318db00c6041abf5b351456866fc099bc39023b7c1e466fb7bca0f0db",
+    "docs/tasks/W012/A1/performance/before-normal-readback-r3.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/tasks/W012/A1/performance/before-normal-readback-r3.json": "1eadb80362ee400f48141df8d2a8bd6e24d8974b26cf789de7bd8e06fa221122",
+    "docs/tasks/W012/A1/performance/after-normal-readback-r3.command.json": "072f91a164163ba9647dbeb19352d63e1f3c0379dc7c456f666f1147cb91ccf8",
+    "docs/tasks/W012/A1/performance/after-normal-readback-r3.stdout.txt": "413573270bc4aa0f027974efb5ecfaaaed6887b7bdc8a7c367557d48a960778e",
+    "docs/tasks/W012/A1/performance/after-normal-readback-r3.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/tasks/W012/A1/performance/after-normal-readback-r3.json": "5704b8b6143c76aa580d0d35779befeae141c0600c10153495460b3a9ed1854d",
+    "docs/tasks/W012/A1/performance/before-extraction-mismatch-r3.command.json": "f1c7ce8ee33d587973c7b5c203adbb8b4fb6503f83b5caa659e40b31e791c7d4",
+    "docs/tasks/W012/A1/performance/before-extraction-mismatch-r3.stdout.txt": "f7939fbd884796b6f959f752e7f2224d94c558de504beaa02baa868f46495782",
+    "docs/tasks/W012/A1/performance/before-extraction-mismatch-r3.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/tasks/W012/A1/performance/before-extraction-mismatch-r3.json": "2ebd45546b9b955d56c6087590de4087d5050fc7903f07a22c4c3ec319ae29c7",
+    "docs/tasks/W012/A1/performance/after-extraction-mismatch-r3.command.json": "95cc07beba95a4d0acd8adb6170502e8df2913c1adf0b8d1246d53a0bdca7302",
+    "docs/tasks/W012/A1/performance/after-extraction-mismatch-r3.stdout.txt": "dd949208b7cee401ab515871fe881300a0fc1e701dae0008c0a0cf37fac468f5",
+    "docs/tasks/W012/A1/performance/after-extraction-mismatch-r3.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/tasks/W012/A1/performance/after-extraction-mismatch-r3.json": "cfb9a24730fab097d00c10ac5eb3649ffe395e2e4e899c10844d523b016190cf",
+    "docs/tasks/W012/A1/profile/commands.json": "1985532240951055c17a67ba14d658df9bcbcfc98c25934257de47588fa36679",
+    "docs/tasks/W012/A1/profile/before-normal-readback-r1.command.json": "696957bbef68a69d5e5f014cfa6b9373ef9427c8fb78ec525b172ba0ff51afc2",
+    "docs/tasks/W012/A1/profile/before-normal-readback-r1.stdout.txt": "68051a362598a6c3e7f6482a54197cb1ebb6091691302d20d90ecca3aa31de9c",
+    "docs/tasks/W012/A1/profile/before-normal-readback-r1.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/tasks/W012/A1/profile/before-normal-readback-r1.json": "249ffefa7a48c21731e494312ad34d20c47857a6b4d78360d944853541a4a77c",
+    "docs/tasks/W012/A1/profile/after-normal-readback-r1.command.json": "507a9e366e005830042fd3c171a4b0fb320b2d43669f1180b6fb18a5141bc544",
+    "docs/tasks/W012/A1/profile/after-normal-readback-r1.stdout.txt": "ca18346e1401aef987f4d0e133a74eb906b3e3739265a2c57c0e4c0bcc739bde",
+    "docs/tasks/W012/A1/profile/after-normal-readback-r1.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/tasks/W012/A1/profile/after-normal-readback-r1.json": "bab9dd3d26fcf74d0baebc6e3cfccb5071bc34ffaedf3089022b76f7ea8607c3",
+    "docs/tasks/W012/A1/performance-summary.json": "6b6aa60ce964cc50bcccb721a26969f6eedb8f4c0ebf1b06ff5b952dfdbe5f32",
+    "docs/tasks/W012/A1/profile/before-normal-readback-r1.profile.json": "3fece798c7e3330bf00faa14c98c63071bf07b98eb2e5369df6e598b4015edf8",
+    "docs/tasks/W012/A1/profile/after-normal-readback-r1.profile.json": "51e1b4dbc732dcb453b0d40687ba2203e5d2273a32bddb0d8130690263f6a7f3"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "argv": [
+    "/workspace/.venvs/layauto/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-p",
+    "no:cacheprovider",
+    "tests/contracts/test_w012_hex_validation.py",
+    "tests/contracts/test_w005_contracts.py",
+    "-q"
+  ],
+  "cwd": "/workspace/Layauto",
+  "started_at_utc": "2026-11-11T01:33:46.335799+00:00",
+  "finished_at_utc": "2026-11-11T01:33:47.037556+00:00",
+  "elapsed_seconds": 0.7017668489999664,
+  "exit_code": 0,
+  "reviewed_head": "e4179dd42cc0de853df73bafd9140a363c8fa5be",
+  "environment_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTEST_DISABLE_PLUGIN_AUTOLOAD": "1",
+    "MPLCONFIGDIR": "/workspace/work/w012-a1-premerge/mplconfig"
+  },
+  "stdout_sha256": "d5689b5f3762fe50ae957b1140060b2e92237a6b24bcea5e72adfb71e079f3b4",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

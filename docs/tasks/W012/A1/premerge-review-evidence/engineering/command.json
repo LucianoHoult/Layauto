@@ -1,0 +1,26 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "-B",
+    "docs/tasks/W012/A1/premerge-review-evidence/engineering/check.py"
+  ],
+  "cwd": "/workspace/Layauto",
+  "exit_code": 0,
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "script_sha256": "39e9aa16d4a4071a2769af6e8461a85575f9d7a56f6d0d0a408e55ac7ec82e25",
+  "stdout": "stdout.txt",
+  "stdout_sha256": "f2d9d921fc2f87d9a89b0a1daf82021d58a010877616e599dc5a0063cd16abab",
+  "stderr": "stderr.txt",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "execution_timestamp_note": "Exact start/end wall-clock timestamps were not captured for this lightweight run; result contains audit UTC.",
+  "audit_result": {
+    "status": "passed",
+    "checks": 1413,
+    "remaining_mandatory_findings": 0
+  },
+  "additional_handoff_manifest_check": {
+    "actual_files_read": 430,
+    "all_hashes_equal": true,
+    "manifest_sha256": "55e8fb98c044d6b567e5a2e71b52039774752851b55e1595035c237154a48629"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "status": "passed",
+  "scope_counts": {
+    "docs": 593,
+    "runtime": 1,
+    "tests": 1
+  },
+  "remote_refs": {
+    "refs/heads/codex/w012-compatible-hex-validation": "e4179dd42cc0de853df73bafd9140a363c8fa5be",
+    "refs/heads/main": "0a3326aa363477724465886cd05874d0997fba3e"
+  }
+}
