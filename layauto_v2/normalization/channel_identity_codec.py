@@ -88,6 +88,28 @@ def _pack(value: object) -> Value:
     return FrozenMap({'scalar': freeze(value)})
 
 
+def _pack_for_encode(value: object) -> object:
+    """Build operation-local tags; canonical_bytes freezes the complete tree."""
+    spec = _SPEC.get(type(value).__name__)
+    if spec is not None and type(value) is spec[0]:
+        return {'record': type(value).__name__,
+                'fields': {field: _pack_for_encode(getattr(value, field)) for field in spec[1]}}
+    for classes, tag, encoder in (
+        (_LOCAL, 'local_record', local_connectivity_codec.encode_record),
+        (_GEOMETRY, 'geometry_record', geometry_codec.encode_record),
+        (_EFFECTIVE, 'effective_record', effective_codec.encode_record),
+        (_SEMANTIC, 'semantic_record', semantic_codec.encode_record),
+        (_CAPTURED, 'captured_record', _captured_bytes),
+    ):
+        if any(type(value) is cls for cls in classes):
+            return {tag: encoder(value)}
+    if type(value) is FrozenMap:
+        return {'map': freeze(value)}
+    if type(value) is tuple:
+        return {'tuple': tuple(_pack_for_encode(item) for item in value)}
+    return {'scalar': freeze(value)}
+
+
 def _unpack(value: Value) -> object:
     if type(value) is not FrozenMap:
         raise ValueError('expected tagged channel identity wire value')
@@ -140,7 +162,7 @@ def encode_record(record: object) -> bytes:
     if spec is None or type(record) is not spec[0]:
         raise ValueError('unsupported channel identity wire type')
     validate_closed_graph(record, _ALL_TYPES)
-    return canonical_bytes({'wire_schema': 'layauto-channel-identity-wire/1', 'record': _pack(record)})
+    return canonical_bytes({'wire_schema': 'layauto-channel-identity-wire/1', 'record': _pack_for_encode(record)})
 
 
 def decode_record(data: bytes) -> object:
