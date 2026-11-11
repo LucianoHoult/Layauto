@@ -1,0 +1,19 @@
+{
+  "status": "passed",
+  "checks": 39187,
+  "finite_candidates": 19201,
+  "exception_cases": 120,
+  "base": "7f7c1304bdafd941791421cef64864fb1616303c",
+  "head": "db07a16fb7cbbac030adae84a9eb88cc0c8aa650",
+  "before_source_sha256": "f1a3a45fbce452957c1c04b8b8c711f17c63a81c5c30d637e9d89dd67d414252",
+  "after_source_sha256": "498efd7d2cd8367bb660883b6e23cc302776d27cfbe487687ef6eab37773b1c7",
+  "actual_profile_phases": 8,
+  "actual_profile_constructor_authentication_functions": 322,
+  "actual_profile_constructor_authentication_counts_equal": true,
+  "checker_sha256": "5e3048ee9a5c21aeb77084b015b7d17e38a5f81089ed1d7e07da72820cd6f2e5",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+  "proof": "For native strings, H={0..9,a..f}; (HH)* equals H* intersect even length, including empty string.",
+  "private_boundary": "Direct _decode with a str subclass overriding __len__ can differ, as already disclosed by plan review; public json.loads creates native str.",
+  "scope": "Small independent source-before/current language and exception contract probe; no full performance, product matrix or complete nested codec run."
+}

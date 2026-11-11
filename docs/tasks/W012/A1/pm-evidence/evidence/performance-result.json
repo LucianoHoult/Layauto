@@ -1,0 +1,5979 @@
+{
+  "status": "passed",
+  "utc": "2026-11-11T01:14:09.271855+00:00",
+  "head": "db07a16fb7cbbac030adae84a9eb88cc0c8aa650",
+  "scope": "Parse and hash retained source/evidence only. No product imports, codec, tests, build/install or performance reruns.",
+  "checks": 1305,
+  "must_fix_findings": 0,
+  "observations": [
+    {
+      "severity": "nonblocking",
+      "kind": "command-index-final-comparison-lag",
+      "stage": "performance",
+      "entries": [
+        "after-extraction-mismatch-r3"
+      ],
+      "impact": "Single command JSON and final receipt contain the complete comparison; aggregate commands.json was written before appending the final comparison field."
+    },
+    {
+      "severity": "nonblocking",
+      "kind": "command-index-final-comparison-lag",
+      "stage": "profile",
+      "entries": [
+        "after-normal-readback-r1"
+      ],
+      "impact": "Single command JSON and final receipt contain the complete comparison; aggregate commands.json was written before appending the final comparison field."
+    }
+  ],
+  "performance": {
+    "normal-direct": {
+      "before": {
+        "samples": [
+          {
+            "rep": 1,
+            "stage_seconds": {
+              "W005_read_inputs": 0.6918369110007916,
+              "W008_adapter_and_build": 0.37233271799959766,
+              "W009_build": 0.6195684369995433,
+              "W010_build": 11.630223224001384,
+              "W011_build": 34.45362320000095,
+              "W011_result_decode": 45.16814992499894,
+              "W011_result_encode": 1.4831888870012335
+            },
+            "total_stage_seconds": 94.41892330200244,
+            "peak_rss_kib": 2850796
+          },
+          {
+            "rep": 2,
+            "stage_seconds": {
+              "W005_read_inputs": 0.6963497020005889,
+              "W008_adapter_and_build": 0.3705888419990515,
+              "W009_build": 0.6095440560002316,
+              "W010_build": 11.124279644000126,
+              "W011_build": 33.81151914600014,
+              "W011_result_decode": 43.79688545499994,
+              "W011_result_encode": 1.458905933999631
+            },
+            "total_stage_seconds": 91.8680727789997,
+            "peak_rss_kib": 2851236
+          },
+          {
+            "rep": 3,
+            "stage_seconds": {
+              "W005_read_inputs": 0.7217822740003612,
+              "W008_adapter_and_build": 0.3971016409996082,
+              "W009_build": 0.638461948999975,
+              "W010_build": 11.612688449000416,
+              "W011_build": 35.7296321369995,
+              "W011_result_decode": 43.86055603500063,
+              "W011_result_encode": 1.462698489000104
+            },
+            "total_stage_seconds": 94.42292097400059,
+            "peak_rss_kib": 2851076
+          }
+        ],
+        "median_total_stage_seconds": 94.41892330200244,
+        "median_stage_seconds": {
+          "W005_read_inputs": 0.6963497020005889,
+          "W008_adapter_and_build": 0.37233271799959766,
+          "W009_build": 0.6195684369995433,
+          "W010_build": 11.612688449000416,
+          "W011_build": 34.45362320000095,
+          "W011_result_decode": 43.86055603500063,
+          "W011_result_encode": 1.462698489000104
+        },
+        "all_peak_rss_kib": [
+          2850796,
+          2851236,
+          2851076
+        ],
+        "median_peak_rss_kib": 2851076,
+        "wire_bytes": 54050313,
+        "wire_sha256": "4d07033687223809e542ea661138fe0566ed162f6eab17fb7d4f806745377f16"
+      },
+      "after": {
+        "samples": [
+          {
+            "rep": 1,
+            "stage_seconds": {
+              "W005_read_inputs": 0.7368261789997632,
+              "W008_adapter_and_build": 0.3814851669994823,
+              "W009_build": 0.6073181520005164,
+              "W010_build": 9.893272463001267,
+              "W011_build": 27.860427937999702,
+              "W011_result_decode": 34.89802833899921,
+              "W011_result_encode": 1.4225330490007764
+            },
+            "total_stage_seconds": 75.79989128700072,
+            "peak_rss_kib": 325192
+          },
+          {
+            "rep": 2,
+            "stage_seconds": {
+              "W005_read_inputs": 0.6730621330007125,
+              "W008_adapter_and_build": 0.3756410159985535,
+              "W009_build": 0.6118310799993196,
+              "W010_build": 9.888378902000113,
+              "W011_build": 27.61468859500019,
+              "W011_result_decode": 35.128252664000684,
+              "W011_result_encode": 1.3889347109998198
+            },
+            "total_stage_seconds": 75.68078910099939,
+            "peak_rss_kib": 325520
+          },
+          {
+            "rep": 3,
+            "stage_seconds": {
+              "W005_read_inputs": 0.7215083030005189,
+              "W008_adapter_and_build": 0.4035643669994897,
+              "W009_build": 0.6244633450005495,
+              "W010_build": 10.25777080700027,
+              "W011_build": 29.827759974999935,
+              "W011_result_decode": 36.94176587899892,
+              "W011_result_encode": 1.5015653380014555
+            },
+            "total_stage_seconds": 80.27839801400114,
+            "peak_rss_kib": 325436
+          }
+        ],
+        "median_total_stage_seconds": 75.79989128700072,
+        "median_stage_seconds": {
+          "W005_read_inputs": 0.7215083030005189,
+          "W008_adapter_and_build": 0.3814851669994823,
+          "W009_build": 0.6118310799993196,
+          "W010_build": 9.893272463001267,
+          "W011_build": 27.860427937999702,
+          "W011_result_decode": 35.128252664000684,
+          "W011_result_encode": 1.4225330490007764
+        },
+        "all_peak_rss_kib": [
+          325192,
+          325520,
+          325436
+        ],
+        "median_peak_rss_kib": 325436,
+        "wire_bytes": 54050313,
+        "wire_sha256": "4d07033687223809e542ea661138fe0566ed162f6eab17fb7d4f806745377f16"
+      },
+      "observed_time_reduction_fraction": 0.1971959789823916,
+      "observed_median_peak_reduction_fraction": 0.8858550245591489
+    },
+    "normal-readback": {
+      "before": {
+        "samples": [
+          {
+            "rep": 1,
+            "stage_seconds": {
+              "W006_caller_reads": 1.2018660310004634,
+              "W006_prepare_inputs": 1.4775190370000928,
+              "W008_adapter_and_build": 0.5993728579996969,
+              "W009_build": 1.2175936530002218,
+              "W010_build": 23.101992420999522,
+              "W011_build": 65.34908134100078,
+              "W011_result_decode": 90.92445545400005,
+              "W011_result_encode": 2.7532838610004546
+            },
+            "total_stage_seconds": 186.6251646560013,
+            "peak_rss_kib": 7344896
+          },
+          {
+            "rep": 2,
+            "stage_seconds": {
+              "W006_caller_reads": 1.221431414000108,
+              "W006_prepare_inputs": 1.4600023700004385,
+              "W008_adapter_and_build": 0.6113362300002336,
+              "W009_build": 1.2327022120007314,
+              "W010_build": 22.984416920000513,
+              "W011_build": 65.72041359600007,
+              "W011_result_decode": 85.04503676199965,
+              "W011_result_encode": 2.723788187999162
+            },
+            "total_stage_seconds": 180.9991276920009,
+            "peak_rss_kib": 7344896
+          },
+          {
+            "rep": 3,
+            "stage_seconds": {
+              "W006_caller_reads": 1.2843987240012211,
+              "W006_prepare_inputs": 1.542930947000059,
+              "W008_adapter_and_build": 0.6459503320002113,
+              "W009_build": 1.2919254829994316,
+              "W010_build": 24.840876580999975,
+              "W011_build": 70.43722500699914,
+              "W011_result_decode": 88.46457938999993,
+              "W011_result_encode": 2.7662935059997835
+            },
+            "total_stage_seconds": 191.27417996999975,
+            "peak_rss_kib": 7321284
+          }
+        ],
+        "median_total_stage_seconds": 186.6251646560013,
+        "median_stage_seconds": {
+          "W006_caller_reads": 1.221431414000108,
+          "W006_prepare_inputs": 1.4775190370000928,
+          "W008_adapter_and_build": 0.6113362300002336,
+          "W009_build": 1.2327022120007314,
+          "W010_build": 23.101992420999522,
+          "W011_build": 65.72041359600007,
+          "W011_result_decode": 88.46457938999993,
+          "W011_result_encode": 2.7532838610004546
+        },
+        "all_peak_rss_kib": [
+          7344896,
+          7344896,
+          7321284
+        ],
+        "median_peak_rss_kib": 7344896,
+        "wire_bytes": 136471701,
+        "wire_sha256": "1b75a398b4a2f22c156600fbe19590c182f37a77d0c171ab0a8b7a79e23cd795"
+      },
+      "after": {
+        "samples": [
+          {
+            "rep": 1,
+            "stage_seconds": {
+              "W006_caller_reads": 1.167539587999272,
+              "W006_prepare_inputs": 1.570016553001551,
+              "W008_adapter_and_build": 0.6037162359989452,
+              "W009_build": 1.240679374001047,
+              "W010_build": 19.32688920200053,
+              "W011_build": 51.42660638400048,
+              "W011_result_decode": 66.11489627799892,
+              "W011_result_encode": 2.6164734000012686
+            },
+            "total_stage_seconds": 144.06681701500202,
+            "peak_rss_kib": 706668
+          },
+          {
+            "rep": 2,
+            "stage_seconds": {
+              "W006_caller_reads": 1.1447228289998748,
+              "W006_prepare_inputs": 1.4344968109999172,
+              "W008_adapter_and_build": 0.5869659740001225,
+              "W009_build": 1.2131053600005544,
+              "W010_build": 19.06654970099953,
+              "W011_build": 50.806235841999296,
+              "W011_result_decode": 64.67762059799861,
+              "W011_result_encode": 2.586005353001383
+            },
+            "total_stage_seconds": 141.5157024679993,
+            "peak_rss_kib": 708860
+          },
+          {
+            "rep": 3,
+            "stage_seconds": {
+              "W006_caller_reads": 1.2455477849998715,
+              "W006_prepare_inputs": 1.5475328530010302,
+              "W008_adapter_and_build": 0.6307156429993483,
+              "W009_build": 1.3126031629999488,
+              "W010_build": 25.232098475000384,
+              "W011_build": 57.568493509999826,
+              "W011_result_decode": 68.9413824050007,
+              "W011_result_encode": 2.955623182999261
+            },
+            "total_stage_seconds": 159.43399701700037,
+            "peak_rss_kib": 708536
+          }
+        ],
+        "median_total_stage_seconds": 144.06681701500202,
+        "median_stage_seconds": {
+          "W006_caller_reads": 1.167539587999272,
+          "W006_prepare_inputs": 1.5475328530010302,
+          "W008_adapter_and_build": 0.6037162359989452,
+          "W009_build": 1.240679374001047,
+          "W010_build": 19.32688920200053,
+          "W011_build": 51.42660638400048,
+          "W011_result_decode": 66.11489627799892,
+          "W011_result_encode": 2.6164734000012686
+        },
+        "all_peak_rss_kib": [
+          706668,
+          708860,
+          708536
+        ],
+        "median_peak_rss_kib": 708536,
+        "wire_bytes": 136471701,
+        "wire_sha256": "1b75a398b4a2f22c156600fbe19590c182f37a77d0c171ab0a8b7a79e23cd795"
+      },
+      "observed_time_reduction_fraction": 0.2280418491227878,
+      "observed_median_peak_reduction_fraction": 0.9035335558188979
+    },
+    "extraction-mismatch": {
+      "before": {
+        "samples": [
+          {
+            "rep": 1,
+            "stage_seconds": {
+              "W005_read_inputs": 0.7085999610008002,
+              "W008_adapter_and_build": 0.37135595700056,
+              "W009_build": 0.6047542249998514,
+              "W010_build": 11.531337280001026,
+              "W011_build": 32.19508551800027,
+              "W011_result_decode": 44.983450462999826,
+              "W011_result_encode": 1.3784755939996103
+            },
+            "total_stage_seconds": 91.77305899800194,
+            "peak_rss_kib": 2860508
+          },
+          {
+            "rep": 2,
+            "stage_seconds": {
+              "W005_read_inputs": 0.8012018289991829,
+              "W008_adapter_and_build": 0.40388888999950723,
+              "W009_build": 0.6483086209991598,
+              "W010_build": 11.749290805000783,
+              "W011_build": 34.50890116200026,
+              "W011_result_decode": 44.41517313999975,
+              "W011_result_encode": 1.4714737869999226
+            },
+            "total_stage_seconds": 93.99823823399856,
+            "peak_rss_kib": 2860516
+          },
+          {
+            "rep": 3,
+            "stage_seconds": {
+              "W005_read_inputs": 0.7404231400014396,
+              "W008_adapter_and_build": 0.3928318529997341,
+              "W009_build": 0.6474979269987671,
+              "W010_build": 12.077501592000772,
+              "W011_build": 34.17726697999933,
+              "W011_result_decode": 43.688787967999815,
+              "W011_result_encode": 1.4461780809997435
+            },
+            "total_stage_seconds": 93.1704875409996,
+            "peak_rss_kib": 2860924
+          }
+        ],
+        "median_total_stage_seconds": 93.1704875409996,
+        "median_stage_seconds": {
+          "W005_read_inputs": 0.7404231400014396,
+          "W008_adapter_and_build": 0.3928318529997341,
+          "W009_build": 0.6474979269987671,
+          "W010_build": 11.749290805000783,
+          "W011_build": 34.17726697999933,
+          "W011_result_decode": 44.41517313999975,
+          "W011_result_encode": 1.4461780809997435
+        },
+        "all_peak_rss_kib": [
+          2860508,
+          2860516,
+          2860924
+        ],
+        "median_peak_rss_kib": 2860516,
+        "wire_bytes": 54045042,
+        "wire_sha256": "83713d7586b02181697f10ac45c59490f2c3aa02fcea37ecf92b740a03b8e2b1"
+      },
+      "after": {
+        "samples": [
+          {
+            "rep": 1,
+            "stage_seconds": {
+              "W005_read_inputs": 0.7015655909999623,
+              "W008_adapter_and_build": 0.37720454200098175,
+              "W009_build": 0.5990095979996113,
+              "W010_build": 10.038311945001624,
+              "W011_build": 28.75785489199916,
+              "W011_result_decode": 37.50605481399907,
+              "W011_result_encode": 1.5340956210002332
+            },
+            "total_stage_seconds": 79.51409700300064,
+            "peak_rss_kib": 324668
+          },
+          {
+            "rep": 2,
+            "stage_seconds": {
+              "W005_read_inputs": 0.7253390189998754,
+              "W008_adapter_and_build": 0.39959416199963016,
+              "W009_build": 0.6347122110000782,
+              "W010_build": 10.518179267999585,
+              "W011_build": 28.741829660000803,
+              "W011_result_decode": 35.41092355100045,
+              "W011_result_encode": 1.4417155159990216
+            },
+            "total_stage_seconds": 77.87229338699944,
+            "peak_rss_kib": 325432
+          },
+          {
+            "rep": 3,
+            "stage_seconds": {
+              "W005_read_inputs": 0.7234463269996922,
+              "W008_adapter_and_build": 0.3961486890002561,
+              "W009_build": 0.6321940709985938,
+              "W010_build": 10.273377739000352,
+              "W011_build": 29.212903498000742,
+              "W011_result_decode": 40.64061717000004,
+              "W011_result_encode": 1.4580061480010045
+            },
+            "total_stage_seconds": 83.33669364200068,
+            "peak_rss_kib": 324424
+          }
+        ],
+        "median_total_stage_seconds": 79.51409700300064,
+        "median_stage_seconds": {
+          "W005_read_inputs": 0.7234463269996922,
+          "W008_adapter_and_build": 0.3961486890002561,
+          "W009_build": 0.6321940709985938,
+          "W010_build": 10.273377739000352,
+          "W011_build": 28.75785489199916,
+          "W011_result_decode": 37.50605481399907,
+          "W011_result_encode": 1.4580061480010045
+        },
+        "all_peak_rss_kib": [
+          324668,
+          325432,
+          324424
+        ],
+        "median_peak_rss_kib": 324668,
+        "wire_bytes": 54045042,
+        "wire_sha256": "83713d7586b02181697f10ac45c59490f2c3aa02fcea37ecf92b740a03b8e2b1"
+      },
+      "observed_time_reduction_fraction": 0.14657420926330855,
+      "observed_median_peak_reduction_fraction": 0.8865001978663989
+    }
+  },
+  "stage_increases": [
+    {
+      "case": "normal-direct",
+      "stage": "W005_read_inputs",
+      "before": 0.6963497020005889,
+      "after": 0.7215083030005189,
+      "delta_seconds": 0.02515860099993006,
+      "increase_fraction": 0.03612926224804891
+    },
+    {
+      "case": "normal-direct",
+      "stage": "W008_adapter_and_build",
+      "before": 0.37233271799959766,
+      "after": 0.3814851669994823,
+      "delta_seconds": 0.009152448999884655,
+      "increase_fraction": 0.024581371868304558
+    },
+    {
+      "case": "normal-readback",
+      "stage": "W006_prepare_inputs",
+      "before": 1.4775190370000928,
+      "after": 1.5475328530010302,
+      "delta_seconds": 0.07001381600093737,
+      "increase_fraction": 0.047386066945770855
+    },
+    {
+      "case": "normal-readback",
+      "stage": "W009_build",
+      "before": 1.2327022120007314,
+      "after": 1.240679374001047,
+      "delta_seconds": 0.00797716200031573,
+      "increase_fraction": 0.006471280673187474
+    },
+    {
+      "case": "extraction-mismatch",
+      "stage": "W008_adapter_and_build",
+      "before": 0.3928318529997341,
+      "after": 0.3961486890002561,
+      "delta_seconds": 0.0033168360005220165,
+      "increase_fraction": 0.008443398810952019
+    },
+    {
+      "case": "extraction-mismatch",
+      "stage": "W011_result_encode",
+      "before": 1.4461780809997435,
+      "after": 1.4580061480010045,
+      "delta_seconds": 0.011828067001260933,
+      "increase_fraction": 0.00817884543865044
+    }
+  ],
+  "profile": {
+    "constructor_authentication_counts_equal": true,
+    "all_localizable_runtime_calls_equal": true,
+    "runtime_function_counts_by_phase": {
+      "W006_caller_reads": 59,
+      "W006_prepare_inputs": 200,
+      "W008_adapter_and_build": 227,
+      "W009_build": 130,
+      "W010_build": 405,
+      "W011_build": 637,
+      "W011_result_decode": 640,
+      "W011_result_encode": 35
+    },
+    "windows": {
+      "before": {
+        "events": 65,
+        "large_string_lengths": [
+          27882860,
+          13236386,
+          2039102,
+          2040028,
+          1171318,
+          27882860,
+          13236386,
+          2039102,
+          2040028,
+          1171318,
+          57757844,
+          1062112,
+          27882860,
+          13236386,
+          2039102,
+          2040028,
+          1171318,
+          27882860,
+          13236386,
+          2039102,
+          2040028,
+          1171318,
+          57757844,
+          1062112,
+          27882860,
+          13236386,
+          2039102,
+          2040028,
+          1171318,
+          27882860,
+          13236386,
+          2039102,
+          2040028,
+          1171318,
+          118841892,
+          14403680,
+          2396190,
+          1062112,
+          57757844,
+          1062112,
+          27882860,
+          13236386,
+          2039102,
+          2040028,
+          1171318,
+          27882860,
+          13236386,
+          2039102,
+          2040028,
+          1171318,
+          2039102,
+          2040028,
+          1171318,
+          57757844,
+          1062112,
+          27882860,
+          13236386,
+          2039102,
+          2040028,
+          1171318,
+          27882860,
+          13236386,
+          2039102,
+          2040028,
+          1171318
+        ],
+        "peak_refreshes": [
+          {
+            "after": {
+              "hwm_kib": 1777752,
+              "rss_kib": 144200
+            },
+            "before": {
+              "hwm_kib": 144088,
+              "rss_kib": 144192
+            },
+            "hex_characters": 27882860,
+            "matcher_seconds": 1.1997563850000006,
+            "pattern": "(?:[0-9a-f]{2})*",
+            "phase": "W010_build"
+          },
+          {
+            "after": {
+              "hwm_kib": 1819800,
+              "rss_kib": 186208
+            },
+            "before": {
+              "hwm_kib": 1777752,
+              "rss_kib": 154884
+            },
+            "hex_characters": 27882860,
+            "matcher_seconds": 1.2208098190003511,
+            "pattern": "(?:[0-9a-f]{2})*",
+            "phase": "W010_build"
+          },
+          {
+            "after": {
+              "hwm_kib": 3585928,
+              "rss_kib": 201888
+            },
+            "before": {
+              "hwm_kib": 1819800,
+              "rss_kib": 180964
+            },
+            "hex_characters": 57757844,
+            "matcher_seconds": 2.7054297880004015,
+            "pattern": "(?:[0-9a-f]{2})*",
+            "phase": "W011_build"
+          },
+          {
+            "after": {
+              "hwm_kib": 3604172,
+              "rss_kib": 220252
+            },
+            "before": {
+              "hwm_kib": 3585928,
+              "rss_kib": 189536
+            },
+            "hex_characters": 57757844,
+            "matcher_seconds": 2.4758943209999416,
+            "pattern": "(?:[0-9a-f]{2})*",
+            "phase": "W011_build"
+          },
+          {
+            "after": {
+              "hwm_kib": 7326636,
+              "rss_kib": 363556
+            },
+            "before": {
+              "hwm_kib": 3604172,
+              "rss_kib": 347652
+            },
+            "hex_characters": 118841892,
+            "matcher_seconds": 5.968507673998829,
+            "pattern": "(?:[0-9a-f]{2})*",
+            "phase": "W011_result_decode"
+          }
+        ],
+        "largest_input_window": {
+          "after": {
+            "hwm_kib": 7326636,
+            "rss_kib": 363556
+          },
+          "before": {
+            "hwm_kib": 3604172,
+            "rss_kib": 347652
+          },
+          "hex_characters": 118841892,
+          "matcher_seconds": 5.968507673998829,
+          "pattern": "(?:[0-9a-f]{2})*",
+          "phase": "W011_result_decode"
+        },
+        "process_peak_rss_kib": 7326636,
+        "sum_observed_matcher_seconds": 36.202323032001004
+      },
+      "after": {
+        "events": 65,
+        "large_string_lengths": [
+          27882860,
+          13236386,
+          2039102,
+          2040028,
+          1171318,
+          27882860,
+          13236386,
+          2039102,
+          2040028,
+          1171318,
+          57757844,
+          1062112,
+          27882860,
+          13236386,
+          2039102,
+          2040028,
+          1171318,
+          27882860,
+          13236386,
+          2039102,
+          2040028,
+          1171318,
+          57757844,
+          1062112,
+          27882860,
+          13236386,
+          2039102,
+          2040028,
+          1171318,
+          27882860,
+          13236386,
+          2039102,
+          2040028,
+          1171318,
+          118841892,
+          14403680,
+          2396190,
+          1062112,
+          57757844,
+          1062112,
+          27882860,
+          13236386,
+          2039102,
+          2040028,
+          1171318,
+          27882860,
+          13236386,
+          2039102,
+          2040028,
+          1171318,
+          2039102,
+          2040028,
+          1171318,
+          57757844,
+          1062112,
+          27882860,
+          13236386,
+          2039102,
+          2040028,
+          1171318,
+          27882860,
+          13236386,
+          2039102,
+          2040028,
+          1171318
+        ],
+        "peak_refreshes": [],
+        "largest_input_window": {
+          "after": {
+            "hwm_kib": 501568,
+            "rss_kib": 358520
+          },
+          "before": {
+            "hwm_kib": 501568,
+            "rss_kib": 358520
+          },
+          "hex_characters": 118841892,
+          "matcher_seconds": 0.233527424001295,
+          "pattern": "[0-9a-f]*",
+          "phase": "W011_result_decode"
+        },
+        "process_peak_rss_kib": 720336,
+        "sum_observed_matcher_seconds": 1.637849296002969
+      }
+    },
+    "after_max_window_hwm_kib": 648896,
+    "profile_decode_increase_fraction": 0.008169411453364361
+  },
+  "handoff_manifest_entries_hashed": 430,
+  "original_external_paths_accessible_here": {
+    "/workspace/w012-a1-performance/wires/baseline": false,
+    "/workspace/w012-a1-performance/wires/profile": false,
+    "/workspace/w012-a1-before": false,
+    "/workspace/w012-inputs/extraction-mismatch": false,
+    "/workspace/.venvs/layauto/bin/python": false,
+    "/workspace/w012-a1-final-r2": false
+  },
+  "wire_claim_basis": "Original per-invocation commands and closed receipts record 1MiB actual complete byte comparison for all18 baseline and2 profile runs; original independent reviewer also recorded actual complete comparison. Their actual huge wire files are absent here, so this PM audit does not claim a fresh bytecmp.",
+  "details": [
+    {
+      "label": "received full head",
+      "passed": true
+    },
+    {
+      "label": "repository has only parent PM documented parallel handoff draft, if any",
+      "passed": true
+    },
+    {
+      "label": "performance: closed receipt",
+      "passed": true
+    },
+    {
+      "label": "performance: explicit process/comparison flags",
+      "passed": true
+    },
+    {
+      "label": "performance: frozen source map matches receipt",
+      "passed": true
+    },
+    {
+      "label": "performance: frozen tool map matches receipt",
+      "passed": true
+    },
+    {
+      "label": "performance: authorized source differences",
+      "passed": true
+    },
+    {
+      "label": "performance: full source counts",
+      "passed": true
+    },
+    {
+      "label": "performance: current tool probe.py",
+      "passed": true
+    },
+    {
+      "label": "performance: current tool run_performance.py",
+      "passed": true
+    },
+    {
+      "label": "performance: complete invocation count",
+      "passed": true
+    },
+    {
+      "label": "performance: command index count",
+      "passed": true
+    },
+    {
+      "label": "before-normal-direct-r1: single command equals final receipt",
+      "passed": true
+    },
+    {
+      "label": "before-normal-direct-r1: execution order",
+      "passed": true
+    },
+    {
+      "label": "before-normal-direct-r1: exit0",
+      "passed": true
+    },
+    {
+      "label": "before-normal-direct-r1: raw stdout hash",
+      "passed": true
+    },
+    {
+      "label": "before-normal-direct-r1: raw stderr hash",
+      "passed": true
+    },
+    {
+      "label": "before-normal-direct-r1: tools frozen",
+      "passed": true
+    },
+    {
+      "label": "before-normal-direct-r1: actually imported source identity",
+      "passed": true
+    },
+    {
+      "label": "before-normal-direct-r1: runtime identity count",
+      "passed": true
+    },
+    {
+      "label": "before-normal-direct-r1: actually imported probe",
+      "passed": true
+    },
+    {
+      "label": "before-normal-direct-r1: runtime root",
+      "passed": true
+    },
+    {
+      "label": "before-normal-direct-r1: package path",
+      "passed": true
+    },
+    {
+      "label": "before-normal-direct-r1: actual mode/case",
+      "passed": true
+    },
+    {
+      "label": "before-normal-direct-r1: interpreter path",
+      "passed": true
+    },
+    {
+      "label": "before-normal-direct-r1: fresh process argv",
+      "passed": true
+    },
+    {
+      "label": "before-normal-direct-r1: fixed input root",
+      "passed": true
+    },
+    {
+      "label": "before-normal-direct-r1: nested timestamps",
+      "passed": true
+    },
+    {
+      "label": "before-normal-direct-r1: original bytecmp receipt",
+      "passed": true
+    },
+    {
+      "label": "before-normal-direct-r1: complete roundtrip equality",
+      "passed": true
+    },
+    {
+      "label": "before-normal-direct-r1: readback boundary",
+      "passed": true
+    },
+    {
+      "label": "before-normal-direct-r1: actual counts",
+      "passed": true
+    },
+    {
+      "label": "before-normal-direct-r1: source mismatch result",
+      "passed": true
+    },
+    {
+      "label": "before-normal-direct-r1: complete FIN and graph",
+      "passed": true
+    },
+    {
+      "label": "before-normal-direct-r1: T05/body",
+      "passed": true
+    },
+    {
+      "label": "before-normal-direct-r1: scope limitation retained",
+      "passed": true
+    },
+    {
+      "label": "before-normal-direct-r1: GC condition",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r1: single command equals final receipt",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r1: execution order",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r1: exit0",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r1: raw stdout hash",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r1: raw stderr hash",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r1: tools frozen",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r1: actually imported source identity",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r1: runtime identity count",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r1: actually imported probe",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r1: runtime root",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r1: package path",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r1: actual mode/case",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r1: interpreter path",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r1: fresh process argv",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r1: fixed input root",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r1: nested timestamps",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r1: serialized after prior process",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r1: original bytecmp receipt",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r1: complete roundtrip equality",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r1: readback boundary",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r1: actual counts",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r1: source mismatch result",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r1: complete FIN and graph",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r1: T05/body",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r1: scope limitation retained",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r1: GC condition",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r1: paired capture_sources",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r1: paired python",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r1: paired executable",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r1: paired platform",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r1: paired input_site",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r1: paired gc_enabled",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r1: paired gc_threshold",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r1: paired result",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r1: paired wire_bytes",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r1: paired wire_sha256",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r1: single command equals final receipt",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r1: execution order",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r1: exit0",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r1: raw stdout hash",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r1: raw stderr hash",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r1: tools frozen",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r1: actually imported source identity",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r1: runtime identity count",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r1: actually imported probe",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r1: runtime root",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r1: package path",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r1: actual mode/case",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r1: interpreter path",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r1: fresh process argv",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r1: fixed input root",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r1: nested timestamps",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r1: serialized after prior process",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r1: original bytecmp receipt",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r1: complete roundtrip equality",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r1: readback boundary",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r1: actual counts",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r1: source mismatch result",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r1: complete FIN and graph",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r1: T05/body",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r1: scope limitation retained",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r1: GC condition",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r1: single command equals final receipt",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r1: execution order",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r1: exit0",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r1: raw stdout hash",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r1: raw stderr hash",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r1: tools frozen",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r1: actually imported source identity",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r1: runtime identity count",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r1: actually imported probe",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r1: runtime root",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r1: package path",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r1: actual mode/case",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r1: interpreter path",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r1: fresh process argv",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r1: fixed input root",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r1: nested timestamps",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r1: serialized after prior process",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r1: original bytecmp receipt",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r1: complete roundtrip equality",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r1: readback boundary",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r1: actual counts",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r1: source mismatch result",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r1: complete FIN and graph",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r1: T05/body",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r1: scope limitation retained",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r1: GC condition",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r1: paired capture_sources",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r1: paired python",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r1: paired executable",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r1: paired platform",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r1: paired input_site",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r1: paired gc_enabled",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r1: paired gc_threshold",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r1: paired result",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r1: paired wire_bytes",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r1: paired wire_sha256",
+      "passed": true
+    },
+    {
+      "label": "before-extraction-mismatch-r1: single command equals final receipt",
+      "passed": true
+    },
+    {
+      "label": "before-extraction-mismatch-r1: execution order",
+      "passed": true
+    },
+    {
+      "label": "before-extraction-mismatch-r1: exit0",
+      "passed": true
+    },
+    {
+      "label": "before-extraction-mismatch-r1: raw stdout hash",
+      "passed": true
+    },
+    {
+      "label": "before-extraction-mismatch-r1: raw stderr hash",
+      "passed": true
+    },
+    {
+      "label": "before-extraction-mismatch-r1: tools frozen",
+      "passed": true
+    },
+    {
+      "label": "before-extraction-mismatch-r1: actually imported source identity",
+      "passed": true
+    },
+    {
+      "label": "before-extraction-mismatch-r1: runtime identity count",
+      "passed": true
+    },
+    {
+      "label": "before-extraction-mismatch-r1: actually imported probe",
+      "passed": true
+    },
+    {
+      "label": "before-extraction-mismatch-r1: runtime root",
+      "passed": true
+    },
+    {
+      "label": "before-extraction-mismatch-r1: package path",
+      "passed": true
+    },
+    {
+      "label": "before-extraction-mismatch-r1: actual mode/case",
+      "passed": true
+    },
+    {
+      "label": "before-extraction-mismatch-r1: interpreter path",
+      "passed": true
+    },
+    {
+      "label": "before-extraction-mismatch-r1: fresh process argv",
+      "passed": true
+    },
+    {
+      "label": "before-extraction-mismatch-r1: fixed input root",
+      "passed": true
+    },
+    {
+      "label": "before-extraction-mismatch-r1: nested timestamps",
+      "passed": true
+    },
+    {
+      "label": "before-extraction-mismatch-r1: serialized after prior process",
+      "passed": true
+    },
+    {
+      "label": "before-extraction-mismatch-r1: original bytecmp receipt",
+      "passed": true
+    },
+    {
+      "label": "before-extraction-mismatch-r1: complete roundtrip equality",
+      "passed": true
+    },
+    {
+      "label": "before-extraction-mismatch-r1: readback boundary",
+      "passed": true
+    },
+    {
+      "label": "before-extraction-mismatch-r1: actual counts",
+      "passed": true
+    },
+    {
+      "label": "before-extraction-mismatch-r1: source mismatch result",
+      "passed": true
+    },
+    {
+      "label": "before-extraction-mismatch-r1: complete FIN and graph",
+      "passed": true
+    },
+    {
+      "label": "before-extraction-mismatch-r1: T05/body",
+      "passed": true
+    },
+    {
+      "label": "before-extraction-mismatch-r1: scope limitation retained",
+      "passed": true
+    },
+    {
+      "label": "before-extraction-mismatch-r1: GC condition",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r1: single command equals final receipt",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r1: execution order",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r1: exit0",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r1: raw stdout hash",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r1: raw stderr hash",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r1: tools frozen",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r1: actually imported source identity",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r1: runtime identity count",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r1: actually imported probe",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r1: runtime root",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r1: package path",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r1: actual mode/case",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r1: interpreter path",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r1: fresh process argv",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r1: fixed input root",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r1: nested timestamps",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r1: serialized after prior process",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r1: original bytecmp receipt",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r1: complete roundtrip equality",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r1: readback boundary",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r1: actual counts",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r1: source mismatch result",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r1: complete FIN and graph",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r1: T05/body",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r1: scope limitation retained",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r1: GC condition",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r1: paired capture_sources",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r1: paired python",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r1: paired executable",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r1: paired platform",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r1: paired input_site",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r1: paired gc_enabled",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r1: paired gc_threshold",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r1: paired result",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r1: paired wire_bytes",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r1: paired wire_sha256",
+      "passed": true
+    },
+    {
+      "label": "before-normal-direct-r2: single command equals final receipt",
+      "passed": true
+    },
+    {
+      "label": "before-normal-direct-r2: execution order",
+      "passed": true
+    },
+    {
+      "label": "before-normal-direct-r2: exit0",
+      "passed": true
+    },
+    {
+      "label": "before-normal-direct-r2: raw stdout hash",
+      "passed": true
+    },
+    {
+      "label": "before-normal-direct-r2: raw stderr hash",
+      "passed": true
+    },
+    {
+      "label": "before-normal-direct-r2: tools frozen",
+      "passed": true
+    },
+    {
+      "label": "before-normal-direct-r2: actually imported source identity",
+      "passed": true
+    },
+    {
+      "label": "before-normal-direct-r2: runtime identity count",
+      "passed": true
+    },
+    {
+      "label": "before-normal-direct-r2: actually imported probe",
+      "passed": true
+    },
+    {
+      "label": "before-normal-direct-r2: runtime root",
+      "passed": true
+    },
+    {
+      "label": "before-normal-direct-r2: package path",
+      "passed": true
+    },
+    {
+      "label": "before-normal-direct-r2: actual mode/case",
+      "passed": true
+    },
+    {
+      "label": "before-normal-direct-r2: interpreter path",
+      "passed": true
+    },
+    {
+      "label": "before-normal-direct-r2: fresh process argv",
+      "passed": true
+    },
+    {
+      "label": "before-normal-direct-r2: fixed input root",
+      "passed": true
+    },
+    {
+      "label": "before-normal-direct-r2: nested timestamps",
+      "passed": true
+    },
+    {
+      "label": "before-normal-direct-r2: serialized after prior process",
+      "passed": true
+    },
+    {
+      "label": "before-normal-direct-r2: original bytecmp receipt",
+      "passed": true
+    },
+    {
+      "label": "before-normal-direct-r2: complete roundtrip equality",
+      "passed": true
+    },
+    {
+      "label": "before-normal-direct-r2: readback boundary",
+      "passed": true
+    },
+    {
+      "label": "before-normal-direct-r2: actual counts",
+      "passed": true
+    },
+    {
+      "label": "before-normal-direct-r2: source mismatch result",
+      "passed": true
+    },
+    {
+      "label": "before-normal-direct-r2: complete FIN and graph",
+      "passed": true
+    },
+    {
+      "label": "before-normal-direct-r2: T05/body",
+      "passed": true
+    },
+    {
+      "label": "before-normal-direct-r2: scope limitation retained",
+      "passed": true
+    },
+    {
+      "label": "before-normal-direct-r2: GC condition",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r2: single command equals final receipt",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r2: execution order",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r2: exit0",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r2: raw stdout hash",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r2: raw stderr hash",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r2: tools frozen",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r2: actually imported source identity",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r2: runtime identity count",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r2: actually imported probe",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r2: runtime root",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r2: package path",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r2: actual mode/case",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r2: interpreter path",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r2: fresh process argv",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r2: fixed input root",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r2: nested timestamps",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r2: serialized after prior process",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r2: original bytecmp receipt",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r2: complete roundtrip equality",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r2: readback boundary",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r2: actual counts",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r2: source mismatch result",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r2: complete FIN and graph",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r2: T05/body",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r2: scope limitation retained",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r2: GC condition",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r2: paired capture_sources",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r2: paired python",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r2: paired executable",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r2: paired platform",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r2: paired input_site",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r2: paired gc_enabled",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r2: paired gc_threshold",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r2: paired result",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r2: paired wire_bytes",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r2: paired wire_sha256",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r2: single command equals final receipt",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r2: execution order",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r2: exit0",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r2: raw stdout hash",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r2: raw stderr hash",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r2: tools frozen",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r2: actually imported source identity",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r2: runtime identity count",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r2: actually imported probe",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r2: runtime root",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r2: package path",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r2: actual mode/case",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r2: interpreter path",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r2: fresh process argv",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r2: fixed input root",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r2: nested timestamps",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r2: serialized after prior process",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r2: original bytecmp receipt",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r2: complete roundtrip equality",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r2: readback boundary",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r2: actual counts",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r2: source mismatch result",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r2: complete FIN and graph",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r2: T05/body",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r2: scope limitation retained",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r2: GC condition",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r2: single command equals final receipt",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r2: execution order",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r2: exit0",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r2: raw stdout hash",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r2: raw stderr hash",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r2: tools frozen",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r2: actually imported source identity",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r2: runtime identity count",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r2: actually imported probe",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r2: runtime root",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r2: package path",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r2: actual mode/case",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r2: interpreter path",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r2: fresh process argv",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r2: fixed input root",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r2: nested timestamps",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r2: serialized after prior process",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r2: original bytecmp receipt",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r2: complete roundtrip equality",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r2: readback boundary",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r2: actual counts",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r2: source mismatch result",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r2: complete FIN and graph",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r2: T05/body",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r2: scope limitation retained",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r2: GC condition",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r2: paired capture_sources",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r2: paired python",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r2: paired executable",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r2: paired platform",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r2: paired input_site",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r2: paired gc_enabled",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r2: paired gc_threshold",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r2: paired result",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r2: paired wire_bytes",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r2: paired wire_sha256",
+      "passed": true
+    },
+    {
+      "label": "before-extraction-mismatch-r2: single command equals final receipt",
+      "passed": true
+    },
+    {
+      "label": "before-extraction-mismatch-r2: execution order",
+      "passed": true
+    },
+    {
+      "label": "before-extraction-mismatch-r2: exit0",
+      "passed": true
+    },
+    {
+      "label": "before-extraction-mismatch-r2: raw stdout hash",
+      "passed": true
+    },
+    {
+      "label": "before-extraction-mismatch-r2: raw stderr hash",
+      "passed": true
+    },
+    {
+      "label": "before-extraction-mismatch-r2: tools frozen",
+      "passed": true
+    },
+    {
+      "label": "before-extraction-mismatch-r2: actually imported source identity",
+      "passed": true
+    },
+    {
+      "label": "before-extraction-mismatch-r2: runtime identity count",
+      "passed": true
+    },
+    {
+      "label": "before-extraction-mismatch-r2: actually imported probe",
+      "passed": true
+    },
+    {
+      "label": "before-extraction-mismatch-r2: runtime root",
+      "passed": true
+    },
+    {
+      "label": "before-extraction-mismatch-r2: package path",
+      "passed": true
+    },
+    {
+      "label": "before-extraction-mismatch-r2: actual mode/case",
+      "passed": true
+    },
+    {
+      "label": "before-extraction-mismatch-r2: interpreter path",
+      "passed": true
+    },
+    {
+      "label": "before-extraction-mismatch-r2: fresh process argv",
+      "passed": true
+    },
+    {
+      "label": "before-extraction-mismatch-r2: fixed input root",
+      "passed": true
+    },
+    {
+      "label": "before-extraction-mismatch-r2: nested timestamps",
+      "passed": true
+    },
+    {
+      "label": "before-extraction-mismatch-r2: serialized after prior process",
+      "passed": true
+    },
+    {
+      "label": "before-extraction-mismatch-r2: original bytecmp receipt",
+      "passed": true
+    },
+    {
+      "label": "before-extraction-mismatch-r2: complete roundtrip equality",
+      "passed": true
+    },
+    {
+      "label": "before-extraction-mismatch-r2: readback boundary",
+      "passed": true
+    },
+    {
+      "label": "before-extraction-mismatch-r2: actual counts",
+      "passed": true
+    },
+    {
+      "label": "before-extraction-mismatch-r2: source mismatch result",
+      "passed": true
+    },
+    {
+      "label": "before-extraction-mismatch-r2: complete FIN and graph",
+      "passed": true
+    },
+    {
+      "label": "before-extraction-mismatch-r2: T05/body",
+      "passed": true
+    },
+    {
+      "label": "before-extraction-mismatch-r2: scope limitation retained",
+      "passed": true
+    },
+    {
+      "label": "before-extraction-mismatch-r2: GC condition",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r2: single command equals final receipt",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r2: execution order",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r2: exit0",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r2: raw stdout hash",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r2: raw stderr hash",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r2: tools frozen",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r2: actually imported source identity",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r2: runtime identity count",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r2: actually imported probe",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r2: runtime root",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r2: package path",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r2: actual mode/case",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r2: interpreter path",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r2: fresh process argv",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r2: fixed input root",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r2: nested timestamps",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r2: serialized after prior process",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r2: original bytecmp receipt",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r2: complete roundtrip equality",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r2: readback boundary",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r2: actual counts",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r2: source mismatch result",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r2: complete FIN and graph",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r2: T05/body",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r2: scope limitation retained",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r2: GC condition",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r2: paired capture_sources",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r2: paired python",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r2: paired executable",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r2: paired platform",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r2: paired input_site",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r2: paired gc_enabled",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r2: paired gc_threshold",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r2: paired result",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r2: paired wire_bytes",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r2: paired wire_sha256",
+      "passed": true
+    },
+    {
+      "label": "before-normal-direct-r3: single command equals final receipt",
+      "passed": true
+    },
+    {
+      "label": "before-normal-direct-r3: execution order",
+      "passed": true
+    },
+    {
+      "label": "before-normal-direct-r3: exit0",
+      "passed": true
+    },
+    {
+      "label": "before-normal-direct-r3: raw stdout hash",
+      "passed": true
+    },
+    {
+      "label": "before-normal-direct-r3: raw stderr hash",
+      "passed": true
+    },
+    {
+      "label": "before-normal-direct-r3: tools frozen",
+      "passed": true
+    },
+    {
+      "label": "before-normal-direct-r3: actually imported source identity",
+      "passed": true
+    },
+    {
+      "label": "before-normal-direct-r3: runtime identity count",
+      "passed": true
+    },
+    {
+      "label": "before-normal-direct-r3: actually imported probe",
+      "passed": true
+    },
+    {
+      "label": "before-normal-direct-r3: runtime root",
+      "passed": true
+    },
+    {
+      "label": "before-normal-direct-r3: package path",
+      "passed": true
+    },
+    {
+      "label": "before-normal-direct-r3: actual mode/case",
+      "passed": true
+    },
+    {
+      "label": "before-normal-direct-r3: interpreter path",
+      "passed": true
+    },
+    {
+      "label": "before-normal-direct-r3: fresh process argv",
+      "passed": true
+    },
+    {
+      "label": "before-normal-direct-r3: fixed input root",
+      "passed": true
+    },
+    {
+      "label": "before-normal-direct-r3: nested timestamps",
+      "passed": true
+    },
+    {
+      "label": "before-normal-direct-r3: serialized after prior process",
+      "passed": true
+    },
+    {
+      "label": "before-normal-direct-r3: original bytecmp receipt",
+      "passed": true
+    },
+    {
+      "label": "before-normal-direct-r3: complete roundtrip equality",
+      "passed": true
+    },
+    {
+      "label": "before-normal-direct-r3: readback boundary",
+      "passed": true
+    },
+    {
+      "label": "before-normal-direct-r3: actual counts",
+      "passed": true
+    },
+    {
+      "label": "before-normal-direct-r3: source mismatch result",
+      "passed": true
+    },
+    {
+      "label": "before-normal-direct-r3: complete FIN and graph",
+      "passed": true
+    },
+    {
+      "label": "before-normal-direct-r3: T05/body",
+      "passed": true
+    },
+    {
+      "label": "before-normal-direct-r3: scope limitation retained",
+      "passed": true
+    },
+    {
+      "label": "before-normal-direct-r3: GC condition",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r3: single command equals final receipt",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r3: execution order",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r3: exit0",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r3: raw stdout hash",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r3: raw stderr hash",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r3: tools frozen",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r3: actually imported source identity",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r3: runtime identity count",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r3: actually imported probe",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r3: runtime root",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r3: package path",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r3: actual mode/case",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r3: interpreter path",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r3: fresh process argv",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r3: fixed input root",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r3: nested timestamps",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r3: serialized after prior process",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r3: original bytecmp receipt",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r3: complete roundtrip equality",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r3: readback boundary",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r3: actual counts",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r3: source mismatch result",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r3: complete FIN and graph",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r3: T05/body",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r3: scope limitation retained",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r3: GC condition",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r3: paired capture_sources",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r3: paired python",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r3: paired executable",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r3: paired platform",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r3: paired input_site",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r3: paired gc_enabled",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r3: paired gc_threshold",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r3: paired result",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r3: paired wire_bytes",
+      "passed": true
+    },
+    {
+      "label": "after-normal-direct-r3: paired wire_sha256",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r3: single command equals final receipt",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r3: execution order",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r3: exit0",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r3: raw stdout hash",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r3: raw stderr hash",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r3: tools frozen",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r3: actually imported source identity",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r3: runtime identity count",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r3: actually imported probe",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r3: runtime root",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r3: package path",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r3: actual mode/case",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r3: interpreter path",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r3: fresh process argv",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r3: fixed input root",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r3: nested timestamps",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r3: serialized after prior process",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r3: original bytecmp receipt",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r3: complete roundtrip equality",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r3: readback boundary",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r3: actual counts",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r3: source mismatch result",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r3: complete FIN and graph",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r3: T05/body",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r3: scope limitation retained",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r3: GC condition",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r3: single command equals final receipt",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r3: execution order",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r3: exit0",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r3: raw stdout hash",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r3: raw stderr hash",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r3: tools frozen",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r3: actually imported source identity",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r3: runtime identity count",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r3: actually imported probe",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r3: runtime root",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r3: package path",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r3: actual mode/case",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r3: interpreter path",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r3: fresh process argv",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r3: fixed input root",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r3: nested timestamps",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r3: serialized after prior process",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r3: original bytecmp receipt",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r3: complete roundtrip equality",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r3: readback boundary",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r3: actual counts",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r3: source mismatch result",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r3: complete FIN and graph",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r3: T05/body",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r3: scope limitation retained",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r3: GC condition",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r3: paired capture_sources",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r3: paired python",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r3: paired executable",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r3: paired platform",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r3: paired input_site",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r3: paired gc_enabled",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r3: paired gc_threshold",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r3: paired result",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r3: paired wire_bytes",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r3: paired wire_sha256",
+      "passed": true
+    },
+    {
+      "label": "before-extraction-mismatch-r3: single command equals final receipt",
+      "passed": true
+    },
+    {
+      "label": "before-extraction-mismatch-r3: execution order",
+      "passed": true
+    },
+    {
+      "label": "before-extraction-mismatch-r3: exit0",
+      "passed": true
+    },
+    {
+      "label": "before-extraction-mismatch-r3: raw stdout hash",
+      "passed": true
+    },
+    {
+      "label": "before-extraction-mismatch-r3: raw stderr hash",
+      "passed": true
+    },
+    {
+      "label": "before-extraction-mismatch-r3: tools frozen",
+      "passed": true
+    },
+    {
+      "label": "before-extraction-mismatch-r3: actually imported source identity",
+      "passed": true
+    },
+    {
+      "label": "before-extraction-mismatch-r3: runtime identity count",
+      "passed": true
+    },
+    {
+      "label": "before-extraction-mismatch-r3: actually imported probe",
+      "passed": true
+    },
+    {
+      "label": "before-extraction-mismatch-r3: runtime root",
+      "passed": true
+    },
+    {
+      "label": "before-extraction-mismatch-r3: package path",
+      "passed": true
+    },
+    {
+      "label": "before-extraction-mismatch-r3: actual mode/case",
+      "passed": true
+    },
+    {
+      "label": "before-extraction-mismatch-r3: interpreter path",
+      "passed": true
+    },
+    {
+      "label": "before-extraction-mismatch-r3: fresh process argv",
+      "passed": true
+    },
+    {
+      "label": "before-extraction-mismatch-r3: fixed input root",
+      "passed": true
+    },
+    {
+      "label": "before-extraction-mismatch-r3: nested timestamps",
+      "passed": true
+    },
+    {
+      "label": "before-extraction-mismatch-r3: serialized after prior process",
+      "passed": true
+    },
+    {
+      "label": "before-extraction-mismatch-r3: original bytecmp receipt",
+      "passed": true
+    },
+    {
+      "label": "before-extraction-mismatch-r3: complete roundtrip equality",
+      "passed": true
+    },
+    {
+      "label": "before-extraction-mismatch-r3: readback boundary",
+      "passed": true
+    },
+    {
+      "label": "before-extraction-mismatch-r3: actual counts",
+      "passed": true
+    },
+    {
+      "label": "before-extraction-mismatch-r3: source mismatch result",
+      "passed": true
+    },
+    {
+      "label": "before-extraction-mismatch-r3: complete FIN and graph",
+      "passed": true
+    },
+    {
+      "label": "before-extraction-mismatch-r3: T05/body",
+      "passed": true
+    },
+    {
+      "label": "before-extraction-mismatch-r3: scope limitation retained",
+      "passed": true
+    },
+    {
+      "label": "before-extraction-mismatch-r3: GC condition",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r3: single command equals final receipt",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r3: execution order",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r3: exit0",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r3: raw stdout hash",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r3: raw stderr hash",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r3: tools frozen",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r3: actually imported source identity",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r3: runtime identity count",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r3: actually imported probe",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r3: runtime root",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r3: package path",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r3: actual mode/case",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r3: interpreter path",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r3: fresh process argv",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r3: fixed input root",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r3: nested timestamps",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r3: serialized after prior process",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r3: original bytecmp receipt",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r3: index has only final comparison lag",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r3: complete roundtrip equality",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r3: readback boundary",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r3: actual counts",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r3: source mismatch result",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r3: complete FIN and graph",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r3: T05/body",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r3: scope limitation retained",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r3: GC condition",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r3: paired capture_sources",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r3: paired python",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r3: paired executable",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r3: paired platform",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r3: paired input_site",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r3: paired gc_enabled",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r3: paired gc_threshold",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r3: paired result",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r3: paired wire_bytes",
+      "passed": true
+    },
+    {
+      "label": "after-extraction-mismatch-r3: paired wire_sha256",
+      "passed": true
+    },
+    {
+      "label": "profile: closed receipt",
+      "passed": true
+    },
+    {
+      "label": "profile: explicit process/comparison flags",
+      "passed": true
+    },
+    {
+      "label": "profile: frozen source map matches receipt",
+      "passed": true
+    },
+    {
+      "label": "profile: frozen tool map matches receipt",
+      "passed": true
+    },
+    {
+      "label": "profile: authorized source differences",
+      "passed": true
+    },
+    {
+      "label": "profile: full source counts",
+      "passed": true
+    },
+    {
+      "label": "profile: current tool probe.py",
+      "passed": true
+    },
+    {
+      "label": "profile: current tool run_performance.py",
+      "passed": true
+    },
+    {
+      "label": "profile: complete invocation count",
+      "passed": true
+    },
+    {
+      "label": "profile: command index count",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r1: single command equals final receipt",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r1: execution order",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r1: exit0",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r1: raw stdout hash",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r1: raw stderr hash",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r1: tools frozen",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r1: actually imported source identity",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r1: runtime identity count",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r1: actually imported probe",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r1: runtime root",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r1: package path",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r1: actual mode/case",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r1: interpreter path",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r1: fresh process argv",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r1: fixed input root",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r1: nested timestamps",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r1: original bytecmp receipt",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r1: complete roundtrip equality",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r1: readback boundary",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r1: actual counts",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r1: source mismatch result",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r1: complete FIN and graph",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r1: T05/body",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r1: scope limitation retained",
+      "passed": true
+    },
+    {
+      "label": "before-normal-readback-r1: GC condition",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r1: single command equals final receipt",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r1: execution order",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r1: exit0",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r1: raw stdout hash",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r1: raw stderr hash",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r1: tools frozen",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r1: actually imported source identity",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r1: runtime identity count",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r1: actually imported probe",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r1: runtime root",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r1: package path",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r1: actual mode/case",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r1: interpreter path",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r1: fresh process argv",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r1: fixed input root",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r1: nested timestamps",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r1: serialized after prior process",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r1: original bytecmp receipt",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r1: index has only final comparison lag",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r1: complete roundtrip equality",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r1: readback boundary",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r1: actual counts",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r1: source mismatch result",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r1: complete FIN and graph",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r1: T05/body",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r1: scope limitation retained",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r1: GC condition",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r1: paired capture_sources",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r1: paired python",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r1: paired executable",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r1: paired platform",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r1: paired input_site",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r1: paired gc_enabled",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r1: paired gc_threshold",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r1: paired result",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r1: paired wire_bytes",
+      "passed": true
+    },
+    {
+      "label": "after-normal-readback-r1: paired wire_sha256",
+      "passed": true
+    },
+    {
+      "label": "preflight performance environment inventory",
+      "passed": true
+    },
+    {
+      "label": "engineering setup explicitly preserves performance environment",
+      "passed": true
+    },
+    {
+      "label": "normal-direct: same recorded performance interpreter",
+      "passed": true
+    },
+    {
+      "label": "normal-direct: same recorded performance interpreter",
+      "passed": true
+    },
+    {
+      "label": "normal-readback: same recorded performance interpreter",
+      "passed": true
+    },
+    {
+      "label": "normal-readback: same recorded performance interpreter",
+      "passed": true
+    },
+    {
+      "label": "extraction-mismatch: same recorded performance interpreter",
+      "passed": true
+    },
+    {
+      "label": "extraction-mismatch: same recorded performance interpreter",
+      "passed": true
+    },
+    {
+      "label": "normal-direct: same recorded performance interpreter",
+      "passed": true
+    },
+    {
+      "label": "normal-direct: same recorded performance interpreter",
+      "passed": true
+    },
+    {
+      "label": "normal-readback: same recorded performance interpreter",
+      "passed": true
+    },
+    {
+      "label": "normal-readback: same recorded performance interpreter",
+      "passed": true
+    },
+    {
+      "label": "extraction-mismatch: same recorded performance interpreter",
+      "passed": true
+    },
+    {
+      "label": "extraction-mismatch: same recorded performance interpreter",
+      "passed": true
+    },
+    {
+      "label": "normal-direct: same recorded performance interpreter",
+      "passed": true
+    },
+    {
+      "label": "normal-direct: same recorded performance interpreter",
+      "passed": true
+    },
+    {
+      "label": "normal-readback: same recorded performance interpreter",
+      "passed": true
+    },
+    {
+      "label": "normal-readback: same recorded performance interpreter",
+      "passed": true
+    },
+    {
+      "label": "extraction-mismatch: same recorded performance interpreter",
+      "passed": true
+    },
+    {
+      "label": "extraction-mismatch: same recorded performance interpreter",
+      "passed": true
+    },
+    {
+      "label": "normal-readback: same recorded performance interpreter",
+      "passed": true
+    },
+    {
+      "label": "normal-readback: same recorded performance interpreter",
+      "passed": true
+    },
+    {
+      "label": "before: attribution uses same readback conditions",
+      "passed": true
+    },
+    {
+      "label": "after: attribution uses same readback conditions",
+      "passed": true
+    },
+    {
+      "label": "baseline finished before attribution profiles",
+      "passed": true
+    },
+    {
+      "label": "profiles finished before first engineering attempt",
+      "passed": true
+    },
+    {
+      "label": "normal-direct/before: repetition conditions/results/wire",
+      "passed": true
+    },
+    {
+      "label": "normal-direct/after: repetition conditions/results/wire",
+      "passed": true
+    },
+    {
+      "label": "normal-direct: independent recomputation equals saved summary exactly",
+      "passed": true
+    },
+    {
+      "label": "normal-readback/before: repetition conditions/results/wire",
+      "passed": true
+    },
+    {
+      "label": "normal-readback/after: repetition conditions/results/wire",
+      "passed": true
+    },
+    {
+      "label": "normal-readback: independent recomputation equals saved summary exactly",
+      "passed": true
+    },
+    {
+      "label": "extraction-mismatch/before: repetition conditions/results/wire",
+      "passed": true
+    },
+    {
+      "label": "extraction-mismatch/after: repetition conditions/results/wire",
+      "passed": true
+    },
+    {
+      "label": "extraction-mismatch: independent recomputation equals saved summary exactly",
+      "passed": true
+    },
+    {
+      "label": "all six observed small-stage increases disclosed",
+      "passed": true
+    },
+    {
+      "label": "W006_caller_reads: constructor/authentication/codec call counts",
+      "passed": true
+    },
+    {
+      "label": "W006_caller_reads: all localizable runtime calls after known line shift",
+      "passed": true
+    },
+    {
+      "label": "W006_prepare_inputs: constructor/authentication/codec call counts",
+      "passed": true
+    },
+    {
+      "label": "W006_prepare_inputs: all localizable runtime calls after known line shift",
+      "passed": true
+    },
+    {
+      "label": "W008_adapter_and_build: constructor/authentication/codec call counts",
+      "passed": true
+    },
+    {
+      "label": "W008_adapter_and_build: all localizable runtime calls after known line shift",
+      "passed": true
+    },
+    {
+      "label": "W009_build: constructor/authentication/codec call counts",
+      "passed": true
+    },
+    {
+      "label": "W009_build: all localizable runtime calls after known line shift",
+      "passed": true
+    },
+    {
+      "label": "W010_build: constructor/authentication/codec call counts",
+      "passed": true
+    },
+    {
+      "label": "W010_build: all localizable runtime calls after known line shift",
+      "passed": true
+    },
+    {
+      "label": "W011_build: constructor/authentication/codec call counts",
+      "passed": true
+    },
+    {
+      "label": "W011_build: all localizable runtime calls after known line shift",
+      "passed": true
+    },
+    {
+      "label": "W011_result_decode: constructor/authentication/codec call counts",
+      "passed": true
+    },
+    {
+      "label": "W011_result_decode: all localizable runtime calls after known line shift",
+      "passed": true
+    },
+    {
+      "label": "W011_result_encode: constructor/authentication/codec call counts",
+      "passed": true
+    },
+    {
+      "label": "W011_result_encode: all localizable runtime calls after known line shift",
+      "passed": true
+    },
+    {
+      "label": "profile summary recomputed from raw functions/windows",
+      "passed": true
+    },
+    {
+      "label": "65 matcher windows same ordered input lengths",
+      "passed": true
+    },
+    {
+      "label": "HWM refreshes 5 to 0",
+      "passed": true
+    },
+    {
+      "label": "residual profile peak correctly retained",
+      "passed": true
+    },
+    {
+      "label": "35 mismatch input origins recorded",
+      "passed": true
+    },
+    {
+      "label": "mismatch origin: /workspace/Layauto/tests/fixtures/w003_m1/body/context-template.json",
+      "passed": true
+    },
+    {
+      "label": "mismatch origin: /workspace/Layauto/tests/fixtures/w003_m1/failures/extraction_mismatch/body/context.json",
+      "passed": true
+    },
+    {
+      "label": "mismatch origin: /workspace/Layauto/tests/fixtures/w003_m1/export_policy.json",
+      "passed": true
+    },
+    {
+      "label": "mismatch origin: /workspace/Layauto/tests/fixtures/w003_m1/independent-design-answer.json",
+      "passed": true
+    },
+    {
+      "label": "mismatch origin: /workspace/Layauto/tests/fixtures/w003_m1/limitations.json",
+      "passed": true
+    },
+    {
+      "label": "mismatch origin: /workspace/Layauto/tests/fixtures/w003_m1/query/dialect.json",
+      "passed": true
+    },
+    {
+      "label": "mismatch origin: /workspace/Layauto/tests/fixtures/w003_m1/failures/extraction_mismatch/query/header.json",
+      "passed": true
+    },
+    {
+      "label": "mismatch origin: /workspace/Layauto/tests/fixtures/w003_m1/failures/extraction_mismatch/query/normalized/device_regions.yaml",
+      "passed": true
+    },
+    {
+      "label": "mismatch origin: /workspace/Layauto/tests/fixtures/w003_m1/query/normalized/instance_xref.yaml",
+      "passed": true
+    },
+    {
+      "label": "mismatch origin: /workspace/Layauto/tests/fixtures/w003_m1/query/normalized/net_regions.yaml",
+      "passed": true
+    },
+    {
+      "label": "mismatch origin: /workspace/Layauto/tests/fixtures/w003_m1/query/normalized/net_xref.yaml",
+      "passed": true
+    },
+    {
+      "label": "mismatch origin: /workspace/Layauto/tests/fixtures/w003_m1/failures/extraction_mismatch/query/raw/device_info_Q17.txt",
+      "passed": true
+    },
+    {
+      "label": "mismatch origin: /workspace/Layauto/tests/fixtures/w003_m1/query/raw/device_info_Q93.txt",
+      "passed": true
+    },
+    {
+      "label": "mismatch origin: /workspace/Layauto/tests/fixtures/w003_m1/query/raw/iXref.temp",
+      "passed": true
+    },
+    {
+      "label": "mismatch origin: /workspace/Layauto/tests/fixtures/w003_m1/query/raw/nXref.temp",
+      "passed": true
+    },
+    {
+      "label": "mismatch origin: /workspace/Layauto/tests/fixtures/w003_m1/query/raw/net_names.txt",
+      "passed": true
+    },
+    {
+      "label": "mismatch origin: /workspace/Layauto/tests/fixtures/w003_m1/query/raw/net_shapes_n_a.txt",
+      "passed": true
+    },
+    {
+      "label": "mismatch origin: /workspace/Layauto/tests/fixtures/w003_m1/query/raw/net_shapes_n_hi.txt",
+      "passed": true
+    },
+    {
+      "label": "mismatch origin: /workspace/Layauto/tests/fixtures/w003_m1/query/raw/net_shapes_n_lo.txt",
+      "passed": true
+    },
+    {
+      "label": "mismatch origin: /workspace/Layauto/tests/fixtures/w003_m1/query/raw/net_shapes_n_y.txt",
+      "passed": true
+    },
+    {
+      "label": "mismatch origin: /workspace/Layauto/tests/fixtures/w003_m1/query/requests.json",
+      "passed": true
+    },
+    {
+      "label": "mismatch origin: /workspace/Layauto/tests/fixtures/w003_m1/site_config.yaml",
+      "passed": true
+    },
+    {
+      "label": "mismatch origin: /workspace/Layauto/tests/fixtures/w003_m1/source.cdl",
+      "passed": true
+    },
+    {
+      "label": "mismatch origin: /workspace/Layauto/tests/fixtures/w003_m1/failures/extraction_mismatch/source.gds",
+      "passed": true
+    },
+    {
+      "label": "mismatch origin: /workspace/Layauto/tests/fixtures/w003_m1/sources.json",
+      "passed": true
+    },
+    {
+      "label": "mismatch origin: /workspace/Layauto/tests/fixtures/w003_m1/special/cut_islands/source.gds",
+      "passed": true
+    },
+    {
+      "label": "mismatch origin: /workspace/Layauto/tests/fixtures/w003_m1/target.cdl",
+      "passed": true
+    },
+    {
+      "label": "mismatch origin: /workspace/Layauto/tests/fixtures/w003_m1/tech/coordinate.json",
+      "passed": true
+    },
+    {
+      "label": "mismatch origin: /workspace/Layauto/tests/fixtures/w003_m1/tech/derived.json",
+      "passed": true
+    },
+    {
+      "label": "mismatch origin: /workspace/Layauto/tests/fixtures/w003_m1/tech/drawn.json",
+      "passed": true
+    },
+    {
+      "label": "mismatch origin: /workspace/Layauto/tests/fixtures/w003_m1/tech/formats.json",
+      "passed": true
+    },
+    {
+      "label": "mismatch origin: /workspace/Layauto/tests/fixtures/w003_m1/tech/physical.json",
+      "passed": true
+    },
+    {
+      "label": "mismatch origin: /workspace/Layauto/tests/fixtures/w003_m1/tech/rules.json",
+      "passed": true
+    },
+    {
+      "label": "mismatch origin: /workspace/Layauto/tests/fixtures/w003_m1/tech.json",
+      "passed": true
+    },
+    {
+      "label": "mismatch origin: /workspace/Layauto/tests/fixtures/w003_m1/validation_policy.json",
+      "passed": true
+    },
+    {
+      "label": "normal-direct: complete capture source count",
+      "passed": true
+    },
+    {
+      "label": "normal-direct: retained capture identity site_config.yaml",
+      "passed": true
+    },
+    {
+      "label": "normal-direct: retained capture identity tech.json",
+      "passed": true
+    },
+    {
+      "label": "normal-direct: retained capture identity tech/drawn.json",
+      "passed": true
+    },
+    {
+      "label": "normal-direct: retained capture identity tech/derived.json",
+      "passed": true
+    },
+    {
+      "label": "normal-direct: retained capture identity tech/physical.json",
+      "passed": true
+    },
+    {
+      "label": "normal-direct: retained capture identity tech/formats.json",
+      "passed": true
+    },
+    {
+      "label": "normal-direct: retained capture identity tech/coordinate.json",
+      "passed": true
+    },
+    {
+      "label": "normal-direct: retained capture identity tech/rules.json",
+      "passed": true
+    },
+    {
+      "label": "normal-direct: retained capture identity export_policy.json",
+      "passed": true
+    },
+    {
+      "label": "normal-direct: retained capture identity validation_policy.json",
+      "passed": true
+    },
+    {
+      "label": "normal-direct: retained capture identity limitations.json",
+      "passed": true
+    },
+    {
+      "label": "normal-direct: retained capture identity source.gds",
+      "passed": true
+    },
+    {
+      "label": "normal-direct: retained capture identity source.cdl",
+      "passed": true
+    },
+    {
+      "label": "normal-direct: retained capture identity target.cdl",
+      "passed": true
+    },
+    {
+      "label": "normal-direct: retained capture identity query/header.json",
+      "passed": true
+    },
+    {
+      "label": "normal-direct: retained capture identity body/context.json",
+      "passed": true
+    },
+    {
+      "label": "normal-direct: retained capture identity query/dialect.json",
+      "passed": true
+    },
+    {
+      "label": "normal-direct: retained capture identity query/requests.json",
+      "passed": true
+    },
+    {
+      "label": "normal-direct: retained capture identity query/raw/iXref.temp",
+      "passed": true
+    },
+    {
+      "label": "normal-direct: retained capture identity query/raw/nXref.temp",
+      "passed": true
+    },
+    {
+      "label": "normal-direct: retained capture identity query/raw/net_names.txt",
+      "passed": true
+    },
+    {
+      "label": "normal-direct: retained capture identity query/raw/device_info_Q17.txt",
+      "passed": true
+    },
+    {
+      "label": "normal-direct: retained capture identity query/raw/device_info_Q93.txt",
+      "passed": true
+    },
+    {
+      "label": "normal-direct: retained capture identity query/raw/net_shapes_n_a.txt",
+      "passed": true
+    },
+    {
+      "label": "normal-direct: retained capture identity query/raw/net_shapes_n_y.txt",
+      "passed": true
+    },
+    {
+      "label": "normal-direct: retained capture identity query/raw/net_shapes_n_lo.txt",
+      "passed": true
+    },
+    {
+      "label": "normal-direct: retained capture identity query/raw/net_shapes_n_hi.txt",
+      "passed": true
+    },
+    {
+      "label": "normal-direct: retained capture identity /workspace/Layauto/tests/fixtures/w003_m1/query/normalized/instance_xref.yaml",
+      "passed": true
+    },
+    {
+      "label": "normal-direct: retained capture identity /workspace/Layauto/tests/fixtures/w003_m1/query/normalized/net_xref.yaml",
+      "passed": true
+    },
+    {
+      "label": "normal-direct: retained capture identity /workspace/Layauto/tests/fixtures/w003_m1/query/normalized/device_regions.yaml",
+      "passed": true
+    },
+    {
+      "label": "normal-direct: retained capture identity /workspace/Layauto/tests/fixtures/w003_m1/query/normalized/net_regions.yaml",
+      "passed": true
+    },
+    {
+      "label": "normal-readback: complete capture source count",
+      "passed": true
+    },
+    {
+      "label": "normal-readback: retained capture identity site_config.yaml",
+      "passed": true
+    },
+    {
+      "label": "normal-readback: retained capture identity tech.json",
+      "passed": true
+    },
+    {
+      "label": "normal-readback: retained capture identity tech/drawn.json",
+      "passed": true
+    },
+    {
+      "label": "normal-readback: retained capture identity tech/derived.json",
+      "passed": true
+    },
+    {
+      "label": "normal-readback: retained capture identity tech/physical.json",
+      "passed": true
+    },
+    {
+      "label": "normal-readback: retained capture identity tech/formats.json",
+      "passed": true
+    },
+    {
+      "label": "normal-readback: retained capture identity tech/coordinate.json",
+      "passed": true
+    },
+    {
+      "label": "normal-readback: retained capture identity tech/rules.json",
+      "passed": true
+    },
+    {
+      "label": "normal-readback: retained capture identity export_policy.json",
+      "passed": true
+    },
+    {
+      "label": "normal-readback: retained capture identity validation_policy.json",
+      "passed": true
+    },
+    {
+      "label": "normal-readback: retained capture identity limitations.json",
+      "passed": true
+    },
+    {
+      "label": "normal-readback: retained capture identity source.gds",
+      "passed": true
+    },
+    {
+      "label": "normal-readback: retained capture identity source.cdl",
+      "passed": true
+    },
+    {
+      "label": "normal-readback: retained capture identity target.cdl",
+      "passed": true
+    },
+    {
+      "label": "normal-readback: retained capture identity query/header.json",
+      "passed": true
+    },
+    {
+      "label": "normal-readback: retained capture identity body/context.json",
+      "passed": true
+    },
+    {
+      "label": "normal-readback: retained capture identity query/dialect.json",
+      "passed": true
+    },
+    {
+      "label": "normal-readback: retained capture identity query/requests.json",
+      "passed": true
+    },
+    {
+      "label": "normal-readback: retained capture identity query/raw/iXref.temp",
+      "passed": true
+    },
+    {
+      "label": "normal-readback: retained capture identity query/raw/nXref.temp",
+      "passed": true
+    },
+    {
+      "label": "normal-readback: retained capture identity query/raw/net_names.txt",
+      "passed": true
+    },
+    {
+      "label": "normal-readback: retained capture identity query/raw/device_info_Q17.txt",
+      "passed": true
+    },
+    {
+      "label": "normal-readback: retained capture identity query/raw/device_info_Q93.txt",
+      "passed": true
+    },
+    {
+      "label": "normal-readback: retained capture identity query/raw/net_shapes_n_a.txt",
+      "passed": true
+    },
+    {
+      "label": "normal-readback: retained capture identity query/raw/net_shapes_n_y.txt",
+      "passed": true
+    },
+    {
+      "label": "normal-readback: retained capture identity query/raw/net_shapes_n_lo.txt",
+      "passed": true
+    },
+    {
+      "label": "normal-readback: retained capture identity query/raw/net_shapes_n_hi.txt",
+      "passed": true
+    },
+    {
+      "label": "normal-readback: retained capture identity /workspace/Layauto/tests/fixtures/w003_m1/query/normalized/instance_xref.yaml",
+      "passed": true
+    },
+    {
+      "label": "normal-readback: retained capture identity /workspace/Layauto/tests/fixtures/w003_m1/query/normalized/net_xref.yaml",
+      "passed": true
+    },
+    {
+      "label": "normal-readback: retained capture identity /workspace/Layauto/tests/fixtures/w003_m1/query/normalized/device_regions.yaml",
+      "passed": true
+    },
+    {
+      "label": "normal-readback: retained capture identity /workspace/Layauto/tests/fixtures/w003_m1/query/normalized/net_regions.yaml",
+      "passed": true
+    },
+    {
+      "label": "extraction-mismatch: complete capture source count",
+      "passed": true
+    },
+    {
+      "label": "extraction-mismatch: retained capture identity site_config.yaml",
+      "passed": true
+    },
+    {
+      "label": "extraction-mismatch: retained capture identity tech.json",
+      "passed": true
+    },
+    {
+      "label": "extraction-mismatch: retained capture identity tech/drawn.json",
+      "passed": true
+    },
+    {
+      "label": "extraction-mismatch: retained capture identity tech/derived.json",
+      "passed": true
+    },
+    {
+      "label": "extraction-mismatch: retained capture identity tech/physical.json",
+      "passed": true
+    },
+    {
+      "label": "extraction-mismatch: retained capture identity tech/formats.json",
+      "passed": true
+    },
+    {
+      "label": "extraction-mismatch: retained capture identity tech/coordinate.json",
+      "passed": true
+    },
+    {
+      "label": "extraction-mismatch: retained capture identity tech/rules.json",
+      "passed": true
+    },
+    {
+      "label": "extraction-mismatch: retained capture identity export_policy.json",
+      "passed": true
+    },
+    {
+      "label": "extraction-mismatch: retained capture identity validation_policy.json",
+      "passed": true
+    },
+    {
+      "label": "extraction-mismatch: retained capture identity limitations.json",
+      "passed": true
+    },
+    {
+      "label": "extraction-mismatch: retained capture identity source.gds",
+      "passed": true
+    },
+    {
+      "label": "extraction-mismatch: retained capture identity source.cdl",
+      "passed": true
+    },
+    {
+      "label": "extraction-mismatch: retained capture identity target.cdl",
+      "passed": true
+    },
+    {
+      "label": "extraction-mismatch: retained capture identity query/header.json",
+      "passed": true
+    },
+    {
+      "label": "extraction-mismatch: retained capture identity body/context.json",
+      "passed": true
+    },
+    {
+      "label": "extraction-mismatch: retained capture identity query/dialect.json",
+      "passed": true
+    },
+    {
+      "label": "extraction-mismatch: retained capture identity query/requests.json",
+      "passed": true
+    },
+    {
+      "label": "extraction-mismatch: retained capture identity query/raw/iXref.temp",
+      "passed": true
+    },
+    {
+      "label": "extraction-mismatch: retained capture identity query/raw/nXref.temp",
+      "passed": true
+    },
+    {
+      "label": "extraction-mismatch: retained capture identity query/raw/net_names.txt",
+      "passed": true
+    },
+    {
+      "label": "extraction-mismatch: retained capture identity query/raw/device_info_Q17.txt",
+      "passed": true
+    },
+    {
+      "label": "extraction-mismatch: retained capture identity query/raw/device_info_Q93.txt",
+      "passed": true
+    },
+    {
+      "label": "extraction-mismatch: retained capture identity query/raw/net_shapes_n_a.txt",
+      "passed": true
+    },
+    {
+      "label": "extraction-mismatch: retained capture identity query/raw/net_shapes_n_y.txt",
+      "passed": true
+    },
+    {
+      "label": "extraction-mismatch: retained capture identity query/raw/net_shapes_n_lo.txt",
+      "passed": true
+    },
+    {
+      "label": "extraction-mismatch: retained capture identity query/raw/net_shapes_n_hi.txt",
+      "passed": true
+    },
+    {
+      "label": "extraction-mismatch: retained capture identity /workspace/w012-inputs/extraction-mismatch/query/normalized/instance_xref.yaml",
+      "passed": true
+    },
+    {
+      "label": "extraction-mismatch: retained capture identity /workspace/w012-inputs/extraction-mismatch/query/normalized/net_xref.yaml",
+      "passed": true
+    },
+    {
+      "label": "extraction-mismatch: retained capture identity /workspace/w012-inputs/extraction-mismatch/query/normalized/device_regions.yaml",
+      "passed": true
+    },
+    {
+      "label": "extraction-mismatch: retained capture identity /workspace/w012-inputs/extraction-mismatch/query/normalized/net_regions.yaml",
+      "passed": true
+    },
+    {
+      "label": "first interrupted attempt archive count",
+      "passed": true
+    },
+    {
+      "label": "preserved interrupted artifact environment-310.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "preserved interrupted artifact source-manifest.json",
+      "passed": true
+    },
+    {
+      "label": "preserved interrupted artifact environment-310.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "preserved interrupted artifact environment-312.json",
+      "passed": true
+    },
+    {
+      "label": "preserved interrupted artifact environment-310.json",
+      "passed": true
+    },
+    {
+      "label": "preserved interrupted artifact pytest-310.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "preserved interrupted artifact collection-312.json",
+      "passed": true
+    },
+    {
+      "label": "preserved interrupted artifact baseline-collection.txt",
+      "passed": true
+    },
+    {
+      "label": "preserved interrupted artifact w011_resource_gate.py",
+      "passed": true
+    },
+    {
+      "label": "preserved interrupted artifact source-snapshot.tar.gz",
+      "passed": true
+    },
+    {
+      "label": "preserved interrupted artifact pytest-312.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "preserved interrupted artifact prepare_final.py",
+      "passed": true
+    },
+    {
+      "label": "preserved interrupted artifact resource-gate.json",
+      "passed": true
+    },
+    {
+      "label": "preserved interrupted artifact pytest-312.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "preserved interrupted artifact collection-310.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "preserved interrupted artifact pytest-scope-310.json",
+      "passed": true
+    },
+    {
+      "label": "preserved interrupted artifact environment-312.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "preserved interrupted artifact environment-312.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "preserved interrupted artifact resource-limits.json",
+      "passed": true
+    },
+    {
+      "label": "preserved interrupted artifact installed_smoke.py",
+      "passed": true
+    },
+    {
+      "label": "preserved interrupted artifact collection-312.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "preserved interrupted artifact pytest-scope-312.json",
+      "passed": true
+    },
+    {
+      "label": "preserved interrupted artifact collection-310.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "preserved interrupted artifact pytest-310.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "preserved interrupted artifact collection-312.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "preserved interrupted artifact collection-310.json",
+      "passed": true
+    },
+    {
+      "label": "partial attempt has no completed receipt",
+      "passed": true
+    },
+    {
+      "label": "partial percentages do not claim pass",
+      "passed": true
+    },
+    {
+      "label": "outer polling wrapper exit remains unknown",
+      "passed": true
+    },
+    {
+      "label": "completion based on internal commands only",
+      "passed": true
+    },
+    {
+      "label": "original faulty runner preserved",
+      "passed": true
+    },
+    {
+      "label": "original R01 reproduction retained",
+      "passed": true
+    },
+    {
+      "label": "fixed runner is actual baseline runner",
+      "passed": true
+    },
+    {
+      "label": "independent R01 closure result retained",
+      "passed": true
+    },
+    {
+      "label": "R01 guard statically precedes any stage mutation",
+      "passed": true
+    },
+    {
+      "label": "complete wire overwrite guard retained",
+      "passed": true
+    },
+    {
+      "label": "selfcheck returns before stage creation",
+      "passed": true
+    },
+    {
+      "label": "fix: original independent checker identity",
+      "passed": true
+    },
+    {
+      "label": "fix: original stdout",
+      "passed": true
+    },
+    {
+      "label": "fix: original stderr",
+      "passed": true
+    },
+    {
+      "label": "reproduce: original independent checker identity",
+      "passed": true
+    },
+    {
+      "label": "reproduce: original stdout",
+      "passed": true
+    },
+    {
+      "label": "reproduce: original stderr",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest analyze_performance.py",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest analyze_profile.py",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest baseline-review-evidence/check.py",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest baseline-review-evidence/command.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest baseline-review-evidence/hook-command.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest baseline-review-evidence/hook-result.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest baseline-review-evidence/hook-stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest baseline-review-evidence/hook-stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest baseline-review-evidence/hook_check.py",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest baseline-review-evidence/result.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest baseline-review-evidence/stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest baseline-review-evidence/stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest baseline-review.md",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest before-package/README-handoff.md",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest before-package/before-source-identity.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest before-package/before-source.tar",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest before-package/build-environment.command.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest before-package/build-environment.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest before-package/build-environment.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest before-package/build.command.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest before-package/build.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest before-package/build.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest before-package/build_before.py",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest before-package/dist/layauto-0.2.0-py3-none-any.whl",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest before-package/dist/layauto-0.2.0.tar.gz",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest before-package/evidence-manifest.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest before-package/git-archive.command.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest before-package/git-archive.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest before-package/identity-format-probe-failure.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest before-package/package-identity.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest before-package/runner.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest before-package/runner.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest collection-310.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest collection-310.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest collection-312.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest collection-312.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest compare_packages.py",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest completion-observation.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest delivery-validation.command.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest delivery-validation.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest delivery-validation.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest delivery-validation.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest development-affected.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest development-affected.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest development-commands.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest development-initial.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest development-initial.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest development-new-310.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest development-new-310.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest early-review-evidence/fix-attempt01-check.py.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest early-review-evidence/fix-attempt01-command.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest early-review-evidence/fix-attempt01-stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest early-review-evidence/fix-attempt01-stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest early-review-evidence/fix.command.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest early-review-evidence/fix.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest early-review-evidence/fix.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest early-review-evidence/reproduce.command.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest early-review-evidence/reproduce.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest early-review-evidence/reproduce.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest early-review-evidence/reproduce_runner.py",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest early-review-evidence/run_performance-before-R01.py.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest early-review-evidence/runner-R01-fix-verification.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest early-review-evidence/runner-R01-reproduction.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest early-review-evidence/verify_runner_fix.py",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest early-review.md",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest engineering-review-evidence/check.py",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest engineering-review-evidence/command.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest engineering-review-evidence/result.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest engineering-review-evidence/stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest engineering-review-evidence/stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest environment/README-handoff.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest environment/evidence/create-310.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest environment/evidence/create-310.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest environment/evidence/create-310.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest environment/evidence/create-312.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest environment/evidence/create-312.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest environment/evidence/create-312.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest environment/evidence/freeze-310.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest environment/evidence/freeze-310.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest environment/evidence/freeze-310.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest environment/evidence/freeze-312.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest environment/evidence/freeze-312.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest environment/evidence/freeze-312.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest environment/evidence/identity-310.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest environment/evidence/identity-310.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest environment/evidence/identity-310.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest environment/evidence/identity-312.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest environment/evidence/identity-312.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest environment/evidence/identity-312.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest environment/evidence/initial-uv-cache-failure.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest environment/evidence/install-deps-310.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest environment/evidence/install-deps-310.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest environment/evidence/install-deps-310.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest environment/evidence/install-deps-312-attempt01.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest environment/evidence/install-deps-312-attempt01.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest environment/evidence/install-deps-312-attempt01.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest environment/evidence/install-deps-312-attempt02.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest environment/evidence/install-deps-312-attempt02.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest environment/evidence/install-deps-312-attempt02.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest environment/evidence/manifest.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest environment/evidence/pip-check-310.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest environment/evidence/pip-check-310.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest environment/evidence/pip-check-310.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest environment/evidence/pip-check-312.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest environment/evidence/pip-check-312.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest environment/evidence/pip-check-312.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest environment/evidence/pip-report-310.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest environment/evidence/pip-report-312.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest environment/evidence/python-inventory.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest environment/evidence/python-inventory.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest environment/evidence/python-inventory.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest environment/evidence/python310-install-attempt01.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest environment/evidence/python310-install-attempt01.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest environment/evidence/python310-install-attempt01.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest environment/evidence/python310-install-attempt02.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest environment/evidence/python310-install-attempt02.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest environment/evidence/python310-install-attempt02.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest environment/evidence/receipt.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest environment/evidence/runner-help-final.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest environment/evidence/runner-help-final.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest environment/evidence/runner-help-final.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest environment/evidence/runner-help.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest environment/evidence/runner-help.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest environment/evidence/runner-help.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest environment/evidence/tool-ast-check-310.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest environment/evidence/tool-ast-check-310.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest environment/evidence/tool-ast-check-310.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest environment/evidence/tool-ast-check.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest environment/evidence/tool-ast-check.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest environment/evidence/tool-ast-check.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest environment/requirements-310.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest environment/requirements-312.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest environment/run_command.py",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest environment/tools/installed_smoke.py",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest environment/tools/prepare_final.py",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest execution.md",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest final-r2-runner.command.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest final-r2-runner.samples.jsonl",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest final-r2-runner.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest final-r2-runner.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest final-review-evidence/check.py",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest final-review-evidence/command.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest final-review-evidence/result.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest final-review-evidence/reviewed-manifest.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest final-review-evidence/stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest final-review-evidence/stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest freeze-check.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest handoff-integrity.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest independent-review.md",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest interruption-01.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest orchestrator.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest orchestrator.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest package-comparison.command.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest package-comparison.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest package-comparison.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest package-comparison.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/after-extraction-mismatch-r1.command.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/after-extraction-mismatch-r1.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/after-extraction-mismatch-r1.samples.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/after-extraction-mismatch-r1.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/after-extraction-mismatch-r1.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/after-extraction-mismatch-r2.command.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/after-extraction-mismatch-r2.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/after-extraction-mismatch-r2.samples.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/after-extraction-mismatch-r2.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/after-extraction-mismatch-r2.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/after-extraction-mismatch-r3.command.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/after-extraction-mismatch-r3.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/after-extraction-mismatch-r3.samples.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/after-extraction-mismatch-r3.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/after-extraction-mismatch-r3.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/after-normal-direct-r1.command.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/after-normal-direct-r1.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/after-normal-direct-r1.samples.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/after-normal-direct-r1.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/after-normal-direct-r1.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/after-normal-direct-r2.command.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/after-normal-direct-r2.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/after-normal-direct-r2.samples.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/after-normal-direct-r2.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/after-normal-direct-r2.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/after-normal-direct-r3.command.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/after-normal-direct-r3.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/after-normal-direct-r3.samples.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/after-normal-direct-r3.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/after-normal-direct-r3.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/after-normal-readback-r1.command.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/after-normal-readback-r1.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/after-normal-readback-r1.samples.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/after-normal-readback-r1.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/after-normal-readback-r1.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/after-normal-readback-r2.command.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/after-normal-readback-r2.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/after-normal-readback-r2.samples.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/after-normal-readback-r2.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/after-normal-readback-r2.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/after-normal-readback-r3.command.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/after-normal-readback-r3.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/after-normal-readback-r3.samples.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/after-normal-readback-r3.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/after-normal-readback-r3.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/before-extraction-mismatch-r1.command.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/before-extraction-mismatch-r1.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/before-extraction-mismatch-r1.samples.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/before-extraction-mismatch-r1.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/before-extraction-mismatch-r1.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/before-extraction-mismatch-r2.command.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/before-extraction-mismatch-r2.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/before-extraction-mismatch-r2.samples.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/before-extraction-mismatch-r2.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/before-extraction-mismatch-r2.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/before-extraction-mismatch-r3.command.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/before-extraction-mismatch-r3.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/before-extraction-mismatch-r3.samples.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/before-extraction-mismatch-r3.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/before-extraction-mismatch-r3.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/before-normal-direct-r1.command.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/before-normal-direct-r1.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/before-normal-direct-r1.samples.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/before-normal-direct-r1.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/before-normal-direct-r1.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/before-normal-direct-r2.command.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/before-normal-direct-r2.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/before-normal-direct-r2.samples.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/before-normal-direct-r2.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/before-normal-direct-r2.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/before-normal-direct-r3.command.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/before-normal-direct-r3.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/before-normal-direct-r3.samples.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/before-normal-direct-r3.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/before-normal-direct-r3.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/before-normal-readback-r1.command.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/before-normal-readback-r1.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/before-normal-readback-r1.samples.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/before-normal-readback-r1.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/before-normal-readback-r1.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/before-normal-readback-r2.command.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/before-normal-readback-r2.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/before-normal-readback-r2.samples.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/before-normal-readback-r2.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/before-normal-readback-r2.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/before-normal-readback-r3.command.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/before-normal-readback-r3.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/before-normal-readback-r3.samples.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/before-normal-readback-r3.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/before-normal-readback-r3.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/commands.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/frozen-identity.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance/receipt.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance-analysis.md",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance-summary.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance-summary.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest performance-summary.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest plan-review-evidence/check.py",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest plan-review-evidence/command.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest plan-review-evidence/result.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest plan-review-evidence/stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest plan-review-evidence/stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest plan-review.md",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest plan.md",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest post-reconnect-samples.jsonl",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest preflight.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest probe.py",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest profile/after-normal-readback-r1.command.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest profile/after-normal-readback-r1.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest profile/after-normal-readback-r1.profile.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest profile/after-normal-readback-r1.samples.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest profile/after-normal-readback-r1.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest profile/after-normal-readback-r1.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest profile/before-normal-readback-r1.command.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest profile/before-normal-readback-r1.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest profile/before-normal-readback-r1.profile.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest profile/before-normal-readback-r1.samples.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest profile/before-normal-readback-r1.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest profile/before-normal-readback-r1.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest profile/commands.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest profile/frozen-identity.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest profile/receipt.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest profile-package-review-evidence/check.py",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest profile-package-review-evidence/command.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest profile-package-review-evidence/result.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest profile-package-review-evidence/stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest profile-package-review-evidence/stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest profile-package-review.md",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest profile-summary.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest profile-summary.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest profile-summary.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest reconnect-02.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest recovery-plan.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest recovery-review-evidence/check.py",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest recovery-review-evidence/command.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest recovery-review-evidence/default-single-worker.command.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest recovery-review-evidence/default-single-worker.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest recovery-review-evidence/default-single-worker.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest recovery-review-evidence/default-two-worker-guard.command.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest recovery-review-evidence/default-two-worker-guard.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest recovery-review-evidence/default-two-worker-guard.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest recovery-review-evidence/explicit-two-worker-optin.command.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest recovery-review-evidence/explicit-two-worker-optin.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest recovery-review-evidence/explicit-two-worker-optin.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest recovery-review-evidence/result.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest recovery-review-evidence/stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest recovery-review-evidence/stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest review-evidence-manifest.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest run-final-01/commands.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest run-final-01/final-verification.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest run-final-01/final-verification.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest run-final-01/performance.command.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest run-final-01/performance.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest run-final-01/performance.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest run-final-01/profile.command.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest run-final-01/profile.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest run-final-01/profile.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest run_all.py",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest run_final_r2.py",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest run_performance.py",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest runner-selfcheck.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest runner-selfcheck.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest runner-selfcheck.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest selfcheck.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest selfcheck.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest selfcheck.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest validate_delivery.py",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-attempt-01/baseline-collection.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-attempt-01/collection-310.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-attempt-01/collection-310.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-attempt-01/collection-310.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-attempt-01/collection-312.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-attempt-01/collection-312.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-attempt-01/collection-312.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-attempt-01/environment-310.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-attempt-01/environment-310.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-attempt-01/environment-310.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-attempt-01/environment-312.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-attempt-01/environment-312.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-attempt-01/environment-312.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-attempt-01/installed_smoke.py",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-attempt-01/prepare_final.py",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-attempt-01/pytest-310.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-attempt-01/pytest-310.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-attempt-01/pytest-312.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-attempt-01/pytest-312.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-attempt-01/pytest-scope-310.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-attempt-01/pytest-scope-312.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-attempt-01/resource-gate.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-attempt-01/resource-limits.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-attempt-01/source-manifest.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-attempt-01/source-snapshot.tar.gz",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-attempt-01/w011_resource_gate.py",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/baseline-collection.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/build.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/build.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/build.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/collection-310.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/collection-310.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/collection-310.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/collection-312.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/collection-312.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/collection-312.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/create-install-310.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/create-install-310.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/create-install-310.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/create-install-312.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/create-install-312.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/create-install-312.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/dist/layauto-0.2.0-py3-none-any.whl",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/dist/layauto-0.2.0.tar.gz",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/environment-310.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/environment-310.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/environment-310.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/environment-312.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/environment-312.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/environment-312.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/evidence-manifest.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/install-310-report.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/install-310.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/install-310.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/install-310.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/install-312-report.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/install-312.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/install-312.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/install-312.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/installation-identity.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/installed-identity-310.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/installed-identity-310.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/installed-identity-310.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/installed-identity-312.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/installed-identity-312.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/installed-identity-312.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/installed-pip-check-310.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/installed-pip-check-310.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/installed-pip-check-310.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/installed-pip-check-312.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/installed-pip-check-312.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/installed-pip-check-312.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/installed-smoke-310.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/installed-smoke-310.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/installed-smoke-310.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/installed-smoke-312.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/installed-smoke-312.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/installed-smoke-312.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/installed_smoke.py",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/package-identity.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/pip-check-310.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/pip-check-310.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/pip-check-310.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/pip-check-312.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/pip-check-312.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/pip-check-312.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/prepare_final.py",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/pytest-310.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/pytest-310.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/pytest-310.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/pytest-312.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/pytest-312.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/pytest-312.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/pytest-scope-310.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/pytest-scope-312.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/receipt.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/resource-limits.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/source-manifest.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/source-snapshot.tar.gz",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/typing-310.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/typing-310.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/typing-310.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/typing-312.json",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/typing-312.stderr.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-r2/typing-312.stdout.txt",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-tools/installed_smoke.py",
+      "passed": true
+    },
+    {
+      "label": "handoff manifest verification-tools/prepare_final.py",
+      "passed": true
+    },
+    {
+      "label": "repository unchanged after audit",
+      "passed": true
+    }
+  ]
+}

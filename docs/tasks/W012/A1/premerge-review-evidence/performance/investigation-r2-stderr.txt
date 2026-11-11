@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/workspace/Layauto/docs/tasks/W012/A1/premerge-review-evidence/performance/investigation_check_r2.py", line 81, in <module>
+    main()
+  File "/workspace/Layauto/docs/tasks/W012/A1/premerge-review-evidence/performance/investigation_check_r2.py", line 72, in main
+    a.check(sum(r['after']['hwm_kib'] > r['before']['hwm_kib'] for r in windows) == 5, 'P1 five matcher HWM refreshes')
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/Layauto/docs/tasks/W012/A1/premerge-review-evidence/performance/investigation_check_r2.py", line 72, in <genexpr>
+    a.check(sum(r['after']['hwm_kib'] > r['before']['hwm_kib'] for r in windows) == 5, 'P1 five matcher HWM refreshes')
+                ~~~~~~~~~~^^^^^^^^^^^
+KeyError: 'hwm_kib'

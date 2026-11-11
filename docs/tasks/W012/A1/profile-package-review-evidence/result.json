@@ -1,0 +1,99 @@
+{
+  "status": "passed",
+  "checks": 498,
+  "profile_receipt_sha256": "41f7664e4baac46b6286082211fce4e504d212490e0048e42322c952a1c4a66f",
+  "profile_summary_sha256": "6788ed69c6986c0e8e5ced613f2ab8d75111b6482767e939c2b0807f47fbc654",
+  "window_results": {
+    "before": {
+      "largest": {
+        "after": {
+          "hwm_kib": 7326636,
+          "rss_kib": 363556
+        },
+        "before": {
+          "hwm_kib": 3604172,
+          "rss_kib": 347652
+        },
+        "hex_characters": 118841892,
+        "matcher_seconds": 5.968507673998829,
+        "pattern": "(?:[0-9a-f]{2})*",
+        "phase": "W011_result_decode"
+      },
+      "refreshes": 5,
+      "peak": 7326636,
+      "max_window_hwm": 7326636,
+      "last_window": {
+        "after": {
+          "hwm_kib": 7326636,
+          "rss_kib": 484476
+        },
+        "before": {
+          "hwm_kib": 7326636,
+          "rss_kib": 484476
+        },
+        "hex_characters": 1171318,
+        "matcher_seconds": 0.04578438300086418,
+        "pattern": "(?:[0-9a-f]{2})*",
+        "phase": "W011_result_decode"
+      },
+      "decode_wall_seconds": 221.04399531200033
+    },
+    "after": {
+      "largest": {
+        "after": {
+          "hwm_kib": 501568,
+          "rss_kib": 358520
+        },
+        "before": {
+          "hwm_kib": 501568,
+          "rss_kib": 358520
+        },
+        "hex_characters": 118841892,
+        "matcher_seconds": 0.233527424001295,
+        "pattern": "[0-9a-f]*",
+        "phase": "W011_result_decode"
+      },
+      "refreshes": 0,
+      "peak": 720336,
+      "max_window_hwm": 648896,
+      "last_window": {
+        "after": {
+          "hwm_kib": 648896,
+          "rss_kib": 476632
+        },
+        "before": {
+          "hwm_kib": 648896,
+          "rss_kib": 476632
+        },
+        "hex_characters": 1171318,
+        "matcher_seconds": 0.0026712550006777747,
+        "pattern": "[0-9a-f]*",
+        "phase": "W011_result_decode"
+      },
+      "decode_wall_seconds": 222.8497946589996
+    }
+  },
+  "all_runtime_function_count_keys_by_stage": {
+    "W006_caller_reads": 59,
+    "W006_prepare_inputs": 200,
+    "W008_adapter_and_build": 227,
+    "W009_build": 130,
+    "W010_build": 405,
+    "W011_build": 637,
+    "W011_result_decode": 640,
+    "W011_result_encode": 35
+  },
+  "before_actual_packages": {
+    "wheel": {
+      "sha256": "ffff7cd43c4680024fda7efdc9f1fc912e2273b0405c9fb1645f2cb8e9212441",
+      "runtime_files": 100,
+      "bytes": 172004
+    },
+    "sdist": {
+      "sha256": "afb9db801fd45801a8e0ec69485ee65178b707ac21fde1b2ed5d44f067b98a94",
+      "runtime_files": 100,
+      "bytes": 138356
+    }
+  },
+  "scope": "complete attribution and before-package evidence only; final engineering not yet complete"
+}

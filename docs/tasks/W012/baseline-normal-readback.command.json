@@ -1,0 +1,28 @@
+{
+  "argv": [
+    "/workspace/.venvs/layauto/bin/python",
+    "-B",
+    "/workspace/Layauto/docs/tasks/W012/probe.py",
+    "--case",
+    "normal-readback",
+    "--mode",
+    "baseline",
+    "--output",
+    "/workspace/Layauto/docs/tasks/W012/baseline-normal-readback.json"
+  ],
+  "cwd": "/workspace/Layauto",
+  "started_at_utc": "2026-11-10T03:21:13.574219+00:00",
+  "git_head": "cfaf85e195fcbedb99fbd26b19787afb0577862d",
+  "tools": {
+    "probe.py": "321b84da8f8f8c9f2e8abda1b181f3a7ae9481d474643795de452b21a974cd7e",
+    "run.py": "e91ac30ac1964a9a64cbc74bb368a32bac928debafd084740345068629d83737"
+  },
+  "environment_override": {
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "finished_at_utc": "2026-11-10T03:24:23.864219+00:00",
+  "elapsed_seconds": 190.28713627299993,
+  "exit_code": 0,
+  "stdout_sha256": "94b37b4f7e1e187ca13234d0f1b0a67fa78f8b53f3291c900a85f305e33ff1a8",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

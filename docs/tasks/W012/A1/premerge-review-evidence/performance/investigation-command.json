@@ -1,0 +1,15 @@
+{
+  "argv": [
+    "python",
+    "-B",
+    "docs/tasks/W012/A1/premerge-review-evidence/performance/investigation_check.py"
+  ],
+  "cwd": "/workspace/Layauto",
+  "started_at_utc": "2026-11-11T01:33:49.685970+00:00",
+  "finished_at_utc": "2026-11-11T01:33:49.743050+00:00",
+  "elapsed_seconds": 0.05708635799999229,
+  "exit_code": 1,
+  "script_sha256": "889bd3e71156f2477343302b220b29963dc95b6c555958f64b1d87a165a8bb10",
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "dc3cb4028522e242ed4f1150f86342bd7ca6304074e85f62e8600713f96b1440"
+}

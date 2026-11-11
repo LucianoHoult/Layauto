@@ -1,0 +1,71 @@
+498 independent profile/before-package checks passed; no product sample rerun
+{
+  "before": {
+    "largest": {
+      "after": {
+        "hwm_kib": 7326636,
+        "rss_kib": 363556
+      },
+      "before": {
+        "hwm_kib": 3604172,
+        "rss_kib": 347652
+      },
+      "hex_characters": 118841892,
+      "matcher_seconds": 5.968507673998829,
+      "pattern": "(?:[0-9a-f]{2})*",
+      "phase": "W011_result_decode"
+    },
+    "refreshes": 5,
+    "peak": 7326636,
+    "max_window_hwm": 7326636,
+    "last_window": {
+      "after": {
+        "hwm_kib": 7326636,
+        "rss_kib": 484476
+      },
+      "before": {
+        "hwm_kib": 7326636,
+        "rss_kib": 484476
+      },
+      "hex_characters": 1171318,
+      "matcher_seconds": 0.04578438300086418,
+      "pattern": "(?:[0-9a-f]{2})*",
+      "phase": "W011_result_decode"
+    },
+    "decode_wall_seconds": 221.04399531200033
+  },
+  "after": {
+    "largest": {
+      "after": {
+        "hwm_kib": 501568,
+        "rss_kib": 358520
+      },
+      "before": {
+        "hwm_kib": 501568,
+        "rss_kib": 358520
+      },
+      "hex_characters": 118841892,
+      "matcher_seconds": 0.233527424001295,
+      "pattern": "[0-9a-f]*",
+      "phase": "W011_result_decode"
+    },
+    "refreshes": 0,
+    "peak": 720336,
+    "max_window_hwm": 648896,
+    "last_window": {
+      "after": {
+        "hwm_kib": 648896,
+        "rss_kib": 476632
+      },
+      "before": {
+        "hwm_kib": 648896,
+        "rss_kib": 476632
+      },
+      "hex_characters": 1171318,
+      "matcher_seconds": 0.0026712550006777747,
+      "pattern": "[0-9a-f]*",
+      "phase": "W011_result_decode"
+    },
+    "decode_wall_seconds": 222.8497946589996
+  }
+}

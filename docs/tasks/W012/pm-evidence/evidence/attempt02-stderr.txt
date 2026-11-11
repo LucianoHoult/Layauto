@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "/workspace/work/w012-pm-check/evidence/check.py", line 243, in <module>
+    main()
+  File "/workspace/work/w012-pm-check/evidence/check.py", line 87, in main
+    check(set(manifest['runtime_files'])=={n for n in files if n.startswith('layauto_v2/')}, 'runtime identity covers exactly 100 layauto_v2 sources')
+  File "/workspace/work/w012-pm-check/evidence/check.py", line 37, in check
+    assert condition, label
+           ^^^^^^^^^
+AssertionError: runtime identity covers exactly 100 layauto_v2 sources

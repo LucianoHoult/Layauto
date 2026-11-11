@@ -1,0 +1,20 @@
+{
+  "argv": [
+    "/workspace/.venvs/layauto/bin/python",
+    "-B",
+    "docs/tasks/W012/review-evidence/check.py"
+  ],
+  "cwd": "/workspace/w012-review",
+  "finished_at_utc": "2026-11-10T03:53:07.036092+00:00",
+  "exit_code": 0,
+  "script_sha256": "d0768fa494c9b3f9961598c5022287d7ea0006c28d976bd874d543ee96c29829",
+  "stdout_sha256": "78bd1a6c076d4d3ed7ac188bafba2ced4c0aa1e3b114758cdbfd32cf2c412f80",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "attempt01": {
+    "exit_code": 1,
+    "reason": "R01: mismatch actual count217 conflicts with original report statement222",
+    "script_sha256": "94322e6db8caad6856f02508833c980dc4deee5938a9f80f6c8f151126b3953d",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_sha256": "550646c1d40682a82a3573f9fa41dcf99c77b253d5b990bf2463f05748e27c57"
+  }
+}

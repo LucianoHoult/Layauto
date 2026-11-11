@@ -1,0 +1,202 @@
+[
+  {
+    "elapsed_seconds": 0.0007801950014254544,
+    "VmRSS": "88 kB",
+    "VmHWM": "88 kB"
+  },
+  {
+    "elapsed_seconds": 2.0010974340002576,
+    "VmRSS": "35248 kB",
+    "VmHWM": "43740 kB"
+  },
+  {
+    "elapsed_seconds": 4.002822715001457,
+    "VmRSS": "63864 kB",
+    "VmHWM": "74072 kB"
+  },
+  {
+    "elapsed_seconds": 6.003169863000949,
+    "VmRSS": "69908 kB",
+    "VmHWM": "74072 kB"
+  },
+  {
+    "elapsed_seconds": 8.003510067001116,
+    "VmRSS": "70244 kB",
+    "VmHWM": "87516 kB"
+  },
+  {
+    "elapsed_seconds": 10.003855693999867,
+    "VmRSS": "72680 kB",
+    "VmHWM": "87516 kB"
+  },
+  {
+    "elapsed_seconds": 12.00418385500052,
+    "VmRSS": "72156 kB",
+    "VmHWM": "87516 kB"
+  },
+  {
+    "elapsed_seconds": 14.004515467000601,
+    "VmRSS": "109876 kB",
+    "VmHWM": "131988 kB"
+  },
+  {
+    "elapsed_seconds": 16.00488126200071,
+    "VmRSS": "109876 kB",
+    "VmHWM": "131988 kB"
+  },
+  {
+    "elapsed_seconds": 18.005351510000764,
+    "VmRSS": "113204 kB",
+    "VmHWM": "131988 kB"
+  },
+  {
+    "elapsed_seconds": 20.005697900000087,
+    "VmRSS": "116120 kB",
+    "VmHWM": "131988 kB"
+  },
+  {
+    "elapsed_seconds": 22.006060683001124,
+    "VmRSS": "121248 kB",
+    "VmHWM": "131988 kB"
+  },
+  {
+    "elapsed_seconds": 24.006388282001353,
+    "VmRSS": "122164 kB",
+    "VmHWM": "131988 kB"
+  },
+  {
+    "elapsed_seconds": 26.006728598000336,
+    "VmRSS": "120700 kB",
+    "VmHWM": "131988 kB"
+  },
+  {
+    "elapsed_seconds": 28.007060843001454,
+    "VmRSS": "120372 kB",
+    "VmHWM": "165384 kB"
+  },
+  {
+    "elapsed_seconds": 30.00748446000034,
+    "VmRSS": "120372 kB",
+    "VmHWM": "165384 kB"
+  },
+  {
+    "elapsed_seconds": 32.00784209400081,
+    "VmRSS": "120908 kB",
+    "VmHWM": "165384 kB"
+  },
+  {
+    "elapsed_seconds": 34.008180739001546,
+    "VmRSS": "121068 kB",
+    "VmHWM": "165384 kB"
+  },
+  {
+    "elapsed_seconds": 36.008660762001455,
+    "VmRSS": "127124 kB",
+    "VmHWM": "165384 kB"
+  },
+  {
+    "elapsed_seconds": 38.0089835710005,
+    "VmRSS": "86612 kB",
+    "VmHWM": "165384 kB"
+  },
+  {
+    "elapsed_seconds": 40.00930308600073,
+    "VmRSS": "77948 kB",
+    "VmHWM": "165384 kB"
+  },
+  {
+    "elapsed_seconds": 42.00966040500134,
+    "VmRSS": "77952 kB",
+    "VmHWM": "165384 kB"
+  },
+  {
+    "elapsed_seconds": 44.009997914999985,
+    "VmRSS": "128176 kB",
+    "VmHWM": "257848 kB"
+  },
+  {
+    "elapsed_seconds": 46.01032795200081,
+    "VmRSS": "174632 kB",
+    "VmHWM": "257848 kB"
+  },
+  {
+    "elapsed_seconds": 48.012770107001415,
+    "VmRSS": "174632 kB",
+    "VmHWM": "257848 kB"
+  },
+  {
+    "elapsed_seconds": 50.013082781000776,
+    "VmRSS": "177468 kB",
+    "VmHWM": "257848 kB"
+  },
+  {
+    "elapsed_seconds": 52.01347993899981,
+    "VmRSS": "179200 kB",
+    "VmHWM": "257848 kB"
+  },
+  {
+    "elapsed_seconds": 54.01391317100024,
+    "VmRSS": "184860 kB",
+    "VmHWM": "257848 kB"
+  },
+  {
+    "elapsed_seconds": 56.01423853800043,
+    "VmRSS": "183880 kB",
+    "VmHWM": "257848 kB"
+  },
+  {
+    "elapsed_seconds": 58.014562955000656,
+    "VmRSS": "135984 kB",
+    "VmHWM": "257848 kB"
+  },
+  {
+    "elapsed_seconds": 60.0148910780008,
+    "VmRSS": "140920 kB",
+    "VmHWM": "257848 kB"
+  },
+  {
+    "elapsed_seconds": 62.01521078100086,
+    "VmRSS": "209596 kB",
+    "VmHWM": "257848 kB"
+  },
+  {
+    "elapsed_seconds": 64.01555099500001,
+    "VmRSS": "213296 kB",
+    "VmHWM": "257848 kB"
+  },
+  {
+    "elapsed_seconds": 66.0158793540013,
+    "VmRSS": "214964 kB",
+    "VmHWM": "257848 kB"
+  },
+  {
+    "elapsed_seconds": 68.01649234400065,
+    "VmRSS": "214976 kB",
+    "VmHWM": "257848 kB"
+  },
+  {
+    "elapsed_seconds": 70.01683283900093,
+    "VmRSS": "220560 kB",
+    "VmHWM": "257848 kB"
+  },
+  {
+    "elapsed_seconds": 72.01716998300071,
+    "VmRSS": "176808 kB",
+    "VmHWM": "257848 kB"
+  },
+  {
+    "elapsed_seconds": 74.01752415300143,
+    "VmRSS": "172788 kB",
+    "VmHWM": "257848 kB"
+  },
+  {
+    "elapsed_seconds": 76.0178689050008,
+    "VmRSS": "172788 kB",
+    "VmHWM": "257848 kB"
+  },
+  {
+    "elapsed_seconds": 78.01821814100003,
+    "VmRSS": "236176 kB",
+    "VmHWM": "257848 kB"
+  }
+]

@@ -1,0 +1,42 @@
+{
+  "status": "passed",
+  "classification": "Actual rebuilt-before versus final-after artifacts; not historical W011 blobs",
+  "artifacts": {
+    "before": {
+      "wheel": {
+        "path": "before-package/dist/layauto-0.2.0-py3-none-any.whl",
+        "sha256": "ffff7cd43c4680024fda7efdc9f1fc912e2273b0405c9fb1645f2cb8e9212441",
+        "bytes": 172004,
+        "actual_runtime_members": 100
+      },
+      "sdist": {
+        "path": "before-package/dist/layauto-0.2.0.tar.gz",
+        "sha256": "afb9db801fd45801a8e0ec69485ee65178b707ac21fde1b2ed5d44f067b98a94",
+        "bytes": 138356,
+        "actual_runtime_members": 100
+      }
+    },
+    "after": {
+      "wheel": {
+        "path": "verification-r2/dist/layauto-0.2.0-py3-none-any.whl",
+        "sha256": "1f1cb417fdf810156a4af7a75d9cf5561151e13cc80f1b524b274ba64962e3d4",
+        "bytes": 172093,
+        "actual_runtime_members": 100
+      },
+      "sdist": {
+        "path": "verification-r2/dist/layauto-0.2.0.tar.gz",
+        "sha256": "4ee7262bb4133623bf6013aaf966156ebbc9fba8117ff874d05e41853a47b46c",
+        "bytes": 139221,
+        "actual_runtime_members": 100
+      }
+    }
+  },
+  "runtime_payload_differences": {
+    "wheel": [
+      "domain/codec.py"
+    ],
+    "sdist": [
+      "domain/codec.py"
+    ]
+  }
+}

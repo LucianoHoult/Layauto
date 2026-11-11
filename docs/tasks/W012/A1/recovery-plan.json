@@ -1,0 +1,12 @@
+{
+  "source_commit_unchanged": "ca1f810c3c97376f71089d8b4054760ff198012f",
+  "engineering_attempt": "verification-r2",
+  "work": "/workspace/w012-a1-final-r2",
+  "matrix_workers": 2,
+  "gate": null,
+  "explicit_flag": "--allow-parallel-without-gate",
+  "reason": "Completed18 samples show optimized full paths about325MB/709MB peak;16GiB/4CPU executor permits two engineering workers. Both complete1656 and all1605 original IDs retained. Performance comparison already finished and remains serial. This scheduling choice is not counted as product improvement or resource upper-bound proof.",
+  "runner_sha256": "399dd249a9225c3b1425fb7c92f9b1cc79948502b466a9467e363fc3127443ad",
+  "original_runner_preserved": "verification-attempt-01/prepare_final.py and environment/tools/prepare_final.py",
+  "limits": "Monitor actual process/cgroup memory; if pressure/failure occurs, retain outputs and adjust only test scheduling, not product or test content."
+}

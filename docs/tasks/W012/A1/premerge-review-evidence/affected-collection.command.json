@@ -1,0 +1,30 @@
+{
+  "argv": [
+    "/workspace/.venvs/layauto/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-p",
+    "no:cacheprovider",
+    "--collect-only",
+    "tests/contracts/test_w011_exceptions.py::test_expected_error_then_second_authentication_fault_keeps_preexisting_history",
+    "tests/contracts/test_w011_exceptions.py::test_actual_nested_w010_w009_w008_w007_wire_preserves_history",
+    "tests/contracts/test_w011_exceptions.py::test_public_builder_and_constructor_reauthenticate_actual_capture_chain",
+    "tests/contracts/test_w011_geometry.py::test_target_only_multiple_axes_do_not_change_source_geometry",
+    "tests/contracts/test_w011_geometry.py::test_source_l_and_w_mismatches_are_all_retained_and_target_is_separate",
+    "-q"
+  ],
+  "cwd": "/workspace/Layauto",
+  "started_at_utc": "2026-11-11T01:35:00.784203+00:00",
+  "finished_at_utc": "2026-11-11T01:35:01.424227+00:00",
+  "elapsed_seconds": 0.6400368619999881,
+  "exit_code": 0,
+  "reviewed_head": "e4179dd42cc0de853df73bafd9140a363c8fa5be",
+  "environment_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTEST_DISABLE_PLUGIN_AUTOLOAD": "1",
+    "MPLCONFIGDIR": "/workspace/work/w012-a1-premerge/mplconfig"
+  },
+  "stdout_sha256": "fbcecd0937f1838dd6b6d7af07e28c0833ae890e9a7d733773201161229c9aae",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

@@ -1,0 +1,23 @@
+{
+  "argv": [
+    "/workspace/w012-a1-env/dev312/bin/python",
+    "-B",
+    "/workspace/w012-a1-env/tools/prepare_final.py",
+    "--help"
+  ],
+  "cwd": "/workspace/w012-a1-env",
+  "overrides": {
+    "UV_NATIVE_TLS": "true",
+    "UV_CACHE_DIR": "/workspace/w012-a1-env/uv-cache",
+    "UV_PYTHON_INSTALL_DIR": "/workspace/w012-a1-env/python",
+    "PIP_CACHE_DIR": "/workspace/w012-a1-env/pip-cache",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "MPLCONFIGDIR": "/workspace/w012-a1-env/mplconfig"
+  },
+  "started_at_utc": "2026-11-10T06:02:29.111293+00:00",
+  "finished_at_utc": "2026-11-10T06:02:29.175073+00:00",
+  "elapsed_seconds": 0.06379506699886406,
+  "exit_code": 0,
+  "stdout_sha256": "e8eb7a69f6050cce06fee98cad28dad524ec2b6dac9d89de3558d34e8312075c",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

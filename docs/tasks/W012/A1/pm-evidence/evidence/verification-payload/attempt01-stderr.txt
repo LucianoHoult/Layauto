@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/workspace/work/w012-a1-pm/evidence/verification-payload/check.py", line 142, in <module>
+    check('evidence_manifest:' + relative + ':' + name, sha((path.parent / name).read_bytes()) == digest)
+                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1019, in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/workspace/Layauto/docs/tasks/W012/A1/reviewer'

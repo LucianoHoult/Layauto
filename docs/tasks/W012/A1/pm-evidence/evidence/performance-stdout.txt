@@ -1,0 +1,88 @@
+{
+  "status": "passed",
+  "utc": "2026-11-11T01:14:09.271855+00:00",
+  "head": "db07a16fb7cbbac030adae84a9eb88cc0c8aa650",
+  "scope": "Parse and hash retained source/evidence only. No product imports, codec, tests, build/install or performance reruns.",
+  "checks": 1305,
+  "must_fix_findings": 0,
+  "observations": [
+    {
+      "severity": "nonblocking",
+      "kind": "command-index-final-comparison-lag",
+      "stage": "performance",
+      "entries": [
+        "after-extraction-mismatch-r3"
+      ],
+      "impact": "Single command JSON and final receipt contain the complete comparison; aggregate commands.json was written before appending the final comparison field."
+    },
+    {
+      "severity": "nonblocking",
+      "kind": "command-index-final-comparison-lag",
+      "stage": "profile",
+      "entries": [
+        "after-normal-readback-r1"
+      ],
+      "impact": "Single command JSON and final receipt contain the complete comparison; aggregate commands.json was written before appending the final comparison field."
+    }
+  ],
+  "stage_increases": [
+    {
+      "case": "normal-direct",
+      "stage": "W005_read_inputs",
+      "before": 0.6963497020005889,
+      "after": 0.7215083030005189,
+      "delta_seconds": 0.02515860099993006,
+      "increase_fraction": 0.03612926224804891
+    },
+    {
+      "case": "normal-direct",
+      "stage": "W008_adapter_and_build",
+      "before": 0.37233271799959766,
+      "after": 0.3814851669994823,
+      "delta_seconds": 0.009152448999884655,
+      "increase_fraction": 0.024581371868304558
+    },
+    {
+      "case": "normal-readback",
+      "stage": "W006_prepare_inputs",
+      "before": 1.4775190370000928,
+      "after": 1.5475328530010302,
+      "delta_seconds": 0.07001381600093737,
+      "increase_fraction": 0.047386066945770855
+    },
+    {
+      "case": "normal-readback",
+      "stage": "W009_build",
+      "before": 1.2327022120007314,
+      "after": 1.240679374001047,
+      "delta_seconds": 0.00797716200031573,
+      "increase_fraction": 0.006471280673187474
+    },
+    {
+      "case": "extraction-mismatch",
+      "stage": "W008_adapter_and_build",
+      "before": 0.3928318529997341,
+      "after": 0.3961486890002561,
+      "delta_seconds": 0.0033168360005220165,
+      "increase_fraction": 0.008443398810952019
+    },
+    {
+      "case": "extraction-mismatch",
+      "stage": "W011_result_encode",
+      "before": 1.4461780809997435,
+      "after": 1.4580061480010045,
+      "delta_seconds": 0.011828067001260933,
+      "increase_fraction": 0.00817884543865044
+    }
+  ],
+  "handoff_manifest_entries_hashed": 430,
+  "original_external_paths_accessible_here": {
+    "/workspace/w012-a1-performance/wires/baseline": false,
+    "/workspace/w012-a1-performance/wires/profile": false,
+    "/workspace/w012-a1-before": false,
+    "/workspace/w012-inputs/extraction-mismatch": false,
+    "/workspace/.venvs/layauto/bin/python": false,
+    "/workspace/w012-a1-final-r2": false
+  },
+  "wire_claim_basis": "Original per-invocation commands and closed receipts record 1MiB actual complete byte comparison for all18 baseline and2 profile runs; original independent reviewer also recorded actual complete comparison. Their actual huge wire files are absent here, so this PM audit does not claim a fresh bytecmp."
+}

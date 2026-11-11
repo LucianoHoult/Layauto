@@ -1,0 +1,15 @@
+{
+  "argv": [
+    "/workspace/.venvs/layauto/bin/python",
+    "-B",
+    "docs/tasks/W012/A1/early-review-evidence/verify_runner_fix.py"
+  ],
+  "cwd": "/workspace/w012-a1-review",
+  "exit_code": 1,
+  "recorded_at_utc": "2026-11-10T10:06:13.225446+00:00",
+  "checker_snapshot": "fix-attempt01-check.py.txt",
+  "checker_sha256": "32b6e1a3ceb2b4e65321b4fdacf941045c4dd50ac1b2b90aa60fb21f8b819315",
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "a822ceb6e5b0d76ba33e96dec3b953aafe6ae1b8fbb1130c5e06a4908b41adfd",
+  "scope": "Original reviewer checker caught the wrong expected exception class; actual retained failure, not a product run; invocation UTC/duration not captured"
+}

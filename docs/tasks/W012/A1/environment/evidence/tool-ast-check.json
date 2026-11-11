@@ -1,0 +1,22 @@
+{
+  "argv": [
+    "/workspace/w012-a1-env/dev312/bin/python",
+    "-B",
+    "-c",
+    "import ast;from pathlib import Path;files=list(Path(\"/workspace/w012-a1-env/tools\").glob(\"*.py\"));[ast.parse(p.read_text()) for p in files];print(\"AST checks passed:\",len(files))"
+  ],
+  "cwd": "/workspace/w012-a1-env",
+  "overrides": {
+    "UV_NATIVE_TLS": "true",
+    "UV_CACHE_DIR": "/workspace/w012-a1-env/uv-cache",
+    "UV_PYTHON_INSTALL_DIR": "/workspace/w012-a1-env/python",
+    "PIP_CACHE_DIR": "/workspace/w012-a1-env/pip-cache",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "started_at_utc": "2026-11-10T06:00:50.666585+00:00",
+  "finished_at_utc": "2026-11-10T06:00:50.703357+00:00",
+  "elapsed_seconds": 0.03678639499958081,
+  "exit_code": 0,
+  "stdout_sha256": "8b33df5cd1a541b92e17111f408601fe0e823d9a8b041c99ad504deac6c84bd7",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

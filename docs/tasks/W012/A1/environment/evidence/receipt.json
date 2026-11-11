@@ -1,0 +1,530 @@
+{
+  "schema": "layauto-w012-a1-environment-setup/1",
+  "status": "ready",
+  "scope": "Dedicated interpreters/core dev dependencies and light tool preparation only; no product package installation, full matrices, build, or performance combination was run. Existing /workspace/.venvs/layauto was not changed.",
+  "source_baseline": "7f7c1304bdafd941791421cef64864fb1616303c",
+  "interpreters": {
+    "310": {
+      "base_executable": "/workspace/w012-a1-env/dev310/bin/python",
+      "distributions": {
+        "PyYAML": "6.0.3",
+        "Pygments": "2.21.0",
+        "ast_serialize": "0.13.1",
+        "build": "1.6.1",
+        "contourpy": "1.3.2",
+        "cycler": "0.12.1",
+        "exceptiongroup": "1.3.1",
+        "fonttools": "4.65.0",
+        "iniconfig": "2.3.1",
+        "kiwisolver": "1.5.1",
+        "librt": "0.16.0",
+        "matplotlib": "3.10.9",
+        "mypy": "2.4.1",
+        "mypy_extensions": "1.2.0",
+        "numpy": "2.2.6",
+        "packaging": "26.3",
+        "pathspec": "1.1.1",
+        "pillow": "12.3.0",
+        "pip": "23.0.1",
+        "pluggy": "1.7.0",
+        "pyparsing": "3.3.3",
+        "pyproject_hooks": "1.3.3",
+        "pytest": "9.2.0",
+        "python-dateutil": "3.0.0",
+        "setuptools": "79.0.1",
+        "six": "1.17.0",
+        "tomli": "2.5.0",
+        "types-PyYAML": "6.0.12.20261103",
+        "typing_extensions": "4.16.0",
+        "tzdata": "2026.6",
+        "wheel": "0.48.0"
+      },
+      "executable": "/workspace/w012-a1-env/dev310/bin/python",
+      "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+      "product_not_installed": true,
+      "version": "3.10.22 (main, Oct  3 2026, 01:32:06) [Clang 22.1.3 ]"
+    },
+    "312": {
+      "base_executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+      "distributions": {
+        "PyYAML": "6.0.3",
+        "Pygments": "2.21.0",
+        "ast_serialize": "0.13.1",
+        "build": "1.6.1",
+        "contourpy": "1.4.0",
+        "cycler": "0.12.1",
+        "fonttools": "4.68.0",
+        "iniconfig": "2.3.1",
+        "kiwisolver": "1.5.1",
+        "librt": "0.16.0",
+        "matplotlib": "3.11.2",
+        "mypy": "2.4.1",
+        "mypy_extensions": "1.2.0",
+        "numpy": "2.5.4",
+        "packaging": "26.3",
+        "pathspec": "1.1.1",
+        "pillow": "13.0.0",
+        "pip": "25.0.1",
+        "pluggy": "1.7.0",
+        "pyparsing": "3.3.3",
+        "pyproject_hooks": "1.3.3",
+        "pytest": "9.2.0",
+        "python-dateutil": "4.0.0",
+        "setuptools": "79.0.1",
+        "types-PyYAML": "6.0.12.20261103",
+        "typing_extensions": "4.16.0",
+        "tzdata": "2026.6",
+        "wheel": "0.48.0"
+      },
+      "executable": "/workspace/w012-a1-env/dev312/bin/python",
+      "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+      "product_not_installed": true,
+      "version": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]"
+    }
+  },
+  "commands": [
+    {
+      "argv": [
+        "/workspace/w012-a1-env/python/cpython-3.10-linux-x86_64-gnu/bin/python3.10",
+        "-m",
+        "venv",
+        "/workspace/w012-a1-env/dev310"
+      ],
+      "cwd": "/workspace/w012-a1-env",
+      "overrides": {
+        "UV_NATIVE_TLS": "true",
+        "UV_CACHE_DIR": "/workspace/w012-a1-env/uv-cache",
+        "UV_PYTHON_INSTALL_DIR": "/workspace/w012-a1-env/python",
+        "PIP_CACHE_DIR": "/workspace/w012-a1-env/pip-cache",
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "started_at_utc": "2026-11-10T05:59:02.732254+00:00",
+      "finished_at_utc": "2026-11-10T05:59:06.836606+00:00",
+      "elapsed_seconds": 4.104377507999743,
+      "exit_code": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "-m",
+        "venv",
+        "/workspace/w012-a1-env/dev312"
+      ],
+      "cwd": "/workspace/w012-a1-env",
+      "overrides": {
+        "UV_NATIVE_TLS": "true",
+        "UV_CACHE_DIR": "/workspace/w012-a1-env/uv-cache",
+        "UV_PYTHON_INSTALL_DIR": "/workspace/w012-a1-env/python",
+        "PIP_CACHE_DIR": "/workspace/w012-a1-env/pip-cache",
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "started_at_utc": "2026-11-10T05:58:36.403389+00:00",
+      "finished_at_utc": "2026-11-10T05:58:39.105082+00:00",
+      "elapsed_seconds": 2.701745177000703,
+      "exit_code": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "/workspace/w012-a1-env/dev310/bin/python",
+        "-m",
+        "pip",
+        "freeze",
+        "--all"
+      ],
+      "cwd": "/workspace/w012-a1-env",
+      "overrides": {
+        "UV_NATIVE_TLS": "true",
+        "UV_CACHE_DIR": "/workspace/w012-a1-env/uv-cache",
+        "UV_PYTHON_INSTALL_DIR": "/workspace/w012-a1-env/python",
+        "PIP_CACHE_DIR": "/workspace/w012-a1-env/pip-cache",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "MPLCONFIGDIR": "/workspace/w012-a1-env/mplconfig"
+      },
+      "started_at_utc": "2026-11-10T06:02:29.214907+00:00",
+      "finished_at_utc": "2026-11-10T06:02:29.947668+00:00",
+      "elapsed_seconds": 0.7327859500001068,
+      "exit_code": 0,
+      "stdout_sha256": "6ef6a6561d72c65c30663590da60558c5d14d50953388a4afb85bbe80999a98f",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "/workspace/w012-a1-env/dev312/bin/python",
+        "-m",
+        "pip",
+        "freeze",
+        "--all"
+      ],
+      "cwd": "/workspace/w012-a1-env",
+      "overrides": {
+        "UV_NATIVE_TLS": "true",
+        "UV_CACHE_DIR": "/workspace/w012-a1-env/uv-cache",
+        "UV_PYTHON_INSTALL_DIR": "/workspace/w012-a1-env/python",
+        "PIP_CACHE_DIR": "/workspace/w012-a1-env/pip-cache",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "MPLCONFIGDIR": "/workspace/w012-a1-env/mplconfig"
+      },
+      "started_at_utc": "2026-11-10T06:02:29.998987+00:00",
+      "finished_at_utc": "2026-11-10T06:02:30.234523+00:00",
+      "elapsed_seconds": 0.23555226200005563,
+      "exit_code": 0,
+      "stdout_sha256": "226cda29304db1376d162a4c654ed2ed0844ee5584e202bd6a535aa3479d97f9",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "/workspace/w012-a1-env/dev310/bin/python",
+        "-B",
+        "-c",
+        "import sys,platform,json,importlib.metadata as m,numpy,matplotlib,yaml,pytest,mypy.version,build;print(json.dumps({\"executable\":sys.executable,\"base_executable\":sys._base_executable,\"version\":sys.version,\"platform\":platform.platform(),\"distributions\":{d.metadata[\"Name\"]:d.version for d in m.distributions()},\"product_not_installed\":all(d.metadata[\"Name\"].lower()!=\"layauto\" for d in m.distributions())},indent=2,sort_keys=True))"
+      ],
+      "cwd": "/workspace/w012-a1-env",
+      "overrides": {
+        "UV_NATIVE_TLS": "true",
+        "UV_CACHE_DIR": "/workspace/w012-a1-env/uv-cache",
+        "UV_PYTHON_INSTALL_DIR": "/workspace/w012-a1-env/python",
+        "PIP_CACHE_DIR": "/workspace/w012-a1-env/pip-cache",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "MPLCONFIGDIR": "/workspace/w012-a1-env/mplconfig"
+      },
+      "started_at_utc": "2026-11-10T06:01:24.579965+00:00",
+      "finished_at_utc": "2026-11-10T06:01:25.318846+00:00",
+      "elapsed_seconds": 0.7389051070003916,
+      "exit_code": 0,
+      "stdout_sha256": "14c4dc725c973b0abb22045283e63c24c1cd6419c932a50cf34b228c212c83dd",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "/workspace/w012-a1-env/dev312/bin/python",
+        "-B",
+        "-c",
+        "import sys,platform,json,importlib.metadata as m,numpy,matplotlib,yaml,pytest,mypy.version,build;print(json.dumps({\"executable\":sys.executable,\"base_executable\":sys._base_executable,\"version\":sys.version,\"platform\":platform.platform(),\"distributions\":{d.metadata[\"Name\"]:d.version for d in m.distributions()},\"product_not_installed\":all(d.metadata[\"Name\"].lower()!=\"layauto\" for d in m.distributions())},indent=2,sort_keys=True))"
+      ],
+      "cwd": "/workspace/w012-a1-env",
+      "overrides": {
+        "UV_NATIVE_TLS": "true",
+        "UV_CACHE_DIR": "/workspace/w012-a1-env/uv-cache",
+        "UV_PYTHON_INSTALL_DIR": "/workspace/w012-a1-env/python",
+        "PIP_CACHE_DIR": "/workspace/w012-a1-env/pip-cache",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "MPLCONFIGDIR": "/workspace/w012-a1-env/mplconfig"
+      },
+      "started_at_utc": "2026-11-10T06:01:25.364960+00:00",
+      "finished_at_utc": "2026-11-10T06:01:25.817681+00:00",
+      "elapsed_seconds": 0.4527461719990242,
+      "exit_code": 0,
+      "stdout_sha256": "6bb0cfa2f36a9695c1d8d7f939e14498db1301b74350aa33fbc0b4b9b7e9a0da",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "/workspace/w012-a1-env/dev310/bin/python",
+        "-m",
+        "pip",
+        "install",
+        "--retries",
+        "1",
+        "--timeout",
+        "10",
+        "--report",
+        "/workspace/w012-a1-env/evidence/pip-report-310.json",
+        "-r",
+        "/workspace/w012-a1-env/requirements-310.txt"
+      ],
+      "cwd": "/workspace/w012-a1-env",
+      "overrides": {
+        "UV_NATIVE_TLS": "true",
+        "UV_CACHE_DIR": "/workspace/w012-a1-env/uv-cache",
+        "UV_PYTHON_INSTALL_DIR": "/workspace/w012-a1-env/python",
+        "PIP_CACHE_DIR": "/workspace/w012-a1-env/pip-cache",
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "started_at_utc": "2026-11-10T05:59:36.076709+00:00",
+      "finished_at_utc": "2026-11-10T05:59:59.105869+00:00",
+      "elapsed_seconds": 23.029198014999565,
+      "exit_code": 0,
+      "stdout_sha256": "a020b8acaa4908214ca3a9a2f21a76b99d80004ea8188a08fdbcaf99db2cbfad",
+      "stderr_sha256": "7e3b19f00ce295ef6694291655eaa67765d755ee5f8dbafbde93136d7fc79ff7"
+    },
+    {
+      "argv": [
+        "/workspace/w012-a1-env/dev312/bin/python",
+        "-m",
+        "pip",
+        "install",
+        "--retries",
+        "1",
+        "--timeout",
+        "10",
+        "--report",
+        "/workspace/w012-a1-env/evidence/pip-report-312.json",
+        "-r",
+        "/workspace/w012-a1-env/requirements-312.txt"
+      ],
+      "cwd": "/workspace/w012-a1-env",
+      "overrides": {
+        "UV_NATIVE_TLS": "true",
+        "UV_CACHE_DIR": "/workspace/w012-a1-env/uv-cache",
+        "UV_PYTHON_INSTALL_DIR": "/workspace/w012-a1-env/python",
+        "PIP_CACHE_DIR": "/workspace/w012-a1-env/pip-cache",
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "started_at_utc": "2026-11-10T05:59:02.697072+00:00",
+      "finished_at_utc": "2026-11-10T05:59:03.107034+00:00",
+      "elapsed_seconds": 0.4099818670001696,
+      "exit_code": 1,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "54a14ca90ef9bb78b9d59fe703099dbd61b858949eaadb9e319ecf496d6affa7"
+    },
+    {
+      "argv": [
+        "/workspace/w012-a1-env/dev312/bin/python",
+        "-m",
+        "pip",
+        "install",
+        "--retries",
+        "1",
+        "--timeout",
+        "10",
+        "--report",
+        "/workspace/w012-a1-env/evidence/pip-report-312.json",
+        "-r",
+        "/workspace/w012-a1-env/requirements-312.txt"
+      ],
+      "cwd": "/workspace/w012-a1-env",
+      "overrides": {
+        "UV_NATIVE_TLS": "true",
+        "UV_CACHE_DIR": "/workspace/w012-a1-env/uv-cache",
+        "UV_PYTHON_INSTALL_DIR": "/workspace/w012-a1-env/python",
+        "PIP_CACHE_DIR": "/workspace/w012-a1-env/pip-cache",
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "started_at_utc": "2026-11-10T05:59:31.715041+00:00",
+      "finished_at_utc": "2026-11-10T05:59:53.503389+00:00",
+      "elapsed_seconds": 21.788374449999537,
+      "exit_code": 0,
+      "stdout_sha256": "651c25850c5f1e98c8fafeb2a2eec688372a78635f1b7e19a465567a0996904c",
+      "stderr_sha256": "f96a57a6d17645d3d9eb401b9cead41a648edf2499f2ca4bc3f9364d677b6080"
+    },
+    {
+      "argv": [
+        "/workspace/w012-a1-env/dev310/bin/python",
+        "-m",
+        "pip",
+        "check"
+      ],
+      "cwd": "/workspace/w012-a1-env",
+      "overrides": {
+        "UV_NATIVE_TLS": "true",
+        "UV_CACHE_DIR": "/workspace/w012-a1-env/uv-cache",
+        "UV_PYTHON_INSTALL_DIR": "/workspace/w012-a1-env/python",
+        "PIP_CACHE_DIR": "/workspace/w012-a1-env/pip-cache",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "MPLCONFIGDIR": "/workspace/w012-a1-env/mplconfig"
+      },
+      "started_at_utc": "2026-11-10T06:01:23.278161+00:00",
+      "finished_at_utc": "2026-11-10T06:01:24.201858+00:00",
+      "elapsed_seconds": 0.9237233830008336,
+      "exit_code": 0,
+      "stdout_sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "/workspace/w012-a1-env/dev312/bin/python",
+        "-m",
+        "pip",
+        "check"
+      ],
+      "cwd": "/workspace/w012-a1-env",
+      "overrides": {
+        "UV_NATIVE_TLS": "true",
+        "UV_CACHE_DIR": "/workspace/w012-a1-env/uv-cache",
+        "UV_PYTHON_INSTALL_DIR": "/workspace/w012-a1-env/python",
+        "PIP_CACHE_DIR": "/workspace/w012-a1-env/pip-cache",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "MPLCONFIGDIR": "/workspace/w012-a1-env/mplconfig"
+      },
+      "started_at_utc": "2026-11-10T06:01:24.251472+00:00",
+      "finished_at_utc": "2026-11-10T06:01:24.535040+00:00",
+      "elapsed_seconds": 0.28358738499991887,
+      "exit_code": 0,
+      "stdout_sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/uv",
+        "python",
+        "list",
+        "--only-installed"
+      ],
+      "cwd": "/workspace/w012-a1-env",
+      "overrides": {
+        "UV_CACHE_DIR": "/workspace/w012-a1-env/uv-cache",
+        "UV_PYTHON_INSTALL_DIR": "/workspace/w012-a1-env/python",
+        "PIP_CACHE_DIR": "/workspace/w012-a1-env/pip-cache",
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "started_at_utc": "2026-11-10T05:57:26.789593+00:00",
+      "finished_at_utc": "2026-11-10T05:57:26.922665+00:00",
+      "elapsed_seconds": 0.13308942100047716,
+      "exit_code": 0,
+      "stdout_sha256": "ea3d37e91daed06cfb3e39562205a5372f157f30bf0038c25428a305bba97361",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/uv",
+        "python",
+        "install",
+        "3.10"
+      ],
+      "cwd": "/workspace/w012-a1-env",
+      "overrides": {
+        "UV_CACHE_DIR": "/workspace/w012-a1-env/uv-cache",
+        "UV_PYTHON_INSTALL_DIR": "/workspace/w012-a1-env/python",
+        "PIP_CACHE_DIR": "/workspace/w012-a1-env/pip-cache",
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "started_at_utc": "2026-11-10T05:57:33.223013+00:00",
+      "finished_at_utc": "2026-11-10T05:57:41.460076+00:00",
+      "elapsed_seconds": 8.237162920000628,
+      "exit_code": 1,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "dc00d99566625e2cff571efefef3847c048dd3dc9b88e464a5cca3f90a78a392"
+    },
+    {
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/uv",
+        "python",
+        "install",
+        "3.10"
+      ],
+      "cwd": "/workspace/w012-a1-env",
+      "overrides": {
+        "UV_NATIVE_TLS": "true",
+        "UV_CACHE_DIR": "/workspace/w012-a1-env/uv-cache",
+        "UV_PYTHON_INSTALL_DIR": "/workspace/w012-a1-env/python",
+        "PIP_CACHE_DIR": "/workspace/w012-a1-env/pip-cache",
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "started_at_utc": "2026-11-10T05:58:25.762076+00:00",
+      "finished_at_utc": "2026-11-10T05:58:28.868201+00:00",
+      "elapsed_seconds": 3.1061531909999758,
+      "exit_code": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "88cf57503960bfa0ad69a9f25c32a390426d8df51dc2fb1149ed743954ea6c3c"
+    },
+    {
+      "argv": [
+        "/workspace/w012-a1-env/dev312/bin/python",
+        "-B",
+        "/workspace/w012-a1-env/tools/prepare_final.py",
+        "--help"
+      ],
+      "cwd": "/workspace/w012-a1-env",
+      "overrides": {
+        "UV_NATIVE_TLS": "true",
+        "UV_CACHE_DIR": "/workspace/w012-a1-env/uv-cache",
+        "UV_PYTHON_INSTALL_DIR": "/workspace/w012-a1-env/python",
+        "PIP_CACHE_DIR": "/workspace/w012-a1-env/pip-cache",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "MPLCONFIGDIR": "/workspace/w012-a1-env/mplconfig"
+      },
+      "started_at_utc": "2026-11-10T06:02:29.111293+00:00",
+      "finished_at_utc": "2026-11-10T06:02:29.175073+00:00",
+      "elapsed_seconds": 0.06379506699886406,
+      "exit_code": 0,
+      "stdout_sha256": "e8eb7a69f6050cce06fee98cad28dad524ec2b6dac9d89de3558d34e8312075c",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "/workspace/w012-a1-env/dev312/bin/python",
+        "-B",
+        "/workspace/w012-a1-env/tools/prepare_final.py",
+        "--help"
+      ],
+      "cwd": "/workspace/w012-a1-env",
+      "overrides": {
+        "UV_NATIVE_TLS": "true",
+        "UV_CACHE_DIR": "/workspace/w012-a1-env/uv-cache",
+        "UV_PYTHON_INSTALL_DIR": "/workspace/w012-a1-env/python",
+        "PIP_CACHE_DIR": "/workspace/w012-a1-env/pip-cache",
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "started_at_utc": "2026-11-10T06:00:50.561963+00:00",
+      "finished_at_utc": "2026-11-10T06:00:50.624246+00:00",
+      "elapsed_seconds": 0.062299532000906765,
+      "exit_code": 0,
+      "stdout_sha256": "e8eb7a69f6050cce06fee98cad28dad524ec2b6dac9d89de3558d34e8312075c",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "/workspace/w012-a1-env/dev310/bin/python",
+        "-B",
+        "-c",
+        "import ast;from pathlib import Path;files=list(Path(\"/workspace/w012-a1-env/tools\").glob(\"*.py\"));[ast.parse(p.read_text(),feature_version=(3,10)) for p in files];lines=Path(\"/workspace/Layauto/docs/tasks/W011/verification/collection-312.stdout.txt\").read_text().splitlines();ids={x for x in lines if x.startswith(\"tests/\") and \"::\" in x};assert len(ids)==1605;print(\"Python3.10 AST + 1605 baseline-ID availability passed\")"
+      ],
+      "cwd": "/workspace/w012-a1-env",
+      "overrides": {
+        "UV_NATIVE_TLS": "true",
+        "UV_CACHE_DIR": "/workspace/w012-a1-env/uv-cache",
+        "UV_PYTHON_INSTALL_DIR": "/workspace/w012-a1-env/python",
+        "PIP_CACHE_DIR": "/workspace/w012-a1-env/pip-cache",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "MPLCONFIGDIR": "/workspace/w012-a1-env/mplconfig"
+      },
+      "started_at_utc": "2026-11-10T06:02:28.944441+00:00",
+      "finished_at_utc": "2026-11-10T06:02:29.067491+00:00",
+      "elapsed_seconds": 0.12306673899911402,
+      "exit_code": 0,
+      "stdout_sha256": "c21866dd0f002ac59979328756ea43f70d18417d2dcd4d9de5543705e0766412",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "/workspace/w012-a1-env/dev312/bin/python",
+        "-B",
+        "-c",
+        "import ast;from pathlib import Path;files=list(Path(\"/workspace/w012-a1-env/tools\").glob(\"*.py\"));[ast.parse(p.read_text()) for p in files];print(\"AST checks passed:\",len(files))"
+      ],
+      "cwd": "/workspace/w012-a1-env",
+      "overrides": {
+        "UV_NATIVE_TLS": "true",
+        "UV_CACHE_DIR": "/workspace/w012-a1-env/uv-cache",
+        "UV_PYTHON_INSTALL_DIR": "/workspace/w012-a1-env/python",
+        "PIP_CACHE_DIR": "/workspace/w012-a1-env/pip-cache",
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "started_at_utc": "2026-11-10T06:00:50.666585+00:00",
+      "finished_at_utc": "2026-11-10T06:00:50.703357+00:00",
+      "elapsed_seconds": 0.03678639499958081,
+      "exit_code": 0,
+      "stdout_sha256": "8b33df5cd1a541b92e17111f408601fe0e823d9a8b041c99ad504deac6c84bd7",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "tool_sources": {
+    "tools/installed_smoke.py": "471401c6f64d78c236d640bf15dbdeaed23dee5a62fc6a325e8192e480361960",
+    "tools/prepare_final.py": "2a796148c68616894d1fafbfb5832765121e3bb7873a08f2e3cd10d0df641e53"
+  },
+  "original_tool_sources": {
+    "/workspace/Layauto/docs/tasks/W011/verification/prepare_final.py": "66456ce9659d2ad2481ab0f8b4309054caf19a41057f1a86b01531f3dd914794",
+    "/workspace/Layauto/docs/tasks/W011/installed_smoke.py": "173b95ec81082b5eb2d33aba1334f08730a04160b69353377b593d5956ea51ce"
+  },
+  "important_constraints": [
+    "Use baseline-test-count1605 and actual new collect count; preserve all original node IDs.",
+    "Run final frozen tools against actual new source snapshot. Heavy product checks not run here.",
+    "Original installed smoke random mismatch URI is installation correctness only, not same-URI performance sample.",
+    "Final runner must have network access for build isolation / clean pip install unless dependencies preseeded; sandbox ordinary network fails inherited proxy in this executor.",
+    "Do not copy interpreter/cache/package trees into repository; only evidence, requirements, runner and tools."
+  ]
+}

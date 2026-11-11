@@ -1,0 +1,54 @@
+{
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "cpu_count": 5,
+  "cgroup": {
+    "/sys/fs/cgroup/memory.max": "17179869184",
+    "/sys/fs/cgroup/cpu.max": "400000 100000",
+    "/sys/fs/cgroup/memory.swap.max": "max"
+  },
+  "rlimits": {
+    "RLIMIT_AS": [
+      -1,
+      -1
+    ],
+    "RLIMIT_CPU": [
+      -1,
+      -1
+    ],
+    "RLIMIT_DATA": [
+      -1,
+      -1
+    ],
+    "RLIMIT_NOFILE": [
+      16384,
+      16384
+    ],
+    "RLIMIT_STACK": [
+      8388608,
+      -1
+    ]
+  },
+  "matrix_workers": 2,
+  "phase_order": [
+    "interpreter matrices",
+    "build",
+    "3.10 clean installation and smoke",
+    "3.12 clean installation and smoke"
+  ],
+  "heavy_package_smokes_overlap_matrices": false,
+  "w011_exclusive_until_pytest_process_exit": true,
+  "resource_gate": {
+    "source": "/workspace/Layauto/docs/tasks/W011/verification/w011_resource_gate.py",
+    "sha256": "1c78c2066736f0f56d80f3353da133a1d23407b0675a0a8f5e471b1337469d70",
+    "module": "w011_resource_gate",
+    "module_directory": "/workspace/w012-a1-final/pytest-plugins",
+    "shared_lock": "/workspace/w012-a1-final/pytest-w011.lock",
+    "lock_release": "OS at pytest process exit",
+    "start": "tryfirst setup hookwrapper before fixtures for first test_w011_* file",
+    "effect": "Only waiting and logging; no test selection, reordering, fixture or outcome changes.",
+    "memory_basis": "Observed W011 process peak about 7 GiB and legacy phase about 1-1.7 GiB under a 16 GiB cgroup; finite observations, not a proven maximum."
+  },
+  "limits": [
+    "Sample timings and process RSS are not maximal input or production resource guarantees."
+  ]
+}

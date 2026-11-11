@@ -1,0 +1,2 @@
+docs/tasks/W012/A1/before-package/build.stderr.txt:9: new blank line at EOF.
+docs/tasks/W012/A1/verification-r2/build.stderr.txt:19: new blank line at EOF.

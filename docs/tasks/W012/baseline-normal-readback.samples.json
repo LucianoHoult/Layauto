@@ -1,0 +1,572 @@
+[
+  {
+    "elapsed_seconds": 0.0010050870000100076,
+    "VmRSS": "88 kB",
+    "VmHWM": "88 kB",
+    "cgroup_memory_current": "173940736"
+  },
+  {
+    "elapsed_seconds": 2.0013744479999787,
+    "VmRSS": "39300 kB",
+    "VmHWM": "59656 kB",
+    "cgroup_memory_current": "209285120"
+  },
+  {
+    "elapsed_seconds": 4.001900235999983,
+    "VmRSS": "57092 kB",
+    "VmHWM": "59656 kB",
+    "cgroup_memory_current": "227393536"
+  },
+  {
+    "elapsed_seconds": 6.004067916999986,
+    "VmRSS": "894860 kB",
+    "VmHWM": "894860 kB",
+    "cgroup_memory_current": "1094635520"
+  },
+  {
+    "elapsed_seconds": 8.004494627999975,
+    "VmRSS": "447704 kB",
+    "VmHWM": "1775036 kB",
+    "cgroup_memory_current": "628744192"
+  },
+  {
+    "elapsed_seconds": 10.005372250999983,
+    "VmRSS": "134044 kB",
+    "VmHWM": "1775036 kB",
+    "cgroup_memory_current": "306421760"
+  },
+  {
+    "elapsed_seconds": 12.006053098999985,
+    "VmRSS": "137816 kB",
+    "VmHWM": "1775036 kB",
+    "cgroup_memory_current": "310280192"
+  },
+  {
+    "elapsed_seconds": 14.006428606999975,
+    "VmRSS": "138364 kB",
+    "VmHWM": "1775036 kB",
+    "cgroup_memory_current": "310685696"
+  },
+  {
+    "elapsed_seconds": 16.006775898,
+    "VmRSS": "144604 kB",
+    "VmHWM": "1775036 kB",
+    "cgroup_memory_current": "316993536"
+  },
+  {
+    "elapsed_seconds": 18.00716687900001,
+    "VmRSS": "1268636 kB",
+    "VmHWM": "1775036 kB",
+    "cgroup_memory_current": "1470337024"
+  },
+  {
+    "elapsed_seconds": 20.00762436299999,
+    "VmRSS": "869112 kB",
+    "VmHWM": "1815144 kB",
+    "cgroup_memory_current": "1061818368"
+  },
+  {
+    "elapsed_seconds": 22.008578572999966,
+    "VmRSS": "136556 kB",
+    "VmHWM": "1815144 kB",
+    "cgroup_memory_current": "309178368"
+  },
+  {
+    "elapsed_seconds": 24.00904810200001,
+    "VmRSS": "137712 kB",
+    "VmHWM": "1815144 kB",
+    "cgroup_memory_current": "310185984"
+  },
+  {
+    "elapsed_seconds": 26.009434148999958,
+    "VmRSS": "144372 kB",
+    "VmHWM": "1815144 kB",
+    "cgroup_memory_current": "317018112"
+  },
+  {
+    "elapsed_seconds": 28.009774495999977,
+    "VmRSS": "95788 kB",
+    "VmHWM": "1815144 kB",
+    "cgroup_memory_current": "267276288"
+  },
+  {
+    "elapsed_seconds": 30.010322900000006,
+    "VmRSS": "1077384 kB",
+    "VmHWM": "1815144 kB",
+    "cgroup_memory_current": "1274662912"
+  },
+  {
+    "elapsed_seconds": 32.010687702999974,
+    "VmRSS": "3615100 kB",
+    "VmHWM": "3615100 kB",
+    "cgroup_memory_current": "3877961728"
+  },
+  {
+    "elapsed_seconds": 34.01105939600001,
+    "VmRSS": "596492 kB",
+    "VmHWM": "3614880 kB",
+    "cgroup_memory_current": "780992512"
+  },
+  {
+    "elapsed_seconds": 36.01143046499999,
+    "VmRSS": "353220 kB",
+    "VmHWM": "3614880 kB",
+    "cgroup_memory_current": "531660800"
+  },
+  {
+    "elapsed_seconds": 38.011893156999975,
+    "VmRSS": "176244 kB",
+    "VmHWM": "3614880 kB",
+    "cgroup_memory_current": "349536256"
+  },
+  {
+    "elapsed_seconds": 40.01238200299997,
+    "VmRSS": "178336 kB",
+    "VmHWM": "3614880 kB",
+    "cgroup_memory_current": "351633408"
+  },
+  {
+    "elapsed_seconds": 42.01279117299998,
+    "VmRSS": "181388 kB",
+    "VmHWM": "3614880 kB",
+    "cgroup_memory_current": "354820096"
+  },
+  {
+    "elapsed_seconds": 44.013132713999994,
+    "VmRSS": "205460 kB",
+    "VmHWM": "3614880 kB",
+    "cgroup_memory_current": "379428864"
+  },
+  {
+    "elapsed_seconds": 46.013588072999994,
+    "VmRSS": "1789212 kB",
+    "VmHWM": "3614880 kB",
+    "cgroup_memory_current": "2005196800"
+  },
+  {
+    "elapsed_seconds": 48.01406714199999,
+    "VmRSS": "259236 kB",
+    "VmHWM": "3614880 kB",
+    "cgroup_memory_current": "435191808"
+  },
+  {
+    "elapsed_seconds": 50.01641437099994,
+    "VmRSS": "214292 kB",
+    "VmHWM": "3614880 kB",
+    "cgroup_memory_current": "389120000"
+  },
+  {
+    "elapsed_seconds": 52.016811132999976,
+    "VmRSS": "216956 kB",
+    "VmHWM": "3614880 kB",
+    "cgroup_memory_current": "391741440"
+  },
+  {
+    "elapsed_seconds": 54.01717708199993,
+    "VmRSS": "219348 kB",
+    "VmHWM": "3614880 kB",
+    "cgroup_memory_current": "394362880"
+  },
+  {
+    "elapsed_seconds": 56.01752533999996,
+    "VmRSS": "242932 kB",
+    "VmHWM": "3614880 kB",
+    "cgroup_memory_current": "418418688"
+  },
+  {
+    "elapsed_seconds": 58.01784857599995,
+    "VmRSS": "162008 kB",
+    "VmHWM": "3614880 kB",
+    "cgroup_memory_current": "335364096"
+  },
+  {
+    "elapsed_seconds": 60.01815787000004,
+    "VmRSS": "103984 kB",
+    "VmHWM": "3614880 kB",
+    "cgroup_memory_current": "275308544"
+  },
+  {
+    "elapsed_seconds": 62.020852730999934,
+    "VmRSS": "691132 kB",
+    "VmHWM": "3614880 kB",
+    "cgroup_memory_current": "877690880"
+  },
+  {
+    "elapsed_seconds": 64.02447624300004,
+    "VmRSS": "3623296 kB",
+    "VmHWM": "3623296 kB",
+    "cgroup_memory_current": "3886194688"
+  },
+  {
+    "elapsed_seconds": 66.02492615399996,
+    "VmRSS": "218292 kB",
+    "VmHWM": "3622952 kB",
+    "cgroup_memory_current": "392507392"
+  },
+  {
+    "elapsed_seconds": 68.025602558,
+    "VmRSS": "216344 kB",
+    "VmHWM": "3622952 kB",
+    "cgroup_memory_current": "390533120"
+  },
+  {
+    "elapsed_seconds": 70.02638664599993,
+    "VmRSS": "339792 kB",
+    "VmHWM": "3622952 kB",
+    "cgroup_memory_current": "517550080"
+  },
+  {
+    "elapsed_seconds": 72.02688345500002,
+    "VmRSS": "184440 kB",
+    "VmHWM": "3622952 kB",
+    "cgroup_memory_current": "358268928"
+  },
+  {
+    "elapsed_seconds": 74.02731497299993,
+    "VmRSS": "186908 kB",
+    "VmHWM": "3622952 kB",
+    "cgroup_memory_current": "360890368"
+  },
+  {
+    "elapsed_seconds": 76.02807827099997,
+    "VmRSS": "211804 kB",
+    "VmHWM": "3622952 kB",
+    "cgroup_memory_current": "407007232"
+  },
+  {
+    "elapsed_seconds": 78.02865951099994,
+    "VmRSS": "162016 kB",
+    "VmHWM": "3622952 kB",
+    "cgroup_memory_current": "334528512"
+  },
+  {
+    "elapsed_seconds": 80.02903412999996,
+    "VmRSS": "1910608 kB",
+    "VmHWM": "3622952 kB",
+    "cgroup_memory_current": "2128744448"
+  },
+  {
+    "elapsed_seconds": 82.02946498299997,
+    "VmRSS": "244548 kB",
+    "VmHWM": "3622952 kB",
+    "cgroup_memory_current": "419225600"
+  },
+  {
+    "elapsed_seconds": 84.03002973999997,
+    "VmRSS": "211916 kB",
+    "VmHWM": "3622952 kB",
+    "cgroup_memory_current": "401231872"
+  },
+  {
+    "elapsed_seconds": 86.03059274599997,
+    "VmRSS": "217248 kB",
+    "VmHWM": "3622952 kB",
+    "cgroup_memory_current": "391245824"
+  },
+  {
+    "elapsed_seconds": 88.03099573499998,
+    "VmRSS": "219456 kB",
+    "VmHWM": "3622952 kB",
+    "cgroup_memory_current": "393605120"
+  },
+  {
+    "elapsed_seconds": 90.03141210500002,
+    "VmRSS": "244700 kB",
+    "VmHWM": "3622952 kB",
+    "cgroup_memory_current": "419557376"
+  },
+  {
+    "elapsed_seconds": 92.03181111999999,
+    "VmRSS": "191024 kB",
+    "VmHWM": "3622952 kB",
+    "cgroup_memory_current": "364408832"
+  },
+  {
+    "elapsed_seconds": 94.03235624099995,
+    "VmRSS": "168016 kB",
+    "VmHWM": "3622952 kB",
+    "cgroup_memory_current": "340893696"
+  },
+  {
+    "elapsed_seconds": 96.03277319199998,
+    "VmRSS": "104796 kB",
+    "VmHWM": "3622952 kB",
+    "cgroup_memory_current": "276099072"
+  },
+  {
+    "elapsed_seconds": 98.033249205,
+    "VmRSS": "104796 kB",
+    "VmHWM": "3622952 kB",
+    "cgroup_memory_current": "275816448"
+  },
+  {
+    "elapsed_seconds": 100.03396369199999,
+    "VmRSS": "364116 kB",
+    "VmHWM": "3622952 kB",
+    "cgroup_memory_current": "541810688"
+  },
+  {
+    "elapsed_seconds": 102.03508398000002,
+    "VmRSS": "3692772 kB",
+    "VmHWM": "3692772 kB",
+    "cgroup_memory_current": "3957256192"
+  },
+  {
+    "elapsed_seconds": 104.03655935699993,
+    "VmRSS": "7160216 kB",
+    "VmHWM": "7160216 kB",
+    "cgroup_memory_current": "7514943488"
+  },
+  {
+    "elapsed_seconds": 106.037101629,
+    "VmRSS": "540380 kB",
+    "VmHWM": "7327952 kB",
+    "cgroup_memory_current": "723304448"
+  },
+  {
+    "elapsed_seconds": 108.03754902999998,
+    "VmRSS": "305924 kB",
+    "VmHWM": "7327952 kB",
+    "cgroup_memory_current": "482054144"
+  },
+  {
+    "elapsed_seconds": 110.03794584500002,
+    "VmRSS": "2597160 kB",
+    "VmHWM": "7327952 kB",
+    "cgroup_memory_current": "2832916480"
+  },
+  {
+    "elapsed_seconds": 112.038314781,
+    "VmRSS": "357396 kB",
+    "VmHWM": "7327952 kB",
+    "cgroup_memory_current": "534675456"
+  },
+  {
+    "elapsed_seconds": 114.03868325000002,
+    "VmRSS": "2021512 kB",
+    "VmHWM": "7327952 kB",
+    "cgroup_memory_current": "2242125824"
+  },
+  {
+    "elapsed_seconds": 116.03905463099994,
+    "VmRSS": "1152056 kB",
+    "VmHWM": "7327952 kB",
+    "cgroup_memory_current": "1350115328"
+  },
+  {
+    "elapsed_seconds": 118.03944094599996,
+    "VmRSS": "324336 kB",
+    "VmHWM": "7327952 kB",
+    "cgroup_memory_current": "500826112"
+  },
+  {
+    "elapsed_seconds": 120.04032776000003,
+    "VmRSS": "324380 kB",
+    "VmHWM": "7327952 kB",
+    "cgroup_memory_current": "500826112"
+  },
+  {
+    "elapsed_seconds": 122.04104013299997,
+    "VmRSS": "326924 kB",
+    "VmHWM": "7327952 kB",
+    "cgroup_memory_current": "503345152"
+  },
+  {
+    "elapsed_seconds": 124.04148673899994,
+    "VmRSS": "350920 kB",
+    "VmHWM": "7327952 kB",
+    "cgroup_memory_current": "527986688"
+  },
+  {
+    "elapsed_seconds": 126.04197697399997,
+    "VmRSS": "981600 kB",
+    "VmHWM": "7327952 kB",
+    "cgroup_memory_current": "1175535616"
+  },
+  {
+    "elapsed_seconds": 128.04245881599996,
+    "VmRSS": "400264 kB",
+    "VmHWM": "7327952 kB",
+    "cgroup_memory_current": "578732032"
+  },
+  {
+    "elapsed_seconds": 130.04287820199994,
+    "VmRSS": "401368 kB",
+    "VmHWM": "7327952 kB",
+    "cgroup_memory_current": "579805184"
+  },
+  {
+    "elapsed_seconds": 132.04331988999996,
+    "VmRSS": "407672 kB",
+    "VmHWM": "7327952 kB",
+    "cgroup_memory_current": "586358784"
+  },
+  {
+    "elapsed_seconds": 134.04380145499994,
+    "VmRSS": "407676 kB",
+    "VmHWM": "7327952 kB",
+    "cgroup_memory_current": "586358784"
+  },
+  {
+    "elapsed_seconds": 136.04431582699993,
+    "VmRSS": "408344 kB",
+    "VmHWM": "7327952 kB",
+    "cgroup_memory_current": "587145216"
+  },
+  {
+    "elapsed_seconds": 138.04471173099995,
+    "VmRSS": "350988 kB",
+    "VmHWM": "7327952 kB",
+    "cgroup_memory_current": "528412672"
+  },
+  {
+    "elapsed_seconds": 140.04513989899993,
+    "VmRSS": "447268 kB",
+    "VmHWM": "7327952 kB",
+    "cgroup_memory_current": "626954240"
+  },
+  {
+    "elapsed_seconds": 142.04757748899993,
+    "VmRSS": "339360 kB",
+    "VmHWM": "7327952 kB",
+    "cgroup_memory_current": "516345856"
+  },
+  {
+    "elapsed_seconds": 144.17606028400002,
+    "VmRSS": "342288 kB",
+    "VmHWM": "7327952 kB",
+    "cgroup_memory_current": "519143424"
+  },
+  {
+    "elapsed_seconds": 146.275696461,
+    "VmRSS": "342288 kB",
+    "VmHWM": "7327952 kB",
+    "cgroup_memory_current": "519143424"
+  },
+  {
+    "elapsed_seconds": 148.276726861,
+    "VmRSS": "343712 kB",
+    "VmHWM": "7327952 kB",
+    "cgroup_memory_current": "520716288"
+  },
+  {
+    "elapsed_seconds": 150.27739943699993,
+    "VmRSS": "1464960 kB",
+    "VmHWM": "7327952 kB",
+    "cgroup_memory_current": "1671331840"
+  },
+  {
+    "elapsed_seconds": 152.277829596,
+    "VmRSS": "424624 kB",
+    "VmHWM": "7327952 kB",
+    "cgroup_memory_current": "603889664"
+  },
+  {
+    "elapsed_seconds": 154.27832115899997,
+    "VmRSS": "799324 kB",
+    "VmHWM": "7327952 kB",
+    "cgroup_memory_current": "988418048"
+  },
+  {
+    "elapsed_seconds": 156.278746871,
+    "VmRSS": "423868 kB",
+    "VmHWM": "7327952 kB",
+    "cgroup_memory_current": "602857472"
+  },
+  {
+    "elapsed_seconds": 158.27912750299998,
+    "VmRSS": "419104 kB",
+    "VmHWM": "7327952 kB",
+    "cgroup_memory_current": "597893120"
+  },
+  {
+    "elapsed_seconds": 160.27949947999997,
+    "VmRSS": "424132 kB",
+    "VmHWM": "7327952 kB",
+    "cgroup_memory_current": "603201536"
+  },
+  {
+    "elapsed_seconds": 162.279853295,
+    "VmRSS": "426148 kB",
+    "VmHWM": "7327952 kB",
+    "cgroup_memory_current": "605724672"
+  },
+  {
+    "elapsed_seconds": 164.28031807999997,
+    "VmRSS": "431608 kB",
+    "VmHWM": "7327952 kB",
+    "cgroup_memory_current": "611262464"
+  },
+  {
+    "elapsed_seconds": 166.28069269099996,
+    "VmRSS": "442684 kB",
+    "VmHWM": "7327952 kB",
+    "cgroup_memory_current": "623783936"
+  },
+  {
+    "elapsed_seconds": 168.28145548000003,
+    "VmRSS": "462108 kB",
+    "VmHWM": "7327952 kB",
+    "cgroup_memory_current": "642494464"
+  },
+  {
+    "elapsed_seconds": 170.28188323299997,
+    "VmRSS": "456000 kB",
+    "VmHWM": "7327952 kB",
+    "cgroup_memory_current": "636170240"
+  },
+  {
+    "elapsed_seconds": 172.28290934199998,
+    "VmRSS": "464128 kB",
+    "VmHWM": "7327952 kB",
+    "cgroup_memory_current": "644497408"
+  },
+  {
+    "elapsed_seconds": 174.28329944900003,
+    "VmRSS": "464128 kB",
+    "VmHWM": "7327952 kB",
+    "cgroup_memory_current": "644497408"
+  },
+  {
+    "elapsed_seconds": 176.28367921,
+    "VmRSS": "470412 kB",
+    "VmHWM": "7327952 kB",
+    "cgroup_memory_current": "651051008"
+  },
+  {
+    "elapsed_seconds": 178.28429328399994,
+    "VmRSS": "418140 kB",
+    "VmHWM": "7327952 kB",
+    "cgroup_memory_current": "597450752"
+  },
+  {
+    "elapsed_seconds": 180.284824108,
+    "VmRSS": "496644 kB",
+    "VmHWM": "7327952 kB",
+    "cgroup_memory_current": "678043648"
+  },
+  {
+    "elapsed_seconds": 182.28548288500002,
+    "VmRSS": "379180 kB",
+    "VmHWM": "7327952 kB",
+    "cgroup_memory_current": "557355008"
+  },
+  {
+    "elapsed_seconds": 184.28609364300002,
+    "VmRSS": "378172 kB",
+    "VmHWM": "7327952 kB",
+    "cgroup_memory_current": "556322816"
+  },
+  {
+    "elapsed_seconds": 186.28645640400003,
+    "VmRSS": "378172 kB",
+    "VmHWM": "7327952 kB",
+    "cgroup_memory_current": "556548096"
+  },
+  {
+    "elapsed_seconds": 188.28682262800004,
+    "VmRSS": "320140 kB",
+    "VmHWM": "7327952 kB",
+    "cgroup_memory_current": "496971776"
+  }
+]

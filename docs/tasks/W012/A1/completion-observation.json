@@ -1,0 +1,15 @@
+{
+  "observed_at_utc": "2026-11-10T09:57:30.847225+00:00",
+  "status": "complete internal engineering receipt observed",
+  "receipt_sha256": "c9b35fb1e4b658b7058882ecbfbfaff7ee44fc6980aa13145d5ac44aaf211898",
+  "closed_manifest_entries": 78,
+  "all_internal_commands_exit0": 21,
+  "actual_test_counts": {
+    "312": 1656,
+    "310": 1656
+  },
+  "outer_polling_wrapper_exit_code": "unknown after reconnect; never substituted with0",
+  "process_observation": "    PID    PPID   RSS STAT     ELAPSED COMMAND\n   9994       1     0 Zs      02:27:49 python\n",
+  "memory_events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0\noom_group_kill 0\n",
+  "continuous_monitoring_limit": "Original wrapper telemetry stopped at reconnect; later discrete observations are not a complete peak series."
+}

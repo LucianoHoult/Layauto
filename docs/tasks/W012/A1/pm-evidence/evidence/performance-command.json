@@ -1,0 +1,15 @@
+{
+  "argv": [
+    "python",
+    "-B",
+    "/workspace/work/w012-a1-pm/evidence/performance-check.py"
+  ],
+  "cwd": "/workspace/Layauto",
+  "recorded_at_utc": "2026-11-11T01:14:29.986028+00:00",
+  "exit_code": 0,
+  "timing": "Not a performance measurement; launch UTC/duration not captured. Metadata recorded after completion.",
+  "checker_sha256": "604ca929dbce4dbe0d15dbb32c6d7a369ca521f3ea34599361808fbb4ce4bdf5",
+  "stdout_sha256": "45de33d0d8ef9cd7da4f936085feb525d44ffcf32117c1c44b593128bd13123f",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "result_sha256": "6ebd4748bb656c0f85096a951a4458d0fbeb08ea7d3232ae7bd699075d1662e8"
+}

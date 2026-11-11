@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/workspace/Layauto/docs/tasks/W012/A1/premerge-review-evidence/performance/investigation_check.py", line 80, in <module>
+    main()
+  File "/workspace/Layauto/docs/tasks/W012/A1/premerge-review-evidence/performance/investigation_check.py", line 23, in main
+    a.check(a.sha(a.raw(ROOT / name)) == digest, f'original P1/P2 delivery {name}')
+  File "/workspace/Layauto/docs/tasks/W012/A1/premerge-review-evidence/performance/check.py", line 22, in check
+    raise AssertionError(message)
+AssertionError: original P1/P2 delivery docs/tasks/W012-capture-wire-performance.md

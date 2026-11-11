@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "/workspace/work/w012-pm-check/evidence/check.py", line 236, in <module>
+    main()
+  File "/workspace/work/w012-pm-check/evidence/check.py", line 159, in main
+    check(all(s['uri'] in origin_by_target and all(s[k]==origin_by_target[s['uri']][k] for k in ['sha256','bytes']) for s in data['capture_sources']), 'mismatch captures match reconstructable fixed overlay '+prefix.name)
+  File "/workspace/work/w012-pm-check/evidence/check.py", line 37, in check
+    assert condition, label
+           ^^^^^^^^^
+AssertionError: mismatch captures match reconstructable fixed overlay baseline-extraction-mismatch

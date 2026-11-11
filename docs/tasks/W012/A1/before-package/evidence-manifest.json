@@ -1,0 +1,20 @@
+{
+  "README-handoff.md": "51ec8d7d56a6f1507423468eda3fb7abc7d5a74ffcaed5b40c46c11028c703b3",
+  "before-source-identity.json": "7f60cc2058329e2040a1e9464882987c030ff38b11a0e6feee63e5f0897468c1",
+  "before-source.tar": "aa3beeb1c38a08dd804c48aae8149c0d74fcc38c5cc7656874e37866607a520a",
+  "build-environment.command.json": "32d4b24b834eb4a72f986fc4ee15972ac89c59846bf0257d1615e8a4b9a65da0",
+  "build-environment.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "build-environment.stdout.txt": "5db47894cebffb2e1a32145be4bc7a17942d6b6efbade53a98ae67e1281815a8",
+  "build.command.json": "2112a3de0251c414efd9179a81f8f324a8b2a5cc2367997a04c5ee8b8b6a58f5",
+  "build.stderr.txt": "b181eea8a45f807f5fa1607f003eb1ae5363271ec186d4780a7fd3630cdea57e",
+  "build.stdout.txt": "461d4085c9c1edf48f3c03e9c17b5a822770c01a51cceba3ad08ecef45a1c107",
+  "build_before.py": "681d7bd9dbac072184344caa6ceafe58f672f25e1e492e9432093bf18eef0152",
+  "dist/layauto-0.2.0-py3-none-any.whl": "ffff7cd43c4680024fda7efdc9f1fc912e2273b0405c9fb1645f2cb8e9212441",
+  "dist/layauto-0.2.0.tar.gz": "afb9db801fd45801a8e0ec69485ee65178b707ac21fde1b2ed5d44f067b98a94",
+  "git-archive.command.json": "84e85f32dd91577aba2ea798627156f6436e7afddb75bfb1f27ac0232dd88250",
+  "git-archive.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "identity-format-probe-failure.txt": "4509e5951c353006f68e7e6af230af29e9ecdeca8d5229560239f87528f0bc59",
+  "package-identity.json": "64878ef7029b34a5cd5a5d8f749eee2945b6592589c73e031b50cf50f3a05f72",
+  "runner.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "runner.stdout.txt": "b4bcbd9bd5744f9963f9ec8f61e6e201ef334d17adc34f787c0097dde474841f"
+}

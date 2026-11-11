@@ -1,0 +1,16 @@
+{
+  "status": "passed",
+  "checks": 307773,
+  "finite_candidates": 153658,
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "executable": "/workspace/.venvs/layauto/bin/python",
+  "review_head": "3b341b7420221599f5ff0eac7d945f57b98a19e3",
+  "plan_sha256": "062736e3c97d925f52703122cbfcd1e7d1682a2eba8a2e19289877a67cf4dcbd",
+  "codec_sha256": "f1a3a45fbce452957c1c04b8b8c711f17c63a81c5c30d637e9d89dd67d414252",
+  "checker_sha256": "1f9e70f63d96c4258accfab9a1c3cfb336cd64f9335a5f80bb93f1d9be12ff2a",
+  "regex_debug": {
+    "old": "MAX_REPEAT 0 MAXREPEAT\n  MAX_REPEAT 2 2\n    IN\n      RANGE (48, 57)\n      RANGE (97, 102)\n\n 0. INFO 4 0b0 0 MAXREPEAT (to 5)\n 5: REPEAT 17 0 MAXREPEAT (to 23)\n 9.   REPEAT_ONE 13 2 2 (to 23)\n13.     IN 8 (to 22)\n15.       RANGE 0x30 0x39 ('0'-'9')\n18.       RANGE 0x61 0x66 ('a'-'f')\n21.       FAILURE\n22:     SUCCESS\n23: MAX_UNTIL\n24. SUCCESS\n",
+    "new": "MAX_REPEAT 0 MAXREPEAT\n  IN\n    RANGE (48, 57)\n    RANGE (97, 102)\n\n 0. INFO 4 0b0 0 MAXREPEAT (to 5)\n 5: REPEAT_ONE 13 0 MAXREPEAT (to 19)\n 9.   IN 8 (to 18)\n11.     RANGE 0x30 0x39 ('0'-'9')\n14.     RANGE 0x61 0x66 ('a'-'f')\n17.     FAILURE\n18:   SUCCESS\n19: SUCCESS\n"
+  },
+  "scope": "finite language/control-flow and current public parser checks; not product implementation or performance proof"
+}

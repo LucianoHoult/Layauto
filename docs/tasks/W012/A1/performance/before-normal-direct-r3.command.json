@@ -1,0 +1,41 @@
+{
+  "argv": [
+    "/workspace/.venvs/layauto/bin/python",
+    "-B",
+    "/workspace/Layauto/docs/tasks/W012/A1/probe.py",
+    "--runtime-root",
+    "/workspace/w012-a1-before",
+    "--input-root",
+    "/workspace/Layauto",
+    "--case",
+    "normal-direct",
+    "--mode",
+    "baseline",
+    "--output",
+    "/workspace/Layauto/docs/tasks/W012/A1/performance/before-normal-direct-r3.json",
+    "--wire-output",
+    "/workspace/w012-a1-performance/wires/baseline/before-normal-direct-r3.bin"
+  ],
+  "cwd": "/workspace/Layauto",
+  "started_at_utc": "2026-11-10T06:44:35.164189+00:00",
+  "side": "before",
+  "case": "normal-direct",
+  "rep": 3,
+  "tools": {
+    "probe.py": "5dc3d2417e2f45486648730151e9150f444041b6eae1a35730783bbb88909f1a",
+    "run_performance.py": "aca026ad28711ec161d848b7f249c33ac723de7da7f821ec0c8c66643b77627c"
+  },
+  "environment_override": {
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "finished_at_utc": "2026-11-10T06:46:11.192098+00:00",
+  "elapsed_seconds": 96.02793592099988,
+  "exit_code": 0,
+  "stdout_sha256": "eaa5d5bff5fb5357109d041a20c88477e56e785a553bc1007ed53dec051ae9ea",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "actual_complete_wire_byte_comparison": {
+    "reference": "/workspace/w012-a1-performance/wires/baseline/before-normal-direct-r1.bin",
+    "bytes": 54050313,
+    "equal": true
+  }
+}

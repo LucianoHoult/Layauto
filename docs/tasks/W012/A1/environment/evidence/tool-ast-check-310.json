@@ -1,0 +1,23 @@
+{
+  "argv": [
+    "/workspace/w012-a1-env/dev310/bin/python",
+    "-B",
+    "-c",
+    "import ast;from pathlib import Path;files=list(Path(\"/workspace/w012-a1-env/tools\").glob(\"*.py\"));[ast.parse(p.read_text(),feature_version=(3,10)) for p in files];lines=Path(\"/workspace/Layauto/docs/tasks/W011/verification/collection-312.stdout.txt\").read_text().splitlines();ids={x for x in lines if x.startswith(\"tests/\") and \"::\" in x};assert len(ids)==1605;print(\"Python3.10 AST + 1605 baseline-ID availability passed\")"
+  ],
+  "cwd": "/workspace/w012-a1-env",
+  "overrides": {
+    "UV_NATIVE_TLS": "true",
+    "UV_CACHE_DIR": "/workspace/w012-a1-env/uv-cache",
+    "UV_PYTHON_INSTALL_DIR": "/workspace/w012-a1-env/python",
+    "PIP_CACHE_DIR": "/workspace/w012-a1-env/pip-cache",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "MPLCONFIGDIR": "/workspace/w012-a1-env/mplconfig"
+  },
+  "started_at_utc": "2026-11-10T06:02:28.944441+00:00",
+  "finished_at_utc": "2026-11-10T06:02:29.067491+00:00",
+  "elapsed_seconds": 0.12306673899911402,
+  "exit_code": 0,
+  "stdout_sha256": "c21866dd0f002ac59979328756ea43f70d18417d2dcd4d9de5543705e0766412",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

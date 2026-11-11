@@ -1,0 +1,31 @@
+{
+  "argv": [
+    "/workspace/w012-a1-env/dev312/bin/python",
+    "-B",
+    "/workspace/Layauto/docs/tasks/W012/A1/verification-tools/prepare_final.py",
+    "--root",
+    "/workspace/Layauto",
+    "--out",
+    "/workspace/Layauto/docs/tasks/W012/A1/verification-r2",
+    "--work",
+    "/workspace/w012-a1-final-r2",
+    "--smoke",
+    "/workspace/Layauto/docs/tasks/W012/A1/verification-tools/installed_smoke.py",
+    "--python310",
+    "/workspace/w012-a1-env/dev310/bin/python",
+    "--python312",
+    "/workspace/w012-a1-env/dev312/bin/python",
+    "--expected-tests",
+    "1656",
+    "--baseline-test-count",
+    "1605",
+    "--matrix-workers",
+    "2",
+    "--allow-parallel-without-gate"
+  ],
+  "cwd": "/workspace/Layauto",
+  "started_at_utc": "2026-11-10T07:29:41.051809+00:00",
+  "source_commit": "ca1f810c3c97376f71089d8b4054760ff198012f",
+  "runner_sha256": "399dd249a9225c3b1425fb7c92f9b1cc79948502b466a9467e363fc3127443ad",
+  "launch_status": "started; completed status is recorded only after process exit"
+}

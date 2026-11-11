@@ -1,0 +1,16 @@
+{
+  "status": "passed",
+  "tools": {
+    "probe.py": "5dc3d2417e2f45486648730151e9150f444041b6eae1a35730783bbb88909f1a",
+    "run_performance.py": "aca026ad28711ec161d848b7f249c33ac723de7da7f821ec0c8c66643b77627c"
+  },
+  "differences": [
+    "layauto_v2/domain/codec.py",
+    "tests/contracts/test_w012_hex_validation.py"
+  ],
+  "checks": [
+    "only authorized product/test differences",
+    "actual byte comparison detects changes",
+    "original probe selfcheck identity matches"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "argv": [
+    "/workspace/.venvs/layauto/bin/python",
+    "-B",
+    "/workspace/Layauto/docs/tasks/W012/memory_probe.py"
+  ],
+  "cwd": "/workspace/Layauto",
+  "started_at_utc": "2026-11-10T03:44:19.509537+00:00",
+  "finished_at_utc": "2026-11-10T03:48:27.974935+00:00",
+  "elapsed_seconds": 248.46548576300006,
+  "exit_code": 0,
+  "tool_sha256": "c1d8176c1faa9ceef442d7599b22373d47f140cad41d3dc86ea2716caaf60b86",
+  "original_probe_sha256": "321b84da8f8f8c9f2e8abda1b181f3a7ae9481d474643795de452b21a974cd7e",
+  "selfcheck_sha256": "44aaf06b94075762bdb81f833f4ec57fd0798782688a69e6b392680d352e0e87",
+  "stdout_sha256": "c911935738d7a68ae0ff49eb71c3258e0cd46772e623c5276787e04a722ce02a",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "serial_after_six_runs": true
+}

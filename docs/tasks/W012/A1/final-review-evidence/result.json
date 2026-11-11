@@ -1,0 +1,16 @@
+{
+  "status": "passed",
+  "checks": 645,
+  "review_head": "44a91c472fdeba5bb4b8a6071c0580313336c379",
+  "changed_files": 372,
+  "source_files": 263,
+  "runtime_files": 100,
+  "final_attachment_count": 78,
+  "retained_raw_output_diff_check_warnings": [
+    "docs/tasks/W012/A1/before-package/build.stderr.txt:9: new blank line at EOF.",
+    "docs/tasks/W012/A1/verification-r2/build.stderr.txt:19: new blank line at EOF."
+  ],
+  "reviewed_manifest_sha256": "44d43118975d0d77bb0c101591bcde70c80399c522502f13374557d278352468",
+  "recorded_at_utc": "2026-11-10T10:03:44.687575+00:00",
+  "scope": "read committed/current bytes and Git scope; no product/test/performance rerun"
+}

@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/workspace/Layauto/docs/tasks/W012/A1/premerge-review-evidence/contracts/probe.py", line 143, in <module>
+    check(calls == [b'\x00'], 'canonical-check-after-json-and-hex')
+  File "/workspace/Layauto/docs/tasks/W012/A1/premerge-review-evidence/contracts/probe.py", line 27, in check
+    raise AssertionError(label)
+AssertionError: canonical-check-after-json-and-hex

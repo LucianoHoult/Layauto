@@ -1,0 +1,7 @@
+{
+  "status": "passed",
+  "source_revision": "7f7c1304bdafd941791421cef64864fb1616303c",
+  "runtime_files": 100,
+  "wheel_sha256": "ffff7cd43c4680024fda7efdc9f1fc912e2273b0405c9fb1645f2cb8e9212441",
+  "sdist_sha256": "afb9db801fd45801a8e0ec69485ee65178b707ac21fde1b2ed5d44f067b98a94"
+}

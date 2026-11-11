@@ -1,0 +1,7 @@
+{
+  "source_sha256": "1bb7a0d182fde14a799eb703d81443b0376e18cf92ccf1d8f3f23a2a67ab37f2",
+  "interrupted_stdout_overwritten": true,
+  "frozen_identity_overwritten": true,
+  "runner_stop": "failed actual sample preserved: before-normal-direct-r1",
+  "scope": "isolated temp paths and substituted failing process; no product or performance run"
+}

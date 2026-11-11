@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "checks": 5973,
+  "baseline_samples": 18,
+  "profile_samples": 2,
+  "index_tail_omissions_reconciled_by_single_command_and_receipt": [
+    "performance/after-extraction-mismatch-r3",
+    "profile/after-normal-readback-r1"
+  ]
+}

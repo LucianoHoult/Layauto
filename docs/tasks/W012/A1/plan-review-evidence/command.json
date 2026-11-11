@@ -1,0 +1,15 @@
+{
+  "argv": [
+    "/workspace/.venvs/layauto/bin/python",
+    "-B",
+    "docs/tasks/W012/A1/plan-review-evidence/check.py"
+  ],
+  "cwd": "/workspace/w012-a1-review",
+  "started_at_utc": "2026-11-10T06:01:03.179210+00:00",
+  "finished_at_utc": "2026-11-10T06:01:03.531784+00:00",
+  "elapsed_seconds": 0.3525946899990231,
+  "exit_code": 0,
+  "checker_sha256": "1f9e70f63d96c4258accfab9a1c3cfb336cd64f9335a5f80bb93f1d9be12ff2a",
+  "stdout_sha256": "c47bad057c3013bd091003fabce552de6f65d95dd24b0810938a4636ad6152af",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

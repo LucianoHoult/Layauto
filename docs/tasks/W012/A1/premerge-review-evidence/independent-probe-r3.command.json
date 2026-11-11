@@ -1,0 +1,20 @@
+{
+  "argv": [
+    "/workspace/.venvs/layauto/bin/python",
+    "-B",
+    "docs/tasks/W012/A1/premerge-review-evidence/contracts/probe.py"
+  ],
+  "cwd": "/workspace/Layauto",
+  "started_at_utc": "2026-11-11T01:34:57.219389+00:00",
+  "finished_at_utc": "2026-11-11T01:35:00.750805+00:00",
+  "elapsed_seconds": 3.5314301000000228,
+  "exit_code": 0,
+  "reviewed_head": "e4179dd42cc0de853df73bafd9140a363c8fa5be",
+  "environment_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTEST_DISABLE_PLUGIN_AUTOLOAD": "1",
+    "MPLCONFIGDIR": "/workspace/work/w012-a1-premerge/mplconfig"
+  },
+  "stdout_sha256": "2cc90dfe379e109516a92bd0c300fdce9e02b7f45bba9f4f9cc9828a6e249195",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

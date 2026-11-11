@@ -1,0 +1,23 @@
+{
+  "argv": [
+    "/workspace/w012-a1-env/dev312/bin/python",
+    "-B",
+    "-m",
+    "build",
+    "--no-isolation",
+    "--outdir",
+    "/workspace/w012-a1-before-package/dist"
+  ],
+  "cwd": "/workspace/w012-a1-before-package/source",
+  "elapsed_seconds": 1.64225733999956,
+  "environment_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "exit_code": 0,
+  "finished_at_utc": "2026-11-10T07:34:43.521363+00:00",
+  "started_at_utc": "2026-11-10T07:34:41.879118+00:00",
+  "stderr": "build.stderr.txt",
+  "stderr_sha256": "b181eea8a45f807f5fa1607f003eb1ae5363271ec186d4780a7fd3630cdea57e",
+  "stdout": "build.stdout.txt",
+  "stdout_sha256": "461d4085c9c1edf48f3c03e9c17b5a822770c01a51cceba3ad08ecef45a1c107"
+}

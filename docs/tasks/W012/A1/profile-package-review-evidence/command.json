@@ -1,0 +1,14 @@
+{
+  "argv": [
+    "/workspace/.venvs/layauto/bin/python",
+    "-B",
+    "docs/tasks/W012/A1/profile-package-review-evidence/check.py"
+  ],
+  "cwd": "/workspace/w012-a1-review",
+  "exit_code": 0,
+  "recorded_at_utc": "2026-11-10T08:17:30.164015+00:00",
+  "checker_sha256": "52429ad31aadb97a2052652a5dd09d76a50f9def4fd0e950fdb73166238624a8",
+  "stdout_sha256": "8f331625453b83717056e502b63fad08ff4140091a026074aa8ebfdc9714acea",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "scope": "Actual completed evidence review; no product/performance sample rerun"
+}

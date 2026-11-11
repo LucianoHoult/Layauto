@@ -1,0 +1,18 @@
+Command (cwd /workspace/Layauto):
+/workspace/.venvs/layauto/bin/python -B docs/tasks/W012/probe.py --selfcheck
+Exit: 1
+Original stderr:
+Traceback (most recent call last):
+  File "/workspace/Layauto/docs/tasks/W012/probe.py", line 317, in <module>
+    selfcheck()
+  File "/workspace/Layauto/docs/tasks/W012/probe.py", line 204, in selfcheck
+    assert meter.result()['bytes_to_hex']['<root>']['payload_bytes'] == 3
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
+
+Disposition: tool assertion expected one encode, but domain.decode itself canonically
+re-encodes. Correct lightweight expectation is two calls / six payload bytes.
+No heavy combination had started. The original tool is reconstructed by reversing
+only this three-line assertion fix in selfcheck-attempt01-probe.py.txt; its explicit
+identity/reconstruction limitation is in selfcheck-attempt01-identity.json.
+No product failure or discarded performance sample.

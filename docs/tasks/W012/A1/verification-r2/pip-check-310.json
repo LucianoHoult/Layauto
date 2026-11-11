@@ -1,0 +1,23 @@
+{
+  "command": [
+    "/workspace/w012-a1-env/dev310/bin/python",
+    "-m",
+    "pip",
+    "check"
+  ],
+  "cwd": "/workspace/w012-a1-final-r2/source",
+  "exit_code": 0,
+  "environment_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PIP_CACHE_DIR": "/workspace/w012-a1-final-r2/pip-cache",
+    "MYPY_CACHE_DIR": "/workspace/w012-a1-final-r2/mypy-pip-check-310",
+    "MPLCONFIGDIR": "/workspace/w012-a1-final-r2/mplconfig"
+  },
+  "started_at_utc": "2026-11-10T09:42:06.608410+00:00",
+  "finished_at_utc": "2026-11-10T09:42:07.084786+00:00",
+  "elapsed_seconds": 0.476,
+  "stdout": "pip-check-310.stdout.txt",
+  "stdout_sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09",
+  "stderr": "pip-check-310.stderr.txt",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

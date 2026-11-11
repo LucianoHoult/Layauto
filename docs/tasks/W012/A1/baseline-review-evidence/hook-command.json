@@ -1,0 +1,14 @@
+{
+  "argv": [
+    "/workspace/.venvs/layauto/bin/python",
+    "-B",
+    "docs/tasks/W012/A1/baseline-review-evidence/hook_check.py"
+  ],
+  "cwd": "/workspace/w012-a1-review",
+  "exit_code": 0,
+  "recorded_at_utc": "2026-11-10T07:07:27.751160+00:00",
+  "checker_sha256": "1ac7bdff2a85497da016ae05cccce4e5ffc3f3a7955353a313cfc0e50ec4d7a5",
+  "stdout_sha256": "7f0b60857636f86e6c2da3f0b16a13a9703dc8c03601f0dc91db13d1b80fc345",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "scope": "Actual completed observer checks on small values; not a product benchmark"
+}

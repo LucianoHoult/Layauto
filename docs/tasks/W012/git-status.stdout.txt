@@ -1,0 +1,8 @@
+## codex/w012-capture-wire-performance
+?? docs/tasks/W012/measurement-plan.md
+?? docs/tasks/W012/preflight.py
+?? docs/tasks/W012/preflight.stderr.txt
+?? docs/tasks/W012/preflight.stdout.txt
+?? docs/tasks/W012/probe.py
+?? docs/tasks/W012/run.py
+?? docs/tasks/W012/selfcheck-attempt01.txt

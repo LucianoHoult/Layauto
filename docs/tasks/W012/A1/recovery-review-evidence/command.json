@@ -1,0 +1,14 @@
+{
+  "argv": [
+    "/workspace/.venvs/layauto/bin/python",
+    "-B",
+    "docs/tasks/W012/A1/recovery-review-evidence/check.py"
+  ],
+  "cwd": "/workspace/w012-a1-review",
+  "exit_code": 0,
+  "recorded_at_utc": "2026-11-10T10:06:13.225446+00:00",
+  "checker_sha256": "1c614f167f3fd217b06c4d5f309c7b76aae90b2c6b63c8aa67e96ba8e9b7fdf3",
+  "stdout_sha256": "94f722c1aa9522c44901ffcc649cb753c93c6680298138bd5fedb051a7f80ca7",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "scope": "Actual earlier completed independent lightweight check; invocation UTC/duration not captured, metadata recorded after completion; not a product timing sample"
+}

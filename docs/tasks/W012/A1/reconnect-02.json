@@ -1,0 +1,8 @@
+{
+  "utc_after_resume": "2026-11-10T07:59:48.678342+00:00",
+  "event": "Second environment starting/ready and polling-call abort",
+  "observed": "Detached prepare_final pid9994 and pytest10013/10014 survived; no rerun or output replacement. Wrapper polling session may be unavailable; actual prepare_final receipt and per-command exit records remain authoritative.",
+  "partial_progress": "approximately73%/78%; not yet a pass",
+  "process_model": "run_final_r2 launches prepare_final in its own session to preserve the complete engineering run across tool disconnection",
+  "memory_events": "all OOM counters0"
+}

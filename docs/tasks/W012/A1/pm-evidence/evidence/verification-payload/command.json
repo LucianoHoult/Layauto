@@ -1,0 +1,16 @@
+{
+  "command": [
+    "python",
+    "/workspace/work/w012-a1-pm/evidence/verification-payload/check.py"
+  ],
+  "cwd": "/workspace/Layauto",
+  "saved_at_utc": "2026-11-11T01:14:09.465207+00:00",
+  "exit_code": 0,
+  "checker_sha256": "aba25efe00d979b511bd1e7d03706b9839cd53bcbff9ac37f75e6b7c6e2ed397",
+  "stdout": "stdout.txt",
+  "stdout_sha256": "db04064901770d6f029378ac287835ac0d19a970b1d575f5b3f2ed3c391cfc98",
+  "stderr": "stderr.txt",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "result": "result.json",
+  "result_sha256": "dd2affecd3b688d6195c8a8362b24cb7a4a4065c447a5e13a5fc13fa6f6d452b"
+}

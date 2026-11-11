@@ -1,0 +1,15 @@
+{
+  "argv": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "-B",
+    "/workspace/work/w012-pm-check/evidence/check.py"
+  ],
+  "cwd": "/workspace/Layauto",
+  "started_at_utc": "2026-11-10T05:29:35.476228+00:00",
+  "finished_at_utc": "2026-11-10T05:29:35.530605+00:00",
+  "elapsed_seconds": 0.054380691988626495,
+  "exit_code": 1,
+  "script_sha256": "c1086dc7d8b1a51fcb49ec3e8e0fc95334843fc7b565a4c133419a2034eeeb98",
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "ff70e9a0621bf269b244fe7f6ade9a4f5a5ca5383d1e78c20fc9eb0ff822ff6a"
+}

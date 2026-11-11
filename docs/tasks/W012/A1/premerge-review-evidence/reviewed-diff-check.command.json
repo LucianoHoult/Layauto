@@ -1,0 +1,21 @@
+{
+  "argv": [
+    "git",
+    "diff",
+    "--check",
+    "0a3326aa363477724465886cd05874d0997fba3e..e4179dd42cc0de853df73bafd9140a363c8fa5be"
+  ],
+  "cwd": "/workspace/Layauto",
+  "started_at_utc": "2026-11-11T01:40:05.528807+00:00",
+  "finished_at_utc": "2026-11-11T01:40:05.601580+00:00",
+  "elapsed_seconds": 0.07278402000008555,
+  "exit_code": 2,
+  "reviewed_head": "e4179dd42cc0de853df73bafd9140a363c8fa5be",
+  "environment_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTEST_DISABLE_PLUGIN_AUTOLOAD": "1",
+    "MPLCONFIGDIR": "/workspace/work/w012-a1-premerge/mplconfig"
+  },
+  "stdout_sha256": "a964613c2a32683a6d79fee568a02dd4fcca6e997d547a2049f5240d382b1da1",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

@@ -1,0 +1,15 @@
+{
+  "argv": [
+    "/workspace/.venvs/layauto/bin/python",
+    "-B",
+    "docs/tasks/W012/A1/final-review-evidence/check.py"
+  ],
+  "cwd": "/workspace/w012-a1-review",
+  "started_at_utc": "2026-11-10T10:03:41.800204+00:00",
+  "finished_at_utc": "2026-11-10T10:03:44.694146+00:00",
+  "exit_code": 0,
+  "checker_sha256": "906be9c0901b30d286910d7b22ac7e134b819dcd1daa11145def2b9c143ec3a1",
+  "stdout_sha256": "35bb6333b772d22ddf327b5eca7f16310d425c0c79df6d3de707e3bc7c791dec",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "scope": "independent read-only final committed snapshot check, not a product timing sample"
+}

@@ -1,0 +1,66 @@
+{
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "executable": "/workspace/w012-a1-final-r2/clean-312/bin/python",
+  "package": "/workspace/w012-a1-final-r2/clean-312/lib/python3.12/site-packages/layauto_v2/__init__.py",
+  "distribution_version": "0.2.0",
+  "direct": {
+    "counts": {
+      "MN0": 5,
+      "MP0": 7
+    },
+    "wire_sha256": "4bed5942599fe55b58d492b6f1e1a3eeba40ab5ab2ca93b799dd6472cf52d260",
+    "wire_bytes": 54052617,
+    "encode_seconds": 1.525788379000005,
+    "decode_seconds": 39.3786295639984,
+    "raw_FIN_records": 18,
+    "comparison_status": "equal",
+    "difference_count": 0,
+    "local_enclosure_status": "pass",
+    "local_nodes": 14,
+    "local_edges": 8,
+    "local_components": 6,
+    "body_shapes": 6
+  },
+  "readback": {
+    "counts": {
+      "MN0": 5,
+      "MP0": 7
+    },
+    "wire_sha256": "4930e19a2d3ca31371f1668eb790354c79c41426c92806a82b10d1eccee11077",
+    "wire_bytes": 136495965,
+    "encode_seconds": 2.937783737001155,
+    "decode_seconds": 71.6513408460014,
+    "raw_FIN_records": 18,
+    "comparison_status": "equal",
+    "difference_count": 0,
+    "local_enclosure_status": "pass",
+    "local_nodes": 14,
+    "local_edges": 8,
+    "local_components": 6,
+    "body_shapes": 6
+  },
+  "extraction_mismatch": {
+    "counts": {
+      "MN0": 4,
+      "MP0": 7
+    },
+    "wire_sha256": "ad8bab9a569d5062e7e00159c06759ef5aabb4fe13e582c3d4fa40452169c90b",
+    "wire_bytes": 54049074,
+    "encode_seconds": 1.5203683219988307,
+    "decode_seconds": 38.923049233999336,
+    "raw_FIN_records": 18,
+    "comparison_status": "mismatch",
+    "difference_count": 1,
+    "local_enclosure_status": "pass",
+    "local_nodes": 14,
+    "local_edges": 8,
+    "local_components": 6,
+    "body_shapes": 6
+  },
+  "attempt_unchanged": true,
+  "checkpoint_unchanged": true,
+  "terminal_absent": true,
+  "limitations": [
+    "Finite synthetic smoke, not full net/body/model equivalence or run completion."
+  ]
+}

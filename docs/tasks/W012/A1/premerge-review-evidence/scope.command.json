@@ -1,0 +1,20 @@
+{
+  "argv": [
+    "/workspace/.venvs/layauto/bin/python",
+    "-B",
+    "docs/tasks/W012/A1/premerge-review-evidence/scope.py"
+  ],
+  "cwd": "/workspace/Layauto",
+  "started_at_utc": "2026-11-11T01:35:55.182134+00:00",
+  "finished_at_utc": "2026-11-11T01:35:55.932014+00:00",
+  "elapsed_seconds": 0.7499924809999925,
+  "exit_code": 0,
+  "reviewed_head": "e4179dd42cc0de853df73bafd9140a363c8fa5be",
+  "environment_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTEST_DISABLE_PLUGIN_AUTOLOAD": "1",
+    "MPLCONFIGDIR": "/workspace/work/w012-a1-premerge/mplconfig"
+  },
+  "stdout_sha256": "d40c342c0b3644a258af71295631aaddaada4455428b32d8fe9c7393d5526fa9",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

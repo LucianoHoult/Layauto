@@ -1,0 +1,12 @@
+START baseline normal-direct
+DONE baseline normal-direct exit=0
+START baseline normal-readback
+DONE baseline normal-readback exit=0
+START baseline extraction-mismatch
+DONE baseline extraction-mismatch exit=0
+START profile normal-direct
+DONE profile normal-direct exit=0
+START profile normal-readback
+DONE profile normal-readback exit=0
+START profile extraction-mismatch
+DONE profile extraction-mismatch exit=0

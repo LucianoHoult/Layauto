@@ -1,0 +1,23 @@
+{
+  "status": "passed",
+  "checks": 525,
+  "receipt_sha256": "c9b35fb1e4b658b7058882ecbfbfaff7ee44fc6980aa13145d5ac44aaf211898",
+  "source_manifest_sha256": "d42efdb27b72973a8a6f5f738d57a2fcecdde7bfe89c7b944e7144b3b088915b",
+  "packages": {
+    "wheel": {
+      "sha256": "1f1cb417fdf810156a4af7a75d9cf5561151e13cc80f1b524b274ba64962e3d4",
+      "runtime_files": 100
+    },
+    "sdist": {
+      "sha256": "4ee7262bb4133623bf6013aaf966156ebbc9fba8117ff874d05e41853a47b46c",
+      "runtime_files": 100
+    }
+  },
+  "actual_tests": {
+    "312": 1656,
+    "310": 1656
+  },
+  "runtime_files": 100,
+  "source_files": 263,
+  "scope": "actual completed new final engineering evidence; no product/test/performance sample rerun"
+}

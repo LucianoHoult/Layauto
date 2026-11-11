@@ -1,0 +1,21 @@
+{
+  "argv": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/uv",
+    "python",
+    "install",
+    "3.10"
+  ],
+  "cwd": "/workspace/w012-a1-env",
+  "overrides": {
+    "UV_CACHE_DIR": "/workspace/w012-a1-env/uv-cache",
+    "UV_PYTHON_INSTALL_DIR": "/workspace/w012-a1-env/python",
+    "PIP_CACHE_DIR": "/workspace/w012-a1-env/pip-cache",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "started_at_utc": "2026-11-10T05:57:33.223013+00:00",
+  "finished_at_utc": "2026-11-10T05:57:41.460076+00:00",
+  "elapsed_seconds": 8.237162920000628,
+  "exit_code": 1,
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "dc00d99566625e2cff571efefef3847c048dd3dc9b88e464a5cca3f90a78a392"
+}

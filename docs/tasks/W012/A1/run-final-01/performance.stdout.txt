@@ -1,0 +1,36 @@
+START before-normal-direct-r1 baseline
+DONE before-normal-direct-r1
+START after-normal-direct-r1 baseline
+DONE after-normal-direct-r1
+START before-normal-readback-r1 baseline
+DONE before-normal-readback-r1
+START after-normal-readback-r1 baseline
+DONE after-normal-readback-r1
+START before-extraction-mismatch-r1 baseline
+DONE before-extraction-mismatch-r1
+START after-extraction-mismatch-r1 baseline
+DONE after-extraction-mismatch-r1
+START before-normal-direct-r2 baseline
+DONE before-normal-direct-r2
+START after-normal-direct-r2 baseline
+DONE after-normal-direct-r2
+START before-normal-readback-r2 baseline
+DONE before-normal-readback-r2
+START after-normal-readback-r2 baseline
+DONE after-normal-readback-r2
+START before-extraction-mismatch-r2 baseline
+DONE before-extraction-mismatch-r2
+START after-extraction-mismatch-r2 baseline
+DONE after-extraction-mismatch-r2
+START before-normal-direct-r3 baseline
+DONE before-normal-direct-r3
+START after-normal-direct-r3 baseline
+DONE after-normal-direct-r3
+START before-normal-readback-r3 baseline
+DONE before-normal-readback-r3
+START after-normal-readback-r3 baseline
+DONE after-normal-readback-r3
+START before-extraction-mismatch-r3 baseline
+DONE before-extraction-mismatch-r3
+START after-extraction-mismatch-r3 baseline
+DONE after-extraction-mismatch-r3

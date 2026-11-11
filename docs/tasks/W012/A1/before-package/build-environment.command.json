@@ -1,0 +1,20 @@
+{
+  "argv": [
+    "/workspace/w012-a1-env/dev312/bin/python",
+    "-B",
+    "-c",
+    "import sys,platform,json,importlib.metadata as m;print(json.dumps({\"python\":sys.version,\"executable\":sys.executable,\"platform\":platform.platform(),\"packages\":{d.metadata[\"Name\"]:d.version for d in m.distributions()}},indent=2,sort_keys=True))"
+  ],
+  "cwd": "/workspace/w012-a1-before-package/source",
+  "elapsed_seconds": 0.1464034910004557,
+  "environment_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "exit_code": 0,
+  "finished_at_utc": "2026-11-10T07:34:41.878645+00:00",
+  "started_at_utc": "2026-11-10T07:34:41.732244+00:00",
+  "stderr": "build-environment.stderr.txt",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout": "build-environment.stdout.txt",
+  "stdout_sha256": "5db47894cebffb2e1a32145be4bc7a17942d6b6efbade53a98ae67e1281815a8"
+}

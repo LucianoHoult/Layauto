@@ -1,0 +1,3 @@
+Constructor/authentication counts equal in all phases; actual hex window lengths equal
+before 65 refreshes 5 peak 7326636 largest {'after': {'hwm_kib': 7326636, 'rss_kib': 363556}, 'before': {'hwm_kib': 3604172, 'rss_kib': 347652}, 'hex_characters': 118841892, 'matcher_seconds': 5.968507673998829, 'pattern': '(?:[0-9a-f]{2})*', 'phase': 'W011_result_decode'}
+after 65 refreshes 0 peak 720336 largest {'after': {'hwm_kib': 501568, 'rss_kib': 358520}, 'before': {'hwm_kib': 501568, 'rss_kib': 358520}, 'hex_characters': 118841892, 'matcher_seconds': 0.233527424001295, 'pattern': '[0-9a-f]*', 'phase': 'W011_result_decode'}
