@@ -25,6 +25,10 @@
 - Follow the role, evidence, and escalation rules in
   `docs/collaboration/rules.md`. Ordinary authorized work should continue without
   asking the user to approve every internal step.
+- Apply the default verification policy in that file's
+  `verification-reuse` section at every execution/review/PM handoff. State what
+  is rerun, what is adopted by source identity, and what triggers extra checks;
+  a new session or role alone is not a reason to repeat the full matrix.
 
 ## Environment and outputs
 
