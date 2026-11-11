@@ -112,6 +112,14 @@ W011 原资源测量每个 case 含 31 份捕获、共 280,706 B，40 条 drawn 
 
 四个实际包/tar、21条最终命令及原输出、双1656/typing54、原1605+新51和中断/r2/轮询断连层级均已核；A1-R01原finding/关闭保留，本次四种非空stageguard也通过。大wire/原安装树本机缺失，原全长实比及安装实读按未变版本的原独立review采信，本次未声称重比18份约1.47GB或重跑小时级矩阵/18测量。两索引末条缺bytecmp字段由单条.command.json和最终receipt闭合，未改历史索引；本次checker失败原源/输出也保留。独立证据和详细限制见报告；仅原A1分支提交推送交PM，main/PM阶段/current-work保持，不启动writer/memo/B。
 
+### A2 兼容方案收敛执行交付（2026-11-11）
+
+从PM准备提交 `842c5c1ea8f1d01bb3f04e4703f105e11f94158c` 恢复原A2分支；远端main为 `2489b4609ae97d8211bf450d55cac9392492ac71`，工作区初始干净。已核263源/100runtime对A1冻结、实际merge、PM准备及磁盘相同，9份after样本/profile同源。新增[具体方案](W012/A2/plan.md)：只推荐W010/W011两个closed encoder的操作私有typed pack，减少临时FrozenMap及对子树反复freeze，最终canonical快照、旧decoder_pack、所有公开constructor/完整重建/二次认证均保留；下层codec、reader/memo/B不在候选中。
+
+[有限附件](W012/A2/reference_pack.py)与[检查原输出](W012/A2/check.stdout.txt)完成6个真实小DTO root逐字节/原decoder对照、22个私有subvalue分支及快照/closed/异常/UTF-8见证，仅记录小值构造次数，不是产品收益。原readback build/decode/encode中位51.427/66.115/2.616s及profile归因边界如实保留，wire降幅要求0；不将全部freeze exclusive或嵌套cumulative当可省预算。未来固定URI/RunRequest/cache/roots/GC的完整三路成对字节/无插桩验证和冻结双矩阵义务见方案。
+
+本次只交方案与必要有限证据，runtime/正式测试/fixture/原报告/PM阶段/current-work未改；A1工程矩阵按同源已验收证据采信，未重跑小时级检查或18基准。方案交未参与设计者独立review后交PM，执行者不自行验收、合main或启动实施。
+
 ## PM 验收与交接（PM）
 
 W011已验收集成后，PM首次派发本任务的P1/P2调查阶段；本次可执行不代表优化实施获批或性能目标已验收。未参与调查/起草的reviewer `/root/w012_handoff_review` 已完成[派发要求独立复核](W012/handoff-review.md)，必须修正项0；受审草稿SHA-256 `c448de9107f625cce700e81eb0584700202e2b47acfd79d94087556e78c04976`。本次只补实际main/分支/依赖状态及PM接收元数据，行为要求/PP1–PP5未改；最终发布身份由Git及交接回复给出。执行交PP1–PP5证据及review后停止，由PM决定实施范围和后续交接。

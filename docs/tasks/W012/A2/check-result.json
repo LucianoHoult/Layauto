@@ -1,0 +1,709 @@
+{
+  "status": "passed",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "runtime_root": "/workspace/Layauto/layauto_v2",
+  "source_manifest_count": 263,
+  "runtime_count": 100,
+  "verified_git_versions": [
+    "ca1f810c3c97376f71089d8b4054760ff198012f",
+    "08dd232139918dc97b0a6d255aad237eb844686a",
+    "842c5c1ea8f1d01bb3f04e4703f105e11f94158c"
+  ],
+  "a1_wall_medians_seconds": {
+    "normal-direct": {
+      "W011_build": 27.860427937999702,
+      "W011_result_decode": 35.128252664000684,
+      "W011_result_encode": 1.4225330490007764,
+      "total_of_each_sample_median": 75.79989128700072
+    },
+    "normal-readback": {
+      "W011_build": 51.42660638400048,
+      "W011_result_decode": 66.11489627799892,
+      "W011_result_encode": 2.6164734000012686,
+      "total_of_each_sample_median": 144.06681701500202
+    },
+    "extraction-mismatch": {
+      "W011_build": 28.75785489199916,
+      "W011_result_decode": 37.50605481399907,
+      "W011_result_encode": 1.4580061480010045,
+      "total_of_each_sample_median": 79.51409700300064
+    }
+  },
+  "after_profile_sha256": "51e1b4dbc732dcb453b0d40687ba2203e5d2273a32bddb0d8130690263f6a7f3",
+  "after_profile_attribution": {
+    "W011_build": {
+      "domain_codec_exclusive_seconds": 98.23657202300001,
+      "functions": [
+        {
+          "calls": 30479491,
+          "cumulative_seconds": 124.85832614600001,
+          "exclusive_seconds": 33.430343695000005,
+          "file": "/workspace/Layauto/layauto_v2/domain/codec.py",
+          "function": "freeze",
+          "line": 38,
+          "primitive_calls": 1899004
+        },
+        {
+          "calls": 7463302,
+          "cumulative_seconds": 126.89607688500001,
+          "exclusive_seconds": 14.58185643,
+          "file": "/workspace/Layauto/layauto_v2/domain/codec.py",
+          "function": "__init__",
+          "line": 20,
+          "primitive_calls": 706175
+        },
+        {
+          "calls": 30404102,
+          "cumulative_seconds": 124.771484407,
+          "exclusive_seconds": 11.713187021000001,
+          "file": "/workspace/Layauto/layauto_v2/domain/codec.py",
+          "function": "<genexpr>",
+          "line": 23,
+          "primitive_calls": 1979823
+        },
+        {
+          "calls": 38608511,
+          "cumulative_seconds": 9.887321251000001,
+          "exclusive_seconds": 9.887321251000001,
+          "file": "/workspace/Layauto/layauto_v2/domain/codec.py",
+          "function": "<genexpr>",
+          "line": 32,
+          "primitive_calls": 38608511
+        },
+        {
+          "calls": 29641439,
+          "cumulative_seconds": 8.029477188000001,
+          "exclusive_seconds": 8.029477188000001,
+          "file": "/workspace/Layauto/layauto_v2/domain/codec.py",
+          "function": "__getitem__",
+          "line": 25,
+          "primitive_calls": 29641439
+        },
+        {
+          "calls": 5961740,
+          "cumulative_seconds": 24.226899307,
+          "exclusive_seconds": 6.903948286,
+          "file": "/workspace/Layauto/layauto_v2/domain/codec.py",
+          "function": "_wire",
+          "line": 63,
+          "primitive_calls": 19731
+        },
+        {
+          "calls": 30404102,
+          "cumulative_seconds": 5.0759550970000005,
+          "exclusive_seconds": 5.0759550970000005,
+          "file": "/workspace/Layauto/layauto_v2/domain/codec.py",
+          "function": "<genexpr>",
+          "line": 21,
+          "primitive_calls": 30404102
+        },
+        {
+          "calls": 9264592,
+          "cumulative_seconds": 106.136918842,
+          "exclusive_seconds": 4.337516750000001,
+          "file": "/workspace/Layauto/layauto_v2/domain/codec.py",
+          "function": "<genexpr>",
+          "line": 52,
+          "primitive_calls": 1467474
+        },
+        {
+          "calls": 9071608,
+          "cumulative_seconds": 2.8674399800000003,
+          "exclusive_seconds": 2.8674399800000003,
+          "file": "/workspace/Layauto/layauto_v2/domain/codec.py",
+          "function": "__iter__",
+          "line": 31,
+          "primitive_calls": 9071608
+        },
+        {
+          "calls": 452804,
+          "cumulative_seconds": 20.244729151,
+          "exclusive_seconds": 0.69202144,
+          "file": "/workspace/Layauto/layauto_v2/domain/codec.py",
+          "function": "_decode",
+          "line": 99,
+          "primitive_calls": 1224
+        },
+        {
+          "calls": 19731,
+          "cumulative_seconds": 56.211528035,
+          "exclusive_seconds": 0.478972598,
+          "file": "/workspace/Layauto/layauto_v2/domain/codec.py",
+          "function": "canonical_bytes",
+          "line": 75,
+          "primitive_calls": 19731
+        },
+        {
+          "calls": 226148,
+          "cumulative_seconds": 0.08915131000000001,
+          "exclusive_seconds": 0.08915131000000001,
+          "file": "/workspace/Layauto/layauto_v2/domain/codec.py",
+          "function": "pairs",
+          "line": 119,
+          "primitive_calls": 226148
+        },
+        {
+          "calls": 1224,
+          "cumulative_seconds": 26.307937176000003,
+          "exclusive_seconds": 0.069645316,
+          "file": "/workspace/Layauto/layauto_v2/domain/codec.py",
+          "function": "decode",
+          "line": 118,
+          "primitive_calls": 1224
+        },
+        {
+          "calls": 136416,
+          "cumulative_seconds": 6.747877164,
+          "exclusive_seconds": 0.04307913,
+          "file": "/workspace/Layauto/layauto_v2/domain/codec.py",
+          "function": "<genexpr>",
+          "line": 103,
+          "primitive_calls": 15224
+        },
+        {
+          "calls": 4392,
+          "cumulative_seconds": 0.072387171,
+          "exclusive_seconds": 0.026928157,
+          "file": "/workspace/Layauto/layauto_v2/domain/codec.py",
+          "function": "rational",
+          "line": 84,
+          "primitive_calls": 4392
+        },
+        {
+          "calls": 5164,
+          "cumulative_seconds": 4.9306079800000004,
+          "exclusive_seconds": 0.007784901,
+          "file": "/workspace/Layauto/layauto_v2/domain/codec.py",
+          "function": "digest",
+          "line": 80,
+          "primitive_calls": 5164
+        },
+        {
+          "calls": 1892,
+          "cumulative_seconds": 1.496878885,
+          "exclusive_seconds": 0.001920707,
+          "file": "/workspace/Layauto/layauto_v2/domain/codec.py",
+          "function": "freeze_map",
+          "line": 56,
+          "primitive_calls": 1892
+        },
+        {
+          "calls": 50,
+          "cumulative_seconds": 3.2682e-05,
+          "exclusive_seconds": 2.2766000000000002e-05,
+          "file": "/workspace/Layauto/layauto_v2/domain/codec.py",
+          "function": "__len__",
+          "line": 34,
+          "primitive_calls": 50
+        }
+      ],
+      "two_owner_pack_and_encode": [
+        {
+          "calls": 6640,
+          "cumulative_seconds": 21.310800104000002,
+          "exclusive_seconds": 0.027740760000000003,
+          "file": "/workspace/Layauto/layauto_v2/normalization/local_connectivity_codec.py",
+          "function": "_pack",
+          "line": 53,
+          "primitive_calls": 304
+        },
+        {
+          "calls": 2,
+          "cumulative_seconds": 157.68704298900002,
+          "exclusive_seconds": 0.020227475,
+          "file": "/workspace/Layauto/layauto_v2/normalization/local_connectivity_codec.py",
+          "function": "decode_record",
+          "line": 125,
+          "primitive_calls": 2
+        },
+        {
+          "calls": 1462,
+          "cumulative_seconds": 1.4518563740000001,
+          "exclusive_seconds": 0.010587188,
+          "file": "/workspace/Layauto/layauto_v2/normalization/channel_identity_codec.py",
+          "function": "_pack",
+          "line": 70,
+          "primitive_calls": 2
+        },
+        {
+          "calls": 30,
+          "cumulative_seconds": 15.601757447,
+          "exclusive_seconds": 0.005714123000000001,
+          "file": "/workspace/Layauto/layauto_v2/normalization/local_connectivity_codec.py",
+          "function": "encode_record",
+          "line": 117,
+          "primitive_calls": 30
+        },
+        {
+          "calls": 2,
+          "cumulative_seconds": 1.5821871900000002,
+          "exclusive_seconds": 0.00037356000000000005,
+          "file": "/workspace/Layauto/layauto_v2/normalization/channel_identity_codec.py",
+          "function": "encode_record",
+          "line": 138,
+          "primitive_calls": 2
+        }
+      ]
+    },
+    "W011_result_decode": {
+      "domain_codec_exclusive_seconds": 124.771350439,
+      "functions": [
+        {
+          "calls": 36315537,
+          "cumulative_seconds": 157.577537841,
+          "exclusive_seconds": 41.966624289,
+          "file": "/workspace/Layauto/layauto_v2/domain/codec.py",
+          "function": "freeze",
+          "line": 38,
+          "primitive_calls": 2307535
+        },
+        {
+          "calls": 9031067,
+          "cumulative_seconds": 160.144440006,
+          "exclusive_seconds": 18.222127859,
+          "file": "/workspace/Layauto/layauto_v2/domain/codec.py",
+          "function": "__init__",
+          "line": 20,
+          "primitive_calls": 865336
+        },
+        {
+          "calls": 36556554,
+          "cumulative_seconds": 157.456125824,
+          "exclusive_seconds": 15.559489222000002,
+          "file": "/workspace/Layauto/layauto_v2/domain/codec.py",
+          "function": "<genexpr>",
+          "line": 23,
+          "primitive_calls": 2396324
+        },
+        {
+          "calls": 46126721,
+          "cumulative_seconds": 13.505937657,
+          "exclusive_seconds": 13.505937657,
+          "file": "/workspace/Layauto/layauto_v2/domain/codec.py",
+          "function": "<genexpr>",
+          "line": 32,
+          "primitive_calls": 46126721
+        },
+        {
+          "calls": 35325149,
+          "cumulative_seconds": 9.972971676,
+          "exclusive_seconds": 9.972971676,
+          "file": "/workspace/Layauto/layauto_v2/domain/codec.py",
+          "function": "__getitem__",
+          "line": 25,
+          "primitive_calls": 35325149
+        },
+        {
+          "calls": 6927417,
+          "cumulative_seconds": 29.631694411,
+          "exclusive_seconds": 8.247991243000001,
+          "file": "/workspace/Layauto/layauto_v2/domain/codec.py",
+          "function": "_wire",
+          "line": 63,
+          "primitive_calls": 25921
+        },
+        {
+          "calls": 36556554,
+          "cumulative_seconds": 6.1671046160000005,
+          "exclusive_seconds": 6.1671046160000005,
+          "file": "/workspace/Layauto/layauto_v2/domain/codec.py",
+          "function": "<genexpr>",
+          "line": 21,
+          "primitive_calls": 36556554
+        },
+        {
+          "calls": 10732139,
+          "cumulative_seconds": 133.85919512700002,
+          "exclusive_seconds": 5.556807741,
+          "file": "/workspace/Layauto/layauto_v2/domain/codec.py",
+          "function": "<genexpr>",
+          "line": 52,
+          "primitive_calls": 1717793
+        },
+        {
+          "calls": 10924358,
+          "cumulative_seconds": 3.566012096,
+          "exclusive_seconds": 3.566012096,
+          "file": "/workspace/Layauto/layauto_v2/domain/codec.py",
+          "function": "__iter__",
+          "line": 31,
+          "primitive_calls": 10924358
+        },
+        {
+          "calls": 565207,
+          "cumulative_seconds": 27.475689842,
+          "exclusive_seconds": 0.9421985340000001,
+          "file": "/workspace/Layauto/layauto_v2/domain/codec.py",
+          "function": "_decode",
+          "line": 99,
+          "primitive_calls": 1839
+        },
+        {
+          "calls": 25921,
+          "cumulative_seconds": 70.183199787,
+          "exclusive_seconds": 0.637103042,
+          "file": "/workspace/Layauto/layauto_v2/domain/codec.py",
+          "function": "canonical_bytes",
+          "line": 75,
+          "primitive_calls": 25921
+        },
+        {
+          "calls": 285784,
+          "cumulative_seconds": 0.212067944,
+          "exclusive_seconds": 0.212067944,
+          "file": "/workspace/Layauto/layauto_v2/domain/codec.py",
+          "function": "pairs",
+          "line": 119,
+          "primitive_calls": 285784
+        },
+        {
+          "calls": 1839,
+          "cumulative_seconds": 36.348551968,
+          "exclusive_seconds": 0.116160489,
+          "file": "/workspace/Layauto/layauto_v2/domain/codec.py",
+          "function": "decode",
+          "line": 118,
+          "primitive_calls": 1839
+        },
+        {
+          "calls": 164659,
+          "cumulative_seconds": 9.357052574,
+          "exclusive_seconds": 0.053130180000000006,
+          "file": "/workspace/Layauto/layauto_v2/domain/codec.py",
+          "function": "<genexpr>",
+          "line": 103,
+          "primitive_calls": 18262
+        },
+        {
+          "calls": 5264,
+          "cumulative_seconds": 0.09198964400000001,
+          "exclusive_seconds": 0.034667532,
+          "file": "/workspace/Layauto/layauto_v2/domain/codec.py",
+          "function": "rational",
+          "line": 84,
+          "primitive_calls": 5264
+        },
+        {
+          "calls": 5371,
+          "cumulative_seconds": 5.020985723,
+          "exclusive_seconds": 0.008593213,
+          "file": "/workspace/Layauto/layauto_v2/domain/codec.py",
+          "function": "digest",
+          "line": 80,
+          "primitive_calls": 5371
+        },
+        {
+          "calls": 2126,
+          "cumulative_seconds": 1.8009158390000002,
+          "exclusive_seconds": 0.002340528,
+          "file": "/workspace/Layauto/layauto_v2/domain/codec.py",
+          "function": "freeze_map",
+          "line": 56,
+          "primitive_calls": 2126
+        },
+        {
+          "calls": 49,
+          "cumulative_seconds": 3.1907000000000005e-05,
+          "exclusive_seconds": 2.2578000000000003e-05,
+          "file": "/workspace/Layauto/layauto_v2/domain/codec.py",
+          "function": "__len__",
+          "line": 34,
+          "primitive_calls": 49
+        }
+      ],
+      "two_owner_pack_and_encode": [
+        {
+          "calls": 10606,
+          "cumulative_seconds": 28.102754455000003,
+          "exclusive_seconds": 0.046025319,
+          "file": "/workspace/Layauto/layauto_v2/normalization/local_connectivity_codec.py",
+          "function": "_pack",
+          "line": 53,
+          "primitive_calls": 517
+        },
+        {
+          "calls": 1,
+          "cumulative_seconds": 222.84759893400002,
+          "exclusive_seconds": 0.033173691000000005,
+          "file": "/workspace/Layauto/layauto_v2/normalization/channel_identity_codec.py",
+          "function": "decode_record",
+          "line": 146,
+          "primitive_calls": 1
+        },
+        {
+          "calls": 5055,
+          "cumulative_seconds": 16.180113386000002,
+          "exclusive_seconds": 0.030074625,
+          "file": "/workspace/Layauto/layauto_v2/normalization/channel_identity_codec.py",
+          "function": "_pack",
+          "line": 70,
+          "primitive_calls": 141
+        },
+        {
+          "calls": 15,
+          "cumulative_seconds": 170.63256202300002,
+          "exclusive_seconds": 0.019174246000000002,
+          "file": "/workspace/Layauto/layauto_v2/normalization/local_connectivity_codec.py",
+          "function": "decode_record",
+          "line": 125,
+          "primitive_calls": 15
+        },
+        {
+          "calls": 95,
+          "cumulative_seconds": 22.504944241,
+          "exclusive_seconds": 0.011560105000000001,
+          "file": "/workspace/Layauto/layauto_v2/normalization/local_connectivity_codec.py",
+          "function": "encode_record",
+          "line": 117,
+          "primitive_calls": 95
+        },
+        {
+          "calls": 3,
+          "cumulative_seconds": 9.628280901,
+          "exclusive_seconds": 0.002586427,
+          "file": "/workspace/Layauto/layauto_v2/normalization/channel_identity_codec.py",
+          "function": "encode_record",
+          "line": 138,
+          "primitive_calls": 3
+        }
+      ]
+    },
+    "W011_result_encode": {
+      "domain_codec_exclusive_seconds": 3.6831821110000003,
+      "functions": [
+        {
+          "calls": 1052453,
+          "cumulative_seconds": 4.681153623,
+          "exclusive_seconds": 1.2489780750000001,
+          "file": "/workspace/Layauto/layauto_v2/domain/codec.py",
+          "function": "freeze",
+          "line": 38,
+          "primitive_calls": 48829
+        },
+        {
+          "calls": 297814,
+          "cumulative_seconds": 4.751575604,
+          "exclusive_seconds": 0.5728950340000001,
+          "file": "/workspace/Layauto/layauto_v2/domain/codec.py",
+          "function": "__init__",
+          "line": 20,
+          "primitive_calls": 26463
+        },
+        {
+          "calls": 1123755,
+          "cumulative_seconds": 4.678971173,
+          "exclusive_seconds": 0.431536623,
+          "file": "/workspace/Layauto/layauto_v2/domain/codec.py",
+          "function": "<genexpr>",
+          "line": 23,
+          "primitive_calls": 59056
+        },
+        {
+          "calls": 1537394,
+          "cumulative_seconds": 0.37059368600000003,
+          "exclusive_seconds": 0.37059368600000003,
+          "file": "/workspace/Layauto/layauto_v2/domain/codec.py",
+          "function": "<genexpr>",
+          "line": 32,
+          "primitive_calls": 1537394
+        },
+        {
+          "calls": 1166982,
+          "cumulative_seconds": 0.32975893900000003,
+          "exclusive_seconds": 0.32975893900000003,
+          "file": "/workspace/Layauto/layauto_v2/domain/codec.py",
+          "function": "__getitem__",
+          "line": 25,
+          "primitive_calls": 1166982
+        },
+        {
+          "calls": 237127,
+          "cumulative_seconds": 1.1319906830000002,
+          "exclusive_seconds": 0.289735683,
+          "file": "/workspace/Layauto/layauto_v2/domain/codec.py",
+          "function": "_wire",
+          "line": 63,
+          "primitive_calls": 1025
+        },
+        {
+          "calls": 1123755,
+          "cumulative_seconds": 0.190376235,
+          "exclusive_seconds": 0.190376235,
+          "file": "/workspace/Layauto/layauto_v2/domain/codec.py",
+          "function": "<genexpr>",
+          "line": 21,
+          "primitive_calls": 1123755
+        },
+        {
+          "calls": 370412,
+          "cumulative_seconds": 0.11676199200000001,
+          "exclusive_seconds": 0.11676199200000001,
+          "file": "/workspace/Layauto/layauto_v2/domain/codec.py",
+          "function": "__iter__",
+          "line": 31,
+          "primitive_calls": 370412
+        },
+        {
+          "calls": 281747,
+          "cumulative_seconds": 3.989650134,
+          "exclusive_seconds": 0.10113524500000001,
+          "file": "/workspace/Layauto/layauto_v2/domain/codec.py",
+          "function": "<genexpr>",
+          "line": 52,
+          "primitive_calls": 41675
+        },
+        {
+          "calls": 1025,
+          "cumulative_seconds": 3.2609688770000003,
+          "exclusive_seconds": 0.031410599000000004,
+          "file": "/workspace/Layauto/layauto_v2/domain/codec.py",
+          "function": "canonical_bytes",
+          "line": 75,
+          "primitive_calls": 1025
+        }
+      ],
+      "two_owner_pack_and_encode": [
+        {
+          "calls": 1043,
+          "cumulative_seconds": 3.692699605,
+          "exclusive_seconds": 0.004949665000000001,
+          "file": "/workspace/Layauto/layauto_v2/normalization/local_connectivity_codec.py",
+          "function": "_pack",
+          "line": 53,
+          "primitive_calls": 14
+        },
+        {
+          "calls": 747,
+          "cumulative_seconds": 6.668181918,
+          "exclusive_seconds": 0.004413052000000001,
+          "file": "/workspace/Layauto/layauto_v2/normalization/channel_identity_codec.py",
+          "function": "_pack",
+          "line": 70,
+          "primitive_calls": 1
+        },
+        {
+          "calls": 14,
+          "cumulative_seconds": 4.220262069,
+          "exclusive_seconds": 0.0028367540000000004,
+          "file": "/workspace/Layauto/layauto_v2/normalization/local_connectivity_codec.py",
+          "function": "encode_record",
+          "line": 117,
+          "primitive_calls": 14
+        },
+        {
+          "calls": 1,
+          "cumulative_seconds": 7.756064526,
+          "exclusive_seconds": 0.0020585440000000003,
+          "file": "/workspace/Layauto/layauto_v2/normalization/channel_identity_codec.py",
+          "function": "encode_record",
+          "line": 138,
+          "primitive_calls": 1
+        }
+      ]
+    }
+  },
+  "small_roots": [
+    {
+      "owner": "layauto_v2.normalization.channel_identity_codec",
+      "root": "ChannelRef",
+      "bytes": 250,
+      "sha256": "88eb014e8a20485344ce47ac44d56c8da95175e9965a9e84a6a6c4698a243eb2",
+      "old_calls": {
+        "freeze": 19,
+        "__init__": 11
+      },
+      "reference_calls": {
+        "freeze": 11,
+        "__init__": 5
+      }
+    },
+    {
+      "owner": "layauto_v2.normalization.channel_identity_codec",
+      "root": "RationalRect",
+      "bytes": 423,
+      "sha256": "e70df677f87ba8a5c9c67e286ea658ca21917bc55b2fbdffa522224a29095e63",
+      "old_calls": {
+        "freeze": 31,
+        "__init__": 17
+      },
+      "reference_calls": {
+        "freeze": 17,
+        "__init__": 7
+      }
+    },
+    {
+      "owner": "layauto_v2.normalization.channel_identity_codec",
+      "root": "SeedIntersection",
+      "bytes": 1611,
+      "sha256": "3013a6a799e652376293c51bc0dee3d50a1c9fe46c465c7ec272b79c96e784f9",
+      "old_calls": {
+        "freeze": 131,
+        "__init__": 75
+      },
+      "reference_calls": {
+        "freeze": 65,
+        "__init__": 31
+      }
+    },
+    {
+      "owner": "layauto_v2.normalization.channel_identity_codec",
+      "root": "SeedLocation",
+      "bytes": 2163,
+      "sha256": "bc2ba48192e3b9b63b8727d3743201b5506bb389fdb8608a23d8e5a815dd65a0",
+      "old_calls": {
+        "freeze": 263,
+        "__init__": 151
+      },
+      "reference_calls": {
+        "freeze": 91,
+        "__init__": 43
+      }
+    },
+    {
+      "owner": "layauto_v2.normalization.local_connectivity_codec",
+      "root": "LocalRef",
+      "bytes": 255,
+      "sha256": "fc17dfa20e2d35dc920a56e1b724b9f071fec0677bd9c26b7a49cfecf4fc27ca",
+      "old_calls": {
+        "freeze": 19,
+        "__init__": 11
+      },
+      "reference_calls": {
+        "freeze": 11,
+        "__init__": 5
+      }
+    },
+    {
+      "owner": "layauto_v2.normalization.local_connectivity_codec",
+      "root": "ContactComponent",
+      "bytes": 1875,
+      "sha256": "b241f5a86cb12f6975dee36ea5cdbdda38a88499617ded523f69582c798128ba",
+      "old_calls": {
+        "freeze": 290,
+        "__init__": 169
+      },
+      "reference_calls": {
+        "freeze": 91,
+        "__init__": 41
+      }
+    }
+  ],
+  "subvalues_per_owner": 11,
+  "checks": [
+    "263 disk/frozen/merge/PM-preparation blobs",
+    "9 after samples + after profile same source",
+    "6 real small roots byte equality + unchanged public decode",
+    "22 private subvalue structural and byte comparisons",
+    "map snapshot detachment",
+    "closed preflight foreign scalar rejection",
+    "original scalar snapshot exception history",
+    "UTF-8 error attributes",
+    "reference bounds"
+  ],
+  "limits": "No full result entry, monkeypatch, product timing or benchmark; counts are small-reference counts.",
+  "attachment_sha256": {
+    "check.py": "efb941f8a815dd644cbda9e33c1ac76a0de6eb3c26627cb072be43cd9bf9edb5",
+    "reference_pack.py": "811b347559fd6c9faa1051e70227082c26f8f6da5467d4feca5badcf0f7b47ca"
+  }
+}
