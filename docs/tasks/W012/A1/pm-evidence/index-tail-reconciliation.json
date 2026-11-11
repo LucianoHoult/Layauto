@@ -1,0 +1,46 @@
+[
+  {
+    "scope": "performance",
+    "aggregate_sha256": "78b8433d1628b6d8007289108d20c74302602b23e02c3e8097758cab4a39d028",
+    "tail_command_file": "docs/tasks/W012/A1/performance/after-extraction-mismatch-r3.command.json",
+    "tail_command_sha256": "95cc07beba95a4d0acd8adb6170502e8df2913c1adf0b8d1246d53a0bdca7302",
+    "aggregate_contains_comparison": false,
+    "actual_command_comparison": {
+      "reference": "/workspace/w012-a1-performance/wires/baseline/before-extraction-mismatch-r1.bin",
+      "bytes": 54045042,
+      "equal": true
+    },
+    "receipt_keys": [
+      "status",
+      "stage",
+      "sources",
+      "tools",
+      "commands",
+      "fresh_processes",
+      "serial",
+      "full_wire_byte_comparison"
+    ]
+  },
+  {
+    "scope": "profile",
+    "aggregate_sha256": "1985532240951055c17a67ba14d658df9bcbcfc98c25934257de47588fa36679",
+    "tail_command_file": "docs/tasks/W012/A1/profile/after-normal-readback-r1.command.json",
+    "tail_command_sha256": "507a9e366e005830042fd3c171a4b0fb320b2d43669f1180b6fb18a5141bc544",
+    "aggregate_contains_comparison": false,
+    "actual_command_comparison": {
+      "reference": "/workspace/w012-a1-performance/wires/baseline/before-normal-readback-r1.bin",
+      "bytes": 136471701,
+      "equal": true
+    },
+    "receipt_keys": [
+      "status",
+      "stage",
+      "sources",
+      "tools",
+      "commands",
+      "fresh_processes",
+      "serial",
+      "full_wire_byte_comparison"
+    ]
+  }
+]

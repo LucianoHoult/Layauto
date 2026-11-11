@@ -1,0 +1,31 @@
+{
+  "status": "passed",
+  "head": "db07a16fb7cbbac030adae84a9eb88cc0c8aa650",
+  "must_fix_findings": 0,
+  "nonblocking_observation_kinds": 1,
+  "observations": [
+    {
+      "severity": "nonblocking",
+      "kind": "command-index-final-comparison-lag",
+      "stage": "performance",
+      "entries": [
+        "after-extraction-mismatch-r3"
+      ],
+      "impact": "Single command JSON and final receipt contain the complete comparison; aggregate commands.json was written before appending the final comparison field."
+    },
+    {
+      "severity": "nonblocking",
+      "kind": "command-index-final-comparison-lag",
+      "stage": "profile",
+      "entries": [
+        "after-normal-readback-r1"
+      ],
+      "impact": "Single command JSON and final receipt contain the complete comparison; aggregate commands.json was written before appending the final comparison field."
+    }
+  ],
+  "performance_check_count": 1305,
+  "verification_payload_result": "verification-payload/result.json",
+  "actual_vs_adopted": "report.md",
+  "scope": "Read-only JSON/hash/tar/zip/AST review; no product run, matrix, codec, install, build, or performance rerun performed in this subtask.",
+  "verification_payload_check_count": 1286
+}

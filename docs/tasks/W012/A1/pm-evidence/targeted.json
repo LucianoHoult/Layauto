@@ -1,0 +1,32 @@
+{
+  "argv": [
+    "/workspace/work/w005-pm-check-env/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-p",
+    "no:cacheprovider",
+    "-q",
+    "tests/contracts/test_w012_hex_validation.py",
+    "tests/contracts/test_w005_contracts.py"
+  ],
+  "cwd": "/workspace/Layauto",
+  "started_utc": "2026-11-11T01:11:01.612498+00:00",
+  "finished_utc": "2026-11-11T01:11:02.449370+00:00",
+  "elapsed_seconds": 0.8368838089809287,
+  "returncode": 0,
+  "tested_head": "db07a16fb7cbbac030adae84a9eb88cc0c8aa650",
+  "environment_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONPATH": "/workspace/Layauto"
+  },
+  "interpreter": "Python 3.12.14",
+  "stdout.txt": {
+    "bytes": 878,
+    "sha256": "0052ceb876f6c169e198ec05d0d87fcbb71934f05ff11236d2b09a76972e9ea4"
+  },
+  "stderr.txt": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

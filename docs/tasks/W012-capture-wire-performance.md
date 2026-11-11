@@ -7,8 +7,8 @@
 | ID / 目标 | W012；降低真实组件组合中完整捕获保留、wire 编解码和重复认证/重建的耗时与内存，保持可审计来源及公开验证合同 |
 | 里程碑 / 依赖 | M1 工程支撑，关联 R13/R27/R28；承接 W011 的明确稳定版本，优先于继续扩大状态链/输入。W011已由PR #65验收集成，见其PM2；本次先派发P1/P2调查 |
 | 授权依据 | 用户明确要求：开发阶段先跑新增及受影响范围，最终交付再跑双全量；PM 单列完整捕获、wire 膨胀和重复重建优化任务，不能只减少测试数量 |
-| 当前阶段 / 阻塞 | **可执行：仅兼容A1实施，派发要求独立复核必须项0，PM已接收。** P1/P2已验收，产品优化未实施；不批准B新格式、writer/reader/memo或整体降幅承诺，见 [PM1](#pm1-investigation)及[A1](#a1-implementation) |
-| 恢复 / 分支 | A1从调查接收提交 `9b573c99d5f4021636f498292f42b53540bff1a1` 建立 `codex/w012-compatible-hex-validation`；接手含A1派发记录的最新head。原调查分支`codex/w012-capture-wire-performance`保留，产品runtime仍等同已验收main `0a3326aa363477724465886cd05874d0997fba3e`/W011冻结源；本轮准备不合main |
+| 当前阶段 / 阻塞 | **待验收：兼容A1分支技术接收通过，新增必须项0。** 专门合并前review/main集成与组合尚待；P1/P2已验收，B新格式和writer/reader/memo未批准，见 [PM3](#pm3-a1-receipt) |
+| 恢复 / 分支 | `codex/w012-compatible-hex-validation`原交付 `db07a16fb7cbbac030adae84a9eb88cc0c8aa650`，产品/测试冻结 `ca1f810c3c97376f71089d8b4054760ff198012f`；接手含PM3的最新原分支head。相对已验收main `0a3326aa363477724465886cd05874d0997fba3e` 的唯一runtime变化为hex校验；原调查分支保留，main未合A1 |
 | 本次允许写入 | A1仅 `layauto_v2/domain/codec.py` 的bytes hex校验及直接必要的tests；本任务执行/方案区、W012下新的A1方案/验证/性能/review附件。不要覆盖P1/P2原测量工具、原输出、报告或finding；不改其它runtime、正式fixture/答案、架构或current-work。PM维护阶段/范围，reviewer维护其结论 |
 | 约束 / 非目标 | 保留原始 bytes、来源/单位/owner/run 绑定、不可变性、公开 constructor/codec 完整验证和异常历史；不修改 fixture/答案、语义计量或生产输入要求，不扩展 body/U06 或物理能力。测试调度/并发 gate 本身不算本任务的性能成果 |
 | 架构依据 | [architecture](../architecture.md) §2.2–2.3、§2.6、§3.7–3.8、§11.2/11.9/11.15；[协作规则](../collaboration/rules.md)的最终验证与证据要求；W005–W011 的来源、不可变 DTO、codec 和错误合同 |
@@ -139,6 +139,16 @@ I4要求完整路径实证，不承诺20%/50%降幅或生产上界。兼容A1的
 未参与调查/设计/起草的 `/root/w012_a1_handoff_review` 完成[派发要求独立复核](W012/A1-handoff-review.md)，必须修正项0；受审task SHA-256 `c9ab53287f654dcd26e4e5d4f5eea7abc1a29ee19695681e331076ec4774e105`、prompt SHA-256 `70ab51c2e5395d1d62c69ad88664decd7253a88c442997f624f6ec200ddd1c3a`。本补记仅更新阶段/PM接收，不改I1–I6或prompt。**A1可执行，交独立执行session先最小方案review后实现。** 没有新性能结果或A1验收结论；本次只做文档/来源/恢复检查，未运行新算法或重型矩阵。
 
 下一执行session使用 [A1完整prompt](W012/A1-execution-prompt.md)，从含本记录的 `codex/w012-compatible-hex-validation` 最新PM准备提交恢复，最终SHA由Git与交接回复给出；原调查分支与PM1记录保留，main未合入本次准备。实施范围、B未批准及交PM停止边界按上文执行。原P1/P2 prompt仅为历史记录。
+
+<a id="pm3-a1-receipt"></a>
+
+### PM3 A1 分支技术接收
+
+核实原交付 `db07a16fb7cbbac030adae84a9eb88cc0c8aa650`、263源/100runtime与最终新冻结源一致，唯一产品改动为bytes hex条件。PM实际 **89项合同回归、typing54**通过，并新跑一次完整normal readback：wire136,471,701B/hash保持，正常5/7、完整roundtrip、原图/T05/body和attempt/checkpoint/unsealed/无terminal边界通过，阶段140.617s、峰值710,728KiB。本次没有before，不从这一次after计算收益。
+
+独立合同39,187项、性能/证据1305项及工程/包1286项轻量核验通过；原18样本同条件/串行及三路中位重算成立，峰值中位降88.59%–90.35%、耗时降14.66%–22.80%，完整wire/hash不变。新源双1656/typing54、21命令、四包/双安装及原A1-R01关闭按身份实核/采信，未重复全矩阵/18样本。大wire/原安装树本机缺失的采信限制、末条索引字段非阻断观察、六处小阶段增幅和残余成本见[PM说明](W012/A1/pm-receipt.md)及[机器回执](W012/A1/pm-receipt.json)。
+
+**A1分支技术接收通过，新增必须项0，尚未最终验收或集成main。** 下一步交专门独立session按[合并前review prompt](W012/A1/independent-premerge-prompt.md)复核，通过后由PM安排实际集成/组合。未启动writer/reader/memo、新wire或下一子项，不把A1效果扩大为完整W012/生产性能保证。
 
 ### 独立执行 session prompt（原P1/P2派发，已交付）
 

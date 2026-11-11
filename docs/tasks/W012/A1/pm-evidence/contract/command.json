@@ -1,0 +1,13 @@
+{
+  "argv": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "-B",
+    "/workspace/work/w012-a1-pm/contract/check.py"
+  ],
+  "cwd": "/workspace/Layauto",
+  "started_utc": "2026-11-11T01:12:57.511152+00:00",
+  "ended_utc": "2026-11-11T01:12:57.660340+00:00",
+  "exit_code": 0,
+  "stdout_sha256": "524f151100a3b799aa1cae4d084b13420fbbb4a4b566fc39690e71d16a506ab9",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

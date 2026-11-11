@@ -1,0 +1,94 @@
+{
+  "status": "failed",
+  "head": "db07a16fb7cbbac030adae84a9eb88cc0c8aa650",
+  "repository_initial_status": "",
+  "checks_total": 1278,
+  "failed_checks": [
+    {
+      "name": "baseline_count_1605",
+      "passed": false,
+      "detail": null
+    },
+    {
+      "name": "baseline_subset:310",
+      "passed": false,
+      "detail": null
+    },
+    {
+      "name": "baseline_subset:312",
+      "passed": false,
+      "detail": null
+    }
+  ],
+  "source_files": 263,
+  "runtime_files": 100,
+  "artifacts": [
+    {
+      "side": "before",
+      "kind": "wheel",
+      "path": "/workspace/Layauto/docs/tasks/W012/A1/before-package/dist/layauto-0.2.0-py3-none-any.whl",
+      "bytes": 172004,
+      "sha256": "ffff7cd43c4680024fda7efdc9f1fc912e2273b0405c9fb1645f2cb8e9212441",
+      "runtime_members": 100
+    },
+    {
+      "side": "before",
+      "kind": "sdist",
+      "path": "/workspace/Layauto/docs/tasks/W012/A1/before-package/dist/layauto-0.2.0.tar.gz",
+      "bytes": 138356,
+      "sha256": "afb9db801fd45801a8e0ec69485ee65178b707ac21fde1b2ed5d44f067b98a94",
+      "runtime_members": 100
+    },
+    {
+      "side": "after",
+      "kind": "wheel",
+      "path": "/workspace/Layauto/docs/tasks/W012/A1/verification-r2/dist/layauto-0.2.0-py3-none-any.whl",
+      "bytes": 172093,
+      "sha256": "1f1cb417fdf810156a4af7a75d9cf5561151e13cc80f1b524b274ba64962e3d4",
+      "runtime_members": 100
+    },
+    {
+      "side": "after",
+      "kind": "sdist",
+      "path": "/workspace/Layauto/docs/tasks/W012/A1/verification-r2/dist/layauto-0.2.0.tar.gz",
+      "bytes": 139221,
+      "sha256": "4ee7262bb4133623bf6013aaf966156ebbc9fba8117ff874d05e41853a47b46c",
+      "runtime_members": 100
+    }
+  ],
+  "runtime_payload_differences": {
+    "wheel": [
+      "domain/codec.py"
+    ],
+    "sdist": [
+      "domain/codec.py"
+    ]
+  },
+  "manifests": [
+    {
+      "path": "/workspace/Layauto/docs/tasks/W012/A1/verification-r2/evidence-manifest.json",
+      "entries": 78,
+      "all_hashes_verified": true
+    },
+    {
+      "path": "/workspace/Layauto/docs/tasks/W012/A1/before-package/evidence-manifest.json",
+      "entries": 18,
+      "all_hashes_verified": true
+    },
+    {
+      "path": "/workspace/Layauto/docs/tasks/W012/A1/handoff-artifact-manifest.json",
+      "entries": 430,
+      "all_hashes_verified": true
+    },
+    {
+      "path": "/workspace/Layauto/docs/tasks/W012/A1/review-evidence-manifest.json",
+      "entries": 66,
+      "all_hashes_verified": true
+    }
+  ],
+  "limitations": [
+    "Saved original command outputs/receipts were inspected and hashed; no test, typing, build, install, smoke, codec or performance process was rerun.",
+    "Original installed trees/interpreters are checked for current accessibility; inaccessible original trees cannot be directly rehashed in this session. Saved installation-identity contains 100 per-file hashes equal to frozen source and actual artifacts.",
+    "Rebuilt before packages are available; this does not establish a before installation/smoke that was not performed."
+  ]
+}

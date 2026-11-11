@@ -1,0 +1,36 @@
+{
+  "argv": [
+    "/workspace/work/w005-pm-check-env/bin/python",
+    "-B",
+    "/workspace/Layauto/docs/tasks/W012/A1/probe.py",
+    "--runtime-root",
+    "/workspace/Layauto",
+    "--input-root",
+    "/workspace/Layauto",
+    "--case",
+    "normal-readback",
+    "--mode",
+    "baseline",
+    "--output",
+    "/workspace/work/w012-a1-pm/readback-result.json"
+  ],
+  "cwd": "/workspace/Layauto",
+  "started_utc": "2026-11-11T01:11:04.241130+00:00",
+  "finished_utc": "2026-11-11T01:13:25.622447+00:00",
+  "elapsed_seconds": 141.3813289560203,
+  "returncode": 0,
+  "tested_head": "db07a16fb7cbbac030adae84a9eb88cc0c8aa650",
+  "environment_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONPATH": "/workspace/Layauto"
+  },
+  "interpreter": "Python 3.12.14",
+  "stdout.txt": {
+    "bytes": 1022,
+    "sha256": "970dca05088576fa58a582a9c8b0c859faf7dff657b16e2577e6f3479ed6d5d3"
+  },
+  "stderr.txt": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

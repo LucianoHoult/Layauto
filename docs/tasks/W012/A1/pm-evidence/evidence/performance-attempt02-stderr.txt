@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/workspace/work/w012-a1-pm/evidence/performance-check.py", line 228, in <module>
+    main()
+  File "/workspace/work/w012-a1-pm/evidence/performance-check.py", line 104, in main
+    check(status == '', 'repository clean before audit')
+  File "/workspace/work/w012-a1-pm/evidence/performance-check.py", line 20, in check
+    raise AssertionError(label)
+AssertionError: repository clean before audit

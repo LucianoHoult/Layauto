@@ -1,0 +1,29 @@
+{
+  "argv": [
+    "/workspace/work/w005-pm-check-env/bin/python",
+    "-B",
+    "-m",
+    "mypy",
+    "--cache-dir",
+    "/workspace/work/w012-a1-pm/mypy-cache"
+  ],
+  "cwd": "/workspace/Layauto",
+  "started_utc": "2026-11-11T01:11:02.453411+00:00",
+  "finished_utc": "2026-11-11T01:11:04.237456+00:00",
+  "elapsed_seconds": 1.784058362012729,
+  "returncode": 0,
+  "tested_head": "db07a16fb7cbbac030adae84a9eb88cc0c8aa650",
+  "environment_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONPATH": "/workspace/Layauto"
+  },
+  "interpreter": "Python 3.12.14",
+  "stdout.txt": {
+    "bytes": 44,
+    "sha256": "80244665c7088b2cce8820f63a43e8138804ae2a8a670798bf2704dd2a9a50a9"
+  },
+  "stderr.txt": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

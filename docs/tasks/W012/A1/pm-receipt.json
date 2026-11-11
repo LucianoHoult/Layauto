@@ -1,0 +1,153 @@
+{
+  "schema_version": "w012-a1-pm-receipt/1",
+  "recorded_at_utc": "2026-11-11T01:16:52.975850+00:00",
+  "reviewed_delivery": "db07a16fb7cbbac030adae84a9eb88cc0c8aa650",
+  "product_and_tests_frozen": "ca1f810c3c97376f71089d8b4054760ff198012f",
+  "engineering_manifest_git_head": "212554cdc402f6b86e92b8b81cd43752a01ff858",
+  "implementation_reviewed": "44a91c472fdeba5bb4b8a6071c0580313336c379",
+  "preparation": "7f7c1304bdafd941791421cef64864fb1616303c",
+  "main_baseline": "0a3326aa363477724465886cd05874d0997fba3e",
+  "status": "A1_branch_technical_receipt_passed_not_final_acceptance",
+  "new_must_fix": 0,
+  "actual_pm": {
+    "formal_regressions": 89,
+    "formal_output": "pm-evidence/targeted.stdout.txt",
+    "typing_source_files": 54,
+    "readback_command": "pm-evidence/readback.json",
+    "readback_wire_bytes": 136471701,
+    "readback_wire_sha256": "1b75a398b4a2f22c156600fbe19590c182f37a77d0c171ab0a8b7a79e23cd795",
+    "readback_rss_kib": 710728,
+    "readback_stage_seconds": 140.61667519703042,
+    "readback_roundtrip_equal": true,
+    "readback_state_boundary": true,
+    "scope": "One new after-only complete readback check, not a new paired benefit estimate"
+  },
+  "independent_pm_checks": {
+    "contract_checks": 39187,
+    "contract_report": "pm-evidence/contract/review.md",
+    "performance_evidence_checks": 1305,
+    "engineering_package_checks": 1286,
+    "evidence_report": "pm-evidence/evidence/report.md",
+    "limits": "These are tool/evidence/finite-language checks, not extra formal regression counts."
+  },
+  "source_identity": {
+    "files": 263,
+    "runtime_files": 100,
+    "manifest_sha256": "d42efdb27b72973a8a6f5f738d57a2fcecdde7bfe89c7b944e7144b3b088915b",
+    "only_runtime_difference": "layauto_v2/domain/codec.py"
+  },
+  "adopted_performance": {
+    "normal-direct": {
+      "before": {
+        "stage_seconds_median": 94.41892330200244,
+        "rss_kib_median": 2851076,
+        "wire_bytes": 54050313,
+        "wire_sha256": "4d07033687223809e542ea661138fe0566ed162f6eab17fb7d4f806745377f16"
+      },
+      "after": {
+        "stage_seconds_median": 75.79989128700072,
+        "rss_kib_median": 325436,
+        "wire_bytes": 54050313,
+        "wire_sha256": "4d07033687223809e542ea661138fe0566ed162f6eab17fb7d4f806745377f16"
+      },
+      "time_reduction": 0.1971959789823916,
+      "rss_reduction": 0.8858550245591489
+    },
+    "normal-readback": {
+      "before": {
+        "stage_seconds_median": 186.6251646560013,
+        "rss_kib_median": 7344896,
+        "wire_bytes": 136471701,
+        "wire_sha256": "1b75a398b4a2f22c156600fbe19590c182f37a77d0c171ab0a8b7a79e23cd795"
+      },
+      "after": {
+        "stage_seconds_median": 144.06681701500202,
+        "rss_kib_median": 708536,
+        "wire_bytes": 136471701,
+        "wire_sha256": "1b75a398b4a2f22c156600fbe19590c182f37a77d0c171ab0a8b7a79e23cd795"
+      },
+      "time_reduction": 0.2280418491227878,
+      "rss_reduction": 0.9035335558188979
+    },
+    "extraction-mismatch": {
+      "before": {
+        "stage_seconds_median": 93.1704875409996,
+        "rss_kib_median": 2860516,
+        "wire_bytes": 54045042,
+        "wire_sha256": "83713d7586b02181697f10ac45c59490f2c3aa02fcea37ecf92b740a03b8e2b1"
+      },
+      "after": {
+        "stage_seconds_median": 79.51409700300064,
+        "rss_kib_median": 324668,
+        "wire_bytes": 54045042,
+        "wire_sha256": "83713d7586b02181697f10ac45c59490f2c3aa02fcea37ecf92b740a03b8e2b1"
+      },
+      "time_reduction": 0.14657420926330855,
+      "rss_reduction": 0.8865001978663989
+    }
+  },
+  "adopted_engineering": {
+    "dual_counts": {
+      "310": 1656,
+      "312": 1656
+    },
+    "baseline_ids_retained": 1605,
+    "new_ids": 51,
+    "dual_typing": 54,
+    "final_commands": 21,
+    "packages": 4,
+    "scope": "Actual package bytes and archived command/output/install identity checked. Original large wire, old runtime, performance venv and installation/test trees absent; bytecmp/installation adopted from original execution and independent reviewer, not newly observed."
+  },
+  "nonblocking_observation": {
+    "issue": "Last entry of performance/commands.json and profile/commands.json omits bytecmp field due to index write order; per-command records and final receipts retain completed comparisons. Original artifacts preserved.",
+    "reconciliation": "pm-evidence/index-tail-reconciliation.json"
+  },
+  "not_done": [
+    "dedicated independent premerge session",
+    "main integration and actual merged-version combination",
+    "repeat dual full matrices, rebuild/reinstall, all18 benchmarks or new before sample",
+    "writer/reader/memo/new wire or next subtask"
+  ],
+  "next": "dedicated independent premerge review using independent-premerge-prompt.md",
+  "evidence_files": {
+    "contract/check.py": "5e3048ee9a5c21aeb77084b015b7d17e38a5f81089ed1d7e07da72820cd6f2e5",
+    "contract/command.json": "5740b3e841f22835ea3438394216584360bfe8e8731458ba4f5264b5798633d0",
+    "contract/result.json": "524f151100a3b799aa1cae4d084b13420fbbb4a4b566fc39690e71d16a506ab9",
+    "contract/review.md": "bbe8b8d98cf900c79f0bb459af66efaa5edb9e04d3de0278f6da7539f2d6a1ea",
+    "contract/source_delivered_after.py": "498efd7d2cd8367bb660883b6e23cc302776d27cfbe487687ef6eab37773b1c7",
+    "contract/source_original_before.py": "f1a3a45fbce452957c1c04b8b8c711f17c63a81c5c30d637e9d89dd67d414252",
+    "contract/stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "contract/stdout.txt": "524f151100a3b799aa1cae4d084b13420fbbb4a4b566fc39690e71d16a506ab9",
+    "evidence/performance-attempt02-stderr.txt": "1d6cab02886d1e39969f63fbc87675e767ee2fcd0e1b54ea5615680331a4dc33",
+    "evidence/performance-attempt02-stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/performance-check.py": "604ca929dbce4dbe0d15dbb32c6d7a369ca521f3ea34599361808fbb4ce4bdf5",
+    "evidence/performance-command.json": "526bc6ed46dda75e4d719028db7a9f7d2ce31bac7d3cc175f2bc2847a2f16286",
+    "evidence/performance-result.json": "6ebd4748bb656c0f85096a951a4458d0fbeb08ea7d3232ae7bd699075d1662e8",
+    "evidence/performance-stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/performance-stdout.txt": "45de33d0d8ef9cd7da4f936085feb525d44ffcf32117c1c44b593128bd13123f",
+    "evidence/report.md": "9521cca834e34104bbda44e2d26fea69a101dad38fbe67f7a534dd0dba2f3483",
+    "evidence/result.json": "040d2666e402c375d2f938b1a9368cf6f9d7e53ad56efa6d405dfa6f245e440c",
+    "evidence/verification-payload/attempt01-stderr.txt": "849444179e6d6e6188ad46895ae2faa4bfe40e1d03d0bd360375f051b9322df3",
+    "evidence/verification-payload/attempt02-result.json": "e843cfa0fa008089e9a530219bab2b4debe5ed86007fde29c827ed09543896c2",
+    "evidence/verification-payload/attempt02-stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/verification-payload/attempt02-stdout.txt": "e25c51efcfff9dfa84e18f893bc2ff2e5d0f1d74c7c1f112caa4817d3a376443",
+    "evidence/verification-payload/check.py": "aba25efe00d979b511bd1e7d03706b9839cd53bcbff9ac37f75e6b7c6e2ed397",
+    "evidence/verification-payload/command.json": "97988dc650a3052593f59b4aa3354a48508b7ca342d5319a3081cd1fd35f3309",
+    "evidence/verification-payload/report.md": "1951501cdbb67b2770f1b18e9a43130178bf5134190037195e7e439fe74b0384",
+    "evidence/verification-payload/result.json": "dd2affecd3b688d6195c8a8362b24cb7a4a4065c447a5e13a5fc13fa6f6d452b",
+    "evidence/verification-payload/stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/verification-payload/stdout.txt": "db04064901770d6f029378ac287835ac0d19a970b1d575f5b3f2ed3c391cfc98",
+    "index-tail-reconciliation.json": "f75b2eb243f3ddd9a79aec88b1ba261c26f9c2eba71038864bc185ca3ff05509",
+    "readback-result.json": "eafd4e6ab5a8371bfb8f87c9741781d35b74cb7ba9b533686b85782edc105771",
+    "readback.json": "e5d5e9c9a8eaad6439d2b61d57c6bd03aa0084073e6961d18e3f825226a0d3fc",
+    "readback.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "readback.stdout.txt": "970dca05088576fa58a582a9c8b0c859faf7dff657b16e2577e6f3479ed6d5d3",
+    "run_checks.py": "30b5f3cea1983c30f0e05cb34b40383ce78566c90652faeb770934b1452cacbb",
+    "targeted.json": "11b8269dc57305afcb962fed6af698fd5af7722363374d16cd958eef86231ebe",
+    "targeted.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "targeted.stdout.txt": "0052ceb876f6c169e198ec05d0d87fcbb71934f05ff11236d2b09a76972e9ea4",
+    "typing.json": "1071382be9cb20e4ea82e2a5e87a7ae07c530118036a646e98b679ade609641b",
+    "typing.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "typing.stdout.txt": "80244665c7088b2cce8820f63a43e8138804ae2a8a670798bf2704dd2a9a50a9"
+  }
+}
