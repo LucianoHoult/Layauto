@@ -7,8 +7,8 @@
 | ID / 目标 | W012；降低真实组件组合中完整捕获保留、wire 编解码和重复认证/重建的耗时与内存，保持可审计来源及公开验证合同 |
 | 里程碑 / 依赖 | M1 工程支撑，关联 R13/R27/R28；承接 W011 的明确稳定版本，优先于继续扩大状态链/输入。W011已由PR #65验收集成，见其PM2；本次先派发P1/P2调查 |
 | 授权依据 | 用户明确要求：开发阶段先跑新增及受影响范围，最终交付再跑双全量；PM 单列完整捕获、wire 膨胀和重复重建优化任务，不能只减少测试数量 |
-| 当前阶段 / 阻塞 | **待验收：兼容A1分支技术接收通过，新增必须项0。** 专门合并前review/main集成与组合尚待；P1/P2已验收，B新格式和writer/reader/memo未批准，见 [PM3](#pm3-a1-receipt) |
-| 恢复 / 分支 | `codex/w012-compatible-hex-validation`原交付 `db07a16fb7cbbac030adae84a9eb88cc0c8aa650`，产品/测试冻结 `ca1f810c3c97376f71089d8b4054760ff198012f`；接手含PM3的最新原分支head。相对已验收main `0a3326aa363477724465886cd05874d0997fba3e` 的唯一runtime变化为hex校验；原调查分支保留，main未合A1 |
+| 当前阶段 / 阻塞 | **兼容A1已验收并集成，剩余必须项0。** P1/P2已验收；W012整体不宣称完成，下一兼容A2方案待准备，未批准writer/reader/memo实施或B新格式，见 [PM4](#pm4-a1-integration) |
+| 恢复 / 分支 | main合并 `08dd232139918dc97b0a6d255aad237eb844686a`，接手含PM4的最新main；已审head `1a1459e3179e7bd234e4971c1969a6a78f387fd2`，产品/测试冻结 `ca1f810c3c97376f71089d8b4054760ff198012f`。原调查与A1分支保留，下一阶段另建分支 |
 | 本次允许写入 | A1仅 `layauto_v2/domain/codec.py` 的bytes hex校验及直接必要的tests；本任务执行/方案区、W012下新的A1方案/验证/性能/review附件。不要覆盖P1/P2原测量工具、原输出、报告或finding；不改其它runtime、正式fixture/答案、架构或current-work。PM维护阶段/范围，reviewer维护其结论 |
 | 约束 / 非目标 | 保留原始 bytes、来源/单位/owner/run 绑定、不可变性、公开 constructor/codec 完整验证和异常历史；不修改 fixture/答案、语义计量或生产输入要求，不扩展 body/U06 或物理能力。测试调度/并发 gate 本身不算本任务的性能成果 |
 | 架构依据 | [architecture](../architecture.md) §2.2–2.3、§2.6、§3.7–3.8、§11.2/11.9/11.15；[协作规则](../collaboration/rules.md)的最终验证与证据要求；W005–W011 的来源、不可变 DTO、codec 和错误合同 |
@@ -157,6 +157,20 @@ I4要求完整路径实证，不承诺20%/50%降幅或生产上界。兼容A1的
 独立合同39,187项、性能/证据1305项及工程/包1286项轻量核验通过；原18样本同条件/串行及三路中位重算成立，峰值中位降88.59%–90.35%、耗时降14.66%–22.80%，完整wire/hash不变。新源双1656/typing54、21命令、四包/双安装及原A1-R01关闭按身份实核/采信，未重复全矩阵/18样本。大wire/原安装树本机缺失的采信限制、末条索引字段非阻断观察、六处小阶段增幅和残余成本见[PM说明](W012/A1/pm-receipt.md)及[机器回执](W012/A1/pm-receipt.json)。
 
 **A1分支技术接收通过，新增必须项0，尚未最终验收或集成main。** 下一步交专门独立session按[合并前review prompt](W012/A1/independent-premerge-prompt.md)复核，通过后由PM安排实际集成/组合。未启动writer/reader/memo、新wire或下一子项，不把A1效果扩大为完整W012/生产性能保证。
+
+<a id="pm4-a1-integration"></a>
+
+### PM4 A1 最终验收与 main 集成
+
+接收专门独立session的[合并前review](W012/A1/independent-premerge-review.md)：新增/剩余必须项0，实际111项正式回归、150,728有限候选及工程/包/18样本重算闭合。交付 `1a1459e3179e7bd234e4971c1969a6a78f387fd2` 仅追加review材料/记录；[集成前及实际merge身份核对](W012/A1/integration-evidence/review-check/report.md)确认263源/100runtime、原输出及清单一致，不把原大wire/安装树采信写成本机实读。
+
+通过 [PR #66](https://github.com/LucianoHoult/Layauto/pull/66) 合入 main `08dd232139918dc97b0a6d255aad237eb844686a`，两parent为原main `0a3326aa363477724465886cd05874d0997fba3e` 与上述review head。merge/已审tree均为 `dc7f3ee70aa35a708abbea4a204f4b60810cbcd4`，263项源/正式测试/配置与最终冻结一致。此前已验收的P1/P2调查及本次A1材料一并纳入main，原分支未删除。
+
+在实际合并版本上，PM串行运行Python3.12 **89项合同回归通过 / 0.46s**，并完成一次完整normal readback公开构造/encode/decode：正常5/7、完整来源/局部图/T05/body、roundtrip相等，attempt/checkpoint不变/unsealed/无terminal；wire **136,471,701B**、SHA-256 `1b75a398b4a2f22c156600fbe19590c182f37a77d0c171ab0a8b7a79e23cd795` 与原固定输入一致，阶段总计 **144.695s**、峰值 **711,128KiB（约694MiB）**。这是实际集成after-only检查，不用它计算新降幅。见[集成回执](W012/A1/integration-receipt.json)、[合同原输出](W012/A1/integration-evidence/contract.stdout.txt)及[readback结果](W012/A1/integration-evidence/readback-result.json)。
+
+双1656/typing54、构建/双安装、18次成对测量与profile及原PM/独立review按相同源码继续适用，未重复全量或before基准。GitHub未返回status或PR workflow记录，不称CI通过。**A1在声明的有限synthetic范围最终验收，main集成完成，剩余必须项0。** 原三路峰值中位降88.59%–90.35%、耗时降14.66%–22.80%的结论保持其样本/环境边界，不能扩大为生产上界或完整M1/W012完成。
+
+下一步只准备一项兼容A2方案收敛和独立方案review，聚焦build/decode共同经过的序列化/防御复制成本；外层encode约2.6s，不能只优化它就承诺明显总收益。保持 `/1` 字节不变时wire降幅仍为0。若无法给出收益/等价依据，交PM回到M1网络标注，不追加泛化优化；本轮不实施A2、不启用B或改认证边界。
 
 ### 独立执行 session prompt（原P1/P2派发，已交付）
 

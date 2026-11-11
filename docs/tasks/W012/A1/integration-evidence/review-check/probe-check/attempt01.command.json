@@ -1,0 +1,15 @@
+{
+  "argv": [
+    "python3",
+    "-B",
+    "/workspace/work/w012-a1-integration/review-check/probe-check/check.py"
+  ],
+  "cwd": "/workspace/Layauto",
+  "started_at_utc": "2026-11-11T03:20:06.195765+00:00",
+  "finished_at_utc": "2026-11-11T03:20:06.228755+00:00",
+  "elapsed_seconds": 0.03299177801818587,
+  "exit_code": 1,
+  "script_sha256": "460a9aa24fc0a8396cc65bbbf7e7d40b54e826deed2d133812d82148c8372039",
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "7ff0cf367ef3206811d372b926cda016e9a5a9658a2f189f694fac1ddf6fece8"
+}

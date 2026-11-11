@@ -1,0 +1,38 @@
+{
+  "status": "passed",
+  "head": "08dd232139918dc97b0a6d255aad237eb844686a",
+  "delivery": "1a1459e3179e7bd234e4971c1969a6a78f387fd2",
+  "reviewed_head": "e4179dd42cc0de853df73bafd9140a363c8fa5be",
+  "manifest_files_checked": 67,
+  "manifest_sha256": "44903ec18bce2a214f4c60243b7b51acf7404716c1e3b666c62f2a67a7ba0a4f",
+  "root_command_stream_pairs_checked": 11,
+  "formal_original_passed": {
+    "targeted-formal": 89,
+    "affected-formal": 22
+  },
+  "formal_original_total": 111,
+  "affected_unique_collected_nodes": 22,
+  "finite_candidate_count_recalculated": 150728,
+  "probe_result_sha256": "2cc90dfe379e109516a92bd0c300fdce9e02b7f45bba9f4f9cc9828a6e249195",
+  "probe_sources": {
+    "original": {
+      "git_rev": "0a3326aa363477724465886cd05874d0997fba3e",
+      "sha256": "f1a3a45fbce452957c1c04b8b8c711f17c63a81c5c30d637e9d89dd67d414252"
+    },
+    "delivered": {
+      "git_rev": "e4179dd42cc0de853df73bafd9140a363c8fa5be",
+      "sha256": "498efd7d2cd8367bb660883b6e23cc302776d27cfbe487687ef6eab37773b1c7"
+    }
+  },
+  "failed_probe_attempts_preserved": 2,
+  "new_mandatory_findings": 0,
+  "remaining_mandatory_findings": 0,
+  "acceptance": "The delivered 111 original test outcomes, 150728 finite probe outcome, and zero-finding review can be accepted as evidence bound to the reviewed source.",
+  "limitations": [
+    "This audit reads original output and identities; it does not rerun pytest, product code, the finite probe, or seal.py.",
+    "Finite synthetic candidates are not formal tests and provide no exhaustive production/max-input guarantee.",
+    "Private malicious str-subclass len behavior differs as already disclosed; public JSON str ingress is the reviewed boundary.",
+    "No verification of large wire payloads, original installation trees, complete performance measurements, or engineering matrix in this subcheck."
+  ],
+  "repository_worktree_unchanged": true
+}

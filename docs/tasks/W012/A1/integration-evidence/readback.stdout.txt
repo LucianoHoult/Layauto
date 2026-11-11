@@ -1,0 +1,17 @@
+START W006_prepare_inputs
+DONE W006_prepare_inputs 1.3089221929840278
+START W006_caller_reads
+DONE W006_caller_reads 1.035930896003265
+START W008_adapter_and_build
+DONE W008_adapter_and_build 0.5495107610186096
+START W009_build
+DONE W009_build 1.1970456189883407
+START W010_build
+DONE W010_build 18.736282456025947
+START W011_build
+DONE W011_build 52.77569965500152
+START W011_result_encode
+DONE W011_result_encode 2.458077068993589
+START W011_result_decode
+DONE W011_result_decode 66.63306255999487
+{"case": "normal-readback", "mode": "baseline", "wall_seconds": {"W006_prepare_inputs": 1.3089221929840278, "W006_caller_reads": 1.035930896003265, "W008_adapter_and_build": 0.5495107610186096, "W009_build": 1.1970456189883407, "W010_build": 18.736282456025947, "W011_build": 52.77569965500152, "W011_result_encode": 2.458077068993589, "W011_result_decode": 66.63306255999487}, "wire_bytes": 136471701, "wire_sha256": "1b75a398b4a2f22c156600fbe19590c182f37a77d0c171ab0a8b7a79e23cd795", "process_peak_rss_kib": 711128}

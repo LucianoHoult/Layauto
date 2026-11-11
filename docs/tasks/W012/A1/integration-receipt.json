@@ -1,0 +1,135 @@
+{
+  "schema_version": "w012-a1-integration-receipt/1",
+  "recorded_at_utc": "2026-11-11T03:25:57.888324+00:00",
+  "pr": 66,
+  "pr_url": "https://github.com/LucianoHoult/Layauto/pull/66",
+  "main_parent": "0a3326aa363477724465886cd05874d0997fba3e",
+  "reviewed_head": "1a1459e3179e7bd234e4971c1969a6a78f387fd2",
+  "merge_commit": "08dd232139918dc97b0a6d255aad237eb844686a",
+  "merge_and_review_tree": "dc7f3ee70aa35a708abbea4a204f4b60810cbcd4",
+  "product_and_tests_frozen": "ca1f810c3c97376f71089d8b4054760ff198012f",
+  "source_files_unchanged": 263,
+  "source_manifest_sha256": "d42efdb27b72973a8a6f5f738d57a2fcecdde7bfe89c7b944e7144b3b088915b",
+  "status": "A1_accepted_and_integrated_not_whole_W012_or_M1_complete",
+  "must_fix_remaining": 0,
+  "actual_postmerge_commands": {
+    "contract": {
+      "argv": [
+        "/workspace/work/w005-pm-check-env/bin/python",
+        "-B",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "-q",
+        "tests/contracts/test_w012_hex_validation.py",
+        "tests/contracts/test_w005_contracts.py"
+      ],
+      "cwd": "/workspace/Layauto",
+      "started_utc": "2026-11-11T03:20:32.058313+00:00",
+      "finished_utc": "2026-11-11T03:20:32.902581+00:00",
+      "elapsed_seconds": 0.8442786690138746,
+      "returncode": 0,
+      "tested_head": "08dd232139918dc97b0a6d255aad237eb844686a",
+      "tested_tree": "dc7f3ee70aa35a708abbea4a204f4b60810cbcd4",
+      "environment_overrides": {
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PYTHONPATH": "/workspace/Layauto"
+      },
+      "interpreter": "Python 3.12.14",
+      "stdout.txt": {
+        "bytes": 878,
+        "sha256": "cb089ba392744b1c236aecaca5fd5d51e2c9eda01da91d8765ff3676d2e9c73a"
+      },
+      "stderr.txt": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    "readback": {
+      "argv": [
+        "/workspace/work/w005-pm-check-env/bin/python",
+        "-B",
+        "/workspace/Layauto/docs/tasks/W012/A1/probe.py",
+        "--runtime-root",
+        "/workspace/Layauto",
+        "--input-root",
+        "/workspace/Layauto",
+        "--case",
+        "normal-readback",
+        "--mode",
+        "baseline",
+        "--output",
+        "/workspace/work/w012-a1-integration/readback-result.json"
+      ],
+      "cwd": "/workspace/Layauto",
+      "started_utc": "2026-11-11T03:20:32.907135+00:00",
+      "finished_utc": "2026-11-11T03:22:58.401572+00:00",
+      "elapsed_seconds": 145.4944504069863,
+      "returncode": 0,
+      "tested_head": "08dd232139918dc97b0a6d255aad237eb844686a",
+      "tested_tree": "dc7f3ee70aa35a708abbea4a204f4b60810cbcd4",
+      "environment_overrides": {
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PYTHONPATH": "/workspace/Layauto"
+      },
+      "interpreter": "Python 3.12.14",
+      "stdout.txt": {
+        "bytes": 1018,
+        "sha256": "34494132e73007f2dbcf5dbd4fb53fade750d697bfeabccc88c0e05df36ec691"
+      },
+      "stderr.txt": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  },
+  "actual_postmerge_regressions": 89,
+  "actual_readback": {
+    "stage_seconds": 144.69453120901017,
+    "process_peak_rss_kib": 711128,
+    "wire_bytes": 136471701,
+    "wire_sha256": "1b75a398b4a2f22c156600fbe19590c182f37a77d0c171ab0a8b7a79e23cd795",
+    "public_roundtrip_equal": true,
+    "unsealed_checkpoint_unchanged_no_terminal": true,
+    "scope": "One after-only integration check, not a new before/after performance comparison"
+  },
+  "adopted_evidence": "same263 sources: dual1656/typing54, build/two clean installs, paired18 measurements/profile, PM89+39187 and dedicated111+150728. No repeat full matrices/build/install/before benchmarks.",
+  "ci_scope": "GitHub returned empty status and PR-workflow lists; not a CI pass.",
+  "next": "Prepare one bounded compatible A2 proposal and independent design review, not implementation/new wire; return to M1 annotation if benefit/equivalence cannot be justified.",
+  "limitations": [
+    "original huge wire/install trees not on this host; original bytecmp/install observed via identity-bound prior independent evidence",
+    "136.5MB wire and repeated reconstruction remain",
+    "no production/maximum input bound, wholeW012 or M1 completion"
+  ],
+  "evidence_files": {
+    "contract.json": "336780153580363619f11fb483f1b7e87c1ea95e5e271a74b3b56af6586e8492",
+    "contract.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "contract.stdout.txt": "cb089ba392744b1c236aecaca5fd5d51e2c9eda01da91d8765ff3676d2e9c73a",
+    "github-evidence.json": "b757fa213d1b44a230f888c01b497092abeefab191a10470c101930ee2cd85b1",
+    "next-priority.md": "38ef1fec927a5453f020dff2cc789ba0e49871acac6ecfa5a3a475e89889fe76",
+    "readback-result.json": "43699497acf8a5eb25684008bbbf326cb0310a59fa167a0ba0841bae049f40f3",
+    "readback.json": "c5b687628bdfceac63d2cbd00df1f2c33488cd2a65a24df5b29792b7a8c05d4a",
+    "readback.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "readback.stdout.txt": "34494132e73007f2dbcf5dbd4fb53fade750d697bfeabccc88c0e05df36ec691",
+    "review-check/probe-check/attempt01.command.json": "1d190b4e90a91e41eeab2dff9e5fb8d4e714a563c3a0862aa4fe5fdf6865d4fe",
+    "review-check/probe-check/attempt01.stderr.txt": "7ff0cf367ef3206811d372b926cda016e9a5a9658a2f189f694fac1ddf6fece8",
+    "review-check/probe-check/attempt01.stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "review-check/probe-check/attempt02.command.json": "86154713b4383072ef1b0b8e90a91f82d68292630c55f181b8b7217ea2463433",
+    "review-check/probe-check/attempt02.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "review-check/probe-check/attempt02.stdout.txt": "01f303d8b3f50bcb2767dc360b1da4b62dda705834f48e9a3f8c58b2f8d1719c",
+    "review-check/probe-check/check-attempt01.py.txt": "460a9aa24fc0a8396cc65bbbf7e7d40b54e826deed2d133812d82148c8372039",
+    "review-check/probe-check/check.py": "ad5389a955d028643de0c51bbca82aeae159d6cf668b3af4cadb0fdf35b318af",
+    "review-check/probe-check/report.md": "8c631f4be36534bc03108913406db7870fc0a8cfc590721333fb3f952e3ee2ad",
+    "review-check/probe-check/result.json": "01f303d8b3f50bcb2767dc360b1da4b62dda705834f48e9a3f8c58b2f8d1719c",
+    "review-check/receipt-manifest.json": "88c7f98055c1495b6fb57f5c336ff6e31b0fd6e1f8442b1236c83e3f629b391f",
+    "review-check/report.md": "d9d7ccf6e15871c415642918d5fe3fd31913a75ea41335697e3823b600ccb268",
+    "review-check/result.json": "1974a9c40ff02b95a0342abd893014071ac5d60b8889fec44ea0c1a17738bc9c",
+    "review-check/source-scope-result.json": "89179a3027089164f9bbfc90894f1f11218f4f44409c9ac8346e9d50254a0d2a",
+    "review-check/source-scope.command.json": "f3dbed8ee9916640dd088e019ff9cfb6e67cae7adac8e375991a7a3d62ea2c4b",
+    "review-check/source-scope.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "review-check/source-scope.stdout.txt": "04e08f91e5383390068f58408cb18608c605e6699b0980cb40b4e6f605b4474d",
+    "review-check/source_scope_check.py": "d2f36834b15b4c83fcf97bf3710d706ad8459e1d6fcb8e3720ac7468b4965559",
+    "run_combined.py": "e12a2b5f0dcd8171d149afce5bdd31e9d19880c59cd5713526899a9d2c4b2544"
+  }
+}

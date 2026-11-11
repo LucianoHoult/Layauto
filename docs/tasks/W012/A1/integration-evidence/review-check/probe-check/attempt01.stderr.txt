@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/workspace/work/w012-a1-integration/review-check/probe-check/check.py", line 31, in <module>
+    assert start_head == HEAD
+           ^^^^^^^^^^^^^^^^^^
+AssertionError

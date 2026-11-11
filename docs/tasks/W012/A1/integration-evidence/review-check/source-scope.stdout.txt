@@ -1,0 +1,68 @@
+{
+  "status": "passed",
+  "review_base": "e4179dd42cc0de853df73bafd9140a363c8fa5be",
+  "delivery": "1a1459e3179e7bd234e4971c1969a6a78f387fd2",
+  "main_base": "0a3326aa363477724465886cd05874d0997fba3e",
+  "integration_commit": "08dd232139918dc97b0a6d255aad237eb844686a",
+  "integration_parents": [
+    "0a3326aa363477724465886cd05874d0997fba3e",
+    "1a1459e3179e7bd234e4971c1969a6a78f387fd2"
+  ],
+  "integration_tree": "dc7f3ee70aa35a708abbea4a204f4b60810cbcd4",
+  "integration_full_tree_equal_delivery": true,
+  "local_main_points_to_integration": true,
+  "delivery_parent_is_review_base": true,
+  "review_delivery_paths": 72,
+  "review_only_added_files": 71,
+  "task_reviewer_append_lines": 8,
+  "task_original_bytes_preserved_by_removing_only_new_reviewer_section": true,
+  "unchanged_pm_and_normative_paths": [
+    "docs/current-work.md",
+    "docs/README.md",
+    "README.md",
+    "docs/architecture.md",
+    "AGENTS.md",
+    "docs/collaboration/rules.md"
+  ],
+  "source_manifest_files": 263,
+  "runtime_files": 100,
+  "both_source_manifests_equal": true,
+  "source_identity_equal_commits": [
+    "ca1f810c3c97376f71089d8b4054760ff198012f",
+    "44a91c472fdeba5bb4b8a6071c0580313336c379",
+    "db07a16fb7cbbac030adae84a9eb88cc0c8aa650",
+    "e4179dd42cc0de853df73bafd9140a363c8fa5be",
+    "1a1459e3179e7bd234e4971c1969a6a78f387fd2",
+    "08dd232139918dc97b0a6d255aad237eb844686a"
+  ],
+  "all_263_current_sha256_equal_manifest": true,
+  "all_263_git_blob_ids_and_modes_equal_across_refs": true,
+  "tar_checks": [
+    {
+      "path": "docs/tasks/W012/A1/verification-attempt-01/source-snapshot.tar.gz",
+      "members": 263,
+      "all_263_equal_manifest_and_current": true,
+      "sha256": "ccf5d42c79734e5c776ff19694ada385a17bdcbabb6fdc1b319edef82dd40736"
+    },
+    {
+      "path": "docs/tasks/W012/A1/verification-r2/source-snapshot.tar.gz",
+      "members": 263,
+      "all_263_equal_manifest_and_current": true,
+      "sha256": "4de55c7ba671403777918395322a5e2f52fdc99cb000c63256085bb4ebf2eb3a"
+    }
+  ],
+  "source_manifest_sha256": {
+    "docs/tasks/W012/A1/verification-attempt-01/source-manifest.json": "e1cea3d19fa375bdc1ece1ece23f9df6aa4a6def6424718d594f374d3e387602",
+    "docs/tasks/W012/A1/verification-r2/source-manifest.json": "d42efdb27b72973a8a6f5f738d57a2fcecdde7bfe89c7b944e7144b3b088915b"
+  },
+  "started_head": "08dd232139918dc97b0a6d255aad237eb844686a",
+  "ended_head": "08dd232139918dc97b0a6d255aad237eb844686a",
+  "started_git_status_porcelain": "",
+  "ended_git_status_porcelain": "",
+  "new_mandatory_findings": 0,
+  "remaining_mandatory_findings": 0,
+  "limitations": [
+    "Read-only evidence receipt/source check; no product, engineering matrix, benchmark or large-wire rerun.",
+    "PM runs actual merged-version combination validation separately."
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "-B",
+    "/workspace/work/w012-a1-integration/review-check/source_scope_check.py"
+  ],
+  "cwd": "/workspace/Layauto",
+  "started_utc": "2026-11-11T03:20:20.267127+00:00",
+  "ended_utc": "2026-11-11T03:20:20.466898+00:00",
+  "exit_code": 0,
+  "script_sha256": "d2f36834b15b4c83fcf97bf3710d706ad8459e1d6fcb8e3720ac7468b4965559",
+  "stdout_sha256": "04e08f91e5383390068f58408cb18608c605e6699b0980cb40b4e6f605b4474d",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

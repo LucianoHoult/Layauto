@@ -35,6 +35,8 @@ M0 分开交付“工程输入/合同准备”和“真实 profile 证据准入�
 
 用户随后明确要求将测试反馈效率与产品性能分别推进：[W012](tasks/W012-capture-wire-performance.md)已单列完整捕获/wire/重复重建成本，归R13/R27/R28的工程支撑；W011稳定基线确定后优先准备，扩大组合前处理。开发新增/受影响、最终双全量的安排归[协作规则](collaboration/rules.md)；少跑测试及互斥gate不能替代单次完整路径的性能改善。W012不新增物理能力或生产性能承诺，详细阶段/目标继续归任务文件。
 
+W012调查及[A1兼容hex优化](tasks/W012-capture-wire-performance.md#pm4-a1-integration)现已随PR #66验收集成。下一近期项只收敛兼容A2方案与独立review，依据build/decode残余成本选择最小共同序列化路径；没有可证收益/等价方案则回M1网络标注。A2不构成标注功能的新硬依赖，不启动新wire；R07/R12等M1能力义务继续保留。
+
 | 里程碑 | 可观察能力与代表输入→结果 | 依赖 / 退出验收 |
 | --- | --- | --- |
 | **M0：知道首个输入能否被接纳** | 从一套 source/target CDL、GDS、raw query、tech/model 资料，给出有出处的 profile/能力矩阵、样本限制和可执行闭环方案；证据不足有明确缺项与获取路径 | [W002](tasks/W002-first-input-admission.md)。工程出口：schema/共享接口/失败流及样本来源有独立 review；真实准入出口：Geometry/CDL/FinCount/DeviceExtraction/body/rules 与 query binding 可证明，不能只填 profile 名称。两种出口分别记录 |

@@ -1,0 +1,22 @@
+{
+  "status": "passed",
+  "new_mandatory_findings": 0,
+  "remaining_mandatory_findings": 0,
+  "integration_commit": "08dd232139918dc97b0a6d255aad237eb844686a",
+  "integration_parents": [
+    "0a3326aa363477724465886cd05874d0997fba3e",
+    "1a1459e3179e7bd234e4971c1969a6a78f387fd2"
+  ],
+  "integration_tree": "dc7f3ee70aa35a708abbea4a204f4b60810cbcd4",
+  "full_tree_equal_delivery": true,
+  "source_files": 263,
+  "runtime_files": 100,
+  "formal_original_passed": 111,
+  "finite_candidates": 150728,
+  "review_manifest_files": 67,
+  "report": "report.md",
+  "source_result": "source-scope-result.json",
+  "probe_result": "probe-check/result.json",
+  "repository_not_modified_by_checkers": true,
+  "actual_merged_product_checks": "PM-owned; not run by this specialist"
+}

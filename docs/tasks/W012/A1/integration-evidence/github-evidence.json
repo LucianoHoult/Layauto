@@ -1,0 +1,51 @@
+{
+  "reviewed_head": "1a1459e3179e7bd234e4971c1969a6a78f387fd2",
+  "pr": {
+    "url": "https://github.com/LucianoHoult/Layauto/pull/66",
+    "number": 66,
+    "state": "closed",
+    "merged": true,
+    "mergeable": false,
+    "draft": false,
+    "body": "Replace the repeated hex-pair matcher with a single-character matcher followed by an even-length check. The accepted lowercase ASCII hex language, empty bytes, matcher/fromhex exception history, final canonical check, /1 wire bytes and all content identities remain unchanged. This PR also integrates the preceding W012 cost investigation and its preserved evidence.\n\nPaired three-sample complete-path measurements show peak RSS medians down 88.59%–90.35% and elapsed medians down 14.66%–22.80%; readback peak falls from about 7 GiB to about 692 MiB. Complete wire sizes/hashes are unchanged, including the 136.5 MB readback. Residual serialization/reconstruction cost and small-stage increases remain disclosed.\n\nFrozen-source validation: Python 3.10/3.12 each 1656 passed, typing54, build and two clean installation smokes. Dedicated premerge review: 111 formal regressions, 150728 finite candidates and evidence/package checks; zero remaining must-fix findings. PM has independently checked contracts and a full readback. Actual merged-version combination checks will be recorded before final acceptance. Original large wire/install trees are adopted by version-bound prior independent evidence where absent locally.\n\nNo new wire format, writer/reader/memo work or production/M1 completion claim. New /2 compatibility and identity decisions remain separate.",
+    "title": "W012 A1: bound hex validation memory without changing wire bytes",
+    "base": "main",
+    "base_sha": "0a3326aa363477724465886cd05874d0997fba3e",
+    "head": "codex/w012-compatible-hex-validation",
+    "head_sha": "1a1459e3179e7bd234e4971c1969a6a78f387fd2",
+    "head_repo_id": 1144936784,
+    "head_repo_full_name": "LucianoHoult/Layauto",
+    "merge_commit_sha": "08dd232139918dc97b0a6d255aad237eb844686a",
+    "user": {
+      "login": "LucianoHoult",
+      "name": "LucianoHoult",
+      "email": null,
+      "avatar_url": "https://avatars.githubusercontent.com/u/29163839?v=4",
+      "id": 29163839
+    },
+    "requested_reviewers": null,
+    "requested_team_reviewers": null,
+    "diff": null,
+    "comments": null,
+    "created_at": "2026-11-11T03:18:14Z",
+    "updated_at": "2026-11-11T03:19:50Z",
+    "closed_at": "2026-11-11T03:19:32Z",
+    "merged_at": "2026-11-11T03:19:32Z",
+    "commits": 19,
+    "changed_files": 666,
+    "additions": 328524,
+    "deletions": 17,
+    "display_url": "https://github.com/LucianoHoult/Layauto/pull/66",
+    "display_title": "W012 A1: bound hex validation memory without changing wire bytes"
+  },
+  "combined_status": {
+    "statuses": []
+  },
+  "workflow_runs": {
+    "workflow_runs": []
+  },
+  "observed_utc": {
+    "current_time": "2026-11-11 03:23:19 UTC"
+  },
+  "limits": "Empty statuses/workflow lists are not a CI pass; workflow wrapper reports pull-request first-page results."
+}
