@@ -1,0 +1,15 @@
+{
+  "argv": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "-B",
+    "docs/tasks/W012/A2/review-r01-verify.py"
+  ],
+  "cwd": "/workspace/work/w012-a2-review",
+  "started_utc": "2026-11-11T06:50:42.084595+00:00",
+  "finished_utc": "2026-11-11T06:50:42.158359+00:00",
+  "exit_code": 0,
+  "script_sha256": "50f492d93743a2d1ed416aec3160ba7776babac5f02b4fb0fbdcac49594dd59f",
+  "environment": {
+    "PYTHONDONTWRITEBYTECODE": "1"
+  }
+}

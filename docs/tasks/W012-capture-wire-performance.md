@@ -118,7 +118,7 @@ W011 原资源测量每个 case 含 31 份捕获、共 280,706 B，40 条 drawn 
 
 [有限附件](W012/A2/reference_pack.py)与[检查原输出](W012/A2/check.stdout.txt)完成6个真实小DTO root逐字节/原decoder对照、22个私有subvalue分支及快照/closed/异常/UTF-8见证，仅记录小值构造次数，不是产品收益。原readback build/decode/encode中位51.427/66.115/2.616s及profile归因边界如实保留，wire降幅要求0；不将全部freeze exclusive或嵌套cumulative当可省预算。未来固定URI/RunRequest/cache/roots/GC的完整三路成对字节/无插桩验证和冻结双矩阵义务见方案。
 
-本次只交方案与必要有限证据，runtime/正式测试/fixture/原报告/PM阶段/current-work未改；A1工程矩阵按同源已验收证据采信，未重跑小时级检查或18基准。方案交未参与设计者独立review后交PM，执行者不自行验收、合main或启动实施。
+本次只交方案与必要有限证据，runtime/正式测试/fixture/原报告/PM阶段/current-work未改；A1工程矩阵按同源已验收证据采信，未重跑小时级检查或18基准。未参与设计的 `/root/independent_review` 在隔离worktree完成[独立方案review](W012/A2/independent-review.md)，建议有限派发；交付自检生成输出顺序finding A2-R01原文/复现保留，修正复核后剩余必须项0。完整产品收益未验证，最终交付见[交PM说明](W012/A2/delivery.md)；执行者不自行验收、合main或启动实施。
 
 ## PM 验收与交接（PM）
 

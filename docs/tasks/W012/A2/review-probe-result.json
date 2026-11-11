@@ -1,0 +1,277 @@
+{
+  "status": "passed",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "reviewed_head": "cbf20807a85d8350928fc6a604612384cb2727fd",
+  "manifest_files": 263,
+  "changed_paths": [
+    "docs/tasks/W012-capture-wire-performance.md",
+    "docs/tasks/W012/A2/check-result.json",
+    "docs/tasks/W012/A2/check.command.json",
+    "docs/tasks/W012/A2/check.py",
+    "docs/tasks/W012/A2/check.stderr.txt",
+    "docs/tasks/W012/A2/check.stdout.txt",
+    "docs/tasks/W012/A2/plan.md",
+    "docs/tasks/W012/A2/reference_pack.py"
+  ],
+  "task_outside_execution_insert_byte_identical": true,
+  "private_subvalue_comparisons": [
+    {
+      "owner": "layauto_v2.normalization.local_connectivity_codec",
+      "type": "NoneType",
+      "tag": "scalar",
+      "bytes": 24,
+      "sha256": "c0dd2925658d29a8dac7d01e815997c2c6e332092307ca11921ebc523f5f6f52"
+    },
+    {
+      "owner": "layauto_v2.normalization.local_connectivity_codec",
+      "type": "bool",
+      "tag": "scalar",
+      "bytes": 24,
+      "sha256": "10e19c01f1ad33c6013d7f694ed0b3383ea5e8fa0f6ea740ad1ca212b80cecd7"
+    },
+    {
+      "owner": "layauto_v2.normalization.local_connectivity_codec",
+      "type": "int",
+      "tag": "scalar",
+      "bytes": 21,
+      "sha256": "37852d7e4754970b3be5523150f56f80437aa99b44e630c698e506636879a495"
+    },
+    {
+      "owner": "layauto_v2.normalization.local_connectivity_codec",
+      "type": "Fraction",
+      "tag": "scalar",
+      "bytes": 69,
+      "sha256": "d9ff0de4a9fc2141255d2bd8aedb35ffa3fcce22cb93790028fbcbb88901de75"
+    },
+    {
+      "owner": "layauto_v2.normalization.local_connectivity_codec",
+      "type": "Fraction",
+      "tag": "scalar",
+      "bytes": 70,
+      "sha256": "24c95b4bcd3ddb7a76eff38b3a18591b66e4e3894a1e20b6fdeb2a5d6c3d048d"
+    },
+    {
+      "owner": "layauto_v2.normalization.local_connectivity_codec",
+      "type": "bytes",
+      "tag": "scalar",
+      "bytes": 33,
+      "sha256": "417cb22d2774992770f85106020fd68de38f7becf4cb83109be6c48344e50b26"
+    },
+    {
+      "owner": "layauto_v2.normalization.local_connectivity_codec",
+      "type": "bytes",
+      "tag": "scalar",
+      "bytes": 37,
+      "sha256": "6c506c2ddecc2fe1e9604fcc79d92366852d7d7f02a21df83d3be30b70161370"
+    },
+    {
+      "owner": "layauto_v2.normalization.local_connectivity_codec",
+      "type": "str",
+      "tag": "scalar",
+      "bytes": 41,
+      "sha256": "d4a95e58ce5aae95e6168802e249d4f8b084521eb0d86d7bec371cc4c88d2366"
+    },
+    {
+      "owner": "layauto_v2.normalization.local_connectivity_codec",
+      "type": "tuple",
+      "tag": "tuple",
+      "bytes": 21,
+      "sha256": "a399d419cd7e5532271abff264ba965d072b8ee03eff35e6e619a842db7a8505"
+    },
+    {
+      "owner": "layauto_v2.normalization.local_connectivity_codec",
+      "type": "tuple",
+      "tag": "tuple",
+      "bytes": 138,
+      "sha256": "e3e9dffdcea6ea851ef7829fa10289b65585e66b50019532fd23af1c26137253"
+    },
+    {
+      "owner": "layauto_v2.normalization.local_connectivity_codec",
+      "type": "FrozenMap",
+      "tag": "map",
+      "bytes": 163,
+      "sha256": "a111707c8b88a03743e774b904c7c0e56385dfa057bfdc2624de04ccd1d9f1be"
+    },
+    {
+      "owner": "layauto_v2.normalization.local_connectivity_codec",
+      "type": "LocalRef",
+      "tag": "record",
+      "bytes": 180,
+      "sha256": "7211626603482d76fb76c669c8956bae765c73c2b3a527588e2e8027006c7f8a"
+    },
+    {
+      "owner": "layauto_v2.normalization.local_connectivity_codec",
+      "type": "GeometryRef",
+      "tag": "geometry_record",
+      "bytes": 528,
+      "sha256": "0d44c11dba6d54b4120212cf1c29ca1fe4ce6be114f69c1351eb8b1f3f0cb55c"
+    },
+    {
+      "owner": "layauto_v2.normalization.local_connectivity_codec",
+      "type": "RegionRef",
+      "tag": "effective_record",
+      "bytes": 549,
+      "sha256": "03ae89c15805c10aba2e97fa0d964f31cad7c0536981eb63d780f087b5975492"
+    },
+    {
+      "owner": "layauto_v2.normalization.local_connectivity_codec",
+      "type": "DeviceId",
+      "result": "same rejection"
+    },
+    {
+      "owner": "layauto_v2.normalization.local_connectivity_codec",
+      "type": "EvidenceRecord",
+      "tag": "captured_record",
+      "bytes": 1468,
+      "sha256": "a7a21c374aaff84de23aac214a6109c220fac75cf611d56945efe5217d68036e"
+    },
+    {
+      "owner": "layauto_v2.normalization.local_connectivity_codec",
+      "type": "SourceRef",
+      "result": "same rejection"
+    },
+    {
+      "owner": "layauto_v2.normalization.channel_identity_codec",
+      "type": "NoneType",
+      "tag": "scalar",
+      "bytes": 24,
+      "sha256": "c0dd2925658d29a8dac7d01e815997c2c6e332092307ca11921ebc523f5f6f52"
+    },
+    {
+      "owner": "layauto_v2.normalization.channel_identity_codec",
+      "type": "bool",
+      "tag": "scalar",
+      "bytes": 24,
+      "sha256": "10e19c01f1ad33c6013d7f694ed0b3383ea5e8fa0f6ea740ad1ca212b80cecd7"
+    },
+    {
+      "owner": "layauto_v2.normalization.channel_identity_codec",
+      "type": "int",
+      "tag": "scalar",
+      "bytes": 21,
+      "sha256": "37852d7e4754970b3be5523150f56f80437aa99b44e630c698e506636879a495"
+    },
+    {
+      "owner": "layauto_v2.normalization.channel_identity_codec",
+      "type": "Fraction",
+      "tag": "scalar",
+      "bytes": 69,
+      "sha256": "d9ff0de4a9fc2141255d2bd8aedb35ffa3fcce22cb93790028fbcbb88901de75"
+    },
+    {
+      "owner": "layauto_v2.normalization.channel_identity_codec",
+      "type": "Fraction",
+      "tag": "scalar",
+      "bytes": 70,
+      "sha256": "24c95b4bcd3ddb7a76eff38b3a18591b66e4e3894a1e20b6fdeb2a5d6c3d048d"
+    },
+    {
+      "owner": "layauto_v2.normalization.channel_identity_codec",
+      "type": "bytes",
+      "tag": "scalar",
+      "bytes": 33,
+      "sha256": "417cb22d2774992770f85106020fd68de38f7becf4cb83109be6c48344e50b26"
+    },
+    {
+      "owner": "layauto_v2.normalization.channel_identity_codec",
+      "type": "bytes",
+      "tag": "scalar",
+      "bytes": 37,
+      "sha256": "6c506c2ddecc2fe1e9604fcc79d92366852d7d7f02a21df83d3be30b70161370"
+    },
+    {
+      "owner": "layauto_v2.normalization.channel_identity_codec",
+      "type": "str",
+      "tag": "scalar",
+      "bytes": 41,
+      "sha256": "d4a95e58ce5aae95e6168802e249d4f8b084521eb0d86d7bec371cc4c88d2366"
+    },
+    {
+      "owner": "layauto_v2.normalization.channel_identity_codec",
+      "type": "tuple",
+      "tag": "tuple",
+      "bytes": 21,
+      "sha256": "a399d419cd7e5532271abff264ba965d072b8ee03eff35e6e619a842db7a8505"
+    },
+    {
+      "owner": "layauto_v2.normalization.channel_identity_codec",
+      "type": "tuple",
+      "tag": "tuple",
+      "bytes": 138,
+      "sha256": "e3e9dffdcea6ea851ef7829fa10289b65585e66b50019532fd23af1c26137253"
+    },
+    {
+      "owner": "layauto_v2.normalization.channel_identity_codec",
+      "type": "FrozenMap",
+      "tag": "map",
+      "bytes": 163,
+      "sha256": "a111707c8b88a03743e774b904c7c0e56385dfa057bfdc2624de04ccd1d9f1be"
+    },
+    {
+      "owner": "layauto_v2.normalization.channel_identity_codec",
+      "type": "LocalRef",
+      "tag": "local_record",
+      "bytes": 539,
+      "sha256": "5c33a57057fbcfaa767b7fb235cad43876c6f42734be95025e6ec87623691848"
+    },
+    {
+      "owner": "layauto_v2.normalization.channel_identity_codec",
+      "type": "GeometryRef",
+      "tag": "geometry_record",
+      "bytes": 528,
+      "sha256": "0d44c11dba6d54b4120212cf1c29ca1fe4ce6be114f69c1351eb8b1f3f0cb55c"
+    },
+    {
+      "owner": "layauto_v2.normalization.channel_identity_codec",
+      "type": "RegionRef",
+      "tag": "effective_record",
+      "bytes": 549,
+      "sha256": "03ae89c15805c10aba2e97fa0d964f31cad7c0536981eb63d780f087b5975492"
+    },
+    {
+      "owner": "layauto_v2.normalization.channel_identity_codec",
+      "type": "DeviceId",
+      "tag": "semantic_record",
+      "bytes": 510,
+      "sha256": "4ca1f56bb86c42911d8bf9166bcd1a23cb2479ed72b0e5bac9bf7b2eb2a04d06"
+    },
+    {
+      "owner": "layauto_v2.normalization.channel_identity_codec",
+      "type": "EvidenceRecord",
+      "tag": "captured_record",
+      "bytes": 1468,
+      "sha256": "a7a21c374aaff84de23aac214a6109c220fac75cf611d56945efe5217d68036e"
+    },
+    {
+      "owner": "layauto_v2.normalization.channel_identity_codec",
+      "type": "SourceRef",
+      "tag": "captured_record",
+      "bytes": 902,
+      "sha256": "f60cbb2403bc3978afaba64528fe5b87f279353a38932f14374104f822c6d1b6"
+    }
+  ],
+  "scalar_types_have_distinct_bytes": true,
+  "immediate_map_snapshot_survives_original_map_storage_replacement": true,
+  "foreign_scalar_root_rejection": [
+    [
+      "ValueError",
+      "foreign or mutable value in effective geometry graph"
+    ],
+    [
+      "ValueError",
+      "foreign or mutable value in effective geometry graph"
+    ]
+  ],
+  "limits": "Only bounded subvalues and one neutral leaf root; no full Result, runtime replacement, product timing or matrix.",
+  "reviewed_files_sha256": {
+    "docs/tasks/W012-capture-wire-performance.md": "91587f61b4462976e1a69a098d2e16a9ef1c2d2ba953c911323a091147bb64e7",
+    "docs/tasks/W012/A2/check-result.json": "b3b179db6791c462e282bfe60b878d1413aeb46c6789b110d29f3421c15fb426",
+    "docs/tasks/W012/A2/check.command.json": "fbfd5bdadd1f2d1601ebb059281cab59cdb631a79d7751d24309b9038c0d53aa",
+    "docs/tasks/W012/A2/check.py": "efb941f8a815dd644cbda9e33c1ac76a0de6eb3c26627cb072be43cd9bf9edb5",
+    "docs/tasks/W012/A2/check.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/tasks/W012/A2/check.stdout.txt": "eb2ed9e6f15dae1baec29c08945181e9299ca674ec8d1ffee6efe3a5332cad42",
+    "docs/tasks/W012/A2/plan.md": "b5a30b7263140ce87320210694d48cefe76f1b66df81bfc28d133778136a7a7e",
+    "docs/tasks/W012/A2/reference_pack.py": "811b347559fd6c9faa1051e70227082c26f8f6da5467d4feca5badcf0f7b47ca"
+  }
+}

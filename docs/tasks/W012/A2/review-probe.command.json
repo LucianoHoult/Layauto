@@ -1,0 +1,16 @@
+{
+  "argv": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "-B",
+    "docs/tasks/W012/A2/review-probe.py"
+  ],
+  "cwd": "/workspace/work/w012-a2-review",
+  "started_utc": "2026-11-11T06:48:32.583109+00:00",
+  "finished_utc": "2026-11-11T06:48:33.061931+00:00",
+  "exit_code": 0,
+  "git_head": "cbf20807a85d8350928fc6a604612384cb2727fd",
+  "script_sha256": "3718af3af696c25e4bc830b93cbd8d5535c29aacc37233a96a7f2f48fe1fa83e",
+  "environment": {
+    "PYTHONDONTWRITEBYTECODE": "1"
+  }
+}

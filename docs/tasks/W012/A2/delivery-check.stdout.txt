@@ -1,0 +1,3 @@
+PASS: only A2 attachments + inserted task execution section differ from PM preparation
+PASS: original task requirements/AP/PM bytes and all other protected paths unchanged
+PASS: plan/delivery links, finite tool identities and original exit/output evidence

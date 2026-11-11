@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/workspace/work/w012-a2-review/docs/tasks/W012/A2/review-r01-reproduce.py", line 39, in <module>
+    assert (delivery.parent / target.split('#')[0]).exists(), (delivery.name, target)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('delivery.md', 'delivery-check.command.json')

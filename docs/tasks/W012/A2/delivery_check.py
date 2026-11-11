@@ -1,0 +1,64 @@
+"""Check the documentation delivery boundary, links and evidence identities."""
+from __future__ import annotations
+
+import hashlib
+import json
+import re
+import subprocess
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[4]
+HERE = Path(__file__).resolve().parent
+BASE = '842c5c1ea8f1d01bb3f04e4703f105e11f94158c'
+TASK = 'docs/tasks/W012-capture-wire-performance.md'
+
+
+def git(*args: str) -> str:
+    return subprocess.check_output(['git', *args], cwd=ROOT, text=True)
+
+
+def main() -> None:
+    tracked_changes = git('diff', '--name-only', BASE).splitlines()
+    untracked = git('ls-files', '--others', '--exclude-standard').splitlines()
+    paths = sorted(set(tracked_changes + untracked))
+    assert all(p == TASK or p.startswith('docs/tasks/W012/A2/') for p in paths), paths
+    old = git('show', f'{BASE}:{TASK}')
+    new = (ROOT / TASK).read_text()
+    start = new.index('### A2 兼容方案收敛执行交付（2026-11-11）')
+    end = new.index('## PM 验收与交接（PM）', start)
+    assert new[:start] + new[end:] == old, 'original PM/AP/task bytes changed'
+    # These outputs are created by this invocation or its command recorder.
+    # Their final contents are bound by Git; do not require a pre-existing result.
+    generated = {HERE / name for name in ('delivery-check.command.json',
+                                          'delivery-check-result.json',
+                                          'delivery-check.stdout.txt',
+                                          'delivery-check.stderr.txt')}
+    for path in (HERE / 'plan.md', HERE / 'delivery.md'):
+        for target in re.findall(r'\[[^\]]+\]\(([^)]+)\)', path.read_text()):
+            if '://' not in target:
+                local = path.parent / target.split('#')[0]
+                if local not in generated:
+                    assert local.exists(), (path, target)
+    result = json.loads((HERE / 'check-result.json').read_text())
+    for name, digest in result['attachment_sha256'].items():
+        assert hashlib.sha256((HERE / name).read_bytes()).hexdigest() == digest, name
+    command = json.loads((HERE / 'check.command.json').read_text())
+    assert command['exit_code'] == 0 and result['status'] == 'passed'
+    assert (HERE / 'check.stderr.txt').read_bytes() == b''
+    assert (HERE / 'independent-review.md').is_file()
+    subprocess.run(['git', 'diff', '--check'], cwd=ROOT, check=True)
+    hashes = {p: hashlib.sha256((ROOT / p).read_bytes()).hexdigest() for p in paths
+              if (ROOT / p).is_file() and not Path(p).name.startswith('delivery-check')}
+    output = {'status': 'passed', 'base': BASE, 'head_at_check': git('rev-parse', 'HEAD').strip(),
+              'scope': paths, 'original_task_PM_AP_bytes_unchanged': True,
+              'protected_other_paths_unchanged': True, 'plan_and_delivery_links_resolve': True,
+              'finite_check_source_hashes_match': True, 'material_sha256': hashes,
+              'exclusions': 'This invocation generates delivery-check result/command/stdout/stderr; their link existence and content are bound after completion by final Git, not pre-required or self-hashed'}
+    (HERE / 'delivery-check-result.json').write_text(json.dumps(output, indent=2) + '\n')
+    print('PASS: only A2 attachments + inserted task execution section differ from PM preparation')
+    print('PASS: original task requirements/AP/PM bytes and all other protected paths unchanged')
+    print('PASS: plan/delivery links, finite tool identities and original exit/output evidence')
+
+
+if __name__ == '__main__':
+    main()

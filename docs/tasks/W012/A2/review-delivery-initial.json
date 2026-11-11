@@ -1,0 +1,13 @@
+{
+  "observed_utc": "2026-11-11T06:49:24.635193+00:00",
+  "finding": "A2-R01",
+  "delivery_sha256": "ad3d5d1daff59b2721a6f10daf90a52a8457544d298b64d58c8ccd1d879f888b",
+  "checker_sha256": "596b202e94ed7585fa10d4451d5be5b9965f2275bf9478cc53dd407d44d2c29b",
+  "missing_link_targets_before_first_run": [
+    "independent-review.md",
+    "delivery-check.command.json",
+    "delivery-check.stdout.txt",
+    "delivery-check-result.json"
+  ],
+  "method": "Read Markdown links and Path.exists only; did not run or edit delivery checker."
+}
