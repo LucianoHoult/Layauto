@@ -1,0 +1,15 @@
+{
+  "argv": [
+    "/workspace/.venvs/layauto/bin/python",
+    "-B",
+    "docs/tasks/W012/A2-implementation/review-evidence/freeze_check.py"
+  ],
+  "cwd": "/workspace/work/w012-a2/review",
+  "start_utc": "2026-11-11T07:33:12.614650+00:00",
+  "script_sha256": "49962b66263fde64fdae1c42da486bf81a67fd74493c759697b7a7e4c99b68d3",
+  "exit_code": 0,
+  "elapsed_seconds": 5.1574210759999914,
+  "end_utc": "2026-11-11T07:33:17.772425+00:00",
+  "stdout_sha256": "4473283fb83cc301120b0b03b7516863632dcfc90c8103f715b701f3a6171d9a",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

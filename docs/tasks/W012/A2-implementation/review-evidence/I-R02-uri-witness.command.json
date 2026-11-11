@@ -1,0 +1,15 @@
+{
+  "argv": [
+    "/workspace/.venvs/layauto/bin/python",
+    "-B",
+    "docs/tasks/W012/A2-implementation/review-evidence/I_R02_uri_witness.py"
+  ],
+  "cwd": "/workspace/work/w012-a2/review",
+  "start_utc": "2026-11-11T08:11:27.955862+00:00",
+  "script_sha256": "662719e50bf39be5162ffc74fc1bc2fc19d628931928c711f3f2c1512ddd6be6",
+  "exit_code": 0,
+  "elapsed_seconds": 3.056307733000267,
+  "end_utc": "2026-11-11T08:11:31.012466+00:00",
+  "stdout_sha256": "c82ebd607f54b6307e4407df41e3f18859d607c48cf4e814a51af586845a92d1",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

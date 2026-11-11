@@ -1,0 +1,6 @@
+Export of actual exec_command chunk 18e40d; cwd=/workspace/work/w012-a2/before; Python=/workspace/.venvs/layauto/bin/python -B; environment PYTHONDONTWRITEBYTECODE=1; wall_time_seconds=1.770165465; exit_code=0.
+This is the original tool output; no exact UTC start/end was separately recorded. It is not a rerun result.
+
+source True (SourceRef(uri='source.cdl', sha256='c71f40728a979c918e083b924a3045cf53bece51dd837f9ae2834cf242776fa4', field=None, line=None, column=None, byte_offset=None, record_index=None),)
+target True (SourceRef(uri='target.cdl', sha256='ddfd4713579743f578170efede62ce978a02680b42e5e2a6faeeb99016cff8db', field=None, line=None, column=None, byte_offset=None, record_index=None),)
+source_uri_index [('source.cdl', 'c71f40728a979c918e083b924a3045cf53bece51dd837f9ae2834cf242776fa4'), ('target.cdl', 'ddfd4713579743f578170efede62ce978a02680b42e5e2a6faeeb99016cff8db')]

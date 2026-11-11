@@ -92,6 +92,16 @@ W011 原资源测量每个 case 含 31 份捕获、共 280,706 B，40 条 drawn 
 
 本轮wire减幅为0；20%/50%仍不是A1硬门或收益承诺。新版profile仍有720,336KiB整进程峰值，最后matcher窗口之后的余量未作allocator逐函数归因，具体边界已记录交PM；未扩到writer/memo或新格式。完成后仅推送原A1分支交PM，不自行验收/合main、改current-work或启动下一子项。
 
+<!-- A2-implementation-execution-start -->
+### A2 最小候选与有限筛选交 PM（2026-11-11，按 AI4 停止）
+
+本独立执行session恢复实施准备 `0213c346ac03b7b7282aae522c299155958ac8f6`，核最新阶段“可执行”后实施。候选产品/正式测试冻结为 `c0a9a2e4c292255202a0ec82b6277cd8a8dd6b78`：仅两个codec新增私有helper和切换encode调用，原decoder `_pack`、全部公开验证/来源重建/两次认证/canonical不动。新82项在3.10/3.12均通过、双strict typing54通过，受影响185项通过；原1656正式节点全保留。完整范围/原输出见[执行记录](W012/A2-implementation/execution.md)及[测试说明](W012/A2-implementation/testing.md)。
+
+新工具冻结后，本机A1与候选三路各1组fresh串行公开build/encode/decode全部成功，真正wire逐块/hash/ref及正常5/7、mismatch4对source5、来源/局部图/T05/body/target、readback unsealed/checkpoint/无terminal均保持，wire降幅0。总耗时direct改善6.08%、readback退化24.18%、mismatch改善3.64%，另有direct decode与mismatch build退化，峰值改善仅0.02%–0.48%；[各次完整证据与分析](W012/A2-implementation/performance-analysis.md)保留。原工具失败样本及I-R01/I-R02原finding/修正均保留，独立结论归[本轮review](W012/A2-implementation/independent-review.md)。
+
+**执行建议按AI4停止当前候选，交PM取舍；不推荐据此进入最终工程或产品验收。** 收益混合且readback整路退化抵消，单组/路与上游波动不足以证明稳定收益。候选和真实结果保留，最终双全量/构建/双干净安装smoke及两侧各3次性能矩阵未执行，未获产品验收；工程材料只是准备，不冒记完整交付。不扩owner/writer/reader/memo/B，不自行验收、合main、改PM阶段/current-work或启动下一节点。最终Git/远端完整SHA由交接实核绑定；文档补记不是新受测产品。
+
+<!-- A2-implementation-execution-end -->
 ## Review 结论（reviewer）
 
 独立 reviewer `/root/independent_review`（未承担测量工具/方案设计）已完成[PP1–PP5调查与方案复核](W012/independent-review.md)，受审base `f3698b7ffda3b0737a2eb61ca85dbf3b40bc89fe`、执行冻结 `4aad0169c47f17c2c97bae541b6bc38bb6aaf489`及单行修复 `27280c4ef243a96578b78e9794ff52407be86eff`。实际1521项独立轻量身份/原输出/统计/观测器核验通过，未重复重型矩阵。新增必须修正项1（R01：mismatch外层bytes事件数217而非222），已由执行修正、reviewer复核关闭；剩余必须项0。原finding/失败stderr、可选pattern类型过滤建议及复核处置均保留。调查与具体方案可交PM接收；目标降幅及新wire格式仍是建议，未批准实施、未作产品性能验收或main集成。

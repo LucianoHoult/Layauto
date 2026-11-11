@@ -1,0 +1,10 @@
+from pathlib import Path
+from layauto_v2.importers import read_inputs
+from layauto_v2.normalization import from_parse_result,normalize
+parsed=read_inputs(Path('/workspace/Layauto/tests/fixtures/w003_m1/site_config.yaml'))
+semantic=normalize(from_parse_result(parsed))
+for owner in ('source','target'):
+ value=getattr(semantic.value,owner)
+ original=next(record for record in parsed.completed if record.kind==owner+'_cdl')
+ print(owner, value.preservation == original, value.preservation.sources)
+print('source_uri_index',[(source.uri,source.sha256) for source in parsed.sources if source.uri in ('source.cdl','target.cdl')])

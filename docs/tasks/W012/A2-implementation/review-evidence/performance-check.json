@@ -1,0 +1,153 @@
+{
+  "all_source_test_config_inputs_tools_unchanged": true,
+  "freeze_sha256": "0589e73f0425583c8c9d079ad8909c225331c7c18dbc4274af5ff471ff5fa398",
+  "fresh_serial_commands": 6,
+  "original_failed_command_retained_not_reused": true,
+  "paths": {
+    "extraction-mismatch": {
+      "full_actual_wire_bytes_equal": 54045042,
+      "stage_arithmetic": {
+        "W011_build_seconds": {
+          "after": 71.96008052199977,
+          "after_minus_before": 11.895079060000171,
+          "before": 60.0650014619996,
+          "improvement_percent": -19.803677300375398
+        },
+        "all_build_seconds": {
+          "after": 90.87180107800032,
+          "after_minus_before": 6.587621916001808,
+          "before": 84.28417916199851,
+          "improvement_percent": -7.8159649669721
+        },
+        "decode_seconds": {
+          "after": 56.68133732199931,
+          "after_minus_before": -12.393894712000474,
+          "before": 69.07523203399978,
+          "improvement_percent": 17.942603082245213
+        },
+        "encode_seconds": {
+          "after": 2.943032064000363,
+          "after_minus_before": 0.12479126699963672,
+          "before": 2.818240797000726,
+          "improvement_percent": -4.427984547397235
+        },
+        "peak_rss_kib": {
+          "after": 326316,
+          "after_minus_before": -80,
+          "before": 326396,
+          "improvement_percent": 0.02451010429049827
+        },
+        "total_seconds": {
+          "after": 150.496170464,
+          "after_minus_before": -5.681481528999029,
+          "before": 156.17765199299902,
+          "improvement_percent": 3.6378325941625156
+        }
+      },
+      "stored_typed_refs_equal": 171,
+      "upstream_W010_seconds": [
+        20.332714827000018,
+        16.162064304000523
+      ],
+      "wire_sha256": "83713d7586b02181697f10ac45c59490f2c3aa02fcea37ecf92b740a03b8e2b1"
+    },
+    "normal-direct": {
+      "full_actual_wire_bytes_equal": 54050313,
+      "stage_arithmetic": {
+        "W011_build_seconds": {
+          "after": 50.57719271999986,
+          "after_minus_before": -19.64490551100016,
+          "before": 70.22209823100002,
+          "improvement_percent": 27.975389522507577
+        },
+        "all_build_seconds": {
+          "after": 77.2041813830001,
+          "after_minus_before": -21.33194964299946,
+          "before": 98.53613102599957,
+          "improvement_percent": 21.648860596496178
+        },
+        "decode_seconds": {
+          "after": 90.45982957599972,
+          "after_minus_before": 14.522314097999697,
+          "before": 75.93751547800002,
+          "improvement_percent": -19.12403112820695
+        },
+        "encode_seconds": {
+          "after": 2.106325905000176,
+          "after_minus_before": -4.183636181000111,
+          "before": 6.289962086000287,
+          "improvement_percent": 66.51289982036181
+        },
+        "peak_rss_kib": {
+          "after": 325876,
+          "after_minus_before": -1568,
+          "before": 327444,
+          "improvement_percent": 0.4788605074455443
+        },
+        "total_seconds": {
+          "after": 169.770336864,
+          "after_minus_before": -10.993271725999875,
+          "before": 180.76360858999988,
+          "improvement_percent": 6.081573504617477
+        }
+      },
+      "stored_typed_refs_equal": 171,
+      "upstream_W010_seconds": [
+        24.860246533999998,
+        21.13724847900039
+      ],
+      "wire_sha256": "4d07033687223809e542ea661138fe0566ed162f6eab17fb7d4f806745377f16"
+    },
+    "normal-readback": {
+      "full_actual_wire_bytes_equal": 136471701,
+      "stage_arithmetic": {
+        "W011_build_seconds": {
+          "after": 141.3664175949998,
+          "after_minus_before": 39.88707694899949,
+          "before": 101.47934064600031,
+          "improvement_percent": -39.30561303915172
+        },
+        "all_build_seconds": {
+          "after": 185.26805894500012,
+          "after_minus_before": 35.27437187800069,
+          "before": 149.99368706699943,
+          "improvement_percent": -23.5172376703056
+        },
+        "decode_seconds": {
+          "after": 157.68499722200022,
+          "after_minus_before": 27.075966857000367,
+          "before": 130.60903036499985,
+          "improvement_percent": -20.730547329946415
+        },
+        "encode_seconds": {
+          "after": 10.43859619199975,
+          "after_minus_before": 6.451385544999994,
+          "before": 3.987210646999756,
+          "improvement_percent": -161.80197426625674
+        },
+        "peak_rss_kib": {
+          "after": 709204,
+          "after_minus_before": -1852,
+          "before": 711056,
+          "improvement_percent": 0.26045768547062753
+        },
+        "total_seconds": {
+          "after": 353.3916523590001,
+          "after_minus_before": 68.80172428000105,
+          "before": 284.58992807899904,
+          "improvement_percent": -24.175741124929218
+        }
+      },
+      "stored_typed_refs_equal": 183,
+      "upstream_W010_seconds": [
+        42.36048911199987,
+        35.84271358900014
+      ],
+      "wire_sha256": "1b75a398b4a2f22c156600fbe19590c182f37a77d0c171ab0a8b7a79e23cd795"
+    }
+  },
+  "samples_per_side_per_path": 1,
+  "scope": "Finite r1 screening only; no three-repetition performance or final engineering acceptance.",
+  "status": "passed",
+  "summary_sha256": "369f5e8c5f842f10fa771f697345534ef2506a2446e527e99fd3d153183af60f"
+}

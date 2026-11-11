@@ -1,0 +1,34 @@
+{
+  "command": [
+    "/workspace/work/w012-a2/envs/dev312/bin/python",
+    "-m",
+    "pip",
+    "install",
+    "numpy",
+    "matplotlib",
+    "pyyaml",
+    "pytest",
+    "mypy",
+    "types-PyYAML",
+    "build",
+    "setuptools",
+    "wheel"
+  ],
+  "cwd": "/workspace/work/w012-a2/engineering",
+  "exit_code": 0,
+  "started_at_utc": "2026-11-11T07:28:57.241508+00:00",
+  "finished_at_utc": "2026-11-11T07:29:31.441945+00:00",
+  "elapsed_seconds": 34.20052861700003,
+  "environment_overrides": {
+    "UV_CACHE_DIR": "/workspace/work/w012-a2/envs/uv-cache",
+    "UV_PYTHON_INSTALL_DIR": "/workspace/work/w012-a2/envs/python",
+    "UV_PYTHON_BIN_DIR": "/workspace/work/w012-a2/envs/bin",
+    "PIP_CACHE_DIR": "/workspace/work/w012-a2/envs/pip-cache",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "UV_NO_PROGRESS": "1"
+  },
+  "stdout": "install-312.stdout.txt",
+  "stderr": "install-312.stderr.txt",
+  "stdout_sha256": "6b660c64f49ccc3aae9244fc8d4f3168edeb49653ca3b2959499c83ea89e05ff",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

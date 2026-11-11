@@ -1,0 +1,40 @@
+usage: engineering_tools.py [-h] --root ROOT --out OUT --work WORK --smoke
+                            SMOKE --python310 PYTHON310 --python312 PYTHON312
+                            --expected-tests EXPECTED_TESTS
+                            [--baseline-collection BASELINE_COLLECTION]
+                            [--baseline-test-count BASELINE_TEST_COUNT]
+                            [--matrix-workers {1}]
+                            [--resource-gate RESOURCE_GATE]
+                            [--allow-parallel-without-gate]
+
+Frozen final engineering matrix for W012 A2 private typed pack; no product or
+test implementation. Example: python prepare_final.py --root
+/workspace/Layauto --out /absolute/evidence --work /workspace/work/w011-final
+--smoke /absolute/installed_smoke.py --python310
+/workspace/.venvs/w011-py310/bin/python --python312
+/workspace/.venvs/w011-py312/bin/python --expected-tests 1234 Run after the
+product/tests/configuration and smoke are frozen. Network work retains
+proxy/CA settings and requires the executor's network permission.
+
+options:
+  -h, --help            show this help message and exit
+  --root ROOT
+  --out OUT
+  --work WORK
+  --smoke SMOKE
+  --python310 PYTHON310
+  --python312 PYTHON312
+  --expected-tests EXPECTED_TESTS
+  --baseline-collection BASELINE_COLLECTION
+  --baseline-test-count BASELINE_TEST_COUNT
+                        Retain every accepted A1 baseline node ID; expected
+                        1656 unless explicitly supplied.
+  --matrix-workers {1}  Default 1 avoids overlapping full captured-wire decode
+                        peaks; packaging runs after both matrices.
+  --resource-gate RESOURCE_GATE
+                        Required with two workers: archived pytest plugin
+                        holds the W011 lock until process exit.
+  --allow-parallel-without-gate
+                        Explicit A1 engineering scheduling choice after
+                        complete low-memory measurements; never a performance
+                        result.

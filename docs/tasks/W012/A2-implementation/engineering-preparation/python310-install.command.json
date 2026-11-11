@@ -1,0 +1,26 @@
+{
+  "command": [
+    "uv",
+    "python",
+    "install",
+    "3.10",
+    "--no-bin"
+  ],
+  "cwd": "/workspace/work/w012-a2/engineering",
+  "exit_code": 0,
+  "started_at_utc": "2026-11-11T07:27:47.248286+00:00",
+  "finished_at_utc": "2026-11-11T07:27:54.206550+00:00",
+  "elapsed_seconds": 6.958328170000016,
+  "environment_overrides": {
+    "UV_CACHE_DIR": "/workspace/work/w012-a2/envs/uv-cache",
+    "UV_PYTHON_INSTALL_DIR": "/workspace/work/w012-a2/envs/python",
+    "UV_PYTHON_BIN_DIR": "/workspace/work/w012-a2/envs/bin",
+    "PIP_CACHE_DIR": "/workspace/work/w012-a2/envs/pip-cache",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "UV_NO_PROGRESS": "1"
+  },
+  "stdout": "python310-install.stdout.txt",
+  "stderr": "python310-install.stderr.txt",
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "22191d73b5969108152551fc3749d52c2ad377bda79c443db6028915219e618b"
+}

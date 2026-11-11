@@ -1,0 +1,291 @@
+{
+  "alternating": "before/after per case per rep",
+  "commands": [
+    {
+      "actual_complete_wire_byte_comparison": {
+        "bytes": 54050313,
+        "candidate": "/workspace/work/w012-a2/wires-attempt02/before-normal-direct-r1.bin",
+        "candidate_sha256": "4d07033687223809e542ea661138fe0566ed162f6eab17fb7d4f806745377f16",
+        "comparison_outside_product_timers": true,
+        "equal": true,
+        "reference": "/workspace/work/w012-a2/wires-attempt02/before-normal-direct-r1.bin",
+        "reference_sha256": "4d07033687223809e542ea661138fe0566ed162f6eab17fb7d4f806745377f16"
+      },
+      "argv": [
+        "/workspace/.venvs/layauto/bin/python",
+        "-B",
+        "/workspace/Layauto/docs/tasks/W012/A2-implementation/measurement/probe.py",
+        "--runtime-root",
+        "/workspace/work/w012-a2/before",
+        "--case",
+        "normal-direct",
+        "--output",
+        "/workspace/Layauto/docs/tasks/W012/A2-implementation/performance-attempt02/before-normal-direct-r1.json",
+        "--wire-output",
+        "/workspace/work/w012-a2/wires-attempt02/before-normal-direct-r1.bin"
+      ],
+      "case": "normal-direct",
+      "cwd": "/workspace/Layauto",
+      "elapsed_seconds": 183.69964985199977,
+      "environment_override": {
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "exit_code": 0,
+      "finished_at_utc": "2026-11-11T08:17:36.576672+00:00",
+      "freeze_sha256": "0589e73f0425583c8c9d079ad8909c225331c7c18dbc4274af5ff471ff5fa398",
+      "rep": 1,
+      "side": "before",
+      "started_at_utc": "2026-11-11T08:14:32.876672+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "9a095e5e69e0e5d3e315c4580f1ea2b731babeb3434dc3222395e3f28c09f1e2",
+      "tools": {
+        "analyze.py": "7aea6b887c433de7bee0a7c2824b35e8d38b58315514c7c58d338b2950d1468b",
+        "common.py": "aef57932e21cf060c20c214fce50a13b02a1ba96edd295de17193e5f8ffba7c1",
+        "prepare.py": "b3a5bc61193d168821eb3ec43238a1af984dce97ec44249b82cc7339238c9a75",
+        "probe.py": "e3d475c00bc403c4250649b6267c1deacfe13a9effb5eb5b3435f9d7ad3b5e14",
+        "run.py": "69555360696913172a39ed8272569534553ef6130ae76feaafcf047831fb70d4",
+        "selfcheck.py": "aaa0d17b03b1681a3f9a45f1fbac6934a42097489c5feb085272a716aaeee136"
+      }
+    },
+    {
+      "actual_complete_wire_byte_comparison": {
+        "bytes": 54050313,
+        "candidate": "/workspace/work/w012-a2/wires-attempt02/after-normal-direct-r1.bin",
+        "candidate_sha256": "4d07033687223809e542ea661138fe0566ed162f6eab17fb7d4f806745377f16",
+        "comparison_outside_product_timers": true,
+        "equal": true,
+        "reference": "/workspace/work/w012-a2/wires-attempt02/before-normal-direct-r1.bin",
+        "reference_sha256": "4d07033687223809e542ea661138fe0566ed162f6eab17fb7d4f806745377f16"
+      },
+      "argv": [
+        "/workspace/.venvs/layauto/bin/python",
+        "-B",
+        "/workspace/Layauto/docs/tasks/W012/A2-implementation/measurement/probe.py",
+        "--runtime-root",
+        "/workspace/Layauto",
+        "--case",
+        "normal-direct",
+        "--output",
+        "/workspace/Layauto/docs/tasks/W012/A2-implementation/performance-attempt02/after-normal-direct-r1.json",
+        "--wire-output",
+        "/workspace/work/w012-a2/wires-attempt02/after-normal-direct-r1.bin"
+      ],
+      "case": "normal-direct",
+      "cwd": "/workspace/Layauto",
+      "elapsed_seconds": 171.57276658199999,
+      "environment_override": {
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "exit_code": 0,
+      "finished_at_utc": "2026-11-11T08:20:28.471919+00:00",
+      "freeze_sha256": "0589e73f0425583c8c9d079ad8909c225331c7c18dbc4274af5ff471ff5fa398",
+      "rep": 1,
+      "side": "after",
+      "started_at_utc": "2026-11-11T08:17:36.898371+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "c026221860a36af67c67c70e384f7acadd18b7ddc38aeaae3637dadfb08faab1",
+      "tools": {
+        "analyze.py": "7aea6b887c433de7bee0a7c2824b35e8d38b58315514c7c58d338b2950d1468b",
+        "common.py": "aef57932e21cf060c20c214fce50a13b02a1ba96edd295de17193e5f8ffba7c1",
+        "prepare.py": "b3a5bc61193d168821eb3ec43238a1af984dce97ec44249b82cc7339238c9a75",
+        "probe.py": "e3d475c00bc403c4250649b6267c1deacfe13a9effb5eb5b3435f9d7ad3b5e14",
+        "run.py": "69555360696913172a39ed8272569534553ef6130ae76feaafcf047831fb70d4",
+        "selfcheck.py": "aaa0d17b03b1681a3f9a45f1fbac6934a42097489c5feb085272a716aaeee136"
+      }
+    },
+    {
+      "actual_complete_wire_byte_comparison": {
+        "bytes": 136471701,
+        "candidate": "/workspace/work/w012-a2/wires-attempt02/before-normal-readback-r1.bin",
+        "candidate_sha256": "1b75a398b4a2f22c156600fbe19590c182f37a77d0c171ab0a8b7a79e23cd795",
+        "comparison_outside_product_timers": true,
+        "equal": true,
+        "reference": "/workspace/work/w012-a2/wires-attempt02/before-normal-readback-r1.bin",
+        "reference_sha256": "1b75a398b4a2f22c156600fbe19590c182f37a77d0c171ab0a8b7a79e23cd795"
+      },
+      "argv": [
+        "/workspace/.venvs/layauto/bin/python",
+        "-B",
+        "/workspace/Layauto/docs/tasks/W012/A2-implementation/measurement/probe.py",
+        "--runtime-root",
+        "/workspace/work/w012-a2/before",
+        "--case",
+        "normal-readback",
+        "--output",
+        "/workspace/Layauto/docs/tasks/W012/A2-implementation/performance-attempt02/before-normal-readback-r1.json",
+        "--wire-output",
+        "/workspace/work/w012-a2/wires-attempt02/before-normal-readback-r1.bin"
+      ],
+      "case": "normal-readback",
+      "cwd": "/workspace/Layauto",
+      "elapsed_seconds": 287.782114956,
+      "environment_override": {
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "exit_code": 0,
+      "finished_at_utc": "2026-11-11T08:25:16.824218+00:00",
+      "freeze_sha256": "0589e73f0425583c8c9d079ad8909c225331c7c18dbc4274af5ff471ff5fa398",
+      "rep": 1,
+      "side": "before",
+      "started_at_utc": "2026-11-11T08:20:29.040616+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "b9c0a1108c1f0c3d3ffec4f981701d7a0cb6102558fc353ae751d4d43896f326",
+      "tools": {
+        "analyze.py": "7aea6b887c433de7bee0a7c2824b35e8d38b58315514c7c58d338b2950d1468b",
+        "common.py": "aef57932e21cf060c20c214fce50a13b02a1ba96edd295de17193e5f8ffba7c1",
+        "prepare.py": "b3a5bc61193d168821eb3ec43238a1af984dce97ec44249b82cc7339238c9a75",
+        "probe.py": "e3d475c00bc403c4250649b6267c1deacfe13a9effb5eb5b3435f9d7ad3b5e14",
+        "run.py": "69555360696913172a39ed8272569534553ef6130ae76feaafcf047831fb70d4",
+        "selfcheck.py": "aaa0d17b03b1681a3f9a45f1fbac6934a42097489c5feb085272a716aaeee136"
+      }
+    },
+    {
+      "actual_complete_wire_byte_comparison": {
+        "bytes": 136471701,
+        "candidate": "/workspace/work/w012-a2/wires-attempt02/after-normal-readback-r1.bin",
+        "candidate_sha256": "1b75a398b4a2f22c156600fbe19590c182f37a77d0c171ab0a8b7a79e23cd795",
+        "comparison_outside_product_timers": true,
+        "equal": true,
+        "reference": "/workspace/work/w012-a2/wires-attempt02/before-normal-readback-r1.bin",
+        "reference_sha256": "1b75a398b4a2f22c156600fbe19590c182f37a77d0c171ab0a8b7a79e23cd795"
+      },
+      "argv": [
+        "/workspace/.venvs/layauto/bin/python",
+        "-B",
+        "/workspace/Layauto/docs/tasks/W012/A2-implementation/measurement/probe.py",
+        "--runtime-root",
+        "/workspace/Layauto",
+        "--case",
+        "normal-readback",
+        "--output",
+        "/workspace/Layauto/docs/tasks/W012/A2-implementation/performance-attempt02/after-normal-readback-r1.json",
+        "--wire-output",
+        "/workspace/work/w012-a2/wires-attempt02/after-normal-readback-r1.bin"
+      ],
+      "case": "normal-readback",
+      "cwd": "/workspace/Layauto",
+      "elapsed_seconds": 358.65972037899974,
+      "environment_override": {
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "exit_code": 0,
+      "finished_at_utc": "2026-11-11T08:31:16.254362+00:00",
+      "freeze_sha256": "0589e73f0425583c8c9d079ad8909c225331c7c18dbc4274af5ff471ff5fa398",
+      "rep": 1,
+      "side": "after",
+      "started_at_utc": "2026-11-11T08:25:17.591853+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "d8fbe9e2e21a6fc9b4e0f01db2a1d55e5a7bde09ae881910fb1f5f84d5389835",
+      "tools": {
+        "analyze.py": "7aea6b887c433de7bee0a7c2824b35e8d38b58315514c7c58d338b2950d1468b",
+        "common.py": "aef57932e21cf060c20c214fce50a13b02a1ba96edd295de17193e5f8ffba7c1",
+        "prepare.py": "b3a5bc61193d168821eb3ec43238a1af984dce97ec44249b82cc7339238c9a75",
+        "probe.py": "e3d475c00bc403c4250649b6267c1deacfe13a9effb5eb5b3435f9d7ad3b5e14",
+        "run.py": "69555360696913172a39ed8272569534553ef6130ae76feaafcf047831fb70d4",
+        "selfcheck.py": "aaa0d17b03b1681a3f9a45f1fbac6934a42097489c5feb085272a716aaeee136"
+      }
+    },
+    {
+      "actual_complete_wire_byte_comparison": {
+        "bytes": 54045042,
+        "candidate": "/workspace/work/w012-a2/wires-attempt02/before-extraction-mismatch-r1.bin",
+        "candidate_sha256": "83713d7586b02181697f10ac45c59490f2c3aa02fcea37ecf92b740a03b8e2b1",
+        "comparison_outside_product_timers": true,
+        "equal": true,
+        "reference": "/workspace/work/w012-a2/wires-attempt02/before-extraction-mismatch-r1.bin",
+        "reference_sha256": "83713d7586b02181697f10ac45c59490f2c3aa02fcea37ecf92b740a03b8e2b1"
+      },
+      "argv": [
+        "/workspace/.venvs/layauto/bin/python",
+        "-B",
+        "/workspace/Layauto/docs/tasks/W012/A2-implementation/measurement/probe.py",
+        "--runtime-root",
+        "/workspace/work/w012-a2/before",
+        "--case",
+        "extraction-mismatch",
+        "--output",
+        "/workspace/Layauto/docs/tasks/W012/A2-implementation/performance-attempt02/before-extraction-mismatch-r1.json",
+        "--wire-output",
+        "/workspace/work/w012-a2/wires-attempt02/before-extraction-mismatch-r1.bin"
+      ],
+      "case": "extraction-mismatch",
+      "cwd": "/workspace/Layauto",
+      "elapsed_seconds": 159.283630422,
+      "environment_override": {
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "exit_code": 0,
+      "finished_at_utc": "2026-11-11T08:33:56.303373+00:00",
+      "freeze_sha256": "0589e73f0425583c8c9d079ad8909c225331c7c18dbc4274af5ff471ff5fa398",
+      "rep": 1,
+      "side": "before",
+      "started_at_utc": "2026-11-11T08:31:17.019904+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "54d68fef7a2b2fecf6af7b0f724d9c1efb96a47c6509392bfddaeff5e197c63a",
+      "tools": {
+        "analyze.py": "7aea6b887c433de7bee0a7c2824b35e8d38b58315514c7c58d338b2950d1468b",
+        "common.py": "aef57932e21cf060c20c214fce50a13b02a1ba96edd295de17193e5f8ffba7c1",
+        "prepare.py": "b3a5bc61193d168821eb3ec43238a1af984dce97ec44249b82cc7339238c9a75",
+        "probe.py": "e3d475c00bc403c4250649b6267c1deacfe13a9effb5eb5b3435f9d7ad3b5e14",
+        "run.py": "69555360696913172a39ed8272569534553ef6130ae76feaafcf047831fb70d4",
+        "selfcheck.py": "aaa0d17b03b1681a3f9a45f1fbac6934a42097489c5feb085272a716aaeee136"
+      }
+    },
+    {
+      "actual_complete_wire_byte_comparison": {
+        "bytes": 54045042,
+        "candidate": "/workspace/work/w012-a2/wires-attempt02/after-extraction-mismatch-r1.bin",
+        "candidate_sha256": "83713d7586b02181697f10ac45c59490f2c3aa02fcea37ecf92b740a03b8e2b1",
+        "comparison_outside_product_timers": true,
+        "equal": true,
+        "reference": "/workspace/work/w012-a2/wires-attempt02/before-extraction-mismatch-r1.bin",
+        "reference_sha256": "83713d7586b02181697f10ac45c59490f2c3aa02fcea37ecf92b740a03b8e2b1"
+      },
+      "argv": [
+        "/workspace/.venvs/layauto/bin/python",
+        "-B",
+        "/workspace/Layauto/docs/tasks/W012/A2-implementation/measurement/probe.py",
+        "--runtime-root",
+        "/workspace/Layauto",
+        "--case",
+        "extraction-mismatch",
+        "--output",
+        "/workspace/Layauto/docs/tasks/W012/A2-implementation/performance-attempt02/after-extraction-mismatch-r1.json",
+        "--wire-output",
+        "/workspace/work/w012-a2/wires-attempt02/after-extraction-mismatch-r1.bin"
+      ],
+      "case": "extraction-mismatch",
+      "cwd": "/workspace/Layauto",
+      "elapsed_seconds": 152.79745152899977,
+      "environment_override": {
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "exit_code": 0,
+      "finished_at_utc": "2026-11-11T08:36:29.517256+00:00",
+      "freeze_sha256": "0589e73f0425583c8c9d079ad8909c225331c7c18dbc4274af5ff471ff5fa398",
+      "rep": 1,
+      "side": "after",
+      "started_at_utc": "2026-11-11T08:33:56.716046+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "40d1d37268db9479a04f8c2c6b3a1c0bd8bfd568e20f523cda57258e31e6efc8",
+      "tools": {
+        "analyze.py": "7aea6b887c433de7bee0a7c2824b35e8d38b58315514c7c58d338b2950d1468b",
+        "common.py": "aef57932e21cf060c20c214fce50a13b02a1ba96edd295de17193e5f8ffba7c1",
+        "prepare.py": "b3a5bc61193d168821eb3ec43238a1af984dce97ec44249b82cc7339238c9a75",
+        "probe.py": "e3d475c00bc403c4250649b6267c1deacfe13a9effb5eb5b3435f9d7ad3b5e14",
+        "run.py": "69555360696913172a39ed8272569534553ef6130ae76feaafcf047831fb70d4",
+        "selfcheck.py": "aaa0d17b03b1681a3f9a45f1fbac6934a42097489c5feb085272a716aaeee136"
+      }
+    }
+  ],
+  "freeze_sha256": "0589e73f0425583c8c9d079ad8909c225331c7c18dbc4274af5ff471ff5fa398",
+  "fresh_processes": true,
+  "full_wire_byte_comparison": true,
+  "reps": [
+    1
+  ],
+  "schema": "w012-a2-implementation-performance/1",
+  "serial": true,
+  "status": "passed",
+  "wire_reduction": 0
+}

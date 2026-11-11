@@ -1,0 +1,9 @@
+{
+  "bytes": 136471701,
+  "candidate": "/workspace/work/w012-a2/wires-attempt02/before-normal-readback-r1.bin",
+  "candidate_sha256": "1b75a398b4a2f22c156600fbe19590c182f37a77d0c171ab0a8b7a79e23cd795",
+  "comparison_outside_product_timers": true,
+  "equal": true,
+  "reference": "/workspace/work/w012-a2/wires-attempt02/before-normal-readback-r1.bin",
+  "reference_sha256": "1b75a398b4a2f22c156600fbe19590c182f37a77d0c171ab0a8b7a79e23cd795"
+}

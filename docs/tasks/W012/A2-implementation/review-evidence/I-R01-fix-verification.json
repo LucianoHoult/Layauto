@@ -1,0 +1,18 @@
+{
+  "status": "passed",
+  "full_corrected_checker_fresh_result_without_precreation": true,
+  "post_completion_material_hashes_all_match": true,
+  "exact_four_generated_paths": [
+    "docs/tasks/W012/A2-implementation/review-evidence/I-R01-reproduction-fixed-result.json",
+    "docs/tasks/W012/A2-implementation/review-evidence/I-R01-reproduction-fixed.command.json",
+    "docs/tasks/W012/A2-implementation/review-evidence/I-R01-reproduction-fixed.stderr.txt",
+    "docs/tasks/W012/A2-implementation/review-evidence/I-R01-reproduction-fixed.stdout.txt"
+  ],
+  "final_generated_sha256": {
+    "docs/tasks/W012/A2-implementation/review-evidence/I-R01-reproduction-fixed.command.json": "73e982b9d22beb7202685f1ee27c6a5b4081972581cf2031f3013feaacdc29fb",
+    "docs/tasks/W012/A2-implementation/review-evidence/I-R01-reproduction-fixed.stdout.txt": "766b03192e62e7fe133e5c06d3489996a69abc1d7dde0503fed0b0c8114c8184",
+    "docs/tasks/W012/A2-implementation/review-evidence/I-R01-reproduction-fixed.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/tasks/W012/A2-implementation/review-evidence/I-R01-reproduction-fixed-result.json": "a0b1679a04ba142550fc6aedab122e4817cde5e91b51d7cb00b746afdeb5c0a9"
+  },
+  "actual_source_sha256": "e54973f185f14ba8247aa1feabb24a448aaa4a46e9396731fd80dff7f63ed63a"
+}

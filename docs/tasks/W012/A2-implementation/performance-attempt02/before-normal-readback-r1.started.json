@@ -1,0 +1,32 @@
+{
+  "argv": [
+    "/workspace/.venvs/layauto/bin/python",
+    "-B",
+    "/workspace/Layauto/docs/tasks/W012/A2-implementation/measurement/probe.py",
+    "--runtime-root",
+    "/workspace/work/w012-a2/before",
+    "--case",
+    "normal-readback",
+    "--output",
+    "/workspace/Layauto/docs/tasks/W012/A2-implementation/performance-attempt02/before-normal-readback-r1.json",
+    "--wire-output",
+    "/workspace/work/w012-a2/wires-attempt02/before-normal-readback-r1.bin"
+  ],
+  "case": "normal-readback",
+  "cwd": "/workspace/Layauto",
+  "environment_override": {
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "freeze_sha256": "0589e73f0425583c8c9d079ad8909c225331c7c18dbc4274af5ff471ff5fa398",
+  "rep": 1,
+  "side": "before",
+  "started_at_utc": "2026-11-11T08:20:29.040616+00:00",
+  "tools": {
+    "analyze.py": "7aea6b887c433de7bee0a7c2824b35e8d38b58315514c7c58d338b2950d1468b",
+    "common.py": "aef57932e21cf060c20c214fce50a13b02a1ba96edd295de17193e5f8ffba7c1",
+    "prepare.py": "b3a5bc61193d168821eb3ec43238a1af984dce97ec44249b82cc7339238c9a75",
+    "probe.py": "e3d475c00bc403c4250649b6267c1deacfe13a9effb5eb5b3435f9d7ad3b5e14",
+    "run.py": "69555360696913172a39ed8272569534553ef6130ae76feaafcf047831fb70d4",
+    "selfcheck.py": "aaa0d17b03b1681a3f9a45f1fbac6934a42097489c5feb085272a716aaeee136"
+  }
+}

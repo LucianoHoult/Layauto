@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/workspace/Layauto/docs/tasks/W012/A2-implementation/measurement/run.py", line 101, in <module>
+    run(parser.parse_args())
+  File "/workspace/Layauto/docs/tasks/W012/A2-implementation/measurement/run.py", line 69, in run
+    assert proc.returncode == 0, 'failed actual sample preserved: ' + name
+           ^^^^^^^^^^^^^^^^^^^^
+AssertionError: failed actual sample preserved: before-normal-direct-r1

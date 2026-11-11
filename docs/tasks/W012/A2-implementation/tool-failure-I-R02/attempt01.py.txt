@@ -1,0 +1,11 @@
+from pathlib import Path
+from layauto_v2.importers import read_inputs
+from layauto_v2.normalization import from_parse_result,normalize
+parsed=read_inputs(Path('/workspace/Layauto/tests/fixtures/w003_m1/site_config.yaml'))
+semantic=normalize(from_parse_result(parsed))
+for owner in ('source','target'):
+ value=getattr(semantic.value,owner)
+ print(owner, value.preservation.kind)
+ print([(ref.uri,ref.sha256,ref.field) for ref in value.preservation.sources])
+ print('payload',list(value.preservation.payload))
+print('parsed target',[(ref.uri,ref.sha256) for ref in parsed.value['target_cdl'].sources])

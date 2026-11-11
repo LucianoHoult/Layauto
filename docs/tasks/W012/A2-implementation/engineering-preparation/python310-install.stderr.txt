@@ -1,0 +1,4 @@
+Downloading cpython-3.10.22-linux-x86_64-gnu (download) (28.0MiB)
+ Downloaded cpython-3.10.22-linux-x86_64-gnu (download)
+Installed Python 3.10.22 in 6.92s
+ + cpython-3.10.22-linux-x86_64-gnu

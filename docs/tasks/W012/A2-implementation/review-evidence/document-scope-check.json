@@ -1,0 +1,11 @@
+{
+  "status": "passed",
+  "preparation": "0213c346ac03b7b7282aae522c299155958ac8f6",
+  "task_sha256": "79b92468b4aef7ce361f71659224047afadbf5d6b622145f50f8af6e362c1b22",
+  "marked_execution_block_sha256": "2714b8c15c1f0976cb7a320f75ea17d1522e1fabb6b0b6191520802cfbfc4637",
+  "protected_original_task_bytes_equal": true,
+  "changed_path_count": 199,
+  "allowed_scope_only": true,
+  "performance_analysis_sha256": "677f98ea4e6118203ef55e403847cc51532831dc275cff1f0be01ed91186e997",
+  "notes": "Actual document/scope review before final delivery/seal; post-completion output identities checked separately."
+}

@@ -1,0 +1,35 @@
+{
+  "status": "passed",
+  "rows": [
+    {
+      "name": "before-normal-direct-r1",
+      "started_fields_match_completed": true,
+      "comparison_fields_match_independent_full_wire_check": true
+    },
+    {
+      "name": "after-normal-direct-r1",
+      "started_fields_match_completed": true,
+      "comparison_fields_match_independent_full_wire_check": true
+    },
+    {
+      "name": "before-normal-readback-r1",
+      "started_fields_match_completed": true,
+      "comparison_fields_match_independent_full_wire_check": true
+    },
+    {
+      "name": "after-normal-readback-r1",
+      "started_fields_match_completed": true,
+      "comparison_fields_match_independent_full_wire_check": true
+    },
+    {
+      "name": "before-extraction-mismatch-r1",
+      "started_fields_match_completed": true,
+      "comparison_fields_match_independent_full_wire_check": true
+    },
+    {
+      "name": "after-extraction-mismatch-r1",
+      "started_fields_match_completed": true,
+      "comparison_fields_match_independent_full_wire_check": true
+    }
+  ]
+}

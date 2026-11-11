@@ -1,0 +1,37 @@
+{
+  "argv": [
+    "/workspace/.venvs/layauto/bin/python",
+    "-B",
+    "/workspace/Layauto/docs/tasks/W012/A2-implementation/measurement/probe.py",
+    "--runtime-root",
+    "/workspace/work/w012-a2/before",
+    "--case",
+    "normal-direct",
+    "--output",
+    "/workspace/Layauto/docs/tasks/W012/A2-implementation/performance/before-normal-direct-r1.json",
+    "--wire-output",
+    "/workspace/work/w012-a2/wires/before-normal-direct-r1.bin"
+  ],
+  "case": "normal-direct",
+  "cwd": "/workspace/Layauto",
+  "elapsed_seconds": 175.25959642100042,
+  "environment_override": {
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "exit_code": 1,
+  "finished_at_utc": "2026-11-11T08:08:56.492622+00:00",
+  "freeze_sha256": "82a650483e9a1c11900960573378830b3e6fcdf9012a88e041f68b6e89069331",
+  "rep": 1,
+  "side": "before",
+  "started_at_utc": "2026-11-11T08:06:01.232543+00:00",
+  "stderr_sha256": "83cb692b8cad418f24a330de610288a9039aa1029a24ef80d06447df0591b19a",
+  "stdout_sha256": "91182ae8eb174aac4ccd5f2d2957b7be209740354d31befc4770b37e45a36a7b",
+  "tools": {
+    "analyze.py": "edb2c82018dc2c4e47fe5e6784c3dd56cd9bfd76a1ed11ebec671104bdf97d7c",
+    "common.py": "aef57932e21cf060c20c214fce50a13b02a1ba96edd295de17193e5f8ffba7c1",
+    "prepare.py": "b3a5bc61193d168821eb3ec43238a1af984dce97ec44249b82cc7339238c9a75",
+    "probe.py": "fd08cf2fb33596a970625adde5a0d4c081efcc09cc967f00cc938af2b153c02f",
+    "run.py": "69555360696913172a39ed8272569534553ef6130ae76feaafcf047831fb70d4",
+    "selfcheck.py": "c1943468e45c7c16dee88f0b0cb3d03eeac88fbd14e7981f1c1126e4147a215a"
+  }
+}

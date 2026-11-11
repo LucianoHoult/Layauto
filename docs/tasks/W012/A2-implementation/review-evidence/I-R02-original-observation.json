@@ -1,0 +1,5 @@
+{
+  "finding": "A2-I-R02",
+  "probe_sha256": "fd08cf2fb33596a970625adde5a0d4c081efcc09cc967f00cc938af2b153c02f",
+  "note": "Original probe/source and failed performance directory raw outputs copied before correction; no successful receipt/wire may be inferred from partial product timings."
+}

@@ -1,0 +1,474 @@
+{
+  "all_observed_failed_commands": [
+    {
+      "argv": [
+        "/workspace/.venvs/layauto/bin/python",
+        "-B",
+        "/workspace/Layauto/docs/tasks/W012/A2-implementation/measurement/probe.py",
+        "--runtime-root",
+        "/workspace/work/w012-a2/before",
+        "--case",
+        "normal-direct",
+        "--output",
+        "/workspace/Layauto/docs/tasks/W012/A2-implementation/performance/before-normal-direct-r1.json",
+        "--wire-output",
+        "/workspace/work/w012-a2/wires/before-normal-direct-r1.bin"
+      ],
+      "case": "normal-direct",
+      "cwd": "/workspace/Layauto",
+      "elapsed_seconds": 175.25959642100042,
+      "environment_override": {
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "exit_code": 1,
+      "finished_at_utc": "2026-11-11T08:08:56.492622+00:00",
+      "freeze_sha256": "82a650483e9a1c11900960573378830b3e6fcdf9012a88e041f68b6e89069331",
+      "path": "/workspace/Layauto/docs/tasks/W012/A2-implementation/performance/before-normal-direct-r1.command.json",
+      "rep": 1,
+      "side": "before",
+      "started_at_utc": "2026-11-11T08:06:01.232543+00:00",
+      "stderr_sha256": "83cb692b8cad418f24a330de610288a9039aa1029a24ef80d06447df0591b19a",
+      "stdout_sha256": "91182ae8eb174aac4ccd5f2d2957b7be209740354d31befc4770b37e45a36a7b",
+      "tools": {
+        "analyze.py": "edb2c82018dc2c4e47fe5e6784c3dd56cd9bfd76a1ed11ebec671104bdf97d7c",
+        "common.py": "aef57932e21cf060c20c214fce50a13b02a1ba96edd295de17193e5f8ffba7c1",
+        "prepare.py": "b3a5bc61193d168821eb3ec43238a1af984dce97ec44249b82cc7339238c9a75",
+        "probe.py": "fd08cf2fb33596a970625adde5a0d4c081efcc09cc967f00cc938af2b153c02f",
+        "run.py": "69555360696913172a39ed8272569534553ef6130ae76feaafcf047831fb70d4",
+        "selfcheck.py": "c1943468e45c7c16dee88f0b0cb3d03eeac88fbd14e7981f1c1126e4147a215a"
+      }
+    }
+  ],
+  "median_rule": "sum actual stages for each run first, then median runs",
+  "paths": {
+    "extraction-mismatch": {
+      "each_actual_sample": {
+        "after": [
+          {
+            "W011_build_seconds": 71.96008052199977,
+            "all_build_seconds": 90.87180107800032,
+            "decode_seconds": 56.68133732199931,
+            "encode_seconds": 2.943032064000363,
+            "peak_rss_kib": 326316,
+            "rep": 1,
+            "sample": "/workspace/Layauto/docs/tasks/W012/A2-implementation/performance-attempt02/after-extraction-mismatch-r1.json",
+            "sample_sha256": "fe5a1c0f98615d8a6a9671d5e338858cc452168d95d424d2fdcdf4ab915f1e80",
+            "stages": {
+              "W005_read_inputs": 1.2586509729999307,
+              "W008_adapter_and_build": 0.5622831439995934,
+              "W009_build": 0.9287221350004984,
+              "W010_build": 16.162064304000523,
+              "W011_build": 71.96008052199977,
+              "W011_result_decode": 56.68133732199931,
+              "W011_result_encode": 2.943032064000363
+            },
+            "total_seconds": 150.496170464,
+            "wire_bytes": 54045042,
+            "wire_sha256": "83713d7586b02181697f10ac45c59490f2c3aa02fcea37ecf92b740a03b8e2b1"
+          }
+        ],
+        "before": [
+          {
+            "W011_build_seconds": 60.0650014619996,
+            "all_build_seconds": 84.28417916199851,
+            "decode_seconds": 69.07523203399978,
+            "encode_seconds": 2.818240797000726,
+            "peak_rss_kib": 326396,
+            "rep": 1,
+            "sample": "/workspace/Layauto/docs/tasks/W012/A2-implementation/performance-attempt02/before-extraction-mismatch-r1.json",
+            "sample_sha256": "e0b2bfec32cb27966e8860d1a1d25e9979acf9441643dad7aa0730c8a02d6df7",
+            "stages": {
+              "W005_read_inputs": 1.2393941089994769,
+              "W008_adapter_and_build": 0.9324730309999723,
+              "W009_build": 1.7145957329994417,
+              "W010_build": 20.332714827000018,
+              "W011_build": 60.0650014619996,
+              "W011_result_decode": 69.07523203399978,
+              "W011_result_encode": 2.818240797000726
+            },
+            "total_seconds": 156.17765199299902,
+            "wire_bytes": 54045042,
+            "wire_sha256": "83713d7586b02181697f10ac45c59490f2c3aa02fcea37ecf92b740a03b8e2b1"
+          }
+        ]
+      },
+      "each_stage_median_and_changes": {
+        "W005_read_inputs": {
+          "after": 1.2586509729999307,
+          "after_minus_before": 0.01925686400045379,
+          "before": 1.2393941089994769,
+          "improvement_percent": -1.5537320905937957
+        },
+        "W008_adapter_and_build": {
+          "after": 0.5622831439995934,
+          "after_minus_before": -0.3701898870003788,
+          "before": 0.9324730309999723,
+          "improvement_percent": 39.69979556442419
+        },
+        "W009_build": {
+          "after": 0.9287221350004984,
+          "after_minus_before": -0.7858735979989433,
+          "before": 1.7145957329994417,
+          "improvement_percent": 45.83433767353247
+        },
+        "W010_build": {
+          "after": 16.162064304000523,
+          "after_minus_before": -4.170650522999495,
+          "before": 20.332714827000018,
+          "improvement_percent": 20.512019956436145
+        },
+        "W011_build": {
+          "after": 71.96008052199977,
+          "after_minus_before": 11.895079060000171,
+          "before": 60.0650014619996,
+          "improvement_percent": -19.803677300375398
+        },
+        "W011_result_decode": {
+          "after": 56.68133732199931,
+          "after_minus_before": -12.393894712000474,
+          "before": 69.07523203399978,
+          "improvement_percent": 17.942603082245213
+        },
+        "W011_result_encode": {
+          "after": 2.943032064000363,
+          "after_minus_before": 0.12479126699963672,
+          "before": 2.818240797000726,
+          "improvement_percent": -4.427984547397235
+        }
+      },
+      "medians_and_changes": {
+        "W011_build_seconds": {
+          "after": 71.96008052199977,
+          "after_minus_before": 11.895079060000171,
+          "before": 60.0650014619996,
+          "improvement_percent": -19.803677300375398
+        },
+        "all_build_seconds": {
+          "after": 90.87180107800032,
+          "after_minus_before": 6.587621916001808,
+          "before": 84.28417916199851,
+          "improvement_percent": -7.8159649669721
+        },
+        "decode_seconds": {
+          "after": 56.68133732199931,
+          "after_minus_before": -12.393894712000474,
+          "before": 69.07523203399978,
+          "improvement_percent": 17.942603082245213
+        },
+        "encode_seconds": {
+          "after": 2.943032064000363,
+          "after_minus_before": 0.12479126699963672,
+          "before": 2.818240797000726,
+          "improvement_percent": -4.427984547397235
+        },
+        "peak_rss_kib": {
+          "after": 326316,
+          "after_minus_before": -80,
+          "before": 326396,
+          "improvement_percent": 0.02451010429049827
+        },
+        "total_seconds": {
+          "after": 150.496170464,
+          "after_minus_before": -5.681481528999029,
+          "before": 156.17765199299902,
+          "improvement_percent": 3.6378325941625156
+        }
+      },
+      "wire_bytes": 54045042,
+      "wire_reduction_percent": 0,
+      "wire_sha256": "83713d7586b02181697f10ac45c59490f2c3aa02fcea37ecf92b740a03b8e2b1"
+    },
+    "normal-direct": {
+      "each_actual_sample": {
+        "after": [
+          {
+            "W011_build_seconds": 50.57719271999986,
+            "all_build_seconds": 77.2041813830001,
+            "decode_seconds": 90.45982957599972,
+            "encode_seconds": 2.106325905000176,
+            "peak_rss_kib": 325876,
+            "rep": 1,
+            "sample": "/workspace/Layauto/docs/tasks/W012/A2-implementation/performance-attempt02/after-normal-direct-r1.json",
+            "sample_sha256": "fe1e61e1453e81a35072aae8b49f6ccefdf768f586dbe2ab156a491a66263937",
+            "stages": {
+              "W005_read_inputs": 2.49875592699982,
+              "W008_adapter_and_build": 1.3199307419999968,
+              "W009_build": 1.6710535150000396,
+              "W010_build": 21.13724847900039,
+              "W011_build": 50.57719271999986,
+              "W011_result_decode": 90.45982957599972,
+              "W011_result_encode": 2.106325905000176
+            },
+            "total_seconds": 169.770336864,
+            "wire_bytes": 54050313,
+            "wire_sha256": "4d07033687223809e542ea661138fe0566ed162f6eab17fb7d4f806745377f16"
+          }
+        ],
+        "before": [
+          {
+            "W011_build_seconds": 70.22209823100002,
+            "all_build_seconds": 98.53613102599957,
+            "decode_seconds": 75.93751547800002,
+            "encode_seconds": 6.289962086000287,
+            "peak_rss_kib": 327444,
+            "rep": 1,
+            "sample": "/workspace/Layauto/docs/tasks/W012/A2-implementation/performance-attempt02/before-normal-direct-r1.json",
+            "sample_sha256": "5cfb1be4d7a12e8a3052c28af6688af1c3031adfb8d398b38a578239143b5621",
+            "stages": {
+              "W005_read_inputs": 1.4288053420000324,
+              "W008_adapter_and_build": 0.7602932699996927,
+              "W009_build": 1.2646876489998249,
+              "W010_build": 24.860246533999998,
+              "W011_build": 70.22209823100002,
+              "W011_result_decode": 75.93751547800002,
+              "W011_result_encode": 6.289962086000287
+            },
+            "total_seconds": 180.76360858999988,
+            "wire_bytes": 54050313,
+            "wire_sha256": "4d07033687223809e542ea661138fe0566ed162f6eab17fb7d4f806745377f16"
+          }
+        ]
+      },
+      "each_stage_median_and_changes": {
+        "W005_read_inputs": {
+          "after": 2.49875592699982,
+          "after_minus_before": 1.0699505849997877,
+          "before": 1.4288053420000324,
+          "improvement_percent": -74.88427944299801
+        },
+        "W008_adapter_and_build": {
+          "after": 1.3199307419999968,
+          "after_minus_before": 0.5596374720003041,
+          "before": 0.7602932699996927,
+          "improvement_percent": -73.60810546179506
+        },
+        "W009_build": {
+          "after": 1.6710535150000396,
+          "after_minus_before": 0.40636586600021474,
+          "before": 1.2646876489998249,
+          "improvement_percent": -32.131717766168435
+        },
+        "W010_build": {
+          "after": 21.13724847900039,
+          "after_minus_before": -3.722998054999607,
+          "before": 24.860246533999998,
+          "improvement_percent": 14.97570850678358
+        },
+        "W011_build": {
+          "after": 50.57719271999986,
+          "after_minus_before": -19.64490551100016,
+          "before": 70.22209823100002,
+          "improvement_percent": 27.975389522507577
+        },
+        "W011_result_decode": {
+          "after": 90.45982957599972,
+          "after_minus_before": 14.522314097999697,
+          "before": 75.93751547800002,
+          "improvement_percent": -19.12403112820695
+        },
+        "W011_result_encode": {
+          "after": 2.106325905000176,
+          "after_minus_before": -4.183636181000111,
+          "before": 6.289962086000287,
+          "improvement_percent": 66.51289982036181
+        }
+      },
+      "medians_and_changes": {
+        "W011_build_seconds": {
+          "after": 50.57719271999986,
+          "after_minus_before": -19.64490551100016,
+          "before": 70.22209823100002,
+          "improvement_percent": 27.975389522507577
+        },
+        "all_build_seconds": {
+          "after": 77.2041813830001,
+          "after_minus_before": -21.33194964299946,
+          "before": 98.53613102599957,
+          "improvement_percent": 21.648860596496178
+        },
+        "decode_seconds": {
+          "after": 90.45982957599972,
+          "after_minus_before": 14.522314097999697,
+          "before": 75.93751547800002,
+          "improvement_percent": -19.12403112820695
+        },
+        "encode_seconds": {
+          "after": 2.106325905000176,
+          "after_minus_before": -4.183636181000111,
+          "before": 6.289962086000287,
+          "improvement_percent": 66.51289982036181
+        },
+        "peak_rss_kib": {
+          "after": 325876,
+          "after_minus_before": -1568,
+          "before": 327444,
+          "improvement_percent": 0.4788605074455443
+        },
+        "total_seconds": {
+          "after": 169.770336864,
+          "after_minus_before": -10.993271725999875,
+          "before": 180.76360858999988,
+          "improvement_percent": 6.081573504617477
+        }
+      },
+      "wire_bytes": 54050313,
+      "wire_reduction_percent": 0,
+      "wire_sha256": "4d07033687223809e542ea661138fe0566ed162f6eab17fb7d4f806745377f16"
+    },
+    "normal-readback": {
+      "each_actual_sample": {
+        "after": [
+          {
+            "W011_build_seconds": 141.3664175949998,
+            "all_build_seconds": 185.26805894500012,
+            "decode_seconds": 157.68499722200022,
+            "encode_seconds": 10.43859619199975,
+            "peak_rss_kib": 709204,
+            "rep": 1,
+            "sample": "/workspace/Layauto/docs/tasks/W012/A2-implementation/performance-attempt02/after-normal-readback-r1.json",
+            "sample_sha256": "daee9950fbc08b4950f80d42aefbfa687393b6887dcd561976b374bee48822a0",
+            "stages": {
+              "W006_caller_reads": 1.8152108489998682,
+              "W006_prepare_inputs": 3.2667961719998857,
+              "W008_adapter_and_build": 0.9439127390000976,
+              "W009_build": 2.0330080010003257,
+              "W010_build": 35.84271358900014,
+              "W011_build": 141.3664175949998,
+              "W011_result_decode": 157.68499722200022,
+              "W011_result_encode": 10.43859619199975
+            },
+            "total_seconds": 353.3916523590001,
+            "wire_bytes": 136471701,
+            "wire_sha256": "1b75a398b4a2f22c156600fbe19590c182f37a77d0c171ab0a8b7a79e23cd795"
+          }
+        ],
+        "before": [
+          {
+            "W011_build_seconds": 101.47934064600031,
+            "all_build_seconds": 149.99368706699943,
+            "decode_seconds": 130.60903036499985,
+            "encode_seconds": 3.987210646999756,
+            "peak_rss_kib": 711056,
+            "rep": 1,
+            "sample": "/workspace/Layauto/docs/tasks/W012/A2-implementation/performance-attempt02/before-normal-readback-r1.json",
+            "sample_sha256": "40b8801b38487c7ab643d3ab75894e2058ac92eccf07cffa484d58c6f5707e88",
+            "stages": {
+              "W006_caller_reads": 1.5905308089995742,
+              "W006_prepare_inputs": 2.0106185579998055,
+              "W008_adapter_and_build": 0.8761920580000151,
+              "W009_build": 1.6765158839998549,
+              "W010_build": 42.36048911199987,
+              "W011_build": 101.47934064600031,
+              "W011_result_decode": 130.60903036499985,
+              "W011_result_encode": 3.987210646999756
+            },
+            "total_seconds": 284.58992807899904,
+            "wire_bytes": 136471701,
+            "wire_sha256": "1b75a398b4a2f22c156600fbe19590c182f37a77d0c171ab0a8b7a79e23cd795"
+          }
+        ]
+      },
+      "each_stage_median_and_changes": {
+        "W006_caller_reads": {
+          "after": 1.8152108489998682,
+          "after_minus_before": 0.22468004000029396,
+          "before": 1.5905308089995742,
+          "improvement_percent": -14.126104236963211
+        },
+        "W006_prepare_inputs": {
+          "after": 3.2667961719998857,
+          "after_minus_before": 1.2561776140000802,
+          "before": 2.0106185579998055,
+          "improvement_percent": -62.477171962927926
+        },
+        "W008_adapter_and_build": {
+          "after": 0.9439127390000976,
+          "after_minus_before": 0.06772068100008255,
+          "before": 0.8761920580000151,
+          "improvement_percent": -7.728976812990163
+        },
+        "W009_build": {
+          "after": 2.0330080010003257,
+          "after_minus_before": 0.3564921170004709,
+          "before": 1.6765158839998549,
+          "improvement_percent": -21.26386754833167
+        },
+        "W010_build": {
+          "after": 35.84271358900014,
+          "after_minus_before": -6.517775522999727,
+          "before": 42.36048911199987,
+          "improvement_percent": 15.386450108654138
+        },
+        "W011_build": {
+          "after": 141.3664175949998,
+          "after_minus_before": 39.88707694899949,
+          "before": 101.47934064600031,
+          "improvement_percent": -39.30561303915172
+        },
+        "W011_result_decode": {
+          "after": 157.68499722200022,
+          "after_minus_before": 27.075966857000367,
+          "before": 130.60903036499985,
+          "improvement_percent": -20.730547329946415
+        },
+        "W011_result_encode": {
+          "after": 10.43859619199975,
+          "after_minus_before": 6.451385544999994,
+          "before": 3.987210646999756,
+          "improvement_percent": -161.80197426625674
+        }
+      },
+      "medians_and_changes": {
+        "W011_build_seconds": {
+          "after": 141.3664175949998,
+          "after_minus_before": 39.88707694899949,
+          "before": 101.47934064600031,
+          "improvement_percent": -39.30561303915172
+        },
+        "all_build_seconds": {
+          "after": 185.26805894500012,
+          "after_minus_before": 35.27437187800069,
+          "before": 149.99368706699943,
+          "improvement_percent": -23.5172376703056
+        },
+        "decode_seconds": {
+          "after": 157.68499722200022,
+          "after_minus_before": 27.075966857000367,
+          "before": 130.60903036499985,
+          "improvement_percent": -20.730547329946415
+        },
+        "encode_seconds": {
+          "after": 10.43859619199975,
+          "after_minus_before": 6.451385544999994,
+          "before": 3.987210646999756,
+          "improvement_percent": -161.80197426625674
+        },
+        "peak_rss_kib": {
+          "after": 709204,
+          "after_minus_before": -1852,
+          "before": 711056,
+          "improvement_percent": 0.26045768547062753
+        },
+        "total_seconds": {
+          "after": 353.3916523590001,
+          "after_minus_before": 68.80172428000105,
+          "before": 284.58992807899904,
+          "improvement_percent": -24.175741124929218
+        }
+      },
+      "wire_bytes": 136471701,
+      "wire_reduction_percent": 0,
+      "wire_sha256": "1b75a398b4a2f22c156600fbe19590c182f37a77d0c171ab0a8b7a79e23cd795"
+    }
+  },
+  "reps": [
+    1
+  ],
+  "samples_per_side_per_path": 1,
+  "scanned_failure_directories": [
+    "/workspace/Layauto/docs/tasks/W012/A2-implementation/performance",
+    "/workspace/Layauto/docs/tasks/W012/A2-implementation/performance-attempt02"
+  ],
+  "schema": "w012-a2-implementation-performance-summary/1",
+  "scope": "Uninstrumented complete public pipeline stages only; no product acceptance decision."
+}

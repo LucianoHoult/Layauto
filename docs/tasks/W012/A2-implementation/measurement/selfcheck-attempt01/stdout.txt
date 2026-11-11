@@ -1,0 +1,2 @@
+HEAD is now at 2489b46 docs: accept W012 A1 integration and record remaining cost
+PASS A2 measurement light selfcheck: exact local A1, 35/5 inputs, bytecmp, guards, A1 assertions

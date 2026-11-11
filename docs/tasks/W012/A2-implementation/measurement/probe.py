@@ -1,0 +1,218 @@
+"""A2 complete public-path probe: A1 timing/roots/GC, independent import tree."""
+from __future__ import annotations
+
+import argparse
+from dataclasses import fields, is_dataclass
+from datetime import datetime, timezone
+import gc
+import json
+from pathlib import Path
+import resource
+import sys
+import time
+
+from common import FIXED_ROOT, OVERLAY, dump_new, environment, identity, inputs, sha
+
+
+def check_result(result, local, mismatch):
+    draft = result.value
+    assert result.status == 'success' and not result.issues and draft is not None
+    assert result.input is local and draft.local is local.value
+    assert result.completed == local.completed and result.body_evidence is local.body_evidence
+    assert result.semantic.value.source == draft.source
+    graph = draft.local
+    assert len(graph.edges) == 8 and len(graph.components) == 6
+    assert graph.local_enclosure_status == 'pass'
+    records = graph.effective.base.layout.records
+    fins = {row.id: row for row in records if row.layer == 'FIN'}
+    assert len(records) == 40 and len(fins) == 18
+    measurements = {row.channel_ref: row for row in draft.measurements}
+    by_name = {row.device_id.name: measurements[row.channel_ref] for row in draft.associations}
+    assert {name: row.count for name, row in by_name.items()} == {'MN0': 4 if mismatch else 5, 'MP0': 7}
+    expected_y = {'MN0': ((24,26),(34,36),(44,46),(54,56)) + (() if mismatch else ((64,66),)),
+                  'MP0': ((114,116),(124,126),(134,136),(144,146),(154,156),(164,166),(174,176))}
+    crossings = {}
+    for name, row in by_name.items():
+        assert {e.fin_id for e in row.evaluations} == set(fins)
+        assert len(row.evaluations) == 18 and row.length_nm == 4
+        qualified = [e for e in row.evaluations if e.status == 'qualified']
+        assert {e.crossing.bounds for e in qualified} == {(58,lo,62,hi) for lo,hi in expected_y[name]}
+        assert all(e.width_nm == 2 and e.source == fins[e.fin_id].source for e in row.evaluations)
+        assert not row.unresolved_relations
+        crossings[name] = [list(map(str, e.crossing.bounds)) for e in qualified]
+    assert all(row.full_coverage and row.coverage_fraction == 1 for row in draft.associations)
+    if mismatch:
+        assert len(draft.differences) == 1 and draft.comparison_status == 'mismatch'
+        diff = draft.differences[0]
+        assert diff.axis == 'fins_per_finger' and diff.measured == 4 and diff.declared.exact == 5
+        assert any(e.status == 'touch' and fins[e.fin_id].rect.bounds == (10,64,110,66)
+                   for e in by_name['MN0'].evaluations)
+    else:
+        assert not draft.differences and draft.comparison_status == 'equal'
+    return {'counts': {name: row.count for name,row in by_name.items()}, 'crossings': crossings,
+            'difference_count': len(draft.differences), 'comparison_status': draft.comparison_status,
+            'local_nodes': len(graph.nodes), 'local_edges': len(graph.edges), 'local_components': len(graph.components),
+            'T05_audits': len(graph.audits), 'T05_status': graph.local_enclosure_status,
+            'body_kind': result.body_evidence.kind, 'complete_evaluations': 36,
+            'partial_unknown': 'not covered by these fixed inputs; selected regressions and final new-source matrices are recorded separately'}
+
+
+def check_preservation(facts, parsed):
+    """Check exact original CDL evidence; keep the captured URI spelling intact."""
+    from layauto_v2.domain.circuit import SemanticCircuitDraft, TargetCircuit
+    assert type(facts.source) is SemanticCircuitDraft
+    assert type(facts.target) is TargetCircuit
+    assert facts.source is not facts.target
+    acquired = {source.uri: source for source in parsed.sources}
+    for owner, kind in (('source', 'source_cdl'), ('target', 'target_cdl')):
+        original = tuple(record for record in parsed.completed if record.kind == kind)
+        assert len(original) == 1
+        preservation = getattr(facts, owner).preservation
+        assert preservation == original[0]  # complete typed payload, sources, bytes bindings and versions
+        assert preservation.kind == kind
+        assert all(ref.uri in acquired and acquired[ref.uri].sha256 == ref.sha256
+                   for ref in preservation.sources)
+    assert facts.source.preservation.sources != facts.target.preservation.sources
+
+
+def check_sources_target(result, parsed):
+    """Use captured bytes and explicit source/target separation; no re-encoding."""
+    draft = result.value
+    facts = result.semantic.value
+    captured = result.input.input.input.input.semantic_input.parse.sources
+    assert len(captured) == 31 and captured == parsed.sources
+    acquired = {source.uri: source for source in captured}
+    assert all(sha(source.data) == source.sha256 for source in captured)
+    assert all(ref.uri in acquired and acquired[ref.uri].sha256 == ref.sha256
+               for evidence in result.completed for ref in evidence.sources)
+    check_preservation(facts, parsed)
+    assert len(facts.net_seeds) > 0
+    assert len(result.body_evidence.payload['shapes']) == 6
+    assert len(draft.local.nodes) == 14 and len(draft.local.audits) == 16
+    identities = {row.query_key: row for row in facts.device_identities}
+    seeds = {row.record['record_id']: row for row in facts.device_seeds}
+    for seed in draft.seeds:
+        original = seeds[seed.record['record_id']]
+        assert seed.device_id == original.semantic_id and seed.query_key == original.query_key
+        assert seed.record == original.record
+        assert seed.identity_provenance == identities[seed.query_key].provenance
+    return {'capture_count': len(captured), 'raw_bytes_sha_verified': True,
+            'completed_sources_resolve': True, 'independent_target': True,
+            'query_seed_provenance': True, 'body_shapes': 6}
+
+
+def refs_inventory(root):
+    """Stored typed references only; full wire equality additionally covers every field."""
+    seen, refs = set(), set()
+    def visit(value):
+        if id(value) in seen:
+            return
+        seen.add(id(value))
+        if is_dataclass(value) and not isinstance(value, type):
+            if type(value).__name__.endswith('Ref'):
+                refs.add((type(value).__module__ + '.' + type(value).__name__,
+                          tuple((field.name, str(getattr(value, field.name))) for field in fields(value))))
+            for field in fields(value):
+                visit(getattr(value, field.name))
+        elif type(value) in (tuple, list):
+            for item in value:
+                visit(item)
+        elif type(value) is dict:
+            for item in value.values():
+                visit(item)
+    visit(root)
+    return sorted(refs)
+
+
+def run(args):
+    runtime = args.runtime_root.resolve()
+    sys.path.insert(0, str(runtime))
+    from layauto_v2.domain.publication import InputsReady, RunRequest
+    from layauto_v2.importers import read_inputs
+    from layauto_v2.normalization import (build_geometry, build_effective_geometry, build_local_connectivity,
+        build_channel_identity, geometry_from_parse_result, geometry_from_inputs_ready)
+    from layauto_v2.normalization import channel_identity_codec as codec
+    from layauto_v2.pipeline import prepare_inputs
+    from layauto_v2.repository import PublicationRepository
+    import layauto_v2
+    assert Path(layauto_v2.__file__).resolve().parent == runtime / 'layauto_v2'
+    assert not args.output.exists() and not args.wire_output.exists(), 'never overwrite any prior evidence'
+    files = identity(runtime)
+    frozen_inputs = inputs()
+    started = datetime.now(timezone.utc).isoformat()
+    selected = OVERLAY if args.case == 'extraction-mismatch' else FIXED_ROOT / 'tests/fixtures/w003_m1'
+    times = {}
+    gc.collect()  # identical A1 collection and automatic GC contract
+    def measure(name, call):
+        print('START ' + name, flush=True)
+        start = time.perf_counter()
+        result = call()
+        times[name] = time.perf_counter() - start
+        print('DONE ' + name + ' ' + str(times[name]), flush=True)
+        return result
+    repository = ready = attempt = checkpoint = parse = tool = audits = None
+    if args.case == 'normal-readback':
+        repository = PublicationRepository()
+        request = RunRequest(proposed_run_id='w012-investigation-run', lineage_id='w012-investigation-lineage',
+                             idempotency_key='create-w012', site_path=str(selected / 'site_config.yaml'))
+        ready = measure('W006_prepare_inputs', lambda: prepare_inputs(repository, request))
+        assert isinstance(ready, InputsReady)
+        def caller_read():
+            return (repository.load_checkpoint(ready.run_id), repository.read(ready.parse_ref),
+                    repository.read(ready.tool_ref), tuple(repository.read(ref) for ref in ready.evidence_refs),
+                    repository.load_attempt(ready.run_id))
+        checkpoint, parse, tool, audits, attempt = measure('W006_caller_reads', caller_read)
+        parsed = parse.result
+        geometry = measure('W008_adapter_and_build', lambda: build_geometry(
+            geometry_from_inputs_ready(ready, checkpoint, parse, tool, audits)))
+    else:
+        parsed = measure('W005_read_inputs', lambda: read_inputs(selected / 'site_config.yaml'))
+        assert parsed.status == 'success', parsed.issues
+        geometry = measure('W008_adapter_and_build', lambda: build_geometry(geometry_from_parse_result(parsed)))
+    effective = measure('W009_build', lambda: build_effective_geometry(geometry))
+    local = measure('W010_build', lambda: build_local_connectivity(effective))
+    result = measure('W011_build', lambda: build_channel_identity(local))
+    info = check_result(result, local, args.case == 'extraction-mismatch')
+    wire = measure('W011_result_encode', lambda: codec.encode_record(result))
+    restored = measure('W011_result_decode', lambda: codec.decode_record(wire))
+    assert restored == result
+    assert restored.input.value == local.value and restored.body_evidence == local.body_evidence
+    if ready is not None:
+        assert repository.load_attempt(ready.run_id) == attempt and attempt.phase == 'unsealed'
+        assert repository.load_checkpoint(ready.run_id) == checkpoint
+        assert repository.read_terminal(ready.run_id) is None
+        assert result.input.input.input.input.readback is not None
+    peak = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
+    # All additional identity/provenance/ref walks and actual wire IO are outside timers and peak.
+    source_target = check_sources_target(result, parsed)
+    assert check_sources_target(restored, parsed) == source_target
+    refs = refs_inventory(result)
+    assert refs_inventory(restored) == refs
+    args.wire_output.parent.mkdir(parents=True, exist_ok=True)
+    with args.wire_output.open('xb') as stream:
+        stream.write(wire)
+    assert identity(runtime) == files and inputs() == frozen_inputs
+    receipt = {'case': args.case, 'mode': 'baseline', 'started_at_utc': started,
+               'finished_at_utc': datetime.now(timezone.utc).isoformat(),
+               'environment': environment(), 'tool_sha256': sha(Path(__file__).read_bytes()),
+               'source_identity': files, 'runtime_root': str(runtime), 'package': str(layauto_v2.__file__),
+               'input_site': str(selected / 'site_config.yaml'), 'input_identity': frozen_inputs,
+               'wall_seconds': times, 'process_peak_rss_kib': peak,
+               'wire_bytes': len(wire), 'wire_sha256': sha(wire), 'wire_artifact': str(args.wire_output),
+               'capture_sources': [{'uri': s.uri, 'sha256': s.sha256, 'bytes': len(s.data)} for s in parsed.sources],
+               'result': info, 'sources_and_target': source_target, 'stored_refs': refs,
+               'public_roundtrip_equal': True,
+               'readback_unsealed_checkpoint_unchanged_no_terminal': ready is not None,
+               'gc_enabled': gc.isenabled(), 'gc_threshold': gc.get_threshold()}
+    dump_new(args.output, receipt)
+    print(json.dumps({key: receipt[key] for key in ('case', 'wall_seconds', 'wire_bytes',
+          'wire_sha256', 'process_peak_rss_kib')}), flush=True)
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--runtime-root', type=Path, required=True)
+    parser.add_argument('--case', choices=('normal-direct', 'normal-readback', 'extraction-mismatch'), required=True)
+    parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--wire-output', type=Path, required=True)
+    run(parser.parse_args())

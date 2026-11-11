@@ -1,0 +1,19 @@
+{
+  "argv": [
+    "/workspace/.venvs/layauto/bin/python",
+    "-B",
+    "/workspace/Layauto/docs/tasks/W012/A2-implementation/measurement/selfcheck.py",
+    "--before-root",
+    "/workspace/work/w012-a2/before",
+    "--output",
+    "/workspace/work/w012-a2/review/docs/tasks/W012/A2-implementation/review-evidence/I-R02-selfcheck-result.json"
+  ],
+  "cwd": "/workspace/work/w012-a2/review",
+  "start_utc": "2026-11-11T08:13:53.001789+00:00",
+  "script_sha256": "aaa0d17b03b1681a3f9a45f1fbac6934a42097489c5feb085272a716aaeee136",
+  "exit_code": 0,
+  "elapsed_seconds": 7.492573676999655,
+  "end_utc": "2026-11-11T08:14:00.494460+00:00",
+  "stdout_sha256": "952664141996125608eeac0af617f9d398e0957fbe8e3abbcbf1dc6bb1e9cf0e",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

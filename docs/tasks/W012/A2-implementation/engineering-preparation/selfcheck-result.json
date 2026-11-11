@@ -1,0 +1,40 @@
+{
+  "status": "passed",
+  "at_utc": "2026-11-11T07:29:10.273483+00:00",
+  "checks": [
+    {
+      "name": "engineering_tools.py",
+      "sha256": "5b03a62b5f0305a192107489ab0734e352f768cc54edebd4bea2db9efa002d3e",
+      "syntax": "parsed"
+    },
+    {
+      "name": "installed_smoke.py",
+      "sha256": "203879f02351da8542f68e7f91a4613e872b38172da4b2e44ccf1c30296bfd16",
+      "syntax": "parsed"
+    },
+    {
+      "check": "existing evidence refuses before new work directory",
+      "exit_code": 1,
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "/workspace/work/w012-a2/engineering/docs/tasks/W012/A2-implementation/engineering_tools.py",
+        "--root",
+        "/workspace/work/w012-a2/engineering",
+        "--out",
+        "/workspace/work/w012-a2/engineering/work/a2-engineering-selfcheck-37x1qlfu/out",
+        "--work",
+        "/workspace/work/w012-a2/engineering/work/a2-engineering-selfcheck-37x1qlfu/work",
+        "--smoke",
+        "/workspace/work/w012-a2/engineering/docs/tasks/W012/A2-implementation/installed_smoke.py",
+        "--python310",
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "--python312",
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "--expected-tests",
+        "1656"
+      ]
+    }
+  ],
+  "heavy_matrix_run": false
+}

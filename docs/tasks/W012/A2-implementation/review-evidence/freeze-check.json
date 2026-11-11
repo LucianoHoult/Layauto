@@ -1,0 +1,35 @@
+{
+  "all_input_bytes_match_original_A1_git": true,
+  "at_utc": "2026-11-11T07:33:17.759415+00:00",
+  "base": "2489b4609ae97d8211bf450d55cac9392492ac71",
+  "candidate": "c0a9a2e4c292255202a0ec82b6277cd8a8dd6b78",
+  "differences": [
+    "layauto_v2/normalization/channel_identity_codec.py",
+    "layauto_v2/normalization/local_connectivity_codec.py",
+    "tests/contracts/test_w012_typed_pack.py"
+  ],
+  "five_overlays": [
+    "body/context.json",
+    "query/header.json",
+    "query/normalized/device_regions.yaml",
+    "query/raw/device_info_Q17.txt",
+    "source.gds"
+  ],
+  "freeze_sha256": "82a650483e9a1c11900960573378830b3e6fcdf9012a88e041f68b6e89069331",
+  "input_count": 35,
+  "scope": "Independent pre-screen scope/input/source/test/config/tool checks; no complete product benchmark run.",
+  "source_counts": {
+    "after": 264,
+    "before": 263
+  },
+  "status": "passed",
+  "tar_members_and_complete_bytes_checked": true,
+  "tools": {
+    "analyze.py": "edb2c82018dc2c4e47fe5e6784c3dd56cd9bfd76a1ed11ebec671104bdf97d7c",
+    "common.py": "aef57932e21cf060c20c214fce50a13b02a1ba96edd295de17193e5f8ffba7c1",
+    "prepare.py": "b3a5bc61193d168821eb3ec43238a1af984dce97ec44249b82cc7339238c9a75",
+    "probe.py": "fd08cf2fb33596a970625adde5a0d4c081efcc09cc967f00cc938af2b153c02f",
+    "run.py": "69555360696913172a39ed8272569534553ef6130ae76feaafcf047831fb70d4",
+    "selfcheck.py": "c1943468e45c7c16dee88f0b0cb3d03eeac88fbd14e7981f1c1126e4147a215a"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "command": [
+    "/workspace/work/w012-a2/envs/dev310/bin/python",
+    "-c",
+    "import json,sys,importlib.metadata as m; print(json.dumps({\"executable\":sys.executable,\"version\":sys.version,\"packages\":{d.metadata[\"Name\"]:d.version for d in m.distributions()}},indent=2))"
+  ],
+  "cwd": "/workspace/work/w012-a2/engineering",
+  "exit_code": 0,
+  "started_at_utc": "2026-11-11T07:28:56.741162+00:00",
+  "finished_at_utc": "2026-11-11T07:28:57.099381+00:00",
+  "elapsed_seconds": 0.3582292250000023,
+  "environment_overrides": {
+    "UV_CACHE_DIR": "/workspace/work/w012-a2/envs/uv-cache",
+    "UV_PYTHON_INSTALL_DIR": "/workspace/work/w012-a2/envs/python",
+    "UV_PYTHON_BIN_DIR": "/workspace/work/w012-a2/envs/bin",
+    "PIP_CACHE_DIR": "/workspace/work/w012-a2/envs/pip-cache",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "UV_NO_PROGRESS": "1"
+  },
+  "stdout": "environment-310.stdout.txt",
+  "stderr": "environment-310.stderr.txt",
+  "stdout_sha256": "d3424c74746bf45a362835a4e2e4f824ae22a924226a50a8c0e174b463273bb2",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

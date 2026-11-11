@@ -1,0 +1,9 @@
+{
+  "bytes": 54050313,
+  "candidate": "/workspace/work/w012-a2/wires-attempt02/before-normal-direct-r1.bin",
+  "candidate_sha256": "4d07033687223809e542ea661138fe0566ed162f6eab17fb7d4f806745377f16",
+  "comparison_outside_product_timers": true,
+  "equal": true,
+  "reference": "/workspace/work/w012-a2/wires-attempt02/before-normal-direct-r1.bin",
+  "reference_sha256": "4d07033687223809e542ea661138fe0566ed162f6eab17fb7d4f806745377f16"
+}

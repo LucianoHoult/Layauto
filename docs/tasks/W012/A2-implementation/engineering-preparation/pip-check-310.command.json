@@ -1,0 +1,25 @@
+{
+  "command": [
+    "/workspace/work/w012-a2/envs/dev310/bin/python",
+    "-m",
+    "pip",
+    "check"
+  ],
+  "cwd": "/workspace/work/w012-a2/engineering",
+  "exit_code": 0,
+  "started_at_utc": "2026-11-11T07:28:55.199622+00:00",
+  "finished_at_utc": "2026-11-11T07:28:56.740201+00:00",
+  "elapsed_seconds": 1.5405954080000015,
+  "environment_overrides": {
+    "UV_CACHE_DIR": "/workspace/work/w012-a2/envs/uv-cache",
+    "UV_PYTHON_INSTALL_DIR": "/workspace/work/w012-a2/envs/python",
+    "UV_PYTHON_BIN_DIR": "/workspace/work/w012-a2/envs/bin",
+    "PIP_CACHE_DIR": "/workspace/work/w012-a2/envs/pip-cache",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "UV_NO_PROGRESS": "1"
+  },
+  "stdout": "pip-check-310.stdout.txt",
+  "stderr": "pip-check-310.stderr.txt",
+  "stdout_sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

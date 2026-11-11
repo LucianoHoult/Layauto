@@ -1,0 +1,3 @@
+normal-direct {'all_build_seconds': 21.649, 'W011_build_seconds': 27.975, 'encode_seconds': 66.513, 'decode_seconds': -19.124, 'total_seconds': 6.082, 'peak_rss_kib': 0.479}
+normal-readback {'all_build_seconds': -23.517, 'W011_build_seconds': -39.306, 'encode_seconds': -161.802, 'decode_seconds': -20.731, 'total_seconds': -24.176, 'peak_rss_kib': 0.26}
+extraction-mismatch {'all_build_seconds': -7.816, 'W011_build_seconds': -19.804, 'encode_seconds': -4.428, 'decode_seconds': 17.943, 'total_seconds': 3.638, 'peak_rss_kib': 0.025}

@@ -1,0 +1,4 @@
+Using CPython 3.12.14 interpreter at: /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12
+Creating virtual environment with seed packages at: /workspace/work/w012-a2/envs/dev312
+ + pip==26.3
+Activate with: source /workspace/work/w012-a2/envs/dev312/bin/activate

@@ -1,0 +1,15 @@
+{
+  "copies_adapted_from": {
+    "docs/tasks/W012/A1/verification-tools/installed_smoke.py": "471401c6f64d78c236d640bf15dbdeaed23dee5a62fc6a325e8192e480361960",
+    "docs/tasks/W012/A1/verification-tools/prepare_final.py": "399dd249a9225c3b1425fb7c92f9b1cc79948502b466a9467e363fc3127443ad"
+  },
+  "runner_changes": [
+    "A2 label",
+    "accepted A1 baseline collection/default count 1656",
+    "serial-only matrix workers"
+  ],
+  "smoke_changes": [
+    "header label only; full original three-path checks retained"
+  ],
+  "heavy_matrix_run": false
+}

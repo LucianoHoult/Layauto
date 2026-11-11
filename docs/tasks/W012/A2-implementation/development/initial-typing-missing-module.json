@@ -1,0 +1,11 @@
+{
+  "source": "actual session tool return copied; no wall/UTC was recorded for this initial probe",
+  "argv": [
+    "/workspace/.venvs/layauto/bin/python",
+    "-m",
+    "mypy"
+  ],
+  "cwd": "/workspace/Layauto",
+  "exit_code": 1,
+  "output": "/workspace/.venvs/layauto/bin/python: No module named mypy\n"
+}

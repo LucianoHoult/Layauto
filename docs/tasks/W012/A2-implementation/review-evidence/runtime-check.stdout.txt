@@ -1,0 +1,1 @@
+PASS: exact owner scope, unchanged original functions, typed bytes/snapshots/errors, small public roots

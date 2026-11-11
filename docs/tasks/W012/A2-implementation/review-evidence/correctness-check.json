@@ -1,0 +1,116 @@
+{
+  "affected_actual_selection_counts": {
+    "test_w009_captured_decode_exceptions.py": 8,
+    "test_w010_contracts.py": 80,
+    "test_w011_contracts.py": 44,
+    "test_w011_exceptions.py": 53
+  },
+  "all_original_nodes_retained": true,
+  "formal_baseline_nodes": 1656,
+  "formal_current_nodes": 1738,
+  "initial_typing_failure_preserved": true,
+  "new_node_count": 82,
+  "raw_completed_commands": [
+    {
+      "argv": [
+        "/workspace/.venvs/layauto/bin/python",
+        "-B",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "tests/contracts/test_w011_exceptions.py",
+        "tests/contracts/test_w011_contracts.py",
+        "tests/contracts/test_w010_contracts.py",
+        "tests/contracts/test_w009_captured_decode_exceptions.py::test_public_collections_validate_and_store_one_snapshot",
+        "-q"
+      ],
+      "command_sha256": "8fcd564924c19b42bf7e2bb607bf363323a10f1db8aea93a68287e3a1deefde0",
+      "exit_code": 0,
+      "marker": "185 passed",
+      "name": "affected-r1",
+      "source_entries_checked": 144
+    },
+    {
+      "argv": [
+        "/workspace/.venvs/layauto/bin/python",
+        "-B",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "tests/contracts/test_w012_typed_pack.py",
+        "-q"
+      ],
+      "command_sha256": "2ba95a8266060461533269a48cb4ceffc6b42415d671451c04de7a17d83469b1",
+      "exit_code": 0,
+      "marker": "82 passed",
+      "name": "new-tests-integrated",
+      "source_entries_checked": 145
+    },
+    {
+      "argv": [
+        "/workspace/work/w012-a2/envs/dev310/bin/python",
+        "-B",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "tests/contracts/test_w012_typed_pack.py",
+        "-q"
+      ],
+      "command_sha256": "94149bd98e608203af2f7fe0095aaf692bd92f76a997ece16f2720b631be37db",
+      "exit_code": 0,
+      "marker": "82 passed",
+      "name": "new-tests-310",
+      "source_entries_checked": 145
+    },
+    {
+      "argv": [
+        "/workspace/work/w012-a2/envs/dev310/bin/python",
+        "-B",
+        "-m",
+        "mypy"
+      ],
+      "command_sha256": "f1ff82262d3c5b27f441df70e3276d123334408471833d8748608d0ede335512",
+      "exit_code": 0,
+      "marker": "54 source files",
+      "name": "typing-310",
+      "source_entries_checked": 145
+    },
+    {
+      "argv": [
+        "/workspace/work/w012-a2/envs/dev312/bin/python",
+        "-B",
+        "-m",
+        "mypy"
+      ],
+      "command_sha256": "2545951a7804e10d0614fc6b69d55ffc1ad8c2aebd75b546c1422edd7755d765",
+      "exit_code": 0,
+      "marker": "54 source files",
+      "name": "typing-312",
+      "source_entries_checked": 145
+    },
+    {
+      "argv": [
+        "/workspace/work/w012-a2/envs/dev312/bin/python",
+        "-B",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "--collect-only",
+        "tests/unit",
+        "tests/contracts",
+        "-q"
+      ],
+      "command_sha256": "b94cf501806c2cda02c430066f4c753f0673d2c202c4c11d06355cb0931483a9",
+      "exit_code": 0,
+      "marker": "1738 tests collected",
+      "name": "formal-collection",
+      "source_entries_checked": 145
+    }
+  ],
+  "scope": "Read/hash/collection review of actual new-source development checks; no final full matrix/installation/benchmark claim.",
+  "status": "passed"
+}

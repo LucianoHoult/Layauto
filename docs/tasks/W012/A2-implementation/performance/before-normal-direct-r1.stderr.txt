@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/workspace/Layauto/docs/tasks/W012/A2-implementation/measurement/probe.py", line 204, in <module>
+    run(parser.parse_args())
+  File "/workspace/Layauto/docs/tasks/W012/A2-implementation/measurement/probe.py", line 173, in run
+    source_target = check_sources_target(result, parsed)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/Layauto/docs/tasks/W012/A2-implementation/measurement/probe.py", line 74, in check_sources_target
+    assert any(ref.uri.endswith('/target.cdl') for ref in facts.target.preservation.sources)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

@@ -1,0 +1,12 @@
+Export of actual exec_command chunk ac3d5f; cwd=/workspace/work/w012-a2/before; Python=/workspace/.venvs/layauto/bin/python -B; environment PYTHONDONTWRITEBYTECODE=1; wall_time_seconds=1.881911406; exit_code=1.
+This transcript preserves the tool's combined stdout/stderr ordering; no exact UTC start/end was separately recorded. It is not a rerun result.
+
+Traceback (most recent call last):
+  File "<stdin>", line 11, in <module>
+source source_cdl
+[('source.cdl', 'c71f40728a979c918e083b924a3045cf53bece51dd837f9ae2834cf242776fa4', None)]
+payload ['schema_version', 'dialect', 'tops', 'globals', 'raw_document', 'source', 'dependency_closure', 'preprocess', 'empty_closure_sha256', 'logical_record_count']
+target target_cdl
+[('target.cdl', 'ddfd4713579743f578170efede62ce978a02680b42e5e2a6faeeb99016cff8db', None)]
+payload ['schema_version', 'dialect', 'tops', 'globals', 'raw_document', 'source', 'dependency_closure', 'preprocess', 'empty_closure_sha256', 'logical_record_count']
+AttributeError: 'FrozenMap' object has no attribute 'sources'

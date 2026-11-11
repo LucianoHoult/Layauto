@@ -1,0 +1,7 @@
+Using CPython 3.10.22 interpreter at: /workspace/work/w012-a2/envs/python/cpython-3.10.22-linux-x86_64-gnu/bin/python3.10
+Creating virtual environment with seed packages at: /workspace/work/w012-a2/envs/dev310
+ + packaging==26.3
+ + pip==26.3
+ + setuptools==84.2.1
+ + wheel==0.48.0
+Activate with: source /workspace/work/w012-a2/envs/dev310/bin/activate

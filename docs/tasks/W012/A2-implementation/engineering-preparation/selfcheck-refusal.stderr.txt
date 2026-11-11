@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/workspace/work/w012-a2/engineering/docs/tasks/W012/A2-implementation/engineering_tools.py", line 336, in <module>
+    main()
+  File "/workspace/work/w012-a2/engineering/docs/tasks/W012/A2-implementation/engineering_tools.py", line 57, in main
+    raise RuntimeError('Evidence output must be absent or empty; prior evidence is preserved')
+RuntimeError: Evidence output must be absent or empty; prior evidence is preserved

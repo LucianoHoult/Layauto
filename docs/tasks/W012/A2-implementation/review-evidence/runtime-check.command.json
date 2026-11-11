@@ -1,0 +1,15 @@
+{
+  "argv": [
+    "/workspace/.venvs/layauto/bin/python",
+    "-B",
+    "docs/tasks/W012/A2-implementation/review-evidence/runtime_check.py"
+  ],
+  "cwd": "/workspace/work/w012-a2/review",
+  "exit_code": 0,
+  "observed_tool_chunk_id": "87dc42",
+  "tool_wall_time_seconds": 0.51640853,
+  "stdout_sha256": "e16e623b099a62f233de674f707abd97ded152476a55207d5c1a4780ad14ede8",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "script_sha256": "afc82b537239891b12be85019143b8338a02cd85d5f498f684ddca693ef8ae93",
+  "record_note": "Exact stdout/stderr and completion metadata transcribed from successful exec_command tool response; UTC was not instrumented for this review-only small check."
+}

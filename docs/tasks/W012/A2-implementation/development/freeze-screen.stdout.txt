@@ -1,0 +1,1 @@
+Frozen local A1/candidate source/tests/config, original fixed 35 inputs and environment

@@ -1,0 +1,29 @@
+{
+  "status": "passed",
+  "valid_actual_W005_W007": true,
+  "preservation": {
+    "source": {
+      "kind": "source_cdl",
+      "refs": [
+        {
+          "uri": "source.cdl",
+          "sha256": "c71f40728a979c918e083b924a3045cf53bece51dd837f9ae2834cf242776fa4"
+        }
+      ],
+      "matching_completed_records": 1
+    },
+    "target": {
+      "kind": "target_cdl",
+      "refs": [
+        {
+          "uri": "target.cdl",
+          "sha256": "ddfd4713579743f578170efede62ce978a02680b42e5e2a6faeeb99016cff8db"
+        }
+      ],
+      "matching_completed_records": 1
+    }
+  },
+  "old_probe_target_suffix_acceptance": false,
+  "original_failure_reproduced_without_complete_W011": true,
+  "scope": "Independent input/provenance witness only; no successful performance sample."
+}

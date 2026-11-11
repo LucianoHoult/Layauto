@@ -1,0 +1,1 @@
+PASS A2 measurement light selfcheck: exact local A1, 35/5 inputs, bytecmp, guards, A1 assertions

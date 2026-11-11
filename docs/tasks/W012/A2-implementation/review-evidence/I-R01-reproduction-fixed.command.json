@@ -1,0 +1,21 @@
+{
+  "argv": [
+    "/workspace/.venvs/layauto/bin/python",
+    "-B",
+    "/workspace/work/w012-a2/review/docs/tasks/W012/A2-implementation/review-evidence/fixed-delivery_check.py",
+    "--root",
+    "/workspace/work/w012-a2/review",
+    "--output",
+    "/workspace/work/w012-a2/review/docs/tasks/W012/A2-implementation/review-evidence/I-R01-reproduction-fixed-result.json",
+    "--pending-command-prefix",
+    "/workspace/work/w012-a2/review/docs/tasks/W012/A2-implementation/review-evidence/I-R01-reproduction-fixed"
+  ],
+  "cwd": "/workspace/work/w012-a2/review",
+  "start_utc": "2026-11-11T07:41:31.052279+00:00",
+  "script_sha256": "e54973f185f14ba8247aa1feabb24a448aaa4a46e9396731fd80dff7f63ed63a",
+  "exit_code": 0,
+  "elapsed_seconds": 0.17110235399991325,
+  "end_utc": "2026-11-11T07:41:31.223653+00:00",
+  "stdout_sha256": "766b03192e62e7fe133e5c06d3489996a69abc1d7dde0503fed0b0c8114c8184",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

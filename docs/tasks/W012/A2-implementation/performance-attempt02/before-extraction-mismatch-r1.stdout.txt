@@ -1,0 +1,15 @@
+START W005_read_inputs
+DONE W005_read_inputs 1.2393941089994769
+START W008_adapter_and_build
+DONE W008_adapter_and_build 0.9324730309999723
+START W009_build
+DONE W009_build 1.7145957329994417
+START W010_build
+DONE W010_build 20.332714827000018
+START W011_build
+DONE W011_build 60.0650014619996
+START W011_result_encode
+DONE W011_result_encode 2.818240797000726
+START W011_result_decode
+DONE W011_result_decode 69.07523203399978
+{"case": "extraction-mismatch", "wall_seconds": {"W005_read_inputs": 1.2393941089994769, "W008_adapter_and_build": 0.9324730309999723, "W009_build": 1.7145957329994417, "W010_build": 20.332714827000018, "W011_build": 60.0650014619996, "W011_result_encode": 2.818240797000726, "W011_result_decode": 69.07523203399978}, "wire_bytes": 54045042, "wire_sha256": "83713d7586b02181697f10ac45c59490f2c3aa02fcea37ecf92b740a03b8e2b1", "process_peak_rss_kib": 326396}

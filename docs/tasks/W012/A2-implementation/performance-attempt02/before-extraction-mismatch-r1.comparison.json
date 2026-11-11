@@ -1,0 +1,9 @@
+{
+  "bytes": 54045042,
+  "candidate": "/workspace/work/w012-a2/wires-attempt02/before-extraction-mismatch-r1.bin",
+  "candidate_sha256": "83713d7586b02181697f10ac45c59490f2c3aa02fcea37ecf92b740a03b8e2b1",
+  "comparison_outside_product_timers": true,
+  "equal": true,
+  "reference": "/workspace/work/w012-a2/wires-attempt02/before-extraction-mismatch-r1.bin",
+  "reference_sha256": "83713d7586b02181697f10ac45c59490f2c3aa02fcea37ecf92b740a03b8e2b1"
+}

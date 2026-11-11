@@ -1,0 +1,22 @@
+{
+  "finding": "A2-I-R01",
+  "tool_sha256": "36b64c1af3c39fe21f0e3b39e19ab1c2e0e34c5b655ceedb3079dbe8dfb2ff9c",
+  "actual_original_map": [
+    {
+      "path": "docs/tasks/W012/A2-implementation/development/scope-selfcheck.command.json",
+      "sealed_sha256": "c33ae3b9c8c8242ccf30655f61abaee28a23e26a9ccd7722a29c26a5071f924e",
+      "actual_completed_sha256": "6371622ce42926b53c4a9af5766e9c80f5d7484f444c2bebb91d78de0ad63d50"
+    },
+    {
+      "path": "docs/tasks/W012/A2-implementation/development/scope-selfcheck.stdout.txt",
+      "sealed_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "actual_completed_sha256": "766b03192e62e7fe133e5c06d3489996a69abc1d7dde0503fed0b0c8114c8184"
+    },
+    {
+      "path": "docs/tasks/W012/A2-implementation/development/scope-selfcheck.stderr.txt",
+      "sealed_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "actual_completed_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "reason": "Checker snapshots current command/stdout before wrapper completion/print; final seal same invocation cannot fully match own emitted files. Existing scope selfcheck is a real witness, separate later evidence edits do not cause these two differences."
+}
