@@ -1,0 +1,152 @@
+{
+  "classification": "pre-implementation-read-only-evidence-not-W013-final-matrix",
+  "utc": "2026-11-12T08:45:06.143922+00:00",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "executable": "/workspace/.venvs/layauto/bin/python",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "dependencies": {
+    "numpy": "2.5.4",
+    "matplotlib": "3.11.2",
+    "PyYAML": "6.0.3",
+    "pytest": "9.2.0",
+    "mypy": null,
+    "build": null,
+    "types-PyYAML": null
+  },
+  "python310_on_path": null,
+  "historical_paths_exist": {
+    "/workspace/w012-a1-env/dev310/bin/python": false,
+    "/workspace/w012-a1-env/dev312/bin/python": false,
+    "/workspace/w012-inputs/extraction-mismatch": false
+  },
+  "cgroup": {
+    "memory.max": "17179869184",
+    "cpu.max": "400000 100000"
+  },
+  "old_manifest_path": "docs/tasks/W012/A1/verification-r2/source-manifest.json",
+  "old_manifest_sha256": "d42efdb27b72973a8a6f5f738d57a2fcecdde7bfe89c7b944e7144b3b088915b",
+  "files_checked": 263,
+  "old_identity_differences": {},
+  "probe": {
+    "argv": [
+      "/workspace/.venvs/layauto/bin/python",
+      "-B",
+      "/workspace/Layauto/docs/tasks/W013/input-boundary-probe.py"
+    ],
+    "cwd": "/workspace/Layauto",
+    "utc_start": "2026-11-12T08:45:05.162537+00:00",
+    "seconds": 0.9810032920000253,
+    "returncode": 0,
+    "stdout_path": "input-boundary-probe.stdout.json",
+    "stderr_path": "input-boundary-probe.stderr.txt",
+    "stdout_sha256": "e95cb7ea6fbe3e72969a566c47247952c6ff032b32ac4c8ce1f59cf726423847",
+    "probe_sha256": "151d5afe6c73d91e5d214e774b94274cf9c6a315d431c350d1db517e50e3395f"
+  },
+  "commands": [
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/workspace/Layauto",
+      "utc_start": "2026-11-12T08:45:06.145387+00:00",
+      "seconds": 0.0015868190000105642,
+      "returncode": 0,
+      "stdout": "d6182fe6893c26490f9d58c6b808a5ce9910384b\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "status",
+        "--short",
+        "--branch"
+      ],
+      "cwd": "/workspace/Layauto",
+      "utc_start": "2026-11-12T08:45:06.146982+00:00",
+      "seconds": 0.008971202999987327,
+      "returncode": 0,
+      "stdout": "## codex/w013-net-annotation-coverage\n?? docs/tasks/W013/input-boundary-probe.py\n?? docs/tasks/W013/input-boundary-probe.stderr.txt\n?? docs/tasks/W013/input-boundary-probe.stdout.json\n?? docs/tasks/W013/interface-plan.md\n?? docs/tasks/W013/pm-decision.md\n?? docs/tasks/W013/preflight-audit.py\n?? docs/tasks/W013/review-evidence/\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "ls-remote",
+        "origin",
+        "refs/heads/main",
+        "refs/heads/codex/w013-net-annotation-coverage"
+      ],
+      "cwd": "/workspace/Layauto",
+      "utc_start": "2026-11-12T08:45:06.155961+00:00",
+      "seconds": 0.3034502930000258,
+      "returncode": 0,
+      "stdout": "d6182fe6893c26490f9d58c6b808a5ce9910384b\trefs/heads/codex/w013-net-annotation-coverage\nd6182fe6893c26490f9d58c6b808a5ce9910384b\trefs/heads/main\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "merge-base",
+        "--is-ancestor",
+        "2489b4609ae97d8211bf450d55cac9392492ac71",
+        "HEAD"
+      ],
+      "cwd": "/workspace/Layauto",
+      "utc_start": "2026-11-12T08:45:06.459425+00:00",
+      "seconds": 0.002313439000033668,
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--name-only",
+        "2489b4609ae97d8211bf450d55cac9392492ac71",
+        "--",
+        "layauto_v2",
+        "tests",
+        "pyproject.toml"
+      ],
+      "cwd": "/workspace/Layauto",
+      "utc_start": "2026-11-12T08:45:06.461757+00:00",
+      "seconds": 0.002896955000039725,
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--name-only",
+        "--",
+        "layauto_v2",
+        "tests",
+        "pyproject.toml",
+        "docs/architecture.md",
+        "docs/current-work.md",
+        "docs/collaboration/rules.md"
+      ],
+      "cwd": "/workspace/Layauto",
+      "utc_start": "2026-11-12T08:45:06.464661+00:00",
+      "seconds": 0.0028940000000261534,
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "initial_recovery_failures": [
+    "git switch --track failed because the managed checkout did not configure this remote branch as a tracked branch",
+    "Fetched the exact branch ref explicitly, then created the original-named local branch without tracking; no content was lost"
+  ],
+  "verification_reuse": {
+    "actually_run": "source hashes, environment inventory, real reader/W007 and QueryKey diagnostics",
+    "adopted_by_identity": "unchanged A1 upstream historical evidence only; no new timing claim",
+    "not_run": "W013 product, full three-path resource combination, new full matrix/typing/build/install/code review",
+    "rerun_trigger": "P01 and design gate closure, actual source changes, source/input/dependency identity gaps or newly found risk"
+  }
+}

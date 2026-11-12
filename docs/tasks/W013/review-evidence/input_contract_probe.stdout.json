@@ -1,0 +1,50 @@
+{
+  "classification": "independent-preimplementation-review-not-W013-validation",
+  "head": "d6182fe6893c26490f9d58c6b808a5ce9910384b",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "executable": "/workspace/.venvs/layauto/bin/python",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "fixture": "/workspace/Layauto/tests/fixtures/w003_m1",
+  "reviewed_files": {
+    "docs/tasks/W013/interface-plan.md": "dabb22fb38e5090c54c927602458db286f14578a148a20a7917d204964b53f40",
+    "docs/tasks/W013/pm-decision.md": "a54c44b9da980b84bfb6ea3b96c79656f654c5812e2eaa23174dbcefa065496a",
+    "docs/tasks/W013/input-boundary-probe.py": "151d5afe6c73d91e5d214e774b94274cf9c6a315d431c350d1db517e50e3395f",
+    "docs/tasks/W013/input-boundary-probe.stdout.json": "e95cb7ea6fbe3e72969a566c47247952c6ff032b32ac4c8ce1f59cf726423847"
+  },
+  "real_indices": {
+    "n_a": "1",
+    "n_hi": "4",
+    "n_lo": "3",
+    "n_y": "2"
+  },
+  "query_key_007": {
+    "outcome": "ValueError",
+    "message": "net query key requires a positive opaque decimal index"
+  },
+  "forged_007_same_captured_sources": {
+    "outcome": "ValueError",
+    "message": "LVS index is not its captured NET NAMES ordinal"
+  },
+  "quality_seed_rejections": {
+    "approximate_bbox": {
+      "outcome": "ValueError",
+      "message": "unsupported annotation seed geometry/quality/unit"
+    },
+    "untrimmed": {
+      "outcome": "ValueError",
+      "message": "unsupported annotation seed geometry/quality/unit"
+    }
+  },
+  "independent_spec_oracle_arithmetic": {
+    "direct_covered_area_nm2_by_layer": {
+      "POLY": 720,
+      "LI": 1110,
+      "M1": 1340
+    },
+    "all_local_node_area_nm2": 35090,
+    "nodes": 14,
+    "edges": 8,
+    "components": 6,
+    "scope_note": "body_associations external; no direct net mapping to OD/BODY"
+  }
+}
