@@ -17,9 +17,8 @@ from layauto_v2.domain.identifiers import CellId, DeviceId, NetId, QueryKey
 from layauto_v2.domain.net_annotation import (
     AnnotationBinding, AnnotationFragment, AnnotationIssue, AnnotationRef, AnnotationTargetId,
     LayerCoverage, MatchEvidence, NET_TYPES, NetComponentSummary, NetEvidence, RecordClassification, TargetEvidence,
-    TargetIntersection, area, canonical_cover, difference, intersections, policy_for, problem, records,
+    TargetIntersection, area, canonical_cover, difference, intersections, policy_for, problem, records, validate_annotation_graph,
 )
-from layauto_v2.domain.regions import validate_closed_graph
 from layauto_v2.domain.results import EvidenceIssue
 from layauto_v2.derive.net_annotation import summarize_components
 from layauto_v2.state.local_connectivity import DRAFT_TYPES as LOCAL_TYPES, LocalConnectivityDraft
@@ -164,7 +163,7 @@ def build_net_annotation_draft(local: LocalConnectivityDraft, source: SemanticCi
     from layauto_v2.state.annotation import AnnotationDraft
     if type(local) is not LocalConnectivityDraft or type(source) is not SemanticCircuitDraft:
         raise ValueError('network annotation requires a local graph and source semantics')
-    validate_closed_graph((local, source, net_evidence, derived, capture_binding), LOCAL_TYPES + NET_TYPES + _SOURCE_TYPES)
+    validate_annotation_graph((local, source, net_evidence, derived, capture_binding), LOCAL_TYPES + NET_TYPES + _SOURCE_TYPES)
     if _rebuild(source) != source or replace(local) != local:
         raise ValueError('network annotation input is not completely reconstructible')
     evidence = tuple(sorted(records(net_evidence, NetEvidence, 'net evidence'), key=lambda item: item.ref.sha256))

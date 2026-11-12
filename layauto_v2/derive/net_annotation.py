@@ -2,12 +2,13 @@
 from __future__ import annotations
 
 from layauto_v2.domain.net_annotation import (
-    AnnotationBinding, AnnotationFragment, NetComponentSummary, TargetEvidence,
+    AnnotationBinding, AnnotationFragment, NetComponentSummary, TargetEvidence, NET_TYPES, validate_annotation_graph,
 )
 
 
 def summarize_components(binding: AnnotationBinding, targets: tuple[TargetEvidence, ...],
                          fragments: tuple[AnnotationFragment, ...]) -> tuple[NetComponentSummary, ...]:
+    validate_annotation_graph((binding, targets, fragments), NET_TYPES)
     rows: list[NetComponentSummary] = []
     for component in binding.topology:
         selected = tuple(target for target in targets if target.component_ref == component.ref)

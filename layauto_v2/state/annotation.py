@@ -16,9 +16,8 @@ from layauto_v2.domain.net_annotation import (
     VERSION, AnnotationBinding, AnnotationFragment, AnnotationIssue, AnnotationRef,
     LayerCoverage, MatchEvidence, NET_TYPES, NetComponentSummary, NetEvidence,
     RecordClassification, TargetEvidence, _value, area, canonical_cover, difference,
-    intersections, policy_for, records, validate_members,
+    intersections, policy_for, records, validate_members, validate_annotation_graph,
 )
-from layauto_v2.domain.regions import validate_closed_graph
 
 
 def _same(a: object, b: object) -> bool:
@@ -53,7 +52,7 @@ class AnnotationDraft:
                           ('fragments', AnnotationFragment), ('coverage', LayerCoverage), ('components', NetComponentSummary),
                           ('classifications', RecordClassification), ('issues', AnnotationIssue)):
             object.__setattr__(self, name, records(getattr(self, name), cls, name))
-        validate_closed_graph(self, DRAFT_TYPES)
+        validate_annotation_graph(self, DRAFT_TYPES)
         for field in fields(self):
             validate_members(getattr(self, field.name))
         self._validate_inputs()
@@ -264,6 +263,7 @@ class AnnotationDraft:
         return AnnotationRef('draft', digest(self.to_value()))
 
     def to_value(self) -> FrozenMap:
+        validate_annotation_graph(self, DRAFT_TYPES)
         return FrozenMap({'type': 'AnnotationDraft', 'fields': {field.name: _value(getattr(self, field.name)) for field in fields(self)}})
 
 

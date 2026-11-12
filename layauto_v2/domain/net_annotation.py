@@ -4,6 +4,7 @@ from __future__ import annotations
 from collections.abc import Callable
 from dataclasses import dataclass, fields, is_dataclass, replace
 from fractions import Fraction
+from math import gcd
 import re
 from typing import Literal, TypeVar, cast
 
@@ -13,7 +14,7 @@ from .evidence import EvidenceRecord, SourceRef
 from .geometry import GeometryRecordId, GeometryRef, Rect, mapping, sequence, source_value
 from .identifiers import CellId, NetId, QueryKey
 from .local_connectivity import ContactComponent, ContactNode, LocalRef
-from .regions import ExactRegion, RegionRef, validate_closed_graph
+from .regions import ExactRegion, RegionRef
 from .results import EvidenceIssue
 from .source_location import ref_from_location
 
@@ -21,6 +22,75 @@ VERSION = 'layauto-net-annotation/1'
 SCOPE = 'source_evidence_local_net_annotation/1'
 RefKind = Literal['binding', 'evidence', 'target', 'match', 'fragment', 'coverage', 'component', 'classification', 'issue', 'draft']
 T = TypeVar('T')
+
+
+def validate_annotation_graph(value: object, record_types: tuple[type[object], ...] = ()) -> None:
+    """Inspect original retained storage before any map iteration or copying.
+
+    FrozenMap's public constructor is defensive, but a forged exact shell is
+    not automatically an immutable value. Only native tuple backing and unique
+    native text keys are admitted. Active-path detection rejects cycles while
+    context-sensitive memoization permits shared immutable DAGs.
+    """
+    active: set[int] = set()
+    complete: set[tuple[int, bool]] = set()
+
+    def check(item: object, value_only: bool) -> None:
+        cls = type(item)
+        if item is None or cls is bool or cls is int or cls is str or cls is bytes:
+            return
+        if cls is Fraction:
+            exact = cast(Fraction, item)
+            numerator, denominator = exact.numerator, exact.denominator
+            if (type(numerator) is not int or type(denominator) is not int
+                    or denominator <= 0 or gcd(abs(numerator), denominator) != 1):
+                raise ValueError('annotation fraction requires reduced native integer components')
+            return
+        is_map = cls is FrozenMap
+        is_tuple = cls is tuple
+        if not is_map and not is_tuple:
+            if value_only or not any(cls is allowed for allowed in record_types) or not is_dataclass(item):
+                raise ValueError('foreign or mutable value in annotation graph')
+        identity = id(item)
+        if identity in active:
+            raise ValueError('cyclic value in annotation graph')
+        context = identity, value_only
+        if context in complete:
+            return
+        active.add(identity)
+        try:
+            if is_map:
+                try:
+                    backing = object.__getattribute__(item, '_entries')
+                except AttributeError as exc:
+                    raise ValueError('annotation map is missing immutable backing') from exc
+                if type(backing) is not tuple:
+                    raise ValueError('annotation map backing requires a native immutable tuple')
+                seen: set[str] = set()
+                for pair in backing:
+                    if type(pair) is not tuple or len(pair) != 2:
+                        raise ValueError('annotation map entries require native key/value tuples')
+                    key, child = pair
+                    if type(key) is not str or key in seen:
+                        raise ValueError('annotation map keys require unique exact text')
+                    seen.add(key)
+                    check(child, True)
+            elif is_tuple:
+                for child in cast(tuple[object, ...], item):
+                    check(child, value_only)
+            else:
+                assert is_dataclass(item)
+                for field in fields(item):
+                    try:
+                        child = object.__getattribute__(item, field.name)
+                    except AttributeError as exc:
+                        raise ValueError('annotation record is missing a retained field') from exc
+                    check(child, False)
+        finally:
+            active.remove(identity)
+        complete.add(context)
+
+    check(value, False)
 
 
 def records(value: object, cls: type[T], name: str) -> tuple[T, ...]:
@@ -46,7 +116,7 @@ def sha(value: object) -> None:
 def fraction(value: object, *, nonnegative: bool = True) -> None:
     if type(value) is not Fraction:
         raise ValueError('annotation requires exact Fraction')
-    validate_closed_graph(value)
+    validate_annotation_graph(value)
     if nonnegative and value < 0:
         raise ValueError('negative annotation measure')
 
@@ -54,7 +124,7 @@ def fraction(value: object, *, nonnegative: bool = True) -> None:
 def ref(value: object, cls: type[object], kind: str) -> None:
     if type(value) is not cls:
         raise ValueError('incorrect typed annotation reference')
-    validate_closed_graph(value, (cls,))
+    validate_annotation_graph(value, (cls,))
     if getattr(value, 'kind', None) != kind:
         raise ValueError('incorrect typed annotation reference')
 
@@ -87,7 +157,7 @@ def common(value: object) -> None:
     version = getattr(value, 'schema_version')
     if type(version) is not str or version != VERSION:
         raise ValueError('unsupported net annotation schema')
-    validate_closed_graph(value, NET_TYPES)
+    validate_annotation_graph(value, NET_TYPES)
     if not is_dataclass(value):
         raise ValueError('annotation requires a dataclass record')
     for field in fields(value):
@@ -129,7 +199,7 @@ def canonical_cover(rectangles: tuple[RationalRect, ...]) -> tuple[RationalRect,
 def cover(value: object) -> tuple[RationalRect, ...]:
     result = records(value, RationalRect, 'exact cover')
     for item in result:
-        validate_closed_graph(item, (RationalRect,))
+        validate_annotation_graph(item, (RationalRect,))
         replace(item)
     if result != canonical_cover(result):
         raise ValueError('annotation rectangles require canonical disjoint cover')
@@ -187,6 +257,7 @@ class AnnotationRef:
 
 class _Record:
     def to_value(self) -> FrozenMap:
+        validate_annotation_graph(self, NET_TYPES)
         return cast(FrozenMap, _value(self))
 
 
@@ -326,7 +397,7 @@ class AnnotationBinding(_Record):
         object.__setattr__(self, 'topology', records(self.topology, ContactComponent, 'topology'))
         object.__setattr__(self, 'drawn_record_ids', records(self.drawn_record_ids, GeometryRecordId, 'drawn identities'))
         object.__setattr__(self, 'evidence_refs', records(self.evidence_refs, AnnotationRef, 'evidence references'))
-        validate_closed_graph(self, NET_TYPES)
+        validate_annotation_graph(self, NET_TYPES)
         ref(self.local_ref, LocalRef, 'draft')
         ref(self.effective_ref, RegionRef, 'draft')
         ref(self.geometry_ref, GeometryRef, 'layout')
@@ -404,7 +475,7 @@ class AnnotationTargetId(_Record):
     schema_version: str = VERSION
 
     def __post_init__(self) -> None:
-        validate_closed_graph(self, NET_TYPES)
+        validate_annotation_graph(self, NET_TYPES)
         ref(self.binding_ref, AnnotationRef, 'binding')
         text(self.layer)
         if type(self.record_id) is not GeometryRecordId:
@@ -428,7 +499,7 @@ class TargetEvidence(_Record):
     schema_version: str = VERSION
 
     def __post_init__(self) -> None:
-        validate_closed_graph(self, NET_TYPES)
+        validate_annotation_graph(self, NET_TYPES)
         if type(self.target_id) is not AnnotationTargetId or type(self.node) is not ContactNode or type(self.drawn_rectangle) is not RationalRect or type(self.source) is not SourceRef:
             raise ValueError('annotation target requires exact node and source evidence')
         ref(self.component_ref, LocalRef, 'component')
@@ -463,7 +534,7 @@ class TargetIntersection(_Record):
 
     def __post_init__(self) -> None:
         object.__setattr__(self, 'rectangles', records(self.rectangles, RationalRect, 'exact cover'))
-        validate_closed_graph(self, NET_TYPES)
+        validate_annotation_graph(self, NET_TYPES)
         ref(self.target_ref, AnnotationRef, 'target')
         object.__setattr__(self, 'rectangles', cover(self.rectangles))
         if not self.rectangles:
@@ -487,7 +558,7 @@ class MatchEvidence(_Record):
         object.__setattr__(self, 'boundary_targets', records(self.boundary_targets, AnnotationRef, 'boundary targets'))
         object.__setattr__(self, 'trimmed', records(self.trimmed, RationalRect, 'trimmed cover'))
         object.__setattr__(self, 'unmatched', records(self.unmatched, RationalRect, 'unmatched cover'))
-        validate_closed_graph(self, NET_TYPES)
+        validate_annotation_graph(self, NET_TYPES)
         ref(self.evidence_ref, AnnotationRef, 'evidence')
         object.__setattr__(self, 'intersections', records(self.intersections, TargetIntersection, 'intersections'))
         if self.intersections != tuple(sorted(self.intersections, key=lambda item: item.target_ref.sha256)) or len({item.target_ref for item in self.intersections}) != len(self.intersections):
@@ -522,7 +593,7 @@ class AnnotationFragment(_Record):
         object.__setattr__(self, 'rectangles', records(self.rectangles, RationalRect, 'exact cover'))
         object.__setattr__(self, 'evidence_refs', records(self.evidence_refs, AnnotationRef, 'evidence refs'))
         object.__setattr__(self, 'net_ids', records(self.net_ids, NetId, 'fragment nets'))
-        validate_closed_graph(self, NET_TYPES)
+        validate_annotation_graph(self, NET_TYPES)
         ref(self.target_ref, AnnotationRef, 'target')
         object.__setattr__(self, 'rectangles', cover(self.rectangles))
         if not self.rectangles:
@@ -599,7 +670,7 @@ class LayerCoverage(_Record):
     def __post_init__(self) -> None:
         object.__setattr__(self, 'source_refs', records(self.source_refs, SourceRef, 'coverage sources'))
         object.__setattr__(self, 'evidence_refs', records(self.evidence_refs, AnnotationRef, 'coverage evidence'))
-        validate_closed_graph(self, NET_TYPES)
+        validate_annotation_graph(self, NET_TYPES)
         text(self.layer)
         for value in (self.drawn_shape_count, self.cell_count, self.target_count):
             if type(value) is not int or value < 0:
@@ -636,7 +707,7 @@ class NetComponentSummary(_Record):
         object.__setattr__(self, 'observed_net_ids', records(self.observed_net_ids, NetId, 'component nets'))
         object.__setattr__(self, 'evidence_refs', records(self.evidence_refs, AnnotationRef, 'component evidence'))
         object.__setattr__(self, 'directly_covered_targets', records(self.directly_covered_targets, AnnotationRef, 'direct coverage'))
-        validate_closed_graph(self, NET_TYPES)
+        validate_annotation_graph(self, NET_TYPES)
         ref(self.component_ref, LocalRef, 'component')
         object.__setattr__(self, 'members', records(self.members, LocalRef, 'component members'))
         if not self.members or self.members != tuple(sorted(set(self.members), key=lambda item: item.sha256)):
@@ -677,7 +748,7 @@ class AnnotationIssue(_Record):
         object.__setattr__(self, 'component_refs', records(self.component_refs, LocalRef, 'issue components'))
         object.__setattr__(self, 'evidence_refs', records(self.evidence_refs, AnnotationRef, 'issue evidence'))
         object.__setattr__(self, 'net_ids', records(self.net_ids, NetId, 'issue nets'))
-        validate_closed_graph(self, NET_TYPES)
+        validate_annotation_graph(self, NET_TYPES)
         if type(self.issue) is not EvidenceIssue:
             raise ValueError('annotation issue requires a located typed issue')
         object.__setattr__(self, 'target_refs', ordered_refs(self.target_refs, 'target'))
@@ -710,6 +781,7 @@ NET_TYPES = _NEW_TYPES + (RationalRect, NetId, CellId, QueryKey, LocalRef, Geome
 
 def policy_for(binding: AnnotationBinding, evidence: NetEvidence) -> FrozenMap:
     """Closed owner interpretation retained by a match, without spatial stamping."""
+    validate_annotation_graph((binding, evidence), NET_TYPES)
     registry = tuple(mapping(row) for row in sequence(binding.derived.payload['derived_registry']))
     matches = tuple((index, row) for index, row in enumerate(registry) if row.get('id') == evidence.record['derived_layer'])
     rows = tuple(mapping(row) for row in sequence(binding.drawn.payload['layers']))
