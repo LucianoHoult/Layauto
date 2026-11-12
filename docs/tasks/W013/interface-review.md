@@ -112,3 +112,43 @@ codec 重建；新 codec 如何承载旧 W010 bytes；encode/decode 后有几次
 本项不会要求重开 A2/B 或为了复用旧 root 名称多跑完整 W011。
 
 **状态：开放，待执行者补充后复核。** 初审实施门仍未通过。
+
+## 修订复核（2026-11-12）
+
+初审全部原文与附件已固定在 `0794d2dc90baaf8d3180e9ce4f4d91683fe90dc7`。
+本次只复核修后 [方案](interface-plan.md)，SHA-256
+`827dd88dd7eb638fa8ec98b15768e9ccb30880eed549d4257fc5337abda1830d`；
+PM材料和初审输入探针身份未变。未修改方案或产品。
+
+- **PR-02 方案层关闭。** 新增序列化树明确完整旧W010 canonical Value子树一次、compact字段一次、
+  W011捕获零次；反向恢复原旧wire bytes，再走未改旧public decode完整认证。确认
+  `domain.codec._wire` 对bytes使用hex，直接opaque bytes嵌套会新增约2B10项；修后方案避免
+  对整个旧wire再hex一次，没有宣称消除旧wire内部既有重复。新public build/Result、encode、
+  decode新增顶层W010 decode次数按1/1/2展开，明确旧decode内部仍递归重建，未将4说成全链总调用。
+  Result由输入派生且encode重新认证，decode对照全部派生字段；无caller认证标志或跨调用cache。
+  这些是待实施的具体边界，代码偏离、canonical遗漏或实际成本问题仍须重新review。
+- **PR-03 方案层关闭。** 主路径roots明确替换旧W011 result/restored/wire为W013对应值，
+  W011实例零；保留其它上游/readback对象和GC条件。独立同机W011基线另起进程，披露不同
+  终端workload，不以总时长直接作新增模块收益结论；不默认多跑完整W011。
+- **PR-01/P01 保持开放。** 未见PM决定；本次复核不替PM选择A/B或neutral层验收解释。
+  **整体仍未通过实施门**，不实施关键产品、不宣称A1–A8完成。
+
+额外独立实跑 [Value envelope基本性质探针](review-evidence/value_envelope_probe.py)，
+脚本SHA-256 `a53ef7c04cb8c0e928f7262a00a2996f2a17f71cbf8e52ef9cd8df1943e41f94`；
+[原输出](review-evidence/value_envelope_probe.stdout.json)
+SHA-256 `1eead623319acafba512c786d5ae1cea95d275961bb603abeb048303af5f16d1`。
+使用未改publication codec的SourceFile小值，旧wire806B，完整Value子树envelope874B，
+opaque bytes envelope1693B；恢复的旧wire SHA完全相同，且改SourceFile sha后旧public decoder
+拒绝。只验证canonical algebra和保留旧认证的必要性，**没有构造W010 Result/W013产品，没有
+测其耗时或峰值**，不能替代三路资源检查点。
+
+探针初稿错用publication envelope字段名`record`，实际为`value`，先出现
+`KeyError: 'record'`。这是review脚本错误；[原脚本](review-evidence/value_envelope_probe.attempt-01.py)、
+[重现stderr](review-evidence/value_envelope_probe.attempt-01.stderr.txt)保留，修后exit0；
+未把它报成产品finding或删除原失败。
+
+再次独立逐hash核对旧A1清单263文件，零差异，见
+[source_identity_review.json](review-evidence/source_identity_review.json)；
+旧清单SHA-256 `d42efdb27b72973a8a6f5f738d57a2fcecdde7bfe89c7b944e7144b3b088915b`。
+因此当前仍是方案/调查交接，只可按身份引用上游历史证据。新产品最终矩阵、代码/组合/资源
+review全部未执行；不能将上述小值探针或旧A1矩阵作为它们的替代。

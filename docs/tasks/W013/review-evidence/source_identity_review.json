@@ -1,0 +1,10 @@
+{
+  "classification": "independent-preimplementation-source-identity-audit",
+  "head": "0794d2dc90baaf8d3180e9ce4f4d91683fe90dc7",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "manifest": "docs/tasks/W012/A1/verification-r2/source-manifest.json",
+  "manifest_sha256": "d42efdb27b72973a8a6f5f738d57a2fcecdde7bfe89c7b944e7144b3b088915b",
+  "files_checked": 263,
+  "differences": {},
+  "limitations": "Not a new W013 final matrix; current product is unchanged."
+}

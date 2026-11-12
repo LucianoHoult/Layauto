@@ -42,7 +42,9 @@ raw格式或profile另行准备；不恢复已废弃的旧convenience JSON。此
 
 ## 当前恢复点
 
-- [具体方案候选](interface-plan.md) 已准备，等待未参与设计/实现的独立review。
+- [具体方案候选](interface-plan.md) 已经[独立review及修订复核](interface-review.md)：
+  PR-02认证/序列化展开、PR-03主路径roots均在方案层关闭；P01保持开放，整体未过实施门。
+  初审精确版本和原findings固定在 `0794d2dc90baaf8d3180e9ce4f4d91683fe90dc7`。
 - 关键产品实施停于方案门；不发布baseline/terminal，不改PM阶段/current-work，不宣称A1–A8完成。
 - 本次实跑：分支/远端/工作区/祖先与A1产品diff；真实reader→W007与007构造反例；环境库存、
   263项旧A1源码清单逐hash核验。原产品无变化，不运行无意义的新双全量。

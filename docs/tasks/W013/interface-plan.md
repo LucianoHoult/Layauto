@@ -64,6 +64,85 @@ W013 中立 draft 仅保留必要 target/evidence/binding 值与 typed content r
 公开 Result 必须能从完整 input 重建并逐字段核验，不能只信 digest。
 旧 W007–W011 codec 的 wire/ref/认证保持逐字节不变。
 
+### PR-02 修订：公开认证与新 wire 的具体展开
+
+初审方案与原 findings 固定在 `0794d2dc90baaf8d3180e9ce4f4d91683fe90dc7`，不回写为已通过。
+以下是修后候选，不是资源实测或已交付格式。
+
+先明确成本陷阱：`domain.codec._wire(bytes)` 使用 **hex**，不是base64。若直接按旧
+typed-pack习惯把 `W010_codec.encode_record(input)` 作为bytes字段塞进W013，设其长度为B10、
+compact新增值为D13，则新wire为约 `2*B10 + D13 + wrapper`。input逻辑上只出现一次，
+仍会新增一次完整hex包装；不能仅靠“只存一份input”声称成本没有增长。
+
+本候选使用新W013独立envelope，**将旧canonical wire的完整Value作为子树**承载，
+不将该完整wire作为bytes再hex一遍。设 `old_bytes = W010_codec.encode_record(input)`，
+`old_value = domain.codec.decode(old_bytes)`，新envelope的 `captured_input_wire` 为old_value。
+反向取 `domain.codec.canonical_bytes(captured_input_wire)` 必须逐字节恢复old_bytes，
+然后调用**未改的**W010 public decode完整认证。必须包含完整子树，不能只放ref。
+旧wire内部已有的bytes/hex封装全部原样保留；不重写它、不改旧wire_schema或任何旧ref。
+这是新codec自身的布局选择，不引入通用flatten/pack重构，不修改A1/A2任何旧codec。
+
+```text
+W013 canonical envelope
+  wire_schema = layauto-net-annotation-wire/1（候选新版本）
+  captured_input_wire = [完整W010 canonical Value一次]
+    W010 Result + local draft + W009 captured input
+      ...旧W009/W008/W007/publication的原bytes封装仍在原位置...
+  annotation = [compact W013 binding/targets/evidence/fragments/coverage/issues一次]
+  component_summary = [只读摘要一次]
+```
+
+预期新packet长度为 `B10 + D13 + wrapper`，而不是2*B10；其完整captures字段只出现一次，
+W011完整captures字段0次，第二个完整NormalizationResult字段0次。这个公式不承诺D13微小，
+更不承诺峰值/耗时改善：额外exact Value解析、重建认证与canonical化会消耗CPU和瞬时内存。
+最早组合必须分别记录B10、D13、总wire与执行time/RSS；若结构偏离或成本解释不清，先交PM。
+
+为避免builder先计算再让public Result重复计算，候选 `NetAnnotationResult` 的公开构造参数
+仅为typed W010 input与schema；status/draft/issues由其完整认证和同源计算派生，不能由调用者
+任填success。中立draft仍有完整公开构造与canonical roundtrip。wire保存全部派生字段，
+decode不能忽略它们：重建后将每一字段与wire给定值做exact/canonical比较，拒绝任何篡改。
+
+| 新公开操作 | 具体次序 | 新增的完整W010 decode认证（顶层调用次数） |
+| --- | --- | --- |
+| build_net_annotation(input) / Result(input) | closed graph→旧W010 encode/decode/equality→同源W007 normalize→owner/target/overlay→冻结派生字段 | 1 |
+| 新encode_record(Result) | 原对象closed graph→重进上述public Result完整认证→比较全部compact派生字段→旧W010 encode得原bytes→domain.decode成完整Value→pack/canonical | 1 |
+| 新decode_record(packet) | domain.decode新envelope并校验closed/字段→canonical_bytes恢复旧input bytes→旧W010 public decode→Result(input)完整认证/计算→比较**全部**wire派生字段与canonical compact编码 | 2 |
+| 一次build+encode+decode | 上述三步，完整input存在packet一次，认证工作仍重复发生 | 4 |
+
+表中的次数仅计新增W013直接触发的W010 public decode；每次旧W010 decode内部仍按原代码
+递归认证W009/W008/W007/publication并做其canonical重建，**没有**声称整个链总共仅四次解析。
+新codec的完整Value解析/旧encode也要单列测量。decode末尾使用已验证值的纯compact pack比较，
+不再调用会重新认证的public encode；这不删认证，完整输入已经过旧public decode与Result重建，
+所有派生字段也已逐一比较。不引入可由调用者伪造的认证标志或跨调用认证缓存。
+
+```mermaid
+sequenceDiagram
+  participant C as Caller
+  participant R as W013 public Result
+  participant L as 原W010 public codec
+  participant S as 同源W007/overlay
+  participant W as W013 codec
+  C->>R: build(input)
+  R->>L: 完整encode/decode认证一次
+  R->>S: normalize + exact overlay
+  R-->>C: immutable result
+  C->>W: encode(result)
+  W->>R: 重新公开认证并比较全部派生字段
+  R->>L: 完整认证一次
+  R->>S: 重建
+  W->>L: 原input wire encode
+  W-->>C: 完整input Value一次 + compact packet
+  C->>W: decode(packet)
+  W->>L: 恢复旧bytes后public decode
+  W->>R: 从该input完整重建
+  R->>L: 完整认证一次
+  R->>S: 重建
+  W-->>C: 全字段比较后result
+```
+
+实际代码若改变构造方式、调用次数、字段出现次数或新packet承载方式，必须更新这份边界并
+独立复核；不能将上述预计次数当作已经观测的profile证据。
+
 `annotation/` 生成 proposed draft，不拥有几何或拓扑；`state.annotation` 是草稿表 owner；
 component summary 是 `derive/` 可重算只读 view。不得调用 repository mutation/pipeline
 publication，不 seal attempt、发布 baseline 或 terminal，不赋予新 LVS/mandatory/body assurance。
@@ -177,7 +256,23 @@ Legacy `io_adapters/parser.py` 的单值 bbox字典、int coercion、中心/整�
 normal `/workspace/Layauto/tests/fixtures/w003_m1`，mismatch `/workspace/w012-inputs/extraction-mismatch`，
 `w012-investigation-run` / `w012-investigation-lineage` / `create-w012`。
 旧mismatch目录缺失，仅按既有preflight的35项文件/字节hash重建副本，不改路径或重造新答案。
-acquisition前一次gc.collect，此后默认GC，保留所有既有roots并加W013 roots。
+acquisition前一次gc.collect，此后默认GC。
+
+### PR-03 修订：roots与比较条件
+
+W013三路主probe保留的roots明确为
+`(parsed, geometry, effective, local, net_result, net_restored, net_wire,
+repository, ready, checkpoint, parse, tool, audits, attempt)`。
+direct/mismatch的readback-only项为None。旧probe中的W011
+`result/restored/wire` **由W013对应值替换**，并非额外构造W011对象；主路径W011实例0个。
+同样保留实际输入、上游对象与codec两个输出直到峰值计量完成；不在中途gc/free旧roots换取数字。
+
+如需同机W011基线，另起fresh process按旧probe原始三路、原全部W011 roots运行；其time/RSS/wire
+只作为单独workload的参考，不与W013新主路径冒称端到端等工作量。URI、RunRequest、cache、
+开始前一次GC及默认GC条件相同；终端产品不同这一不等条件必须披露。W013未改上游阶段的
+分阶段成本可对照；新增模块成本看新build/encode/decode与实际packet字段，不从两个不同终端
+workload的总耗时直接推断性能收益。若不需同机重测，不默认运行该完整W011链。
+
 分别记录W005/W008/W009/W010未改上游、W013 build、encode/decode的time/RSS/wire；
 对比同机同条件W010/既有W011路径，跨环境历史秒数仅参考。
 本轮只读库存：16GiB/4CPU，3.12.14可用，3.10及mypy/build当前缺失，需实施获准后准备。

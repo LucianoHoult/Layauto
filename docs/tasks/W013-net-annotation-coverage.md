@@ -53,6 +53,8 @@ P01涉及“含007”与现行已验收ordinal捕获解释冲突，关键产品�
 [preflight回执](W013/preflight-audit.json)与[可复现审计工具](W013/preflight-audit.py)保存远端/工作区、
 263项旧A1文件hash一致、当前环境及真实reader→W007/007拒绝探针；
 [独立反例](W013/review-evidence/input_contract_probe.stdout.json)另核完整captured-source认证拒绝伪造007。
+[独立交接证据核证](W013/evidence-review.md)确认来源、实际import、初审可重建身份与PM原文范围；
+新产品尚未实施，未将同身份A1历史证据当作W013最终矩阵。
 
 实跑：上述轻量调查与文档检查。按身份采信：仅同源A1上游历史证据，历史耗时不当本机测量。
 未覆盖：W013新产品、三路资源组合、新冻结双3.10/3.12全量/typing/build/双干净安装smoke及代码review。
@@ -62,7 +64,14 @@ P01涉及“含007”与现行已验收ordinal捕获解释冲突，关键产品�
 
 ## Review 结论（reviewer）
 
-未执行。分别绑定方案与代码版本，列实际审查/独立见证、finding原文、修正及复核；0必须项不能替代未完成工程或性能证据。
+2026-11-12，独立 reviewer `/root/independent_review`（未参与方案设计或实现）完成本轮
+[方案 review](W013/interface-review.md)，原 findings 固定在
+`0794d2dc90baaf8d3180e9ce4f4d91683fe90dc7`。修后方案 SHA-256 为
+`827dd88dd7eb638fa8ec98b15768e9ccb30880eed549d4257fc5337abda1830d`；PR-02 的
+完整认证/序列化展开与 PR-03 的 retained roots/独立W011基线范围已在方案层修正并复核关闭。
+PR-01/P01（当前ordinal捕获不能表示007的验收解释）仍待PM决定，**未通过实施门**。
+独立轻量探针、原失败与源码身份核对见报告附件；没有W013产品、代码/组合/资源review或新最终
+矩阵，不把本次方案复核或旧A1证据记作A1–A8完成。
 
 ## PM 验收与交接（PM）
 
