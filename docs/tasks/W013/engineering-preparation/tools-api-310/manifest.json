@@ -1,0 +1,18 @@
+{
+  "installed_smoke-help.command.json": "b03489d31d74eba86256c1c8b263bf6947a1f2ad7ebe41527ecc7bb6add31596",
+  "installed_smoke-help.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "installed_smoke-help.stdout.txt": "d9ac872c94b27586fe1a63178a530d03357aba40fd77b1f18db8bb699204fc0f",
+  "prepare_final-help.command.json": "2653dbeb5dca7e569c9cc18584784cb2344e20fe13f06ac194380dcfe55db4f3",
+  "prepare_final-help.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "prepare_final-help.stdout.txt": "7317b718a09572023b273a12832283332ab85c45e880584109949d5bf13dd438",
+  "receipt.json": "c671090e84e561f29d176a62156da222788115541f7a2b4d747f332924546880",
+  "resource-clearance-rejection.command.json": "746200f1fdd5fb0686fcaec4f87641dcf15e0275de2eba9d65942c3ba4a878e9",
+  "resource-clearance-rejection.stderr.txt": "d7d332a87af7237ce89e1c84d6fb8e611542ea97b189e2a989ab4eca67dd6195",
+  "resource-clearance-rejection.stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "source-identity.command.json": "867b16f1a5646cedb49dc8699c8f6af5b9c1029d40fb9f1fa9c88969a118b106",
+  "source-identity.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "source-identity.stdout.txt": "dcc0f70b438629fd61ebb838d173ab2c911d4859ee2cccc22dfb820317307979",
+  "source_identity-help.command.json": "8cede572859558042087c3b04b58f09b1af73849e6be0dc35542163498f8b0e2",
+  "source_identity-help.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "source_identity-help.stdout.txt": "65db815a85ff3e8f78d5c8c493d3d5114597d0999b7720387ef2ae5f20df67fc"
+}

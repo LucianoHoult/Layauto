@@ -1,0 +1,21 @@
+{
+  "command": [
+    "/workspace/work/w013-env/dev310/bin/python",
+    "-B",
+    "/workspace/work/w013-engineering/docs/tasks/W013/verification-tools/source_identity.py",
+    "--help"
+  ],
+  "cwd": "/workspace/work/w013-engineering",
+  "started_at_utc": "2026-11-12T09:13:17.581378+00:00",
+  "seconds": 0.12946129800002382,
+  "returncode": 0,
+  "expected_returncode": 0,
+  "environment_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONPATH": "/workspace/work/w013-engineering"
+  },
+  "stdout": "source_identity-help.stdout.txt",
+  "stdout_sha256": "65db815a85ff3e8f78d5c8c493d3d5114597d0999b7720387ef2ae5f20df67fc",
+  "stderr": "source_identity-help.stderr.txt",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

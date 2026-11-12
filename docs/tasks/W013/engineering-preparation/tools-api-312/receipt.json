@@ -1,0 +1,165 @@
+{
+  "classification": "engineering-preparation-not-W013-final-matrix",
+  "status": "passed",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "executable": "/workspace/work/w013-env/dev312/bin/python",
+  "tools": {
+    "installed_smoke.py": "c9e2f141e13a7d5fe54e3e10297271f067e9139ec28a4184bbe47ff02036c8be",
+    "preflight_tools.py": "6d26d3cdf9b9b7a0e4a42275252768ab6b16e3946e6c5ca3f57eea5f58e4a81a",
+    "prepare_final.py": "f756e2f995935617b929da06fd5bf6b741691489f8e37867467f63ec78eb2463",
+    "source_identity.py": "dd17b3f9abbe5e459bb84ff1e35cd8ee07118b9e1fd08df542597355b85e7395"
+  },
+  "source_id": "6527949f4fb0b063763b4be5f4f136e4b68fbfcd7cb84054f5a6d23767afb281",
+  "source_file_count": 263,
+  "runtime_file_count": 100,
+  "baseline_collection_sha256": "29d03b7337dbfca2900a43bf703838514b749dfab8734652027cc78f5b835928",
+  "baseline_node_count": 1656,
+  "commands": [
+    {
+      "command": [
+        "/workspace/work/w013-env/dev312/bin/python",
+        "-B",
+        "/workspace/work/w013-engineering/docs/tasks/W013/verification-tools/prepare_final.py",
+        "--help"
+      ],
+      "cwd": "/workspace/work/w013-engineering",
+      "started_at_utc": "2026-11-12T09:13:18.493775+00:00",
+      "seconds": 0.04583068300007653,
+      "returncode": 0,
+      "expected_returncode": 0,
+      "environment_overrides": {
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PYTHONPATH": "/workspace/work/w013-engineering"
+      },
+      "stdout": "prepare_final-help.stdout.txt",
+      "stdout_sha256": "7317b718a09572023b273a12832283332ab85c45e880584109949d5bf13dd438",
+      "stderr": "prepare_final-help.stderr.txt",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "/workspace/work/w013-env/dev312/bin/python",
+        "-B",
+        "/workspace/work/w013-engineering/docs/tasks/W013/verification-tools/source_identity.py",
+        "--help"
+      ],
+      "cwd": "/workspace/work/w013-engineering",
+      "started_at_utc": "2026-11-12T09:13:18.539866+00:00",
+      "seconds": 0.030468747999748302,
+      "returncode": 0,
+      "expected_returncode": 0,
+      "environment_overrides": {
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PYTHONPATH": "/workspace/work/w013-engineering"
+      },
+      "stdout": "source_identity-help.stdout.txt",
+      "stdout_sha256": "65db815a85ff3e8f78d5c8c493d3d5114597d0999b7720387ef2ae5f20df67fc",
+      "stderr": "source_identity-help.stderr.txt",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "/workspace/work/w013-env/dev312/bin/python",
+        "-B",
+        "/workspace/work/w013-engineering/docs/tasks/W013/verification-tools/installed_smoke.py",
+        "--help"
+      ],
+      "cwd": "/workspace/work/w013-engineering",
+      "started_at_utc": "2026-11-12T09:13:18.570686+00:00",
+      "seconds": 0.10720966200005932,
+      "returncode": 0,
+      "expected_returncode": 0,
+      "environment_overrides": {
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PYTHONPATH": "/workspace/work/w013-engineering"
+      },
+      "stdout": "installed_smoke-help.stdout.txt",
+      "stdout_sha256": "d9ac872c94b27586fe1a63178a530d03357aba40fd77b1f18db8bb699204fc0f",
+      "stderr": "installed_smoke-help.stderr.txt",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "/workspace/work/w013-env/dev312/bin/python",
+        "-B",
+        "/workspace/work/w013-engineering/docs/tasks/W013/verification-tools/source_identity.py",
+        "--root",
+        "/workspace/work/w013-engineering"
+      ],
+      "cwd": "/workspace/work/w013-engineering",
+      "started_at_utc": "2026-11-12T09:13:18.678104+00:00",
+      "seconds": 0.05752111599986165,
+      "returncode": 0,
+      "expected_returncode": 0,
+      "environment_overrides": {
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PYTHONPATH": "/workspace/work/w013-engineering"
+      },
+      "stdout": "source-identity.stdout.txt",
+      "stdout_sha256": "affb7c0c6b84da22ff0bf711cb637e07f98357dc261046c9c165403a0d5e7b35",
+      "stderr": "source-identity.stderr.txt",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "/workspace/work/w013-env/dev312/bin/python",
+        "-B",
+        "/workspace/work/w013-engineering/docs/tasks/W013/verification-tools/prepare_final.py",
+        "--root",
+        "/workspace/work/w013-engineering",
+        "--out",
+        "/tmp/w013-tool-preflight-_1jxu9p4/out",
+        "--work",
+        "/tmp/w013-tool-preflight-_1jxu9p4/work",
+        "--smoke",
+        "/workspace/work/w013-engineering/docs/tasks/W013/verification-tools/installed_smoke.py",
+        "--python310",
+        "/workspace/work/w013-env/dev312/bin/python",
+        "--python312",
+        "/workspace/work/w013-env/dev312/bin/python",
+        "--expected-tests",
+        "1656",
+        "--baseline-collection",
+        "/workspace/work/w013-engineering/docs/tasks/W012/A1/verification-r2/collection-312.stdout.txt",
+        "--baseline-sha256",
+        "29d03b7337dbfca2900a43bf703838514b749dfab8734652027cc78f5b835928",
+        "--expected-source-id",
+        "6527949f4fb0b063763b4be5f4f136e4b68fbfcd7cb84054f5a6d23767afb281",
+        "--resource-clearance",
+        "/tmp/w013-tool-preflight-_1jxu9p4/clearance.json"
+      ],
+      "cwd": "/workspace/work/w013-engineering",
+      "started_at_utc": "2026-11-12T09:13:18.740322+00:00",
+      "seconds": 0.050520379000317917,
+      "returncode": 2,
+      "expected_returncode": 2,
+      "environment_overrides": {
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PYTHONPATH": "/workspace/work/w013-engineering"
+      },
+      "stdout": "resource-clearance-rejection.stdout.txt",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr": "resource-clearance-rejection.stderr.txt",
+      "stderr_sha256": "d7d332a87af7237ce89e1c84d6fb8e611542ea97b189e2a989ab4eca67dd6195"
+    }
+  ],
+  "smoke_api_assertions_integrated": true,
+  "checks": [
+    "Python3.10 grammar for every tool",
+    "--help for runner/identity/smoke",
+    "all tracked and untracked source/test/config paths enumerated",
+    "smoke readiness inspected statically; no actual smoke run",
+    "resource rejection occurs before output/work creation"
+  ],
+  "not_run": [
+    "product tests",
+    "typing",
+    "build/install",
+    "product combination/resource probe",
+    "final matrix"
+  ],
+  "remaining": [
+    "Root must provide final source identity and passed resource clearance before the matrix.",
+    "Actual W013 source-external smoke must still execute against the new clean installations."
+  ]
+}

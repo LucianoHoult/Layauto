@@ -1,0 +1,18 @@
+{
+  "installed_smoke-help.command.json": "80303bd4df40aaaece8ec83dced655f530f02a9f052612a34552ed84f466d71f",
+  "installed_smoke-help.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "installed_smoke-help.stdout.txt": "d9ac872c94b27586fe1a63178a530d03357aba40fd77b1f18db8bb699204fc0f",
+  "prepare_final-help.command.json": "74560c9416f51435b0577e03654b85fe45e7c10fcaf0fb5fca8a226005f8eed2",
+  "prepare_final-help.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "prepare_final-help.stdout.txt": "7317b718a09572023b273a12832283332ab85c45e880584109949d5bf13dd438",
+  "receipt.json": "0febaa7a65bf1ceb0c318414a8e07350ee6eba9a409899be439c807db705c7da",
+  "resource-clearance-rejection.command.json": "584f8494c626d491c4f495d9112a3f2863f8e4f4d8e0a81423c7f094252b7b3f",
+  "resource-clearance-rejection.stderr.txt": "d7d332a87af7237ce89e1c84d6fb8e611542ea97b189e2a989ab4eca67dd6195",
+  "resource-clearance-rejection.stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "source-identity.command.json": "34ba0e9c17af6c574af58f115008882349b7bfa559e7c03590be70bd5bbaef48",
+  "source-identity.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "source-identity.stdout.txt": "affb7c0c6b84da22ff0bf711cb637e07f98357dc261046c9c165403a0d5e7b35",
+  "source_identity-help.command.json": "7297cda8ce743915ca3a6d5bb38ec8c44291b10bab5a1db5f4f1e31f5c047c83",
+  "source_identity-help.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "source_identity-help.stdout.txt": "65db815a85ff3e8f78d5c8c493d3d5114597d0999b7720387ef2ae5f20df67fc"
+}

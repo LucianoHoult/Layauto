@@ -1,0 +1,13 @@
+usage: installed_smoke.py [-h] fixture
+
+W013 source-external installation smoke for the public local annotation API.
+Run the finalized script with -I -B outside the checkout and frozen source. It
+imports installed runtime plus stdlib only, never tests/support or answers.
+Independent constants come from accepted local oracle/manual/raw facts.
+Preparing this script does not establish an actual successful smoke or matrix.
+
+positional arguments:
+  fixture
+
+options:
+  -h, --help  show this help message and exit

@@ -59,11 +59,20 @@ def main() -> None:
     baseline = root / 'docs/tasks/W012/A1/verification-r2/collection-312.stdout.txt'
     ids = {line for line in baseline.read_text().splitlines() if line.startswith('tests/') and '::' in line}
     assert ids
-    # The current API scaffold must fail closed, rather than pass an old W011 smoke.
-    smoke_guard = run('smoke-not-ready-guard', [sys.executable, '-B', str(tools / 'installed_smoke.py'),
-                                               '/not-a-runtime-input'], expected=2)
-    assert smoke_guard == ''
-    assert 'API assertions are not integrated' in (out / 'smoke-not-ready-guard.stderr.txt').read_text()
+    smoke_tree = ast.parse((tools / 'installed_smoke.py').read_text())
+    readiness = [node.value.value for node in smoke_tree.body
+                 if isinstance(node, ast.Assign) and isinstance(node.value, ast.Constant)
+                 and any(isinstance(target, ast.Name) and target.id == 'W013_SMOKE_READY'
+                         for target in node.targets)]
+    assert readiness in ([False], [True]), readiness
+    smoke_ready = readiness == [True]
+    if not smoke_ready:
+        smoke_guard = run('smoke-not-ready-guard', [sys.executable, '-B', str(tools / 'installed_smoke.py'),
+                                                   '/not-a-runtime-input'], expected=2)
+        assert smoke_guard == ''
+        assert 'API assertions are not integrated' in (out / 'smoke-not-ready-guard.stderr.txt').read_text()
+    else:
+        assert 'NotImplementedError' not in (tools / 'installed_smoke.py').read_text()
     with tempfile.TemporaryDirectory(prefix='w013-tool-preflight-') as temp:
         scratch = Path(temp)
         clearance = scratch / 'clearance.json'
@@ -83,12 +92,15 @@ def main() -> None:
               'runtime_file_count': len(identity['runtime_files']),
               'baseline_collection_sha256': sha(baseline), 'baseline_node_count': len(ids),
               'commands': rows,
+              'smoke_api_assertions_integrated': smoke_ready,
               'checks': ['Python3.10 grammar for every tool', '--help for runner/identity/smoke',
                          'all tracked and untracked source/test/config paths enumerated',
-                         'unfinalized smoke refuses success', 'resource rejection occurs before output/work creation'],
+                         'smoke readiness inspected statically; no actual smoke run' if smoke_ready else 'unfinalized smoke refuses success',
+                         'resource rejection occurs before output/work creation'],
               'not_run': ['product tests', 'typing', 'build/install', 'product combination/resource probe', 'final matrix'],
-              'remaining': ['Integrate actual W013 public API assertions into installed_smoke.py before its freeze.',
-                            'Root must provide final source identity and passed resource clearance before the matrix.']}
+              'remaining': ([] if smoke_ready else ['Integrate actual W013 public API assertions into installed_smoke.py before its freeze.']) +
+                           ['Root must provide final source identity and passed resource clearance before the matrix.',
+                            'Actual W013 source-external smoke must still execute against the new clean installations.']}
     (out / 'receipt.json').write_text(json.dumps(result, indent=2) + '\n')
     (out / 'manifest.json').write_text(json.dumps({str(path.relative_to(out)): sha(path)
                                                  for path in sorted(out.rglob('*')) if path.is_file()}, indent=2) + '\n')

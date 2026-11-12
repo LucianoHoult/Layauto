@@ -9,16 +9,17 @@ wheel+sdist 构建、两次全新安装、源码外 `-I -B` 组合 smoke 与包/
 它不硬编码 runtime 文件数、旧测试数或“无 net 字段”假设；显式检查解释器为3.10和3.12。
 tracked、staged、unstaged、untracked 的实际源字节均由完整文件映射覆盖，不以 HEAD 代替。
 
-`installed_smoke.py` 当前是 **未就绪骨架**：W005/W006→W010、14/8/6本地范围、完整来源、
-外置 body 和 attempt/checkpoint/unsealed/无 terminal 检查已准备，但实际 W013
-`AnnotationDraft/Result` 公开 API 及独立 coverage/component 断言须由 root 集成后完成。
-`W013_SMOKE_READY=False` 和未实现 hook 会拒绝成功，不能以本文件冒充已通过的 smoke。
-它不实例化 W011，也不解析 oracle/spec/expected。临时 mismatch URI 仅作安装正确性测试，
-不是固定 URI 性能对照。
+`installed_smoke.py` 已按实际 W013 `AnnotationDraft/Result` 公开 API 写入具体断言：
+W005/W006→W010→W013、14/8/6本地范围、完整来源/capture/readback binding、全部target/
+fragment、正常/mismatch精确分母与3170nm²直接覆盖、4关联/2unknown分量、marker、
+原图/T05/body/attempt保持及完整public wire roundtrip。直接路径另核一次完整public digest
+和一个neutral forged值拒绝，避免逐字段重复捕获认证。**这些断言尚未实际运行，不能以脚本
+就绪冒充 smoke 通过**。它不实例化 W011、不声明FIN计数，也不解析 oracle/spec/expected。
+临时 mismatch URI 仅作安装正确性测试，不是固定 URI 性能对照。
 
 执行顺序（由 root 在产品和工具冻结后完成）：
 
-1. 完成 smoke 的 W013 public build/codec/独立预期断言，并删除其准备阶段限制；核新工具身份。
+1. root 集成实际 W013 产品及新工具，核 API 断言与产品源/工具身份；保留原准备阶段证据。
 2. 用 `source_identity.py --root /workspace/Layauto --out <new-source-identity.json>` 保存实际
    源/测试/config/全部fixture与必要样本的路径和字节映射。`source_id` 是排序相对路径→文件
    SHA-256 映射的 canonical JSON SHA-256；绝对路径和 Git 元数据不参与此值。
@@ -48,5 +49,6 @@ tracked、staged、unstaged、untracked 的实际源字节均由完整文件映�
 clearance 身份。源码/测试/config 再变时，重新冻结并执行要求的最终矩阵。
 
 准备阶段轻量验证见 [engineering-preparation](../engineering-preparation/)：双解释器检查所有
-脚本3.10语法、CLI帮助、完整source-id、当前1656条baseline、smoke未就绪拒绝及资源门拒绝。
-这些检查没有运行产品组合、typing、构建安装或最终矩阵。
+脚本3.10语法、CLI帮助、完整source-id、当前1656条baseline与资源门拒绝。初始版本还核了
+smoke未就绪拒绝；API补充版只静态核readiness，不执行产品。所有检查均未运行产品组合、
+typing、构建安装或最终矩阵。
