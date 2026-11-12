@@ -11,10 +11,9 @@ from typing import Literal
 from layauto_v2.domain.codec import FrozenMap
 from layauto_v2.domain.evidence import EvidenceRecord
 from layauto_v2.domain.geometry import mapping
-from layauto_v2.domain.net_annotation import AnnotationProblem, NetEvidence
+from layauto_v2.domain.net_annotation import AnnotationProblem, NetEvidence, validate_annotation_graph
 from layauto_v2.domain.publication import ContentRef
 from layauto_v2.domain.publication_codec import content_ref
-from layauto_v2.domain.regions import validate_closed_graph
 from layauto_v2.domain.results import EvidenceIssue
 from layauto_v2.annotation.net_regions import build_net_annotation_draft
 from layauto_v2.state.annotation import AnnotationDraft
@@ -30,7 +29,7 @@ VERSION = 'layauto-net-annotation-result/1'
 def _require_input(input: LocalConnectivityResult) -> None:
     if type(input) is not LocalConnectivityResult:
         raise ValueError('net annotation requires a successful captured W010 result')
-    validate_closed_graph(input, local_connectivity_codec._ALL_TYPES)
+    validate_annotation_graph(input, local_connectivity_codec._ALL_TYPES)
     if input.status != 'success' or input.value is None:
         raise ValueError('net annotation requires a successful captured W010 result')
     restored = local_connectivity_codec.decode_record(local_connectivity_codec.encode_record(input))
