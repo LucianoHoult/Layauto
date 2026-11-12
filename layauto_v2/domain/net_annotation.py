@@ -323,6 +323,10 @@ class AnnotationBinding(_Record):
     schema_version: str = VERSION
 
     def __post_init__(self) -> None:
+        object.__setattr__(self, 'topology', records(self.topology, ContactComponent, 'topology'))
+        object.__setattr__(self, 'drawn_record_ids', records(self.drawn_record_ids, GeometryRecordId, 'drawn identities'))
+        object.__setattr__(self, 'evidence_refs', records(self.evidence_refs, AnnotationRef, 'evidence references'))
+        validate_closed_graph(self, NET_TYPES)
         ref(self.local_ref, LocalRef, 'draft')
         ref(self.effective_ref, RegionRef, 'draft')
         ref(self.geometry_ref, GeometryRef, 'layout')
@@ -398,6 +402,7 @@ class AnnotationTargetId(_Record):
     schema_version: str = VERSION
 
     def __post_init__(self) -> None:
+        validate_closed_graph(self, NET_TYPES)
         ref(self.binding_ref, AnnotationRef, 'binding')
         text(self.layer)
         if type(self.record_id) is not GeometryRecordId:
@@ -421,6 +426,7 @@ class TargetEvidence(_Record):
     schema_version: str = VERSION
 
     def __post_init__(self) -> None:
+        validate_closed_graph(self, NET_TYPES)
         if type(self.target_id) is not AnnotationTargetId or type(self.node) is not ContactNode or type(self.drawn_rectangle) is not RationalRect or type(self.source) is not SourceRef:
             raise ValueError('annotation target requires exact node and source evidence')
         ref(self.component_ref, LocalRef, 'component')
@@ -454,6 +460,8 @@ class TargetIntersection(_Record):
     schema_version: str = VERSION
 
     def __post_init__(self) -> None:
+        object.__setattr__(self, 'rectangles', records(self.rectangles, RationalRect, 'exact cover'))
+        validate_closed_graph(self, NET_TYPES)
         ref(self.target_ref, AnnotationRef, 'target')
         object.__setattr__(self, 'rectangles', cover(self.rectangles))
         if not self.rectangles:
@@ -473,6 +481,11 @@ class MatchEvidence(_Record):
     schema_version: str = VERSION
 
     def __post_init__(self) -> None:
+        object.__setattr__(self, 'intersections', records(self.intersections, TargetIntersection, 'intersections'))
+        object.__setattr__(self, 'boundary_targets', records(self.boundary_targets, AnnotationRef, 'boundary targets'))
+        object.__setattr__(self, 'trimmed', records(self.trimmed, RationalRect, 'trimmed cover'))
+        object.__setattr__(self, 'unmatched', records(self.unmatched, RationalRect, 'unmatched cover'))
+        validate_closed_graph(self, NET_TYPES)
         ref(self.evidence_ref, AnnotationRef, 'evidence')
         object.__setattr__(self, 'intersections', records(self.intersections, TargetIntersection, 'intersections'))
         if self.intersections != tuple(sorted(self.intersections, key=lambda item: item.target_ref.sha256)) or len({item.target_ref for item in self.intersections}) != len(self.intersections):
@@ -504,6 +517,10 @@ class AnnotationFragment(_Record):
     schema_version: str = VERSION
 
     def __post_init__(self) -> None:
+        object.__setattr__(self, 'rectangles', records(self.rectangles, RationalRect, 'exact cover'))
+        object.__setattr__(self, 'evidence_refs', records(self.evidence_refs, AnnotationRef, 'evidence refs'))
+        object.__setattr__(self, 'net_ids', records(self.net_ids, NetId, 'fragment nets'))
+        validate_closed_graph(self, NET_TYPES)
         ref(self.target_ref, AnnotationRef, 'target')
         object.__setattr__(self, 'rectangles', cover(self.rectangles))
         if not self.rectangles:
@@ -578,6 +595,9 @@ class LayerCoverage(_Record):
     schema_version: str = VERSION
 
     def __post_init__(self) -> None:
+        object.__setattr__(self, 'source_refs', records(self.source_refs, SourceRef, 'coverage sources'))
+        object.__setattr__(self, 'evidence_refs', records(self.evidence_refs, AnnotationRef, 'coverage evidence'))
+        validate_closed_graph(self, NET_TYPES)
         text(self.layer)
         for value in (self.drawn_shape_count, self.cell_count, self.target_count):
             if type(value) is not int or value < 0:
@@ -609,6 +629,12 @@ class NetComponentSummary(_Record):
     schema_version: str = VERSION
 
     def __post_init__(self) -> None:
+        object.__setattr__(self, 'members', records(self.members, LocalRef, 'component members'))
+        object.__setattr__(self, 'target_refs', records(self.target_refs, AnnotationRef, 'component targets'))
+        object.__setattr__(self, 'observed_net_ids', records(self.observed_net_ids, NetId, 'component nets'))
+        object.__setattr__(self, 'evidence_refs', records(self.evidence_refs, AnnotationRef, 'component evidence'))
+        object.__setattr__(self, 'directly_covered_targets', records(self.directly_covered_targets, AnnotationRef, 'direct coverage'))
+        validate_closed_graph(self, NET_TYPES)
         ref(self.component_ref, LocalRef, 'component')
         object.__setattr__(self, 'members', records(self.members, LocalRef, 'component members'))
         if not self.members or self.members != tuple(sorted(set(self.members), key=lambda item: item.sha256)):
@@ -645,6 +671,11 @@ class AnnotationIssue(_Record):
     schema_version: str = VERSION
 
     def __post_init__(self) -> None:
+        object.__setattr__(self, 'target_refs', records(self.target_refs, AnnotationRef, 'issue targets'))
+        object.__setattr__(self, 'component_refs', records(self.component_refs, LocalRef, 'issue components'))
+        object.__setattr__(self, 'evidence_refs', records(self.evidence_refs, AnnotationRef, 'issue evidence'))
+        object.__setattr__(self, 'net_ids', records(self.net_ids, NetId, 'issue nets'))
+        validate_closed_graph(self, NET_TYPES)
         if type(self.issue) is not EvidenceIssue:
             raise ValueError('annotation issue requires a located typed issue')
         object.__setattr__(self, 'target_refs', ordered_refs(self.target_refs, 'target'))
