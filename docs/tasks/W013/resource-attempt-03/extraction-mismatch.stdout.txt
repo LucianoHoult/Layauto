@@ -1,0 +1,15 @@
+START W005_read_inputs
+DONE W005_read_inputs 0.6436166000003141
+START W008_adapter_and_build
+DONE W008_adapter_and_build 0.3385555509998994
+START W009_build
+DONE W009_build 0.6177668729997094
+START W010_build
+DONE W010_build 9.245003206999627
+START W013_build
+DONE W013_build 12.6986342780001
+START W013_result_encode
+DONE W013_result_encode 17.31529797500025
+START W013_result_decode
+DONE W013_result_decode 28.57837211700007
+{"case": "extraction-mismatch", "wire_bytes": 23104160, "peak_kib": 203928, "new_seconds": 58.59230437000042}

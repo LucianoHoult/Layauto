@@ -1,0 +1,106 @@
+{
+  "source_id": "6463eb67b1c1ce5b9fd1fca436fa499a4ad14da004ef8fcd913872bd350443a9",
+  "rows": [
+    {
+      "case": "normal-direct",
+      "source_id": "6463eb67b1c1ce5b9fd1fca436fa499a4ad14da004ef8fcd913872bd350443a9",
+      "wire_bytes": 23104092,
+      "input_wire_bytes": 22789218,
+      "increment_bytes": 314874,
+      "peak_kib": 204668,
+      "initial_upstream_seconds": 10.985852879999584,
+      "new_public_seconds": 54.57908495100037,
+      "calls_inclusive": {
+        "W010_public_decode": {
+          "count": 4,
+          "inclusive_seconds": 47.5906375529994
+        },
+        "W013_full_input_requirement": {
+          "count": 3,
+          "inclusive_seconds": 37.87472856899967
+        },
+        "W007_source_normalization": {
+          "count": 3,
+          "inclusive_seconds": 0.08856087099957222
+        },
+        "W013_capture_binding_digest": {
+          "count": 3,
+          "inclusive_seconds": 0.30711993600016285
+        },
+        "W013_neutral_draft_build": {
+          "count": 3,
+          "inclusive_seconds": 2.4028333739997834
+        }
+      },
+      "wire_same_as_pre_fix": true
+    },
+    {
+      "case": "normal-readback",
+      "source_id": "6463eb67b1c1ce5b9fd1fca436fa499a4ad14da004ef8fcd913872bd350443a9",
+      "wire_bytes": 59736484,
+      "input_wire_bytes": 59420946,
+      "increment_bytes": 315538,
+      "peak_kib": 518612,
+      "initial_upstream_seconds": 23.24220339400017,
+      "new_public_seconds": 112.80760792099863,
+      "calls_inclusive": {
+        "W010_public_decode": {
+          "count": 4,
+          "inclusive_seconds": 100.92002186599984
+        },
+        "W013_full_input_requirement": {
+          "count": 3,
+          "inclusive_seconds": 80.26430792199972
+        },
+        "W007_source_normalization": {
+          "count": 3,
+          "inclusive_seconds": 0.08623220500157913
+        },
+        "W013_capture_binding_digest": {
+          "count": 3,
+          "inclusive_seconds": 1.1743494209995333
+        },
+        "W013_neutral_draft_build": {
+          "count": 3,
+          "inclusive_seconds": 2.5048691160009184
+        }
+      },
+      "wire_same_as_pre_fix": true
+    },
+    {
+      "case": "extraction-mismatch",
+      "source_id": "6463eb67b1c1ce5b9fd1fca436fa499a4ad14da004ef8fcd913872bd350443a9",
+      "wire_bytes": 23104160,
+      "input_wire_bytes": 22789282,
+      "increment_bytes": 314878,
+      "peak_kib": 205364,
+      "initial_upstream_seconds": 10.986225630998888,
+      "new_public_seconds": 54.33661165100057,
+      "calls_inclusive": {
+        "W010_public_decode": {
+          "count": 4,
+          "inclusive_seconds": 47.433510990000286
+        },
+        "W013_full_input_requirement": {
+          "count": 3,
+          "inclusive_seconds": 37.934049255999525
+        },
+        "W007_source_normalization": {
+          "count": 3,
+          "inclusive_seconds": 0.08590276399900176
+        },
+        "W013_capture_binding_digest": {
+          "count": 3,
+          "inclusive_seconds": 0.3664863220010375
+        },
+        "W013_neutral_draft_build": {
+          "count": 3,
+          "inclusive_seconds": 2.4015347800004747
+        }
+      },
+      "wire_same_as_pre_fix": true
+    }
+  ],
+  "measurement_note": "Primary API-path HWM fixed before packet-analysis bookkeeping; nested inclusive timing buckets overlap.",
+  "scope": "same finite synthetic fixed URI workload; no W011 complete capture"
+}

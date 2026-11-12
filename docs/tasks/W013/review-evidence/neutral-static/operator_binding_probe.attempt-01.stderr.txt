@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/workspace/Layauto/docs/tasks/W013/review-evidence/neutral-static/operator_binding_probe.py", line 15, in <module>
+    from layauto_v2.domain.channel_identity import RationalRect
+ModuleNotFoundError: No module named 'layauto_v2'

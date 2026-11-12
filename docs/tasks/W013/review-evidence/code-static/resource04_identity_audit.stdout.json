@@ -1,0 +1,102 @@
+{
+  "classification": "independent-resource-node-identity-audit-not-final-matrix",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "source_id": "6463eb67b1c1ce5b9fd1fca436fa499a4ad14da004ef8fcd913872bd350443a9",
+  "file_count": 273,
+  "source_and_tests_equal_postfix_review": true,
+  "targeted_110_passed_same_source": true,
+  "all_accepted_fixture_hashes_unchanged": 116,
+  "fixed_mismatch_input_count": 35,
+  "cases": [
+    {
+      "case": "normal-direct",
+      "wire_bytes": 23104092,
+      "inner_W010_bytes": 22789218,
+      "added_wire_bytes": 314874,
+      "peak_kib": 204668,
+      "new_phase_seconds": 54.57908495100037,
+      "W010_public_decode_counts": {
+        "W013_build": 1,
+        "W013_result_encode": 1,
+        "W013_result_decode": 2
+      },
+      "inclusive_call_buckets_do_not_add": {
+        "W010_public_decode": 47.5906375529994,
+        "W013_neutral_draft_build": 2.4028333739997834,
+        "W013_full_input_requirement": 37.87472856899967,
+        "W013_capture_binding_digest": 0.30711993600016285,
+        "W007_source_normalization": 0.08856087099957222
+      },
+      "wire_sha_matches_original_resource03": true,
+      "actual_capture_bytes_verified": 31
+    },
+    {
+      "case": "normal-readback",
+      "wire_bytes": 59736484,
+      "inner_W010_bytes": 59420946,
+      "added_wire_bytes": 315538,
+      "peak_kib": 518612,
+      "new_phase_seconds": 112.80760792099863,
+      "W010_public_decode_counts": {
+        "W013_build": 1,
+        "W013_result_encode": 1,
+        "W013_result_decode": 2
+      },
+      "inclusive_call_buckets_do_not_add": {
+        "W010_public_decode": 100.92002186599984,
+        "W013_neutral_draft_build": 2.5048691160009184,
+        "W013_full_input_requirement": 80.26430792199972,
+        "W013_capture_binding_digest": 1.1743494209995333,
+        "W007_source_normalization": 0.08623220500157913
+      },
+      "wire_sha_matches_original_resource03": true,
+      "actual_capture_bytes_verified": 31
+    },
+    {
+      "case": "extraction-mismatch",
+      "wire_bytes": 23104160,
+      "inner_W010_bytes": 22789282,
+      "added_wire_bytes": 314878,
+      "peak_kib": 205364,
+      "new_phase_seconds": 54.33661165100057,
+      "W010_public_decode_counts": {
+        "W013_build": 1,
+        "W013_result_encode": 1,
+        "W013_result_decode": 2
+      },
+      "inclusive_call_buckets_do_not_add": {
+        "W010_public_decode": 47.433510990000286,
+        "W013_neutral_draft_build": 2.4015347800004747,
+        "W013_full_input_requirement": 37.934049255999525,
+        "W013_capture_binding_digest": 0.3664863220010375,
+        "W007_source_normalization": 0.08590276399900176
+      },
+      "wire_sha_matches_original_resource03": true,
+      "actual_capture_bytes_verified": 31
+    }
+  ],
+  "evidence_files": {
+    "extraction-mismatch.command.json": "fab272896dcad268cb5ef17e81535c9f3d9a45ecc474c48d5ac98f8863e6d9b6",
+    "extraction-mismatch.json": "b4db244ee0b8f9ad38bd04c1bfe13631d07273dd88212c98d2a809cadfa2fb62",
+    "extraction-mismatch.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "extraction-mismatch.stdout.txt": "eda54ea5b186fca3e90ba21a99fe801cf14f5c095727187bbf7099f63ad9db28",
+    "normal-direct.command.json": "a42849a6634b7084e27e85b79c724e9e3f13112d3d438eac001d70e853754bf9",
+    "normal-direct.json": "66f8c0884efe61132281a8e9f51eed3ea7c9b37a839c631ef33d59225f745c34",
+    "normal-direct.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "normal-direct.stdout.txt": "56fd0d28df0c3c9820d2689a714b593a51a7c7b36e183522d43a566ac4f07115",
+    "normal-readback.command.json": "1de740bcc95103ef0062b97536df6dbe820468d243447994aedf05e1e437e0d6",
+    "normal-readback.json": "b5d373b7bec6a9337e83c322098ce8e3c4cdf5ef73b3d6adc19426fef6102b4a",
+    "normal-readback.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "normal-readback.stdout.txt": "4ad162f6f0e428d5cd7ce6eab90c31c7de00c519d4cbb77a106ee8f0c911d62f",
+    "resource-probe.py": "7295d3bab20b5f65fee02650824d36e4d59ae27e11ac2e80b02ae938e2d19981",
+    "suite.json": "d1c578b9060bd417f7e6d87da1263768d703db7b88c17b1d91292fb84d260729",
+    "suite.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "suite.stdout.txt": "136400f12e4ca280761dd7ac7c5155369139812883a8d84554f687756eb97fa2"
+  },
+  "not_run": [
+    "product build/encode/decode",
+    "resource measurement",
+    "full regression"
+  ],
+  "limits": "Audit adopts retained actual measurements by exact identity. Inclusive nested timer buckets cannot be summed as independent costs; parallel test scheduling is not a performance improvement claim."
+}

@@ -53,7 +53,7 @@ P01涉及“含007”与现行已验收ordinal捕获解释冲突，关键产品�
 
 ## 执行结果（执行）
 
-2026-11-12当前为实施前调查交接，**未实现W013，A1–A8未完成，不是完整产品交付**。
+2026-11-12首轮实施前调查交接时，**未实现W013，A1–A8未完成，不是完整产品交付**。
 [preflight回执](W013/preflight-audit.json)与[可复现审计工具](W013/preflight-audit.py)保存远端/工作区、
 263项旧A1文件hash一致、当前环境及真实reader→W007/007拒绝探针；
 [独立反例](W013/review-evidence/input_contract_probe.stdout.json)另核完整captured-source认证拒绝伪造007。
@@ -65,6 +65,31 @@ P01涉及“含007”与现行已验收ordinal捕获解释冲突，关键产品�
 补跑触发：P01与方案必须项关闭后实施；最早组合即测direct/readback/mismatch；资源放大先交PM，
 最终产品重新冻结跑新矩阵，相关源码再变仍重新冻结验证。旧A1矩阵不能替代新产品矩阵。
 下一步仅交PM明确P01并恢复本任务，不改PM阶段/current-work、不合main或启动下一任务。
+
+### 用户决定后的实现恢复点（执行，2026-11-12）
+
+P01已按用户选项A记录并经独立实施门复核关闭。当前产品/测试/配置源码已落在
+`119189d5a958b617fe754b61c4e3b8a7e8a9f9fb`后续同源版本；实际完整字节身份以
+[定向验证回执](W013/development/targeted-attempt-01.command.json)的
+`6463eb67b1c1ce5b9fd1fca436fa499a4ad14da004ef8fcd913872bd350443a9`为准。
+新增6个runtime模块、normalization公开入口和typing范围，以及4个新测试文件；
+旧codec/fixture/答案/历史finding/报告未改。当前不是完整产品交付：最终工程证据仍在执行。
+
+实际开发验证：75项新增与受影响query/identity/dependency范围合计**110 passed / 450.21s**，
+源码前后身份一致；双3.10.22/3.12.14 strict mypy均60文件通过。全量实际collection为1731，
+保留原1656项并新增75项。独立[代码/合同review](W013/code-review.md)保留CR-01–03原失败，
+operator owners、可写map backing与分类/contributor闭合均已修正并独立复核，当前必须项0。
+
+[首完整direct](W013/resource-attempt-02/normal-direct.json)以及
+[首轮三路](W013/resource-attempt-03/suite.json)保留修前源码身份和原始time/RSS/wire；
+首direct的嵌入W010旧wire SHA与同机W010参考完全一致，未新增整份W011捕获。
+CR修正后当前正在同一新源上复测三路，记录已有公开认证调用及其inclusive耗时；
+旧结果不冒记为修后同源或稳定性能改善。
+
+当前分工：实跑为上述开发/独立探针和已有组合；按身份采信仅未改上游原合同/历史证据；
+最终双全量、构建和双全新安装源码外组合smoke尚待新冻结执行。三路成本清楚且资源节点核验后
+启动最终1731项双解释器矩阵；源码/测试/config再变仍重新冻结验证。PM阶段/current-work不变，
+最终仅提交推送原W013分支交PM，不合main、不自行验收或启动下一任务。
 
 ## Review 结论（reviewer）
 

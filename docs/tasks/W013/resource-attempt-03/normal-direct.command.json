@@ -1,0 +1,22 @@
+{
+  "argv": [
+    "/workspace/work/w013-env/dev312/bin/python",
+    "-B",
+    "/workspace/Layauto/docs/tasks/W013/resource-attempt-03/resource-probe.py",
+    "--case",
+    "normal-direct",
+    "--out",
+    "/workspace/Layauto/docs/tasks/W013/resource-attempt-03/normal-direct.json"
+  ],
+  "cwd": "/workspace/Layauto",
+  "environment_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONPATH": "/workspace/Layauto"
+  },
+  "utc_start": "2026-11-12T09:16:23.798350+00:00",
+  "seconds": 68.30602657200006,
+  "returncode": 0,
+  "probe_sha256": "c4b648e3a62ee0a8d7cb50cf7c8d6838f32c26b075edac8aea2c01ab5af17234",
+  "stdout_sha256": "f467cf59163347bcd5a14c3d337f9471d755825717679316ee944a3712607992",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

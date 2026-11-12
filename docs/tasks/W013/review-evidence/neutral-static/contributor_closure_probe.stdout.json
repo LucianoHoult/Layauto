@@ -1,0 +1,20 @@
+{
+  "classification": "pure-neutral-dangling-contributor-probe-not-captured-product",
+  "head": "e8f375ad5a44c0dfae54b4d1184e7ffc43ad51f9",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "node_operator_binding": "a17ba329dee4c07af09a534338c514011b70610a49dd927861d263a0f7f576e1",
+  "component_operator_binding": "a17ba329dee4c07af09a534338c514011b70610a49dd927861d263a0f7f576e1",
+  "operator_bindings_equal": true,
+  "region_contributor_ids": [
+    "a85102af0cd781814c6821fef7c11e729f844b5af702129584640846fa872761"
+  ],
+  "drawn_record_ids": [
+    "70ce871f8a3d3fb449bc3c3ace6547cef02dfc74ffe48d912532a724bfdbe5b9"
+  ],
+  "all_contributors_declared": false,
+  "public_draft_constructed": true,
+  "public_codec_roundtrip_accepted": true,
+  "wire_sha256": "0d43fda2170f1e93a523270678b3c3119577c6e0ac75181eb4750b9d899ea39f",
+  "wire_bytes": 19375,
+  "limits": "Full-capture NetAnnotationResult was not built; fake neutral content refs do not claim any capture authority."
+}
