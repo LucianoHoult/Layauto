@@ -52,7 +52,10 @@ def fraction(value: object, *, nonnegative: bool = True) -> None:
 
 
 def ref(value: object, cls: type[object], kind: str) -> None:
-    if type(value) is not cls or getattr(value, 'kind', None) != kind:
+    if type(value) is not cls:
+        raise ValueError('incorrect typed annotation reference')
+    validate_closed_graph(value, (cls,))
+    if getattr(value, 'kind', None) != kind:
         raise ValueError('incorrect typed annotation reference')
 
 
@@ -308,6 +311,7 @@ class AnnotationBinding(_Record):
     top: str
     source_cell: CellId
     source_digest: str
+    source_ref: SourceRef
     derived: EvidenceRecord
     drawn: EvidenceRecord
     topology: tuple[ContactComponent, ...]
@@ -330,6 +334,9 @@ class AnnotationBinding(_Record):
         if type(self.source_cell) is not CellId:
             raise ValueError('annotation binding requires a typed source cell')
         sha(self.source_digest)
+        if type(self.source_ref) is not SourceRef or self.source_ref.sha256 is None:
+            raise ValueError('annotation binding requires captured source CDL provenance')
+        source_value(self.source_ref)
         for owner, kind in ((self.derived, 'derived'), (self.drawn, 'drawn')):
             if type(owner) is not EvidenceRecord or owner.kind != kind or len(owner.sources) != 1:
                 raise ValueError('annotation binding requires one captured ' + kind + ' owner')

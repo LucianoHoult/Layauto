@@ -97,7 +97,7 @@ class AnnotationDraft:
             elif type(value) is tuple:
                 for child in value:
                     sources(child)
-        sources(b.derived.sources + b.drawn.sources)
+        sources((b.source_ref,) + b.derived.sources + b.drawn.sources)
         for seed in self.evidence:
             sources((seed.record, seed.identity_provenance))
         for row in self.classifications:

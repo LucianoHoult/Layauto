@@ -178,7 +178,7 @@ def build_net_annotation_draft(local: LocalConnectivityDraft, source: SemanticCi
     layout = local.effective.base.layout
     binding = AnnotationBinding(local.ref, local.effective.ref, layout.ref, layout.units.ref,
                                 local.effective.base.partition.ref, layout.units.canonical_tick_nm, layout.top,
-                                source.selected_cell, digest(semantic_value(source)), derived, local.binding.drawn,
+                                source.selected_cell, digest(semantic_value(source)), source.preservation.sources[0], derived, local.binding.drawn,
                                 local.components, tuple(sorted((row.id for row in layout.records), key=lambda item: item.sha256)), tuple(seed.ref for seed in evidence), capture_binding)
     source_nets = {net.id for cell in source.cells if cell.id == source.selected_cell for net in cell.nets}
     if any(seed.net_id not in source_nets for seed in evidence):
