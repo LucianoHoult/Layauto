@@ -10,10 +10,12 @@ from .geometry import GeometryResult, build_geometry
 from .effective import EffectiveGeometryResult, build_effective_geometry
 from .local_connectivity import LocalConnectivityResult, build_local_connectivity
 from .channel_identity import ChannelIdentityResult, build_channel_identity
+from .net_annotation import NetAnnotationResult, build_net_annotation
 
 __all__ = ['normalize', 'from_inputs_ready', 'from_parse_result', 'NormalizationInput', 'NormalizationResult',
            'GeometryInput', 'GeometryInputError', 'GeometryResult', 'build_geometry',
            'geometry_from_parse_result', 'geometry_from_inputs_ready', 'geometry_from_normalization_input',
            'EffectiveGeometryResult', 'build_effective_geometry',
            'LocalConnectivityResult', 'build_local_connectivity',
-           'ChannelIdentityResult', 'build_channel_identity']
+           'ChannelIdentityResult', 'build_channel_identity',
+           'NetAnnotationResult', 'build_net_annotation']

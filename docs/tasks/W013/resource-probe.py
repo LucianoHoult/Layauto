@@ -123,7 +123,7 @@ def run(case, output, terminal):
         assert repository.load_attempt(ready.run_id) == attempt and attempt.phase == 'unsealed'
         assert repository.load_checkpoint(ready.run_id) == checkpoint
         assert repository.read_terminal(ready.run_id) is None
-        assert net_result.input.input.input.input.readback is not None
+        assert local.input.input.input.readback is not None
     peak = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
     # Keep this tuple alive until after the fixed peak, matching the reviewed
     # replacement of old W011 result/restored/wire with their W013 siblings.
@@ -137,6 +137,7 @@ def run(case, output, terminal):
                           else 'same-machine-W010-reference-workload-not-W013-product',
         'terminal_component': terminal,
         'case': case, 'started_at_utc': started,
+        'argv': sys.argv, 'cwd': str(Path.cwd()),
         'python': sys.version, 'executable': sys.executable, 'platform': platform.platform(),
         'runtime_root': str(ROOT), 'package': str(layauto_v2.__file__),
         'input_site': str(selected / 'site_config.yaml'), 'probe_sha256': sha(Path(__file__).read_bytes()),
