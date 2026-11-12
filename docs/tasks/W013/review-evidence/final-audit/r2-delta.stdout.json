@@ -1,0 +1,140 @@
+{
+  "auditor": "/root/input_contracts",
+  "classification": "R2 test-only resource adoption and failure evidence identity",
+  "checks": [
+    {
+      "name": "delta_proof_hash",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "delta_review_hash",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "actual_delta_exactly_reviewed",
+      "passed": true,
+      "detail": {
+        "tests/contracts/test_w007_contracts.py": {
+          "measured": "ea27c8079bf95df14568bdabec86338efc1b5fcc540f04a15ec747d9b94d1050",
+          "current": "128bf3ac2091a7345693782a9804fac8f86e8b74ca6cfd7b3929af3ddf01bd01"
+        }
+      }
+    },
+    {
+      "name": "measured_new_source_binding",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "all_runtime_bytes_unchanged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "measured_resource_probe_exists",
+      "passed": true,
+      "detail": [
+        "/workspace/Layauto/docs/tasks/W013/resource-attempt-04/resource-probe.py"
+      ]
+    },
+    {
+      "name": "guard_exact_narrow_source_delta",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "original_stopped_command:310",
+      "passed": true,
+      "detail": {
+        "command": [
+          "/workspace/work/w013-env/dev310/bin/python",
+          "-m",
+          "pytest",
+          "-p",
+          "no:cacheprovider",
+          "tests/unit",
+          "tests/contracts",
+          "-q"
+        ],
+        "cwd": "/workspace/work/w013-final/source",
+        "exit_code": -15,
+        "environment_overrides": {
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "PYTHONPATH": "/workspace/work/w013-final/source",
+          "PIP_CACHE_DIR": "/workspace/work/w013-final/pip-cache",
+          "MYPY_CACHE_DIR": "/workspace/work/w013-final/mypy-pytest-310",
+          "MPLCONFIGDIR": "/workspace/work/w013-final/mplconfig"
+        },
+        "started_at_utc": "2026-11-12T09:58:51.997727+00:00",
+        "finished_at_utc": "2026-11-12T10:04:21.147881+00:00",
+        "elapsed_seconds": 329.15,
+        "stdout": "pytest-310.stdout.txt",
+        "stdout_sha256": "709c8541d6a70dadec0a99b5e3e2df1821d283b033776311f4c70f05f9e73c91",
+        "stderr": "pytest-310.stderr.txt",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "original_stopped_command:312",
+      "passed": true,
+      "detail": {
+        "command": [
+          "/workspace/work/w013-env/dev312/bin/python",
+          "-m",
+          "pytest",
+          "-p",
+          "no:cacheprovider",
+          "tests/unit",
+          "tests/contracts",
+          "-q"
+        ],
+        "cwd": "/workspace/work/w013-final/source",
+        "exit_code": -15,
+        "environment_overrides": {
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "PYTHONPATH": "/workspace/work/w013-final/source",
+          "PIP_CACHE_DIR": "/workspace/work/w013-final/pip-cache",
+          "MYPY_CACHE_DIR": "/workspace/work/w013-final/mypy-pytest-312",
+          "MPLCONFIGDIR": "/workspace/work/w013-final/mplconfig"
+        },
+        "started_at_utc": "2026-11-12T09:58:51.359277+00:00",
+        "finished_at_utc": "2026-11-12T10:04:21.148075+00:00",
+        "elapsed_seconds": 329.789,
+        "stdout": "pytest-312.stdout.txt",
+        "stdout_sha256": "a9d0dd85b05b98a32e478851fdd936de1ceebeb5d4f1d45341e847a7057debf1",
+        "stderr": "pytest-312.stderr.txt",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "all_stopped_evidence_preserved",
+      "passed": true,
+      "detail": 31
+    },
+    {
+      "name": "three_boundary_checks_same_new_source",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "boundary_check_raw_logs",
+      "passed": true,
+      "detail": null
+    }
+  ],
+  "failures": [],
+  "status": "passed",
+  "not_run": [
+    "product captures",
+    "pytest",
+    "typing",
+    "build",
+    "installation",
+    "smoke"
+  ],
+  "limits": [
+    "Resource measurements remain bound to their original source; this check only validates adoption under a test-only delta."
+  ]
+}

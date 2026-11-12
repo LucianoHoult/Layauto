@@ -1,0 +1,24 @@
+{
+  "classification": "independent-resource-r2-workload-identity-adoption-not-a-new-measurement",
+  "status": "passed",
+  "source_id": "2c5724a9d3ecf99913857ad89015c03c03475ae762c1c8ab00b5146fd3eec278",
+  "measured_source_id": "6463eb67b1c1ce5b9fd1fca436fa499a4ad14da004ef8fcd913872bd350443a9",
+  "adoption_path": "docs/tasks/W013/resource-r2-identity-adoption.json",
+  "adoption_sha256": "8081f70449963f04e22e3143650f78f5b5d1a9d00439a58ce645d399b2ee059d",
+  "independent_delta_review_path": "docs/tasks/W013/review-evidence/retained-boundary-delta-review.stdout.json",
+  "independent_delta_review_sha256": "8fe9cac30d5db1b214a543542e486cf053053f299cc8bdb324c203b225cd1ab0",
+  "changed_files": {
+    "tests/contracts/test_w007_contracts.py": {
+      "measured": "ea27c8079bf95df14568bdabec86338efc1b5fcc540f04a15ec747d9b94d1050",
+      "current": "128bf3ac2091a7345693782a9804fac8f86e8b74ca6cfd7b3929af3ddf01bd01"
+    }
+  },
+  "runtime_files_verified": 106,
+  "source_paths_verified": 273,
+  "resource_probe_sha256": "7295d3bab20b5f65fee02650824d36e4d59ae27e11ac2e80b02ae938e2d19981",
+  "matrix_workers": 2,
+  "package_and_install_smokes_after_matrices": true,
+  "first_stopped_matrix_not_counted_as_passed": true,
+  "new_freeze_dual_1731_full_matrices_required": true,
+  "limits": "Only an exact retained architecture-test allowance changed; resource04 imports/executes no test module. This adopts existing resource measurements by unchanged runtime/input/config/probe identity, not by pretending the old full source_id changed. No final engineering result is certified by this receipt."
+}

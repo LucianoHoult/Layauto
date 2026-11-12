@@ -1,0 +1,25 @@
+{
+  "command": [
+    "/workspace/work/w013-final-r2/clean-312/bin/python",
+    "-I",
+    "-B",
+    "/workspace/Layauto/docs/tasks/W013/verification-r2/installed_smoke.py",
+    "/workspace/work/w013-final-r2/source/tests/fixtures/w003_m1"
+  ],
+  "cwd": "/workspace/work/w013-final-r2/installed-cwd",
+  "exit_code": 0,
+  "environment_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONPATH": "/workspace/work/w013-final-r2/installed-cwd",
+    "PIP_CACHE_DIR": "/workspace/work/w013-final-r2/pip-cache",
+    "MYPY_CACHE_DIR": "/workspace/work/w013-final-r2/mypy-installed-smoke-312",
+    "MPLCONFIGDIR": "/workspace/work/w013-final-r2/mplconfig"
+  },
+  "started_at_utc": "2026-11-12T12:50:37.107180+00:00",
+  "finished_at_utc": "2026-11-12T12:55:50.535936+00:00",
+  "elapsed_seconds": 313.429,
+  "stdout": "installed-smoke-312.stdout.txt",
+  "stdout_sha256": "c75d48a03df0d13b71197d79fb426b271138a7263b49a1927917ead0d517aad6",
+  "stderr": "installed-smoke-312.stderr.txt",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

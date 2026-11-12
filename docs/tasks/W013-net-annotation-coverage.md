@@ -91,6 +91,87 @@ CR修正后当前正在同一新源上复测三路，记录已有公开认证调
 启动最终1731项双解释器矩阵；源码/测试/config再变仍重新冻结验证。PM阶段/current-work不变，
 最终仅提交推送原W013分支交PM，不合main、不自行验收或启动下一任务。
 
+
+### 最终新冻结 R2（执行，2026-11-12）
+
+修后三路成本已完成并经独立资源核证，见[成本与限制](W013/resource-summary.md)；
+原实际受测source_id仍为`6463eb67…3443a9`，不改写为后来的测试身份。
+首轮最终矩阵在双解释器的同一保留W007架构guard失败：旧白名单未声明W013两个
+normalization模块对只读`AnnotationDraft`的必要依赖。已保留[原失败/受控停止](W013/verification/controlled-stop.json)
+与[单点复现](W013/development/retained-boundary-failure.command.json)，**首轮不算全量通过**。
+执行只为这两个文件/这个类补精确白名单，未放开mutable state或发布依赖；
+[三个相关架构检查](W013/development/retained-boundary-after.command.json)实跑3 passed。
+
+独立[测试delta复核](W013/review-evidence/retained-boundary-delta-review.stdout.json)确认273项
+完整路径集合不变，只有`tests/contracts/test_w007_contracts.py`字节变化；106个runtime文件、
+config、输入及新增75项测试不变。按资源工作负载不执行该test的事实，
+[资源采信证明](W013/resource-r2-identity-adoption.json)与[独立核证](W013/review-evidence/resource-r2-adoption-review.json)
+采用原测量，不把它冒记成新source实跑；资源必须项0。
+原clearance的review commit引用错误另以[不可变补正](W013/resource-clearance-reference-correction.json)
+及[独立核证](W013/review-evidence/resource-clearance-reference-review.json)保留追溯，原字节不改。
+
+新的完整源码/测试/config身份为
+`2c5724a9d3ecf99913857ad89015c03c03475ae762c1c8ab00b5146fd3eec278`，
+冻结HEAD `2a45938`；[R2快照/映射](W013/verification-r2/source-manifest.json)包含全部273项实际字节。
+已按此新冻结启动双3.10.22/3.12.14各1731项，随后双typing、构建、双干净安装与源码外
+三路smoke；[R2目录](W013/verification-r2/)只收本次原记录，旧失败不覆盖。
+当前仍在执行，尚不宣称新最终矩阵通过或A1–A8完整交付。
+
+
+### 最终执行交付（2026-11-12，待PM接收）
+
+**实施与最终工程验证已完成；A1–A8覆盖见下表，独立最终review以下段结论为准，不代PM验收。**
+最终完整源码/测试/config身份为
+`2c5724a9d3ecf99913857ad89015c03c03475ae762c1c8ab00b5146fd3eec278`，
+冻结提交`2a45938aba8e751183d472d660a1ab66a1063636`。
+[最终R2回执](W013/verification-r2/receipt.json)为`passed`；
+[273项完整映射](W013/verification-r2/source-manifest.json)、
+[可重建源码快照](W013/verification-r2/source-snapshot.tar.gz)与
+[全部原证据hash](W013/verification-r2/evidence-manifest.json)可定位实际受测字节。
+所有命令结束后再次核原工作区/执行snapshot/源码路径集合、三冻结工具、clearance及原collection
+字节不变；后续提交只补本任务文档/证据，不以新的Git HEAD冒充不同受测源。
+
+| 要求 | 本轮交付与证据 |
+| --- | --- |
+| A1 同源/身份 | 复用真实W007 xref→NetId/QueryKey seeds，完整W010公开认证后从同一semantic input重建。source/run/database/owner错配及伪造xref拒绝；保留原1/2/3/4字符串和全部来源。007按用户选项A为拒绝反例，未改旧parser/QueryKey |
+| A2 精确区域 | Fraction nm、tech layer mapping、声明quality/tolerance/trim裁交；独立target/fragment及同网union去重。partial、CUT gap、边/点零面积、同cell多occupant及query未匹配均有明确验证 |
+| A3 本地分量 | 正常14节点/8边/6分量对照独立local oracle，4关联+2未知body分量；cut专例中同A网仍三物理分量。无新增/删除物理edge，component关联不替代region直接覆盖，外部body节点/边未纳入 |
+| A4 缺口/质量 | 正常14 targets、8份net evidence、40项drawn分类：总35090/直接覆盖3170/未覆盖31920 nm²，MARK25另列非导体。冲突、unknown、trim及unmatched证据保留；不升级非exact质量，现行上游拒绝范围不假称已支持 |
+| A5 公开DTO/codec | 不可变、防御快照、native scalar/完整closed graph、全字段与owner/source验证；neutral与captured认证分层。CR-01–03原失败及修正复核保留，原异常object/cause/context/suppression保真。新wire仅含一次完整旧W010 canonical Value，旧codec/wire/ref未改 |
+| A6 有效性/owner | state.annotation拥有compact proposed draft，annotation纯匹配、derive只读摘要。固定source-evidence/local与当前geometry/input/run binding；body/completed原证据保留，readback attempt/checkpoint不变且terminal为空 |
+| A7 组合成本 | 调用/序列化图和实际1/1/2共4次W010公开decode认证相符；[首完整组合及修后测量](W013/resource-summary.md)分别保留源身份，完整W011 Result零份。修后固定三路新compact约0.315MB，成本主要为未改上游认证，资源节点无must。R2仅test delta按工作负载身份采信，原测量不改标 |
+| A8 工程/review | 新冻结双全量、双strict typing、构建与双干净安装源码外三路smoke全部实跑通过；独立方案门、代码/合同/组合/资源探针、完整源/输入/工程身份审查分别留证。原guard失败和受控停止不计为通过，R2双矩阵已重新完整执行 |
+
+具体文件职责/调用图/小输入输出见[方案](W013/interface-plan.md)，实际最小文件变化和独立判据
+入口见[范围专项](W013/handoff-scope-audit.md)。产品仅6个新模块、公开入口/typing清单；
+测试为3个新收集模块+1个共享helper和旧W007精确依赖白名单维护。未改已验收fixture/答案、
+旧codec/finding/报告、architecture、roadmap/current-work、任务PM要求/阶段/验收段。
+
+| 最终实跑 | 结果及原记录 |
+| --- | --- |
+| Python3.10.22全量 | 1731 passed，pytest报告9252.87s；[原输出](W013/verification-r2/pytest-310.stdout.txt)/[进程回执](W013/verification-r2/pytest-310.json) |
+| Python3.12.14全量 | 1731 passed，pytest报告6653.50s；[原输出](W013/verification-r2/pytest-312.stdout.txt)/[进程回执](W013/verification-r2/pytest-312.json) |
+| 双strict typing/pip check | 两套均60源文件通过，依赖检查均0；命令/依赖/解释器身份在最终回执中 |
+| wheel/sdist构建 | 两包全部106个runtime文件逐hash等于冻结源码；[包身份](W013/verification-r2/package-identity.json) |
+| 3.10全新sdist安装 | 源码外`-I -B` direct/readback/mismatch全部通过，434.159s；[原输出](W013/verification-r2/installed-smoke-310.stdout.txt) |
+| 3.12全新wheel安装 | 同样三路全部通过，313.429s；[原输出](W013/verification-r2/installed-smoke-312.stdout.txt) |
+
+[双安装身份](W013/verification-r2/installation-identity.json)证明导入来自各自clean venv的
+site-packages，106个runtime字节均与源/包相同；smoke不加载tests/support或oracle答案，
+同时核完整public roundtrip、直接result digest、neutral防伪、精确coverage和run/body绑定。
+安装smoke的临时mismatch URI只作正确性；不将它的耗时/wire与固定URI资源测量混比。
+上表为本环境实际命令，不从旧A1跨环境秒数推断性能改善。
+
+| 验证分工 | 交PM时事实与限制 |
+| --- | --- |
+| 本次实跑 | 开发新增/受影响110项、必要3项guard修正验证、独立关键反例/精确数学/实际captured异常链、最早及修后三路资源、R2双1731全量/typing/build/双安装三路smoke，以及独立完整身份审计 |
+| 按身份采信 | 资源04的原source6463eb67…按106 runtime/config/input/probe完全相同采信到R2，唯一delta是未执行于资源workload的旧guard test；原独立探针亦按相同runtime采信。旧A1仅为来源/合同及原collection对照，未替代新产品最终矩阵 |
+| 未覆盖 | synthetic支持范围外的真实EDA/生产PDK、非矩形/非exact或新容差policy；完整M1、body/U06与其它规则/生命周期闭合及baseline/terminal发布。现有body要求不改。分支尚待PM实际接收/集成 |
+| 补跑触发 | 源码/测试/config/相关输入/依赖变化、实际合并冲突或组合行为变化、身份不闭合/证据缺失或新风险；相关源变后重新冻结并完成要求的最终矩阵。文档/引用补记及换session/角色本身不触发重复双全量；PM在实际集成版本补必要组合验证 |
+
+最终只沿原`codex/w013-net-annotation-coverage`分支以项目noreply身份提交推送，核远端完整
+SHA交PM；不自行验收、合main、删分支、改变PM阶段/current-work或启动下一任务。
+
 ## Review 结论（reviewer）
 
 2026-11-12，独立 reviewer `/root/independent_review`（未参与方案设计或实现）完成本轮
@@ -107,6 +188,30 @@ PR-01/P01（当前ordinal捕获不能表示007的验收解释）仍待PM决定�
 及方案新SHA-256 `7591fa5d2deb24ced2f2301db7d4cf953801d704ac812e9da092010262f40e1c`，
 PR-01/P01关闭，PR-02/03既有修正仍成立，**方案实施门通过，可在当前真实捕获范围实施**。
 这只解除方案门；代码/合同/组合/资源review及新产品最终矩阵仍未执行，不构成产品或PM验收。
+
+
+### 最终独立review（2026-11-12，reviewer）
+
+**代码/合同/组合/资源及最终工程证据review通过，剩余必须修正项0；支持交PM，不代PM验收。**
+受测冻结提交`2a45938aba8e751183d472d660a1ab66a1063636`，完整source_id
+`2c5724a9d3ecf99913857ad89015c03c03475ae762c1c8ab00b5146fd3eec278`。
+[完整review](W013/code-review.md#最终独立review结论2026-11-12)保留CR-01–03原失败、修正及独立复核，
+P01按用户选A保留007拒绝；当前synthetic/local范围下A1–A8交付及执行表与实际证据一致。
+
+主reviewer `/root/independent_review` 未参与设计/实现，独立审实际diff、来源/owner/公开合同、
+精确coverage/本地oracle、canonical与原异常链，补关键反例并复核修正；另以
+[最终只读审计](W013/review-evidence/code-static/final_r2_complete_audit.stdout.json)核21条实际命令、
+81份证据manifest、273源/测试/config、106runtime与包/安装字节身份。
+[工程专项148项](W013/final-evidence-review.md#r2最终工程身份核证完成追加2026-11-12)亦通过。
+新R2双3.10.22/3.12.14各1731全量、双60源strict typing、build和双fresh安装源码外三路smoke
+均有实际通过证据；首轮中断矩阵不计通过，旧A1矩阵未替代新产品矩阵。
+
+实跑为上述独立反例/合同/源与证据身份检查；按身份采信新R2原工程实跑及resource04的精确
+runtime/input/probe相同采信链，不重复全量或捕获。137项固定输入审计与历史README/资源review
+引用补正闭合，原probe/失败/日志/manifest保留。未覆盖真实EDA/完整M1、外部body/U06与其它既有
+后续义务、baseline/terminal发布及实际main集成；本输出仍为source-evidence/local草稿。
+源码/测试/config/相关输入/依赖变化、实际组合变化或证据身份缺口触发相应复核和重新冻结验证；
+文档补记/换session本身不触发重复双全量。PM在实际接收/集成版本补必要组合验证。
 
 ## PM 验收与交接（PM）
 

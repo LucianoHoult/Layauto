@@ -1,0 +1,1890 @@
+{
+  "auditor": "/root/input_contracts",
+  "utc": "2026-11-12T12:56:03.731993+00:00",
+  "attempt": "r2",
+  "phase": "complete",
+  "source_id": "2c5724a9d3ecf99913857ad89015c03c03475ae762c1c8ab00b5146fd3eec278",
+  "git_head": "2a45938aba8e751183d472d660a1ab66a1063636",
+  "git_status": " M docs/tasks/W013-net-annotation-coverage.md\n M docs/tasks/W013/code-review.md\n?? docs/tasks/W013/final-evidence-review.md\n?? docs/tasks/W013/final-runner-r2.stderr.txt\n?? docs/tasks/W013/final-runner-r2.stdout.txt\n?? docs/tasks/W013/handoff-scope-audit.md\n?? docs/tasks/W013/review-evidence/code-static/final_r2_precheck.py\n?? docs/tasks/W013/review-evidence/code-static/final_r2_precheck.stderr.txt\n?? docs/tasks/W013/review-evidence/code-static/final_r2_precheck.stdout.json\n?? docs/tasks/W013/review-evidence/final-audit/\n?? docs/tasks/W013/review-evidence/final-doc-precheck/\n?? docs/tasks/W013/review-evidence/resource-r2-adoption-review.json\n?? docs/tasks/W013/verification-r2/\n",
+  "checks": [
+    {
+      "name": "current_complete_source_selection",
+      "passed": true,
+      "detail": {
+        "current": 273,
+        "frozen": 273
+      }
+    },
+    {
+      "name": "source_identity",
+      "passed": true,
+      "detail": "2c5724a9d3ecf99913857ad89015c03c03475ae762c1c8ab00b5146fd3eec278"
+    },
+    {
+      "name": "source_count",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "snapshot_only_unique_regular_files",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "snapshot_complete_bytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "executed_snapshot_bytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "runtime_selection",
+      "passed": true,
+      "detail": 106
+    },
+    {
+      "name": "r2_only_retained_guard_changes",
+      "passed": true,
+      "detail": [
+        "tests/contracts/test_w007_contracts.py"
+      ]
+    },
+    {
+      "name": "r2_runtime_unchanged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "development_original_source",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "original_failure_preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "only_expected_source_changes",
+      "passed": true,
+      "detail": [
+        "A\tlayauto_v2/annotation/net_regions.py",
+        "A\tlayauto_v2/derive/net_annotation.py",
+        "A\tlayauto_v2/domain/net_annotation.py",
+        "M\tlayauto_v2/normalization/__init__.py",
+        "A\tlayauto_v2/normalization/net_annotation.py",
+        "A\tlayauto_v2/normalization/net_annotation_codec.py",
+        "A\tlayauto_v2/state/annotation.py",
+        "M\tpyproject.toml",
+        "M\ttests/contracts/test_w007_contracts.py",
+        "A\ttests/contracts/test_w013_composition.py",
+        "A\ttests/contracts/test_w013_contracts.py",
+        "A\ttests/contracts/w013_cases.py",
+        "A\ttests/unit/test_w013_net_annotation.py"
+      ]
+    },
+    {
+      "name": "fixture_and_old_codec_bytes",
+      "passed": true,
+      "detail": {
+        "count": 123,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "old_reports_architecture_PM_pointers_unchanged",
+      "passed": true,
+      "detail": [
+        "docs/tasks/W013-net-annotation-coverage.md",
+        "docs/tasks/W013/.gitattributes",
+        "docs/tasks/W013/code-review.md",
+        "docs/tasks/W013/development/collection-attempt-01.stderr.txt",
+        "docs/tasks/W013/development/collection-attempt-01.stdout.txt",
+        "docs/tasks/W013/development/collection-attempt-02.stderr.txt",
+        "docs/tasks/W013/development/collection-attempt-02.stdout.txt",
+        "docs/tasks/W013/development/core-cr01/after.stderr.txt",
+        "docs/tasks/W013/development/core-cr01/after.stdout.txt",
+        "docs/tasks/W013/development/core-cr02/guard-after.stderr.txt",
+        "docs/tasks/W013/development/core-cr02/guard-after.stdout.json",
+        "docs/tasks/W013/development/core-cr03/static-after.stderr.txt",
+        "docs/tasks/W013/development/core-cr03/static-after.stdout.json",
+        "docs/tasks/W013/development/cr01-cr02-after-attempt-01.stderr.txt",
+        "docs/tasks/W013/development/cr01-cr02-after-attempt-01.stdout.txt",
+        "docs/tasks/W013/development/full-collection-final-candidate.stderr.txt",
+        "docs/tasks/W013/development/full-collection-final-candidate.stdout.txt",
+        "docs/tasks/W013/development/mypy-310-final-candidate.stderr.txt",
+        "docs/tasks/W013/development/mypy-310-final-candidate.stdout.txt",
+        "docs/tasks/W013/development/mypy-312-final-candidate.stderr.txt",
+        "docs/tasks/W013/development/mypy-312-final-candidate.stdout.txt",
+        "docs/tasks/W013/development/mypy-integration-attempt-01.stderr.txt",
+        "docs/tasks/W013/development/mypy-integration-attempt-01.stdout.txt",
+        "docs/tasks/W013/development/mypy-integration-attempt-02.stderr.txt",
+        "docs/tasks/W013/development/mypy-integration-attempt-02.stdout.txt",
+        "docs/tasks/W013/development/retained-boundary-after.command.json",
+        "docs/tasks/W013/development/retained-boundary-after.stderr.txt",
+        "docs/tasks/W013/development/retained-boundary-after.stdout.txt",
+        "docs/tasks/W013/development/retained-boundary-failure.command.json",
+        "docs/tasks/W013/development/retained-boundary-failure.stderr.txt",
+        "docs/tasks/W013/development/retained-boundary-failure.stdout.txt",
+        "docs/tasks/W013/development/targeted-attempt-01.command.json",
+        "docs/tasks/W013/development/targeted-attempt-01.stderr.txt",
+        "docs/tasks/W013/development/targeted-attempt-01.stdout.txt",
+        "docs/tasks/W013/development/test-author/attempt-01-import-origin.txt",
+        "docs/tasks/W013/development/test-author/compact-initial.json",
+        "docs/tasks/W013/development/test-author/compact-initial.stderr.txt",
+        "docs/tasks/W013/development/test-author/compact-initial.stdout.txt",
+        "docs/tasks/W013/development/test-author/cr01-before-multiple_owners_probe.json",
+        "docs/tasks/W013/development/test-author/cr01-before-multiple_owners_probe.stderr.txt",
+        "docs/tasks/W013/development/test-author/cr01-before-multiple_owners_probe.stdout.txt",
+        "docs/tasks/W013/development/test-author/cr01-before-operator_binding_probe.json",
+        "docs/tasks/W013/development/test-author/cr01-before-operator_binding_probe.stderr.txt",
+        "docs/tasks/W013/development/test-author/cr01-before-operator_binding_probe.stdout.txt",
+        "docs/tasks/W013/development/test-author/cr01-cr02-neutral-after.json",
+        "docs/tasks/W013/development/test-author/cr01-cr02-neutral-after.stderr.txt",
+        "docs/tasks/W013/development/test-author/cr01-cr02-neutral-after.stdout.txt",
+        "docs/tasks/W013/development/test-author/cr01-cr03-neutral-after.json",
+        "docs/tasks/W013/development/test-author/cr01-cr03-neutral-after.stderr.txt",
+        "docs/tasks/W013/development/test-author/cr01-cr03-neutral-after.stdout.txt",
+        "docs/tasks/W013/development/test-author/cr01-regression-before.json",
+        "docs/tasks/W013/development/test-author/cr01-regression-before.stderr.txt",
+        "docs/tasks/W013/development/test-author/cr01-regression-before.stdout.txt",
+        "docs/tasks/W013/development/test-author/cr02-before-map_backing_probe.json",
+        "docs/tasks/W013/development/test-author/cr02-before-map_backing_probe.stderr.txt",
+        "docs/tasks/W013/development/test-author/cr02-before-map_backing_probe.stdout.txt",
+        "docs/tasks/W013/development/test-author/cr02-regression-before.json",
+        "docs/tasks/W013/development/test-author/cr02-regression-before.stderr.txt",
+        "docs/tasks/W013/development/test-author/cr02-regression-before.stdout.txt",
+        "docs/tasks/W013/development/test-author/cr03-before-contributor_closure_probe.json",
+        "docs/tasks/W013/development/test-author/cr03-before-contributor_closure_probe.stderr.txt",
+        "docs/tasks/W013/development/test-author/cr03-before-contributor_closure_probe.stdout.txt",
+        "docs/tasks/W013/development/test-author/cr03-before-target_classification_probe.json",
+        "docs/tasks/W013/development/test-author/cr03-before-target_classification_probe.stderr.txt",
+        "docs/tasks/W013/development/test-author/cr03-before-target_classification_probe.stdout.txt",
+        "docs/tasks/W013/development/test-author/cr03-regression-before.json",
+        "docs/tasks/W013/development/test-author/cr03-regression-before.stderr.txt",
+        "docs/tasks/W013/development/test-author/cr03-regression-before.stdout.txt",
+        "docs/tasks/W013/development/test-author/input-scope-initial.json",
+        "docs/tasks/W013/development/test-author/input-scope-initial.stderr.txt",
+        "docs/tasks/W013/development/test-author/input-scope-initial.stdout.txt",
+        "docs/tasks/W013/development/test-author/unit-initial.json",
+        "docs/tasks/W013/development/test-author/unit-initial.stderr.txt",
+        "docs/tasks/W013/development/test-author/unit-initial.stdout.txt",
+        "docs/tasks/W013/engineering-preparation/README.md",
+        "docs/tasks/W013/engineering-preparation/smoke-api-basis.json",
+        "docs/tasks/W013/engineering-preparation/smoke-api.md",
+        "docs/tasks/W013/engineering-preparation/tools-310/installed_smoke-help.command.json",
+        "docs/tasks/W013/engineering-preparation/tools-310/installed_smoke-help.stderr.txt",
+        "docs/tasks/W013/engineering-preparation/tools-310/installed_smoke-help.stdout.txt",
+        "docs/tasks/W013/engineering-preparation/tools-310/manifest.json",
+        "docs/tasks/W013/engineering-preparation/tools-310/prepare_final-help.command.json",
+        "docs/tasks/W013/engineering-preparation/tools-310/prepare_final-help.stderr.txt",
+        "docs/tasks/W013/engineering-preparation/tools-310/prepare_final-help.stdout.txt",
+        "docs/tasks/W013/engineering-preparation/tools-310/receipt.json",
+        "docs/tasks/W013/engineering-preparation/tools-310/resource-clearance-rejection.command.json",
+        "docs/tasks/W013/engineering-preparation/tools-310/resource-clearance-rejection.stderr.txt",
+        "docs/tasks/W013/engineering-preparation/tools-310/resource-clearance-rejection.stdout.txt",
+        "docs/tasks/W013/engineering-preparation/tools-310/smoke-not-ready-guard.command.json",
+        "docs/tasks/W013/engineering-preparation/tools-310/smoke-not-ready-guard.stderr.txt",
+        "docs/tasks/W013/engineering-preparation/tools-310/smoke-not-ready-guard.stdout.txt",
+        "docs/tasks/W013/engineering-preparation/tools-310/source-identity.command.json",
+        "docs/tasks/W013/engineering-preparation/tools-310/source-identity.stderr.txt",
+        "docs/tasks/W013/engineering-preparation/tools-310/source-identity.stdout.txt",
+        "docs/tasks/W013/engineering-preparation/tools-310/source_identity-help.command.json",
+        "docs/tasks/W013/engineering-preparation/tools-310/source_identity-help.stderr.txt",
+        "docs/tasks/W013/engineering-preparation/tools-310/source_identity-help.stdout.txt",
+        "docs/tasks/W013/engineering-preparation/tools-312/installed_smoke-help.command.json",
+        "docs/tasks/W013/engineering-preparation/tools-312/installed_smoke-help.stderr.txt",
+        "docs/tasks/W013/engineering-preparation/tools-312/installed_smoke-help.stdout.txt",
+        "docs/tasks/W013/engineering-preparation/tools-312/manifest.json",
+        "docs/tasks/W013/engineering-preparation/tools-312/prepare_final-help.command.json",
+        "docs/tasks/W013/engineering-preparation/tools-312/prepare_final-help.stderr.txt",
+        "docs/tasks/W013/engineering-preparation/tools-312/prepare_final-help.stdout.txt",
+        "docs/tasks/W013/engineering-preparation/tools-312/receipt.json",
+        "docs/tasks/W013/engineering-preparation/tools-312/resource-clearance-rejection.command.json",
+        "docs/tasks/W013/engineering-preparation/tools-312/resource-clearance-rejection.stderr.txt",
+        "docs/tasks/W013/engineering-preparation/tools-312/resource-clearance-rejection.stdout.txt",
+        "docs/tasks/W013/engineering-preparation/tools-312/smoke-not-ready-guard.command.json",
+        "docs/tasks/W013/engineering-preparation/tools-312/smoke-not-ready-guard.stderr.txt",
+        "docs/tasks/W013/engineering-preparation/tools-312/smoke-not-ready-guard.stdout.txt",
+        "docs/tasks/W013/engineering-preparation/tools-312/source-identity.command.json",
+        "docs/tasks/W013/engineering-preparation/tools-312/source-identity.stderr.txt",
+        "docs/tasks/W013/engineering-preparation/tools-312/source-identity.stdout.txt",
+        "docs/tasks/W013/engineering-preparation/tools-312/source_identity-help.command.json",
+        "docs/tasks/W013/engineering-preparation/tools-312/source_identity-help.stderr.txt",
+        "docs/tasks/W013/engineering-preparation/tools-312/source_identity-help.stdout.txt",
+        "docs/tasks/W013/engineering-preparation/tools-api-310/installed_smoke-help.command.json",
+        "docs/tasks/W013/engineering-preparation/tools-api-310/installed_smoke-help.stderr.txt",
+        "docs/tasks/W013/engineering-preparation/tools-api-310/installed_smoke-help.stdout.txt",
+        "docs/tasks/W013/engineering-preparation/tools-api-310/manifest.json",
+        "docs/tasks/W013/engineering-preparation/tools-api-310/prepare_final-help.command.json",
+        "docs/tasks/W013/engineering-preparation/tools-api-310/prepare_final-help.stderr.txt",
+        "docs/tasks/W013/engineering-preparation/tools-api-310/prepare_final-help.stdout.txt",
+        "docs/tasks/W013/engineering-preparation/tools-api-310/receipt.json",
+        "docs/tasks/W013/engineering-preparation/tools-api-310/resource-clearance-rejection.command.json",
+        "docs/tasks/W013/engineering-preparation/tools-api-310/resource-clearance-rejection.stderr.txt",
+        "docs/tasks/W013/engineering-preparation/tools-api-310/resource-clearance-rejection.stdout.txt",
+        "docs/tasks/W013/engineering-preparation/tools-api-310/source-identity.command.json",
+        "docs/tasks/W013/engineering-preparation/tools-api-310/source-identity.stderr.txt",
+        "docs/tasks/W013/engineering-preparation/tools-api-310/source-identity.stdout.txt",
+        "docs/tasks/W013/engineering-preparation/tools-api-310/source_identity-help.command.json",
+        "docs/tasks/W013/engineering-preparation/tools-api-310/source_identity-help.stderr.txt",
+        "docs/tasks/W013/engineering-preparation/tools-api-310/source_identity-help.stdout.txt",
+        "docs/tasks/W013/engineering-preparation/tools-api-312/installed_smoke-help.command.json",
+        "docs/tasks/W013/engineering-preparation/tools-api-312/installed_smoke-help.stderr.txt",
+        "docs/tasks/W013/engineering-preparation/tools-api-312/installed_smoke-help.stdout.txt",
+        "docs/tasks/W013/engineering-preparation/tools-api-312/manifest.json",
+        "docs/tasks/W013/engineering-preparation/tools-api-312/prepare_final-help.command.json",
+        "docs/tasks/W013/engineering-preparation/tools-api-312/prepare_final-help.stderr.txt",
+        "docs/tasks/W013/engineering-preparation/tools-api-312/prepare_final-help.stdout.txt",
+        "docs/tasks/W013/engineering-preparation/tools-api-312/receipt.json",
+        "docs/tasks/W013/engineering-preparation/tools-api-312/resource-clearance-rejection.command.json",
+        "docs/tasks/W013/engineering-preparation/tools-api-312/resource-clearance-rejection.stderr.txt",
+        "docs/tasks/W013/engineering-preparation/tools-api-312/resource-clearance-rejection.stdout.txt",
+        "docs/tasks/W013/engineering-preparation/tools-api-312/source-identity.command.json",
+        "docs/tasks/W013/engineering-preparation/tools-api-312/source-identity.stderr.txt",
+        "docs/tasks/W013/engineering-preparation/tools-api-312/source-identity.stdout.txt",
+        "docs/tasks/W013/engineering-preparation/tools-api-312/source_identity-help.command.json",
+        "docs/tasks/W013/engineering-preparation/tools-api-312/source_identity-help.stderr.txt",
+        "docs/tasks/W013/engineering-preparation/tools-api-312/source_identity-help.stdout.txt",
+        "docs/tasks/W013/environment/README-handoff.md",
+        "docs/tasks/W013/environment/evidence/create310.command.json",
+        "docs/tasks/W013/environment/evidence/create310.stderr.txt",
+        "docs/tasks/W013/environment/evidence/create310.stdout.txt",
+        "docs/tasks/W013/environment/evidence/create312.command.json",
+        "docs/tasks/W013/environment/evidence/create312.stderr.txt",
+        "docs/tasks/W013/environment/evidence/create312.stdout.txt",
+        "docs/tasks/W013/environment/evidence/freeze310.command.json",
+        "docs/tasks/W013/environment/evidence/freeze310.stderr.txt",
+        "docs/tasks/W013/environment/evidence/freeze310.stdout.txt",
+        "docs/tasks/W013/environment/evidence/freeze312.command.json",
+        "docs/tasks/W013/environment/evidence/freeze312.stderr.txt",
+        "docs/tasks/W013/environment/evidence/freeze312.stdout.txt",
+        "docs/tasks/W013/environment/evidence/identity310.command.json",
+        "docs/tasks/W013/environment/evidence/identity310.stderr.txt",
+        "docs/tasks/W013/environment/evidence/identity310.stdout.txt",
+        "docs/tasks/W013/environment/evidence/identity312.command.json",
+        "docs/tasks/W013/environment/evidence/identity312.stderr.txt",
+        "docs/tasks/W013/environment/evidence/identity312.stdout.txt",
+        "docs/tasks/W013/environment/evidence/initial-cache-observation.txt",
+        "docs/tasks/W013/environment/evidence/install310-attempt01.command.json",
+        "docs/tasks/W013/environment/evidence/install310-attempt01.stderr.txt",
+        "docs/tasks/W013/environment/evidence/install310-attempt01.stdout.txt",
+        "docs/tasks/W013/environment/evidence/install312-attempt01.command.json",
+        "docs/tasks/W013/environment/evidence/install312-attempt01.stderr.txt",
+        "docs/tasks/W013/environment/evidence/install312-attempt01.stdout.txt",
+        "docs/tasks/W013/environment/evidence/installed-inventory.command.json",
+        "docs/tasks/W013/environment/evidence/installed-inventory.stderr.txt",
+        "docs/tasks/W013/environment/evidence/installed-inventory.stdout.txt",
+        "docs/tasks/W013/environment/evidence/pip-check310.command.json",
+        "docs/tasks/W013/environment/evidence/pip-check310.stderr.txt",
+        "docs/tasks/W013/environment/evidence/pip-check310.stdout.txt",
+        "docs/tasks/W013/environment/evidence/pip-check312.command.json",
+        "docs/tasks/W013/environment/evidence/pip-check312.stderr.txt",
+        "docs/tasks/W013/environment/evidence/pip-check312.stdout.txt",
+        "docs/tasks/W013/environment/evidence/pip-report310.json",
+        "docs/tasks/W013/environment/evidence/pip-report312.json",
+        "docs/tasks/W013/environment/evidence/python310-install-attempt01.command.json",
+        "docs/tasks/W013/environment/evidence/python310-install-attempt01.stderr.txt",
+        "docs/tasks/W013/environment/evidence/python310-install-attempt01.stdout.txt",
+        "docs/tasks/W013/environment/identity.py",
+        "docs/tasks/W013/environment/manifest.json",
+        "docs/tasks/W013/environment/receipt.json",
+        "docs/tasks/W013/environment/requirements-310.txt",
+        "docs/tasks/W013/environment/requirements-312.txt",
+        "docs/tasks/W013/environment/run_command.py",
+        "docs/tasks/W013/evidence-review.md",
+        "docs/tasks/W013/final-runner.stderr.txt",
+        "docs/tasks/W013/final-runner.stdout.txt",
+        "docs/tasks/W013/fixed-mismatch-restoration.json",
+        "docs/tasks/W013/handoff-check.json",
+        "docs/tasks/W013/input-boundary-probe.py",
+        "docs/tasks/W013/input-boundary-probe.stderr.txt",
+        "docs/tasks/W013/input-boundary-probe.stdout.json",
+        "docs/tasks/W013/interface-plan.md",
+        "docs/tasks/W013/interface-review.md",
+        "docs/tasks/W013/pm-decision.md",
+        "docs/tasks/W013/pre-final-source-identity.json",
+        "docs/tasks/W013/preflight-audit.json",
+        "docs/tasks/W013/preflight-audit.py",
+        "docs/tasks/W013/resource-analysis.json",
+        "docs/tasks/W013/resource-attempt-01/resource-probe.py",
+        "docs/tasks/W013/resource-attempt-01/w010-reference-normal-direct.json",
+        "docs/tasks/W013/resource-attempt-01/w010-reference-normal-direct.stderr.txt",
+        "docs/tasks/W013/resource-attempt-01/w010-reference-normal-direct.stdout.txt",
+        "docs/tasks/W013/resource-attempt-02/normal-direct.json",
+        "docs/tasks/W013/resource-attempt-02/normal-direct.stderr.txt",
+        "docs/tasks/W013/resource-attempt-02/normal-direct.stdout.txt",
+        "docs/tasks/W013/resource-attempt-02/resource-probe.py",
+        "docs/tasks/W013/resource-attempt-03/extraction-mismatch.command.json",
+        "docs/tasks/W013/resource-attempt-03/extraction-mismatch.json",
+        "docs/tasks/W013/resource-attempt-03/extraction-mismatch.stderr.txt",
+        "docs/tasks/W013/resource-attempt-03/extraction-mismatch.stdout.txt",
+        "docs/tasks/W013/resource-attempt-03/normal-direct.command.json",
+        "docs/tasks/W013/resource-attempt-03/normal-direct.json",
+        "docs/tasks/W013/resource-attempt-03/normal-direct.stderr.txt",
+        "docs/tasks/W013/resource-attempt-03/normal-direct.stdout.txt",
+        "docs/tasks/W013/resource-attempt-03/normal-readback.command.json",
+        "docs/tasks/W013/resource-attempt-03/normal-readback.json",
+        "docs/tasks/W013/resource-attempt-03/normal-readback.stderr.txt",
+        "docs/tasks/W013/resource-attempt-03/normal-readback.stdout.txt",
+        "docs/tasks/W013/resource-attempt-03/resource-probe.py",
+        "docs/tasks/W013/resource-attempt-03/suite.json",
+        "docs/tasks/W013/resource-attempt-03/suite.stderr.txt",
+        "docs/tasks/W013/resource-attempt-03/suite.stdout.txt",
+        "docs/tasks/W013/resource-attempt-04/extraction-mismatch.command.json",
+        "docs/tasks/W013/resource-attempt-04/extraction-mismatch.json",
+        "docs/tasks/W013/resource-attempt-04/extraction-mismatch.stderr.txt",
+        "docs/tasks/W013/resource-attempt-04/extraction-mismatch.stdout.txt",
+        "docs/tasks/W013/resource-attempt-04/normal-direct.command.json",
+        "docs/tasks/W013/resource-attempt-04/normal-direct.json",
+        "docs/tasks/W013/resource-attempt-04/normal-direct.stderr.txt",
+        "docs/tasks/W013/resource-attempt-04/normal-direct.stdout.txt",
+        "docs/tasks/W013/resource-attempt-04/normal-readback.command.json",
+        "docs/tasks/W013/resource-attempt-04/normal-readback.json",
+        "docs/tasks/W013/resource-attempt-04/normal-readback.stderr.txt",
+        "docs/tasks/W013/resource-attempt-04/normal-readback.stdout.txt",
+        "docs/tasks/W013/resource-attempt-04/resource-probe.py",
+        "docs/tasks/W013/resource-attempt-04/suite.json",
+        "docs/tasks/W013/resource-attempt-04/suite.stderr.txt",
+        "docs/tasks/W013/resource-attempt-04/suite.stdout.txt",
+        "docs/tasks/W013/resource-clearance-r2.json",
+        "docs/tasks/W013/resource-clearance-reference-correction.json",
+        "docs/tasks/W013/resource-clearance.json",
+        "docs/tasks/W013/resource-probe.py",
+        "docs/tasks/W013/resource-r2-identity-adoption.json",
+        "docs/tasks/W013/resource-summary.md",
+        "docs/tasks/W013/review-evidence/.gitattributes",
+        "docs/tasks/W013/review-evidence/code-static/captured_map_alias_probe.py",
+        "docs/tasks/W013/review-evidence/code-static/captured_map_alias_probe.stderr.txt",
+        "docs/tasks/W013/review-evidence/code-static/captured_map_alias_probe.stdout.json",
+        "docs/tasks/W013/review-evidence/code-static/cr03-before.stderr.txt",
+        "docs/tasks/W013/review-evidence/code-static/cr03-before.stdout.json",
+        "docs/tasks/W013/review-evidence/code-static/cr03-before/contributor_closure_probe.py.stderr.txt",
+        "docs/tasks/W013/review-evidence/code-static/cr03-before/contributor_closure_probe.py.stdout.txt",
+        "docs/tasks/W013/review-evidence/code-static/cr03-before/receipt.json",
+        "docs/tasks/W013/review-evidence/code-static/cr03-before/runtime.patch",
+        "docs/tasks/W013/review-evidence/code-static/cr03-before/target_classification_probe.py.stderr.txt",
+        "docs/tasks/W013/review-evidence/code-static/cr03-before/target_classification_probe.py.stdout.txt",
+        "docs/tasks/W013/review-evidence/code-static/exact_set_probe.attempt-01.stderr.txt",
+        "docs/tasks/W013/review-evidence/code-static/exact_set_probe.attempt-01.stdout.txt",
+        "docs/tasks/W013/review-evidence/code-static/exact_set_probe.py",
+        "docs/tasks/W013/review-evidence/code-static/exact_set_probe.stderr.txt",
+        "docs/tasks/W013/review-evidence/code-static/exact_set_probe.stdout.json",
+        "docs/tasks/W013/review-evidence/code-static/initial-source-identity.json",
+        "docs/tasks/W013/review-evidence/code-static/initial-source-identity.stdout.json",
+        "docs/tasks/W013/review-evidence/code-static/postfix-source-identity.json",
+        "docs/tasks/W013/review-evidence/code-static/postfix-source-identity.stdout.json",
+        "docs/tasks/W013/review-evidence/code-static/postfix_captured_recheck.py",
+        "docs/tasks/W013/review-evidence/code-static/postfix_captured_recheck.stderr.txt",
+        "docs/tasks/W013/review-evidence/code-static/postfix_captured_recheck.stdout.json",
+        "docs/tasks/W013/review-evidence/code-static/postfix_exact_set_probe.stderr.txt",
+        "docs/tasks/W013/review-evidence/code-static/postfix_exact_set_probe.stdout.json",
+        "docs/tasks/W013/review-evidence/code-static/postfix_neutral_recheck.py",
+        "docs/tasks/W013/review-evidence/code-static/postfix_neutral_recheck.stderr.txt",
+        "docs/tasks/W013/review-evidence/code-static/postfix_neutral_recheck.stdout.json",
+        "docs/tasks/W013/review-evidence/code-static/resource04_identity_audit.py",
+        "docs/tasks/W013/review-evidence/code-static/resource04_identity_audit.stderr.txt",
+        "docs/tasks/W013/review-evidence/code-static/resource04_identity_audit.stdout.json",
+        "docs/tasks/W013/review-evidence/code-static/run_neutral_rechecks.py",
+        "docs/tasks/W013/review-evidence/input_contract_probe.py",
+        "docs/tasks/W013/review-evidence/input_contract_probe.stdout.json",
+        "docs/tasks/W013/review-evidence/neutral-static/README.md",
+        "docs/tasks/W013/review-evidence/neutral-static/contributor_closure_probe.py",
+        "docs/tasks/W013/review-evidence/neutral-static/contributor_closure_probe.stderr.txt",
+        "docs/tasks/W013/review-evidence/neutral-static/contributor_closure_probe.stdout.json",
+        "docs/tasks/W013/review-evidence/neutral-static/manifest.json",
+        "docs/tasks/W013/review-evidence/neutral-static/map_backing_probe.py",
+        "docs/tasks/W013/review-evidence/neutral-static/map_backing_probe.stderr.txt",
+        "docs/tasks/W013/review-evidence/neutral-static/map_backing_probe.stdout.json",
+        "docs/tasks/W013/review-evidence/neutral-static/multiple_owners_probe.py",
+        "docs/tasks/W013/review-evidence/neutral-static/multiple_owners_probe.stderr.txt",
+        "docs/tasks/W013/review-evidence/neutral-static/multiple_owners_probe.stdout.json",
+        "docs/tasks/W013/review-evidence/neutral-static/operator_binding_probe.attempt-01.stderr.txt",
+        "docs/tasks/W013/review-evidence/neutral-static/operator_binding_probe.attempt-01.stdout.txt",
+        "docs/tasks/W013/review-evidence/neutral-static/operator_binding_probe.py",
+        "docs/tasks/W013/review-evidence/neutral-static/operator_binding_probe.stderr.txt",
+        "docs/tasks/W013/review-evidence/neutral-static/operator_binding_probe.stdout.json",
+        "docs/tasks/W013/review-evidence/neutral-static/target_classification_probe.identity.json",
+        "docs/tasks/W013/review-evidence/neutral-static/target_classification_probe.py",
+        "docs/tasks/W013/review-evidence/neutral-static/target_classification_probe.runtime.patch",
+        "docs/tasks/W013/review-evidence/neutral-static/target_classification_probe.stderr.txt",
+        "docs/tasks/W013/review-evidence/neutral-static/target_classification_probe.stdout.json",
+        "docs/tasks/W013/review-evidence/resource-clearance-reference-review.json",
+        "docs/tasks/W013/review-evidence/retained-boundary-delta-review.py",
+        "docs/tasks/W013/review-evidence/retained-boundary-delta-review.stderr.txt",
+        "docs/tasks/W013/review-evidence/retained-boundary-delta-review.stdout.json",
+        "docs/tasks/W013/review-evidence/retained-boundary-selected-paths.json",
+        "docs/tasks/W013/review-evidence/source_identity_review.json",
+        "docs/tasks/W013/review-evidence/value_envelope_probe.attempt-01.py",
+        "docs/tasks/W013/review-evidence/value_envelope_probe.attempt-01.stderr.txt",
+        "docs/tasks/W013/review-evidence/value_envelope_probe.attempt-01.stdout.txt",
+        "docs/tasks/W013/review-evidence/value_envelope_probe.py",
+        "docs/tasks/W013/review-evidence/value_envelope_probe.stderr.txt",
+        "docs/tasks/W013/review-evidence/value_envelope_probe.stdout.json",
+        "docs/tasks/W013/run-resource-checkpoint.py",
+        "docs/tasks/W013/verification-tools/README.md",
+        "docs/tasks/W013/verification-tools/installed_smoke.py",
+        "docs/tasks/W013/verification-tools/preflight_tools.py",
+        "docs/tasks/W013/verification-tools/prepare_final.py",
+        "docs/tasks/W013/verification-tools/run_check.py",
+        "docs/tasks/W013/verification-tools/source_identity.py",
+        "docs/tasks/W013/verification/baseline-collection.txt",
+        "docs/tasks/W013/verification/collection-310.json",
+        "docs/tasks/W013/verification/collection-310.stderr.txt",
+        "docs/tasks/W013/verification/collection-310.stdout.txt",
+        "docs/tasks/W013/verification/collection-312.json",
+        "docs/tasks/W013/verification/collection-312.stderr.txt",
+        "docs/tasks/W013/verification/collection-312.stdout.txt",
+        "docs/tasks/W013/verification/controlled-stop.json",
+        "docs/tasks/W013/verification/environment-310.json",
+        "docs/tasks/W013/verification/environment-310.stderr.txt",
+        "docs/tasks/W013/verification/environment-310.stdout.txt",
+        "docs/tasks/W013/verification/environment-312.json",
+        "docs/tasks/W013/verification/environment-312.stderr.txt",
+        "docs/tasks/W013/verification/environment-312.stdout.txt",
+        "docs/tasks/W013/verification/evidence-manifest.json",
+        "docs/tasks/W013/verification/failure.json",
+        "docs/tasks/W013/verification/installed_smoke.py",
+        "docs/tasks/W013/verification/prepare_final.py",
+        "docs/tasks/W013/verification/pytest-310.json",
+        "docs/tasks/W013/verification/pytest-310.stderr.txt",
+        "docs/tasks/W013/verification/pytest-310.stdout.txt",
+        "docs/tasks/W013/verification/pytest-312.json",
+        "docs/tasks/W013/verification/pytest-312.stderr.txt",
+        "docs/tasks/W013/verification/pytest-312.stdout.txt",
+        "docs/tasks/W013/verification/pytest-scope-310.json",
+        "docs/tasks/W013/verification/pytest-scope-312.json",
+        "docs/tasks/W013/verification/resource-clearance.json",
+        "docs/tasks/W013/verification/resource-limits.json",
+        "docs/tasks/W013/verification/source-manifest.json",
+        "docs/tasks/W013/verification/source-snapshot.tar.gz",
+        "docs/tasks/W013/verification/source_identity.py",
+        "docs/tasks/W013/verification/tool-identity.json"
+      ]
+    },
+    {
+      "name": "task_PM_requirements_unchanged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "task_PM_acceptance_unchanged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "baseline_collection_original_bytes",
+      "passed": true,
+      "detail": "29d03b7337dbfca2900a43bf703838514b749dfab8734652027cc78f5b835928"
+    },
+    {
+      "name": "baseline_1656",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "command:environment-310",
+      "passed": true,
+      "detail": {
+        "command": [
+          "/workspace/work/w013-env/dev310/bin/python",
+          "-c",
+          "import sys,platform,importlib.metadata as m,json,layauto_v2; from pathlib import Path; assert sys.version_info[:2] == (3, 10), sys.version; p=Path(layauto_v2.__file__).resolve(); assert p.parent==Path.cwd()/\"layauto_v2\", p; print(json.dumps({\"executable\":sys.executable,\"version\":sys.version,\"platform\":platform.platform(),\"source_package\":str(p),\"packages\":{d.metadata[\"Name\"]:d.version for d in m.distributions()}},indent=2))"
+        ],
+        "cwd": "/workspace/work/w013-final-r2/source",
+        "exit_code": 0,
+        "environment_overrides": {
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "PYTHONPATH": "/workspace/work/w013-final-r2/source",
+          "PIP_CACHE_DIR": "/workspace/work/w013-final-r2/pip-cache",
+          "MYPY_CACHE_DIR": "/workspace/work/w013-final-r2/mypy-environment-310",
+          "MPLCONFIGDIR": "/workspace/work/w013-final-r2/mplconfig"
+        },
+        "started_at_utc": "2026-11-12T10:08:31.876194+00:00",
+        "finished_at_utc": "2026-11-12T10:08:32.144236+00:00",
+        "elapsed_seconds": 0.268,
+        "stdout": "environment-310.stdout.txt",
+        "stdout_sha256": "01deca3c04dd1a4f87de3eb346989d97611b2336c45d5aba58f9d4c55ae65fa1",
+        "stderr": "environment-310.stderr.txt",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "log:environment-310:stdout",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "log:environment-310:stderr",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "command:collection-310",
+      "passed": true,
+      "detail": {
+        "command": [
+          "/workspace/work/w013-env/dev310/bin/python",
+          "-m",
+          "pytest",
+          "-p",
+          "no:cacheprovider",
+          "--collect-only",
+          "tests/unit",
+          "tests/contracts",
+          "-q"
+        ],
+        "cwd": "/workspace/work/w013-final-r2/source",
+        "exit_code": 0,
+        "environment_overrides": {
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "PYTHONPATH": "/workspace/work/w013-final-r2/source",
+          "PIP_CACHE_DIR": "/workspace/work/w013-final-r2/pip-cache",
+          "MYPY_CACHE_DIR": "/workspace/work/w013-final-r2/mypy-collection-310",
+          "MPLCONFIGDIR": "/workspace/work/w013-final-r2/mplconfig"
+        },
+        "started_at_utc": "2026-11-12T10:08:32.144903+00:00",
+        "finished_at_utc": "2026-11-12T10:08:34.282154+00:00",
+        "elapsed_seconds": 2.137,
+        "stdout": "collection-310.stdout.txt",
+        "stdout_sha256": "19bfc274567c455d102105629ac8854763bd5af2be116448dd3191399df98575",
+        "stderr": "collection-310.stderr.txt",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "log:collection-310:stdout",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "log:collection-310:stderr",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "interpreter:310",
+      "passed": true,
+      "detail": {
+        "executable": "/workspace/work/w013-env/dev310/bin/python",
+        "version": "3.10.22 (main, Oct  3 2026, 01:32:06) [Clang 22.1.3 ]",
+        "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+        "source_package": "/workspace/work/w013-final-r2/source/layauto_v2/__init__.py",
+        "packages": {
+          "numpy": "2.2.6",
+          "pathspec": "1.1.1",
+          "ast_serialize": "0.13.1",
+          "cycler": "0.12.1",
+          "fonttools": "4.65.0",
+          "pyparsing": "3.3.3",
+          "librt": "0.16.0",
+          "tzdata": "2026.6",
+          "pip": "23.0.1",
+          "iniconfig": "2.3.1",
+          "pyproject_hooks": "1.3.3",
+          "contourpy": "1.3.2",
+          "types-PyYAML": "6.0.12.20261103",
+          "kiwisolver": "1.5.1",
+          "tomli": "2.5.0",
+          "pluggy": "1.7.0",
+          "typing_extensions": "4.16.0",
+          "matplotlib": "3.10.9",
+          "build": "1.6.1",
+          "exceptiongroup": "1.3.1",
+          "mypy": "2.4.1",
+          "mypy_extensions": "1.2.0",
+          "pytest": "9.2.0",
+          "packaging": "26.3",
+          "wheel": "0.48.0",
+          "Pygments": "2.21.0",
+          "python-dateutil": "3.0.0",
+          "pillow": "12.3.0",
+          "PyYAML": "6.0.3",
+          "setuptools": "79.0.1",
+          "six": "1.17.0"
+        }
+      }
+    },
+    {
+      "name": "interpreter_binary:310",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "environment_dependency_import_versions:310",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "snapshot_command_cwd:310",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "complete_test_scope:310",
+      "passed": true,
+      "detail": {
+        "all": 1731,
+        "added": 75,
+        "missing": [],
+        "added_files": [
+          "tests/contracts/test_w013_composition.py",
+          "tests/contracts/test_w013_contracts.py",
+          "tests/unit/test_w013_net_annotation.py"
+        ]
+      }
+    },
+    {
+      "name": "command:environment-312",
+      "passed": true,
+      "detail": {
+        "command": [
+          "/workspace/work/w013-env/dev312/bin/python",
+          "-c",
+          "import sys,platform,importlib.metadata as m,json,layauto_v2; from pathlib import Path; assert sys.version_info[:2] == (3, 12), sys.version; p=Path(layauto_v2.__file__).resolve(); assert p.parent==Path.cwd()/\"layauto_v2\", p; print(json.dumps({\"executable\":sys.executable,\"version\":sys.version,\"platform\":platform.platform(),\"source_package\":str(p),\"packages\":{d.metadata[\"Name\"]:d.version for d in m.distributions()}},indent=2))"
+        ],
+        "cwd": "/workspace/work/w013-final-r2/source",
+        "exit_code": 0,
+        "environment_overrides": {
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "PYTHONPATH": "/workspace/work/w013-final-r2/source",
+          "PIP_CACHE_DIR": "/workspace/work/w013-final-r2/pip-cache",
+          "MYPY_CACHE_DIR": "/workspace/work/w013-final-r2/mypy-environment-312",
+          "MPLCONFIGDIR": "/workspace/work/w013-final-r2/mplconfig"
+        },
+        "started_at_utc": "2026-11-12T10:08:31.876654+00:00",
+        "finished_at_utc": "2026-11-12T10:08:31.984978+00:00",
+        "elapsed_seconds": 0.108,
+        "stdout": "environment-312.stdout.txt",
+        "stdout_sha256": "3d2101299819d185d670a1892e120211b5c9216a04ea9a93a7ce7192b5aafa94",
+        "stderr": "environment-312.stderr.txt",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "log:environment-312:stdout",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "log:environment-312:stderr",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "command:collection-312",
+      "passed": true,
+      "detail": {
+        "command": [
+          "/workspace/work/w013-env/dev312/bin/python",
+          "-m",
+          "pytest",
+          "-p",
+          "no:cacheprovider",
+          "--collect-only",
+          "tests/unit",
+          "tests/contracts",
+          "-q"
+        ],
+        "cwd": "/workspace/work/w013-final-r2/source",
+        "exit_code": 0,
+        "environment_overrides": {
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "PYTHONPATH": "/workspace/work/w013-final-r2/source",
+          "PIP_CACHE_DIR": "/workspace/work/w013-final-r2/pip-cache",
+          "MYPY_CACHE_DIR": "/workspace/work/w013-final-r2/mypy-collection-312",
+          "MPLCONFIGDIR": "/workspace/work/w013-final-r2/mplconfig"
+        },
+        "started_at_utc": "2026-11-12T10:08:31.985462+00:00",
+        "finished_at_utc": "2026-11-12T10:08:33.743275+00:00",
+        "elapsed_seconds": 1.758,
+        "stdout": "collection-312.stdout.txt",
+        "stdout_sha256": "1c456df6cff5c7d2130164435180075472f6fed0dde0d7c7101482217c82ece8",
+        "stderr": "collection-312.stderr.txt",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "log:collection-312:stdout",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "log:collection-312:stderr",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "interpreter:312",
+      "passed": true,
+      "detail": {
+        "executable": "/workspace/work/w013-env/dev312/bin/python",
+        "version": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+        "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+        "source_package": "/workspace/work/w013-final-r2/source/layauto_v2/__init__.py",
+        "packages": {
+          "pathspec": "1.1.1",
+          "ast_serialize": "0.13.1",
+          "cycler": "0.12.1",
+          "fonttools": "4.68.0",
+          "pyparsing": "3.3.3",
+          "librt": "0.16.0",
+          "tzdata": "2026.6",
+          "iniconfig": "2.3.1",
+          "pyproject_hooks": "1.3.3",
+          "types-PyYAML": "6.0.12.20261103",
+          "kiwisolver": "1.5.1",
+          "matplotlib": "3.11.2",
+          "pluggy": "1.7.0",
+          "typing_extensions": "4.16.0",
+          "build": "1.6.1",
+          "mypy": "2.4.1",
+          "mypy_extensions": "1.2.0",
+          "pytest": "9.2.0",
+          "pip": "25.0.1",
+          "packaging": "26.3",
+          "python-dateutil": "4.0.0",
+          "wheel": "0.48.0",
+          "Pygments": "2.21.0",
+          "contourpy": "1.4.0",
+          "numpy": "2.5.4",
+          "PyYAML": "6.0.3",
+          "setuptools": "79.0.1",
+          "pillow": "13.0.0"
+        }
+      }
+    },
+    {
+      "name": "interpreter_binary:312",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "environment_dependency_import_versions:312",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "snapshot_command_cwd:312",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "complete_test_scope:312",
+      "passed": true,
+      "detail": {
+        "all": 1731,
+        "added": 75,
+        "missing": [],
+        "added_files": [
+          "tests/contracts/test_w013_composition.py",
+          "tests/contracts/test_w013_contracts.py",
+          "tests/unit/test_w013_net_annotation.py"
+        ]
+      }
+    },
+    {
+      "name": "dual_collection_identical",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "engineering_tool:runner",
+      "passed": true,
+      "detail": {
+        "source": "/workspace/Layauto/docs/tasks/W013/verification-tools/prepare_final.py",
+        "sha256": "f756e2f995935617b929da06fd5bf6b741691489f8e37867467f63ec78eb2463"
+      }
+    },
+    {
+      "name": "engineering_tool:source_identity",
+      "passed": true,
+      "detail": {
+        "source": "/workspace/Layauto/docs/tasks/W013/verification-tools/source_identity.py",
+        "sha256": "dd17b3f9abbe5e459bb84ff1e35cd8ee07118b9e1fd08df542597355b85e7395"
+      }
+    },
+    {
+      "name": "engineering_tool:smoke",
+      "passed": true,
+      "detail": {
+        "source": "/workspace/Layauto/docs/tasks/W013/verification-tools/installed_smoke.py",
+        "sha256": "c9e2f141e13a7d5fe54e3e10297271f067e9139ec28a4184bbe47ff02036c8be"
+      }
+    },
+    {
+      "name": "clearance_preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "r2_review_content_identity",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "two_workers_and_packages_after_matrices",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "final_status",
+      "passed": true,
+      "detail": {
+        "312": 1731,
+        "310": 1731
+      }
+    },
+    {
+      "name": "final_source_id_and_counts",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "final_snapshot_and_manifest_identity",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "final_freeze_rechecked",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "command:environment-310",
+      "passed": true,
+      "detail": {
+        "command": [
+          "/workspace/work/w013-env/dev310/bin/python",
+          "-c",
+          "import sys,platform,importlib.metadata as m,json,layauto_v2; from pathlib import Path; assert sys.version_info[:2] == (3, 10), sys.version; p=Path(layauto_v2.__file__).resolve(); assert p.parent==Path.cwd()/\"layauto_v2\", p; print(json.dumps({\"executable\":sys.executable,\"version\":sys.version,\"platform\":platform.platform(),\"source_package\":str(p),\"packages\":{d.metadata[\"Name\"]:d.version for d in m.distributions()}},indent=2))"
+        ],
+        "cwd": "/workspace/work/w013-final-r2/source",
+        "exit_code": 0,
+        "environment_overrides": {
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "PYTHONPATH": "/workspace/work/w013-final-r2/source",
+          "PIP_CACHE_DIR": "/workspace/work/w013-final-r2/pip-cache",
+          "MYPY_CACHE_DIR": "/workspace/work/w013-final-r2/mypy-environment-310",
+          "MPLCONFIGDIR": "/workspace/work/w013-final-r2/mplconfig"
+        },
+        "started_at_utc": "2026-11-12T10:08:31.876194+00:00",
+        "finished_at_utc": "2026-11-12T10:08:32.144236+00:00",
+        "elapsed_seconds": 0.268,
+        "stdout": "environment-310.stdout.txt",
+        "stdout_sha256": "01deca3c04dd1a4f87de3eb346989d97611b2336c45d5aba58f9d4c55ae65fa1",
+        "stderr": "environment-310.stderr.txt",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "log:environment-310:stdout",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "log:environment-310:stderr",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "final_receipt_matches_command:environment-310",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "command:collection-310",
+      "passed": true,
+      "detail": {
+        "command": [
+          "/workspace/work/w013-env/dev310/bin/python",
+          "-m",
+          "pytest",
+          "-p",
+          "no:cacheprovider",
+          "--collect-only",
+          "tests/unit",
+          "tests/contracts",
+          "-q"
+        ],
+        "cwd": "/workspace/work/w013-final-r2/source",
+        "exit_code": 0,
+        "environment_overrides": {
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "PYTHONPATH": "/workspace/work/w013-final-r2/source",
+          "PIP_CACHE_DIR": "/workspace/work/w013-final-r2/pip-cache",
+          "MYPY_CACHE_DIR": "/workspace/work/w013-final-r2/mypy-collection-310",
+          "MPLCONFIGDIR": "/workspace/work/w013-final-r2/mplconfig"
+        },
+        "started_at_utc": "2026-11-12T10:08:32.144903+00:00",
+        "finished_at_utc": "2026-11-12T10:08:34.282154+00:00",
+        "elapsed_seconds": 2.137,
+        "stdout": "collection-310.stdout.txt",
+        "stdout_sha256": "19bfc274567c455d102105629ac8854763bd5af2be116448dd3191399df98575",
+        "stderr": "collection-310.stderr.txt",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "log:collection-310:stdout",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "log:collection-310:stderr",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "final_receipt_matches_command:collection-310",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "command:pytest-310",
+      "passed": true,
+      "detail": {
+        "command": [
+          "/workspace/work/w013-env/dev310/bin/python",
+          "-m",
+          "pytest",
+          "-p",
+          "no:cacheprovider",
+          "tests/unit",
+          "tests/contracts",
+          "-q"
+        ],
+        "cwd": "/workspace/work/w013-final-r2/source",
+        "exit_code": 0,
+        "environment_overrides": {
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "PYTHONPATH": "/workspace/work/w013-final-r2/source",
+          "PIP_CACHE_DIR": "/workspace/work/w013-final-r2/pip-cache",
+          "MYPY_CACHE_DIR": "/workspace/work/w013-final-r2/mypy-pytest-310",
+          "MPLCONFIGDIR": "/workspace/work/w013-final-r2/mplconfig"
+        },
+        "started_at_utc": "2026-11-12T10:08:34.283945+00:00",
+        "finished_at_utc": "2026-11-12T12:42:50.233582+00:00",
+        "elapsed_seconds": 9255.95,
+        "stdout": "pytest-310.stdout.txt",
+        "stdout_sha256": "f149e71d97c462b9dd376cf10067788af4742803b33df978f44039aaba6a64fb",
+        "stderr": "pytest-310.stderr.txt",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "log:pytest-310:stdout",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "log:pytest-310:stderr",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "final_receipt_matches_command:pytest-310",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "command:typing-310",
+      "passed": true,
+      "detail": {
+        "command": [
+          "/workspace/work/w013-env/dev310/bin/python",
+          "-m",
+          "mypy"
+        ],
+        "cwd": "/workspace/work/w013-final-r2/source",
+        "exit_code": 0,
+        "environment_overrides": {
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "PYTHONPATH": "/workspace/work/w013-final-r2/source",
+          "PIP_CACHE_DIR": "/workspace/work/w013-final-r2/pip-cache",
+          "MYPY_CACHE_DIR": "/workspace/work/w013-final-r2/mypy-typing-310",
+          "MPLCONFIGDIR": "/workspace/work/w013-final-r2/mplconfig"
+        },
+        "started_at_utc": "2026-11-12T12:42:50.235330+00:00",
+        "finished_at_utc": "2026-11-12T12:42:52.438957+00:00",
+        "elapsed_seconds": 2.204,
+        "stdout": "typing-310.stdout.txt",
+        "stdout_sha256": "61bd8cb9959645a85c4ae3dffd6695b2b000164bf38ab0bdef0fc9ba4a4072b6",
+        "stderr": "typing-310.stderr.txt",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "log:typing-310:stdout",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "log:typing-310:stderr",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "final_receipt_matches_command:typing-310",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "command:pip-check-310",
+      "passed": true,
+      "detail": {
+        "command": [
+          "/workspace/work/w013-env/dev310/bin/python",
+          "-m",
+          "pip",
+          "check"
+        ],
+        "cwd": "/workspace/work/w013-final-r2/source",
+        "exit_code": 0,
+        "environment_overrides": {
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "PYTHONPATH": "/workspace/work/w013-final-r2/source",
+          "PIP_CACHE_DIR": "/workspace/work/w013-final-r2/pip-cache",
+          "MYPY_CACHE_DIR": "/workspace/work/w013-final-r2/mypy-pip-check-310",
+          "MPLCONFIGDIR": "/workspace/work/w013-final-r2/mplconfig"
+        },
+        "started_at_utc": "2026-11-12T12:42:52.439741+00:00",
+        "finished_at_utc": "2026-11-12T12:42:53.269362+00:00",
+        "elapsed_seconds": 0.83,
+        "stdout": "pip-check-310.stdout.txt",
+        "stdout_sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09",
+        "stderr": "pip-check-310.stderr.txt",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "log:pip-check-310:stdout",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "log:pip-check-310:stderr",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "final_receipt_matches_command:pip-check-310",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "command:environment-312",
+      "passed": true,
+      "detail": {
+        "command": [
+          "/workspace/work/w013-env/dev312/bin/python",
+          "-c",
+          "import sys,platform,importlib.metadata as m,json,layauto_v2; from pathlib import Path; assert sys.version_info[:2] == (3, 12), sys.version; p=Path(layauto_v2.__file__).resolve(); assert p.parent==Path.cwd()/\"layauto_v2\", p; print(json.dumps({\"executable\":sys.executable,\"version\":sys.version,\"platform\":platform.platform(),\"source_package\":str(p),\"packages\":{d.metadata[\"Name\"]:d.version for d in m.distributions()}},indent=2))"
+        ],
+        "cwd": "/workspace/work/w013-final-r2/source",
+        "exit_code": 0,
+        "environment_overrides": {
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "PYTHONPATH": "/workspace/work/w013-final-r2/source",
+          "PIP_CACHE_DIR": "/workspace/work/w013-final-r2/pip-cache",
+          "MYPY_CACHE_DIR": "/workspace/work/w013-final-r2/mypy-environment-312",
+          "MPLCONFIGDIR": "/workspace/work/w013-final-r2/mplconfig"
+        },
+        "started_at_utc": "2026-11-12T10:08:31.876654+00:00",
+        "finished_at_utc": "2026-11-12T10:08:31.984978+00:00",
+        "elapsed_seconds": 0.108,
+        "stdout": "environment-312.stdout.txt",
+        "stdout_sha256": "3d2101299819d185d670a1892e120211b5c9216a04ea9a93a7ce7192b5aafa94",
+        "stderr": "environment-312.stderr.txt",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "log:environment-312:stdout",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "log:environment-312:stderr",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "final_receipt_matches_command:environment-312",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "command:collection-312",
+      "passed": true,
+      "detail": {
+        "command": [
+          "/workspace/work/w013-env/dev312/bin/python",
+          "-m",
+          "pytest",
+          "-p",
+          "no:cacheprovider",
+          "--collect-only",
+          "tests/unit",
+          "tests/contracts",
+          "-q"
+        ],
+        "cwd": "/workspace/work/w013-final-r2/source",
+        "exit_code": 0,
+        "environment_overrides": {
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "PYTHONPATH": "/workspace/work/w013-final-r2/source",
+          "PIP_CACHE_DIR": "/workspace/work/w013-final-r2/pip-cache",
+          "MYPY_CACHE_DIR": "/workspace/work/w013-final-r2/mypy-collection-312",
+          "MPLCONFIGDIR": "/workspace/work/w013-final-r2/mplconfig"
+        },
+        "started_at_utc": "2026-11-12T10:08:31.985462+00:00",
+        "finished_at_utc": "2026-11-12T10:08:33.743275+00:00",
+        "elapsed_seconds": 1.758,
+        "stdout": "collection-312.stdout.txt",
+        "stdout_sha256": "1c456df6cff5c7d2130164435180075472f6fed0dde0d7c7101482217c82ece8",
+        "stderr": "collection-312.stderr.txt",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "log:collection-312:stdout",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "log:collection-312:stderr",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "final_receipt_matches_command:collection-312",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "command:pytest-312",
+      "passed": true,
+      "detail": {
+        "command": [
+          "/workspace/work/w013-env/dev312/bin/python",
+          "-m",
+          "pytest",
+          "-p",
+          "no:cacheprovider",
+          "tests/unit",
+          "tests/contracts",
+          "-q"
+        ],
+        "cwd": "/workspace/work/w013-final-r2/source",
+        "exit_code": 0,
+        "environment_overrides": {
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "PYTHONPATH": "/workspace/work/w013-final-r2/source",
+          "PIP_CACHE_DIR": "/workspace/work/w013-final-r2/pip-cache",
+          "MYPY_CACHE_DIR": "/workspace/work/w013-final-r2/mypy-pytest-312",
+          "MPLCONFIGDIR": "/workspace/work/w013-final-r2/mplconfig"
+        },
+        "started_at_utc": "2026-11-12T10:08:33.745325+00:00",
+        "finished_at_utc": "2026-11-12T11:59:29.557502+00:00",
+        "elapsed_seconds": 6655.812,
+        "stdout": "pytest-312.stdout.txt",
+        "stdout_sha256": "ca602960da7ef36d5e061e548a540591a6784ccbf8e008873152e5126edbe173",
+        "stderr": "pytest-312.stderr.txt",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "log:pytest-312:stdout",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "log:pytest-312:stderr",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "final_receipt_matches_command:pytest-312",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "command:typing-312",
+      "passed": true,
+      "detail": {
+        "command": [
+          "/workspace/work/w013-env/dev312/bin/python",
+          "-m",
+          "mypy"
+        ],
+        "cwd": "/workspace/work/w013-final-r2/source",
+        "exit_code": 0,
+        "environment_overrides": {
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "PYTHONPATH": "/workspace/work/w013-final-r2/source",
+          "PIP_CACHE_DIR": "/workspace/work/w013-final-r2/pip-cache",
+          "MYPY_CACHE_DIR": "/workspace/work/w013-final-r2/mypy-typing-312",
+          "MPLCONFIGDIR": "/workspace/work/w013-final-r2/mplconfig"
+        },
+        "started_at_utc": "2026-11-12T11:59:29.558749+00:00",
+        "finished_at_utc": "2026-11-12T11:59:31.497837+00:00",
+        "elapsed_seconds": 1.939,
+        "stdout": "typing-312.stdout.txt",
+        "stdout_sha256": "61bd8cb9959645a85c4ae3dffd6695b2b000164bf38ab0bdef0fc9ba4a4072b6",
+        "stderr": "typing-312.stderr.txt",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "log:typing-312:stdout",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "log:typing-312:stderr",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "final_receipt_matches_command:typing-312",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "command:pip-check-312",
+      "passed": true,
+      "detail": {
+        "command": [
+          "/workspace/work/w013-env/dev312/bin/python",
+          "-m",
+          "pip",
+          "check"
+        ],
+        "cwd": "/workspace/work/w013-final-r2/source",
+        "exit_code": 0,
+        "environment_overrides": {
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "PYTHONPATH": "/workspace/work/w013-final-r2/source",
+          "PIP_CACHE_DIR": "/workspace/work/w013-final-r2/pip-cache",
+          "MYPY_CACHE_DIR": "/workspace/work/w013-final-r2/mypy-pip-check-312",
+          "MPLCONFIGDIR": "/workspace/work/w013-final-r2/mplconfig"
+        },
+        "started_at_utc": "2026-11-12T11:59:31.498349+00:00",
+        "finished_at_utc": "2026-11-12T11:59:31.774146+00:00",
+        "elapsed_seconds": 0.276,
+        "stdout": "pip-check-312.stdout.txt",
+        "stdout_sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09",
+        "stderr": "pip-check-312.stderr.txt",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "log:pip-check-312:stdout",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "log:pip-check-312:stderr",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "final_receipt_matches_command:pip-check-312",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "command:build",
+      "passed": true,
+      "detail": {
+        "command": [
+          "/workspace/work/w013-env/dev312/bin/python",
+          "-m",
+          "build",
+          "--outdir",
+          "/workspace/Layauto/docs/tasks/W013/verification-r2/dist"
+        ],
+        "cwd": "/workspace/work/w013-final-r2/source",
+        "exit_code": 0,
+        "environment_overrides": {
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "PYTHONPATH": "/workspace/work/w013-final-r2/source",
+          "PIP_CACHE_DIR": "/workspace/work/w013-final-r2/pip-cache",
+          "MYPY_CACHE_DIR": "/workspace/work/w013-final-r2/mypy-build",
+          "MPLCONFIGDIR": "/workspace/work/w013-final-r2/mplconfig"
+        },
+        "started_at_utc": "2026-11-12T12:42:53.271209+00:00",
+        "finished_at_utc": "2026-11-12T12:42:56.560667+00:00",
+        "elapsed_seconds": 3.289,
+        "stdout": "build.stdout.txt",
+        "stdout_sha256": "2a1b0c0f62dfc3cfa1fc27a24d854fe523d8a0042733739ba14ae785f5439ece",
+        "stderr": "build.stderr.txt",
+        "stderr_sha256": "7b2888f78d7fa636ed83e6385e6be3fdaf145831d191ec5b2a189ea147e86505"
+      }
+    },
+    {
+      "name": "log:build:stdout",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "log:build:stderr",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "final_receipt_matches_command:build",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "command:create-install-310",
+      "passed": true,
+      "detail": {
+        "command": [
+          "/workspace/work/w013-env/dev310/bin/python",
+          "-m",
+          "venv",
+          "/workspace/work/w013-final-r2/clean-310"
+        ],
+        "cwd": "/workspace/work/w013-final-r2/installed-cwd",
+        "exit_code": 0,
+        "environment_overrides": {
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "PYTHONPATH": "/workspace/work/w013-final-r2/installed-cwd",
+          "PIP_CACHE_DIR": "/workspace/work/w013-final-r2/pip-cache",
+          "MYPY_CACHE_DIR": "/workspace/work/w013-final-r2/mypy-create-install-310",
+          "MPLCONFIGDIR": "/workspace/work/w013-final-r2/mplconfig"
+        },
+        "started_at_utc": "2026-11-12T12:42:56.580486+00:00",
+        "finished_at_utc": "2026-11-12T12:42:59.664489+00:00",
+        "elapsed_seconds": 3.084,
+        "stdout": "create-install-310.stdout.txt",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr": "create-install-310.stderr.txt",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "log:create-install-310:stdout",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "log:create-install-310:stderr",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "final_receipt_matches_command:create-install-310",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "command:install-310",
+      "passed": true,
+      "detail": {
+        "command": [
+          "/workspace/work/w013-final-r2/clean-310/bin/python",
+          "-m",
+          "pip",
+          "install",
+          "--report",
+          "/workspace/Layauto/docs/tasks/W013/verification-r2/install-310-report.json",
+          "/workspace/Layauto/docs/tasks/W013/verification-r2/dist/layauto-0.2.0.tar.gz"
+        ],
+        "cwd": "/workspace/work/w013-final-r2/installed-cwd",
+        "exit_code": 0,
+        "environment_overrides": {
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "PYTHONPATH": "/workspace/work/w013-final-r2/installed-cwd",
+          "PIP_CACHE_DIR": "/workspace/work/w013-final-r2/pip-cache",
+          "MYPY_CACHE_DIR": "/workspace/work/w013-final-r2/mypy-install-310",
+          "MPLCONFIGDIR": "/workspace/work/w013-final-r2/mplconfig"
+        },
+        "started_at_utc": "2026-11-12T12:42:59.665324+00:00",
+        "finished_at_utc": "2026-11-12T12:43:11.814290+00:00",
+        "elapsed_seconds": 12.149,
+        "stdout": "install-310.stdout.txt",
+        "stdout_sha256": "5ee66cc01ae7c1f067466aa15ca8d4a00ceec735ca1a10a96790588c07487284",
+        "stderr": "install-310.stderr.txt",
+        "stderr_sha256": "7515f2eeef5815cdb1c2ae9d13d857bc9ddffb09a5231bf51b3961ea6f81e2d1"
+      }
+    },
+    {
+      "name": "log:install-310:stdout",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "log:install-310:stderr",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "final_receipt_matches_command:install-310",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "command:installed-pip-check-310",
+      "passed": true,
+      "detail": {
+        "command": [
+          "/workspace/work/w013-final-r2/clean-310/bin/python",
+          "-m",
+          "pip",
+          "check"
+        ],
+        "cwd": "/workspace/work/w013-final-r2/installed-cwd",
+        "exit_code": 0,
+        "environment_overrides": {
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "PYTHONPATH": "/workspace/work/w013-final-r2/installed-cwd",
+          "PIP_CACHE_DIR": "/workspace/work/w013-final-r2/pip-cache",
+          "MYPY_CACHE_DIR": "/workspace/work/w013-final-r2/mypy-installed-pip-check-310",
+          "MPLCONFIGDIR": "/workspace/work/w013-final-r2/mplconfig"
+        },
+        "started_at_utc": "2026-11-12T12:43:11.815191+00:00",
+        "finished_at_utc": "2026-11-12T12:43:12.587155+00:00",
+        "elapsed_seconds": 0.772,
+        "stdout": "installed-pip-check-310.stdout.txt",
+        "stdout_sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09",
+        "stderr": "installed-pip-check-310.stderr.txt",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "log:installed-pip-check-310:stdout",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "log:installed-pip-check-310:stderr",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "final_receipt_matches_command:installed-pip-check-310",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "command:installed-identity-310",
+      "passed": true,
+      "detail": {
+        "command": [
+          "/workspace/work/w013-final-r2/clean-310/bin/python",
+          "-I",
+          "-B",
+          "-c",
+          "import layauto_v2,sys,json; print(json.dumps({\"package\":layauto_v2.__file__,\"executable\":sys.executable,\"version\":sys.version,\"isolated\":sys.flags.isolated}))"
+        ],
+        "cwd": "/workspace/work/w013-final-r2/installed-cwd",
+        "exit_code": 0,
+        "environment_overrides": {
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "PYTHONPATH": "/workspace/work/w013-final-r2/installed-cwd",
+          "PIP_CACHE_DIR": "/workspace/work/w013-final-r2/pip-cache",
+          "MYPY_CACHE_DIR": "/workspace/work/w013-final-r2/mypy-installed-identity-310",
+          "MPLCONFIGDIR": "/workspace/work/w013-final-r2/mplconfig"
+        },
+        "started_at_utc": "2026-11-12T12:43:12.587724+00:00",
+        "finished_at_utc": "2026-11-12T12:43:12.671151+00:00",
+        "elapsed_seconds": 0.083,
+        "stdout": "installed-identity-310.stdout.txt",
+        "stdout_sha256": "0832cbc08fe48bb6dffb6baaa5daffb8fe8814a271d9680822d725ad5a079d96",
+        "stderr": "installed-identity-310.stderr.txt",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "log:installed-identity-310:stdout",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "log:installed-identity-310:stderr",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "final_receipt_matches_command:installed-identity-310",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "command:installed-smoke-310",
+      "passed": true,
+      "detail": {
+        "command": [
+          "/workspace/work/w013-final-r2/clean-310/bin/python",
+          "-I",
+          "-B",
+          "/workspace/Layauto/docs/tasks/W013/verification-r2/installed_smoke.py",
+          "/workspace/work/w013-final-r2/source/tests/fixtures/w003_m1"
+        ],
+        "cwd": "/workspace/work/w013-final-r2/installed-cwd",
+        "exit_code": 0,
+        "environment_overrides": {
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "PYTHONPATH": "/workspace/work/w013-final-r2/installed-cwd",
+          "PIP_CACHE_DIR": "/workspace/work/w013-final-r2/pip-cache",
+          "MYPY_CACHE_DIR": "/workspace/work/w013-final-r2/mypy-installed-smoke-310",
+          "MPLCONFIGDIR": "/workspace/work/w013-final-r2/mplconfig"
+        },
+        "started_at_utc": "2026-11-12T12:43:12.679087+00:00",
+        "finished_at_utc": "2026-11-12T12:50:26.838303+00:00",
+        "elapsed_seconds": 434.159,
+        "stdout": "installed-smoke-310.stdout.txt",
+        "stdout_sha256": "aeda936b7dd44c1ac17cb3ced3d37f024144cdbcc9f6d5971998f995e0285997",
+        "stderr": "installed-smoke-310.stderr.txt",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "log:installed-smoke-310:stdout",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "log:installed-smoke-310:stderr",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "final_receipt_matches_command:installed-smoke-310",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "command:create-install-312",
+      "passed": true,
+      "detail": {
+        "command": [
+          "/workspace/work/w013-env/dev312/bin/python",
+          "-m",
+          "venv",
+          "/workspace/work/w013-final-r2/clean-312"
+        ],
+        "cwd": "/workspace/work/w013-final-r2/installed-cwd",
+        "exit_code": 0,
+        "environment_overrides": {
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "PYTHONPATH": "/workspace/work/w013-final-r2/installed-cwd",
+          "PIP_CACHE_DIR": "/workspace/work/w013-final-r2/pip-cache",
+          "MYPY_CACHE_DIR": "/workspace/work/w013-final-r2/mypy-create-install-312",
+          "MPLCONFIGDIR": "/workspace/work/w013-final-r2/mplconfig"
+        },
+        "started_at_utc": "2026-11-12T12:50:26.839614+00:00",
+        "finished_at_utc": "2026-11-12T12:50:28.506928+00:00",
+        "elapsed_seconds": 1.667,
+        "stdout": "create-install-312.stdout.txt",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr": "create-install-312.stderr.txt",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "log:create-install-312:stdout",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "log:create-install-312:stderr",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "final_receipt_matches_command:create-install-312",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "command:install-312",
+      "passed": true,
+      "detail": {
+        "command": [
+          "/workspace/work/w013-final-r2/clean-312/bin/python",
+          "-m",
+          "pip",
+          "install",
+          "--report",
+          "/workspace/Layauto/docs/tasks/W013/verification-r2/install-312-report.json",
+          "/workspace/Layauto/docs/tasks/W013/verification-r2/dist/layauto-0.2.0-py3-none-any.whl"
+        ],
+        "cwd": "/workspace/work/w013-final-r2/installed-cwd",
+        "exit_code": 0,
+        "environment_overrides": {
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "PYTHONPATH": "/workspace/work/w013-final-r2/installed-cwd",
+          "PIP_CACHE_DIR": "/workspace/work/w013-final-r2/pip-cache",
+          "MYPY_CACHE_DIR": "/workspace/work/w013-final-r2/mypy-install-312",
+          "MPLCONFIGDIR": "/workspace/work/w013-final-r2/mplconfig"
+        },
+        "started_at_utc": "2026-11-12T12:50:28.507441+00:00",
+        "finished_at_utc": "2026-11-12T12:50:36.845378+00:00",
+        "elapsed_seconds": 8.338,
+        "stdout": "install-312.stdout.txt",
+        "stdout_sha256": "28d9c44119e75617aa3038bc5f82f43da5c121deec74cb0b1d971a68b87b8932",
+        "stderr": "install-312.stderr.txt",
+        "stderr_sha256": "f96a57a6d17645d3d9eb401b9cead41a648edf2499f2ca4bc3f9364d677b6080"
+      }
+    },
+    {
+      "name": "log:install-312:stdout",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "log:install-312:stderr",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "final_receipt_matches_command:install-312",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "command:installed-pip-check-312",
+      "passed": true,
+      "detail": {
+        "command": [
+          "/workspace/work/w013-final-r2/clean-312/bin/python",
+          "-m",
+          "pip",
+          "check"
+        ],
+        "cwd": "/workspace/work/w013-final-r2/installed-cwd",
+        "exit_code": 0,
+        "environment_overrides": {
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "PYTHONPATH": "/workspace/work/w013-final-r2/installed-cwd",
+          "PIP_CACHE_DIR": "/workspace/work/w013-final-r2/pip-cache",
+          "MYPY_CACHE_DIR": "/workspace/work/w013-final-r2/mypy-installed-pip-check-312",
+          "MPLCONFIGDIR": "/workspace/work/w013-final-r2/mplconfig"
+        },
+        "started_at_utc": "2026-11-12T12:50:36.845928+00:00",
+        "finished_at_utc": "2026-11-12T12:50:37.081641+00:00",
+        "elapsed_seconds": 0.236,
+        "stdout": "installed-pip-check-312.stdout.txt",
+        "stdout_sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09",
+        "stderr": "installed-pip-check-312.stderr.txt",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "log:installed-pip-check-312:stdout",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "log:installed-pip-check-312:stderr",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "final_receipt_matches_command:installed-pip-check-312",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "command:installed-identity-312",
+      "passed": true,
+      "detail": {
+        "command": [
+          "/workspace/work/w013-final-r2/clean-312/bin/python",
+          "-I",
+          "-B",
+          "-c",
+          "import layauto_v2,sys,json; print(json.dumps({\"package\":layauto_v2.__file__,\"executable\":sys.executable,\"version\":sys.version,\"isolated\":sys.flags.isolated}))"
+        ],
+        "cwd": "/workspace/work/w013-final-r2/installed-cwd",
+        "exit_code": 0,
+        "environment_overrides": {
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "PYTHONPATH": "/workspace/work/w013-final-r2/installed-cwd",
+          "PIP_CACHE_DIR": "/workspace/work/w013-final-r2/pip-cache",
+          "MYPY_CACHE_DIR": "/workspace/work/w013-final-r2/mypy-installed-identity-312",
+          "MPLCONFIGDIR": "/workspace/work/w013-final-r2/mplconfig"
+        },
+        "started_at_utc": "2026-11-12T12:50:37.082132+00:00",
+        "finished_at_utc": "2026-11-12T12:50:37.098851+00:00",
+        "elapsed_seconds": 0.017,
+        "stdout": "installed-identity-312.stdout.txt",
+        "stdout_sha256": "049bbf28b4130d6831241543cc947787bbaa8b0b5ac5fdca18f23dedd104414d",
+        "stderr": "installed-identity-312.stderr.txt",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "log:installed-identity-312:stdout",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "log:installed-identity-312:stderr",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "final_receipt_matches_command:installed-identity-312",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "command:installed-smoke-312",
+      "passed": true,
+      "detail": {
+        "command": [
+          "/workspace/work/w013-final-r2/clean-312/bin/python",
+          "-I",
+          "-B",
+          "/workspace/Layauto/docs/tasks/W013/verification-r2/installed_smoke.py",
+          "/workspace/work/w013-final-r2/source/tests/fixtures/w003_m1"
+        ],
+        "cwd": "/workspace/work/w013-final-r2/installed-cwd",
+        "exit_code": 0,
+        "environment_overrides": {
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "PYTHONPATH": "/workspace/work/w013-final-r2/installed-cwd",
+          "PIP_CACHE_DIR": "/workspace/work/w013-final-r2/pip-cache",
+          "MYPY_CACHE_DIR": "/workspace/work/w013-final-r2/mypy-installed-smoke-312",
+          "MPLCONFIGDIR": "/workspace/work/w013-final-r2/mplconfig"
+        },
+        "started_at_utc": "2026-11-12T12:50:37.107180+00:00",
+        "finished_at_utc": "2026-11-12T12:55:50.535936+00:00",
+        "elapsed_seconds": 313.429,
+        "stdout": "installed-smoke-312.stdout.txt",
+        "stdout_sha256": "c75d48a03df0d13b71197d79fb426b271138a7263b49a1927917ead0d517aad6",
+        "stderr": "installed-smoke-312.stderr.txt",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "log:installed-smoke-312:stdout",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "log:installed-smoke-312:stderr",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "final_receipt_matches_command:installed-smoke-312",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "full_pytest:310",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "full_typing:310",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "full_pytest:312",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "full_typing:312",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "package_runtime:wheel",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "package_runtime:sdist",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "installed_runtime:310",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source_external_isolated_smoke:310",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "installed_combination:310",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "installed_runtime:312",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source_external_isolated_smoke:312",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "installed_combination:312",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "all_final_evidence_hashes",
+      "passed": true,
+      "detail": 81
+    }
+  ],
+  "failures": [],
+  "observed_runner_state": {
+    "receipt_exists": true,
+    "failure_exists": false,
+    "completed_command_receipts": [
+      "build",
+      "collection-310",
+      "collection-312",
+      "create-install-310",
+      "create-install-312",
+      "environment-310",
+      "environment-312",
+      "install-310",
+      "install-312",
+      "installed-identity-310",
+      "installed-identity-312",
+      "installed-pip-check-310",
+      "installed-pip-check-312",
+      "installed-smoke-310",
+      "installed-smoke-312",
+      "pip-check-310",
+      "pip-check-312",
+      "pytest-310",
+      "pytest-312",
+      "typing-310",
+      "typing-312"
+    ]
+  },
+  "status": "passed",
+  "not_run_by_auditor": [
+    "pytest",
+    "mypy",
+    "product capture",
+    "build",
+    "installation",
+    "installed smoke"
+  ],
+  "limits": [
+    "This audit checks source/evidence identity; it does not replace independent product/contract review or PM acceptance."
+  ]
+}

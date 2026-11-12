@@ -1,0 +1,347 @@
+{
+  "auditor": "/root/independent_review/neutral_static_audit",
+  "utc": "2026-11-12T12:47:01.554183+00:00",
+  "classification": "final documentation/input identity precheck; not full engineering acceptance",
+  "head": "2a45938aba8e751183d472d660a1ab66a1063636",
+  "reviewed_files": {
+    "handoff-scope-audit.md": "99f37800207664dcdde8cf8e1a6cd74b17c6f6577e7d35fd20d467367efe895b",
+    "final-evidence-review.md": "cf9c1962517d52c5e0c94be93491bae0a54b9234f0d9a31eba563bdb0cde6cee",
+    "review-evidence/final-audit/fixed_input_audit.py": "60d10d6f7ab79225fa4d132e7699d3e7ba21922c21bc5237c974094c00ff919a",
+    "review-evidence/final-audit/fixed-input.stdout.json": "eef1bb15572f8b66d39f064b2d9c024b755795871129753db1a5aec2ed8e6afa",
+    "review-evidence/final-audit/fixed-input-manifest.json": "5587cac5b3c7aa154553a117fe155bd0a96fb472601040835f38822f18ee2d27"
+  },
+  "task_document_sha256": "2dc8faa9727a248a23c95b95f3ded1f30c774480531ab0917cfd0a713c913a8a",
+  "R2_source_id": "2c5724a9d3ecf99913857ad89015c03c03475ae762c1c8ab00b5146fd3eec278",
+  "fixed_audit_check_count": 137,
+  "fixed_input_files": 35,
+  "saved_capture_rows": 93,
+  "fixture_files": 116,
+  "fixed_case_sites": {
+    "normal-direct": "/workspace/Layauto/tests/fixtures/w003_m1/site_config.yaml",
+    "normal-readback": "/workspace/Layauto/tests/fixtures/w003_m1/site_config.yaml",
+    "extraction-mismatch": "/workspace/w012-inputs/extraction-mismatch/site_config.yaml"
+  },
+  "checks": [
+    {
+      "name": "PM_requirements_and_phase_unchanged",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "PM_acceptance_segment_unchanged",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "protected_baseline_paths_unchanged",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "name": "R2_273_current_source_and_snapshot_identity",
+      "passed": true,
+      "details": "2c5724a9d3ecf99913857ad89015c03c03475ae762c1c8ab00b5146fd3eec278"
+    },
+    {
+      "name": "fixed_audit_tool_output_manifest_matches",
+      "passed": true,
+      "details": {
+        "fixed_input_audit.py": "60d10d6f7ab79225fa4d132e7699d3e7ba21922c21bc5237c974094c00ff919a",
+        "fixed-input.stdout.json": "eef1bb15572f8b66d39f064b2d9c024b755795871129753db1a5aec2ed8e6afa",
+        "fixed-input.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "137_check_classes_and_failures",
+      "passed": true,
+      "details": {
+        "original_A1_preflight_immutable": 1,
+        "exact_35_fixed_input_paths": 1,
+        "normal_fixture_A1_and_R2_all_bytes": 1,
+        "fixed_file": 35,
+        "capture_unique_count": 3,
+        "fixed_site_URI": 3,
+        "capture_source": 93
+      }
+    },
+    {
+      "name": "A1_preflight_current_equals_base_git_bytes",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "35_exact_fixed_URIs",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "35_fixed_bytes_and_origin_mapping",
+      "passed": true,
+      "details": {
+        "/workspace/w012-inputs/extraction-mismatch/body/context-template.json": true,
+        "/workspace/w012-inputs/extraction-mismatch/body/context.json": true,
+        "/workspace/w012-inputs/extraction-mismatch/export_policy.json": true,
+        "/workspace/w012-inputs/extraction-mismatch/independent-design-answer.json": true,
+        "/workspace/w012-inputs/extraction-mismatch/limitations.json": true,
+        "/workspace/w012-inputs/extraction-mismatch/query/dialect.json": true,
+        "/workspace/w012-inputs/extraction-mismatch/query/header.json": true,
+        "/workspace/w012-inputs/extraction-mismatch/query/normalized/device_regions.yaml": true,
+        "/workspace/w012-inputs/extraction-mismatch/query/normalized/instance_xref.yaml": true,
+        "/workspace/w012-inputs/extraction-mismatch/query/normalized/net_regions.yaml": true,
+        "/workspace/w012-inputs/extraction-mismatch/query/normalized/net_xref.yaml": true,
+        "/workspace/w012-inputs/extraction-mismatch/query/raw/device_info_Q17.txt": true,
+        "/workspace/w012-inputs/extraction-mismatch/query/raw/device_info_Q93.txt": true,
+        "/workspace/w012-inputs/extraction-mismatch/query/raw/iXref.temp": true,
+        "/workspace/w012-inputs/extraction-mismatch/query/raw/nXref.temp": true,
+        "/workspace/w012-inputs/extraction-mismatch/query/raw/net_names.txt": true,
+        "/workspace/w012-inputs/extraction-mismatch/query/raw/net_shapes_n_a.txt": true,
+        "/workspace/w012-inputs/extraction-mismatch/query/raw/net_shapes_n_hi.txt": true,
+        "/workspace/w012-inputs/extraction-mismatch/query/raw/net_shapes_n_lo.txt": true,
+        "/workspace/w012-inputs/extraction-mismatch/query/raw/net_shapes_n_y.txt": true,
+        "/workspace/w012-inputs/extraction-mismatch/query/requests.json": true,
+        "/workspace/w012-inputs/extraction-mismatch/site_config.yaml": true,
+        "/workspace/w012-inputs/extraction-mismatch/source.cdl": true,
+        "/workspace/w012-inputs/extraction-mismatch/source.gds": true,
+        "/workspace/w012-inputs/extraction-mismatch/sources.json": true,
+        "/workspace/w012-inputs/extraction-mismatch/special/cut_islands/source.gds": true,
+        "/workspace/w012-inputs/extraction-mismatch/target.cdl": true,
+        "/workspace/w012-inputs/extraction-mismatch/tech/coordinate.json": true,
+        "/workspace/w012-inputs/extraction-mismatch/tech/derived.json": true,
+        "/workspace/w012-inputs/extraction-mismatch/tech/drawn.json": true,
+        "/workspace/w012-inputs/extraction-mismatch/tech/formats.json": true,
+        "/workspace/w012-inputs/extraction-mismatch/tech/physical.json": true,
+        "/workspace/w012-inputs/extraction-mismatch/tech/rules.json": true,
+        "/workspace/w012-inputs/extraction-mismatch/tech.json": true,
+        "/workspace/w012-inputs/extraction-mismatch/validation_policy.json": true
+      }
+    },
+    {
+      "name": "116_fixture_full_A1_R2_current_snapshot_equal",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "original_resource_site_and_source_id:normal-direct",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "31_unique_saved_capture_URIs:normal-direct",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "original_resource_site_and_source_id:normal-readback",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "31_unique_saved_capture_URIs:normal-readback",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "original_resource_site_and_source_id:extraction-mismatch",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "31_unique_saved_capture_URIs:extraction-mismatch",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "93_saved_resource_capture_bytes_and_fixed_scope",
+      "passed": true,
+      "details": {
+        "normal-direct:site_config.yaml": true,
+        "normal-direct:tech.json": true,
+        "normal-direct:tech/drawn.json": true,
+        "normal-direct:tech/derived.json": true,
+        "normal-direct:tech/physical.json": true,
+        "normal-direct:tech/formats.json": true,
+        "normal-direct:tech/coordinate.json": true,
+        "normal-direct:tech/rules.json": true,
+        "normal-direct:export_policy.json": true,
+        "normal-direct:validation_policy.json": true,
+        "normal-direct:limitations.json": true,
+        "normal-direct:source.gds": true,
+        "normal-direct:source.cdl": true,
+        "normal-direct:target.cdl": true,
+        "normal-direct:query/header.json": true,
+        "normal-direct:body/context.json": true,
+        "normal-direct:query/dialect.json": true,
+        "normal-direct:query/requests.json": true,
+        "normal-direct:query/raw/iXref.temp": true,
+        "normal-direct:query/raw/nXref.temp": true,
+        "normal-direct:query/raw/net_names.txt": true,
+        "normal-direct:query/raw/device_info_Q17.txt": true,
+        "normal-direct:query/raw/device_info_Q93.txt": true,
+        "normal-direct:query/raw/net_shapes_n_a.txt": true,
+        "normal-direct:query/raw/net_shapes_n_y.txt": true,
+        "normal-direct:query/raw/net_shapes_n_lo.txt": true,
+        "normal-direct:query/raw/net_shapes_n_hi.txt": true,
+        "normal-direct:/workspace/Layauto/tests/fixtures/w003_m1/query/normalized/instance_xref.yaml": true,
+        "normal-direct:/workspace/Layauto/tests/fixtures/w003_m1/query/normalized/net_xref.yaml": true,
+        "normal-direct:/workspace/Layauto/tests/fixtures/w003_m1/query/normalized/device_regions.yaml": true,
+        "normal-direct:/workspace/Layauto/tests/fixtures/w003_m1/query/normalized/net_regions.yaml": true,
+        "normal-readback:site_config.yaml": true,
+        "normal-readback:tech.json": true,
+        "normal-readback:tech/drawn.json": true,
+        "normal-readback:tech/derived.json": true,
+        "normal-readback:tech/physical.json": true,
+        "normal-readback:tech/formats.json": true,
+        "normal-readback:tech/coordinate.json": true,
+        "normal-readback:tech/rules.json": true,
+        "normal-readback:export_policy.json": true,
+        "normal-readback:validation_policy.json": true,
+        "normal-readback:limitations.json": true,
+        "normal-readback:source.gds": true,
+        "normal-readback:source.cdl": true,
+        "normal-readback:target.cdl": true,
+        "normal-readback:query/header.json": true,
+        "normal-readback:body/context.json": true,
+        "normal-readback:query/dialect.json": true,
+        "normal-readback:query/requests.json": true,
+        "normal-readback:query/raw/iXref.temp": true,
+        "normal-readback:query/raw/nXref.temp": true,
+        "normal-readback:query/raw/net_names.txt": true,
+        "normal-readback:query/raw/device_info_Q17.txt": true,
+        "normal-readback:query/raw/device_info_Q93.txt": true,
+        "normal-readback:query/raw/net_shapes_n_a.txt": true,
+        "normal-readback:query/raw/net_shapes_n_y.txt": true,
+        "normal-readback:query/raw/net_shapes_n_lo.txt": true,
+        "normal-readback:query/raw/net_shapes_n_hi.txt": true,
+        "normal-readback:/workspace/Layauto/tests/fixtures/w003_m1/query/normalized/instance_xref.yaml": true,
+        "normal-readback:/workspace/Layauto/tests/fixtures/w003_m1/query/normalized/net_xref.yaml": true,
+        "normal-readback:/workspace/Layauto/tests/fixtures/w003_m1/query/normalized/device_regions.yaml": true,
+        "normal-readback:/workspace/Layauto/tests/fixtures/w003_m1/query/normalized/net_regions.yaml": true,
+        "extraction-mismatch:site_config.yaml": true,
+        "extraction-mismatch:tech.json": true,
+        "extraction-mismatch:tech/drawn.json": true,
+        "extraction-mismatch:tech/derived.json": true,
+        "extraction-mismatch:tech/physical.json": true,
+        "extraction-mismatch:tech/formats.json": true,
+        "extraction-mismatch:tech/coordinate.json": true,
+        "extraction-mismatch:tech/rules.json": true,
+        "extraction-mismatch:export_policy.json": true,
+        "extraction-mismatch:validation_policy.json": true,
+        "extraction-mismatch:limitations.json": true,
+        "extraction-mismatch:source.gds": true,
+        "extraction-mismatch:source.cdl": true,
+        "extraction-mismatch:target.cdl": true,
+        "extraction-mismatch:query/header.json": true,
+        "extraction-mismatch:body/context.json": true,
+        "extraction-mismatch:query/dialect.json": true,
+        "extraction-mismatch:query/requests.json": true,
+        "extraction-mismatch:query/raw/iXref.temp": true,
+        "extraction-mismatch:query/raw/nXref.temp": true,
+        "extraction-mismatch:query/raw/net_names.txt": true,
+        "extraction-mismatch:query/raw/device_info_Q17.txt": true,
+        "extraction-mismatch:query/raw/device_info_Q93.txt": true,
+        "extraction-mismatch:query/raw/net_shapes_n_a.txt": true,
+        "extraction-mismatch:query/raw/net_shapes_n_y.txt": true,
+        "extraction-mismatch:query/raw/net_shapes_n_lo.txt": true,
+        "extraction-mismatch:query/raw/net_shapes_n_hi.txt": true,
+        "extraction-mismatch:/workspace/w012-inputs/extraction-mismatch/query/normalized/instance_xref.yaml": true,
+        "extraction-mismatch:/workspace/w012-inputs/extraction-mismatch/query/normalized/net_xref.yaml": true,
+        "extraction-mismatch:/workspace/w012-inputs/extraction-mismatch/query/normalized/device_regions.yaml": true,
+        "extraction-mismatch:/workspace/w012-inputs/extraction-mismatch/query/normalized/net_regions.yaml": true
+      }
+    },
+    {
+      "name": "stdout_R2_identity_tag_matches_real_manifest",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "first_failed_matrix_preserved_not_relabelled",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "initial_neutral_README_bytes_recovered_exactly",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "all_original_neutral_probe_and_output_hashes_unchanged",
+      "passed": true,
+      "details": {
+        "docs/tasks/W013/review-evidence/neutral-static/map_backing_probe.py": {
+          "recorded": "47a2efae219cbd82f85399d18e5f82bedab828cfe50ab7ba06fe63d40acb70c7",
+          "actual": "47a2efae219cbd82f85399d18e5f82bedab828cfe50ab7ba06fe63d40acb70c7"
+        },
+        "docs/tasks/W013/review-evidence/neutral-static/map_backing_probe.stderr.txt": {
+          "recorded": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "actual": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "docs/tasks/W013/review-evidence/neutral-static/map_backing_probe.stdout.json": {
+          "recorded": "d0138a6378f36cb684a29b9ad7ec8c20215c2b4fa80b193b3d57952a0c987dde",
+          "actual": "d0138a6378f36cb684a29b9ad7ec8c20215c2b4fa80b193b3d57952a0c987dde"
+        },
+        "docs/tasks/W013/review-evidence/neutral-static/multiple_owners_probe.py": {
+          "recorded": "cebb09a93fdb8062a02459858170a4f8383ac5bff3aba9d5ebf059c39db30600",
+          "actual": "cebb09a93fdb8062a02459858170a4f8383ac5bff3aba9d5ebf059c39db30600"
+        },
+        "docs/tasks/W013/review-evidence/neutral-static/multiple_owners_probe.stderr.txt": {
+          "recorded": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "actual": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "docs/tasks/W013/review-evidence/neutral-static/multiple_owners_probe.stdout.json": {
+          "recorded": "e9a5e10dbaac4b7813e0fae5aa99cd1b61de1a2f67816ab46de94ecac27a88dd",
+          "actual": "e9a5e10dbaac4b7813e0fae5aa99cd1b61de1a2f67816ab46de94ecac27a88dd"
+        },
+        "docs/tasks/W013/review-evidence/neutral-static/operator_binding_probe.attempt-01.stderr.txt": {
+          "recorded": "52138a8628d83d533430f400c725e6ed2aa1971f2755707bfd425c38266fc30f",
+          "actual": "52138a8628d83d533430f400c725e6ed2aa1971f2755707bfd425c38266fc30f"
+        },
+        "docs/tasks/W013/review-evidence/neutral-static/operator_binding_probe.attempt-01.stdout.txt": {
+          "recorded": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "actual": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "docs/tasks/W013/review-evidence/neutral-static/operator_binding_probe.py": {
+          "recorded": "a426361e7a95715a3e6579dfb1cce690354196d1e84d85b3d2ed52a725e4c713",
+          "actual": "a426361e7a95715a3e6579dfb1cce690354196d1e84d85b3d2ed52a725e4c713"
+        },
+        "docs/tasks/W013/review-evidence/neutral-static/operator_binding_probe.stderr.txt": {
+          "recorded": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "actual": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "docs/tasks/W013/review-evidence/neutral-static/operator_binding_probe.stdout.json": {
+          "recorded": "c6ff216289281218893698878bc0f5c184b3fc63bbbb6afdf2206e677d87b322",
+          "actual": "c6ff216289281218893698878bc0f5c184b3fc63bbbb6afdf2206e677d87b322"
+        }
+      }
+    },
+    {
+      "name": "reviewed_doc_bytes_stayed_same_during_precheck",
+      "passed": true,
+      "details": null
+    }
+  ],
+  "failures": [],
+  "status": "passed",
+  "final_matrix_artifact_presence_only": {
+    "receipt_exists": false,
+    "failure_exists": false,
+    "installed_smoke_command_receipt_present": {
+      "310": false,
+      "312": false
+    }
+  },
+  "not_run": [
+    "product import",
+    "capture",
+    "performance measurement",
+    "pytest",
+    "typing",
+    "build",
+    "installation",
+    "smoke"
+  ],
+  "limits": [
+    "Document precheck does not replace primary review or final receipt validation.",
+    "Any historical pending text is assessed at its recorded stage; no pending smoke is counted as passed."
+  ]
+}

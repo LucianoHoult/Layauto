@@ -1,0 +1,58 @@
+{
+  "classification": "immutable historical README reference correction only",
+  "original_manifest": "docs/tasks/W013/review-evidence/neutral-static/manifest.json",
+  "original_manifest_sha256": "9fa4af7cc2706287f41fd251d5c43f7681a6111b664802991f0aae01c5835b4b",
+  "original_recorded_path": "docs/tasks/W013/review-evidence/neutral-static/README.md",
+  "original_recorded_sha256": "296c985b003b8f6429729086785eb940c841e3e981fd22a368c5dd2eeed44e7e",
+  "recovered_initial_copy": "docs/tasks/W013/review-evidence/final-doc-precheck/neutral-static-README.initial.md",
+  "recovered_initial_sha256": "296c985b003b8f6429729086785eb940c841e3e981fd22a368c5dd2eeed44e7e",
+  "current_appended_README_sha256": "c3d05f7c859a6cdb3ffa695820f5749021032eb4cbcb9bd54872320da4b8d914",
+  "original_probe_and_output_hashes": {
+    "docs/tasks/W013/review-evidence/neutral-static/map_backing_probe.py": {
+      "recorded": "47a2efae219cbd82f85399d18e5f82bedab828cfe50ab7ba06fe63d40acb70c7",
+      "actual": "47a2efae219cbd82f85399d18e5f82bedab828cfe50ab7ba06fe63d40acb70c7"
+    },
+    "docs/tasks/W013/review-evidence/neutral-static/map_backing_probe.stderr.txt": {
+      "recorded": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "actual": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/tasks/W013/review-evidence/neutral-static/map_backing_probe.stdout.json": {
+      "recorded": "d0138a6378f36cb684a29b9ad7ec8c20215c2b4fa80b193b3d57952a0c987dde",
+      "actual": "d0138a6378f36cb684a29b9ad7ec8c20215c2b4fa80b193b3d57952a0c987dde"
+    },
+    "docs/tasks/W013/review-evidence/neutral-static/multiple_owners_probe.py": {
+      "recorded": "cebb09a93fdb8062a02459858170a4f8383ac5bff3aba9d5ebf059c39db30600",
+      "actual": "cebb09a93fdb8062a02459858170a4f8383ac5bff3aba9d5ebf059c39db30600"
+    },
+    "docs/tasks/W013/review-evidence/neutral-static/multiple_owners_probe.stderr.txt": {
+      "recorded": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "actual": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/tasks/W013/review-evidence/neutral-static/multiple_owners_probe.stdout.json": {
+      "recorded": "e9a5e10dbaac4b7813e0fae5aa99cd1b61de1a2f67816ab46de94ecac27a88dd",
+      "actual": "e9a5e10dbaac4b7813e0fae5aa99cd1b61de1a2f67816ab46de94ecac27a88dd"
+    },
+    "docs/tasks/W013/review-evidence/neutral-static/operator_binding_probe.attempt-01.stderr.txt": {
+      "recorded": "52138a8628d83d533430f400c725e6ed2aa1971f2755707bfd425c38266fc30f",
+      "actual": "52138a8628d83d533430f400c725e6ed2aa1971f2755707bfd425c38266fc30f"
+    },
+    "docs/tasks/W013/review-evidence/neutral-static/operator_binding_probe.attempt-01.stdout.txt": {
+      "recorded": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "actual": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/tasks/W013/review-evidence/neutral-static/operator_binding_probe.py": {
+      "recorded": "a426361e7a95715a3e6579dfb1cce690354196d1e84d85b3d2ed52a725e4c713",
+      "actual": "a426361e7a95715a3e6579dfb1cce690354196d1e84d85b3d2ed52a725e4c713"
+    },
+    "docs/tasks/W013/review-evidence/neutral-static/operator_binding_probe.stderr.txt": {
+      "recorded": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "actual": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/tasks/W013/review-evidence/neutral-static/operator_binding_probe.stdout.json": {
+      "recorded": "c6ff216289281218893698878bc0f5c184b3fc63bbbb6afdf2206e677d87b322",
+      "actual": "c6ff216289281218893698878bc0f5c184b3fc63bbbb6afdf2206e677d87b322"
+    }
+  },
+  "scope": "Original manifest covers only its listed old-batch probe/output bytes and initial README; later target-classification additions have their own identity.json and are not retroactively covered.",
+  "unchanged": "No old manifest, README, raw probe/output, product, test, config, or frozen engineering tool was modified."
+}

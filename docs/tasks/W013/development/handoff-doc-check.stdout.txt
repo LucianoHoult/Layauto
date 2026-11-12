@@ -1,0 +1,39 @@
+{
+  "markdown_files": 17,
+  "local_links_checked": 156,
+  "initial_naive_check_failure_preserved": [
+    {
+      "file": "docs/tasks/W013/review-evidence/final-doc-precheck/neutral-static-README.initial.md",
+      "target": "operator_binding_probe.py"
+    },
+    {
+      "file": "docs/tasks/W013/review-evidence/final-doc-precheck/neutral-static-README.initial.md",
+      "target": "operator_binding_probe.stdout.json"
+    },
+    {
+      "file": "docs/tasks/W013/review-evidence/final-doc-precheck/neutral-static-README.initial.md",
+      "target": "multiple_owners_probe.py"
+    },
+    {
+      "file": "docs/tasks/W013/review-evidence/final-doc-precheck/neutral-static-README.initial.md",
+      "target": "multiple_owners_probe.stdout.json"
+    },
+    {
+      "file": "docs/tasks/W013/review-evidence/final-doc-precheck/neutral-static-README.initial.md",
+      "target": "map_backing_probe.py"
+    },
+    {
+      "file": "docs/tasks/W013/review-evidence/final-doc-precheck/neutral-static-README.initial.md",
+      "target": "map_backing_probe.stdout.json"
+    },
+    {
+      "file": "docs/tasks/W013/review-evidence/final-doc-precheck/neutral-static-README.initial.md",
+      "target": "operator_binding_probe.attempt-01.stderr.txt"
+    }
+  ],
+  "historical_snapshot": "docs/tasks/W013/review-evidence/final-doc-precheck/neutral-static-README.initial.md",
+  "historical_snapshot_sha256": "296c985b003b8f6429729086785eb940c841e3e981fd22a368c5dd2eeed44e7e",
+  "historical_link_base": "docs/tasks/W013/review-evidence/neutral-static",
+  "basis": "Byte-exact historical README is evidence, not a relocated active document. Its relative links retain the original recorded parent; all active links use their actual parent. No raw evidence bytes are edited or probes duplicated.",
+  "resolved_missing": []
+}

@@ -268,3 +268,91 @@ source_id上启动要求的双3.10/3.12、各1731项最终矩阵。16GiB/4CPU下
 本次实跑只有证据/输入hash审计；产品三路原实跑按精确身份采信。尚未覆盖最终双全量、typing、
 build、双干净安装源码外smoke及其包/环境/源身份，**完整review结论仍待这些证据**。
 后续仅文档补记不触发重跑；runtime/tests/config/依赖或证据绑定变化则按规则核影响并重新冻结。
+
+## 保留边界guard失败与r2资源身份采信复核（2026-11-12）
+
+首次完整矩阵在保留的W007纯依赖guard发现W013新immutable state DTO尚未登记，两侧均在
+相同节点暴露失败。原 `verification/` source snapshot、两条pytest日志/负退出码、failure与
+controlled-stop以及独立完整失败trace均保留；**第一次矩阵不计为通过**。源内原允许列表已为
+W008–W011只读draft作同类精确登记，W013这项补充属于必要架构测试维护，没有改变运行时合同。
+
+独立审查实际diff，唯一文件变化为`tests/contracts/test_w007_contracts.py`：仅两个指定
+normalization文件、`ast.ImportFrom`、`layauto_v2.state.annotation`且names集合恰为
+`{'AnnotationDraft'}`允许；mutable/publication访问仍禁止。直接执行该真实AST许可表达式的
+11种正负变体，确认其它文件、模块、mutable/额外symbol/star/普通import均不放行；只读类的
+本地别名仍指向同一个immutable DTO。修后旧/新3项边界guard原实跑`3 passed`和日志hash闭合。
+见 [独立test delta审计](review-evidence/retained-boundary-delta-review.stdout.json)及
+[273路径核查](review-evidence/retained-boundary-selected-paths.json)。
+
+完整新source_id为
+`2c5724a9d3ecf99913857ad89015c03c03475ae762c1c8ab00b5146fd3eec278`。
+与实测resource04的`6463eb67…`相比路径集合仍为273项，完整hash delta只有上述一个保留test。
+106个runtime文件、pyproject、75项新增W013测试、输入fixture和冻结资源probe均逐hash相同。
+resource workload既不import也不执行该test，身份bookkeeping在成本计量之外，故按运行工作负载
+身份采信resource04有效；**原实测source_id保持原值，不冒改为新冻结ID**。
+
+[resource-r2-identity-adoption.json](resource-r2-identity-adoption.json)已独立逐项核验，
+轻量独立 [采信回执](review-evidence/resource-r2-adoption-review.json)为passed。支持两worker
+最终矩阵调度、后置串行package/双安装smoke；无新增资源或合同必须项。不重测无变化的资源三路，
+但修改后的完整源码/测试/config必须新冻结，**双1731项全量及其工程义务全部重新执行**。
+该复核不把3项guard或旧中断运行当最终矩阵，不因reviewer/session变化增加无关全量。
+
+原资源审查报告995c852d…在`8dca80fee138b48f353f791a70d96765426c342a`内的immutable blob
+引用仍成立；本节只追加历史，清晰区分原资源review、引用纠正及此次test-only身份delta。
+原clearance字节不被回写；先前[引用纠正独立回执](review-evidence/resource-clearance-reference-review.json)
+确认冻结clearance、raw patches和工程工具原身份保持完整。最终完整review仍等待r2全部实跑证据。
+
+## 最终独立review结论（2026-11-12）
+
+**W013当前授权范围的代码、合同、组合、资源与最终工程证据review通过，剩余必须修正项0；支持交PM接收。**
+受测冻结提交为`2a45938aba8e751183d472d660a1ab66a1063636`，实际完整source_id为
+`2c5724a9d3ecf99913857ad89015c03c03475ae762c1c8ab00b5146fd3eec278`。
+当前273项源码/测试/config、执行snapshot与tar、106项runtime及三冻结工具再次核对一致；
+后续本任务文档/证据补记不冒记为新产品版本。
+
+主reviewer已独立审完整diff/原合同/真实输入及本地oracle映射，执行关键owner/alias/role/
+contributor反例、Fraction集合判据与实际captured原异常链。CR-01–03修正均独立复核关闭，
+原接受反例、原失败、首轮全量guard失败与受控停止全部保留。P01按用户选择A收口：本轮真实
+ordinal捕获保持字符串保真，007为不支持/拒绝反例，不改变旧parser/QueryKey或伪造raw字段。
+
+在runner完成后，主reviewer另用
+[final_r2_complete_audit.py](review-evidence/code-static/final_r2_complete_audit.py)只读核原最终
+工程结果，见 [完整审计原输出](review-evidence/code-static/final_r2_complete_audit.stdout.json)，
+exit0。重新核实际21条命令/81份evidence manifest、package及两安装的全部106项字节、
+source/snapshot/工具/clearance/baseline结束守卫，没有重跑任何full/capture/resource。
+工程专项 `/root/input_contracts` 的[最终148项身份审计](final-evidence-review.md#r2最终工程身份核证完成追加2026-11-12)
+也全部通过；本主结论结合实际产品/合同/组合/资源检查，不以专项摘要代替完整review。
+
+| 最终实际证据 | 独立核证结果 |
+| --- | --- |
+| 双解释器新产品全量 | Python3.10.22与3.12.14各1731 passed，原1656节点完整保留、新增75；两侧同一完整nodeid集合。原A1矩阵未作为新产品通过依据 |
+| 双strict typing/依赖 | 两侧各60个source文件无typing问题，所有pip check命令exit0 |
+| build与包 | 新wheel/sdist构建exit0，每包106个runtime文件逐hash等于冻结源码 |
+| 双clean安装 | 3.10安装新sdist、3.12安装新wheel；实际导入均在对应clean venv site-packages，106字节映射=原包=冻结源码 |
+| 源码外组合smoke | 两侧实际`-I -B`，各direct/readback/mismatch public build/encode/decode均通过；原attempt/checkpoint不推进且无terminal，marker/unknown/精确coverage保留。耗时分别434.159s、313.429s |
+| wire一致性 | 两解释器的安装smoke direct/readback wire SHA相同；mismatch临时URI不同，明确不作为相同输入的hash/性能比较。所有roundtrip均通过 |
+| 调度/资源 | package和两安装在双矩阵后串行；原固定三路resource04按同runtime/input/probe采信到R2唯一test-only delta。没有整包倍增、资源阻塞或无法解释的认证成本 |
+
+正常本地图仍14nodes/8edges/6components，直接query覆盖3170nm²、分母35090nm²、未覆盖31920nm²；
+OD/BODY未被分量摘要冒标为直接query覆盖，MARK25nm²单列非导体。mismatch安装见证的分母34634nm²
+与其实际既有几何变化相符。schema/refs只绑定source-evidence/local草稿；旧codec/wire/ref、
+原body证据与U06、mandatory约束要求均未放宽，没有baseline/terminal发布或完整M1/真实EDA承诺。
+
+固定输入审计137项与独立文档预核22项已按原工具/输出hash核证：35个固定外部URI文件、三路
+93个capture-source及116个已验收fixture身份闭合。原resource测量仍标6463eb67…，未改标为R2。
+历史资源review引用纠正、neutral初版README引用纠正及原raw patch/log空白数据保真均可追溯：
+原manifest/probe/失败/日志不被覆盖；补正只说明原版本与后续追加的边界，不触发产品重测。
+[README基址/版本补记](review-evidence/final-doc-precheck/readme-link-base-addendum.json)指出，
+byte-exact历史快照的7条相对href以原[neutral-static目录](review-evidence/neutral-static/)为基址。
+原快照不重写、probe不复制；新README追加前字节和原manifest分别保留，由新的小manifest记录
+后续文档状态，不能将旧manifest追认为覆盖追加批或新产品验证。
+
+| 交接验证分工 | 最终review事实 |
+| --- | --- |
+| 本review实跑 | 独立数学/owner/alias/分类与来源反例及修后复核、实际direct/captured异常链、AST白名单正负反例、完整source/包/安装/输入/工具/原日志身份审计 |
+| 按身份采信 | 新R2实际双1731/typing/build/双clean安装smoke与原resource04；主reviewer未重复这些全量/捕获，未用旧A1矩阵替代新产品矩阵 |
+| 未覆盖 | 真实EDA/PDK、完整M1、全量器件/pin/color、外部body/U06及其它mandatory规则/生命周期闭合、baseline/terminal发布、实际main集成验证；均保持原任务非目标/后续义务 |
+| 补跑触发 | 实际源码/测试/config/依赖/相关输入变化，合并冲突或组合行为变化，证据缺失/身份不闭合或独立新风险；相关源变后重新冻结要求的最终矩阵。文档/引用补记或换session/角色本身不触发双全量 |
+
+本结论不是PM验收或main集成授权；不修改PM阶段/current-work，不合main/删分支或启动下一任务。
+执行者按授权沿原W013分支提交推送并核远端完整SHA，PM在实际接收/集成版本做必要组合核验。

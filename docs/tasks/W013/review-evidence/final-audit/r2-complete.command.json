@@ -1,0 +1,26 @@
+{
+  "auditor": "/root/input_contracts",
+  "command": [
+    "python",
+    "-B",
+    "docs/tasks/W013/review-evidence/final-audit/audit_attempt.py",
+    "--attempt",
+    "r2",
+    "--complete"
+  ],
+  "cwd": "/workspace/Layauto",
+  "observed_exit_code": 0,
+  "recorded_at_utc": "2026-11-12T12:56:57.823460+00:00",
+  "recorder_python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "recorder_executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+  "script_sha256": "b42c6f76aa4c15ac9480f134a995694dee9e374ff50127df57bdd570368d6973",
+  "stdout": {
+    "path": "docs/tasks/W013/review-evidence/final-audit/r2-complete.stdout.json",
+    "sha256": "775b6418efa6b1d16faecd15d17bb66867019ba95e7cdf90591cb0e8b0fe376d"
+  },
+  "stderr": {
+    "path": "docs/tasks/W013/review-evidence/final-audit/r2-complete.stderr.txt",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "no_product_operation_rerun": true
+}
