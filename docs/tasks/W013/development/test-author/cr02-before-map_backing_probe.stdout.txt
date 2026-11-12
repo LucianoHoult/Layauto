@@ -1,0 +1,13 @@
+{
+  "classification": "pure-neutral-new-DTO-alias-witness-not-a-captured-build",
+  "head": "a347263a4ed26a08e69dcb5004669408e961728d",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "constructor_accepted_mutable_map_storage": true,
+  "policy_identity_retained": true,
+  "external_alias_changes_retained_policy": true,
+  "wire_changed": true,
+  "content_ref_changed": true,
+  "wire_before_sha256": "3599c42d73fcbfcb0ea87ed9655c45aa87d406dc2e5d521a00674f068ffe7b4f",
+  "wire_after_sha256": "4731fa5db7658cb685bfaf1d3ba0dfae681dfd8e12a8e739fceaeb05ed6e1115",
+  "limitations": "The FrozenMap shell was forged via object.__new__/object.__setattr__, not its safe public constructor; this tests the new boundary promise to reject malformed retained values before codecs copy them."
+}

@@ -1,0 +1,27 @@
+{
+  "argv": [
+    "/workspace/.venvs/layauto/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "/workspace/work/w013-tests/tests/unit/test_w013_net_annotation.py",
+    "-q",
+    "-p",
+    "no:cacheprovider"
+  ],
+  "cwd": "/tmp",
+  "utc_start": "2026-11-12T09:08:42.522374+00:00",
+  "seconds": 0.45517290400016464,
+  "exit_code": 0,
+  "environment_overrides": {
+    "PYTHONPATH": "/workspace/work/w013-core",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "source_files": {
+    "/workspace/work/w013-tests/tests/contracts/w013_cases.py": "edc6bb495b99b9b98897c77bd84b98de6affa536671b93e52a03832ea8c87d6e",
+    "/workspace/work/w013-tests/tests/contracts/test_w013_contracts.py": "fde49d26b254fc18e9eccc514a068997eef339393a6a06d0d47098586ca4a081",
+    "/workspace/work/w013-tests/tests/unit/test_w013_net_annotation.py": "fe4fb61bee66717df64cd470f229e18725cd41702b0d2b135bd4057ba6932c7a",
+    "/workspace/work/w013-core/layauto_v2/domain/net_annotation.py": "1d712e6ce4941be37a82a35f71dd625545ac5938f1e9673262f5df15ae9d4df1"
+  },
+  "classification": "development subset, not final matrix"
+}

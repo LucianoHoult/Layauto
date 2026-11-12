@@ -1,0 +1,27 @@
+{
+  "list_backing": {
+    "type": "ValueError",
+    "message": "annotation map backing requires a native immutable tuple"
+  },
+  "list_entry": {
+    "type": "ValueError",
+    "message": "annotation map entries require native key/value tuples"
+  },
+  "nested_tuple": {
+    "type": "ValueError",
+    "message": "annotation map backing requires a native immutable tuple"
+  },
+  "duplicate_key": {
+    "type": "ValueError",
+    "message": "annotation map keys require unique exact text"
+  },
+  "cycle": {
+    "type": "ValueError",
+    "message": "cyclic value in annotation graph"
+  },
+  "value_only_context": {
+    "type": "ValueError",
+    "message": "foreign or mutable value in annotation graph"
+  },
+  "shared_immutable_DAG": "accepted"
+}

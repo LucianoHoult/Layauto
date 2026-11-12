@@ -1,0 +1,22 @@
+{
+  "argv": [
+    "/workspace/.venvs/layauto/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "/workspace/work/w013-tests/tests/contracts/test_w013_contracts.py",
+    "-k",
+    "not new_modules",
+    "-q",
+    "-p",
+    "no:cacheprovider"
+  ],
+  "cwd": "/tmp",
+  "utc_start": "2026-11-12T09:12:50.371282+00:00",
+  "seconds": 23.00947564299986,
+  "exit_code": 0,
+  "environment_overrides": {
+    "PYTHONPATH": "/workspace/work/w013-core",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  }
+}

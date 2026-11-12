@@ -1,0 +1,12 @@
+{
+  "target_classification_probe.py": {
+    "rejected": true,
+    "type": "ValueError",
+    "message": "annotation conductor target cannot use a non-conductor classification"
+  },
+  "contributor_closure_probe.py": {
+    "rejected": true,
+    "type": "ValueError",
+    "message": "annotation region has a dangling drawn contributor"
+  }
+}

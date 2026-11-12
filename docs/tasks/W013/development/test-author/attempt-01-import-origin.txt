@@ -1,0 +1,25 @@
+Command:
+PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=/workspace/work/w013-core /workspace/.venvs/layauto/bin/python -B -m pytest tests/unit/test_w013_net_annotation.py -q -p no:cacheprovider
+cwd: /workspace/work/w013-tests
+exit: 2
+
+==================================== ERRORS ====================================
+___________ ERROR collecting tests/unit/test_w013_net_annotation.py ____________
+ImportError while importing test module '/workspace/work/w013-tests/tests/unit/test_w013_net_annotation.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/unit/test_w013_net_annotation.py:11: in <module>
+    from layauto_v2.domain.net_annotation import (
+E   ModuleNotFoundError: No module named 'layauto_v2.domain.net_annotation'
+=========================== short test summary info ============================
+ERROR tests/unit/test_w013_net_annotation.py
+!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
+1 error in 0.14s
+
+Diagnosis: python -m pytest placed the test worktree cwd ahead of PYTHONPATH;
+that worktree intentionally has no new product files. Later checks execute from
+/tmp with the intended core worktree package supplied explicitly. This is a
+test invocation/import-origin error, not a product finding.

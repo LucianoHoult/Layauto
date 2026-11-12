@@ -1,0 +1,24 @@
+{
+  "argv": [
+    "/workspace/.venvs/layauto/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "/workspace/work/w013-tests/tests/contracts/test_w013_contracts.py",
+    "-k",
+    "cr02_new_dto",
+    "-q",
+    "--tb=short",
+    "-p",
+    "no:cacheprovider"
+  ],
+  "cwd": "/tmp",
+  "utc_start": "2026-11-12T09:25:08.566340+00:00",
+  "seconds": 0.6489698729997144,
+  "exit_code": 1,
+  "test_sha256": "470df8448e660c4877ff5d8b1180a3ad9cfe8cf0c2a44fb024d95f442c1cd508",
+  "environment_overrides": {
+    "PYTHONPATH": "/workspace/Layauto",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  }
+}

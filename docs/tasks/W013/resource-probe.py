@@ -62,6 +62,7 @@ def run(case, output, terminal):
         from layauto_v2.normalization import net_annotation_codec as codec
     else:
         from layauto_v2.normalization import local_connectivity_codec as codec
+    from layauto_v2.normalization import local_connectivity_codec, net_annotation
     from layauto_v2.pipeline import prepare_inputs
     from layauto_v2.repository import PublicationRepository
 
@@ -74,9 +75,31 @@ def run(case, output, terminal):
     started = datetime.now(timezone.utc).isoformat()
     gc.collect()
     phases = {}
+    observed_calls = []
+    current_phase = ['acquisition']
+
+    def observe(module, name, label):
+        original = getattr(module, name)
+        def observed(*args, **kwargs):
+            tick = time.perf_counter()
+            try:
+                return original(*args, **kwargs)
+            finally:
+                observed_calls.append({'phase': current_phase[0], 'call': label,
+                                       'inclusive_seconds': time.perf_counter() - tick})
+        setattr(module, name, observed)
+
+    # Observe only calls that the public paths already make. No extra capture,
+    # encoding, authentication, or weakened API is introduced by these timers.
+    observe(local_connectivity_codec, 'decode_record', 'W010_public_decode')
+    observe(net_annotation, '_require_input', 'W013_full_input_requirement')
+    observe(net_annotation, 'normalize', 'W007_source_normalization')
+    observe(net_annotation, '_capture_binding', 'W013_capture_binding_digest')
+    observe(net_annotation, 'build_net_annotation_draft', 'W013_neutral_draft_build')
 
     def measure(name, call):
         print('START ' + name, flush=True)
+        current_phase[0] = name
         tick = time.perf_counter()
         result = call()
         phases[name] = {'seconds': time.perf_counter() - tick,
@@ -125,6 +148,11 @@ def run(case, output, terminal):
         assert repository.read_terminal(ready.run_id) is None
         assert local.input.input.input.readback is not None
     peak = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
+    if terminal == 'w013':
+        actual_counts = {name: sum(row['phase'] == name and row['call'] == 'W010_public_decode'
+                                  for row in observed_calls)
+                         for name in ('W013_build', 'W013_result_encode', 'W013_result_decode')}
+        assert actual_counts == {'W013_build': 1, 'W013_result_encode': 1, 'W013_result_decode': 2}, actual_counts
     # Keep this tuple alive until after the fixed peak, matching the reviewed
     # replacement of old W011 result/restored/wire with their W013 siblings.
     retained = (parsed, geometry, effective, local, net_result, net_restored, net_wire,
@@ -144,6 +172,8 @@ def run(case, output, terminal):
         'source_id': source_id(identity), 'files': identity,
         'runtime_files': runtime_manifest(ROOT / 'layauto_v2'),
         'phases': phases, 'process_peak_rss_kib_before_postmeasurement_analysis': peak,
+        'observed_existing_calls': observed_calls,
+        'observation_note': 'Inclusive timers overlap; never sum nested call buckets as disjoint costs.',
         'wire_bytes': len(net_wire), 'wire_sha256': sha(net_wire),
         'retained_W010_wire_bytes': len(old_wire), 'retained_W010_wire_sha256': sha(old_wire),
         'W013_compact_envelope_bytes_without_input_field': len(canonical_bytes(body)),

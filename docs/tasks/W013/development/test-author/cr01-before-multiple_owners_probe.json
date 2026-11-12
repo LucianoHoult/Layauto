@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "/workspace/.venvs/layauto/bin/python",
+    "-B",
+    "/workspace/Layauto/docs/tasks/W013/review-evidence/neutral-static/multiple_owners_probe.py"
+  ],
+  "cwd": "/workspace/Layauto",
+  "utc_start": "2026-11-12T09:21:43.375846+00:00",
+  "exit_code": 0,
+  "seconds": 0.6122708410002815
+}

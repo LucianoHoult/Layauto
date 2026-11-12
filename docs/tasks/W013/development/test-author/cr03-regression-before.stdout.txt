@@ -1,0 +1,22 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+_ test_cr03_neutral_targets_cannot_be_nonconductors_or_reference_missing_drawn_contributors[marker_target] _
+/workspace/work/w013-tests/tests/contracts/test_w013_contracts.py:595: in test_cr03_neutral_targets_cannot_be_nonconductors_or_reference_missing_drawn_contributors
+    with pytest.raises(ValueError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE ValueError
+_ test_cr03_neutral_targets_cannot_be_nonconductors_or_reference_missing_drawn_contributors[connector_target] _
+/workspace/work/w013-tests/tests/contracts/test_w013_contracts.py:595: in test_cr03_neutral_targets_cannot_be_nonconductors_or_reference_missing_drawn_contributors
+    with pytest.raises(ValueError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE ValueError
+_ test_cr03_neutral_targets_cannot_be_nonconductors_or_reference_missing_drawn_contributors[dangling_cut] _
+/workspace/work/w013-tests/tests/contracts/test_w013_contracts.py:595: in test_cr03_neutral_targets_cannot_be_nonconductors_or_reference_missing_drawn_contributors
+    with pytest.raises(ValueError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE ValueError
+=========================== short test summary info ============================
+FAILED ../workspace/work/w013-tests/tests/contracts/test_w013_contracts.py::test_cr03_neutral_targets_cannot_be_nonconductors_or_reference_missing_drawn_contributors[marker_target]
+FAILED ../workspace/work/w013-tests/tests/contracts/test_w013_contracts.py::test_cr03_neutral_targets_cannot_be_nonconductors_or_reference_missing_drawn_contributors[connector_target]
+FAILED ../workspace/work/w013-tests/tests/contracts/test_w013_contracts.py::test_cr03_neutral_targets_cannot_be_nonconductors_or_reference_missing_drawn_contributors[dangling_cut]
+3 failed, 44 deselected in 0.75s

@@ -1,0 +1,41 @@
+{
+  "argv": [
+    "/workspace/.venvs/layauto/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "/workspace/work/w013-tests/tests/contracts/test_w013_contracts.py",
+    "-k",
+    "cr01_neutral_graph or cr02_new_dto or cr03_neutral_targets",
+    "-q",
+    "-p",
+    "no:cacheprovider"
+  ],
+  "cwd": "/tmp",
+  "utc_start": "2026-11-12T09:37:17.558900+00:00",
+  "seconds": 1.8927671120000014,
+  "exit_code": 0,
+  "root_head": "10b1f0fc6973e3957046badf7b8e107be88f6476",
+  "runtime_hash_before": {
+    "layauto_v2/domain/net_annotation.py": "29c3f6c7f6beb751be9fea8837e95727a5c358ee0ee46650367f7e5806b76ac6",
+    "layauto_v2/state/annotation.py": "7a37374660ec6efb03f27bdb0e5fd0fe6060033ffde9d2923a31bf6e19b9fb86",
+    "layauto_v2/annotation/net_regions.py": "d9023e8f9d9e839ec20d188c8f90f2b008f8153494b35c6d82f0d496065551eb",
+    "layauto_v2/derive/net_annotation.py": "cc1e0122f7f269276a289bb2197061f9ddbb6020dbfb753173377da2f276fb16",
+    "layauto_v2/normalization/net_annotation.py": "cb70b480acf256c797ff7eb9c5422ac2b7171549d104242484e6f441d33ac6bc",
+    "layauto_v2/normalization/net_annotation_codec.py": "9204909f37f67ebafc5f9522d6ebd575f7c6b04cf6455825a456dc60f8bcc49e"
+  },
+  "runtime_hash_after": {
+    "layauto_v2/domain/net_annotation.py": "29c3f6c7f6beb751be9fea8837e95727a5c358ee0ee46650367f7e5806b76ac6",
+    "layauto_v2/state/annotation.py": "7a37374660ec6efb03f27bdb0e5fd0fe6060033ffde9d2923a31bf6e19b9fb86",
+    "layauto_v2/annotation/net_regions.py": "d9023e8f9d9e839ec20d188c8f90f2b008f8153494b35c6d82f0d496065551eb",
+    "layauto_v2/derive/net_annotation.py": "cc1e0122f7f269276a289bb2197061f9ddbb6020dbfb753173377da2f276fb16",
+    "layauto_v2/normalization/net_annotation.py": "cb70b480acf256c797ff7eb9c5422ac2b7171549d104242484e6f441d33ac6bc",
+    "layauto_v2/normalization/net_annotation_codec.py": "9204909f37f67ebafc5f9522d6ebd575f7c6b04cf6455825a456dc60f8bcc49e"
+  },
+  "runtime_stable": true,
+  "test_sha256": "643b3bce0f3cc0ed3011f57623498e569155220cedcf26371524c410d2ff3bef",
+  "environment_overrides": {
+    "PYTHONPATH": "/workspace/Layauto",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  }
+}
