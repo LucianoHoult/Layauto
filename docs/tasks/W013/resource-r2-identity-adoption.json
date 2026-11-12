@@ -1,0 +1,18 @@
+{
+  "source_id": "2c5724a9d3ecf99913857ad89015c03c03475ae762c1c8ab00b5146fd3eec278",
+  "measured_source_id": "6463eb67b1c1ce5b9fd1fca436fa499a4ad14da004ef8fcd913872bd350443a9",
+  "changed_files": {
+    "tests/contracts/test_w007_contracts.py": {
+      "measured": "ea27c8079bf95df14568bdabec86338efc1b5fcc540f04a15ec747d9b94d1050",
+      "current": "128bf3ac2091a7345693782a9804fac8f86e8b74ca6cfd7b3929af3ddf01bd01"
+    }
+  },
+  "runtime_files_identical": true,
+  "runtime_file_count": 106,
+  "source_file_count": 273,
+  "resource_probe_sha256": "7295d3bab20b5f65fee02650824d36e4d59ae27e11ac2e80b02ae938e2d19981",
+  "measured_probe_sha256": "7295d3bab20b5f65fee02650824d36e4d59ae27e11ac2e80b02ae938e2d19981",
+  "pyproject_unchanged": true,
+  "new_W013_tests_unchanged": true,
+  "basis": "Only the retained test AST whitelist changes; the resource workload neither imports nor executes that test. All runtime, input fixture, configuration and resource-probe bytes remain identical. Raw measured source IDs are not rewritten; all final full matrices must rerun on this new full source/test/config identity."
+}

@@ -1,0 +1,20 @@
+Traceback (most recent call last):
+  File "/workspace/Layauto/docs/tasks/W013/verification-tools/prepare_final.py", line 289, in <module>
+    main()
+  File "/workspace/Layauto/docs/tasks/W013/verification-tools/prepare_final.py", line 252, in main
+    commands.extend(job.result())
+                    ^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/concurrent/futures/_base.py", line 456, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/concurrent/futures/_base.py", line 401, in __get_result
+    raise self._exception
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/concurrent/futures/thread.py", line 59, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/Layauto/docs/tasks/W013/verification-tools/prepare_final.py", line 185, in matrix
+    rows.append(run('pytest-' + tag, pytest_command, source))
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/Layauto/docs/tasks/W013/verification-tools/prepare_final.py", line 104, in run
+    raise RuntimeError(name + ' failed; inspect stdout/stderr in ' + str(out))
+RuntimeError: pytest-310 failed; inspect stdout/stderr in /workspace/Layauto/docs/tasks/W013/verification

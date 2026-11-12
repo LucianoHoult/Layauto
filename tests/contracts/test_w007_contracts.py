@@ -370,8 +370,15 @@ def test_normalization_and_new_domain_keep_pure_dependency_boundaries():
                                      and isinstance(node, ast.ImportFrom)
                                      and node.module == 'layauto_v2.state.local_connectivity'
                                      and {alias.name for alias in node.names} == {'LocalConnectivityDraft'})
+            # W013 composes its immutable proposed annotation draft only. This
+            # does not permit any mutable state or publication dependency.
+            allowed_net_annotation_state = (path.parent.name == 'normalization'
+                                            and path.name in ('net_annotation.py', 'net_annotation_codec.py')
+                                            and isinstance(node, ast.ImportFrom)
+                                            and node.module == 'layauto_v2.state.annotation'
+                                            and {alias.name for alias in node.names} == {'AnnotationDraft'})
             if not (allowed_channel_local or allowed_decoder or allowed_geometry_decoder or allowed_geometry_state
-                    or allowed_effective_state or allowed_local_contact_state):
+                    or allowed_effective_state or allowed_local_contact_state or allowed_net_annotation_state):
                 violations.extend((str(path), module) for module in modules if module.startswith(forbidden))
         for node in ast.walk(tree):
             if isinstance(node, ast.Call) and isinstance(node.func, ast.Name):

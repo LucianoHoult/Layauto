@@ -1,0 +1,33 @@
+{
+  "classification": "independent-document-reference-correction-review-no-matrix-rerun",
+  "original_clearance_sha256": "ac4ebb0b5f4efced56f9fb99a3bd0886edf3be844668eb1479ca7c6a94c1888a",
+  "correct_review_commit": "8dca80fee138b48f353f791a70d96765426c342a",
+  "review_path": "docs/tasks/W013/code-review.md",
+  "review_sha256": "995c852dbb913b8153b373603c56a18d49d2b5fd01e2c15fb82c545c004ff349",
+  "incorrect_review_commit_missing_report_returncode": 128,
+  "source_id": "6463eb67b1c1ce5b9fd1fca436fa499a4ad14da004ef8fcd913872bd350443a9",
+  "actual_selected_files_unchanged": 273,
+  "active_runner_frozen_clearance_unchanged": true,
+  "active_runner_tools_unchanged": {
+    "runner": {
+      "source": "/workspace/Layauto/docs/tasks/W013/verification-tools/prepare_final.py",
+      "sha256": "f756e2f995935617b929da06fd5bf6b741691489f8e37867467f63ec78eb2463"
+    },
+    "source_identity": {
+      "source": "/workspace/Layauto/docs/tasks/W013/verification-tools/source_identity.py",
+      "sha256": "dd17b3f9abbe5e459bb84ff1e35cd8ee07118b9e1fd08df542597355b85e7395"
+    },
+    "smoke": {
+      "source": "/workspace/Layauto/docs/tasks/W013/verification-tools/installed_smoke.py",
+      "sha256": "c9e2f141e13a7d5fe54e3e10297271f067e9139ec28a4184bbe47ff02036c8be"
+    }
+  },
+  "raw_patch_bytes_unchanged": {
+    "docs/tasks/W013/review-evidence/neutral-static/target_classification_probe.runtime.patch": "bbf4e2218760b1f76f45580bebc2afc5ecc0953577c306e9a73781f18275fa6a",
+    "docs/tasks/W013/review-evidence/code-static/cr03-before/runtime.patch": "a36ad5ebd8fee7497d193a156cbca609f1a9f8e8f5a62e32e83dd23dc341cca7"
+  },
+  "gitattributes_path": "docs/tasks/W013/review-evidence/.gitattributes",
+  "gitattributes_sha256": "71e6a43b327de624c61e08386d4f71c8a6df0cb2051c0ff1a5a277bfd6d4d876",
+  "scope": "Only evidence reference/addendum and whitespace interpretation of raw patch context; no runtime/test/config/input or engineering tool change.",
+  "conclusion": "Correction closes the original immutable report reference; no reason to stop or repeat the active source-identical matrices. Final full review still awaits actual matrix/build/install results."
+}
