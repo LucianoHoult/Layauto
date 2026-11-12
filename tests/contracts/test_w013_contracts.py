@@ -467,3 +467,69 @@ def test_cr01_neutral_graph_requires_one_coherent_contact_and_region_operator_ow
     wire = canonical_bytes({'wire_schema': WIRE_VERSION, 'record': packet_value(bad)})
     with pytest.raises(ValueError):
         decode_record(wire)
+
+
+def _cr02_forged_frozen_map(shape):
+    """Create an exact FrozenMap shell whose private representation is unsafe."""
+    from layauto_v2.domain.codec import FrozenMap
+    value = object.__new__(FrozenMap)
+    if shape == 'list_backing':
+        storage = [('supported', False), ('reason', 'unknown_policy')]
+    elif shape == 'list_entry':
+        storage = (['supported', False], ('reason', 'unknown_policy'))
+    elif shape == 'nested_tuple':
+        nested, _ = _cr02_forged_frozen_map('list_backing')
+        storage = (('supported', False), ('nested', (nested,)))
+    elif shape == 'duplicate_key':
+        storage = (('supported', False), ('supported', True))
+    else:
+        assert shape == 'cycle'
+        storage = (('self', value),)
+    object.__setattr__(value, '_entries', storage)
+    return value, storage
+
+
+@pytest.mark.parametrize('shape', ('list_backing', 'list_entry', 'nested_tuple', 'duplicate_key', 'cycle'))
+def test_cr02_new_dto_constructor_and_codec_reject_unsafe_exact_frozen_map_shells(shape):
+    from layauto_v2.domain.codec import FrozenMap
+    from layauto_v2.domain.net_annotation import AnnotationRef, MatchEvidence
+    from layauto_v2.normalization.net_annotation_codec import encode_record
+    unsafe, backing = _cr02_forged_frozen_map(shape)
+    assert type(unsafe) is FrozenMap  # exact class alone does not prove immutability
+    good = MatchEvidence(AnnotationRef('evidence', '1' * 64), (), (), (), (),
+                         FrozenMap({'supported': False, 'reason': 'unknown_policy'}), 'unsupported')
+    stable_ref = good.ref
+    with pytest.raises(ValueError):
+        replace(good, policy=unsafe)
+    with pytest.raises(ValueError):
+        encode_record(unchecked_replace(good, policy=unsafe))
+    if shape == 'list_backing':
+        backing.append(('external_mutation', True))
+    assert good.ref == stable_ref and good.policy.get('external_mutation') is None
+
+
+def test_cr02_captured_input_rejects_mutable_map_backing_before_old_codec_can_copy_it(monkeypatch):
+    from layauto_v2.domain.codec import FrozenMap
+    from layauto_v2.normalization import local_connectivity_codec
+    from layauto_v2.normalization.net_annotation import NetAnnotationResult, build_net_annotation
+    from layauto_v2.normalization.net_annotation_codec import encode_record
+    result = normal_capture()
+    local = result.input
+    original_owner = local.value.binding.drawn
+    backing = list(original_owner.payload.items())
+    unsafe = object.__new__(FrozenMap)
+    object.__setattr__(unsafe, '_entries', backing)
+    owner = unchecked_replace(original_owner, payload=unsafe)
+    graph = unchecked_replace(local.value, binding=unchecked_replace(local.value.binding, drawn=owner))
+    borrowed = unchecked_replace(local, value=graph)
+    forged_result = unchecked_replace(result, input=borrowed)
+    def copied_before_validation(*args, **kwargs):
+        pytest.fail('old codec was entered before malformed FrozenMap backing was rejected')
+    monkeypatch.setattr(local_connectivity_codec, 'encode_record', copied_before_validation)
+    for entry in (lambda: build_net_annotation(borrowed), lambda: NetAnnotationResult(borrowed),
+                  lambda: encode_record(forged_result)):
+        with pytest.raises(ValueError):
+            entry()
+    backing.append(('external_mutation', True))
+    assert original_owner.payload.get('external_mutation') is None
+    assert result.input is local and result.input.value.binding.drawn is original_owner
