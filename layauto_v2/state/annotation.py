@@ -132,8 +132,23 @@ class AnnotationDraft:
             raise ValueError('annotation target has no drawn record backlink')
         for target in self.targets:
             row = drawn[target.target_id.record_id]
+            if row.classification != 'target_conductor':
+                raise ValueError('annotation conductor target cannot use a non-conductor classification')
             if row.layer != target.target_id.layer or not _same(row.rectangle, target.drawn_rectangle) or not _same(row.source, target.source):
                 raise ValueError('annotation target differs from original drawn classification/source')
+            contributors = target.node.region.contributors
+            if not set(contributors) <= set(drawn):
+                raise ValueError('annotation region has a dangling drawn contributor')
+            # W009's existing finite operators consume CUT for LI and POLY for
+            # OD terminal splitting. W010's other local nodes have no inputs
+            # in this contributor field; do not invent or rebuild their edges.
+            expected_contributor = {'LI': ('CUT', 'cut'), 'OD': ('POLY', 'gate')}.get(target.node.layer)
+            for identity in contributors:
+                contributor = drawn[identity]
+                if expected_contributor is None or (contributor.layer, contributor.role) != expected_contributor:
+                    raise ValueError('annotation region contributor has an incompatible source role')
+                if target.node.layer == 'LI' and registry[contributor.layer].get('cut_target') != 'LI':
+                    raise ValueError('annotation LI contributor does not declare the LI cut target')
 
     def _validate_matches(self) -> None:
         if tuple(match.evidence_ref for match in self.matches) != self.binding.evidence_refs:
