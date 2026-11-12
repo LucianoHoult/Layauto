@@ -105,11 +105,15 @@ class AnnotationDraft:
         if self.targets != tuple(sorted(self.targets, key=lambda row: row.ref.sha256)) or len({row.ref for row in self.targets}) != len(self.targets):
             raise ValueError('annotation targets require canonical unique identities')
         topology = {member: component.ref for component in b.topology for member in component.members}
+        contact_owners = {component.ref: component.binding_ref for component in b.topology}
+        if len({target.node.region.operator_ref for target in self.targets}) > 1:
+            raise ValueError('annotation targets mix effective region operator owners')
         if {target.node_ref for target in self.targets} != set(topology) or len(self.targets) != len(topology):
             raise ValueError('annotation targets do not completely cover original local nodes')
         for target in self.targets:
             if (target.target_id.binding_ref != b.ref or target.component_ref != topology[target.node_ref]
-                    or target.tick_nm != b.tick_nm or target.node.region.unit_ref != b.unit_ref):
+                    or target.tick_nm != b.tick_nm or target.node.region.unit_ref != b.unit_ref
+                    or target.node.binding_ref != contact_owners[target.component_ref]):
                 raise ValueError('annotation target belongs to another binding/component/unit')
         if tuple(row.record_id for row in self.classifications) != b.drawn_record_ids:
             raise ValueError('annotation classification omitted/duplicated original drawn records')

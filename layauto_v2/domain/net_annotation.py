@@ -349,6 +349,8 @@ class AnnotationBinding(_Record):
         object.__setattr__(self, 'evidence_refs', ordered_refs(self.evidence_refs, 'evidence'))
         if self.topology != tuple(sorted(self.topology, key=lambda item: item.ref.sha256)) or len({item.ref for item in self.topology}) != len(self.topology):
             raise ValueError('annotation topology requires complete canonical components')
+        if len({component.binding_ref for component in self.topology}) > 1:
+            raise ValueError('annotation topology mixes contact operator owners')
         members = tuple(member for component in self.topology for member in component.members)
         if len(set(members)) != len(members):
             raise ValueError('annotation topology repeats a node')
