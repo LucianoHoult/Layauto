@@ -1,0 +1,21 @@
+{
+  "command": [
+    "/workspace/work/w013-env/dev310/bin/python",
+    "-B",
+    "/workspace/work/w013-engineering/docs/tasks/W013/verification-tools/installed_smoke.py",
+    "--help"
+  ],
+  "cwd": "/workspace/work/w013-engineering",
+  "started_at_utc": "2026-11-12T09:03:27.537024+00:00",
+  "seconds": 0.35632983699997567,
+  "returncode": 0,
+  "expected_returncode": 0,
+  "environment_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONPATH": "/workspace/work/w013-engineering"
+  },
+  "stdout": "installed_smoke-help.stdout.txt",
+  "stdout_sha256": "5f661ee2d7c9efad9c09c32886c4f862d2049bcc27e6aed0b14f92a7cf8c0550",
+  "stderr": "installed_smoke-help.stderr.txt",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

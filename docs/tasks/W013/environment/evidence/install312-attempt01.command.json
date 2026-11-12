@@ -1,0 +1,31 @@
+{
+  "argv": [
+    "/workspace/work/w013-env/dev312/bin/python",
+    "-m",
+    "pip",
+    "install",
+    "--report",
+    "/workspace/work/w013-engineering/docs/tasks/W013/environment/evidence/pip-report312.json",
+    "-r",
+    "/workspace/work/w013-engineering/docs/tasks/W013/environment/requirements-312.txt"
+  ],
+  "cwd": "/workspace/work/w013-env",
+  "environment_overrides": {
+    "UV_PYTHON_INSTALL_DIR": "/workspace/work/w013-env/python",
+    "UV_PYTHON_BIN_DIR": "/workspace/work/w013-env/bin",
+    "UV_CACHE_DIR": "/workspace/work/w013-env/uv-cache",
+    "PIP_CACHE_DIR": "/workspace/work/w013-env/pip-cache",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "MPLCONFIGDIR": "/workspace/work/w013-env/mplconfig"
+  },
+  "inherited_proxy_and_ca_preserved": true,
+  "started_utc": "2026-11-12T09:01:20.780668+00:00",
+  "finished_utc": "2026-11-12T09:01:32.962464+00:00",
+  "seconds": 12.181821649000085,
+  "returncode": 0,
+  "runner_sha256": "1143618484f779a314c6f3688d4c59f026849db51924b5e8090fa3f5b7034045",
+  "stdout": "install312-attempt01.stdout.txt",
+  "stdout_sha256": "96e562a4ab1fdd327db6010594f0e4bc7d09d77d776d9bf432cbe10963b26e31",
+  "stderr": "install312-attempt01.stderr.txt",
+  "stderr_sha256": "f96a57a6d17645d3d9eb401b9cead41a648edf2499f2ca4bc3f9364d677b6080"
+}

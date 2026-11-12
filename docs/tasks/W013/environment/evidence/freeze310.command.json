@@ -1,0 +1,28 @@
+{
+  "argv": [
+    "/workspace/work/w013-env/dev310/bin/python",
+    "-m",
+    "pip",
+    "freeze",
+    "--all"
+  ],
+  "cwd": "/workspace/work/w013-env",
+  "environment_overrides": {
+    "UV_PYTHON_INSTALL_DIR": "/workspace/work/w013-env/python",
+    "UV_PYTHON_BIN_DIR": "/workspace/work/w013-env/bin",
+    "UV_CACHE_DIR": "/workspace/work/w013-env/uv-cache",
+    "PIP_CACHE_DIR": "/workspace/work/w013-env/pip-cache",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "MPLCONFIGDIR": "/workspace/work/w013-env/mplconfig"
+  },
+  "inherited_proxy_and_ca_preserved": true,
+  "started_utc": "2026-11-12T09:01:59.892939+00:00",
+  "finished_utc": "2026-11-12T09:02:00.724550+00:00",
+  "seconds": 0.8316368550001698,
+  "returncode": 0,
+  "runner_sha256": "1143618484f779a314c6f3688d4c59f026849db51924b5e8090fa3f5b7034045",
+  "stdout": "freeze310.stdout.txt",
+  "stdout_sha256": "6ef6a6561d72c65c30663590da60558c5d14d50953388a4afb85bbe80999a98f",
+  "stderr": "freeze310.stderr.txt",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

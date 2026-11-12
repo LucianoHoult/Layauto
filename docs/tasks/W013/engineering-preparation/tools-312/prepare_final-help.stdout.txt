@@ -1,0 +1,29 @@
+usage: prepare_final.py [-h] --root ROOT --out OUT --work WORK --smoke SMOKE
+                        --python310 PYTHON310 --python312 PYTHON312
+                        --expected-tests EXPECTED_TESTS --baseline-collection
+                        BASELINE_COLLECTION --baseline-sha256 BASELINE_SHA256
+                        --expected-source-id EXPECTED_SOURCE_ID
+                        --resource-clearance RESOURCE_CLEARANCE
+                        [--matrix-workers {1,2}]
+
+Frozen W013 dual-interpreter matrix; run only after its resource checkpoint.
+Use source_identity.py to record the final current source_id first. Required
+--resource-clearance is an explicit review receipt containing status="passed",
+source_id equal to --expected-source-id, and all three fixed case names. This
+receipt records the checkpoint decision; actual performance evidence stays at
+its original linked owner. Network commands preserve inherited proxy/CA trust.
+
+options:
+  -h, --help            show this help message and exit
+  --root ROOT
+  --out OUT
+  --work WORK
+  --smoke SMOKE
+  --python310 PYTHON310
+  --python312 PYTHON312
+  --expected-tests EXPECTED_TESTS
+  --baseline-collection BASELINE_COLLECTION
+  --baseline-sha256 BASELINE_SHA256
+  --expected-source-id EXPECTED_SOURCE_ID
+  --resource-clearance RESOURCE_CLEARANCE
+  --matrix-workers {1,2}

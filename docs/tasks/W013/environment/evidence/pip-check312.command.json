@@ -1,0 +1,27 @@
+{
+  "argv": [
+    "/workspace/work/w013-env/dev312/bin/python",
+    "-m",
+    "pip",
+    "check"
+  ],
+  "cwd": "/workspace/work/w013-env",
+  "environment_overrides": {
+    "UV_PYTHON_INSTALL_DIR": "/workspace/work/w013-env/python",
+    "UV_PYTHON_BIN_DIR": "/workspace/work/w013-env/bin",
+    "UV_CACHE_DIR": "/workspace/work/w013-env/uv-cache",
+    "PIP_CACHE_DIR": "/workspace/work/w013-env/pip-cache",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "MPLCONFIGDIR": "/workspace/work/w013-env/mplconfig"
+  },
+  "inherited_proxy_and_ca_preserved": true,
+  "started_utc": "2026-11-12T09:01:48.241848+00:00",
+  "finished_utc": "2026-11-12T09:01:48.487029+00:00",
+  "seconds": 0.24520464800002628,
+  "returncode": 0,
+  "runner_sha256": "1143618484f779a314c6f3688d4c59f026849db51924b5e8090fa3f5b7034045",
+  "stdout": "pip-check312.stdout.txt",
+  "stdout_sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09",
+  "stderr": "pip-check312.stderr.txt",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

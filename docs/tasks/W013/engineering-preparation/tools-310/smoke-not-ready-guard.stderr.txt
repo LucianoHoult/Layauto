@@ -1,0 +1,2 @@
+usage: installed_smoke.py [-h] fixture
+installed_smoke.py: error: W013 API assertions are not integrated; this scaffold cannot report success
