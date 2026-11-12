@@ -533,3 +533,78 @@ def test_cr02_captured_input_rejects_mutable_map_backing_before_old_codec_can_co
     backing.append(('external_mutation', True))
     assert original_owner.payload.get('external_mutation') is None
     assert result.input is local and result.input.value.binding.drawn is original_owner
+
+
+def _cr03_target_forgery(change):
+    """Retain one neutral target while contradicting its own drawn facts."""
+    import hashlib
+    import json
+    from layauto_v2.domain.evidence import SourceRef
+    from layauto_v2.domain.geometry import GeometryRecordId
+    from layauto_v2.domain.local_connectivity import ContactComponent
+    from layauto_v2.domain.net_annotation import AnnotationFragment, AnnotationTargetId, NetComponentSummary
+    from layauto_v2.tech.schema import validate_payload
+    good, _ = _neutral_operator_control_and_forgery('node_component')
+    old_target, old_record = good.targets[0], good.classifications[0]
+    region = old_target.node.region
+    if change == 'dangling_cut':
+        contributor = GeometryRecordId(hashlib.sha256(b'undeclared-CUT-record').hexdigest())
+        region = replace(region, contributors=(contributor,))
+        node = replace(old_target.node, region=region)
+        drawn, capture = good.binding.drawn, good.binding.capture_binding
+        record = old_record
+    else:
+        role, classification = ('marker', 'marker') if change == 'marker_target' else ('contact', 'connector')
+        document = mutable(good.binding.drawn.payload)
+        next(row for row in document['layers'] if row['name'] == 'M1')['role'] = role
+        payload = freeze_map(document)
+        validate_payload(payload, 'drawn')
+        raw = (json.dumps(document, sort_keys=True) + '\n').encode()
+        source = SourceRef('review/drawn.json', hashlib.sha256(raw).hexdigest())
+        drawn = replace(good.binding.drawn, payload=payload, sources=(source,))
+        binding = mutable(good.binding.capture_binding)
+        binding['sources'] = [
+            {'uri': source.uri, 'sha256': source.sha256} if row['uri'] == good.binding.drawn.sources[0].uri else row
+            for row in binding['sources']]
+        capture = freeze_map(binding)
+        node = replace(old_target.node, layer='M1')
+        record = replace(old_record, layer='M1', role=role, classification=classification)
+    component = ContactComponent((node.ref,), node.binding_ref)
+    binding = replace(good.binding, topology=(component,), drawn=drawn, capture_binding=capture)
+    identity = AnnotationTargetId(binding.ref, node.layer, node.region.owner_id, node.region.ref)
+    target = replace(old_target, target_id=identity, node=node, component_ref=component.ref)
+    fragment = AnnotationFragment(target.ref, target.rectangles, (), (), 'unknown')
+    coverage = replace(good.coverage[0], layer=node.layer)
+    summary = NetComponentSummary(component.ref, component.members, (target.ref,), (), (), (), 'unknown')
+    return good, unchecked_replace(good, binding=binding, targets=(target,), fragments=(fragment,),
+                                   coverage=(coverage,), components=(summary,), classifications=(record,))
+
+
+@pytest.mark.parametrize('change', ('marker_target', 'connector_target', 'dangling_cut'))
+def test_cr03_neutral_targets_cannot_be_nonconductors_or_reference_missing_drawn_contributors(change):
+    from dataclasses import is_dataclass
+    from layauto_v2.domain.codec import FrozenMap
+    from layauto_v2.normalization.net_annotation_codec import WIRE_VERSION, decode_record, encode_record
+    good, bad = _cr03_target_forgery(change)
+    assert decode_record(encode_record(good)) == good
+    if change == 'dangling_cut':
+        assert not set(bad.targets[0].node.region.contributors) <= set(bad.binding.drawn_record_ids)
+    else:
+        assert bad.targets[0].target_id.layer == 'M1'
+        assert bad.classifications[0].classification in ('marker', 'connector')
+    with pytest.raises(ValueError):
+        replace(bad)
+    with pytest.raises(ValueError):
+        encode_record(bad)
+    def packet_value(value):
+        if type(value) is FrozenMap:
+            return {'map': value}
+        if type(value) is tuple:
+            return {'tuple': tuple(packet_value(item) for item in value)}
+        if is_dataclass(value):
+            return {'record': type(value).__name__,
+                    'fields': {field.name: packet_value(getattr(value, field.name)) for field in fields(value)}}
+        return {'scalar': value}
+    wire = canonical_bytes({'wire_schema': WIRE_VERSION, 'record': packet_value(bad)})
+    with pytest.raises(ValueError):
+        decode_record(wire)
