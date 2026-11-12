@@ -353,3 +353,117 @@ def test_captured_public_boundaries_preserve_original_exception_cause_context_an
     assert raised.value is failure
     assert failure.__cause__ is cause and failure.__context__ is context
     assert failure.__suppress_context__ is suppress
+
+
+def _neutral_operator_control_and_forgery(change):
+    """CR-01's tiny representation witness, with no captured result built.
+
+    Symbolic content refs isolate contradictory retained operator owners. They
+    claim neutral internal consistency only, never authenticity of a GDS record.
+    """
+    import hashlib
+    from layauto_v2.domain.channel_identity import RationalRect
+    from layauto_v2.domain.evidence import EvidenceRecord, SourceRef
+    from layauto_v2.domain.geometry import GeometryRecordId, GeometryRef, Rect
+    from layauto_v2.domain.identifiers import CellId
+    from layauto_v2.domain.local_connectivity import ContactComponent, ContactNode, LocalRef
+    from layauto_v2.domain.net_annotation import (
+        AnnotationBinding, AnnotationFragment, AnnotationTargetId, LayerCoverage,
+        NetComponentSummary, RecordClassification, TargetEvidence,
+    )
+    from layauto_v2.domain.regions import ExactRegion, RegionRef
+    from layauto_v2.state.annotation import AnnotationDraft
+    from w005_cases import read_json, sha
+    def h(label):
+        return hashlib.sha256(label.encode()).hexdigest()
+    def owner(name):
+        path = FIXTURE / 'tech' / (name + '.json')
+        return EvidenceRecord(name, freeze_map(read_json(path)), (SourceRef('tech/' + name + '.json', sha(path)),))
+    derived, drawn = owner('derived'), owner('drawn')
+    count = 1 if change == 'node_component' else 2
+    gds_hash = sha(FIXTURE / 'source.gds')
+    sources = tuple(SourceRef('source.gds', gds_hash, record_index=i) for i in range(count))
+    cdl = SourceRef('source.cdl', sha(FIXTURE / 'source.cdl'))
+    unit = GeometryRef('unit', h('one-unit'))
+    capture = freeze_map({'schema': 'layauto-net-capture-binding/1',
+        'normalization_input_sha256': h('neutral-only-not-a-receipt'),
+        'sources': tuple({'uri': row.uri, 'sha256': row.sha256}
+                         for row in (sources[0], cdl, derived.sources[0], drawn.sources[0])),
+        'readback': None})
+    def leaves(altered):
+        region_labels = ['one-effective-owner'] * count
+        node_labels = ['one-contact-owner'] * count
+        component_labels = ['one-contact-owner'] * count
+        if altered and change == 'node_component':
+            component_labels[0] = 'other-contact-owner'
+        if altered and change == 'multiple_contacts':
+            node_labels[1] = component_labels[1] = 'other-contact-owner'
+        if altered and change == 'multiple_regions':
+            region_labels[1] = 'other-effective-owner'
+        regions = tuple(ExactRegion(GeometryRecordId(h('record-' + str(i))), 'effective', (), unit,
+                    RegionRef('operators', h(region_labels[i])), (Rect(i * 20, 0, i * 20 + 10, 1),))
+                        for i in range(count))
+        nodes = tuple(ContactNode('LI', region, LocalRef('operators', h(node_labels[i])))
+                      for i, region in enumerate(regions))
+        components = tuple(sorted((ContactComponent((node.ref,), LocalRef('operators', h(component_labels[i])))
+                                   for i, node in enumerate(nodes)), key=lambda row: row.ref.sha256))
+        return regions, nodes, components
+    good_regions, good_nodes, good_components = leaves(False)
+    binding = AnnotationBinding(LocalRef('draft', h('one-local')), RegionRef('draft', h('one-effective')),
+        GeometryRef('layout', h('one-layout')), unit, GeometryRef('base_partition', h('one-partition')),
+        1, 'INV_M1_SYNTH', CellId('INV_M1_SYNTH'), h('semantic'), cdl, derived, drawn, good_components,
+        tuple(sorted((region.owner_id for region in good_regions), key=lambda row: row.sha256)), (), capture)
+    def tables(current_binding, nodes, components):
+        by_node = {member: component for component in components for member in component.members}
+        targets = tuple(sorted((TargetEvidence(
+            AnnotationTargetId(current_binding.ref, node.layer, node.region.owner_id, node.region.ref), node,
+            by_node[node.ref].ref, RationalRect(*(Fraction(v) for v in node.region.rectangles[0].bounds)), sources[i], 1)
+            for i, node in enumerate(nodes)), key=lambda row: row.ref.sha256))
+        fragments = tuple(sorted((AnnotationFragment(target.ref, target.rectangles, (), (), 'unknown')
+                                  for target in targets), key=lambda row: row.ref.sha256))
+        classifications = tuple(sorted((RecordClassification(target.target_id.record_id, 'LI', 'interconnect',
+                'target_conductor', target.drawn_rectangle, target.source, ()) for target in targets),
+                key=lambda row: row.record_id.sha256))
+        source_refs = tuple(sorted(sources, key=lambda source: canonical_bytes(
+            {'uri': source.uri, 'sha': source.sha256, 'record': source.record_index})))
+        coverage = LayerCoverage('LI', count, 0, count, Fraction(count * 10), Fraction(0),
+                                  Fraction(count * 10), Fraction(0), Fraction(0), source_refs, ())
+        summaries = tuple(NetComponentSummary(component.ref, component.members,
+                        tuple(target.ref for target in targets if target.component_ref == component.ref),
+                        (), (), (), 'unknown') for component in components)
+        return {'binding': current_binding, 'evidence': (), 'targets': targets, 'matches': (),
+                'fragments': fragments, 'coverage': (coverage,), 'components': summaries,
+                'classifications': classifications, 'issues': ()}
+    good = AnnotationDraft(**tables(binding, good_nodes, good_components))
+    _, bad_nodes, bad_components = leaves(True)
+    bad_binding = unchecked_replace(binding, topology=bad_components)
+    bad = unchecked_replace(good, **tables(bad_binding, bad_nodes, bad_components))
+    return good, bad
+
+
+@pytest.mark.parametrize('change', ('node_component', 'multiple_contacts', 'multiple_regions'))
+def test_cr01_neutral_graph_requires_one_coherent_contact_and_region_operator_owner(change):
+    from dataclasses import is_dataclass
+    from layauto_v2.domain.codec import FrozenMap
+    from layauto_v2.normalization.net_annotation_codec import WIRE_VERSION, decode_record, encode_record
+    good, bad = _neutral_operator_control_and_forgery(change)
+    assert decode_record(encode_record(good)) == good
+    with pytest.raises(ValueError):
+        replace(bad)
+    with pytest.raises(ValueError):
+        encode_record(bad)
+    # Author a negative packet independently of the validating public encoder.
+    # The public decoder must reject the same retained contradiction as the
+    # public DTO constructor, even though every local wire tag is well formed.
+    def packet_value(value):
+        if type(value) is FrozenMap:
+            return {'map': value}
+        if type(value) is tuple:
+            return {'tuple': tuple(packet_value(item) for item in value)}
+        if is_dataclass(value):
+            return {'record': type(value).__name__,
+                    'fields': {field.name: packet_value(getattr(value, field.name)) for field in fields(value)}}
+        return {'scalar': value}
+    wire = canonical_bytes({'wire_schema': WIRE_VERSION, 'record': packet_value(bad)})
+    with pytest.raises(ValueError):
+        decode_record(wire)
