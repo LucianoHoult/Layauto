@@ -25,6 +25,7 @@
 | 如何跨机器工作？ | [environment/remote-development.md](environment/remote-development.md)：运行位置、环境准备与代码交接 |
 | 以前讨论过什么？ | [旧工作流提案](proposals/v2-codex-development-workflow.md)：未采纳部分保留作候选；[历史 changelog](archive/changelog.md)：归档记录 |
 | 网络身份何时落到区域？ | [W013 PM2](tasks/W013-net-annotation-coverage.md#pm2-integration)：本地网络区域标注/覆盖/冲突草稿已验收集成；实际merge三路组合及5项边界检查通过，未知body与完整M1边界保留 |
+| 下一步如何核对器件接线？ | [W014](tasks/W014-terminal-body-relations.md)：结合channel定位、本地net标注和独立body context核对D/G/S/B；先方案review再实施，并交生产单cell缺上下文的具体设计 |
 
 ## 读取架构的起点
 
