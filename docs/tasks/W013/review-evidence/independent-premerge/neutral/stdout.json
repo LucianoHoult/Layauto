@@ -1,0 +1,116 @@
+{
+  "classification": "new independent bounded neutral/codec probe",
+  "head": "f31df3f3e6cd5df7ecef2e1f91977c3b68a9fac4",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "control_roundtrip": true,
+  "shared_immutable_DAG": true,
+  "guard_only_two_exact_readonly_imports": [
+    [
+      "net_annotation.py",
+      "layauto_v2.state.annotation",
+      [
+        "AnnotationDraft"
+      ]
+    ],
+    [
+      "net_annotation_codec.py",
+      "layauto_v2.state.annotation",
+      [
+        "AnnotationDraft"
+      ]
+    ]
+  ],
+  "checked_runtime_and_guard_files": 108,
+  "source_stable": true,
+  "checks": [
+    {
+      "case": "same DAG under map value-only context",
+      "outcome": "ValueError",
+      "message": "foreign or mutable value in annotation graph"
+    },
+    {
+      "case": "derived owner nested list backing",
+      "outcome": "ValueError",
+      "message": "annotation map backing requires a native immutable tuple"
+    },
+    {
+      "case": "binding boolean DBU",
+      "outcome": "ValueError",
+      "message": "annotation binding requires positive exact DBU"
+    },
+    {
+      "case": "binding source URI changed",
+      "outcome": "ValueError",
+      "message": "annotation source belongs to another capture"
+    },
+    {
+      "case": "text subclass",
+      "outcome": "ValueError",
+      "message": "foreign or mutable value in annotation graph"
+    },
+    {
+      "case": "integer subclass",
+      "outcome": "ValueError",
+      "message": "foreign or mutable value in annotation graph"
+    },
+    {
+      "case": "float",
+      "outcome": "ValueError",
+      "message": "foreign or mutable value in annotation graph"
+    },
+    {
+      "case": "Fraction boolean numerator",
+      "outcome": "ValueError",
+      "message": "annotation fraction requires reduced native integer components"
+    },
+    {
+      "case": "target region ID changes with geometry operator",
+      "outcome": "ValueError",
+      "message": "annotation target differs from original region identity"
+    },
+    {
+      "case": "classification nonconductor with original target",
+      "outcome": "ValueError",
+      "message": "classification changes drawn role/conductor meaning"
+    },
+    {
+      "case": "extra neutral wire envelope field",
+      "outcome": "ValueError",
+      "message": "unknown/missing net annotation envelope fields"
+    },
+    {
+      "case": "extra neutral record field",
+      "outcome": "ValueError",
+      "message": "unknown/missing net annotation wire fields"
+    },
+    {
+      "case": "exception identity/constructor/suppress=False",
+      "outcome": "preserved"
+    },
+    {
+      "case": "exception identity/encoder/suppress=False",
+      "outcome": "preserved"
+    },
+    {
+      "case": "exception identity/decoder/suppress=False",
+      "outcome": "preserved"
+    },
+    {
+      "case": "exception identity/constructor/suppress=True",
+      "outcome": "preserved"
+    },
+    {
+      "case": "exception identity/encoder/suppress=True",
+      "outcome": "preserved"
+    },
+    {
+      "case": "exception identity/decoder/suppress=True",
+      "outcome": "preserved"
+    }
+  ],
+  "not_run": [
+    "captured construction/roundtrip",
+    "full matrix",
+    "resource timing"
+  ]
+}

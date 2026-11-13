@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/workspace/Layauto/work/w013-premerge/binding/probe.py", line 71, in <module>
+    checks[name] = rejected(lambda: from_parse_result(forged))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/Layauto/work/w013-premerge/binding/probe.py", line 38, in rejected
+    raise AssertionError('forged evidence was admitted')
+AssertionError: forged evidence was admitted

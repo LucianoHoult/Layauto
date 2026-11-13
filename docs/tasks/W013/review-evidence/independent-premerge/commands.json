@@ -1,0 +1,140 @@
+{
+  "classification": "recorded original probe commands, not reruns after archival",
+  "shell": "bash login=true",
+  "entries": [
+    {
+      "name": "coverage kernel",
+      "argv": [
+        "/workspace/.venvs/layauto/bin/python",
+        "-B",
+        "work/w013-premerge/coverage/probe.py"
+      ],
+      "cwd": "/workspace/Layauto",
+      "explicit_env": {
+        "PYTHONPATH": "."
+      },
+      "other_env": "inherited; not fully captured",
+      "exit_codes_in_order": [
+        1,
+        0
+      ],
+      "archived_stdout": "coverage/probe.stdout.json",
+      "archived_stderr": "coverage/probe.stderr.txt",
+      "failed_script": "coverage/probe.attempt01.py",
+      "failed_stdout": "coverage/probe.attempt01.stdout.json",
+      "failed_stderr": "coverage/probe.attempt01.stderr.txt"
+    },
+    {
+      "name": "independent oracle",
+      "argv": [
+        "/workspace/.venvs/layauto/bin/python",
+        "-B",
+        "work/w013-premerge/coverage/oracle_audit.py"
+      ],
+      "cwd": "/workspace/Layauto",
+      "explicit_env": {},
+      "other_env": "inherited; not fully captured",
+      "exit_codes_in_order": [
+        1,
+        0
+      ],
+      "archived_stdout": "coverage/oracle_audit.stdout.json",
+      "archived_stderr": "coverage/oracle_audit.stderr.txt",
+      "failed_script": "coverage/oracle_audit.attempt01.py",
+      "failed_stdout": "coverage/oracle_audit.attempt01.stdout.json",
+      "failed_stderr": "coverage/oracle_audit.attempt01.stderr.txt"
+    },
+    {
+      "name": "neutral and AST guard",
+      "argv": [
+        "python",
+        "-B",
+        "work/w013-premerge/neutral/probe.py"
+      ],
+      "cwd": "/workspace/Layauto",
+      "explicit_env": {
+        "PYTHONPATH": "/workspace/Layauto",
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "other_env": "inherited; not fully captured",
+      "exit_codes_in_order": [
+        0
+      ],
+      "archived_stdout": "neutral/stdout.json",
+      "archived_stderr": "neutral/stderr.txt",
+      "original_record": "neutral/manifest.json",
+      "executable_note": "PATH-resolved python; absolute path was not recorded"
+    },
+    {
+      "name": "raw binding and layered admission",
+      "argv": [
+        "/workspace/.venvs/layauto/bin/python",
+        "-B",
+        "work/w013-premerge/binding/probe.py"
+      ],
+      "cwd": "/workspace/Layauto",
+      "explicit_env": {
+        "PYTHONPATH": "."
+      },
+      "other_env": "inherited; not fully captured",
+      "exit_codes_in_order": [
+        1,
+        0,
+        0
+      ],
+      "archived_stdout": "binding/stdout.json",
+      "archived_stderr": "binding/stderr.txt",
+      "failed_script": "binding/probe.attempt01.py",
+      "failed_stderr": "binding/attempt01.stderr.txt",
+      "diagnostic_script": "binding/probe.attempt02.py",
+      "diagnostic_stdout": "binding/attempt02.stdout.json"
+    },
+    {
+      "name": "independent original evidence audit",
+      "argv": [
+        "python",
+        "-B",
+        "work/w013-premerge/evidence/audit.py",
+        "/workspace/Layauto"
+      ],
+      "cwd": "/workspace/Layauto",
+      "explicit_env": {},
+      "other_env": "inherited; not fully captured",
+      "exit_codes_in_order": [
+        0
+      ],
+      "archived_stdout": "evidence/stdout.json",
+      "archived_stderr": "evidence/stderr.txt",
+      "result_checks": 59,
+      "executable_note": "PATH-resolved python; absolute path was not recorded"
+    }
+  ],
+  "root_public_original_command": "public.command.json",
+  "root_public_explicit_env": {
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "root_header_original_command": "header-attack.command.json",
+  "root_header_explicit_env": {
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "runner_first_failure": {
+    "argv": [
+      "/workspace/.venvs/layauto/bin/python",
+      "-B",
+      "work/w013-premerge/run_public.py"
+    ],
+    "exit_code": 1,
+    "output": "tool transcript only; failed before product subprocess launch"
+  },
+  "runner_before_fix_reproduction": {
+    "argv": [
+      "/workspace/.venvs/layauto/bin/python",
+      "-B",
+      "work/w013-premerge/run_public.attempt01.py"
+    ],
+    "exit_code": 1,
+    "stdout": "runner.attempt01.stdout.txt",
+    "stderr": "runner.attempt01.stderr.txt",
+    "script": "run_public.attempt01.py"
+  }
+}

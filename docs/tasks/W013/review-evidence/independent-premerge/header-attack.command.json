@@ -1,0 +1,15 @@
+{
+  "argv": [
+    "/workspace/.venvs/layauto/bin/python",
+    "-B",
+    "/workspace/Layauto/work/w013-premerge/header_attack.py"
+  ],
+  "cwd": "/workspace/Layauto",
+  "started_utc": "2026-11-13T01:50:46.477308+00:00",
+  "elapsed_seconds": 33.341370794,
+  "exit_code": 0,
+  "script_sha256": "6faa88ec94584582a8db17c56fea943b1a51c960381dc6e880fe4c8d2cad077e",
+  "helper_sha256": "ec97b28a9a2a534e36255ba10382098048d7b2ccd698f705564eb5e3df149fca",
+  "stdout_sha256": "d0fcdbfe25164a08d78c353bdc90225a57a0d6ba8aefdef124daba80a908fac2",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

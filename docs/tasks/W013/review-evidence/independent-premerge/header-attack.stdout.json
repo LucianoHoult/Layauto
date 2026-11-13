@@ -1,0 +1,29 @@
+{
+  "head": "f31df3f3e6cd5df7ecef2e1f91977c3b68a9fac4",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "source_id": "2c5724a9d3ecf99913857ad89015c03c03475ae762c1c8ab00b5146fd3eec278",
+  "checks": [
+    {
+      "field": "query_run_id",
+      "rejected": true,
+      "type": "GeometryInputError",
+      "message": "captured bytes differ from accepted /header evidence"
+    },
+    {
+      "field": "query_database_id",
+      "rejected": true,
+      "type": "GeometryInputError",
+      "message": "captured bytes differ from accepted /header evidence"
+    },
+    {
+      "field": "top_identities",
+      "rejected": true,
+      "type": "GeometryInputError",
+      "message": "captured bytes differ from accepted /header evidence"
+    }
+  ],
+  "status": "passed",
+  "source_stable": true,
+  "elapsed_seconds": 32.96197000800004,
+  "scope": "one real W010 build and three actual W013 public admission attacks; no full roundtrip/matrix"
+}

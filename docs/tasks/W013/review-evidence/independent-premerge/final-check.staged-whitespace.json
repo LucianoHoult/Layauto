@@ -1,0 +1,16 @@
+{
+  "classification": "staged archival source whitespace check; not a product failure",
+  "argv": [
+    "git",
+    "diff",
+    "--cached",
+    "--check"
+  ],
+  "exit_code": 2,
+  "paths": [
+    "binding/probe.attempt02.py:71",
+    "binding/probe.py:72"
+  ],
+  "reason": "raw executed probe snapshots contain original blank-line trailing whitespace",
+  "correction": "exact two-path archival .gitattributes; raw probe bytes and existing hashes unchanged"
+}

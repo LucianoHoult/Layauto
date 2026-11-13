@@ -1,0 +1,3 @@
+# Executed probe source snapshots retain their exact original whitespace.
+binding/probe.attempt02.py whitespace=-blank-at-eol
+binding/probe.py whitespace=-blank-at-eol

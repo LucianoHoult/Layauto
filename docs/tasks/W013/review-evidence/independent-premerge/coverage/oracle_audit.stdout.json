@@ -1,0 +1,55 @@
+{
+  "status": "passed",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "head": "f31df3f3e6cd5df7ecef2e1f91977c3b68a9fac4",
+  "normal": {
+    "targets": 14,
+    "edges": 8,
+    "components": 6,
+    "direct_targets": [
+      "G",
+      "LN",
+      "LP",
+      "LY",
+      "MA",
+      "MN",
+      "MP",
+      "MY"
+    ],
+    "unknown_direct": [
+      "BN",
+      "BP",
+      "ON.D",
+      "ON.S",
+      "OP.D",
+      "OP.S"
+    ],
+    "total_nm2": 35090,
+    "direct_nm2": 3170,
+    "uncovered_nm2": 31920,
+    "marker_nm2": 25
+  },
+  "cut_special": {
+    "components": 3,
+    "edges": 0,
+    "shared_label": "A",
+    "areas_nm2": [
+      36,
+      36,
+      40
+    ]
+  },
+  "scope": "independent local oracle/raw arithmetic; not product execution",
+  "input_hashes": {
+    "oracle.json": "cd328ff61f048c94f8903f84f00bc26e5944438020cd519dd60c3a7ce97e93d5",
+    "independent-design-answer.json": "7803702158822f04df5703c695c93e61f10285f8ca971095dd0914fa88408aca",
+    "spec.json": "607d0e53169160d988a36749d18f09bb3adeefe5303dee1dc42657e97f6eda31",
+    "query/requests.json": "57f5f38cb3ec450fd1815ef88c618c03a9703690672348b313fa35fbce97bc62",
+    "tech/derived.json": "0806468843e018c9dda461dc7c6c583773f63453392143ce6b6a92259a7ec1d9",
+    "special/cut_islands/oracle.json": "458ade29772a72c6be5efb7952521570ddbc3dabb8a4ea5caa79fcd5706bd092",
+    "query/raw/net_shapes_n_a.txt": "38fdc36e1fcf3fe8651567b91d1ba7fd061b23d09e485da718d40b9e394ac339",
+    "query/raw/net_shapes_n_y.txt": "ccf7d35dc5d9340970737d9e94497fefaa2428af3780a92b59c1cd839dd479c3",
+    "query/raw/net_shapes_n_lo.txt": "930681f091fa835ceac3948a44d629a086a0b38b65ad786b47eec6fe9ced3e44",
+    "query/raw/net_shapes_n_hi.txt": "9a24daf5ceb930fc38406e8b6957c6b2618ba2b35f3b1e110dbea4278fe1199d"
+  }
+}

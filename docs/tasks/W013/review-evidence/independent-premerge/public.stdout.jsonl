@@ -1,0 +1,10 @@
+{"check": "environment", "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]", "root": "/workspace/Layauto", "source_id": "2c5724a9d3ecf99913857ad89015c03c03475ae762c1c8ab00b5146fd3eec278"}
+{"check": "upstream_real_files", "components": 6, "edges": 8, "nodes": 14}
+{"check": "public_roundtrip", "covered": "3170", "elapsed_seconds": 137.003906239, "increment_bytes": 314874, "old_decode_calls": [1, 1, 2], "old_wire_bytes": 22789218, "old_wire_sha256": "626390e06ec923628e0e7a49d63a40f2f28b3b4f7e19e14fc1f67823685b7ac7", "status": "success", "total": "35090", "uncovered": "31920", "wire_bytes": 23104092, "wire_sha256": "d189f2cb9d86ad0b88cab99bd11db45667f817eb1c415283b4f1b5014f05f943"}
+{"check": "canonical_derived_status_tamper", "error": "net annotation wire differs from complete captured reconstruction", "rejected": true}
+{"boundary": "builder", "check": "original_exception_chain", "passed": true, "types": 4}
+{"boundary": "constructor", "check": "original_exception_chain", "passed": true, "types": 4}
+{"boundary": "encoder", "check": "original_exception_chain", "passed": true, "types": 4}
+{"boundary": "decoder", "check": "original_exception_chain", "passed": true, "types": 4}
+{"check": "original_map_storage_attack", "error": "annotation map backing requires a native immutable tuple", "rejected": true}
+{"check": "complete", "elapsed_seconds": 191.839976574, "fixture_modified": false, "passed": true, "saved_large_wire": false, "source_stable": true}

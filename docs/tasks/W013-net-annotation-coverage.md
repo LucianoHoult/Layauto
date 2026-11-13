@@ -213,6 +213,25 @@ runtime/input/probe相同采信链，不重复全量或捕获。137项固定输�
 源码/测试/config/相关输入/依赖变化、实际组合变化或证据身份缺口触发相应复核和重新冻结验证；
 文档补记/换session本身不触发重复双全量。PM在实际接收/集成版本补必要组合验证。
 
+### 合并前独立新会话复核（reviewer，2026-11-13）
+
+**可进入 PM 集成及组合验证；本次未发现新的阻塞项，必须修正项 0。**
+新会话 `/root` 及四个只读专项均未参与 W013 设计、实现或正式测试编写；
+受审 base=`d6182fe6893c26490f9d58c6b808a5ce9910384b`，
+head=`f31df3f3e6cd5df7ecef2e1f91977c3b68a9fac4`，273 项完整 source_id 仍为
+`2c5724a9d3ecf99913857ad89015c03c03475ae762c1c8ab00b5146fd3eec278`。
+[独立报告](W013/independent-premerge-review.md)逐项列 A1–A8、CR-01–03、来源/几何/公开边界、
+实跑、采信及限制；[新有界证据](W013/review-evidence/independent-premerge/README.md)保留原输出与 hash。
+
+实际补跑独立集合 768 项、fragment/oracle 算术、neutral 攻击/精确 guard、reader→W007/W008
+来源反例、完整 direct public roundtrip/派生字段篡改/原异常链及 actual W013 run/database/top
+三字段篡改拒绝；59 项独立证据审计闭合 273 源、81 证据、21 命令、两包106 runtime及原环境链。
+R2 双1731、双typing60、构建和双 clean 安装三路 smoke、resource04 的 test-only delta
+采信链按精确身份复用，未机械重跑；旧 source6463…测量未改标为 R2。
+仅新增报告/必要有界证据并追加本 reviewer 区，不改产品/正式测试/fixture/历史报告或 PM 段。
+结论限现行 synthetic exact/local source-evidence 草稿；真实 EDA、外部 body/U06、完整 M1 与
+实际 main 集成版本未覆盖。交 PM 核实际集成版本并做必要组合验证；不代 PM 验收或合 main。
+
 ## PM 验收与交接（PM）
 
 2026-11-11：从已验收A1 main准备此任务，W012 A2候选保留原分支且不集成。此处仅准备开发交接，没有实施或验收W013；关键方案独立review是实施前要求。当前只检查文档、来源/链接和恢复范围，不为纯文档重跑产品测试。下一执行session按prompt先方案review再实现，完成后交PM，不能自行合main/验收或启动下一节点。
