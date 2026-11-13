@@ -7,8 +7,8 @@
 | 目标 | 将同源CDL/query的网络身份关联到既有本地有效区域和物理分量，输出可追溯的标注、覆盖缺口、歧义/冲突及分量网络摘要 |
 | 里程碑/依赖 | M1 Stage 2组件，承接W007 net identities/seeds、W008索引、W009有效区域、W010局部物理图；W011继续保留既有FIN能力。本任务不完成整个M1 |
 | 授权 | 2026-11-11用户同意结束本轮A2尝试、继续网络标注，并明确减少重复验证为标准流程；W012停止决定见[PM7](W012-capture-wire-performance.md#pm7-a2-stop) |
-| 恢复 | 从A1验收main 2489b4609ae97d8211bf450d55cac9392492ac71建立codex/w013-net-annotation-coverage；当前main基线为d6182fe6893c26490f9d58c6b808a5ce9910384b；交付63a0962后接手本分支最新PM接收head，按合并前独立review prompt继续。不得从6045d8f的A2产品分支派生或带入其两codec改动/新增测试 |
-| 阶段 | **待验收：PM分支技术接收已完成；合并前独立session复核待进行。** 执行/R2工程及既有独立review按PM1核对接收；未最终验收或合main，见下方PM1 |
+| 恢复 | 从包含[PM2](#pm2-integration)验收补记的最新main恢复；产品merge为088ed3c718eb5a0703511ff6b214274f30052ff1，已审head为da90a793cc1d1e45ae7f2de26d9e98766191428d。原W013分支保留作历史；不得从6045d8f的A2候选派生后续产品 |
+| 阶段 | **已验收并集成。** PR #68 实际 merge 的三路公开组合及5项边界检查通过；剩余必须项0。范围与采信边界见[PM2](#pm2-integration) |
 | 范围/owner | annotation的匹配/覆盖逻辑、domain中立DTO、state.annotation草稿所有权及必要normalization入口/codec与测试；具体最小文件列表由方案给出。可写新docs/tasks/W013/附件与本任务执行/方案区；PM维护要求/阶段/current-work |
 | 非目标 | 不改已验收fixture/答案、A1/A2历史证据、物理边/几何、source/target语义；不实现完整工艺坐标、外部body连通、全套器件/pin/color标注、规则豁免、事务baseline/发布、ECO后重新提取、Stage6或真实EDA。既有body输入要求及U06不由本任务改写 |
 | 架构依据 | [architecture](../architecture.md) §3.3、§3.5–3.8、§5.3–5.9、§11.2/11.5/11.9/11.15；[协作规则](../collaboration/rules.md#verification-reuse)及[U06](../roadmap.md#production-body-evidence) |
@@ -249,3 +249,20 @@ A1–A8已有执行/独立证据，允许进入合并前独立session复核；**
 PM同步纠正任务历史“含007”文字并明确正常/孤岛专例区别，依据用户P01选A、MR-020/034及现行已验收fixture；不是修改输入合同、fixture或按实现重定答案。原要求字节可在交付63a0962追溯，旧执行/reviewer段及失败记录未改。
 
 下一步使用[合并前独立review prompt](W013/independent-premerge-prompt.md)，重点新公开DTO/canonical来源闭合、几何coverage与CR修正，不机械重复R2双全量。若无阻塞，再由PM处理实际main集成及必要组合验证；当前main未变，不启动下一功能任务。
+
+
+<a id="pm2-integration"></a>
+
+### PM2 最终验收与 main 集成（2026-11-13）
+
+**W013在当前synthetic local/source-evidence范围内验收通过，剩余必须修正项0。** 独立合并前review交付`da90a793cc1d1e45ae7f2de26d9e98766191428d`经PM读取并核对49项归档证据hash；产品/测试/config仍为R2冻结版本，273项逐hash一致。CR-01–03关闭及A1–A8判断依该独立报告和原证据接收，未以PM文件核对冒充新独立产品review。
+
+通过[PR #68](https://github.com/LucianoHoult/Layauto/pull/68)合入main，实际merge为`088ed3c718eb5a0703511ff6b214274f30052ff1`，完整tree与已审head相同，无冲突或产品增量。原W013分支保留，A2候选未引入。
+
+本次实跑：在实际merge checkout使用Python3.12.14，direct/readback/extraction-mismatch三路公开build/encode/decode全部通过；正常路径另核public digest和伪造负面积拒绝。readback的attempt/checkpoint保持、attempt仍unsealed、无成功terminal。另5项正式边界测试通过，覆盖007/现行ordinal、两种非exact质量拒绝及新旧依赖guard。三路串行总命令约273.60秒；这是本机正确性检查时间，不是性能改善证明。原输出、命令、环境及hash见[集成回执](W013/integration/receipt.json)与[复现说明](W013/integration/README.md)。
+
+正常结果仍为14目标、8条query证据、6个本地分量（4关联+2未知body），直接覆盖3170/总35090nm²，MARK25另列；mismatch fixture的总目标面积34634、直接覆盖3170。mismatch的网络标注可完成不意味着FIN/source差异已解决，也不改变W011原判断。
+
+按冻结身份采信：R2双1731、双strict typing60、构建/两包和双干净安装三路smoke；独立数学、来源攻击、异常链及资源原证据保留其版本。此次没有重跑双全量、typing、构建/安装、峰值/性能矩阵；GitHub无返回CI状态，不记为CI通过。实际集成源码导入已核到本checkout；未复制大wire或安装树。后续源/测试/config/依赖/输入变化、证据不闭合或新增风险才触发相应补跑。
+
+本验收不关闭完整M1、U06生产单cell/body证据、全套器件/pin/color标注、完整工艺坐标/mandatory、原子baseline、Stage6或真实EDA/PDK。下一步由PM收敛剩余Stage2能力的近期切片，再交独立执行session；本轮未启动下一产品任务。后续从含本补记的最新main建立新分支，不重启已完成的W013执行/review prompt。

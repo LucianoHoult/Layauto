@@ -1,0 +1,22 @@
+{
+  "date": "2026-11-13",
+  "timezone": "Asia/Shanghai",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "executable": "/workspace/venvs/layauto/bin/python",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "dependencies": {
+    "pytest": "9.2.0",
+    "PyYAML": "6.0.3",
+    "mypy": null,
+    "build": null,
+    "setuptools": null
+  },
+  "review_head": "da90a793cc1d1e45ae7f2de26d9e98766191428d",
+  "merge": "088ed3c718eb5a0703511ff6b214274f30052ff1",
+  "review_evidence_files_verified": 49,
+  "review_manifest_sha256": "b611ba28d4d9bb9d96e7cbc0be12272f896fe32b2f7cd29d3aaf1e0bf8a8cdc4",
+  "review_report_sha256": "a0525f97427e870bbc1847dea9cd10e0b226c82a2669bf42c4ea8b1efe85e4a6",
+  "ci_statuses": [],
+  "ci_pass_claimed": false,
+  "environment_probe_note": "Initial package metadata enumeration stopped at absent mypy; rerun records unavailable packages as null. No product failure or dependency installation."
+}

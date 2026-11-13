@@ -1,0 +1,23 @@
+{
+  "argv": [
+    "/workspace/venvs/layauto/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-p",
+    "no:cacheprovider",
+    "-q",
+    "tests/contracts/test_w013_contracts.py::test_current_capture_scope_retains_text_ordinals_and_explicitly_rejects_007",
+    "tests/contracts/test_w013_contracts.py::test_nonexact_quality_is_an_upstream_refusal_not_a_successful_w013_seed",
+    "tests/contracts/test_w013_contracts.py::test_new_modules_keep_declared_dependency_and_no_io_boundaries",
+    "tests/contracts/test_w007_contracts.py::test_normalization_and_new_domain_keep_pure_dependency_boundaries"
+  ],
+  "cwd": "/workspace/work/layauto-w013-integration",
+  "head": "088ed3c718eb5a0703511ff6b214274f30052ff1",
+  "elapsed_seconds": 3.3626129627227783,
+  "exit_code": 0,
+  "stdout": "boundaries.stdout.txt",
+  "stderr": "boundaries.stderr.txt",
+  "stdout_sha256": "bcf3f583289898122b384e61f38b9931517884fa3508e04677a56f3ae6809b14",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}
