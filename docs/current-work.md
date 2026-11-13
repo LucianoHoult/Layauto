@@ -1,10 +1,12 @@
 # 当前工作入口
 
-最近更新见[W013 PM2](tasks/W013-net-annotation-coverage.md#pm2-integration)；W012 A2停止决定见[PM7](tasks/W012-capture-wire-performance.md#pm7-a2-stop)。详细决定、证据与review结论归任务文件。
+最近任务见[W014](tasks/W014-terminal-body-relations.md)，已完成节点见[W013 PM2](tasks/W013-net-annotation-coverage.md#pm2-integration)；W012 A2停止决定见[PM7](tasks/W012-capture-wire-performance.md#pm7-a2-stop)。详细决定、证据与review结论归任务文件。
 
 ## 当前节点
 
-**W013已验收并通过[PR #68](https://github.com/LucianoHoult/Layauto/pull/68)合入main。** [PM2](tasks/W013-net-annotation-coverage.md#pm2-integration)与[集成回执](tasks/W013/integration/receipt.json)记录实际merge三路公开组合和5项边界检查通过，剩余必须项0；R2双1731等工程证据按冻结身份采信。当前具备本地网络区域标注、覆盖与冲突草稿，正常本地body仍未知，007按现行合同拒绝。下一步由PM收敛剩余Stage2近期任务，尚未派发新任务；A2候选不集成。
+**当前准备执行W014：器件端子与外置body关系核对草稿。** [任务](tasks/W014-terminal-body-relations.md)及[执行prompt](tasks/W014/execution-prompt.md)要求先具体方案和独立review，再核对每个器件D/G/S/B与source CDL；现行synthetic外部body链单独证明，不改变本地图。生产单cell缺上下文的U06本轮交具体设计，尚不修改输入格式或reader必填项。W014尚未实现或验收。
+
+**W013已验收并通过[PR #68](https://github.com/LucianoHoult/Layauto/pull/68)合入main。** [PM2](tasks/W013-net-annotation-coverage.md#pm2-integration)与[集成回执](tasks/W013/integration/receipt.json)记录实际merge三路公开组合和5项边界检查通过，剩余必须项0；R2双1731等工程证据按冻结身份采信。当前具备本地网络区域标注、覆盖与冲突草稿，正常本地body仍未知，007按现行合同拒绝。后续切片已定位W014；A2候选不集成。
 
 **[W012 兼容A1](tasks/W012-capture-wire-performance.md#pm4-a1-integration)已验收，通过[PR #66](https://github.com/LucianoHoult/Layauto/pull/66)合入main `08dd232139918dc97b0a6d255aad237eb844686a`。** merge与已审tree相同，实际合并版本89项合同及完整readback通过，wire/hash保持、峰值约694MiB，剩余必须项0。原三路峰值中位降约89%–90%、耗时降约15%–23%，136.5MB wire和重复重建继续保留。A2后续候选现已按PM7停止，不集成；main已继续集成W013。
 
@@ -30,10 +32,11 @@
 
 ## 恢复与版本身份
 
-先读根[AGENTS](../AGENTS.md)、[README](../README.md)、[协作规则](collaboration/rules.md)及W012，回查W011 PM2、W007–W010组件合同、W003/W004现行判据和任务引用的架构原文。不要从已完成的W004–W010实施或补修prompt重新开始；各任务历史finding保留各自关闭依据。
+先读根[AGENTS](../AGENTS.md)、[README](../README.md)、[协作规则](collaboration/rules.md)及W014，回查W011 PM2、W007–W010组件合同、W003/W004现行判据和任务引用的架构原文。不要从已完成的W004–W010实施或补修prompt重新开始；各任务历史finding保留各自关闭依据。
 
 | 用途 | 恢复依据 |
 | --- | --- |
+| W014当前恢复 | codex/w014-terminal-body-relations最新PM准备head，产品基线main00ee6c6f51b683a8aefa96a5415b7ca969778502；按任务先方案及独立review，再实施。产品、fixture、U06新输入格式尚未改变；不从A2候选派生 |
 | W013当前恢复 | 接手含PM2验收补记的最新main；产品merge088ed3c718eb5a0703511ff6b214274f30052ff1，已审head da90a793cc1d1e45ae7f2de26d9e98766191428d，冻结2a45938。原codex/w013-net-annotation-coverage保留历史，不再执行旧prompt；后续任务另建分支 |
 | W012 A2停止记录 | 原候选codex/w012-a2-private-typed-pack@6045d8f7e4d80e6d4bb794ed15717767a5e4cde0保留；[PM7](tasks/W012-capture-wire-performance.md#pm7-a2-stop)及停止回执，不作产品验收 |
 | W012 A1最终集成 | main `08dd232139918dc97b0a6d255aad237eb844686a`，已审head`1a1459e3179e7bd234e4971c1969a6a78f387fd2`，冻结源`ca1f810c3c97376f71089d8b4054760ff198012f`；[PM4](tasks/W012-capture-wire-performance.md#pm4-a1-integration)及[集成回执](tasks/W012/A1/integration-receipt.json)，接手含验收补记的最新main；原分支保留 |
@@ -74,7 +77,7 @@
 | 完整工艺坐标/annotation/连通/body/提取状态与原子baseline | 后续Stage2任务保留；W008索引及W009区域草稿不替代这些义务 |
 | 无变化的完整判定、只读GDS/CDL/JSON及报告/terminal | 后续Stage3–6组合；通过后才验收M1 |
 
-W010/W011及W012 A1已验收集成，具有局部物理图及有限器件定位/FIN计量，并已降低已定位的hex瞬时峰值；示例coordinate与32×16见证仍不能充当完整运行坐标。A2已停止、不集成；W013网络区域标注与覆盖草稿已验收集成。其资源证据见任务记录，后续继续在方案及最早组合检查序列化/重建成本，资源明显放大时交PM，不无限扩大状态链。之后仍需剩余标注/外部body、完整坐标与规则、原子baseline及运行输出组合；不把A1效果或FIN计数相等提升为完整M1/no_change。原drawn及W008 raw occupancy保持，外部body图形独立；生产输入/body任务派发前必须回查U06。
+W010/W011及W012 A1已验收集成，具有局部物理图及有限器件定位/FIN计量，并已降低已定位的hex瞬时峰值；示例coordinate与32×16见证仍不能充当完整运行坐标。A2已停止、不集成；W013网络区域标注与覆盖草稿已验收集成。其资源证据见任务记录，后续继续在方案及最早组合检查序列化/重建成本，资源明显放大时交PM，不无限扩大状态链。近期W014补器件端子/source网络比较与现行synthetic外部body关联，同时交U06具体方案；之后仍需完整坐标、剩余标注与规则、原子baseline及运行输出组合；不把A1效果或FIN计数相等提升为完整M1/no_change。原drawn及W008 raw occupancy保持，外部body图形独立；生产输入/body任务派发前必须回查U06。
 
 正常输入在W006仅交接unsealed attempt，不产生成功terminal；W007组件也不推进attempt或宣称整轮成功。C08/09/10和C13的正式终结阶段仍需后续组合验证。完整Stage2/baseline/no_change与Stage6文件闭环仍是M1硬门；真实工具与配置机制后置项保持，新增关键预期带实例交PM/用户。W007验收不等同完整Stage2/M1通过。
 
@@ -82,7 +85,7 @@ W010/W011及W012 A1已验收集成，具有局部物理图及有限器件定位/
 
 W005已实现声明的synthetic文件读取组件，尚未验证真实生产方言或平台。后续可按实际支持范围准备由用户单向上传隔离服务器的测试包；无需等M1全闭环完成，也不将synthetic通过当正式生产准入。解析已有raw与实际调用Calibre获取query证据分别记录，前者不证明后者。
 
-用户2026-11-02新增的“生产环境不提供body tapcell时应正确处理”已登记为[U06需求](roadmap.md#production-body-evidence)。生产读取测试与body能力任务须区分无本地tap、无外部上下文、可信替代证据、完全缺证明及已提供但错误的资料，明确可继续范围和缺项。具体测试入口/profile尚待设计；当前统一入口仍要求body_context，W008继续既定synthetic几何范围。首次生产测试准备和后续body任务派发前必须回查U06。
+用户2026-11-02新增的“生产环境不提供body tapcell时应正确处理”已登记为[U06需求](roadmap.md#production-body-evidence)。生产读取测试与body能力任务须区分无本地tap、无外部上下文、可信替代证据、完全缺证明及已提供但错误的资料，明确可继续范围和缺项。具体测试入口/profile尚待设计；W014将交场景方案，当前统一入口仍要求body_context。首次生产测试准备和后续body任务派发前必须回查U06。
 
 2026-11-03用户进一步明确：只提供待修改底层cell、tapcell与全局power rail定义在范围之外是实际使用场景。U06已补充本地已知端口/连接、上层net/电源关联与外部物理路径的区别，以及最小上下文和人工标注的证明边界；后续须考虑单cell分析/修改，不能仅用读取smoke覆盖此需求。开发负责先给出具体方案，当前无需用户逐项决策。
 
