@@ -1,0 +1,171 @@
+{
+  "classification": "R2-to-R3-valid-wire-and-observed-public-cost-comparison-not-product-rerun",
+  "status": "passed",
+  "r2_source_id": "d75b1b03b90e1eb010806a689a828fdcdeb715fdc20eb493a5bfd2219ae7f8a9",
+  "r3_source_id": "2d46bbdaccd858af936d37427ec8bad11d0bb11074d92cddb901da6197ecf639",
+  "all_three_valid_wire_SHA_and_bytes_unchanged": true,
+  "all_three_authentication_counts_unchanged_1_1_2": true,
+  "selected_source_delta": [
+    {
+      "path": "layauto_v2/normalization/terminal_relations_codec.py",
+      "r2_sha256": "a64f2d42cd9431d60a38a057abf956b654e4fc979ef4c9824782a112e13a2bc4",
+      "r3_sha256": "08f172f7e80ea56afbaf7a4d19391f9d5d44ba6e2a450adb154c61932933148a"
+    },
+    {
+      "path": "tests/contracts/test_w014_body_scope.py",
+      "r2_sha256": "b10c156acfd655b4b76e3fa8dabd149c72a9b7df7ab7ef6a25efd8558dc2bdb4",
+      "r3_sha256": "85b7d5d597c1073c3b064c7e314fb0cb0d6e3ecfcbad1dadc054d3d03e9916c8"
+    },
+    {
+      "path": "tests/contracts/test_w014_contracts.py",
+      "r2_sha256": "34ace98cc4089e316fe7e3f01fbc719ac47edb3b584adb1434cc638b51c66e22",
+      "r3_sha256": "98ba63b43643c0c8c6272944b267831a7e1104e770ec177a5660b7c7e48c8eeb"
+    }
+  ],
+  "comparison": {
+    "normal-direct": {
+      "identical_valid_wire_sha256": "bde8a9b847bb146a189902f3bbe89d56571dfa76a1fc63cebaf7cdb2f97677be",
+      "identical_valid_wire_bytes": 23450036,
+      "identical_compact_envelope_bytes": 660795,
+      "identical_authentication_counts": {
+        "W014_build": 1,
+        "W014_encode": 1,
+        "W014_decode": 2
+      },
+      "phases": {
+        "build": {
+          "r2_seconds": 14.25006871000005,
+          "r3_seconds_including_full_retained_validation": 13.655831231999855,
+          "delta_seconds": -0.5942374780001956,
+          "ratio": 0.9582993254212742
+        },
+        "encode": {
+          "r2_seconds": 15.993782686000031,
+          "r3_seconds_including_full_retained_validation": 16.067285590999745,
+          "delta_seconds": 0.07350290499971379,
+          "ratio": 1.004595717376106
+        },
+        "decode": {
+          "r2_seconds": 28.97458831899985,
+          "r3_seconds_including_full_retained_validation": 28.59234343700018,
+          "delta_seconds": -0.382244881999668,
+          "ratio": 0.9868075819476264
+        }
+      },
+      "r2_component_seconds": 59.21843971499993,
+      "r3_component_seconds": 58.31546025999978,
+      "component_ratio": 0.9847517182258446,
+      "r2_process_peak_rss_kib": 203488,
+      "r3_process_peak_rss_kib": 203276
+    },
+    "normal-readback": {
+      "identical_valid_wire_sha256": "0bb20024b9212e82ad2f3afb53c1baed891acf13712b705ec841d27f3bed88cb",
+      "identical_valid_wire_bytes": 60077912,
+      "identical_compact_envelope_bytes": 661439,
+      "identical_authentication_counts": {
+        "W014_build": 1,
+        "W014_encode": 1,
+        "W014_decode": 2
+      },
+      "phases": {
+        "build": {
+          "r2_seconds": 30.231049597999572,
+          "r3_seconds_including_full_retained_validation": 27.078799365000123,
+          "delta_seconds": -3.1522502329994495,
+          "ratio": 0.8957280585716734
+        },
+        "encode": {
+          "r2_seconds": 33.92892017300028,
+          "r3_seconds_including_full_retained_validation": 32.12073309099969,
+          "delta_seconds": -1.808187082000586,
+          "ratio": 0.9467066127427335
+        },
+        "decode": {
+          "r2_seconds": 60.98176986599992,
+          "r3_seconds_including_full_retained_validation": 57.54840192699976,
+          "delta_seconds": -3.4333679390001635,
+          "ratio": 0.9436984537092876
+        }
+      },
+      "r2_component_seconds": 125.14173963699977,
+      "r3_component_seconds": 116.74793438299957,
+      "component_ratio": 0.9329256147601255,
+      "r2_process_peak_rss_kib": 519292,
+      "r3_process_peak_rss_kib": 492832
+    },
+    "extraction-mismatch": {
+      "identical_valid_wire_sha256": "a2a8078904e14400df29516e55a7dd26bf8b8e767c55dcb6f7baa7d0b7d4ab19",
+      "identical_valid_wire_bytes": 23449815,
+      "identical_compact_envelope_bytes": 659614,
+      "identical_authentication_counts": {
+        "W014_build": 1,
+        "W014_encode": 1,
+        "W014_decode": 2
+      },
+      "phases": {
+        "build": {
+          "r2_seconds": 13.928146552999806,
+          "r3_seconds_including_full_retained_validation": 14.216846811999858,
+          "delta_seconds": 0.28870025900005203,
+          "ratio": 1.0207278303614542
+        },
+        "encode": {
+          "r2_seconds": 18.66580838100026,
+          "r3_seconds_including_full_retained_validation": 16.70925282500002,
+          "delta_seconds": -1.9565555560002394,
+          "ratio": 0.8951797041915528
+        },
+        "decode": {
+          "r2_seconds": 31.828798172999996,
+          "r3_seconds_including_full_retained_validation": 28.5798187219998,
+          "delta_seconds": -3.2489794510001957,
+          "ratio": 0.8979232758541205
+        }
+      },
+      "r2_component_seconds": 64.42275310700006,
+      "r3_component_seconds": 59.50591835899968,
+      "component_ratio": 0.9236785993943166,
+      "r2_process_peak_rss_kib": 203340,
+      "r3_process_peak_rss_kib": 205008
+    }
+  },
+  "evidence_files": {
+    "docs/tasks/W014/resources-r2/suite.json": "6a46e8296fc26423e10df46010ccac1fe4efab269eb34488cc9a4f47a8159b1b",
+    "docs/tasks/W014/resources-r3/suite.json": "517f81efe349abb4550c505bb36ef1b3ffc35022873b6265136b2b39b45043f4",
+    "docs/tasks/W014/resources-r2/w014-normal-direct.json": "4688e2f7bd41ddc7ff61192ef41a49f51a22fa69aea27e6702645283d70d2e80",
+    "docs/tasks/W014/resources-r3/w014-normal-direct.json": "822bc8e0817324a8beef21e92165991164ca541ca0b9bbb9774572e1441b719d",
+    "docs/tasks/W014/resources-r2/w014-normal-direct.command.json": "be187b84341af9142296873b95aae960c7f378b1200cda7755c0014aeb6da5fc",
+    "docs/tasks/W014/resources-r2/w014-normal-direct.stdout.txt": "d643f13e88146774a09657ec240366bf8a5bd09169738980a6a228eed34b179e",
+    "docs/tasks/W014/resources-r2/w014-normal-direct.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/tasks/W014/resources-r3/w014-normal-direct.command.json": "e0cc1b203f6b70693997eafc693cd429be70e64636fbb9c8977e71fa120d9d31",
+    "docs/tasks/W014/resources-r3/w014-normal-direct.stdout.txt": "f9601a40a0f1e13c882d9509306957d42402af499232f9711cfb88a465ce32bb",
+    "docs/tasks/W014/resources-r3/w014-normal-direct.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/tasks/W014/resources-r2/w014-normal-readback.json": "0dd8b27ffa9c004467c376dc603366cf5e6f3b8d720e4c451920161f00280087",
+    "docs/tasks/W014/resources-r3/w014-normal-readback.json": "a34f5013b8aa74aa1323448d979f874b9f1c564f641f411246f9f428dc21d063",
+    "docs/tasks/W014/resources-r2/w014-normal-readback.command.json": "ff2faba28ffc3c776c461300f2af304da244eb12f8af3dc8c7f1fd3d6b06988c",
+    "docs/tasks/W014/resources-r2/w014-normal-readback.stdout.txt": "2739bc64b29a3903508a87d2b3bf8ad6bed3a01f426cb66b1128e07ed815d32a",
+    "docs/tasks/W014/resources-r2/w014-normal-readback.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/tasks/W014/resources-r3/w014-normal-readback.command.json": "bf984ed5009be9b2c27434a015dd7e02f0b1969c1b158227b8a24ea70cb73a15",
+    "docs/tasks/W014/resources-r3/w014-normal-readback.stdout.txt": "440ca4340e5d7e4b9e79b74c099f0601d5d520af103ca475ab34fc889d489ee7",
+    "docs/tasks/W014/resources-r3/w014-normal-readback.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/tasks/W014/resources-r2/w014-extraction-mismatch.json": "c88d17af70d0b65dc77f15acadaf6d714656e69f45915c07512e028cfd1f97dc",
+    "docs/tasks/W014/resources-r3/w014-extraction-mismatch.json": "fdcb0467d3133578bf282b8884eaee09f304180e40a50292d515b07de9a5eb9d",
+    "docs/tasks/W014/resources-r2/w014-extraction-mismatch.command.json": "58eaaa0a06a9295dc3b950e17972eab66472415179acb2cdece8247a4001797a",
+    "docs/tasks/W014/resources-r2/w014-extraction-mismatch.stdout.txt": "2927f1f1bc0488bb32af2cc2947d04072f5979f43799200e535d16560a4a5bb3",
+    "docs/tasks/W014/resources-r2/w014-extraction-mismatch.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/tasks/W014/resources-r3/w014-extraction-mismatch.command.json": "14428559a1ee0972ceaf84437cad6585e25f1d81d2a8d018061e8f9806cf75af",
+    "docs/tasks/W014/resources-r3/w014-extraction-mismatch.stdout.txt": "c6032940b8c6da307635d9e9b54fed29694318953c9a0db28d62be9439097013",
+    "docs/tasks/W014/resources-r3/w014-extraction-mismatch.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/tasks/W014/resource-adoption-r3/adoption.json": "501676d2ff47d115f88c11b5380d9100268016a86511e618e2ba3c32a9d74d6f"
+  },
+  "generator_sha256": "142f55637f9efb003c70be157c49592871367d13bb5512984deef03c55010217",
+  "cost_interpretation": "The R3 public encode measurements include the new complete retained-field validation. The original probe did not time _retained separately. End-to-end phase samples include process scheduling/noise; faster samples do not establish negative check cost or a performance improvement.",
+  "not_run": [
+    "product chain",
+    "resource probes",
+    "typing",
+    "tests",
+    "final matrices",
+    "installed smoke"
+  ]
+}

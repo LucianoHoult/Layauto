@@ -1,0 +1,49 @@
+{
+  "classification": "stdlib-only independent raw GDS rectangle check",
+  "results": [
+    {
+      "case": "normal",
+      "gds_source": "tests/fixtures/w003_m1/source.gds",
+      "body": [
+        0,
+        0,
+        120,
+        90
+      ],
+      "active": [
+        20,
+        20,
+        100,
+        70
+      ],
+      "margins_nominal_nm": [
+        20,
+        20,
+        20,
+        20
+      ]
+    },
+    {
+      "case": "extraction-mismatch",
+      "gds_source": "tests/fixtures/w003_m1/failures/extraction_mismatch/source.gds",
+      "body": [
+        0,
+        0,
+        120,
+        90
+      ],
+      "active": [
+        20,
+        20,
+        100,
+        64
+      ],
+      "margins_nominal_nm": [
+        20,
+        20,
+        20,
+        26
+      ]
+    }
+  ]
+}

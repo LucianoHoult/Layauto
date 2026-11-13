@@ -1,0 +1,7 @@
+{
+  "status": "resource-and-identity-audit-passed-not-final-product-review",
+  "check_count": 528,
+  "final_candidate_source_id": "8ef803c96ed693a1f97843fa5dede942151e76c326a9b5cd29f7b92a3377048d",
+  "runtime_input_config_unchanged": true,
+  "parallel_matrices_safe_assessment": true
+}

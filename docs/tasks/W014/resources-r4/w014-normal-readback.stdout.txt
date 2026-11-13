@@ -1,0 +1,17 @@
+START W006_prepare_inputs
+DONE W006_prepare_inputs 1.4109529370007294
+START W006_caller_reads
+DONE W006_caller_reads 1.1433987829996113
+START W008_adapter_build
+DONE W008_adapter_build 0.5511942260000069
+START W009_build
+DONE W009_build 1.2061037260000376
+START W010_build
+DONE W010_build 19.46337882900025
+START W014_build
+DONE W014_build 28.34293240199986
+START W014_encode
+DONE W014_encode 29.485862968999754
+START W014_decode
+DONE W014_decode 57.134191681999255
+{"component": "w014", "case": "normal-readback", "wire_bytes": 60077912, "peak_kib": 503716}

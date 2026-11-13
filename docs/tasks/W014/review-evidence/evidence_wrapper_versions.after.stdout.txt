@@ -1,0 +1,56 @@
+actual_neutral_ready
+case_done=body_evidence.schema_version
+case_done=body_evidence.parser_version
+case_done=derived.schema_version
+case_done=derived.parser_version
+case_done=local_rules.schema_version
+case_done=local_rules.parser_version
+{
+  "domain_sha256": "5bb96a063ed41d708ed5322c1cb95ee2f1ce868c53b4b7158fcf2bfe79b7a731",
+  "codec_sha256": "08f172f7e80ea56afbaf7a4d19391f9d5d44ba6e2a450adb154c61932933148a",
+  "cases": [
+    {
+      "owner": "body_evidence",
+      "field": "schema_version",
+      "constructor_accepted": false,
+      "constructor_error": "ValueError",
+      "message": "invalid evidence discriminator/version"
+    },
+    {
+      "owner": "body_evidence",
+      "field": "parser_version",
+      "constructor_accepted": false,
+      "constructor_error": "ValueError",
+      "message": "invalid evidence discriminator/version"
+    },
+    {
+      "owner": "derived",
+      "field": "schema_version",
+      "constructor_accepted": false,
+      "constructor_error": "ValueError",
+      "message": "invalid evidence discriminator/version"
+    },
+    {
+      "owner": "derived",
+      "field": "parser_version",
+      "constructor_accepted": false,
+      "constructor_error": "ValueError",
+      "message": "invalid evidence discriminator/version"
+    },
+    {
+      "owner": "local_rules",
+      "field": "schema_version",
+      "constructor_accepted": false,
+      "constructor_error": "ValueError",
+      "message": "invalid evidence discriminator/version"
+    },
+    {
+      "owner": "local_rules",
+      "field": "parser_version",
+      "constructor_accepted": false,
+      "constructor_error": "ValueError",
+      "message": "invalid evidence discriminator/version"
+    }
+  ],
+  "elapsed_seconds": 6.295625921999999
+}

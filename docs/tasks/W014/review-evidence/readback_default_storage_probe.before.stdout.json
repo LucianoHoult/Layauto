@@ -1,0 +1,21 @@
+{
+  "domain_sha256": "20f1b840091a77b04e39abce82ce2901af5bc68468b6c947cb6cfba2a9219779",
+  "results": [
+    {
+      "type": "RunRequest",
+      "class_default_fields": [
+        "kind"
+      ],
+      "accepted": false,
+      "error": "terminal record has missing or undeclared retained fields"
+    },
+    {
+      "type": "RunAttempt",
+      "class_default_fields": [
+        "kind"
+      ],
+      "accepted": false,
+      "error": "terminal record has missing or undeclared retained fields"
+    }
+  ]
+}

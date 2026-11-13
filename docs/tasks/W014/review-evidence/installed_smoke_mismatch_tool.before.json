@@ -1,0 +1,6 @@
+{
+  "path": "docs/tasks/W014/verification-tools/installed_smoke.py",
+  "sha256": "6bb0f70335fc6b0bbeb1090fec80521cc460f533dcb2fe25ca102657c34d3822",
+  "snapshot": "docs/tasks/W014/review-evidence/installed_smoke_before_mismatch_fix.py",
+  "snapshot_sha256": "6bb0f70335fc6b0bbeb1090fec80521cc460f533dcb2fe25ca102657c34d3822"
+}

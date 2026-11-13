@@ -55,15 +55,55 @@ W011已能把query器件身份定位到channel并计量FIN，且保留局部G/S/
 
 ## 方案与决定（执行准备，PM接收）
 
-待执行；具体接口、文件表、独立方案review、U06推荐方案尚未形成。当前没有要求用户再次选择既有D1=A，也没有选定生产格式。
+执行方案见 [plan](W014/plan.md)、[body调查](W014/body-design-notes.md)；
+未参与设计的 reviewer 已完成 [独立方案review](W014/plan-review.md)，
+PR-01/PR-02修正复核关闭，剩余必须项0。方案与review冻结提交
+`40559e0186f7d80bb8a7f3256c900e0fadd66191`。
+[U06具体方案](W014/production-body-scope.md)只作为设计交付，未改变现行reader
+或生产格式；D1=A不重复询问。后续代码review、最终工程验证及PM验收分别完成。
 
 ## 执行结果（执行）
 
-未执行。按A1–A9补充实际版本、范围、原命令/环境/证据及实跑/采信/未覆盖/补跑触发表；保留初始失败及修正链。执行结束提交推送原任务分支并核完整远端SHA，交PM。
+2026-11-13执行恢复：目标分支实际准备head为
+`8f3f39562ed04d790c8d6c015f7c9b8742b6a3c4`，原工作区干净；产品仍为已验收
+W013，未带入W012 A2。先完成具体方案和独立门review，随后实施授权范围；
+产品、测试与配置冻结于`66f5b1e5369549ed8df361f89f099acfd2f39e17`，完整
+source_id为`c7769fcbfb0312b93e4d44628c77ff21e273698a537eaba0e1454734b049d364`。
+
+实现、A1–A9覆盖、原失败及修复链见[执行证据](W014/execution.md)。开发165项
+范围已闭合（85项按单测试分支delta采信、80项最终候选实跑）；最终资源三路经
+[独立资源review](W014/resource-review.md)核证。双3.10/3.12最终全量各1889
+passed，保留原1731 IDs；strict typing各65文件及wheel/sdist build通过，完整
+111项runtime字节一致。双clean安装源码外三路smoke全部通过，21条实际命令
+均exit0，检查后冻结源身份复核一致，见[整体回执](W014/verification/receipt.json)。
+未参与实现者的[最终工程审计](W014/review-evidence/final_engineering_audit.stdout.json)
+实际840项通过，未重跑产品链；代码review结论由reviewer填写下节。
+
+交付保留正常八端有限关系、原FIN差异及coverage/conflict；本地graph和unknown
+body分量不变，无baseline/terminal/真实LVS或生产准入承诺。A8四类生产样张见
+[U06方案](W014/production-body-scope.md)，仅设计，reader必填不改。原失败、
+修复复核、三路资源、实跑/采信/未覆盖/补跑触发均见执行证据，交PM核验接收。
 
 ## Review结论（reviewer）
 
-尚未review；由未参与对应设计/实现者填写被审身份、独立依据、findings与关闭复核。不得把PM任务准备当技术方案已通过。
+独立review通过，未关闭必须项0，交PM验收。被审产品冻结为
+`66f5b1e5369549ed8df361f89f099acfd2f39e17`，完整source_id
+`c7769fcbfb0312b93e4d44628c77ff21e273698a537eaba0e1454734b049d364`。
+Reviewer未参与实现或正式测试编写；完整A1–A9核查、独立反例及限制见
+[代码review](W014/code-review.md)。CR01–07、CR09–12共11项复核关闭；
+CR08的公开链缺口归因已撤回，EG01工具问题由实际双安装smoke验证关闭，
+原finding、失败与调查纠正保留。
+
+最终工程证据由未参与实现者独立只读审计，
+[840项通过](W014/review-evidence/final_engineering_audit.stdout.json)：
+双3.10/3.12各1889 passed（保留原1731项）、strict typing各65、build、两包和
+双clean安装各111 runtime字节、源码外三路smoke及21条原命令/log/hash/时间、
+286项Git/live/tar冻结身份均闭合。按身份采信已有矩阵，未为换reviewer重复跑。
+
+正常六个本地端与两个独立body关系、完整性/精确性/错误边界及有限比较符合
+本任务授权；本地graph未union，BN/BP仍unknown，原FIN4对source5与W013缺口
+保留。U06仅具体设计，现reader的body_context必填未改；未声明完整M1、全部
+mandatory、真实LVS/生产准入、baseline/no_change或Stage6。此结论不代PM验收。
 
 ## PM验收与交接（PM）
 

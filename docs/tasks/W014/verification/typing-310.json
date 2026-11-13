@@ -1,0 +1,23 @@
+{
+  "command": [
+    "/workspace/work/w014-env/dev310/bin/python",
+    "-m",
+    "mypy"
+  ],
+  "cwd": "/workspace/work/w014-final/source",
+  "exit_code": 0,
+  "environment_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONPATH": "/workspace/work/w014-final/source",
+    "PIP_CACHE_DIR": "/workspace/work/w014-final/pip-cache",
+    "MYPY_CACHE_DIR": "/workspace/work/w014-final/mypy-typing-310",
+    "MPLCONFIGDIR": "/workspace/work/w014-final/mplconfig"
+  },
+  "started_at_utc": "2026-11-13T12:23:04.300388+00:00",
+  "finished_at_utc": "2026-11-13T12:23:06.396031+00:00",
+  "elapsed_seconds": 2.096,
+  "stdout": "typing-310.stdout.txt",
+  "stdout_sha256": "b0ace9fa65214a0173d654eb85c8e448e9b3ef16afd34ed8ee583a66146336f1",
+  "stderr": "typing-310.stderr.txt",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

@@ -1,0 +1,27 @@
+{
+  "command": [
+    "/workspace/work/w014-final/clean-312/bin/python",
+    "-m",
+    "pip",
+    "install",
+    "--report",
+    "/workspace/Layauto/docs/tasks/W014/verification/install-312-report.json",
+    "/workspace/Layauto/docs/tasks/W014/verification/dist/layauto-0.2.0-py3-none-any.whl"
+  ],
+  "cwd": "/workspace/work/w014-final/installed-cwd",
+  "exit_code": 0,
+  "environment_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONPATH": "/workspace/work/w014-final/installed-cwd",
+    "PIP_CACHE_DIR": "/workspace/work/w014-final/pip-cache",
+    "MYPY_CACHE_DIR": "/workspace/work/w014-final/mypy-install-312",
+    "MPLCONFIGDIR": "/workspace/work/w014-final/mplconfig"
+  },
+  "started_at_utc": "2026-11-13T12:31:08.185693+00:00",
+  "finished_at_utc": "2026-11-13T12:31:16.150530+00:00",
+  "elapsed_seconds": 7.965,
+  "stdout": "install-312.stdout.txt",
+  "stdout_sha256": "d366ac2831952875ebc188a9781dc416ad80cfa4ae0c9feb6d23d532163f8989",
+  "stderr": "install-312.stderr.txt",
+  "stderr_sha256": "f96a57a6d17645d3d9eb401b9cead41a648edf2499f2ca4bc3f9364d677b6080"
+}

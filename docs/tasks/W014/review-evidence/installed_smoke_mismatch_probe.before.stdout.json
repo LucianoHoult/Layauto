@@ -1,0 +1,16 @@
+{
+  "classification": "tool helper only; no actual installed smoke run",
+  "tool_sha256": "6bb0f70335fc6b0bbeb1090fec80521cc460f533dcb2fe25ca102657c34d3822",
+  "current": false,
+  "cases": [
+    {
+      "case": "normal-direct",
+      "accepted": true
+    },
+    {
+      "case": "extraction-mismatch",
+      "accepted": false,
+      "error": "AssertionError"
+    }
+  ]
+}

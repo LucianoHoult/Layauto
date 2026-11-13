@@ -1,0 +1,61 @@
+{
+  "owner_checks": [
+    {
+      "case": "gate_operator",
+      "category": "unsupported",
+      "source": "tech/physical.json",
+      "field": "/device_extraction_contract/gate_operator"
+    },
+    {
+      "case": "tap_connects",
+      "category": "unsupported",
+      "source": "tech/drawn.json",
+      "field": "/layers/11/electrical_connects"
+    },
+    {
+      "case": "tap_predicate",
+      "category": "unsupported",
+      "source": "tech/drawn.json",
+      "field": "/layers/11/contact_predicate"
+    },
+    {
+      "case": "rule_evaluator",
+      "category": "unsupported",
+      "source": "tech/rules.json",
+      "field": "/rules/3/exact_evaluator_ref"
+    }
+  ],
+  "history_checks": [
+    {
+      "type": "RuntimeError",
+      "suppression": false,
+      "preserved": true
+    },
+    {
+      "type": "RuntimeError",
+      "suppression": true,
+      "preserved": true
+    },
+    {
+      "type": "KeyboardInterrupt",
+      "suppression": false,
+      "preserved": true
+    },
+    {
+      "type": "KeyboardInterrupt",
+      "suppression": true,
+      "preserved": true
+    },
+    {
+      "type": "SystemExit",
+      "suppression": false,
+      "preserved": true
+    },
+    {
+      "type": "SystemExit",
+      "suppression": true,
+      "preserved": true
+    }
+  ],
+  "body_source_sha256": "be59c340a021d9a9a3f25fa97729a8f2040c769522c9d36cbda6595377cad485"
+}

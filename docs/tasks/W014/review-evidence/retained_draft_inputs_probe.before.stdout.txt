@@ -1,0 +1,22 @@
+actual_normal_ready
+forged_input_done
+{
+  "codec_sha256": "a64f2d42cd9431d60a38a057abf956b654e4fc979ef4c9824782a112e13a2bc4",
+  "cases": [
+    {
+      "case": "result_retains_changed_draft_source_dialect",
+      "original": "toy_literal_cdl/1",
+      "changed": "forged",
+      "accepted": true,
+      "wire_bytes": 23450036,
+      "wire_sha256": "bde8a9b847bb146a189902f3bbe89d56571dfa76a1fc63cebaf7cdb2f97677be"
+    },
+    {
+      "case": "neutral_missing_channel_observations_coverage",
+      "accepted": false,
+      "error_type": "KeyError",
+      "message": "'coverage'"
+    }
+  ],
+  "elapsed_seconds": 41.499130874
+}

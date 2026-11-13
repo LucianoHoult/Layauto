@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/workspace/Layauto/docs/tasks/W014/smoke-assertion-repair/verify_geometry.py", line 153, in <module>
+    main()
+  File "/workspace/Layauto/docs/tasks/W014/smoke-assertion-repair/verify_geometry.py", line 135, in main
+    assert len(selected_gds) == 1 and selected_gds[0]['sha256'] == sha((folder / 'source.gds').read_bytes())
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

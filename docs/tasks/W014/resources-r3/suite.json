@@ -1,0 +1,140 @@
+{
+  "classification": "resource-measurement-not-PM-clearance",
+  "source_id": "2d46bbdaccd858af936d37427ec8bad11d0bb11074d92cddb901da6197ecf639",
+  "components": [
+    "w014"
+  ],
+  "cases": [
+    "normal-direct",
+    "normal-readback",
+    "extraction-mismatch"
+  ],
+  "commands": [
+    {
+      "argv": [
+        "/workspace/work/w014-env/dev312/bin/python",
+        "-B",
+        "/workspace/Layauto/docs/tasks/W014/resources-r3/resource_probe.py",
+        "--root",
+        "/workspace/Layauto",
+        "--mismatch-dir",
+        "/workspace/work/w014-resource-inputs/extraction-mismatch",
+        "--prepare-fixed-mismatch",
+        "--out",
+        "/workspace/Layauto/docs/tasks/W014/resources-r3/fixed-inputs.json"
+      ],
+      "cwd": "/workspace/Layauto",
+      "environment_overrides": {
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PYTHONPATH": "/workspace/Layauto",
+        "MPLCONFIGDIR": "/workspace/work/w014-env/mplconfig"
+      },
+      "started_at_utc": "2026-11-13T08:27:30.152676+00:00",
+      "seconds": 0.08796008799981792,
+      "returncode": 0,
+      "tool_hashes": {
+        "resource_probe.py": "c1f4155266341a89f859af95b822ce9c5718a59ecf13763e38250d275b6725d7",
+        "source_identity.py": "0addcabf7537e4dc1598decca9733cce0f28330b8d099cf8b4d630c463c712e1"
+      },
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "/workspace/work/w014-env/dev312/bin/python",
+        "-B",
+        "/workspace/Layauto/docs/tasks/W014/resources-r3/resource_probe.py",
+        "--root",
+        "/workspace/Layauto",
+        "--mismatch-dir",
+        "/workspace/work/w014-resource-inputs/extraction-mismatch",
+        "--component",
+        "w014",
+        "--case",
+        "normal-direct",
+        "--out",
+        "/workspace/Layauto/docs/tasks/W014/resources-r3/w014-normal-direct.json"
+      ],
+      "cwd": "/workspace/Layauto",
+      "environment_overrides": {
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PYTHONPATH": "/workspace/Layauto",
+        "MPLCONFIGDIR": "/workspace/work/w014-env/mplconfig"
+      },
+      "started_at_utc": "2026-11-13T08:27:30.242895+00:00",
+      "seconds": 70.57091028900004,
+      "returncode": 0,
+      "tool_hashes": {
+        "resource_probe.py": "c1f4155266341a89f859af95b822ce9c5718a59ecf13763e38250d275b6725d7",
+        "source_identity.py": "0addcabf7537e4dc1598decca9733cce0f28330b8d099cf8b4d630c463c712e1"
+      },
+      "stdout_sha256": "f9601a40a0f1e13c882d9509306957d42402af499232f9711cfb88a465ce32bb",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "/workspace/work/w014-env/dev312/bin/python",
+        "-B",
+        "/workspace/Layauto/docs/tasks/W014/resources-r3/resource_probe.py",
+        "--root",
+        "/workspace/Layauto",
+        "--mismatch-dir",
+        "/workspace/work/w014-resource-inputs/extraction-mismatch",
+        "--component",
+        "w014",
+        "--case",
+        "normal-readback",
+        "--out",
+        "/workspace/Layauto/docs/tasks/W014/resources-r3/w014-normal-readback.json"
+      ],
+      "cwd": "/workspace/Layauto",
+      "environment_overrides": {
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PYTHONPATH": "/workspace/Layauto",
+        "MPLCONFIGDIR": "/workspace/work/w014-env/mplconfig"
+      },
+      "started_at_utc": "2026-11-13T08:28:40.814320+00:00",
+      "seconds": 142.56470197999988,
+      "returncode": 0,
+      "tool_hashes": {
+        "resource_probe.py": "c1f4155266341a89f859af95b822ce9c5718a59ecf13763e38250d275b6725d7",
+        "source_identity.py": "0addcabf7537e4dc1598decca9733cce0f28330b8d099cf8b4d630c463c712e1"
+      },
+      "stdout_sha256": "440ca4340e5d7e4b9e79b74c099f0601d5d520af103ca475ab34fc889d489ee7",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "/workspace/work/w014-env/dev312/bin/python",
+        "-B",
+        "/workspace/Layauto/docs/tasks/W014/resources-r3/resource_probe.py",
+        "--root",
+        "/workspace/Layauto",
+        "--mismatch-dir",
+        "/workspace/work/w014-resource-inputs/extraction-mismatch",
+        "--component",
+        "w014",
+        "--case",
+        "extraction-mismatch",
+        "--out",
+        "/workspace/Layauto/docs/tasks/W014/resources-r3/w014-extraction-mismatch.json"
+      ],
+      "cwd": "/workspace/Layauto",
+      "environment_overrides": {
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PYTHONPATH": "/workspace/Layauto",
+        "MPLCONFIGDIR": "/workspace/work/w014-env/mplconfig"
+      },
+      "started_at_utc": "2026-11-13T08:31:03.379468+00:00",
+      "seconds": 71.16968898300001,
+      "returncode": 0,
+      "tool_hashes": {
+        "resource_probe.py": "c1f4155266341a89f859af95b822ce9c5718a59ecf13763e38250d275b6725d7",
+        "source_identity.py": "0addcabf7537e4dc1598decca9733cce0f28330b8d099cf8b4d630c463c712e1"
+      },
+      "stdout_sha256": "c6032940b8c6da307635d9e9b54fed29694318953c9a0db28d62be9439097013",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "comparison": {}
+}

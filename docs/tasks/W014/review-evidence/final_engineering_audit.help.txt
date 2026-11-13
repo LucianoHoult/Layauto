@@ -1,0 +1,15 @@
+usage: final_engineering_audit.py [-h] --root ROOT --evidence EVIDENCE
+                                  --source-id SOURCE_ID
+                                  [--freeze-commit FREEZE_COMMIT] --out OUT
+
+Independent read-only audit of completed W014 final engineering evidence. This
+never imports product modules or reruns tests/build/install/smokes. A
+missing/failed final receipt cannot produce a passing audit.
+
+options:
+  -h, --help            show this help message and exit
+  --root ROOT
+  --evidence EVIDENCE
+  --source-id SOURCE_ID
+  --freeze-commit FREEZE_COMMIT
+  --out OUT

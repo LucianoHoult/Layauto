@@ -1,0 +1,101 @@
+begin_evaluator=be59c340a021d9a9a3f25fa97729a8f2040c769522c9d36cbda6595377cad485
+conflict_done
+frame_done
+{
+  "evaluator_sha256": "be59c340a021d9a9a3f25fa97729a8f2040c769522c9d36cbda6595377cad485",
+  "current": true,
+  "cases": [
+    {
+      "case": "full_VSS_with_partial_VDD",
+      "issues": [
+        "ConflictingComponentNets",
+        "ConflictingRegionNets"
+      ],
+      "paths": [
+        {
+          "device": "MN0",
+          "chain": "established",
+          "rule": "indeterminate",
+          "observed": [
+            "VDD",
+            "VSS"
+          ],
+          "body_edge": "90",
+          "rail_edge": "10"
+        },
+        {
+          "device": "MP0",
+          "chain": "established",
+          "rule": "satisfied",
+          "observed": [
+            "VDD"
+          ],
+          "body_edge": "100",
+          "rail_edge": "10"
+        }
+      ],
+      "terminals": [
+        {
+          "device": "MN0",
+          "role": "B",
+          "status": "conflict",
+          "observed": [
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "device": "MP0",
+          "role": "B",
+          "status": "equal",
+          "observed": [
+            "VDD"
+          ]
+        }
+      ]
+    },
+    {
+      "case": "continuation_at_minus10_frame_at_zero",
+      "issues": [
+        "BodyContinuationMismatch"
+      ],
+      "paths": [
+        {
+          "device": "MN0",
+          "chain": "indeterminate",
+          "rule": "indeterminate",
+          "observed": [],
+          "body_edge": "90",
+          "rail_edge": "10"
+        },
+        {
+          "device": "MP0",
+          "chain": "established",
+          "rule": "satisfied",
+          "observed": [
+            "VDD"
+          ],
+          "body_edge": "100",
+          "rail_edge": "10"
+        }
+      ],
+      "terminals": [
+        {
+          "device": "MN0",
+          "role": "B",
+          "status": "indeterminate",
+          "observed": []
+        },
+        {
+          "device": "MP0",
+          "role": "B",
+          "status": "equal",
+          "observed": [
+            "VDD"
+          ]
+        }
+      ]
+    }
+  ],
+  "elapsed_seconds": 27.124508624999862
+}

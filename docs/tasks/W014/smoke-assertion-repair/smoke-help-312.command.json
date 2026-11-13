@@ -1,0 +1,14 @@
+{
+  "argv": [
+    "/workspace/work/w014-env/dev312/bin/python",
+    "-B",
+    "docs/tasks/W014/verification-tools/installed_smoke.py",
+    "--help"
+  ],
+  "returncode": 0,
+  "not_run": [
+    "product chain",
+    "installed smoke"
+  ],
+  "corrected_smoke_sha256": "25eea1ea828d1451c8ffcb5a9fd8d56a8131cb3048169e4a6713d5a72947257e"
+}

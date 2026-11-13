@@ -1,0 +1,19 @@
+{
+  "domain_sha256": "d7654ce54ab139f4be690d5616393cc503cd2bf1b660930273fece4bc8b09b89",
+  "results": [
+    {
+      "type": "RunRequest",
+      "class_default_fields": [
+        "kind"
+      ],
+      "accepted": true
+    },
+    {
+      "type": "RunAttempt",
+      "class_default_fields": [
+        "kind"
+      ],
+      "accepted": true
+    }
+  ]
+}

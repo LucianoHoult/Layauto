@@ -1,0 +1,15 @@
+usage: installed_smoke.py [-h] fixture
+
+W014 source-external installation smoke for device terminal and external body
+relations. Run the finalized script with -I -B outside the checkout and frozen
+source. It imports installed runtime plus stdlib only, never tests/support or
+answers. Independent constants come from accepted oracle/manual/raw facts.
+Readiness means the actual API assertions are integrated; it does not claim
+execution. Preparing this script does not establish an actual successful smoke
+or matrix.
+
+positional arguments:
+  fixture
+
+options:
+  -h, --help  show this help message and exit

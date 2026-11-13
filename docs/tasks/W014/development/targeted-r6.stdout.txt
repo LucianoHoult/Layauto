@@ -1,0 +1,28 @@
+........................................................................ [ 43%]
+.............F
+=================================== FAILURES ===================================
+_ test_neutral_capture_source_set_must_close_every_consumed_owner_and_seed[channel] _
+
+accepted = TerminalRelationsResult(input=LocalConnectivityResult(status='success', value=LocalConnectivityDraft(effective=Effecti...), name='VDD'),), support_status='established', schema_version='layauto-terminal-relations/1')), issues=()), issues=())
+where = 'channel'
+
+    @pytest.mark.parametrize('where', ['source', 'channel', 'net', 'body', 'derived'])
+    def test_neutral_capture_source_set_must_close_every_consumed_owner_and_seed(accepted, where):
+        draft = accepted.value
+        if where == 'source':
+            reference = draft.source.preservation.sources[0]
+        elif where == 'body':
+            reference = draft.body_evidence.sources[0]
+        elif where == 'derived':
+            reference = draft.derived.sources[0]
+        else:
+            seed = draft.channel_seeds[0] if where == 'channel' else draft.net_evidence[0]
+>           reference = seed.source
+                        ^^^^^^^^^^^
+E           AttributeError: 'ChannelSeed' object has no attribute 'source'
+
+tests/contracts/test_w014_contracts.py:146: AttributeError
+=========================== short test summary info ============================
+FAILED tests/contracts/test_w014_contracts.py::test_neutral_capture_source_set_must_close_every_consumed_owner_and_seed[channel]
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+1 failed, 85 passed in 404.74s (0:06:44)

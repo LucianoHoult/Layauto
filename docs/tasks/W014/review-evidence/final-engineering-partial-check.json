@@ -1,0 +1,136 @@
+{
+  "classification": "independent read-only partial artifact check; final receipt pending",
+  "source_id": "c7769fcbfb0312b93e4d44628c77ff21e273698a537eaba0e1454734b049d364",
+  "completed_commands": {
+    "environment-310": {
+      "exit_code": 0,
+      "seconds": 0.137,
+      "stdout_sha256": "a1a03572c416b040cb66aed47b9ab471d800f109ec9a13215000eed30a993dbf"
+    },
+    "collection-310": {
+      "exit_code": 0,
+      "seconds": 2.294,
+      "stdout_sha256": "c468399a9b9c4e1529062786683fe80d7900413bc611911c5b14021bae0c7523"
+    },
+    "pytest-310": {
+      "exit_code": 0,
+      "seconds": 10787.714,
+      "stdout_sha256": "aa85cfafd257d4bbe4e09cae93c9ce46c1d78ca9c900c0142dadcb46f212c8c0"
+    },
+    "typing-310": {
+      "exit_code": 0,
+      "seconds": 2.096,
+      "stdout_sha256": "b0ace9fa65214a0173d654eb85c8e448e9b3ef16afd34ed8ee583a66146336f1"
+    },
+    "pip-check-310": {
+      "exit_code": 0,
+      "seconds": 0.249,
+      "stdout_sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09"
+    },
+    "create-install-310": {
+      "exit_code": 0,
+      "seconds": 2.877,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "install-310": {
+      "exit_code": 0,
+      "seconds": 11.123,
+      "stdout_sha256": "2f71124933acaca92239a1424414fbbf68e452f35993cddea0b3dd415e4cc309"
+    },
+    "installed-pip-check-310": {
+      "exit_code": 0,
+      "seconds": 0.442,
+      "stdout_sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09"
+    },
+    "installed-identity-310": {
+      "exit_code": 0,
+      "seconds": 0.016,
+      "stdout_sha256": "c07acad1ac24da10ee5409b24b220d351d24fc5248643c4cfa6037f9eaebb9af"
+    },
+    "installed-smoke-310": {
+      "exit_code": 0,
+      "seconds": 461.918,
+      "stdout_sha256": "b1afe6e73764437f08df8d0463827d6ef065bf22c044857900ccdf87024c3736"
+    },
+    "environment-312": {
+      "exit_code": 0,
+      "seconds": 0.106,
+      "stdout_sha256": "3c309bff22023cfa929e87f921a4be91f05abf0b9cc0987d080803202fd45c25"
+    },
+    "collection-312": {
+      "exit_code": 0,
+      "seconds": 1.851,
+      "stdout_sha256": "ea8b202b10fd23605bc135f0057884f26e95a2cdfcf3c029b374b32ebb2eea78"
+    },
+    "pytest-312": {
+      "exit_code": 0,
+      "seconds": 7733.73,
+      "stdout_sha256": "24c0104d0cfd4c0027c9bdf6f25b168dc72fa152b1d110b93ce4ee94da620065"
+    },
+    "typing-312": {
+      "exit_code": 0,
+      "seconds": 2.275,
+      "stdout_sha256": "b0ace9fa65214a0173d654eb85c8e448e9b3ef16afd34ed8ee583a66146336f1"
+    },
+    "pip-check-312": {
+      "exit_code": 0,
+      "seconds": 0.203,
+      "stdout_sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09"
+    },
+    "create-install-312": {
+      "exit_code": 0,
+      "seconds": 1.611,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "install-312": {
+      "exit_code": 0,
+      "seconds": 7.965,
+      "stdout_sha256": "d366ac2831952875ebc188a9781dc416ad80cfa4ae0c9feb6d23d532163f8989"
+    },
+    "installed-pip-check-312": {
+      "exit_code": 0,
+      "seconds": 0.202,
+      "stdout_sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09"
+    },
+    "installed-identity-312": {
+      "exit_code": 0,
+      "seconds": 0.015,
+      "stdout_sha256": "e2f410393a24039bf1112696f7a013b12a3a8d67b9eb9ae2c8119b2f4492d897"
+    }
+  },
+  "collections": {
+    "310": {
+      "count": 1889,
+      "retained_baseline": 1731
+    },
+    "312": {
+      "count": 1889,
+      "retained_baseline": 1731
+    }
+  },
+  "package_runtime_counts": {
+    "wheel": 111,
+    "sdist": 111
+  },
+  "smoke_310": {
+    "normal-direct": {
+      "roundtrip": true,
+      "MN0_fins": 5,
+      "source_fins": 5
+    },
+    "normal-readback": {
+      "roundtrip": true,
+      "MN0_fins": 5,
+      "source_fins": 5
+    },
+    "extraction-mismatch": {
+      "roundtrip": true,
+      "MN0_fins": 4,
+      "source_fins": 5
+    }
+  },
+  "pending": [
+    "installed-smoke-312"
+  ],
+  "final_receipt_exists": false
+}

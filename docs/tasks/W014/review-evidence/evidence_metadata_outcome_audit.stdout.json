@@ -1,0 +1,26 @@
+{
+  "status": "passed",
+  "scope": "existing CR12 independent receipts only",
+  "checks": [
+    "body_evidence.schema_version: original roundtrip failure preserved",
+    "body_evidence.schema_version: after rejects before encoding",
+    "body_evidence.parser_version: original roundtrip failure preserved",
+    "body_evidence.parser_version: after rejects before encoding",
+    "derived.schema_version: old upstream control already rejected",
+    "derived.schema_version: after rejects before encoding",
+    "derived.parser_version: old upstream control already rejected",
+    "derived.parser_version: after rejects before encoding",
+    "local_rules.schema_version: original roundtrip failure preserved",
+    "local_rules.schema_version: after rejects before encoding",
+    "local_rules.parser_version: original roundtrip failure preserved",
+    "local_rules.parser_version: after rejects before encoding",
+    "layauto_v2/domain/terminal_relations.py: after runtime still current",
+    "layauto_v2/normalization/terminal_relations_codec.py: after runtime still current"
+  ],
+  "check_count": 14,
+  "after_domain_sha256": "5bb96a063ed41d708ed5322c1cb95ee2f1ce868c53b4b7158fcf2bfe79b7a731",
+  "after_codec_sha256": "08f172f7e80ea56afbaf7a4d19391f9d5d44ba6e2a450adb154c61932933148a",
+  "limitations": [
+    "No new product constructor, codec, capture or tests were executed."
+  ]
+}
