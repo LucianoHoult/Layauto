@@ -1,0 +1,10 @@
+usage: source_identity.py [-h] --root ROOT [--out OUT]
+
+Describe all current source/test/config bytes used by the W013 final matrix.
+This command does not run product code. An optional --out must be a new file.
+Its source_id intentionally excludes Git metadata and absolute checkout paths.
+
+options:
+  -h, --help   show this help message and exit
+  --root ROOT
+  --out OUT

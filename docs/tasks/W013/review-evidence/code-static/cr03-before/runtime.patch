@@ -1,0 +1,82 @@
+diff --git a/layauto_v2/normalization/net_annotation.py b/layauto_v2/normalization/net_annotation.py
+index 509ebfe..fe37da3 100644
+--- a/layauto_v2/normalization/net_annotation.py
++++ b/layauto_v2/normalization/net_annotation.py
+@@ -11,10 +11,9 @@ from typing import Literal
+ from layauto_v2.domain.codec import FrozenMap
+ from layauto_v2.domain.evidence import EvidenceRecord
+ from layauto_v2.domain.geometry import mapping
+-from layauto_v2.domain.net_annotation import AnnotationProblem, NetEvidence
++from layauto_v2.domain.net_annotation import AnnotationProblem, NetEvidence, validate_annotation_graph
+ from layauto_v2.domain.publication import ContentRef
+ from layauto_v2.domain.publication_codec import content_ref
+-from layauto_v2.domain.regions import validate_closed_graph
+ from layauto_v2.domain.results import EvidenceIssue
+ from layauto_v2.annotation.net_regions import build_net_annotation_draft
+ from layauto_v2.state.annotation import AnnotationDraft
+@@ -30,7 +29,7 @@ VERSION = 'layauto-net-annotation-result/1'
+ def _require_input(input: LocalConnectivityResult) -> None:
+     if type(input) is not LocalConnectivityResult:
+         raise ValueError('net annotation requires a successful captured W010 result')
+-    validate_closed_graph(input, local_connectivity_codec._ALL_TYPES)
++    validate_annotation_graph(input, local_connectivity_codec._ALL_TYPES)
+     if input.status != 'success' or input.value is None:
+         raise ValueError('net annotation requires a successful captured W010 result')
+     restored = local_connectivity_codec.decode_record(local_connectivity_codec.encode_record(input))
+diff --git a/layauto_v2/normalization/net_annotation_codec.py b/layauto_v2/normalization/net_annotation_codec.py
+index 7c5361a..bca35d2 100644
+--- a/layauto_v2/normalization/net_annotation_codec.py
++++ b/layauto_v2/normalization/net_annotation_codec.py
+@@ -18,9 +18,9 @@ from layauto_v2.domain.local_connectivity import ContactComponent, ContactNode,
+ from layauto_v2.domain.net_annotation import (
+     AnnotationBinding, AnnotationFragment, AnnotationIssue, AnnotationRef, AnnotationTargetId,
+     LayerCoverage, MatchEvidence, NetComponentSummary, NetEvidence, RecordClassification,
+-    TargetEvidence, TargetIntersection,
++    TargetEvidence, TargetIntersection, validate_annotation_graph,
+ )
+-from layauto_v2.domain.regions import ExactRegion, RegionRef, validate_closed_graph
++from layauto_v2.domain.regions import ExactRegion, RegionRef
+ from layauto_v2.domain.results import EvidenceIssue
+ from layauto_v2.state.annotation import AnnotationDraft
+ from . import local_connectivity_codec
+@@ -130,7 +130,7 @@ def _compact(result: NetAnnotationResult) -> FrozenMap:
+ 
+ 
+ def _validate_result(result: NetAnnotationResult) -> NetAnnotationResult:
+-    validate_closed_graph(result, _types() + local_connectivity_codec._ALL_TYPES + (NetAnnotationResult,))
++    validate_annotation_graph(result, _types() + local_connectivity_codec._ALL_TYPES + (NetAnnotationResult,))
+     rebuilt = NetAnnotationResult(result.input, result.schema_version)
+     if canonical_bytes(_compact(result)) != canonical_bytes(_compact(rebuilt)):
+         raise ValueError('net annotation result differs from complete captured reconstruction')
+@@ -144,10 +144,12 @@ def encode_record(record: object) -> bytes:
+         old_value = decode(old_bytes)
+         return canonical_bytes({'wire_schema': WIRE_VERSION,
+                                 'captured_input_wire': old_value, 'record': _compact(rebuilt)})
+-    spec = _SPEC.get(type(record).__name__)
+-    if spec is None or type(record) is not spec[0]:
++    # Reject foreign classes by identity before inspecting caller-controlled
++    # metaclass attributes such as __name__.
++    spec = next((entry for entry in _SPEC.values() if type(record) is entry[0]), None)
++    if spec is None:
+         raise ValueError('unsupported net annotation wire type')
+-    validate_closed_graph(record, _types())
++    validate_annotation_graph(record, _types())
+     packed = _pack(record)
+     rebuilt_record = _unpack(packed)
+     if canonical_bytes(_pack(rebuilt_record)) != canonical_bytes(packed):
+@@ -156,12 +158,14 @@ def encode_record(record: object) -> bytes:
+ 
+ 
+ def decode_record(data: bytes) -> object:
++    if type(data) is not bytes:
++        raise ValueError('net annotation wire requires native immutable bytes')
+     value = decode(data)
+     if type(value) is not FrozenMap or value.get('wire_schema') != WIRE_VERSION:
+         raise ValueError('unsupported net annotation wire schema')
+     if set(value) == {'wire_schema', 'record'}:
+         result = _unpack(value['record'])
+-        validate_closed_graph(result, _types())
++        validate_annotation_graph(result, _types())
+         if canonical_bytes({'wire_schema': WIRE_VERSION, 'record': _pack(result)}) != data:
+             raise ValueError('noncanonical net annotation wire bytes')
+         return result

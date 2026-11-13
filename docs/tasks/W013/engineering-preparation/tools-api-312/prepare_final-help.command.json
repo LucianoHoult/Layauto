@@ -1,0 +1,21 @@
+{
+  "command": [
+    "/workspace/work/w013-env/dev312/bin/python",
+    "-B",
+    "/workspace/work/w013-engineering/docs/tasks/W013/verification-tools/prepare_final.py",
+    "--help"
+  ],
+  "cwd": "/workspace/work/w013-engineering",
+  "started_at_utc": "2026-11-12T09:13:18.493775+00:00",
+  "seconds": 0.04583068300007653,
+  "returncode": 0,
+  "expected_returncode": 0,
+  "environment_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONPATH": "/workspace/work/w013-engineering"
+  },
+  "stdout": "prepare_final-help.stdout.txt",
+  "stdout_sha256": "7317b718a09572023b273a12832283332ab85c45e880584109949d5bf13dd438",
+  "stderr": "prepare_final-help.stderr.txt",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

@@ -1,0 +1,42 @@
+{
+  "command": [
+    "/workspace/work/w013-env/dev312/bin/python",
+    "-B",
+    "/workspace/work/w013-engineering/docs/tasks/W013/verification-tools/prepare_final.py",
+    "--root",
+    "/workspace/work/w013-engineering",
+    "--out",
+    "/tmp/w013-tool-preflight-_1jxu9p4/out",
+    "--work",
+    "/tmp/w013-tool-preflight-_1jxu9p4/work",
+    "--smoke",
+    "/workspace/work/w013-engineering/docs/tasks/W013/verification-tools/installed_smoke.py",
+    "--python310",
+    "/workspace/work/w013-env/dev312/bin/python",
+    "--python312",
+    "/workspace/work/w013-env/dev312/bin/python",
+    "--expected-tests",
+    "1656",
+    "--baseline-collection",
+    "/workspace/work/w013-engineering/docs/tasks/W012/A1/verification-r2/collection-312.stdout.txt",
+    "--baseline-sha256",
+    "29d03b7337dbfca2900a43bf703838514b749dfab8734652027cc78f5b835928",
+    "--expected-source-id",
+    "6527949f4fb0b063763b4be5f4f136e4b68fbfcd7cb84054f5a6d23767afb281",
+    "--resource-clearance",
+    "/tmp/w013-tool-preflight-_1jxu9p4/clearance.json"
+  ],
+  "cwd": "/workspace/work/w013-engineering",
+  "started_at_utc": "2026-11-12T09:13:18.740322+00:00",
+  "seconds": 0.050520379000317917,
+  "returncode": 2,
+  "expected_returncode": 2,
+  "environment_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONPATH": "/workspace/work/w013-engineering"
+  },
+  "stdout": "resource-clearance-rejection.stdout.txt",
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr": "resource-clearance-rejection.stderr.txt",
+  "stderr_sha256": "d7d332a87af7237ce89e1c84d6fb8e611542ea97b189e2a989ab4eca67dd6195"
+}

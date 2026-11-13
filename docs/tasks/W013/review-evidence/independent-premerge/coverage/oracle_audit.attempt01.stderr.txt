@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/workspace/Layauto/work/w013-premerge/coverage/oracle_audit.py", line 52, in <module>
+    points=[tuple(F(value,20) for value in point.split()) for point in lines[i+1:i+5]]
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/Layauto/work/w013-premerge/coverage/oracle_audit.py", line 52, in <genexpr>
+    points=[tuple(F(value,20) for value in point.split()) for point in lines[i+1:i+5]]
+                  ^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/fractions.py", line 277, in __new__
+    raise TypeError("both arguments should be "
+TypeError: both arguments should be Rational instances

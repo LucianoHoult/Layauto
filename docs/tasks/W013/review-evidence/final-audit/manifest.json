@@ -1,0 +1,8 @@
+{
+  "audit-attempt01.py": "81dba84373f1418e0e279a4cba24b42e6acdfcdf3014cfdec4ec796270edf2bb",
+  "audit.py": "fee7ac9a431ff166e58a7833730cb7f4d4d0e0818d9aeaf918c08462e39e5935",
+  "preflight-r2.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "preflight-r2.stdout.json": "811ece368d603b3fdf6e4386a40f54b83488deec18d53e14c78f0b4651ca6a47",
+  "preflight.stderr.txt": "916b31aae394483f5d6804005590c9044ccefe2a226ccd2aa932c2095974ac5e",
+  "preflight.stdout.json": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

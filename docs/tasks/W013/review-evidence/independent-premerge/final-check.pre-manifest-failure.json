@@ -1,0 +1,14 @@
+{
+  "classification": "documentation assembly check before manifest exists; not a product failure",
+  "argv": [
+    "/workspace/.venvs/layauto/bin/python",
+    "-B",
+    "docs/tasks/W013/review-evidence/independent-premerge/final_check.py"
+  ],
+  "exit_code": 1,
+  "reason": "report link to manifest.json checked before archive manifest was generated",
+  "error": "AssertionError: missing review-evidence/independent-premerge/manifest.json",
+  "stdout": "final-check.pre-manifest.stdout.json",
+  "stderr": "shown in execution tool transcript; no redirected stderr file was produced",
+  "script_unchanged": true
+}

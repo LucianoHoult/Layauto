@@ -1,0 +1,435 @@
+{
+  "auditor": "/root/evidence_review",
+  "reviewed_base": "d6182fe6893c26490f9d58c6b808a5ce9910384b",
+  "reviewed_head": "f31df3f3e6cd5df7ecef2e1f91977c3b68a9fac4",
+  "source_id": "2c5724a9d3ecf99913857ad89015c03c03475ae762c1c8ab00b5146fd3eec278",
+  "status": "passed",
+  "check_count": 59,
+  "failures": [],
+  "checks": [
+    {
+      "check": "selected_paths_complete",
+      "passed": true,
+      "detail": 273
+    },
+    {
+      "check": "source_identity_recomputed",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "disk_all_273_files",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "git_all_273:2a45938aba8e751183d472d660a1ab66a1063636",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "git_all_273:63a0962f1b56655f234140822bffa8f56b7bb15f",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "git_all_273:f31df3f3e6cd5df7ecef2e1f91977c3b68a9fac4",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "snapshot_all_273",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "receipt_snapshot_manifest_hash",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "runtime_manifest",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "81_evidence_hashes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "21_commands_exit_and_streams",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "receipt_full_pass",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "prepared_environment_evidence_hashes",
+      "passed": true,
+      "detail": 45
+    },
+    {
+      "check": "collection_1731:310",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "raw_pytest_pass:310",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "raw_typing_60:310",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "environment_version_and_source:310",
+      "passed": true,
+      "detail": {
+        "executable": "/workspace/work/w013-env/dev310/bin/python",
+        "version": "3.10.22 (main, Oct  3 2026, 01:32:06) [Clang 22.1.3 ]",
+        "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+        "source_package": "/workspace/work/w013-final-r2/source/layauto_v2/__init__.py",
+        "packages": {
+          "numpy": "2.2.6",
+          "pathspec": "1.1.1",
+          "ast_serialize": "0.13.1",
+          "cycler": "0.12.1",
+          "fonttools": "4.65.0",
+          "pyparsing": "3.3.3",
+          "librt": "0.16.0",
+          "tzdata": "2026.6",
+          "pip": "23.0.1",
+          "iniconfig": "2.3.1",
+          "pyproject_hooks": "1.3.3",
+          "contourpy": "1.3.2",
+          "types-PyYAML": "6.0.12.20261103",
+          "kiwisolver": "1.5.1",
+          "tomli": "2.5.0",
+          "pluggy": "1.7.0",
+          "typing_extensions": "4.16.0",
+          "matplotlib": "3.10.9",
+          "build": "1.6.1",
+          "exceptiongroup": "1.3.1",
+          "mypy": "2.4.1",
+          "mypy_extensions": "1.2.0",
+          "pytest": "9.2.0",
+          "packaging": "26.3",
+          "wheel": "0.48.0",
+          "Pygments": "2.21.0",
+          "python-dateutil": "3.0.0",
+          "pillow": "12.3.0",
+          "PyYAML": "6.0.3",
+          "setuptools": "79.0.1",
+          "six": "1.17.0"
+        }
+      }
+    },
+    {
+      "check": "recorded_interpreter_and_all_dependency_versions:310",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "installed_smoke_three_public_roundtrips:310",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "installed_smoke_import_isolation:310",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "installed_smoke_expected_geometry:310",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "collection_1731:312",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "raw_pytest_pass:312",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "raw_typing_60:312",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "environment_version_and_source:312",
+      "passed": true,
+      "detail": {
+        "executable": "/workspace/work/w013-env/dev312/bin/python",
+        "version": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+        "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+        "source_package": "/workspace/work/w013-final-r2/source/layauto_v2/__init__.py",
+        "packages": {
+          "pathspec": "1.1.1",
+          "ast_serialize": "0.13.1",
+          "cycler": "0.12.1",
+          "fonttools": "4.68.0",
+          "pyparsing": "3.3.3",
+          "librt": "0.16.0",
+          "tzdata": "2026.6",
+          "iniconfig": "2.3.1",
+          "pyproject_hooks": "1.3.3",
+          "types-PyYAML": "6.0.12.20261103",
+          "kiwisolver": "1.5.1",
+          "matplotlib": "3.11.2",
+          "pluggy": "1.7.0",
+          "typing_extensions": "4.16.0",
+          "build": "1.6.1",
+          "mypy": "2.4.1",
+          "mypy_extensions": "1.2.0",
+          "pytest": "9.2.0",
+          "pip": "25.0.1",
+          "packaging": "26.3",
+          "python-dateutil": "4.0.0",
+          "wheel": "0.48.0",
+          "Pygments": "2.21.0",
+          "contourpy": "1.4.0",
+          "numpy": "2.5.4",
+          "PyYAML": "6.0.3",
+          "setuptools": "79.0.1",
+          "pillow": "13.0.0"
+        }
+      }
+    },
+    {
+      "check": "recorded_interpreter_and_all_dependency_versions:312",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "installed_smoke_three_public_roundtrips:312",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "installed_smoke_import_isolation:312",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "installed_smoke_expected_geometry:312",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "two_collections_identical",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained_1656_new_75",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "baseline_immutable",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "package_106_runtime:wheel",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "package_106_runtime:sdist",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "saved_installation_106:310",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "saved_installation_106:312",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "tool_original_frozen_receipt:runner",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "tool_original_frozen_receipt:source_identity",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "tool_original_frozen_receipt:smoke",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "protected_fixture_old_codecs_unchanged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "resource_R2_exact_test_only_delta",
+      "passed": true,
+      "detail": {
+        "tests/contracts/test_w007_contracts.py": {
+          "measured": "ea27c8079bf95df14568bdabec86338efc1b5fcc540f04a15ec747d9b94d1050",
+          "current": "128bf3ac2091a7345693782a9804fac8f86e8b74ca6cfd7b3929af3ddf01bd01"
+        }
+      }
+    },
+    {
+      "check": "resource_clearance_reference:delta_proof",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "resource_clearance_reference:delta_review",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "resource_review_blob",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "fixed_35_origin_chain",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "resource_source_all_273:normal-direct",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "resource_probe_and_logs:normal-direct",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "resource_capture_31_source_bytes:normal-direct",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "resource_single_W010_no_W011_and_1_1_2:normal-direct",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "resource_source_all_273:normal-readback",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "resource_probe_and_logs:normal-readback",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "resource_capture_31_source_bytes:normal-readback",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "resource_single_W010_no_W011_and_1_1_2:normal-readback",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "resource_source_all_273:extraction-mismatch",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "resource_probe_and_logs:extraction-mismatch",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "resource_capture_31_source_bytes:extraction-mismatch",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "resource_single_W010_no_W011_and_1_1_2:extraction-mismatch",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "stopped_attempt_evidence_preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "stopped_attempt_not_passed",
+      "passed": true,
+      "detail": null
+    }
+  ],
+  "packages": {
+    "wheel": {
+      "files": 106,
+      "sha256": "4feaed09e9b8a52712a01947a7dcdd69833fbc82957094f59fd301af0ca08dde"
+    },
+    "sdist": {
+      "files": 106,
+      "sha256": "177bb9f881f6c2ede1fbf8abf144723cf7b2d0a960099a506e70b1d7ab2fba44"
+    }
+  },
+  "resource": [
+    {
+      "case": "normal-direct",
+      "wire_bytes": 23104092,
+      "compact_increment": 314874,
+      "decode_calls": {
+        "W013_build": 1,
+        "W013_result_encode": 1,
+        "W013_result_decode": 2
+      }
+    },
+    {
+      "case": "normal-readback",
+      "wire_bytes": 59736484,
+      "compact_increment": 315538,
+      "decode_calls": {
+        "W013_build": 1,
+        "W013_result_encode": 1,
+        "W013_result_decode": 2
+      }
+    },
+    {
+      "case": "extraction-mismatch",
+      "wire_bytes": 23104160,
+      "compact_increment": 314878,
+      "decode_calls": {
+        "W013_build": 1,
+        "W013_result_encode": 1,
+        "W013_result_decode": 2
+      }
+    }
+  ],
+  "not_run": [
+    "product imports/captures/tests/typing/build/installation/smoke",
+    "performance measurement"
+  ],
+  "limitations": [
+    "Recorded installation/interpreter/dependency identities are adopted from immutable evidence; historical hosts and installation trees do not exist in this fresh environment.",
+    "Fixed external mismatch files are absent locally; their recorded 35-file provenance chain and 31 captured source hashes per case are checked against preserved source origin bytes.",
+    "Byte audit does not replace independent product correctness review or PM integration checks."
+  ]
+}

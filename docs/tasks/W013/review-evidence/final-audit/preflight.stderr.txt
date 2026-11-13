@@ -1,0 +1,16 @@
+fatal: path 'docs/tasks/W013/code-review.md' exists on disk, but not in '065827b6ab014b046c2721738770fee032677bb7'
+Traceback (most recent call last):
+  File "/workspace/Layauto/docs/tasks/W013/review-evidence/final-audit/audit.py", line 203, in <module>
+    main()
+  File "/workspace/Layauto/docs/tasks/W013/review-evidence/final-audit/audit.py", line 138, in main
+    old_bytes = git('show', correction['incorrect_review_commit'] + ':' + correction['review_path'])
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/Layauto/docs/tasks/W013/review-evidence/final-audit/audit.py", line 37, in git
+    return subprocess.check_output(['git', *args], cwd=ROOT)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 466, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['git', 'show', '065827b6ab014b046c2721738770fee032677bb7:docs/tasks/W013/code-review.md']' returned non-zero exit status 128.

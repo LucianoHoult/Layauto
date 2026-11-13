@@ -1,0 +1,13 @@
+{
+  "classification": "pure-neutral-operator-consistency-probe-not-captured-product",
+  "head": "b42492fe32a70cf1819af21a9fe80f38edd43693",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "node_operator_binding": "a17ba329dee4c07af09a534338c514011b70610a49dd927861d263a0f7f576e1",
+  "component_operator_binding": "50c01fb0f22d2b795aa5635bb359cf0e710ff2131004315ee9fe6979f29b86df",
+  "operator_bindings_equal": false,
+  "public_draft_constructed": true,
+  "public_codec_roundtrip_accepted": true,
+  "wire_sha256": "72871a1ddda218a66c6ee407102c93229b7770d35748f162e67286720d4b5db7",
+  "wire_bytes": 19221,
+  "limits": "Full-capture NetAnnotationResult was not built; fake neutral content refs do not claim any capture authority."
+}

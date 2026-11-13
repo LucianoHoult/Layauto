@@ -1,0 +1,12 @@
+{
+  "classification": "independent-captured-alias-review-probe-not-resource-measurement",
+  "head": "a347263a4ed26a08e69dcb5004669408e961728d",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "seconds": 23.770224926000083,
+  "scope": "one real direct W005/W010/W013 build; no W013 public wire roundtrip",
+  "limitations": "Forged backing was installed via object.__setattr__; safe public FrozenMap constructor is not alleged to leak an alias.",
+  "public_result_rejected": false,
+  "public_result_status_after_external_mutation": "success",
+  "retained_input_identity": true,
+  "external_alias_changed_result_input": true
+}

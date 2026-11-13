@@ -1,0 +1,43 @@
+{
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "cpu_count": 5,
+  "cgroup": {
+    "/sys/fs/cgroup/memory.max": "17179869184",
+    "/sys/fs/cgroup/cpu.max": "400000 100000",
+    "/sys/fs/cgroup/memory.swap.max": "max"
+  },
+  "rlimits": {
+    "RLIMIT_AS": [
+      -1,
+      -1
+    ],
+    "RLIMIT_CPU": [
+      -1,
+      -1
+    ],
+    "RLIMIT_DATA": [
+      -1,
+      -1
+    ],
+    "RLIMIT_NOFILE": [
+      16384,
+      16384
+    ],
+    "RLIMIT_STACK": [
+      8388608,
+      -1
+    ]
+  },
+  "matrix_workers": 2,
+  "phase_order": [
+    "interpreter matrices",
+    "build",
+    "3.10 clean installation and smoke",
+    "3.12 clean installation and smoke"
+  ],
+  "heavy_package_smokes_overlap_matrices": false,
+  "resource_clearance_sha256": "641ffe0c17d3fbb6b04b949fc1bf4dd8058f75c5c414b6b79672c05ce33137f8",
+  "limits": [
+    "Sample timings and process RSS are not maximal input or production resource guarantees."
+  ]
+}

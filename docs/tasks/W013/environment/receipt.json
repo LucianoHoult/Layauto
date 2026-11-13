@@ -1,0 +1,130 @@
+{
+  "classification": "environment-preparation-not-W013-product-validation",
+  "utc": "2026-11-12T09:02:39.819284+00:00",
+  "status": "ready",
+  "root": "/workspace/work/w013-env",
+  "python_environments": {
+    "310": "/workspace/work/w013-env/dev310/bin/python",
+    "312": "/workspace/work/w013-env/dev312/bin/python"
+  },
+  "identities": {
+    "310": {
+      "executable": "/workspace/work/w013-env/dev310/bin/python",
+      "resolved_executable": "/workspace/work/w013-env/python/cpython-3.10.22-linux-x86_64-gnu/bin/python3.10",
+      "resolved_executable_sha256": "fc1cff69ed88fb77d262cd867a6032a7c270c20418e05b4728b9afaefc63a6a3",
+      "version": "3.10.22 (main, Oct  3 2026, 01:32:06) [Clang 22.1.3 ]",
+      "prefix": "/workspace/work/w013-env/dev310",
+      "base_prefix": "/workspace/work/w013-env/python/cpython-3.10.22-linux-x86_64-gnu",
+      "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+      "dependency_imports": {
+        "numpy": "2.2.6",
+        "matplotlib": "3.10.9",
+        "yaml": "6.0.3",
+        "pytest": "9.2.0",
+        "mypy": "2.4.1",
+        "build": "1.6.1"
+      },
+      "layauto_product_installed": false
+    },
+    "312": {
+      "executable": "/workspace/work/w013-env/dev312/bin/python",
+      "resolved_executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+      "resolved_executable_sha256": "fa67443527ed9647f760d807e2a38f26340757123e643c4639cf273ed15d5ea7",
+      "version": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+      "prefix": "/workspace/work/w013-env/dev312",
+      "base_prefix": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python",
+      "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+      "dependency_imports": {
+        "numpy": "2.5.4",
+        "matplotlib": "3.11.2",
+        "yaml": "6.0.3",
+        "pytest": "9.2.0",
+        "mypy": "2.4.1",
+        "build": "1.6.1"
+      },
+      "layauto_product_installed": false
+    }
+  },
+  "setup_command_receipts": [
+    {
+      "receipt": "evidence/create310.command.json",
+      "sha256": "34023bb21aea23e3f3b280e735b98b3142b290f451063b1fc88d449a42484b67"
+    },
+    {
+      "receipt": "evidence/create312.command.json",
+      "sha256": "8a3a52acbcb81ce382f97db29814a555e806294fec79055838c3dd6b7b49ed9d"
+    },
+    {
+      "receipt": "evidence/freeze310.command.json",
+      "sha256": "7cf91532d874b11a00b85328601973b2a1e0383f797c18c1a067c21ca94e5841"
+    },
+    {
+      "receipt": "evidence/freeze312.command.json",
+      "sha256": "8bd05cce828eaed6713674b9903c24b3350f0d89ff6e4cc98bb5302abced0600"
+    },
+    {
+      "receipt": "evidence/identity310.command.json",
+      "sha256": "1e42e64487e32c3773b4fb86bec7a3d4760ab6395a140b297fd5d110c2bbefa0"
+    },
+    {
+      "receipt": "evidence/identity312.command.json",
+      "sha256": "af37834ebf23903644d4e42df172268b45706d11ac8a542d25d423dabf910a38"
+    },
+    {
+      "receipt": "evidence/install310-attempt01.command.json",
+      "sha256": "e7287349093e5ba6db8681d406d89f8a895f54654202c57841ba2f8183c0de4a"
+    },
+    {
+      "receipt": "evidence/install312-attempt01.command.json",
+      "sha256": "926f5620ca61bcbfd4e435085bf5159222f574509d394f42ccbb73a8e4d1de2c"
+    },
+    {
+      "receipt": "evidence/installed-inventory.command.json",
+      "sha256": "3c2c1093d8819c350937d9e5cfff1d100080f1bae5880ab8e8a48b11b670f88c"
+    },
+    {
+      "receipt": "evidence/pip-check310.command.json",
+      "sha256": "0a06f39a8180bac01c620ee292b5414ff5c1dbb65e37dbeb2bf22bc8d04b7f84"
+    },
+    {
+      "receipt": "evidence/pip-check312.command.json",
+      "sha256": "5702feb3996e433c8c2de5985c81274918c20642cb670ff97b080da9c8c59517"
+    },
+    {
+      "receipt": "evidence/python310-install-attempt01.command.json",
+      "sha256": "50ec2edb267304fa47ffdb00f8986126eb5d96ecd35405a9015e2b34822477ef"
+    }
+  ],
+  "tools": {
+    "run_command.py": "1143618484f779a314c6f3688d4c59f026849db51924b5e8090fa3f5b7034045",
+    "identity.py": "8e5d4501472222104c1f2dfd5dd179d33240b02aaa317f1b8efd86ba1869ba8a",
+    "requirements-310.txt": "613c3800cde9aec8337e1b434aa0fd91f4824f4c0894eeed70d076f149788efc",
+    "requirements-312.txt": "276a51e8f9a190a3b247d44090bc59ba9e4dec456e60d696af13ece12acdf0d5"
+  },
+  "network": {
+    "environment_id": "ccarenv_b64_Y2NhcmVudl85OWQwOGEzMDc0MGM4MTkxYWE2YTQ5NTg3NTc0NjA0Ng",
+    "observations_current": true,
+    "policy_state": "enforced",
+    "proxy_and_ca": "inherited unchanged; no insecure TLS option or credential replacement",
+    "ordinary_sandbox_commands_succeeded": true
+  },
+  "initial_failure": "initial-cache-observation.txt preserves read-only UV home-cache inventory failure; subsequent operations bind install/cache/bin under workspace",
+  "product_installed": false,
+  "checks_run": [
+    "dual dev dependency installation",
+    "dual actual dependency imports",
+    "dual pip check",
+    "dual pip freeze --all",
+    "requirements exact-version validation",
+    "command stdout/stderr hash validation"
+  ],
+  "not_run": [
+    "W013 product composition",
+    "three-path resource measurement",
+    "final test/typing/build/clean-install matrix"
+  ],
+  "recheck_trigger": [
+    "environment/dependency/runtime relocation or modification",
+    "new final product source freeze"
+  ]
+}

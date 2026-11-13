@@ -1,0 +1,77 @@
+{
+  "classification": "independent-retained-boundary-test-delta-review-no-product-rerun",
+  "measured_source_id": "6463eb67b1c1ce5b9fd1fca436fa499a4ad14da004ef8fcd913872bd350443a9",
+  "new_source_id": "2c5724a9d3ecf99913857ad89015c03c03475ae762c1c8ab00b5146fd3eec278",
+  "delta": {
+    "tests/contracts/test_w007_contracts.py": {
+      "measured": "ea27c8079bf95df14568bdabec86338efc1b5fcc540f04a15ec747d9b94d1050",
+      "current": "128bf3ac2091a7345693782a9804fac8f86e8b74ca6cfd7b3929af3ddf01bd01"
+    }
+  },
+  "runtime_config_inputs_new75tests_unchanged": true,
+  "actual_allowance_predicate_cases": [
+    {
+      "filename": "normalization/net_annotation.py",
+      "import": "from layauto_v2.state.annotation import AnnotationDraft",
+      "allowed": true
+    },
+    {
+      "filename": "normalization/net_annotation_codec.py",
+      "import": "from layauto_v2.state.annotation import AnnotationDraft",
+      "allowed": true
+    },
+    {
+      "filename": "normalization/net_annotation.py",
+      "import": "from layauto_v2.state.annotation import AnnotationDraft as ReadOnlyDraft",
+      "allowed": true
+    },
+    {
+      "filename": "normalization/semantic.py",
+      "import": "from layauto_v2.state.annotation import AnnotationDraft",
+      "allowed": false
+    },
+    {
+      "filename": "domain/net_annotation.py",
+      "import": "from layauto_v2.state.annotation import AnnotationDraft",
+      "allowed": false
+    },
+    {
+      "filename": "normalization/net_annotation.py",
+      "import": "from layauto_v2.state.annotation import MutableState",
+      "allowed": false
+    },
+    {
+      "filename": "normalization/net_annotation.py",
+      "import": "from layauto_v2.state.annotation import AnnotationDraft, install",
+      "allowed": false
+    },
+    {
+      "filename": "normalization/net_annotation.py",
+      "import": "from layauto_v2.state.annotation import *",
+      "allowed": false
+    },
+    {
+      "filename": "normalization/net_annotation.py",
+      "import": "import layauto_v2.state.annotation",
+      "allowed": false
+    },
+    {
+      "filename": "normalization/net_annotation.py",
+      "import": "from layauto_v2.state.other import AnnotationDraft",
+      "allowed": false
+    },
+    {
+      "filename": "normalization/net_annotation.py",
+      "import": "from layauto_v2.repository import PublicationRepository",
+      "allowed": false
+    }
+  ],
+  "failed_old_matrix_exit_codes": {
+    "310": -15,
+    "312": -15
+  },
+  "retained_boundary_reproduced_before": true,
+  "new_and_old_boundary_tests_3_passed": true,
+  "resource_adoption_basis": "Only one architecture-test source changed; resource probe imports no test module. Runtime/config/input/probe bytes remain at original measured identity.",
+  "required_next_step": "Freeze the new complete source and rerun both 1731-test full matrices plus required typing/build/install; old stopped runs are failures, never passed coverage."
+}

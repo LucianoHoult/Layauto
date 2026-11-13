@@ -1,0 +1,30 @@
+{
+  "classification": "pure-neutral-target-role-consistency-not-captured-validation",
+  "head": "85299a1d20ba5a2b6d9e677653b527c49d92f21b",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "cases": [
+    {
+      "declared_drawn_role": "marker",
+      "classification": "marker",
+      "retained_node_layer": "M1",
+      "retained_target_count": 1,
+      "coverage_denominator_area_nm2": "10",
+      "public_draft_constructed": true,
+      "public_codec_roundtrip_accepted": true,
+      "drawn_owner_schema_validated": true,
+      "wire_sha256": "c449feb04d078fa1b0f913cc853256d889962e0a84ee767abcd07218da46df57"
+    },
+    {
+      "declared_drawn_role": "contact",
+      "classification": "connector",
+      "retained_node_layer": "M1",
+      "retained_target_count": 1,
+      "coverage_denominator_area_nm2": "10",
+      "public_draft_constructed": true,
+      "public_codec_roundtrip_accepted": true,
+      "drawn_owner_schema_validated": true,
+      "wire_sha256": "a666fb3094289cc6aa1bb5451c1af2206bbc9b283f9a4df3ac0a7080988cc901"
+    }
+  ],
+  "limitations": "No original fixture bytes or product source were changed. Pure synthetic owner/target DTOs do not claim capture authority."
+}

@@ -1,0 +1,8 @@
+{
+  "classification": "documentation manifest assembly rejection; no product execution",
+  "exit_code": 1,
+  "reason": "first archival generator excluded any basename manifest.json, unintentionally omitting neutral/manifest.json",
+  "script": "final_check.py unchanged; complete path-set assertion caught omission",
+  "correction": "exclude only the outer manifest path",
+  "stderr": "shown in execution tool transcript"
+}

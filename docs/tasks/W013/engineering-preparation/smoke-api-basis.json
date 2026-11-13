@@ -1,0 +1,15 @@
+{
+  "classification": "static-API-basis-not-product-freeze-or-smoke-pass",
+  "source_files_read": {
+    "/workspace/work/w013-core/layauto_v2/domain/net_annotation.py": "8c1d89e775c21f049d2f992712f7c7261b83a2efebe6eecdbe9c34f66fae74c5",
+    "/workspace/work/w013-core/layauto_v2/state/annotation.py": "0e529c71ba438fbfa64f6d6306e4d72baa2e6d57f1de3748722f8a28b039b623",
+    "/workspace/Layauto/layauto_v2/normalization/net_annotation.py": "11877d7658418ee101f2e21a35f6b51de22eb4c5046f93af4d3d53d74c096166",
+    "/workspace/Layauto/layauto_v2/normalization/net_annotation_codec.py": "e2edf477ba170ebe9b4bb616e6479a3251ca939f9f375c6fcf1042c249411c8b"
+  },
+  "smoke_sha256": "c9e2f141e13a7d5fe54e3e10297271f067e9139ec28a4184bbe47ff02036c8be",
+  "limits": [
+    "Read actual DTO/API declarations from independently owned working trees; these paths are not a final immutable product freeze.",
+    "Only AST/--help/resource rejection checks executed here; no actual W013 smoke or matrix.",
+    "Root must integrate product and tools and freeze new full source/test/config identity before final verification."
+  ]
+}

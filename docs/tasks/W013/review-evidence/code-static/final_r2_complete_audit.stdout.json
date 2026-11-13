@@ -1,0 +1,196 @@
+{
+  "classification": "independent-final-W013-engineering-closure-read-only-audit",
+  "status": "passed",
+  "source_id": "2c5724a9d3ecf99913857ad89015c03c03475ae762c1c8ab00b5146fd3eec278",
+  "commands_verified": 21,
+  "evidence_manifest_entries_verified": 81,
+  "source_files_verified": 273,
+  "runtime_files_verified": 106,
+  "precheck_script_sha256": "b81a12d9c83e515dd93678944c8d756447b4d344782b048ddb149fd96785c3ef",
+  "receipt_sha256": "aec97e358e816c585ee845fdacc3b98d7dc577a176d769fdf61aa244a59b20d8",
+  "evidence_manifest_sha256": "6981667b219496057b17d924bc46c260295dc9787fd8e2d7ac5e923be6c71332",
+  "matrix_summary": {
+    "310": {
+      "version": "3.10.22",
+      "tests": 1731,
+      "retained_baseline_nodes": 1656,
+      "added_nodes": 75,
+      "command_elapsed_seconds": 9255.95,
+      "typing_source_files": 60
+    },
+    "312": {
+      "version": "3.12.14",
+      "tests": 1731,
+      "retained_baseline_nodes": 1656,
+      "added_nodes": 75,
+      "command_elapsed_seconds": 6655.812,
+      "typing_source_files": 60
+    }
+  },
+  "package_artifacts": {
+    "wheel": {
+      "sha256": "4feaed09e9b8a52712a01947a7dcdd69833fbc82957094f59fd301af0ca08dde",
+      "runtime_files": 106
+    },
+    "sdist": {
+      "sha256": "177bb9f881f6c2ede1fbf8abf144723cf7b2d0a960099a506e70b1d7ab2fba44",
+      "runtime_files": 106
+    }
+  },
+  "smokes": {
+    "310": {
+      "elapsed_seconds": 434.159,
+      "package": "/workspace/work/w013-final-r2/clean-310/lib/python3.10/site-packages/layauto_v2/__init__.py",
+      "artifact": "sdist",
+      "stdout_sha256": "aeda936b7dd44c1ac17cb3ced3d37f024144cdbcc9f6d5971998f995e0285997",
+      "cases": {
+        "normal-direct": {
+          "wire_bytes": 23105316,
+          "wire_sha256": "a08edb9e2185431ae0c6bc7b203af32aeacbd81add5d0bc46a76d5609a9df2be",
+          "public_roundtrip_equal": true,
+          "public_result_digest_checked": true,
+          "build_seconds": 19.778815505998864,
+          "encode_seconds": 23.50536700700104,
+          "decode_seconds": 43.38169854700027,
+          "targets": 14,
+          "evidence": 8,
+          "classifications": 40,
+          "components": 6,
+          "associated_components": 4,
+          "unknown_components": 2,
+          "target_area_nm2": 35090,
+          "direct_area_nm2": 3170,
+          "uncovered_area_nm2": 31920,
+          "marker_area_nm2": 25,
+          "scope": "source_evidence_local_net_annotation/1",
+          "validity": "source_evidence"
+        },
+        "normal-readback": {
+          "wire_bytes": 59749116,
+          "wire_sha256": "ece161056f0a84d8267be55cb4482790638a3c5a7df3741235b5538744d32784",
+          "public_roundtrip_equal": true,
+          "public_result_digest_checked": false,
+          "build_seconds": 40.55983414199909,
+          "encode_seconds": 44.30496453500018,
+          "decode_seconds": 85.61721663800017,
+          "targets": 14,
+          "evidence": 8,
+          "classifications": 40,
+          "components": 6,
+          "associated_components": 4,
+          "unknown_components": 2,
+          "target_area_nm2": 35090,
+          "direct_area_nm2": 3170,
+          "uncovered_area_nm2": 31920,
+          "marker_area_nm2": 25,
+          "scope": "source_evidence_local_net_annotation/1",
+          "validity": "source_evidence"
+        },
+        "extraction-mismatch": {
+          "wire_bytes": 23106880,
+          "wire_sha256": "8d2e9b4501cbdd0c5dcd4d1a32624e54041be271fdd3b1fd7472833eff8ac416",
+          "public_roundtrip_equal": true,
+          "public_result_digest_checked": false,
+          "build_seconds": 20.765328887000578,
+          "encode_seconds": 21.864002587999494,
+          "decode_seconds": 42.1687198619984,
+          "targets": 14,
+          "evidence": 8,
+          "classifications": 40,
+          "components": 6,
+          "associated_components": 4,
+          "unknown_components": 2,
+          "target_area_nm2": 34634,
+          "direct_area_nm2": 3170,
+          "uncovered_area_nm2": 31464,
+          "marker_area_nm2": 25,
+          "scope": "source_evidence_local_net_annotation/1",
+          "validity": "source_evidence"
+        }
+      }
+    },
+    "312": {
+      "elapsed_seconds": 313.429,
+      "package": "/workspace/work/w013-final-r2/clean-312/lib/python3.12/site-packages/layauto_v2/__init__.py",
+      "artifact": "wheel",
+      "stdout_sha256": "c75d48a03df0d13b71197d79fb426b271138a7263b49a1927917ead0d517aad6",
+      "cases": {
+        "normal-direct": {
+          "wire_bytes": 23105316,
+          "wire_sha256": "a08edb9e2185431ae0c6bc7b203af32aeacbd81add5d0bc46a76d5609a9df2be",
+          "public_roundtrip_equal": true,
+          "public_result_digest_checked": true,
+          "build_seconds": 15.343945332999283,
+          "encode_seconds": 15.598479993999717,
+          "decode_seconds": 30.60137556799964,
+          "targets": 14,
+          "evidence": 8,
+          "classifications": 40,
+          "components": 6,
+          "associated_components": 4,
+          "unknown_components": 2,
+          "target_area_nm2": 35090,
+          "direct_area_nm2": 3170,
+          "uncovered_area_nm2": 31920,
+          "marker_area_nm2": 25,
+          "scope": "source_evidence_local_net_annotation/1",
+          "validity": "source_evidence"
+        },
+        "normal-readback": {
+          "wire_bytes": 59749116,
+          "wire_sha256": "ece161056f0a84d8267be55cb4482790638a3c5a7df3741235b5538744d32784",
+          "public_roundtrip_equal": true,
+          "public_result_digest_checked": false,
+          "build_seconds": 28.686913035000543,
+          "encode_seconds": 31.188735484000063,
+          "decode_seconds": 58.12666305399944,
+          "targets": 14,
+          "evidence": 8,
+          "classifications": 40,
+          "components": 6,
+          "associated_components": 4,
+          "unknown_components": 2,
+          "target_area_nm2": 35090,
+          "direct_area_nm2": 3170,
+          "uncovered_area_nm2": 31920,
+          "marker_area_nm2": 25,
+          "scope": "source_evidence_local_net_annotation/1",
+          "validity": "source_evidence"
+        },
+        "extraction-mismatch": {
+          "wire_bytes": 23106880,
+          "wire_sha256": "915c51b49fc4e143b73cb8dbe1b56ee397ae38e60653efe97c1899651a70027d",
+          "public_roundtrip_equal": true,
+          "public_result_digest_checked": false,
+          "build_seconds": 15.85981095399984,
+          "encode_seconds": 16.651904866001132,
+          "decode_seconds": 30.261147978000736,
+          "targets": 14,
+          "evidence": 8,
+          "classifications": 40,
+          "components": 6,
+          "associated_components": 4,
+          "unknown_components": 2,
+          "target_area_nm2": 34634,
+          "direct_area_nm2": 3170,
+          "uncovered_area_nm2": 31464,
+          "marker_area_nm2": 25,
+          "scope": "source_evidence_local_net_annotation/1",
+          "validity": "source_evidence"
+        }
+      }
+    }
+  },
+  "build_and_installs_after_matrices": true,
+  "smokes_serial": true,
+  "all_reference_corrections_closed": true,
+  "not_run": [
+    "pytest",
+    "typing",
+    "build",
+    "install",
+    "capture",
+    "resource measurement"
+  ],
+  "scope": "Existing actual commands adopted by exact source/input/tool/package identity. This audit does not constitute PM acceptance or complete M1/real EDA assurance."
+}

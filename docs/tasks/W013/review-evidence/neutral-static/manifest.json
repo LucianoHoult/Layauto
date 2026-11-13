@@ -1,0 +1,22 @@
+{
+  "head": "a347263a4ed26a08e69dcb5004669408e961728d",
+  "source_files": {
+    "layauto_v2/domain/net_annotation.py": "170dcbcd201452b7401d397c23e945e72acbb9a2d4903452bba703d60e03b47f",
+    "layauto_v2/state/annotation.py": "0e529c71ba438fbfa64f6d6306e4d72baa2e6d57f1de3748722f8a28b039b623",
+    "layauto_v2/normalization/net_annotation_codec.py": "b3d44a3fb1567712ce2b82eeca0fe8c9b342058e2daba44c009fe3a44b3145b9"
+  },
+  "evidence_files": {
+    "docs/tasks/W013/review-evidence/neutral-static/README.md": "296c985b003b8f6429729086785eb940c841e3e981fd22a368c5dd2eeed44e7e",
+    "docs/tasks/W013/review-evidence/neutral-static/map_backing_probe.py": "47a2efae219cbd82f85399d18e5f82bedab828cfe50ab7ba06fe63d40acb70c7",
+    "docs/tasks/W013/review-evidence/neutral-static/map_backing_probe.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/tasks/W013/review-evidence/neutral-static/map_backing_probe.stdout.json": "d0138a6378f36cb684a29b9ad7ec8c20215c2b4fa80b193b3d57952a0c987dde",
+    "docs/tasks/W013/review-evidence/neutral-static/multiple_owners_probe.py": "cebb09a93fdb8062a02459858170a4f8383ac5bff3aba9d5ebf059c39db30600",
+    "docs/tasks/W013/review-evidence/neutral-static/multiple_owners_probe.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/tasks/W013/review-evidence/neutral-static/multiple_owners_probe.stdout.json": "e9a5e10dbaac4b7813e0fae5aa99cd1b61de1a2f67816ab46de94ecac27a88dd",
+    "docs/tasks/W013/review-evidence/neutral-static/operator_binding_probe.attempt-01.stderr.txt": "52138a8628d83d533430f400c725e6ed2aa1971f2755707bfd425c38266fc30f",
+    "docs/tasks/W013/review-evidence/neutral-static/operator_binding_probe.attempt-01.stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/tasks/W013/review-evidence/neutral-static/operator_binding_probe.py": "a426361e7a95715a3e6579dfb1cce690354196d1e84d85b3d2ed52a725e4c713",
+    "docs/tasks/W013/review-evidence/neutral-static/operator_binding_probe.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/tasks/W013/review-evidence/neutral-static/operator_binding_probe.stdout.json": "c6ff216289281218893698878bc0f5c184b3fc63bbbb6afdf2206e677d87b322"
+  }
+}

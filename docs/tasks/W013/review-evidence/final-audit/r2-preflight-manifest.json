@@ -1,0 +1,8 @@
+{
+  "audit_attempt.py": "b42c6f76aa4c15ac9480f134a995694dee9e374ff50127df57bdd570368d6973",
+  "r2_delta_audit.py": "9246ae667af2f0520524baca703ec0468e016671c3efa7fc039f8cf87c04aa66",
+  "r2-preflight.stdout.json": "5f7ef82e998a0af7a78f3f3eae172256df15b5dad6a7f2b5b647b4a312ee4a60",
+  "r2-preflight.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "r2-delta.stdout.json": "7ad2954d9ecd0944607e9338ece45cad953ec3956521249c88d61260dea7bd17",
+  "r2-delta.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

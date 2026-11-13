@@ -1,0 +1,796 @@
+{
+  "auditor": "/root/input_contracts",
+  "utc": "2026-11-12T10:03:11.562212+00:00",
+  "phase": "preflight-running-matrix",
+  "source_id": "6463eb67b1c1ce5b9fd1fca436fa499a4ad14da004ef8fcd913872bd350443a9",
+  "git_head": "8dca80fee138b48f353f791a70d96765426c342a",
+  "git_status": "?? docs/tasks/W013/final-runner.stderr.txt\n?? docs/tasks/W013/final-runner.stdout.txt\n?? docs/tasks/W013/resource-clearance-reference-correction.json\n?? docs/tasks/W013/review-evidence/.gitattributes\n?? docs/tasks/W013/review-evidence/final-audit/\n?? docs/tasks/W013/review-evidence/resource-clearance-reference-review.json\n?? docs/tasks/W013/verification/\n",
+  "checks": [
+    {
+      "name": "current_complete_source_selection",
+      "passed": true,
+      "detail": {
+        "current": 273,
+        "frozen": 273
+      }
+    },
+    {
+      "name": "source_identity",
+      "passed": true,
+      "detail": "6463eb67b1c1ce5b9fd1fca436fa499a4ad14da004ef8fcd913872bd350443a9"
+    },
+    {
+      "name": "source_count",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "snapshot_only_unique_regular_files",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "snapshot_complete_bytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "executed_snapshot_bytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "runtime_selection",
+      "passed": true,
+      "detail": 106
+    },
+    {
+      "name": "development_same_complete_source",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "only_expected_source_changes",
+      "passed": true,
+      "detail": [
+        "A\tlayauto_v2/annotation/net_regions.py",
+        "A\tlayauto_v2/derive/net_annotation.py",
+        "A\tlayauto_v2/domain/net_annotation.py",
+        "M\tlayauto_v2/normalization/__init__.py",
+        "A\tlayauto_v2/normalization/net_annotation.py",
+        "A\tlayauto_v2/normalization/net_annotation_codec.py",
+        "A\tlayauto_v2/state/annotation.py",
+        "M\tpyproject.toml",
+        "A\ttests/contracts/test_w013_composition.py",
+        "A\ttests/contracts/test_w013_contracts.py",
+        "A\ttests/contracts/w013_cases.py",
+        "A\ttests/unit/test_w013_net_annotation.py"
+      ]
+    },
+    {
+      "name": "fixture_and_old_codec_bytes",
+      "passed": true,
+      "detail": {
+        "count": 123,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "old_reports_architecture_PM_pointers_unchanged",
+      "passed": true,
+      "detail": [
+        "docs/tasks/W013-net-annotation-coverage.md",
+        "docs/tasks/W013/code-review.md",
+        "docs/tasks/W013/development/collection-attempt-01.stderr.txt",
+        "docs/tasks/W013/development/collection-attempt-01.stdout.txt",
+        "docs/tasks/W013/development/collection-attempt-02.stderr.txt",
+        "docs/tasks/W013/development/collection-attempt-02.stdout.txt",
+        "docs/tasks/W013/development/core-cr01/after.stderr.txt",
+        "docs/tasks/W013/development/core-cr01/after.stdout.txt",
+        "docs/tasks/W013/development/core-cr02/guard-after.stderr.txt",
+        "docs/tasks/W013/development/core-cr02/guard-after.stdout.json",
+        "docs/tasks/W013/development/core-cr03/static-after.stderr.txt",
+        "docs/tasks/W013/development/core-cr03/static-after.stdout.json",
+        "docs/tasks/W013/development/cr01-cr02-after-attempt-01.stderr.txt",
+        "docs/tasks/W013/development/cr01-cr02-after-attempt-01.stdout.txt",
+        "docs/tasks/W013/development/full-collection-final-candidate.stderr.txt",
+        "docs/tasks/W013/development/full-collection-final-candidate.stdout.txt",
+        "docs/tasks/W013/development/mypy-310-final-candidate.stderr.txt",
+        "docs/tasks/W013/development/mypy-310-final-candidate.stdout.txt",
+        "docs/tasks/W013/development/mypy-312-final-candidate.stderr.txt",
+        "docs/tasks/W013/development/mypy-312-final-candidate.stdout.txt",
+        "docs/tasks/W013/development/mypy-integration-attempt-01.stderr.txt",
+        "docs/tasks/W013/development/mypy-integration-attempt-01.stdout.txt",
+        "docs/tasks/W013/development/mypy-integration-attempt-02.stderr.txt",
+        "docs/tasks/W013/development/mypy-integration-attempt-02.stdout.txt",
+        "docs/tasks/W013/development/targeted-attempt-01.command.json",
+        "docs/tasks/W013/development/targeted-attempt-01.stderr.txt",
+        "docs/tasks/W013/development/targeted-attempt-01.stdout.txt",
+        "docs/tasks/W013/development/test-author/attempt-01-import-origin.txt",
+        "docs/tasks/W013/development/test-author/compact-initial.json",
+        "docs/tasks/W013/development/test-author/compact-initial.stderr.txt",
+        "docs/tasks/W013/development/test-author/compact-initial.stdout.txt",
+        "docs/tasks/W013/development/test-author/cr01-before-multiple_owners_probe.json",
+        "docs/tasks/W013/development/test-author/cr01-before-multiple_owners_probe.stderr.txt",
+        "docs/tasks/W013/development/test-author/cr01-before-multiple_owners_probe.stdout.txt",
+        "docs/tasks/W013/development/test-author/cr01-before-operator_binding_probe.json",
+        "docs/tasks/W013/development/test-author/cr01-before-operator_binding_probe.stderr.txt",
+        "docs/tasks/W013/development/test-author/cr01-before-operator_binding_probe.stdout.txt",
+        "docs/tasks/W013/development/test-author/cr01-cr02-neutral-after.json",
+        "docs/tasks/W013/development/test-author/cr01-cr02-neutral-after.stderr.txt",
+        "docs/tasks/W013/development/test-author/cr01-cr02-neutral-after.stdout.txt",
+        "docs/tasks/W013/development/test-author/cr01-cr03-neutral-after.json",
+        "docs/tasks/W013/development/test-author/cr01-cr03-neutral-after.stderr.txt",
+        "docs/tasks/W013/development/test-author/cr01-cr03-neutral-after.stdout.txt",
+        "docs/tasks/W013/development/test-author/cr01-regression-before.json",
+        "docs/tasks/W013/development/test-author/cr01-regression-before.stderr.txt",
+        "docs/tasks/W013/development/test-author/cr01-regression-before.stdout.txt",
+        "docs/tasks/W013/development/test-author/cr02-before-map_backing_probe.json",
+        "docs/tasks/W013/development/test-author/cr02-before-map_backing_probe.stderr.txt",
+        "docs/tasks/W013/development/test-author/cr02-before-map_backing_probe.stdout.txt",
+        "docs/tasks/W013/development/test-author/cr02-regression-before.json",
+        "docs/tasks/W013/development/test-author/cr02-regression-before.stderr.txt",
+        "docs/tasks/W013/development/test-author/cr02-regression-before.stdout.txt",
+        "docs/tasks/W013/development/test-author/cr03-before-contributor_closure_probe.json",
+        "docs/tasks/W013/development/test-author/cr03-before-contributor_closure_probe.stderr.txt",
+        "docs/tasks/W013/development/test-author/cr03-before-contributor_closure_probe.stdout.txt",
+        "docs/tasks/W013/development/test-author/cr03-before-target_classification_probe.json",
+        "docs/tasks/W013/development/test-author/cr03-before-target_classification_probe.stderr.txt",
+        "docs/tasks/W013/development/test-author/cr03-before-target_classification_probe.stdout.txt",
+        "docs/tasks/W013/development/test-author/cr03-regression-before.json",
+        "docs/tasks/W013/development/test-author/cr03-regression-before.stderr.txt",
+        "docs/tasks/W013/development/test-author/cr03-regression-before.stdout.txt",
+        "docs/tasks/W013/development/test-author/input-scope-initial.json",
+        "docs/tasks/W013/development/test-author/input-scope-initial.stderr.txt",
+        "docs/tasks/W013/development/test-author/input-scope-initial.stdout.txt",
+        "docs/tasks/W013/development/test-author/unit-initial.json",
+        "docs/tasks/W013/development/test-author/unit-initial.stderr.txt",
+        "docs/tasks/W013/development/test-author/unit-initial.stdout.txt",
+        "docs/tasks/W013/engineering-preparation/README.md",
+        "docs/tasks/W013/engineering-preparation/smoke-api-basis.json",
+        "docs/tasks/W013/engineering-preparation/smoke-api.md",
+        "docs/tasks/W013/engineering-preparation/tools-310/installed_smoke-help.command.json",
+        "docs/tasks/W013/engineering-preparation/tools-310/installed_smoke-help.stderr.txt",
+        "docs/tasks/W013/engineering-preparation/tools-310/installed_smoke-help.stdout.txt",
+        "docs/tasks/W013/engineering-preparation/tools-310/manifest.json",
+        "docs/tasks/W013/engineering-preparation/tools-310/prepare_final-help.command.json",
+        "docs/tasks/W013/engineering-preparation/tools-310/prepare_final-help.stderr.txt",
+        "docs/tasks/W013/engineering-preparation/tools-310/prepare_final-help.stdout.txt",
+        "docs/tasks/W013/engineering-preparation/tools-310/receipt.json",
+        "docs/tasks/W013/engineering-preparation/tools-310/resource-clearance-rejection.command.json",
+        "docs/tasks/W013/engineering-preparation/tools-310/resource-clearance-rejection.stderr.txt",
+        "docs/tasks/W013/engineering-preparation/tools-310/resource-clearance-rejection.stdout.txt",
+        "docs/tasks/W013/engineering-preparation/tools-310/smoke-not-ready-guard.command.json",
+        "docs/tasks/W013/engineering-preparation/tools-310/smoke-not-ready-guard.stderr.txt",
+        "docs/tasks/W013/engineering-preparation/tools-310/smoke-not-ready-guard.stdout.txt",
+        "docs/tasks/W013/engineering-preparation/tools-310/source-identity.command.json",
+        "docs/tasks/W013/engineering-preparation/tools-310/source-identity.stderr.txt",
+        "docs/tasks/W013/engineering-preparation/tools-310/source-identity.stdout.txt",
+        "docs/tasks/W013/engineering-preparation/tools-310/source_identity-help.command.json",
+        "docs/tasks/W013/engineering-preparation/tools-310/source_identity-help.stderr.txt",
+        "docs/tasks/W013/engineering-preparation/tools-310/source_identity-help.stdout.txt",
+        "docs/tasks/W013/engineering-preparation/tools-312/installed_smoke-help.command.json",
+        "docs/tasks/W013/engineering-preparation/tools-312/installed_smoke-help.stderr.txt",
+        "docs/tasks/W013/engineering-preparation/tools-312/installed_smoke-help.stdout.txt",
+        "docs/tasks/W013/engineering-preparation/tools-312/manifest.json",
+        "docs/tasks/W013/engineering-preparation/tools-312/prepare_final-help.command.json",
+        "docs/tasks/W013/engineering-preparation/tools-312/prepare_final-help.stderr.txt",
+        "docs/tasks/W013/engineering-preparation/tools-312/prepare_final-help.stdout.txt",
+        "docs/tasks/W013/engineering-preparation/tools-312/receipt.json",
+        "docs/tasks/W013/engineering-preparation/tools-312/resource-clearance-rejection.command.json",
+        "docs/tasks/W013/engineering-preparation/tools-312/resource-clearance-rejection.stderr.txt",
+        "docs/tasks/W013/engineering-preparation/tools-312/resource-clearance-rejection.stdout.txt",
+        "docs/tasks/W013/engineering-preparation/tools-312/smoke-not-ready-guard.command.json",
+        "docs/tasks/W013/engineering-preparation/tools-312/smoke-not-ready-guard.stderr.txt",
+        "docs/tasks/W013/engineering-preparation/tools-312/smoke-not-ready-guard.stdout.txt",
+        "docs/tasks/W013/engineering-preparation/tools-312/source-identity.command.json",
+        "docs/tasks/W013/engineering-preparation/tools-312/source-identity.stderr.txt",
+        "docs/tasks/W013/engineering-preparation/tools-312/source-identity.stdout.txt",
+        "docs/tasks/W013/engineering-preparation/tools-312/source_identity-help.command.json",
+        "docs/tasks/W013/engineering-preparation/tools-312/source_identity-help.stderr.txt",
+        "docs/tasks/W013/engineering-preparation/tools-312/source_identity-help.stdout.txt",
+        "docs/tasks/W013/engineering-preparation/tools-api-310/installed_smoke-help.command.json",
+        "docs/tasks/W013/engineering-preparation/tools-api-310/installed_smoke-help.stderr.txt",
+        "docs/tasks/W013/engineering-preparation/tools-api-310/installed_smoke-help.stdout.txt",
+        "docs/tasks/W013/engineering-preparation/tools-api-310/manifest.json",
+        "docs/tasks/W013/engineering-preparation/tools-api-310/prepare_final-help.command.json",
+        "docs/tasks/W013/engineering-preparation/tools-api-310/prepare_final-help.stderr.txt",
+        "docs/tasks/W013/engineering-preparation/tools-api-310/prepare_final-help.stdout.txt",
+        "docs/tasks/W013/engineering-preparation/tools-api-310/receipt.json",
+        "docs/tasks/W013/engineering-preparation/tools-api-310/resource-clearance-rejection.command.json",
+        "docs/tasks/W013/engineering-preparation/tools-api-310/resource-clearance-rejection.stderr.txt",
+        "docs/tasks/W013/engineering-preparation/tools-api-310/resource-clearance-rejection.stdout.txt",
+        "docs/tasks/W013/engineering-preparation/tools-api-310/source-identity.command.json",
+        "docs/tasks/W013/engineering-preparation/tools-api-310/source-identity.stderr.txt",
+        "docs/tasks/W013/engineering-preparation/tools-api-310/source-identity.stdout.txt",
+        "docs/tasks/W013/engineering-preparation/tools-api-310/source_identity-help.command.json",
+        "docs/tasks/W013/engineering-preparation/tools-api-310/source_identity-help.stderr.txt",
+        "docs/tasks/W013/engineering-preparation/tools-api-310/source_identity-help.stdout.txt",
+        "docs/tasks/W013/engineering-preparation/tools-api-312/installed_smoke-help.command.json",
+        "docs/tasks/W013/engineering-preparation/tools-api-312/installed_smoke-help.stderr.txt",
+        "docs/tasks/W013/engineering-preparation/tools-api-312/installed_smoke-help.stdout.txt",
+        "docs/tasks/W013/engineering-preparation/tools-api-312/manifest.json",
+        "docs/tasks/W013/engineering-preparation/tools-api-312/prepare_final-help.command.json",
+        "docs/tasks/W013/engineering-preparation/tools-api-312/prepare_final-help.stderr.txt",
+        "docs/tasks/W013/engineering-preparation/tools-api-312/prepare_final-help.stdout.txt",
+        "docs/tasks/W013/engineering-preparation/tools-api-312/receipt.json",
+        "docs/tasks/W013/engineering-preparation/tools-api-312/resource-clearance-rejection.command.json",
+        "docs/tasks/W013/engineering-preparation/tools-api-312/resource-clearance-rejection.stderr.txt",
+        "docs/tasks/W013/engineering-preparation/tools-api-312/resource-clearance-rejection.stdout.txt",
+        "docs/tasks/W013/engineering-preparation/tools-api-312/source-identity.command.json",
+        "docs/tasks/W013/engineering-preparation/tools-api-312/source-identity.stderr.txt",
+        "docs/tasks/W013/engineering-preparation/tools-api-312/source-identity.stdout.txt",
+        "docs/tasks/W013/engineering-preparation/tools-api-312/source_identity-help.command.json",
+        "docs/tasks/W013/engineering-preparation/tools-api-312/source_identity-help.stderr.txt",
+        "docs/tasks/W013/engineering-preparation/tools-api-312/source_identity-help.stdout.txt",
+        "docs/tasks/W013/environment/README-handoff.md",
+        "docs/tasks/W013/environment/evidence/create310.command.json",
+        "docs/tasks/W013/environment/evidence/create310.stderr.txt",
+        "docs/tasks/W013/environment/evidence/create310.stdout.txt",
+        "docs/tasks/W013/environment/evidence/create312.command.json",
+        "docs/tasks/W013/environment/evidence/create312.stderr.txt",
+        "docs/tasks/W013/environment/evidence/create312.stdout.txt",
+        "docs/tasks/W013/environment/evidence/freeze310.command.json",
+        "docs/tasks/W013/environment/evidence/freeze310.stderr.txt",
+        "docs/tasks/W013/environment/evidence/freeze310.stdout.txt",
+        "docs/tasks/W013/environment/evidence/freeze312.command.json",
+        "docs/tasks/W013/environment/evidence/freeze312.stderr.txt",
+        "docs/tasks/W013/environment/evidence/freeze312.stdout.txt",
+        "docs/tasks/W013/environment/evidence/identity310.command.json",
+        "docs/tasks/W013/environment/evidence/identity310.stderr.txt",
+        "docs/tasks/W013/environment/evidence/identity310.stdout.txt",
+        "docs/tasks/W013/environment/evidence/identity312.command.json",
+        "docs/tasks/W013/environment/evidence/identity312.stderr.txt",
+        "docs/tasks/W013/environment/evidence/identity312.stdout.txt",
+        "docs/tasks/W013/environment/evidence/initial-cache-observation.txt",
+        "docs/tasks/W013/environment/evidence/install310-attempt01.command.json",
+        "docs/tasks/W013/environment/evidence/install310-attempt01.stderr.txt",
+        "docs/tasks/W013/environment/evidence/install310-attempt01.stdout.txt",
+        "docs/tasks/W013/environment/evidence/install312-attempt01.command.json",
+        "docs/tasks/W013/environment/evidence/install312-attempt01.stderr.txt",
+        "docs/tasks/W013/environment/evidence/install312-attempt01.stdout.txt",
+        "docs/tasks/W013/environment/evidence/installed-inventory.command.json",
+        "docs/tasks/W013/environment/evidence/installed-inventory.stderr.txt",
+        "docs/tasks/W013/environment/evidence/installed-inventory.stdout.txt",
+        "docs/tasks/W013/environment/evidence/pip-check310.command.json",
+        "docs/tasks/W013/environment/evidence/pip-check310.stderr.txt",
+        "docs/tasks/W013/environment/evidence/pip-check310.stdout.txt",
+        "docs/tasks/W013/environment/evidence/pip-check312.command.json",
+        "docs/tasks/W013/environment/evidence/pip-check312.stderr.txt",
+        "docs/tasks/W013/environment/evidence/pip-check312.stdout.txt",
+        "docs/tasks/W013/environment/evidence/pip-report310.json",
+        "docs/tasks/W013/environment/evidence/pip-report312.json",
+        "docs/tasks/W013/environment/evidence/python310-install-attempt01.command.json",
+        "docs/tasks/W013/environment/evidence/python310-install-attempt01.stderr.txt",
+        "docs/tasks/W013/environment/evidence/python310-install-attempt01.stdout.txt",
+        "docs/tasks/W013/environment/identity.py",
+        "docs/tasks/W013/environment/manifest.json",
+        "docs/tasks/W013/environment/receipt.json",
+        "docs/tasks/W013/environment/requirements-310.txt",
+        "docs/tasks/W013/environment/requirements-312.txt",
+        "docs/tasks/W013/environment/run_command.py",
+        "docs/tasks/W013/evidence-review.md",
+        "docs/tasks/W013/fixed-mismatch-restoration.json",
+        "docs/tasks/W013/handoff-check.json",
+        "docs/tasks/W013/input-boundary-probe.py",
+        "docs/tasks/W013/input-boundary-probe.stderr.txt",
+        "docs/tasks/W013/input-boundary-probe.stdout.json",
+        "docs/tasks/W013/interface-plan.md",
+        "docs/tasks/W013/interface-review.md",
+        "docs/tasks/W013/pm-decision.md",
+        "docs/tasks/W013/pre-final-source-identity.json",
+        "docs/tasks/W013/preflight-audit.json",
+        "docs/tasks/W013/preflight-audit.py",
+        "docs/tasks/W013/resource-analysis.json",
+        "docs/tasks/W013/resource-attempt-01/resource-probe.py",
+        "docs/tasks/W013/resource-attempt-01/w010-reference-normal-direct.json",
+        "docs/tasks/W013/resource-attempt-01/w010-reference-normal-direct.stderr.txt",
+        "docs/tasks/W013/resource-attempt-01/w010-reference-normal-direct.stdout.txt",
+        "docs/tasks/W013/resource-attempt-02/normal-direct.json",
+        "docs/tasks/W013/resource-attempt-02/normal-direct.stderr.txt",
+        "docs/tasks/W013/resource-attempt-02/normal-direct.stdout.txt",
+        "docs/tasks/W013/resource-attempt-02/resource-probe.py",
+        "docs/tasks/W013/resource-attempt-03/extraction-mismatch.command.json",
+        "docs/tasks/W013/resource-attempt-03/extraction-mismatch.json",
+        "docs/tasks/W013/resource-attempt-03/extraction-mismatch.stderr.txt",
+        "docs/tasks/W013/resource-attempt-03/extraction-mismatch.stdout.txt",
+        "docs/tasks/W013/resource-attempt-03/normal-direct.command.json",
+        "docs/tasks/W013/resource-attempt-03/normal-direct.json",
+        "docs/tasks/W013/resource-attempt-03/normal-direct.stderr.txt",
+        "docs/tasks/W013/resource-attempt-03/normal-direct.stdout.txt",
+        "docs/tasks/W013/resource-attempt-03/normal-readback.command.json",
+        "docs/tasks/W013/resource-attempt-03/normal-readback.json",
+        "docs/tasks/W013/resource-attempt-03/normal-readback.stderr.txt",
+        "docs/tasks/W013/resource-attempt-03/normal-readback.stdout.txt",
+        "docs/tasks/W013/resource-attempt-03/resource-probe.py",
+        "docs/tasks/W013/resource-attempt-03/suite.json",
+        "docs/tasks/W013/resource-attempt-03/suite.stderr.txt",
+        "docs/tasks/W013/resource-attempt-03/suite.stdout.txt",
+        "docs/tasks/W013/resource-attempt-04/extraction-mismatch.command.json",
+        "docs/tasks/W013/resource-attempt-04/extraction-mismatch.json",
+        "docs/tasks/W013/resource-attempt-04/extraction-mismatch.stderr.txt",
+        "docs/tasks/W013/resource-attempt-04/extraction-mismatch.stdout.txt",
+        "docs/tasks/W013/resource-attempt-04/normal-direct.command.json",
+        "docs/tasks/W013/resource-attempt-04/normal-direct.json",
+        "docs/tasks/W013/resource-attempt-04/normal-direct.stderr.txt",
+        "docs/tasks/W013/resource-attempt-04/normal-direct.stdout.txt",
+        "docs/tasks/W013/resource-attempt-04/normal-readback.command.json",
+        "docs/tasks/W013/resource-attempt-04/normal-readback.json",
+        "docs/tasks/W013/resource-attempt-04/normal-readback.stderr.txt",
+        "docs/tasks/W013/resource-attempt-04/normal-readback.stdout.txt",
+        "docs/tasks/W013/resource-attempt-04/resource-probe.py",
+        "docs/tasks/W013/resource-attempt-04/suite.json",
+        "docs/tasks/W013/resource-attempt-04/suite.stderr.txt",
+        "docs/tasks/W013/resource-attempt-04/suite.stdout.txt",
+        "docs/tasks/W013/resource-clearance.json",
+        "docs/tasks/W013/resource-probe.py",
+        "docs/tasks/W013/resource-summary.md",
+        "docs/tasks/W013/review-evidence/code-static/captured_map_alias_probe.py",
+        "docs/tasks/W013/review-evidence/code-static/captured_map_alias_probe.stderr.txt",
+        "docs/tasks/W013/review-evidence/code-static/captured_map_alias_probe.stdout.json",
+        "docs/tasks/W013/review-evidence/code-static/cr03-before.stderr.txt",
+        "docs/tasks/W013/review-evidence/code-static/cr03-before.stdout.json",
+        "docs/tasks/W013/review-evidence/code-static/cr03-before/contributor_closure_probe.py.stderr.txt",
+        "docs/tasks/W013/review-evidence/code-static/cr03-before/contributor_closure_probe.py.stdout.txt",
+        "docs/tasks/W013/review-evidence/code-static/cr03-before/receipt.json",
+        "docs/tasks/W013/review-evidence/code-static/cr03-before/runtime.patch",
+        "docs/tasks/W013/review-evidence/code-static/cr03-before/target_classification_probe.py.stderr.txt",
+        "docs/tasks/W013/review-evidence/code-static/cr03-before/target_classification_probe.py.stdout.txt",
+        "docs/tasks/W013/review-evidence/code-static/exact_set_probe.attempt-01.stderr.txt",
+        "docs/tasks/W013/review-evidence/code-static/exact_set_probe.attempt-01.stdout.txt",
+        "docs/tasks/W013/review-evidence/code-static/exact_set_probe.py",
+        "docs/tasks/W013/review-evidence/code-static/exact_set_probe.stderr.txt",
+        "docs/tasks/W013/review-evidence/code-static/exact_set_probe.stdout.json",
+        "docs/tasks/W013/review-evidence/code-static/initial-source-identity.json",
+        "docs/tasks/W013/review-evidence/code-static/initial-source-identity.stdout.json",
+        "docs/tasks/W013/review-evidence/code-static/postfix-source-identity.json",
+        "docs/tasks/W013/review-evidence/code-static/postfix-source-identity.stdout.json",
+        "docs/tasks/W013/review-evidence/code-static/postfix_captured_recheck.py",
+        "docs/tasks/W013/review-evidence/code-static/postfix_captured_recheck.stderr.txt",
+        "docs/tasks/W013/review-evidence/code-static/postfix_captured_recheck.stdout.json",
+        "docs/tasks/W013/review-evidence/code-static/postfix_exact_set_probe.stderr.txt",
+        "docs/tasks/W013/review-evidence/code-static/postfix_exact_set_probe.stdout.json",
+        "docs/tasks/W013/review-evidence/code-static/postfix_neutral_recheck.py",
+        "docs/tasks/W013/review-evidence/code-static/postfix_neutral_recheck.stderr.txt",
+        "docs/tasks/W013/review-evidence/code-static/postfix_neutral_recheck.stdout.json",
+        "docs/tasks/W013/review-evidence/code-static/resource04_identity_audit.py",
+        "docs/tasks/W013/review-evidence/code-static/resource04_identity_audit.stderr.txt",
+        "docs/tasks/W013/review-evidence/code-static/resource04_identity_audit.stdout.json",
+        "docs/tasks/W013/review-evidence/code-static/run_neutral_rechecks.py",
+        "docs/tasks/W013/review-evidence/input_contract_probe.py",
+        "docs/tasks/W013/review-evidence/input_contract_probe.stdout.json",
+        "docs/tasks/W013/review-evidence/neutral-static/README.md",
+        "docs/tasks/W013/review-evidence/neutral-static/contributor_closure_probe.py",
+        "docs/tasks/W013/review-evidence/neutral-static/contributor_closure_probe.stderr.txt",
+        "docs/tasks/W013/review-evidence/neutral-static/contributor_closure_probe.stdout.json",
+        "docs/tasks/W013/review-evidence/neutral-static/manifest.json",
+        "docs/tasks/W013/review-evidence/neutral-static/map_backing_probe.py",
+        "docs/tasks/W013/review-evidence/neutral-static/map_backing_probe.stderr.txt",
+        "docs/tasks/W013/review-evidence/neutral-static/map_backing_probe.stdout.json",
+        "docs/tasks/W013/review-evidence/neutral-static/multiple_owners_probe.py",
+        "docs/tasks/W013/review-evidence/neutral-static/multiple_owners_probe.stderr.txt",
+        "docs/tasks/W013/review-evidence/neutral-static/multiple_owners_probe.stdout.json",
+        "docs/tasks/W013/review-evidence/neutral-static/operator_binding_probe.attempt-01.stderr.txt",
+        "docs/tasks/W013/review-evidence/neutral-static/operator_binding_probe.attempt-01.stdout.txt",
+        "docs/tasks/W013/review-evidence/neutral-static/operator_binding_probe.py",
+        "docs/tasks/W013/review-evidence/neutral-static/operator_binding_probe.stderr.txt",
+        "docs/tasks/W013/review-evidence/neutral-static/operator_binding_probe.stdout.json",
+        "docs/tasks/W013/review-evidence/neutral-static/target_classification_probe.identity.json",
+        "docs/tasks/W013/review-evidence/neutral-static/target_classification_probe.py",
+        "docs/tasks/W013/review-evidence/neutral-static/target_classification_probe.runtime.patch",
+        "docs/tasks/W013/review-evidence/neutral-static/target_classification_probe.stderr.txt",
+        "docs/tasks/W013/review-evidence/neutral-static/target_classification_probe.stdout.json",
+        "docs/tasks/W013/review-evidence/source_identity_review.json",
+        "docs/tasks/W013/review-evidence/value_envelope_probe.attempt-01.py",
+        "docs/tasks/W013/review-evidence/value_envelope_probe.attempt-01.stderr.txt",
+        "docs/tasks/W013/review-evidence/value_envelope_probe.attempt-01.stdout.txt",
+        "docs/tasks/W013/review-evidence/value_envelope_probe.py",
+        "docs/tasks/W013/review-evidence/value_envelope_probe.stderr.txt",
+        "docs/tasks/W013/review-evidence/value_envelope_probe.stdout.json",
+        "docs/tasks/W013/run-resource-checkpoint.py",
+        "docs/tasks/W013/verification-tools/README.md",
+        "docs/tasks/W013/verification-tools/installed_smoke.py",
+        "docs/tasks/W013/verification-tools/preflight_tools.py",
+        "docs/tasks/W013/verification-tools/prepare_final.py",
+        "docs/tasks/W013/verification-tools/run_check.py",
+        "docs/tasks/W013/verification-tools/source_identity.py"
+      ]
+    },
+    {
+      "name": "task_PM_requirements_unchanged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "task_PM_acceptance_unchanged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "baseline_collection_original_bytes",
+      "passed": true,
+      "detail": "29d03b7337dbfca2900a43bf703838514b749dfab8734652027cc78f5b835928"
+    },
+    {
+      "name": "baseline_1656",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "command:environment-310",
+      "passed": true,
+      "detail": {
+        "command": [
+          "/workspace/work/w013-env/dev310/bin/python",
+          "-c",
+          "import sys,platform,importlib.metadata as m,json,layauto_v2; from pathlib import Path; assert sys.version_info[:2] == (3, 10), sys.version; p=Path(layauto_v2.__file__).resolve(); assert p.parent==Path.cwd()/\"layauto_v2\", p; print(json.dumps({\"executable\":sys.executable,\"version\":sys.version,\"platform\":platform.platform(),\"source_package\":str(p),\"packages\":{d.metadata[\"Name\"]:d.version for d in m.distributions()}},indent=2))"
+        ],
+        "cwd": "/workspace/work/w013-final/source",
+        "exit_code": 0,
+        "environment_overrides": {
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "PYTHONPATH": "/workspace/work/w013-final/source",
+          "PIP_CACHE_DIR": "/workspace/work/w013-final/pip-cache",
+          "MYPY_CACHE_DIR": "/workspace/work/w013-final/mypy-environment-310",
+          "MPLCONFIGDIR": "/workspace/work/w013-final/mplconfig"
+        },
+        "started_at_utc": "2026-11-12T09:58:49.476030+00:00",
+        "finished_at_utc": "2026-11-12T09:58:49.763860+00:00",
+        "elapsed_seconds": 0.288,
+        "stdout": "environment-310.stdout.txt",
+        "stdout_sha256": "d9370070b8c70ed838a4df690ace04542ba4157f67adaba28da76c65aa6bd503",
+        "stderr": "environment-310.stderr.txt",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "log:environment-310:stdout",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "log:environment-310:stderr",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "command:collection-310",
+      "passed": true,
+      "detail": {
+        "command": [
+          "/workspace/work/w013-env/dev310/bin/python",
+          "-m",
+          "pytest",
+          "-p",
+          "no:cacheprovider",
+          "--collect-only",
+          "tests/unit",
+          "tests/contracts",
+          "-q"
+        ],
+        "cwd": "/workspace/work/w013-final/source",
+        "exit_code": 0,
+        "environment_overrides": {
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "PYTHONPATH": "/workspace/work/w013-final/source",
+          "PIP_CACHE_DIR": "/workspace/work/w013-final/pip-cache",
+          "MYPY_CACHE_DIR": "/workspace/work/w013-final/mypy-collection-310",
+          "MPLCONFIGDIR": "/workspace/work/w013-final/mplconfig"
+        },
+        "started_at_utc": "2026-11-12T09:58:49.764422+00:00",
+        "finished_at_utc": "2026-11-12T09:58:51.994732+00:00",
+        "elapsed_seconds": 2.23,
+        "stdout": "collection-310.stdout.txt",
+        "stdout_sha256": "3b621f9a6fb4e85ce81ddac75242ff592adb9582a4338e1a103b94ec0f6dfc95",
+        "stderr": "collection-310.stderr.txt",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "log:collection-310:stdout",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "log:collection-310:stderr",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "interpreter:310",
+      "passed": true,
+      "detail": {
+        "executable": "/workspace/work/w013-env/dev310/bin/python",
+        "version": "3.10.22 (main, Oct  3 2026, 01:32:06) [Clang 22.1.3 ]",
+        "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+        "source_package": "/workspace/work/w013-final/source/layauto_v2/__init__.py",
+        "packages": {
+          "numpy": "2.2.6",
+          "pathspec": "1.1.1",
+          "ast_serialize": "0.13.1",
+          "cycler": "0.12.1",
+          "fonttools": "4.65.0",
+          "pyparsing": "3.3.3",
+          "librt": "0.16.0",
+          "tzdata": "2026.6",
+          "pip": "23.0.1",
+          "iniconfig": "2.3.1",
+          "pyproject_hooks": "1.3.3",
+          "contourpy": "1.3.2",
+          "types-PyYAML": "6.0.12.20261103",
+          "kiwisolver": "1.5.1",
+          "tomli": "2.5.0",
+          "pluggy": "1.7.0",
+          "typing_extensions": "4.16.0",
+          "matplotlib": "3.10.9",
+          "build": "1.6.1",
+          "exceptiongroup": "1.3.1",
+          "mypy": "2.4.1",
+          "mypy_extensions": "1.2.0",
+          "pytest": "9.2.0",
+          "packaging": "26.3",
+          "wheel": "0.48.0",
+          "Pygments": "2.21.0",
+          "python-dateutil": "3.0.0",
+          "pillow": "12.3.0",
+          "PyYAML": "6.0.3",
+          "setuptools": "79.0.1",
+          "six": "1.17.0"
+        }
+      }
+    },
+    {
+      "name": "interpreter_binary:310",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "environment_dependency_import_versions:310",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "snapshot_command_cwd:310",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "complete_test_scope:310",
+      "passed": true,
+      "detail": {
+        "all": 1731,
+        "added": 75,
+        "missing": [],
+        "added_files": [
+          "tests/contracts/test_w013_composition.py",
+          "tests/contracts/test_w013_contracts.py",
+          "tests/unit/test_w013_net_annotation.py"
+        ]
+      }
+    },
+    {
+      "name": "command:environment-312",
+      "passed": true,
+      "detail": {
+        "command": [
+          "/workspace/work/w013-env/dev312/bin/python",
+          "-c",
+          "import sys,platform,importlib.metadata as m,json,layauto_v2; from pathlib import Path; assert sys.version_info[:2] == (3, 12), sys.version; p=Path(layauto_v2.__file__).resolve(); assert p.parent==Path.cwd()/\"layauto_v2\", p; print(json.dumps({\"executable\":sys.executable,\"version\":sys.version,\"platform\":platform.platform(),\"source_package\":str(p),\"packages\":{d.metadata[\"Name\"]:d.version for d in m.distributions()}},indent=2))"
+        ],
+        "cwd": "/workspace/work/w013-final/source",
+        "exit_code": 0,
+        "environment_overrides": {
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "PYTHONPATH": "/workspace/work/w013-final/source",
+          "PIP_CACHE_DIR": "/workspace/work/w013-final/pip-cache",
+          "MYPY_CACHE_DIR": "/workspace/work/w013-final/mypy-environment-312",
+          "MPLCONFIGDIR": "/workspace/work/w013-final/mplconfig"
+        },
+        "started_at_utc": "2026-11-12T09:58:49.476428+00:00",
+        "finished_at_utc": "2026-11-12T09:58:49.574097+00:00",
+        "elapsed_seconds": 0.098,
+        "stdout": "environment-312.stdout.txt",
+        "stdout_sha256": "703285bca04d9b781f8f8774e42cf0be0556aecc9fbf97335046e16798db9f93",
+        "stderr": "environment-312.stderr.txt",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "log:environment-312:stdout",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "log:environment-312:stderr",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "command:collection-312",
+      "passed": true,
+      "detail": {
+        "command": [
+          "/workspace/work/w013-env/dev312/bin/python",
+          "-m",
+          "pytest",
+          "-p",
+          "no:cacheprovider",
+          "--collect-only",
+          "tests/unit",
+          "tests/contracts",
+          "-q"
+        ],
+        "cwd": "/workspace/work/w013-final/source",
+        "exit_code": 0,
+        "environment_overrides": {
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "PYTHONPATH": "/workspace/work/w013-final/source",
+          "PIP_CACHE_DIR": "/workspace/work/w013-final/pip-cache",
+          "MYPY_CACHE_DIR": "/workspace/work/w013-final/mypy-collection-312",
+          "MPLCONFIGDIR": "/workspace/work/w013-final/mplconfig"
+        },
+        "started_at_utc": "2026-11-12T09:58:49.574647+00:00",
+        "finished_at_utc": "2026-11-12T09:58:51.357478+00:00",
+        "elapsed_seconds": 1.783,
+        "stdout": "collection-312.stdout.txt",
+        "stdout_sha256": "989ffdd250190de5a5957e067cfbe5dd76f0770ae9cbe474b2e08e65a2aa85cc",
+        "stderr": "collection-312.stderr.txt",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "log:collection-312:stdout",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "log:collection-312:stderr",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "interpreter:312",
+      "passed": true,
+      "detail": {
+        "executable": "/workspace/work/w013-env/dev312/bin/python",
+        "version": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+        "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+        "source_package": "/workspace/work/w013-final/source/layauto_v2/__init__.py",
+        "packages": {
+          "pathspec": "1.1.1",
+          "ast_serialize": "0.13.1",
+          "cycler": "0.12.1",
+          "fonttools": "4.68.0",
+          "pyparsing": "3.3.3",
+          "librt": "0.16.0",
+          "tzdata": "2026.6",
+          "iniconfig": "2.3.1",
+          "pyproject_hooks": "1.3.3",
+          "types-PyYAML": "6.0.12.20261103",
+          "kiwisolver": "1.5.1",
+          "matplotlib": "3.11.2",
+          "pluggy": "1.7.0",
+          "typing_extensions": "4.16.0",
+          "build": "1.6.1",
+          "mypy": "2.4.1",
+          "mypy_extensions": "1.2.0",
+          "pytest": "9.2.0",
+          "pip": "25.0.1",
+          "packaging": "26.3",
+          "python-dateutil": "4.0.0",
+          "wheel": "0.48.0",
+          "Pygments": "2.21.0",
+          "contourpy": "1.4.0",
+          "numpy": "2.5.4",
+          "PyYAML": "6.0.3",
+          "setuptools": "79.0.1",
+          "pillow": "13.0.0"
+        }
+      }
+    },
+    {
+      "name": "interpreter_binary:312",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "environment_dependency_import_versions:312",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "snapshot_command_cwd:312",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "complete_test_scope:312",
+      "passed": true,
+      "detail": {
+        "all": 1731,
+        "added": 75,
+        "missing": [],
+        "added_files": [
+          "tests/contracts/test_w013_composition.py",
+          "tests/contracts/test_w013_contracts.py",
+          "tests/unit/test_w013_net_annotation.py"
+        ]
+      }
+    },
+    {
+      "name": "dual_collection_identical",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "engineering_tool:runner",
+      "passed": true,
+      "detail": {
+        "source": "/workspace/Layauto/docs/tasks/W013/verification-tools/prepare_final.py",
+        "sha256": "f756e2f995935617b929da06fd5bf6b741691489f8e37867467f63ec78eb2463"
+      }
+    },
+    {
+      "name": "engineering_tool:source_identity",
+      "passed": true,
+      "detail": {
+        "source": "/workspace/Layauto/docs/tasks/W013/verification-tools/source_identity.py",
+        "sha256": "dd17b3f9abbe5e459bb84ff1e35cd8ee07118b9e1fd08df542597355b85e7395"
+      }
+    },
+    {
+      "name": "engineering_tool:smoke",
+      "passed": true,
+      "detail": {
+        "source": "/workspace/Layauto/docs/tasks/W013/verification-tools/installed_smoke.py",
+        "sha256": "c9e2f141e13a7d5fe54e3e10297271f067e9139ec28a4184bbe47ff02036c8be"
+      }
+    },
+    {
+      "name": "clearance_preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "corrected_review_content",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "reference_correction_needed_and_not_content_change",
+      "passed": true,
+      "detail": {
+        "original_reference_returncode": 128,
+        "original_reference_stderr": "fatal: path 'docs/tasks/W013/code-review.md' exists on disk, but not in '065827b6ab014b046c2721738770fee032677bb7'\n"
+      }
+    },
+    {
+      "name": "two_workers_and_packages_after_matrices",
+      "passed": true,
+      "detail": null
+    }
+  ],
+  "failures": [],
+  "observed_runner_state": {
+    "receipt_exists": false,
+    "failure_exists": false,
+    "completed_command_receipts": [
+      "collection-310",
+      "collection-312",
+      "environment-310",
+      "environment-312"
+    ]
+  },
+  "status": "preflight_passed_final_pending",
+  "not_run_by_auditor": [
+    "pytest",
+    "mypy",
+    "product capture",
+    "build",
+    "installation",
+    "installed smoke"
+  ],
+  "limits": [
+    "This audit checks source/evidence identity; it does not replace independent product/contract review or PM acceptance."
+  ]
+}

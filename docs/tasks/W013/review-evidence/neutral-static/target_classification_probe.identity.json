@@ -1,0 +1,27 @@
+{
+  "head": "85299a1d20ba5a2b6d9e677653b527c49d92f21b",
+  "source_files": {
+    "layauto_v2/domain/net_annotation.py": "29c3f6c7f6beb751be9fea8837e95727a5c358ee0ee46650367f7e5806b76ac6",
+    "layauto_v2/state/annotation.py": "9f8150d5d7534502717c735c94ed6a8a30beb0b44f360ae5db20802b9cb9a1fd",
+    "layauto_v2/normalization/net_annotation_codec.py": "9204909f37f67ebafc5f9522d6ebd575f7c6b04cf6455825a456dc60f8bcc49e"
+  },
+  "evidence_files": {
+    "target_classification_probe.py": "50fc4dd0476e821f66a35c9185a0fb7dd5c5a227f0ccc536d4042ebd3d927e7e",
+    "target_classification_probe.stdout.json": "e5bbedfc4acbe1ef1f7c78aefaad0e4aaf63a151fab95a219719515d75be8e0a",
+    "target_classification_probe.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "target_classification_probe.runtime.patch": "bbf4e2218760b1f76f45580bebc2afc5ecc0953577c306e9a73781f18275fa6a"
+  },
+  "command": [
+    "/workspace/work/w013-env/dev312/bin/python",
+    "-B",
+    "docs/tasks/W013/review-evidence/neutral-static/target_classification_probe.py"
+  ],
+  "cwd": "/workspace/Layauto",
+  "environment_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONPATH": "/workspace/Layauto"
+  },
+  "exit_code": 0,
+  "elapsed_seconds": 0.386113466,
+  "scope": "pure neutral values; no captured builder"
+}

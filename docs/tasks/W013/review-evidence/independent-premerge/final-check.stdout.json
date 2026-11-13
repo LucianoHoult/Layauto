@@ -1,0 +1,14 @@
+{
+  "status": "passed",
+  "reviewed_head": "f31df3f3e6cd5df7ecef2e1f91977c3b68a9fac4",
+  "checks": {
+    "complete_273_current_source": "2c5724a9d3ecf99913857ad89015c03c03475ae762c1c8ab00b5146fd3eec278",
+    "task_only_reviewer_append_preserving_pm_and_old_text": true,
+    "only_allowed_report_evidence_reviewer_paths": 52,
+    "new_local_links_exist": 16,
+    "archived_python_scripts_parse": 15,
+    "public_probe_receipts_and_59_evidence_audit": true,
+    "complete_archival_manifest": 49,
+    "git_diff_check": true
+  }
+}

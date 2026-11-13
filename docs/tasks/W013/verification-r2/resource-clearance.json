@@ -1,0 +1,37 @@
+{
+  "source": "/workspace/Layauto/docs/tasks/W013/resource-clearance-r2.json",
+  "sha256": "641ffe0c17d3fbb6b04b949fc1bf4dd8058f75c5c414b6b79672c05ce33137f8",
+  "decision": {
+    "status": "passed",
+    "source_id": "2c5724a9d3ecf99913857ad89015c03c03475ae762c1c8ab00b5146fd3eec278",
+    "cases": [
+      "normal-direct",
+      "normal-readback",
+      "extraction-mismatch"
+    ],
+    "parallel_matrices_safe": true,
+    "purpose": "finite synthetic final-matrix scheduling only, not a performance improvement or production guarantee",
+    "resource_suite": "docs/tasks/W013/resource-attempt-04/suite.json",
+    "resource_analysis": "docs/tasks/W013/resource-analysis.json",
+    "source_file_count": 273,
+    "review_commit": "8dca80fee138b48f353f791a70d96765426c342a",
+    "review_path": "docs/tasks/W013/code-review.md",
+    "review_sha256": "995c852dbb913b8153b373603c56a18d49d2b5fd01e2c15fb82c545c004ff349",
+    "review_conclusion": "CR01-03 independently closed; same-source resource identity and costs checked, no resource must; full review still awaits final matrix evidence",
+    "cgroup_memory_bytes": 17179869184,
+    "cgroup_cpu_quota": "400000 100000",
+    "measured_API_path_hwm_kib_max": 518612,
+    "matrix_workers": 2,
+    "build_and_clean_install_smokes_after_both_matrices": true,
+    "historical_A1_matrix_not_used_as_W013_final": true,
+    "measured_source_id": "6463eb67b1c1ce5b9fd1fca436fa499a4ad14da004ef8fcd913872bd350443a9",
+    "resource_review_note": "review_commit/path/hash refer to the original immutable resource review. New test-only delta and adoption independently reviewed separately below; no raw measurement relabeling.",
+    "delta_proof": "docs/tasks/W013/resource-r2-identity-adoption.json",
+    "delta_proof_sha256": "8081f70449963f04e22e3143650f78f5b5d1a9d00439a58ce645d399b2ee059d",
+    "delta_review": "docs/tasks/W013/review-evidence/retained-boundary-delta-review.stdout.json",
+    "delta_review_sha256": "8fe9cac30d5db1b214a543542e486cf053053f299cc8bdb324c203b225cd1ab0",
+    "first_matrix_status": "failed and controlled-stop; preserved in verification; not adopted as full pass",
+    "new_full_matrix_required": true,
+    "adoption_basis": "Resource probe executes none of the changed retained architecture test. All 106 runtime files, input fixture files, pyproject, probe, retained-root/run/cache/GC policy and all new W013 test files unchanged. Dual full matrices rerun on the complete new source/test/config identity."
+  }
+}

@@ -1,0 +1,105 @@
+{
+  "classification": "independent-neutral-findings-recheck-not-final-matrix",
+  "head": "119189d5a958b617fe754b61c4e3b8a7e8a9f9fb",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "source_files": {
+    "layauto_v2/domain/net_annotation.py": "29c3f6c7f6beb751be9fea8837e95727a5c358ee0ee46650367f7e5806b76ac6",
+    "layauto_v2/state/annotation.py": "7a37374660ec6efb03f27bdb0e5fd0fe6060033ffde9d2923a31bf6e19b9fb86",
+    "layauto_v2/annotation/net_regions.py": "d9023e8f9d9e839ec20d188c8f90f2b008f8153494b35c6d82f0d496065551eb",
+    "layauto_v2/derive/net_annotation.py": "cc1e0122f7f269276a289bb2197061f9ddbb6020dbfb753173377da2f276fb16",
+    "layauto_v2/normalization/net_annotation.py": "cb70b480acf256c797ff7eb9c5422ac2b7171549d104242484e6f441d33ac6bc",
+    "layauto_v2/normalization/net_annotation_codec.py": "9204909f37f67ebafc5f9522d6ebd575f7c6b04cf6455825a456dc60f8bcc49e",
+    "layauto_v2/normalization/__init__.py": "727d987921f959b1ffb1f51cf3c1c57a4d7620b7ff7e4f54fbaa1f57f5d29a49",
+    "pyproject.toml": "37090341e3e25859c8b1537ef24331e2dd6e7f03ae5bd579b2c1b2a94d18fdf9"
+  },
+  "source_stable": true,
+  "rejected_cases": [
+    {
+      "case": "CR01 node/component owner mismatch",
+      "outcome": "ValueError",
+      "message": "annotation target belongs to another binding/component/unit"
+    },
+    {
+      "case": "CR01 multiple effective operators",
+      "outcome": "ValueError",
+      "message": "annotation targets mix effective region operator owners"
+    },
+    {
+      "case": "CR01 multiple contact operators",
+      "outcome": "ValueError",
+      "message": "annotation topology mixes contact operator owners"
+    },
+    {
+      "case": "CR02 original mutable policy backing",
+      "outcome": "ValueError",
+      "message": "annotation map backing requires a native immutable tuple"
+    },
+    {
+      "case": "CR03 marker target",
+      "outcome": "ValueError",
+      "message": "annotation conductor target cannot use a non-conductor classification"
+    },
+    {
+      "case": "CR03 connector target",
+      "outcome": "ValueError",
+      "message": "annotation conductor target cannot use a non-conductor classification"
+    },
+    {
+      "case": "CR03 dangling region contributor",
+      "outcome": "ValueError",
+      "message": "annotation region has a dangling drawn contributor"
+    },
+    {
+      "case": "CR02 nested mutable backing",
+      "outcome": "ValueError",
+      "message": "annotation map backing requires a native immutable tuple"
+    },
+    {
+      "case": "CR02 duplicate map keys",
+      "outcome": "ValueError",
+      "message": "annotation map keys require unique exact text"
+    },
+    {
+      "case": "CR02 native list entry",
+      "outcome": "ValueError",
+      "message": "annotation map entries require native key/value tuples"
+    },
+    {
+      "case": "CR02 map cycle",
+      "outcome": "ValueError",
+      "message": "cyclic value in annotation graph"
+    },
+    {
+      "case": "CR02 missing backing",
+      "outcome": "ValueError",
+      "message": "annotation map is missing immutable backing"
+    },
+    {
+      "case": "CR02 value-only memo context",
+      "outcome": "ValueError",
+      "message": "foreign or mutable value in annotation graph"
+    },
+    {
+      "case": "CR02 unreduced native Fraction shell",
+      "outcome": "ValueError",
+      "message": "annotation fraction requires reduced native integer components"
+    }
+  ],
+  "valid_neutral_target_roundtrip": {
+    "declared_drawn_role": "interconnect",
+    "classification": "target_conductor",
+    "retained_node_layer": "M1",
+    "retained_target_count": 1,
+    "coverage_denominator_area_nm2": "10",
+    "public_draft_constructed": true,
+    "public_codec_roundtrip_accepted": true,
+    "drawn_owner_schema_validated": true,
+    "wire_sha256": "61b2424b4c2896c7b5a60ef5a0051b1abbfda002ec3e5693c797ebe8f0d42743"
+  },
+  "valid_policy_roundtrip": true,
+  "not_run": [
+    "captured result",
+    "resource probe",
+    "full regression"
+  ]
+}

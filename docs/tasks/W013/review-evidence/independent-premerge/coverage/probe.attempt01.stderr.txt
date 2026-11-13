@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/workspace/Layauto/work/w013-premerge/coverage/probe.py", line 128, in <module>
+    main()
+  File "/workspace/Layauto/work/w013-premerge/coverage/probe.py", line 111, in main
+    assert sum(row.area_nm2 for row in rows if row.status=='conflict')==2
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

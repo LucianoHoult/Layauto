@@ -1,0 +1,6 @@
+START normal-direct
+DONE normal-direct 0
+START normal-readback
+DONE normal-readback 0
+START extraction-mismatch
+DONE extraction-mismatch 0

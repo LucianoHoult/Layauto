@@ -1,0 +1,21 @@
+{
+  "installed_smoke-help.command.json": "020c0135580b3a7641ddf5b38efef5b4be73431167cc2190d9407fda0200b965",
+  "installed_smoke-help.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "installed_smoke-help.stdout.txt": "5f661ee2d7c9efad9c09c32886c4f862d2049bcc27e6aed0b14f92a7cf8c0550",
+  "prepare_final-help.command.json": "3a539c5a10dd519bb8620d209e5241ca64d5e979f608b096f6487ca3df088693",
+  "prepare_final-help.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "prepare_final-help.stdout.txt": "7317b718a09572023b273a12832283332ab85c45e880584109949d5bf13dd438",
+  "receipt.json": "37ed648177bd647fbabeb9ff5e6c90c393cbb14f2327dcdbaa3d5664e123fb5f",
+  "resource-clearance-rejection.command.json": "63b1e368142449683265c6a25dd8d4538ab85594f38da5d85ecddd24d5725c5c",
+  "resource-clearance-rejection.stderr.txt": "d7d332a87af7237ce89e1c84d6fb8e611542ea97b189e2a989ab4eca67dd6195",
+  "resource-clearance-rejection.stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "smoke-not-ready-guard.command.json": "3da0c1203dc3a57ac91823c53e83a59bdbbb57abd791cf2c670b6eb2ac1087e5",
+  "smoke-not-ready-guard.stderr.txt": "86390913473fa4aecbfff4426169048b9aec621e8f8780121c08fc16b0ae0313",
+  "smoke-not-ready-guard.stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "source-identity.command.json": "d52826bfefa277b6523553b723fc22c96fba7c05156cb23b6d1ba403cfc1bca1",
+  "source-identity.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "source-identity.stdout.txt": "f31cbf58164ec16fb86f89acc6ac32ab69962b27da17405f97bedaa18ed88d08",
+  "source_identity-help.command.json": "3a2d783c0a318dad689e6ca7cbf73113d21bc224698f82e7bc4d64569636cf6d",
+  "source_identity-help.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "source_identity-help.stdout.txt": "65db815a85ff3e8f78d5c8c493d3d5114597d0999b7720387ef2ae5f20df67fc"
+}

@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "/workspace/.venvs/layauto/bin/python",
+    "-B",
+    "/workspace/Layauto/docs/tasks/W013/review-evidence/neutral-static/map_backing_probe.py"
+  ],
+  "cwd": "/workspace/Layauto",
+  "utc_start": "2026-11-12T09:23:40.973291+00:00",
+  "seconds": 0.34793503900027645,
+  "exit_code": 0
+}

@@ -1,0 +1,2 @@
+# Raw unified diffs are immutable evidence: a blank context line is one space.
+*.patch whitespace=-blank-at-eol

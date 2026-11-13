@@ -1,0 +1,22 @@
+{
+  "argv": [
+    "/workspace/work/w013-env/dev312/bin/python",
+    "-B",
+    "/workspace/Layauto/docs/tasks/W013/resource-attempt-04/resource-probe.py",
+    "--case",
+    "extraction-mismatch",
+    "--out",
+    "/workspace/Layauto/docs/tasks/W013/resource-attempt-04/extraction-mismatch.json"
+  ],
+  "cwd": "/workspace/Layauto",
+  "environment_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONPATH": "/workspace/Layauto"
+  },
+  "utc_start": "2026-11-12T09:51:26.582325+00:00",
+  "seconds": 66.26848032699945,
+  "returncode": 0,
+  "probe_sha256": "7295d3bab20b5f65fee02650824d36e4d59ae27e11ac2e80b02ae938e2d19981",
+  "stdout_sha256": "eda54ea5b186fca3e90ba21a99fe801cf14f5c095727187bbf7099f63ad9db28",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

@@ -1,0 +1,15 @@
+{
+  "reason": "Both full matrices exposed the same retained W007 dependency guard failure at node 454. Stop known-failing runs before expensive remaining tests; reproduce exact failure separately, add only the specific W013 immutable draft import allowance, then refreeze source/test/config and rerun both full matrices.",
+  "utc": "2026-11-12T10:04:21.140402+00:00",
+  "nodeid": "tests/contracts/test_w007_contracts.py::test_normalization_and_new_domain_keep_pure_dependency_boundaries",
+  "processes": [
+    {
+      "pid": 7941,
+      "command": "/workspace/work/w013-env/dev312/bin/python -m pytest -p no:cacheprovider tests/unit tests/contracts -q "
+    },
+    {
+      "pid": 7942,
+      "command": "/workspace/work/w013-env/dev310/bin/python -m pytest -p no:cacheprovider tests/unit tests/contracts -q "
+    }
+  ]
+}

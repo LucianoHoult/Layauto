@@ -1,0 +1,11 @@
+Initial read-only inventory before explicit workspace UV paths:
+
+uv python dir -> /home/agent/.local/share/uv/python (directory absent)
+uv cache dir -> /home/agent/.cache/uv (directory empty)
+uv python list --only-installed -> error: Failed to initialize cache at `/home/agent/.cache/uv`
+  cause: failed to open file `/home/agent/.cache/uv/CACHEDIR.TAG`: Read-only file system (os error 30)
+
+No cached managed 3.10 runtime was found and no home file was written. Subsequent
+commands explicitly bind all UV install/cache/bin paths below /workspace/work/w013-env.
+Existing trusted CPython 3.12 runtime:
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12

@@ -1,0 +1,8 @@
+usage: prepare_final.py [-h] --root ROOT --out OUT --work WORK --smoke SMOKE
+                        --python310 PYTHON310 --python312 PYTHON312
+                        --expected-tests EXPECTED_TESTS --baseline-collection
+                        BASELINE_COLLECTION --baseline-sha256 BASELINE_SHA256
+                        --expected-source-id EXPECTED_SOURCE_ID
+                        --resource-clearance RESOURCE_CLEARANCE
+                        [--matrix-workers {1,2}]
+prepare_final.py: error: Resource clearance must bind this source_id and all three fixed cases

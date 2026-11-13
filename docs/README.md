@@ -24,7 +24,7 @@
 | 如何准备与运行环境？ | [environment/local-setup.md](environment/local-setup.md)：Python、安装、测试及历史环境记录 |
 | 如何跨机器工作？ | [environment/remote-development.md](environment/remote-development.md)：运行位置、环境准备与代码交接 |
 | 以前讨论过什么？ | [旧工作流提案](proposals/v2-codex-development-workflow.md)：未采纳部分保留作候选；[历史 changelog](archive/changelog.md)：归档记录 |
-| 网络身份何时落到区域？ | [W013](tasks/W013-net-annotation-coverage.md)及[prompt](tasks/W013/execution-prompt.md)：从A1准备网络区域标注/覆盖/冲突，先方案review再实施；默认[验证复用](collaboration/rules.md#verification-reuse)，尚未实现 |
+| 网络身份何时落到区域？ | [W013 PM1](tasks/W013-net-annotation-coverage.md#pm1-receipt)：本地网络区域标注/覆盖/冲突草稿已交付，待[独立合并前review](tasks/W013/independent-premerge-prompt.md)；默认[验证复用](collaboration/rules.md#verification-reuse)，尚未最终验收或集成 |
 
 ## 读取架构的起点
 

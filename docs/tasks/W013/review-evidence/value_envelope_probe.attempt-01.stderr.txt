@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "/workspace/Layauto/docs/tasks/W013/review-evidence/value_envelope_probe.attempt-01.py", line 53, in <module>
+    main()
+  File "/workspace/Layauto/docs/tasks/W013/review-evidence/value_envelope_probe.attempt-01.py", line 27, in main
+    bad_fields = dict(old_value['record']['fields'])
+                      ~~~~~~~~~^^^^^^^^^^
+  File "/workspace/Layauto/layauto_v2/domain/codec.py", line 29, in __getitem__
+    raise KeyError(key)
+KeyError: 'record'

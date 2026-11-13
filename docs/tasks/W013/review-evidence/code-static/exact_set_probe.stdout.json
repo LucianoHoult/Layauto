@@ -1,0 +1,21 @@
+{
+  "classification": "independent-exact-set-review-not-full-product-matrix",
+  "head": "b42492fe32a70cf1819af21a9fe80f38edd43693",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "seed": 130013,
+  "random_inputs": 160,
+  "set_operation_checks": 480,
+  "runtime_module_sha256": "170dcbcd201452b7401d397c23e945e72acbb9a2d4903452bba703d60e03b47f",
+  "scope": [
+    "Fraction 1/20 and 1/7 nm",
+    "negative and 10^30-offset coordinates",
+    "overlapping/redundant rectangles",
+    "union/intersection/difference area and coverage",
+    "disjoint canonical output"
+  ],
+  "not_run": [
+    "captured W010/W013 construction",
+    "resource costs",
+    "full regression"
+  ]
+}

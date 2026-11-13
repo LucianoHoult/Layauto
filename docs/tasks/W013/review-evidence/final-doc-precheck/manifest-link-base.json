@@ -1,0 +1,11 @@
+{
+  "README.before-link-base.md": "69d59c60bc7adbc18b5e26960b91d082fcff1a14b9b0d9214ed6b7491601b7ce",
+  "README.md": "dfce7555b20629456df527604780932b6ea7bf2630c100af3ac09d9724f17050",
+  "manifest.json": "23ff2c1a10da5c2f1584c53e9610ce70569447a9660467e4b9254169ea558746",
+  "neutral-readme-reference-correction.json": "1bc8ce437202464258003edc659c5b1bfd2be7d2ceee27d949032dc3f169fb14",
+  "neutral-static-README.initial.md": "296c985b003b8f6429729086785eb940c841e3e981fd22a368c5dd2eeed44e7e",
+  "precheck.py": "08c2b8779a569a5571598fcf674077676a8e85c96dca9937d2740c72a5b86652",
+  "precheck.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "precheck.stdout.json": "78e1d5c516aec2984589d1de70092c793921040a4b90cd5f41d0d134eb1d6e29",
+  "readme-link-base-addendum.json": "049dab394ea06074ff1b502ae0b354b2f592224e84a0245bb3b52004c91f3fd0"
+}

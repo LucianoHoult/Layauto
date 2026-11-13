@@ -1,0 +1,51 @@
+FFFFF                                                                    [100%]
+=================================== FAILURES ===================================
+_ test_cr02_new_dto_constructor_and_codec_reject_unsafe_exact_frozen_map_shells[list_backing] _
+/workspace/work/w013-tests/tests/contracts/test_w013_contracts.py:502: in test_cr02_new_dto_constructor_and_codec_reject_unsafe_exact_frozen_map_shells
+    with pytest.raises(ValueError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE ValueError
+_ test_cr02_new_dto_constructor_and_codec_reject_unsafe_exact_frozen_map_shells[list_entry] _
+/workspace/work/w013-tests/tests/contracts/test_w013_contracts.py:502: in test_cr02_new_dto_constructor_and_codec_reject_unsafe_exact_frozen_map_shells
+    with pytest.raises(ValueError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE ValueError
+_ test_cr02_new_dto_constructor_and_codec_reject_unsafe_exact_frozen_map_shells[nested_tuple] _
+/workspace/work/w013-tests/tests/contracts/test_w013_contracts.py:502: in test_cr02_new_dto_constructor_and_codec_reject_unsafe_exact_frozen_map_shells
+    with pytest.raises(ValueError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE ValueError
+_ test_cr02_new_dto_constructor_and_codec_reject_unsafe_exact_frozen_map_shells[duplicate_key] _
+/workspace/work/w013-tests/tests/contracts/test_w013_contracts.py:502: in test_cr02_new_dto_constructor_and_codec_reject_unsafe_exact_frozen_map_shells
+    with pytest.raises(ValueError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE ValueError
+_ test_cr02_new_dto_constructor_and_codec_reject_unsafe_exact_frozen_map_shells[cycle] _
+/workspace/work/w013-tests/tests/contracts/test_w013_contracts.py:503: in test_cr02_new_dto_constructor_and_codec_reject_unsafe_exact_frozen_map_shells
+    replace(good, policy=unsafe)
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/dataclasses.py:1588: in replace
+    return obj.__class__(**changes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+<string>:11: in __init__
+    ???
+/workspace/Layauto/layauto_v2/domain/net_annotation.py:488: in __post_init__
+    validate_closed_graph(self, NET_TYPES)
+/workspace/Layauto/layauto_v2/domain/regions.py:53: in validate_closed_graph
+    check(value, False)
+/workspace/Layauto/layauto_v2/domain/regions.py:52: in check
+    check(getattr(item, field.name), False)
+/workspace/Layauto/layauto_v2/domain/regions.py:43: in check
+    check(child, True)
+/workspace/Layauto/layauto_v2/domain/regions.py:43: in check
+    check(child, True)
+/workspace/Layauto/layauto_v2/domain/regions.py:43: in check
+    check(child, True)
+E   RecursionError: maximum recursion depth exceeded
+!!! Recursion detected (same locals & position)
+=========================== short test summary info ============================
+FAILED ../workspace/work/w013-tests/tests/contracts/test_w013_contracts.py::test_cr02_new_dto_constructor_and_codec_reject_unsafe_exact_frozen_map_shells[list_backing]
+FAILED ../workspace/work/w013-tests/tests/contracts/test_w013_contracts.py::test_cr02_new_dto_constructor_and_codec_reject_unsafe_exact_frozen_map_shells[list_entry]
+FAILED ../workspace/work/w013-tests/tests/contracts/test_w013_contracts.py::test_cr02_new_dto_constructor_and_codec_reject_unsafe_exact_frozen_map_shells[nested_tuple]
+FAILED ../workspace/work/w013-tests/tests/contracts/test_w013_contracts.py::test_cr02_new_dto_constructor_and_codec_reject_unsafe_exact_frozen_map_shells[duplicate_key]
+FAILED ../workspace/work/w013-tests/tests/contracts/test_w013_contracts.py::test_cr02_new_dto_constructor_and_codec_reject_unsafe_exact_frozen_map_shells[cycle]
+5 failed, 39 deselected in 0.38s

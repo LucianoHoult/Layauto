@@ -1,0 +1,13 @@
+usage: installed_smoke.py [-h] fixture
+
+W013 source-external installation smoke scaffold; API assertions pending. Run
+the finalized script with -I -B outside the checkout and frozen source. It
+imports installed runtime plus stdlib only, never tests/support or answers.
+The readiness guard must remain false until actual W013 assertions are added.
+This preparation artifact is not a successful W013 smoke or final matrix.
+
+positional arguments:
+  fixture
+
+options:
+  -h, --help  show this help message and exit

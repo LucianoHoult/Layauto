@@ -1,0 +1,14 @@
+{
+  "runner": {
+    "source": "/workspace/Layauto/docs/tasks/W013/verification-tools/prepare_final.py",
+    "sha256": "f756e2f995935617b929da06fd5bf6b741691489f8e37867467f63ec78eb2463"
+  },
+  "source_identity": {
+    "source": "/workspace/Layauto/docs/tasks/W013/verification-tools/source_identity.py",
+    "sha256": "dd17b3f9abbe5e459bb84ff1e35cd8ee07118b9e1fd08df542597355b85e7395"
+  },
+  "smoke": {
+    "source": "/workspace/Layauto/docs/tasks/W013/verification-tools/installed_smoke.py",
+    "sha256": "c9e2f141e13a7d5fe54e3e10297271f067e9139ec28a4184bbe47ff02036c8be"
+  }
+}

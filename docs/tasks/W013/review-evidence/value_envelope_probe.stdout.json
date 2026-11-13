@@ -1,0 +1,18 @@
+{
+  "classification": "canonical-algebra-witness-only-not-W013-product-or-W010-cost",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "old_record_type": "SourceFile",
+  "old_wire_bytes": 806,
+  "value_envelope_bytes": 874,
+  "opaque_bytes_envelope_bytes": 1693,
+  "value_envelope_overhead_bytes": 68,
+  "opaque_envelope_overhead_above_double_bytes": 81,
+  "old_wire_sha256": "02ea153f6f68ab15a4f5dcf07577348556d6a1ab440f10a03a5400042997fc7f",
+  "restored_wire_sha256": "02ea153f6f68ab15a4f5dcf07577348556d6a1ab440f10a03a5400042997fc7f",
+  "old_public_decode_changed_sha_rejection": {
+    "type": "ValueError",
+    "message": "wire discriminator, derived hash, or canonical value mismatch"
+  },
+  "plan_sha256": "827dd88dd7eb638fa8ec98b15768e9ccb30880eed549d4257fc5337abda1830d",
+  "limitations": "No W010 Result or W013 implementation was built; no runtime/memory claim. Public old decode remains necessary."
+}
