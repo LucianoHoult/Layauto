@@ -7,8 +7,8 @@
 | 目标 | 将同源CDL/query的网络身份关联到既有本地有效区域和物理分量，输出可追溯的标注、覆盖缺口、歧义/冲突及分量网络摘要 |
 | 里程碑/依赖 | M1 Stage 2组件，承接W007 net identities/seeds、W008索引、W009有效区域、W010局部物理图；W011继续保留既有FIN能力。本任务不完成整个M1 |
 | 授权 | 2026-11-11用户同意结束本轮A2尝试、继续网络标注，并明确减少重复验证为标准流程；W012停止决定见[PM7](W012-capture-wire-performance.md#pm7-a2-stop) |
-| 恢复 | 从A1验收main 2489b4609ae97d8211bf450d55cac9392492ac71建立codex/w013-net-annotation-coverage；接手本任务准备提交的最新远端head。不得从6045d8f的A2产品分支派生或带入其两codec改动/新增测试 |
-| 阶段 | **可执行：先具体方案及独立方案review，必须项关闭后在既定范围实施；有关键预期空白则带实例交PM。** 未运行W013，未进行独立派发review，不宣称方案或代码已通过review |
+| 恢复 | 从A1验收main 2489b4609ae97d8211bf450d55cac9392492ac71建立codex/w013-net-annotation-coverage；当前main基线为d6182fe6893c26490f9d58c6b808a5ce9910384b；交付63a0962后接手本分支最新PM接收head，按合并前独立review prompt继续。不得从6045d8f的A2产品分支派生或带入其两codec改动/新增测试 |
+| 阶段 | **待验收：PM分支技术接收已完成；合并前独立session复核待进行。** 执行/R2工程及既有独立review按PM1核对接收；未最终验收或合main，见下方PM1 |
 | 范围/owner | annotation的匹配/覆盖逻辑、domain中立DTO、state.annotation草稿所有权及必要normalization入口/codec与测试；具体最小文件列表由方案给出。可写新docs/tasks/W013/附件与本任务执行/方案区；PM维护要求/阶段/current-work |
 | 非目标 | 不改已验收fixture/答案、A1/A2历史证据、物理边/几何、source/target语义；不实现完整工艺坐标、外部body连通、全套器件/pin/color标注、规则豁免、事务baseline/发布、ECO后重新提取、Stage6或真实EDA。既有body输入要求及U06不由本任务改写 |
 | 架构依据 | [architecture](../architecture.md) §3.3、§3.5–3.8、§5.3–5.9、§11.2/11.5/11.9/11.15；[协作规则](../collaboration/rules.md#verification-reuse)及[U06](../roadmap.md#production-body-evidence) |
@@ -20,11 +20,11 @@
 
 以W009有效region/必要fragment为标注目标，空间索引只枚举候选，最终由精确几何关系判定。查询边界只覆盖一部分region时，保留精确覆盖部分及缺口，不能给整个shape/cell贴满标签；具体target identity、分割/歧义表示、coverage分母与重叠去重规则必须在方案中说明并review。未支持的approximate_bbox/untrimmed、非零容差/trim组合应保留quality/source和明确unsupported/ambiguous，不假装exact成功。已支持正常数据不得以一概unsupported规避本任务。
 
-本地scope与外置body分开：只关联本地有效导体及既有W010分量。现有完整oracle含外部body节点/边，须明确取其本地投影，不能把16节点/10边的完整样本解释冒作W010本地图。先复核W010现行14节点/8边/6分量的实际输入，独立oracle映射仅用作测试判据。A的主分量及两个孤岛即使同网也仍为三个物理分量；标签不制造连通。
+本地scope与外置body分开：只关联本地有效导体及既有W010分量。现有完整oracle含外部body节点/边，须明确取其本地投影，不能把16节点/10边的完整样本解释冒作W010本地图。先复核W010现行14节点/8边/6分量的实际输入，独立oracle映射仅用作测试判据。正常六分量按现行local oracle为四个网络关联分量及两个本地body未知分量；A的主分量与两个孤岛属于cut专例，即使同网也仍为三个物理分量。标签不制造连通，不能把历史旧正常样本当现行答案。
 
 | 验收项 | 输入/条件 → 预期行为及验证 |
 | --- | --- |
-| A1 同源与身份 | W007 semantic/net identities/seeds与W009/W010输入属于同一捕获/tech/unit/top/scope/run → 可组合；跨run/database、伪造/缺失/冲突xref或owner/来源错配 → 定位typed issue/失败。保留QueryKey opaque lvs_index（含007）、layout名、canonical NetId及原source backlink，不按数字或字符串相等替代身份 |
+| A1 同源与身份 | W007 semantic/net identities/seeds与W009/W010输入属于同一捕获/tech/unit/top/scope/run → 可组合；跨run/database、伪造/缺失/冲突xref或owner/来源错配 → 定位typed issue/失败。保留现行方言实际产生的QueryKey ordinal字符串索引、layout名、canonical NetId及原source backlink；007按P01决定为拒绝反例，不按数字或字符串相等替代身份 |
 | A2 精确区域 | 按registry carries/associates_with与实际单位、质量、trim规则匹配；cut后的左右区域、部分交叠、同cell多occupant、边界接触/零面积、重叠同网证据不能整shape过标或重复累计。区域/fragment身份、精确面积/coverage与未覆盖部分可重建、顺序确定 |
 | A3 分量摘要 | 正常既有六个本地分量的网络关联对照独立本地判据；多个断开分量可同NetId，不新增或删除物理edge。一个分量出现不可解释的不同NetId须保留全部证据并报conflict；不最后写覆盖、不用语义网名合并分量，component摘要不冒作每个region已直接覆盖 |
 | A4 缺口与质量 | 未匹配query、未标注导体、部分coverage、marker/非导体分类及多候选/质量不足分别报告；unknown不是兼容任意net。原drawn/effective仍完整保留。coverage在本次scope内逐layer列总目标、覆盖/未覆盖/冲突与证据来源，说明计量单位和分母；coverage gap不自动等同整轮失败或成功 |
@@ -216,3 +216,17 @@ runtime/input/probe相同采信链，不重复全量或捕获。137项固定输�
 ## PM 验收与交接（PM）
 
 2026-11-11：从已验收A1 main准备此任务，W012 A2候选保留原分支且不集成。此处仅准备开发交接，没有实施或验收W013；关键方案独立review是实施前要求。当前只检查文档、来源/链接和恢复范围，不为纯文档重跑产品测试。下一执行session按prompt先方案review再实现，完成后交PM，不能自行合main/验收或启动下一节点。
+
+<a id="pm1-receipt"></a>
+
+### PM1 分支技术接收（2026-11-13）
+
+远端交付核为63a0962f1b56655f234140822bffa8f56b7bb15f，main仍d6182fe6893c26490f9d58c6b808a5ce9910384b。PM读取任务/方案决定、scope audit、最终code-review及resource-summary，CR-01–03关闭按既有独立复核采信；产品13路径变化，fixture及A2两codec未改。源冻结2a45938aba8e751183d472d660a1ab66a1063636，完整source_id=2c5724a9d3ecf99913857ad89015c03c03475ae762c1c8ab00b5146fd3eec278。
+
+本次实际运行[只读收据核对](W013/pm-receipt-check.py)：273源码/测试/config对磁盘、冻结Git、交付Git及源码tar逐项一致；81项证据hash、21条命令exit/原输出hash通过；wheel/sdist各106 runtime内容等于冻结源。命令为python -B docs/tasks/W013/pm-receipt-check.py，exit0，结果见[PM回执](W013/pm-receipt.json)。未运行新产品测试、全量、安装或性能实验；双1731、typing60和安装smoke按同源原证据采信，不把PM核对当新独立产品review。
+
+A1–A8已有执行/独立证据，允许进入合并前独立session复核；**本项仅分支技术接收，尚未最终验收或集成。** 正常4关联+2本地body未知、直接覆盖3170/总35090nm²、MARK25另列，支持边界不等于完整body/M1。资源04采信链由原独立核证承担；约0.315MB增量避免新增W011整包，完整上游认证成本仍在，不比较不同终端workload得出提速结论。
+
+PM同步纠正任务历史“含007”文字并明确正常/孤岛专例区别，依据用户P01选A、MR-020/034及现行已验收fixture；不是修改输入合同、fixture或按实现重定答案。原要求字节可在交付63a0962追溯，旧执行/reviewer段及失败记录未改。
+
+下一步使用[合并前独立review prompt](W013/independent-premerge-prompt.md)，重点新公开DTO/canonical来源闭合、几何coverage与CR修正，不机械重复R2双全量。若无阻塞，再由PM处理实际main集成及必要组合验证；当前main未变，不启动下一功能任务。

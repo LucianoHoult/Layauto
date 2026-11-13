@@ -1,0 +1,26 @@
+{
+  "date": "2026-11-13",
+  "delivery": "63a0962f1b56655f234140822bffa8f56b7bb15f",
+  "frozen": "2a45938aba8e751183d472d660a1ab66a1063636",
+  "source_id": "2c5724a9d3ecf99913857ad89015c03c03475ae762c1c8ab00b5146fd3eec278",
+  "source_files_checked": 273,
+  "runtime_files": 106,
+  "snapshot_matches": true,
+  "evidence_hashes_checked": 81,
+  "commands_checked": 21,
+  "adopted_test_counts": {
+    "312": 1731,
+    "310": 1731
+  },
+  "packages_checked": {
+    "layauto-0.2.0-py3-none-any.whl": 106,
+    "layauto-0.2.0.tar.gz": 106
+  },
+  "fixture_and_A2_codec_paths_unchanged": true,
+  "review_findings": "CR-01..03 closure read and adopted; not independently re-executed here",
+  "resource_scope": "resource04 adopted via documented R2 test-only delta; no fresh benchmark",
+  "limits": [
+    "No new product tests/full matrix/install execution or performance measurement",
+    "Does not constitute final acceptance, independent premerge review or integration"
+  ]
+}
