@@ -76,11 +76,15 @@ def build_source(input: NormalizationInput) -> SemanticCircuitDraft:
     records = {record.kind: record for record in input.parse.completed}
     tech = mapping(input.value['tech'])
     header = mapping(input.value['header'])
-    return SemanticCircuitDraft(_cells(records['source_cdl'], tech),
+    return build_source_operands(records['source_cdl'], tech, header, mapping(input.value['tech_bundle']))
+
+
+def build_source_operands(record: EvidenceRecord, tech: FrozenMap, header: FrozenMap,
+                          bundle: FrozenMap) -> SemanticCircuitDraft:
+    return SemanticCircuitDraft(_cells(record, tech),
                                 CellId(string(mapping(header['top_identities'])['source'])),
-                                string(mapping(input.value['tech_bundle'])['profile_id']),
-                                string(mapping(mapping(tech['formats'])['cdl_dialect'])['id']),
-                                records['source_cdl'])
+                                string(bundle['profile_id']),
+                                string(mapping(mapping(tech['formats'])['cdl_dialect'])['id']), record)
 
 
 def build_target(input: NormalizationInput) -> TargetCircuit:

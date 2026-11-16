@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "/workspace/Layauto/docs/tasks/W016/evidence/review/old_interface_parity.py", line 179, in <module>
+    main()
+  File "/workspace/Layauto/docs/tasks/W016/evidence/review/old_interface_parity.py", line 140, in main
+    inspect('w007', semantic, 'codec')
+  File "/workspace/Layauto/docs/tasks/W016/evidence/review/old_interface_parity.py", line 112, in inspect
+    assert canonical_bytes(structural(decoded)) == canonical_bytes(structural(value))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

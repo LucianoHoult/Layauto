@@ -6,7 +6,10 @@ from dataclasses import dataclass, fields, is_dataclass, replace
 from fractions import Fraction
 from math import gcd
 import re
-from typing import Literal, TypeVar, cast
+from typing import TYPE_CHECKING, Literal, TypeVar, cast
+
+if TYPE_CHECKING:
+    from .analysis_annotation import AnalysisAnnotationBinding
 
 from .channel_identity import RationalRect, _field_locations
 from .codec import FrozenMap, Value, canonical_bytes, digest, rational
@@ -398,35 +401,7 @@ class AnnotationBinding(_Record):
         object.__setattr__(self, 'drawn_record_ids', records(self.drawn_record_ids, GeometryRecordId, 'drawn identities'))
         object.__setattr__(self, 'evidence_refs', records(self.evidence_refs, AnnotationRef, 'evidence references'))
         validate_annotation_graph(self, NET_TYPES)
-        ref(self.local_ref, LocalRef, 'draft')
-        ref(self.effective_ref, RegionRef, 'draft')
-        ref(self.geometry_ref, GeometryRef, 'layout')
-        ref(self.unit_ref, GeometryRef, 'unit')
-        ref(self.partition_ref, GeometryRef, 'base_partition')
-        if type(self.tick_nm) is not int or self.tick_nm <= 0:
-            raise ValueError('annotation binding requires positive exact DBU')
-        text(self.top)
-        if type(self.source_cell) is not CellId:
-            raise ValueError('annotation binding requires a typed source cell')
-        sha(self.source_digest)
-        if type(self.source_ref) is not SourceRef or self.source_ref.sha256 is None:
-            raise ValueError('annotation binding requires captured source CDL provenance')
-        source_value(self.source_ref)
-        for owner, kind in ((self.derived, 'derived'), (self.drawn, 'drawn')):
-            if type(owner) is not EvidenceRecord or owner.kind != kind or len(owner.sources) != 1:
-                raise ValueError('annotation binding requires one captured ' + kind + ' owner')
-        object.__setattr__(self, 'topology', records(self.topology, ContactComponent, 'topology'))
-        object.__setattr__(self, 'drawn_record_ids', records(self.drawn_record_ids, GeometryRecordId, 'drawn identities'))
-        object.__setattr__(self, 'evidence_refs', ordered_refs(self.evidence_refs, 'evidence'))
-        if self.topology != tuple(sorted(self.topology, key=lambda item: item.ref.sha256)) or len({item.ref for item in self.topology}) != len(self.topology):
-            raise ValueError('annotation topology requires complete canonical components')
-        if len({component.binding_ref for component in self.topology}) > 1:
-            raise ValueError('annotation topology mixes contact operator owners')
-        members = tuple(member for component in self.topology for member in component.members)
-        if len(set(members)) != len(members):
-            raise ValueError('annotation topology repeats a node')
-        if self.drawn_record_ids != tuple(sorted(set(self.drawn_record_ids), key=lambda item: item.sha256)):
-            raise ValueError('annotation drawn identities require canonical unique order')
+        validate_binding_operands(self)
         if type(self.capture_binding) is not FrozenMap or set(self.capture_binding) != {'schema', 'normalization_input_sha256', 'sources', 'readback'}:
             raise ValueError('incomplete annotation capture binding')
         capture = self.capture_binding
@@ -782,16 +757,21 @@ NET_TYPES = _NEW_TYPES + (RationalRect, NetId, CellId, QueryKey, LocalRef, Geome
 def policy_for(binding: AnnotationBinding, evidence: NetEvidence) -> FrozenMap:
     """Closed owner interpretation retained by a match, without spatial stamping."""
     validate_annotation_graph((binding, evidence), NET_TYPES)
-    registry = tuple(mapping(row) for row in sequence(binding.derived.payload['derived_registry']))
+    return policy_for_operands(binding.derived, binding.drawn, evidence)
+
+
+def policy_for_operands(derived: EvidenceRecord, drawn_owner: EvidenceRecord, evidence: NetEvidence) -> FrozenMap:
+    validate_annotation_graph((derived, drawn_owner, evidence), NET_TYPES)
+    registry = tuple(mapping(row) for row in sequence(derived.payload['derived_registry']))
     matches = tuple((index, row) for index, row in enumerate(registry) if row.get('id') == evidence.record['derived_layer'])
-    rows = tuple(mapping(row) for row in sequence(binding.drawn.payload['layers']))
+    rows = tuple(mapping(row) for row in sequence(drawn_owner.payload['layers']))
     if len(matches) != 1:
         return FrozenMap({'declaration': None, 'registry_index': None, 'target_layer': None,
                           'trim_operator': None, 'supported': False, 'reason': 'ambiguous_registry'})
     index, declaration = matches[0]
     operand = mapping(sequence(mapping(mapping(evidence.record['field_sources'])['derived_layer'])['sources'])[1])
     location = ref_from_location(operand)
-    owner = binding.derived.sources[0]
+    owner = derived.sources[0]
     if (canonical_bytes(operand['lexeme']) != canonical_bytes(declaration)
             or (location.uri, location.sha256, location.field) != (owner.uri, owner.sha256, f'/derived_registry/{index}')):
         raise ValueError('net seed derived operand contradicts actual owner/source role')
@@ -813,3 +793,35 @@ def policy_for(binding: AnnotationBinding, evidence: NetEvidence) -> FrozenMap:
         reason = 'unsupported_target_or_trim'
     return FrozenMap({'declaration': declaration, 'registry_index': index, 'target_layer': layer,
                       'trim_operator': declaration.get('trim_operator'), 'supported': not reason, 'reason': reason})
+
+
+def validate_binding_operands(self: AnnotationBinding | AnalysisAnnotationBinding) -> None:
+    ref(self.local_ref, LocalRef, 'draft')
+    ref(self.effective_ref, RegionRef, 'draft')
+    ref(self.geometry_ref, GeometryRef, 'layout')
+    ref(self.unit_ref, GeometryRef, 'unit')
+    ref(self.partition_ref, GeometryRef, 'base_partition')
+    if type(self.tick_nm) is not int or self.tick_nm <= 0:
+        raise ValueError('annotation binding requires positive exact DBU')
+    text(self.top)
+    if type(self.source_cell) is not CellId:
+        raise ValueError('annotation binding requires a typed source cell')
+    sha(self.source_digest)
+    if type(self.source_ref) is not SourceRef or self.source_ref.sha256 is None:
+        raise ValueError('annotation binding requires captured source CDL provenance')
+    source_value(self.source_ref)
+    for owner, kind in ((self.derived, 'derived'), (self.drawn, 'drawn')):
+        if type(owner) is not EvidenceRecord or owner.kind != kind or len(owner.sources) != 1:
+            raise ValueError('annotation binding requires one captured ' + kind + ' owner')
+    object.__setattr__(self, 'topology', records(self.topology, ContactComponent, 'topology'))
+    object.__setattr__(self, 'drawn_record_ids', records(self.drawn_record_ids, GeometryRecordId, 'drawn identities'))
+    object.__setattr__(self, 'evidence_refs', ordered_refs(self.evidence_refs, 'evidence'))
+    if self.topology != tuple(sorted(self.topology, key=lambda item: item.ref.sha256)) or len({item.ref for item in self.topology}) != len(self.topology):
+        raise ValueError('annotation topology requires complete canonical components')
+    if len({component.binding_ref for component in self.topology}) > 1:
+        raise ValueError('annotation topology mixes contact operator owners')
+    members = tuple(member for component in self.topology for member in component.members)
+    if len(set(members)) != len(members):
+        raise ValueError('annotation topology repeats a node')
+    if self.drawn_record_ids != tuple(sorted(set(self.drawn_record_ids), key=lambda item: item.sha256)):
+        raise ValueError('annotation drawn identities require canonical unique order')

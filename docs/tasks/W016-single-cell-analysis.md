@@ -66,17 +66,30 @@ A1–A8测试选择、资源计数方式及相对已采纳方案的差异；无�
 
 ## 执行结果（执行）
 
-未执行。记录工作区、起始完整SHA、保护的既有改动、源码/测试/config冻结身份、
-A1–A8实际结果、原命令/环境/输出/失败及资源限制，列实跑/采信/未覆盖/补跑触发。
-按授权以项目noreply身份提交推送原W016分支；不改PM要求/阶段/current-work，不自行合main。
+本轮已进入产品实施，但尚未交付完整入口。实际捕获/重parse认证、source/local/FIN及新annotation
+内部链已连通；早期去重诊断report触发资源门，两轮缩减后仍为235613/44873 bytes（5.25倍）。
+按任务门暂停body/manual/terminal/API扩包与最终矩阵，完成不受阻的定向防伪修正、58项回归和typing。
+实际源码范围、原失败/测量、未完成A1–A8及恢复点见[资源交接](W016/resource-checkpoint.md)，
+独立中间review见[review记录](W016/independent-review.md)。PM后续授权将本任务相关源码/测试/独立复核与证据提交推送为未完成检查点；
+本轮仅补资源核算和封包，不扩剩余功能、不放宽资源门，不自行验收或合main。
 
 ## Review结论（reviewer）
 
-未执行。绑定实际受审版本/相关快照，独立审来源/旧兼容/聚合状态/异常/资源，保留反例和修正复核。
+独立 reviewer `/root/w016_review` 完成当前**资源中断检查点**审查，未参与产品实施；
+不是 W016 完整实现通过。受审 293 个源码/测试/config 文件绑定
+[源码身份](W016/evidence/source-identity.json)，独立逐文件核对无差异；完整结论、
+原失败和可复用证据见[独立 review](W016/independent-review.md)。
 
 | Finding | 严重性、影响与依据 | 执行处理及版本 | 独立复核 |
 | --- | --- | --- | --- |
-| 尚未review | 不代表无finding | — | — |
+| R01 | must：初始 receipt 的 graph walk 未拒绝 nested SourceFile 额外可变字段；实际文件反例可重现 | 改用完整 native storage guard；绑定当前 source-identity | 实际文件反例现抛 ValueError，关闭该反例 |
+| R02 | must：新 annotation binding 不在旧 validate_members 重构注册表，draft/view 边界缺新 binding 语义重构 | 显式重构 binding，并在 to_value 重验；同一冻结身份 | forged scope/validity/version 及 to_value 共四断言通过，关闭该反例 |
+| 资源门 | 去重报告缩减后仍235613/44873=5.250663倍，超过2倍复核门；不是 raw/完整旧Result重复 | 执行保留构成及缩减前后输出，暂停body/manual扩包和最终矩阵 | 独立核报告hash、长度、1869对象及23 captures一致；交PM复核，不代验收 |
+
+独立实跑基线 normal-direct W007–W014 完整 DTO/wire roundtrip，仅基线准备，**未跑候选双侧parity**；
+唯一压缩快照已保留在任务 evidence。其余readback/mismatch/错body路径及最终双版本矩阵未跑。
+当前缺顶层API、terminal/body/manual、状态/异常聚合与完整A1–A8，不能提交为完成交付。
+执行的定向58项与typing按冻结身份采信；恢复后按实际改动和既定verification-reuse补验。
 
 ## PM验收与交接（PM）
 

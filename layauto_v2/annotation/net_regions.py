@@ -17,14 +17,15 @@ from layauto_v2.domain.identifiers import CellId, DeviceId, NetId, QueryKey
 from layauto_v2.domain.net_annotation import (
     AnnotationBinding, AnnotationFragment, AnnotationIssue, AnnotationRef, AnnotationTargetId,
     LayerCoverage, MatchEvidence, NET_TYPES, NetComponentSummary, NetEvidence, RecordClassification, TargetEvidence,
-    TargetIntersection, area, canonical_cover, difference, intersections, policy_for, problem, records, validate_annotation_graph,
+    TargetIntersection, area, canonical_cover, difference, intersections, policy_for, policy_for_operands, problem, records, validate_annotation_graph,
 )
 from layauto_v2.domain.results import EvidenceIssue
-from layauto_v2.derive.net_annotation import summarize_components
+from layauto_v2.derive.net_annotation import summarize_components, summarize_topology
 from layauto_v2.state.local_connectivity import DRAFT_TYPES as LOCAL_TYPES, LocalConnectivityDraft
 from layauto_v2.tech.schema import SchemaError, validate_payload
 
 if TYPE_CHECKING:
+    from layauto_v2.domain.analysis_annotation import AnalysisAnnotationBinding
     from layauto_v2.state.annotation import AnnotationDraft
 
 _SOURCE_TYPES = (CellId, DeviceId, NetId, QueryKey, Parameter, Terminal, Membership,
@@ -45,11 +46,11 @@ def _boundary(a: RationalRect, b: RationalRect) -> bool:
     return width >= 0 and height >= 0 and (width == 0 or height == 0)
 
 
-def match_evidence(binding: AnnotationBinding, evidence: tuple[NetEvidence, ...],
+def match_evidence(binding: AnnotationBinding | AnalysisAnnotationBinding, evidence: tuple[NetEvidence, ...],
                    targets: tuple[TargetEvidence, ...], classifications: tuple[RecordClassification, ...] = ()) -> tuple[MatchEvidence, ...]:
     matches: list[MatchEvidence] = []
     for seed in evidence:
-        policy = policy_for(binding, seed)
+        policy = policy_for_operands(binding.derived, binding.drawn, seed)
         if not policy['supported']:
             status = 'ambiguous' if str(policy['reason']).startswith('ambiguous') else 'unsupported'
             matches.append(MatchEvidence(seed.ref, (), (), (), (seed.rectangle,), policy, status))
@@ -96,7 +97,7 @@ def fragment_targets(evidence: tuple[NetEvidence, ...], targets: tuple[TargetEvi
     return tuple(sorted(result, key=lambda item: item.ref.sha256))
 
 
-def layer_coverage(binding: AnnotationBinding, targets: tuple[TargetEvidence, ...],
+def layer_coverage(binding: AnnotationBinding | AnalysisAnnotationBinding, targets: tuple[TargetEvidence, ...],
                    fragments: tuple[AnnotationFragment, ...], classifications: tuple[RecordClassification, ...],
                    components: tuple[NetComponentSummary, ...]) -> tuple[LayerCoverage, ...]:
     conflict_components = {component.component_ref for component in components if component.status == 'conflict'}
@@ -146,11 +147,11 @@ def annotation_issues(evidence: tuple[NetEvidence, ...], targets: tuple[TargetEv
     return tuple(sorted(issues, key=lambda item: item.ref.sha256))
 
 
-def overlay(binding: AnnotationBinding, evidence: tuple[NetEvidence, ...], targets: tuple[TargetEvidence, ...],
+def overlay(binding: AnnotationBinding | AnalysisAnnotationBinding, evidence: tuple[NetEvidence, ...], targets: tuple[TargetEvidence, ...],
             classifications: tuple[RecordClassification, ...]) -> tuple[tuple[MatchEvidence, ...], tuple[AnnotationFragment, ...], tuple[LayerCoverage, ...], tuple[NetComponentSummary, ...], tuple[AnnotationIssue, ...]]:
     matches = match_evidence(binding, evidence, targets, classifications)
     fragments = fragment_targets(evidence, targets, matches)
-    components = summarize_components(binding, targets, fragments)
+    components = summarize_topology(binding.topology, targets, fragments)
     coverage = layer_coverage(binding, targets, fragments, classifications, components)
     issues = annotation_issues(evidence, targets, matches, fragments, components)
     return matches, fragments, coverage, components, issues
@@ -179,6 +180,14 @@ def build_net_annotation_draft(local: LocalConnectivityDraft, source: SemanticCi
                                 local.effective.base.partition.ref, layout.units.canonical_tick_nm, layout.top,
                                 source.selected_cell, digest(semantic_value(source)), source.preservation.sources[0], derived, local.binding.drawn,
                                 local.components, tuple(sorted((row.id for row in layout.records), key=lambda item: item.sha256)), tuple(seed.ref for seed in evidence), capture_binding)
+    return AnnotationDraft(binding, evidence, *build_annotation_operands(local, source, evidence, binding))
+
+
+def build_annotation_operands(local: LocalConnectivityDraft, source: SemanticCircuitDraft,
+                              evidence: tuple[NetEvidence, ...], binding: AnnotationBinding | AnalysisAnnotationBinding) -> tuple[
+        tuple[TargetEvidence, ...], tuple[MatchEvidence, ...], tuple[AnnotationFragment, ...], tuple[LayerCoverage, ...],
+        tuple[NetComponentSummary, ...], tuple[RecordClassification, ...], tuple[AnnotationIssue, ...]]:
+    layout = local.effective.base.layout
     source_nets = {net.id for cell in source.cells if cell.id == source.selected_cell for net in cell.nets}
     if any(seed.net_id not in source_nets for seed in evidence):
         raise ValueError('network evidence references a foreign source net')
@@ -200,4 +209,4 @@ def build_net_annotation_draft(local: LocalConnectivityDraft, source: SemanticCi
             RationalRect(*(Fraction(value * binding.tick_nm) for value in row.rect.bounds)), row.source, cells))
     classified = tuple(sorted(classifications, key=lambda row: row.record_id.sha256))
     matches, fragments, coverage, summaries, issues = overlay(binding, evidence, targets, classified)
-    return AnnotationDraft(binding, evidence, targets, matches, fragments, coverage, summaries, classified, issues)
+    return targets, matches, fragments, coverage, summaries, classified, issues

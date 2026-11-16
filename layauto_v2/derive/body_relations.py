@@ -7,14 +7,17 @@ from __future__ import annotations
 
 from dataclasses import replace
 from fractions import Fraction
-from typing import cast
+from typing import TYPE_CHECKING, cast
+
+if TYPE_CHECKING:
+    from layauto_v2.state.analysis_annotation import AnalysisAnnotationDraft
 
 from layauto_v2.domain.channel_identity import RationalRect
 from layauto_v2.domain.codec import FrozenMap, Value, rational
 from layauto_v2.domain.evidence import EvidenceRecord, SourceRef
 from layauto_v2.domain.geometry import DrawnRecord, evidence_value, mapping, sequence, source_value
 from layauto_v2.domain.identifiers import identity_value
-from layauto_v2.domain.net_annotation import policy_for, validate_annotation_graph
+from layauto_v2.domain.net_annotation import policy_for, policy_for_operands, validate_annotation_graph
 from layauto_v2.domain.results import EvidenceIssue
 from layauto_v2.domain.terminal_relations import validate_terminal_graph
 from layauto_v2.state.annotation import AnnotationDraft, DRAFT_TYPES as ANNOTATION_TYPES
@@ -181,6 +184,13 @@ def evaluate_body(channels: ChannelIdentityDraft, annotation: AnnotationDraft,
     layout = local.effective.base.layout
     allowed = {(mapping(row)['uri'], mapping(row)['sha256'])
                for row in sequence(annotation.binding.capture_binding['sources'])}
+    return evaluate_body_operands(channels, annotation, body, allowed)
+
+
+def evaluate_body_operands(channels: ChannelIdentityDraft, annotation: AnnotationDraft | AnalysisAnnotationDraft,
+                           body: EvidenceRecord, allowed: set[tuple[Value, Value]]) -> tuple[FrozenMap, tuple[EvidenceIssue, ...]]:
+    local = channels.local
+    layout = local.effective.base.layout
     if any((ref.uri, ref.sha256) not in allowed for ref in body.sources):
         raise ValueError('body sources belong to another capture')
     if (body.sources[1] != layout.gds.sources[0] or body.sources[0].uri == body.sources[1].uri
@@ -409,7 +419,7 @@ def evaluate_body(channels: ChannelIdentityDraft, annotation: AnnotationDraft,
         rail_rect = records_nm[rail.id]
         layer_evidence = []
         for seed in annotation.evidence:
-            policy = policy_for(annotation.binding, seed)
+            policy = policy_for_operands(annotation.binding.derived, annotation.binding.drawn, seed)
             if policy['target_layer'] == 'M1' and policy['supported'] is True:
                 layer_evidence.append(seed)
         exact = tuple(seed for seed in layer_evidence if seed.rectangle == rail_rect)

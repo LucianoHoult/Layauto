@@ -1,0 +1,1 @@
+{"stage": "w005", "status": "success", "issues": [], "dto": {"bytes": 1231524, "sha256": "8a12836c18f9a622dd82ef94a31281b00116f88b93e887b3679b3cbaab03adf2", "exact_comparison": null, "snapshot": "w005.dto.gz"}, "inspection_seconds": 0.1317517920000455, "hwm_kib": 35092}
