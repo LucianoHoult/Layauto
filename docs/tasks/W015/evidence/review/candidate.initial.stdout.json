@@ -1,0 +1,30 @@
+{
+  "hash_mismatches": [],
+  "closure_digest_matches": true,
+  "request_uri_mismatches": [
+    "query/raw/device_info_Q17.txt",
+    "query/raw/device_info_Q93.txt",
+    "query/raw/net_shapes_n_a.txt",
+    "query/raw/net_shapes_n_y.txt",
+    "query/raw/net_shapes_n_lo.txt",
+    "query/raw/net_shapes_n_hi.txt"
+  ],
+  "owner_paths_missing_from_manifest_root": [
+    "drawn",
+    "derived",
+    "physical",
+    "formats",
+    "coordinate",
+    "rules"
+  ],
+  "query_parser_only": {
+    "status": "error",
+    "code": "RequestBindingMismatch",
+    "category": "binding",
+    "source": "../../../../../tests/fixtures/w003_m1/query/requests.json",
+    "field": "/requests/0/path"
+  },
+  "mode": "initial",
+  "reviewed_initial_commit": "5a815f58584746986b344f7616786b6360986e42",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]"
+}

@@ -20,7 +20,7 @@
 | A4 | [implementation-proposal](implementation-proposal.md)：最小文件表、旧入口/DTO/wire兼容矩阵、annotation/body隐藏耦合与等强认证分拆 |
 | A5 | 同方案的有限首包步骤、T01–T10实际文件验收、最小生产调查表；[可派发prompt草案](implementation-prompt.md)须PM接收后使用 |
 | A6 | 同方案的旧/新调用图、一次capture/中立重构边界、早期三case资源及退回PM门；未新跑资源benchmark |
-| A7 | 独立review安排在方案冻结后；review结论及finding关闭以[independent-review](independent-review.md)为准，不能以本执行摘要替代 |
+| A7 | 独立review通过，剩余必须项0；冻结候选`a2d55dbf20c1b07b9f5ca3faddad9c6a8721637b`，F01/F02 must及F03/F04 minor修正后均由reviewer复核关闭，原finding/失败保留；见[independent-review](independent-review.md) |
 
 ## 验证复用与限制
 
@@ -42,10 +42,13 @@
 
 ## PM 接收点与下一步
 
-请PM核A1–A7、独立finding闭合与候选合同是否在授权内，再为首包另建实施任务并明确
+本轮A1–A7已交付，独立方案review通过。请PM核覆盖、独立finding闭合与候选合同是否在授权内，再为首包另建实施任务并明确
 baseline/branch/正式owner同步。候选推荐已收敛，无需用户重复选择D1。剩余真实生产资料、
 trust authority、父级映射/冻结/窗口验证器、修改/完整运行都不在本包承诺中；涉及新增关键
 使用预期时再带具体样张交PM。生产隔离边界保持，不索取raw/PDK/log/hash，不假设pass/fail外传。
+
+独立review后只补执行交接、文档/身份核验和review材料，核心方案/合同/样张/实施prompt/
+候选input相对受审冻结候选不再变化，按精确身份采信review。
 
 Git交接以本分支最终推送SHA为准；报告不追求包含自己的最终hash。review候选commit与修后
 文件身份由reviewer记录；推送后核远端完整SHA并在对用户回复交PM恢复入口。

@@ -1,0 +1,63 @@
+{
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "head": "5a815f58584746986b344f7616786b6360986e42",
+  "product_main": "3b8d78902591bca32ec9b8ee5d3167d115e1a974",
+  "base": "e7c92c03d0b48aa143259da4fc9fbedc382efee0",
+  "unchanged_product_file_count": 284,
+  "reader_body_precedes_gds_parse": true,
+  "strict_geometry_body_roles": true,
+  "strict_old_annotation_normalization_binding": true,
+  "body_requires_annotation_capture": true,
+  "w009_encode_without_decode_confirmed": true,
+  "protected_owner_sections_unchanged": true,
+  "reviewed_worktree_files": [
+    {
+      "path": "docs/tasks/W015/delivery.md",
+      "sha256": "bdb9acd1c3963b26733a32d4f86936c22d3301d9bd5def725ca5a25886aa4031"
+    },
+    {
+      "path": "docs/tasks/W015/entry-contract.md",
+      "sha256": "e4c46bfc38c5037ef0c2077825afb6b8ad20fd050efac1dee83652b55bb46cc4"
+    },
+    {
+      "path": "docs/tasks/W015/execution-prompt.md",
+      "sha256": "2b1c410b9df5ce69495f8a61eb7784ed1342df013d22a3aa96f65c38397d3bf2"
+    },
+    {
+      "path": "docs/tasks/W015/implementation-prompt.md",
+      "sha256": "0709ce5afda18da189239b987e01b7ed4c249966ba9d870cc8f3d6084983a073"
+    },
+    {
+      "path": "docs/tasks/W015/implementation-proposal.md",
+      "sha256": "7c9cd0723533101e7fc3fbd543266e8d3aa93f54ca232f7a73b3954016c29456"
+    },
+    {
+      "path": "docs/tasks/W015/interface-examples.md",
+      "sha256": "1e348568d95456588f1dda2b574e5034eebfcd753ff6907bf3a8943ec2beb8e2"
+    },
+    {
+      "path": "docs/tasks/W015/plan.md",
+      "sha256": "728a858fd49c77d948876a3e01e9af6f00edc570dc91dfc7f0c426bb572bade6"
+    },
+    {
+      "path": "docs/tasks/W015/evidence/candidate-input/analysis.json",
+      "sha256": "ad7742dca05601a0520ec25bbabd8edb4416d8fce354843b0bd56dbe14e1f03f"
+    },
+    {
+      "path": "docs/tasks/W015/evidence/candidate-input/local-header.json",
+      "sha256": "c1b0a655495a0f6a47bff61a0e66a729bd493aaa228bf3bd6e849c119dbbcf0c"
+    },
+    {
+      "path": "docs/tasks/W015/evidence/candidate-input/provenance.json",
+      "sha256": "23153b63eea58fac9d77ca97c91492e2eb73fcf1fd03fc872d0a3bb320ecef2a"
+    },
+    {
+      "path": "docs/tasks/W015/evidence/candidate-input/requests.json",
+      "sha256": "c42c46751e264cd4eee99e08561bd202132181d683a8308f572d0d7c430e2aa8"
+    },
+    {
+      "path": "docs/tasks/W015/evidence/candidate-input/tech.json",
+      "sha256": "2da73d0b701b917ecf3a3b69de89949ccb7d95c6ed9fddece88bb7b0c5adc175"
+    }
+  ]
+}

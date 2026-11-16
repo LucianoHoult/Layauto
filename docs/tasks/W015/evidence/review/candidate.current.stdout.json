@@ -1,0 +1,18 @@
+{
+  "hash_mismatches": [],
+  "closure_digest_matches": true,
+  "request_uri_mismatches": [],
+  "owner_paths_missing_from_manifest_root": [],
+  "query_parser_only": {
+    "status": "success",
+    "record_counts": {
+      "instance_xref": 2,
+      "net_xref": 4,
+      "device_regions": 2,
+      "net_regions": 8
+    }
+  },
+  "mode": "current",
+  "reviewed_initial_commit": "5a815f58584746986b344f7616786b6360986e42",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]"
+}

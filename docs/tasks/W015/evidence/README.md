@@ -31,3 +31,12 @@ legacy只读cdl_parser/calibre_query两源；架构引用原文及W014/U06一并
 
 `source-identity.json`记录本次起点所有runtime/正式tests/config字节清单与产品main比较，
 只证明身份未改，不代原产品测试。review绑定冻结候选commit或明确path快照，不绑定报告自身hash。
+
+独立review绑定`a2d55dbf20c1b07b9f5ca3faddad9c6a8721637b`，
+review目录保存初审/修后候选实际parser反例与最终来源/284项产品身份核验。
+[独立报告](../independent-review.md)保留两must和两minor的原问题与复核关闭结论。
+
+最终执行交接检查：`python -B docs/tasks/W015/evidence/check_delivery.py`，
+输出[delivery-check.stdout.json](delivery-check.stdout.json)及stderr；核全部本轮本地Markdown
+链接、JSON、284项未改产品/tests/config字节、写入范围及原PM要求/阶段/验收段逐字不变。
+这只是文档与身份检查，不是产品矩阵；review后核心候选文件与受审commit保持相同。
