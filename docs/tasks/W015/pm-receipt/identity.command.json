@@ -1,0 +1,13 @@
+{
+  "argv": [
+    "/workspace/venvs/layauto/bin/python",
+    "-B",
+    "docs/tasks/W015/evidence/review/identity_audit.py"
+  ],
+  "cwd": "/workspace/work/layauto-w015-prep",
+  "head": "a73713bc8ff7e1e2d4cc61ab93fbd3ace178753d",
+  "exit_code": 0,
+  "elapsed_seconds": 0.6656535540023469,
+  "stdout_sha256": "7cda0a799da8d687e9586c3aa3fb7d89dc9fef03fee18c55c375b214f06067d7",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

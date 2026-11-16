@@ -1,0 +1,15 @@
+{
+  "argv": [
+    "/workspace/venvs/layauto/bin/python",
+    "-B",
+    "docs/tasks/W015/evidence/review/candidate_probe.py",
+    "current"
+  ],
+  "cwd": "/workspace/work/layauto-w016-prep",
+  "head": "d0bb5628384f3a9fec1fe87b6311b854996f574b",
+  "exit_code": 0,
+  "elapsed_seconds": 0.21647431000019424,
+  "stdout_sha256": "ab6a5dd827374874ea8c9ad3ee3f94d8dc1b5f8d54537ca9d79aa158308565ff",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "tree_equals_reviewed_head": true
+}

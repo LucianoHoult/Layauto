@@ -8,7 +8,7 @@
 | 里程碑 / 依赖 | M1旁的生产读取适配准备，承接W005–W014；服务后续单cell分析与受限修改，不替代M1完整Stage2、baseline和Stage6闭环 |
 | 授权依据与范围 | 用户2026-11-16在W014验收及U06方案说明后要求推进下一步；沿用独立执行session。本轮执行调查、具体合同/样张、最小改造方案及独立方案review，完成后交PM接收 |
 | 起始版本 / 分支 | main `3b8d78902591bca32ec9b8ee5d3167d115e1a974`（W014已验收）；`codex/w015-single-cell-analysis-plan`最新远端准备提交。准备提交仅文档，不带入W012 A2候选 |
-| 当前阶段 / 阻塞 | **可执行：方案与实施准备。** 目前无阻塞本轮调查的待决项；产品实施须在具体方案及独立review交PM接收后另行明确范围，不能把本任务准备验收记为入口已经可用 |
+| 当前阶段 / 阻塞 | **方案已验收并集成。** PR72及[PM1](#pm1-acceptance)接收A1–A7；首个产品实施另见[W016](W016-single-cell-analysis.md)，本任务通过不表示入口已实现 |
 | 写入范围 | 本任务的方案、执行、review区及`docs/tasks/W015/`中的方案、候选样张和只读调查探针/小型输出。PM要求、阶段、current-work由PM维护 |
 | 非目标 | 本轮不改runtime、正式测试、固定fixture/答案、现行schema/wire及架构正文；不实现生产parser、baseline LVS冻结验证、上层几何窗口、实际修改/发布、EDA调用或新wire性能优化 |
 | 架构依据 | 上述main的[architecture](../architecture.md) §2.2–2.3、3.6、5.6–5.9、11.10/11.13/11.15与12；[U06](../roadmap.md#production-body-evidence)、[W014生产方案](W014/production-body-scope.md)、[W014 PM2](W014-terminal-body-relations.md#pm2-integration)；具体格式仍为提案，不能覆盖现行合同 |
@@ -114,3 +114,28 @@ S1–S7为候选synthetic，新产品仍需真实文件验收、旧DTO/wire pari
 本轮PM仅建立要求和执行入口。W015方案未交付、未验收，产品尚未实施。
 执行分支及[启动prompt](W015/execution-prompt.md)可供独立session恢复；
 完成A1–A7后交PM接收具体合同及第一实现包，不自行进入产品修改。
+
+
+<a id="pm1-acceptance"></a>
+
+### PM1 方案接收与下一实施包
+
+PM已读取交付`a73713bc8ff7e1e2d4cc61ab93fbd3ace178753d`的合同、S1–S7、源码调查、
+实施步骤及独立review；A1–A7接收。F01候选URI闭合、F02认证wrapper所有权已独立关闭，
+F03/F04源码和资源口径修正成立，剩余必须项0。11个受审核心文件与冻结`a2d55db…`哈希一致，
+284个runtime/tests/config与原产品逐字节相同；后续补记未冒称新产品验证。
+
+通过[PR72](https://github.com/LucianoHoult/Layauto/pull/72)集成，merge为
+`d0bb5628384f3a9fec1fe87b6311b854996f574b`，tree等于交付head。
+本次重跑文档/身份核查、已有parser候选探针，并在实际merge重跑候选组合；均通过，
+详见[PM回执](W015/pm-receipt/README.md)。不重复双全量/typing/build/安装或大wire，
+不将已有parser探针、空CI状态或方案review当成新分析入口/生产通过。
+
+采纳推荐的独立只读入口、独立manifest/header及local认证、facet状态和旧接口兼容方案。
+具体synthetic输入格式和窄人工声明属于用户已确认方向内的实现收敛，不新增生产能力承诺，
+无需重新选择D1。正式分析边界同步架构，首包实施交[W016](W016-single-cell-analysis.md)。
+W016明确补资料后新调用/重认证、无交互挂起，local是选定cell scope且首包限flat；
+Receipt再次消费只作内部探针，不据此新增公开续算API。上述澄清不改变受审核心方案。
+
+历史候选和原失败/评审材料保留，W015分支不删除。下一session从W016准备分支按新prompt
+实施，不重新执行W015方案prompt；当前尚未实现新API，完整M1与真实EDA/PDK边界不变。

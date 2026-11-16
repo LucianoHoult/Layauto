@@ -1,0 +1,33 @@
+{
+  "status": "plan_accepted_and_integrated",
+  "reviewed_head": "a73713bc8ff7e1e2d4cc61ab93fbd3ace178753d",
+  "reviewed_core": "a2d55dbf20c1b07b9f5ca3faddad9c6a8721637b",
+  "merge": "d0bb5628384f3a9fec1fe87b6311b854996f574b",
+  "pr": 72,
+  "core_files_hash_checked": 11,
+  "unchanged_product_test_config_files": 284,
+  "real_checks": [
+    "delivery-check",
+    "identity",
+    "candidate",
+    "merge-candidate"
+  ],
+  "limits": [
+    "Documentation and existing parser probes only; no new analysis API implemented.",
+    "No repeat full product matrix, build/install or resource benchmark."
+  ],
+  "files": {
+    "candidate.command.json": "cd095535cdc983f8addd87fd45a544d9675ceb2a2b5a7d8a2cfee2895cb8ae6c",
+    "candidate.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "candidate.stdout.json": "ab6a5dd827374874ea8c9ad3ee3f94d8dc1b5f8d54537ca9d79aa158308565ff",
+    "delivery-check.command.json": "29624832bc2f77f5cf4763f7cad8cb6b1c5460862916f430da0ecf5c521976e3",
+    "delivery-check.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "delivery-check.stdout.json": "82eed0eb5cf1079be98f0d629b93c072173cafe5f6b7d884d9d6cf63726b09b9",
+    "identity.command.json": "6da5e1fe537b2139474b1de6d4f95e82a1b1b3c2cf5a27d4a5e839ba434c6bff",
+    "identity.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "identity.stdout.json": "7cda0a799da8d687e9586c3aa3fb7d89dc9fef03fee18c55c375b214f06067d7",
+    "merge-candidate.command.json": "bfd2076bb2ab4e124ae4498f2e4f678c6ae97e2d81f25e85d721a7c69f06af2b",
+    "merge-candidate.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "merge-candidate.stdout.json": "ab6a5dd827374874ea8c9ad3ee3f94d8dc1b5f8d54537ca9d79aa158308565ff"
+  }
+}

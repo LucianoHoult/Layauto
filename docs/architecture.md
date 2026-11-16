@@ -133,6 +133,33 @@ Stage 1 不应做的事：
 - 不应根据 query 结果直接生成 `Device.fin_track_indices` 或 `Net.segments` 等工作状态。
 - 不应进行 resize 或任何几何写回。
 
+<a id="local-readonly-analysis"></a>
+
+#### 独立只读分析组件边界（W016实施合同）
+
+[W015方案已接收](tasks/W015-single-cell-analysis-entry.md#pm1-acceptance)，
+[W016](tasks/W016-single-cell-analysis.md)负责实施独立的`analyze_cell(AnalysisRequest)`。
+本段规定目标合同，不表示实现已交付。它不进入完整Stage1–6运行，也不放宽上述完整run要求。
+
+分析使用独立版本manifest/header和local认证，选择实际GDS/source CDL、query raw/header/
+requests/dialect、tech及limitations；首包仅已声明synthetic、flat capability，query仍必需。
+不需要target/export/validation文件，不构造target=source；旧site、header、receipt和wire
+不因新分析而接受缺字段。真实生产query不能通过删除旧header字段转换成更宽松证据。
+
+本地事实、父级/global关系、外部body证明与人工声明分scope保留。外部证据未选时，可认证的
+本地事实继续分析，body观测/父级关系未知；选中但读错、绑定错或违例须定位报告，不降为缺省。
+人工声明不证明导通。结果明确各facet的可用/错误/未执行及来源、缺项与受阻操作；
+`completed`仅表示分析处理完成，不能表示所有规则通过、完整提取匹配、生产准入或修改许可。
+
+新Receipt由normalization按captured bytes完整认证；domain只冻结中立Evidence/只读view，
+不反向依赖parser。诊断report不可decode成受信receipt。分析facade不访问publication repository，
+不创建run/attempt、baseline、no_change、terminal或可提交几何。完整运行仍走原pipeline合同。
+首包只公开顶层分析，不提供公开receipt续算/持久化入口。
+
+输入在调用开始显式选择，缺项在结果中报告；补资料后新调用重新获取并认证，旧结果不变，
+不在运行中挂起补文件或暗改输入。local表示选定cell的scope，不等于已支持任意层级；
+超出flat capability的reachable hierarchy定位unsupported，不能隐式flatten。
+
 ### 2.3 Stage 2：事实归一化与 layout state 构建
 
 Stage 2 的核心不是创建某个固定 package tree，而是把 Stage 1 的 schema-canonical evidence 做 semantic / identity / spatial normalization，形成几类**来源清楚、生命周期不同、后续消费者明确**的事实对象；raw CDL diff、raw ECO command 或 raw signoff feedback 也在这里归一化为 typed target intent。Current circuit state 从 source CDL 初始化、可由 Stage 5 commit 更新；target circuit / target intent 是 immutable reference，不被 commit 改写。下面出现的 `domain.*` / `state.*` / `annotation.*` 名称是建议实现落点，用于表达职责边界；真正的架构要求是数据所有权和依赖方向，而不是这些目录名本身。
@@ -2158,6 +2185,9 @@ Selected FinCount/DeviceExtraction profile决定 raw/effective FIN、active、ga
 **Stage boundary 要求。**
 `pipeline.py` 应显式记录每个 stage 的输入、输出和 tagged failure result。被捕获的 Stage 1–5 failure冻结 failure RunRecord；`run_record_freeze` 本身失败按专门 variant处理。Crash-durable profile 的 crash/OOM/power loss 由 durable RunAttempt journal与启动 recovery补成 interrupted/requires-review record，不能承诺在故障瞬间一定有 PipelineResult；process-local MVP 不承诺断电恢复。Stage 6 failure不修改前置 RunRecord。`ValidationResult` 只表示 checks，`ReportingResult` 只表示 report/visualization outcome，最终 PipelineResult汇总 refs。Changed success在 Stage 5 publication后才有新 snapshot；no-change success复用当前 snapshot且 commit chain为空。任何降级/跳过都进入相应 record。
 
+独立`analysis.py`仅编排获取、纯分析和诊断view，按[只读分析边界](#local-readonly-analysis)执行，
+不调用此pipeline或repository来产生运行/发布状态；importers/normalization/domain的依赖方向不变。
+
 ### 11.14 `legacy_mvp/` 与代码取用原则
 
 仓库级 `legacy_mvp/` 是历史实现，不是 v2 package、runtime dependency 或迁移适配层。只有满足以下条件的现有逻辑才可取用并迁入 v2 owner：
@@ -2220,6 +2250,10 @@ Legacy MVP 中符合 v2 架构要求的实现可以按职责复用，例如 CDL 
 ### 12.1 `site_config.yaml`
 
 `site_config.yaml` 是一次 run 的 manifest。它描述输入/输出路径、tech bundle 入口、Stage 1 evidence acquisition 策略、tool adapter 参数、export policy 与 validation policy。它不承载 device instance、device pins、net membership、target nfin、shape bbox、Calibre query 内容等设计事实。
+
+独立只读分析使用自己的版本化manifest，不是site_config的宽松模式；它不能声明完整运行、
+替代target/policy或授予修改许可。输入/缺项和来源边界见[只读分析合同](#local-readonly-analysis)，
+实施状态见W016。
 
 建议 schema 分层：
 

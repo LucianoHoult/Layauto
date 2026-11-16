@@ -39,7 +39,7 @@ W012调查及[A1兼容hex优化](tasks/W012-capture-wire-performance.md#pm4-a1-i
 
 [W014](tasks/W014-terminal-body-relations.md#pm2-integration)已通过PR #70验收集成，承接W011/W013核对现行synthetic器件D/G/S/B与source网络，单独计算外置body链及T04/T05外部范围/T08关系事实，推进R06/R07/R12/R16。U06具体场景与最小上下文方案已接收，生产可选输入实现尚未开始；不表示完整Stage2、全套mandatory或M1通过。
 
-近期[W015](tasks/W015-single-cell-analysis-entry.md)将U06收敛为单cell读取/分析入口合同、样张和最小兼容实施方案，先经独立方案review交PM；当前不改产品。它推进生产读取适配准备，不替代剩余Stage2与M1闭环，也不把真实PDK资料缺项隐藏为已支持。
+[W015](tasks/W015-single-cell-analysis-entry.md#pm1-acceptance)入口合同及实施方案已验收集成；近期[W016](tasks/W016-single-cell-analysis.md)实现独立只读分析入口，缺外部body时保留已认证本地事实。首包仅synthetic/flat、query必需，不替代剩余Stage2与M1闭环，也不代表真实PDK适配。
 
 | 里程碑 | 可观察能力与代表输入→结果 | 依赖 / 退出验收 |
 | --- | --- | --- |
@@ -171,7 +171,7 @@ W012调查及[A1兼容hex优化](tasks/W012-capture-wire-performance.md#pm4-a1-i
 | 显式未选择body资料，或已选择但文件缺失/格式错误/绑定错误/连接违例 | 区分“未提供”与“提供了不可用或错误的资料”；后者报告实际错误及来源，不静默按可选缺省处理，也不把已发现违例改写为未知 |
 | 修改超出body/boundary冻结证明范围 | 旧证明失效，重验或拒绝；不继续沿用旧assurance |
 
-**近期任务：** [W015](tasks/W015-single-cell-analysis-entry.md)承接W014具体场景，调查现行body认证耦合，给推荐入口、状态表、S1–S7样张和可直接实施的首包计划；本轮是方案交付，实际支持范围和生产格式仍不得提前宣称。
+**近期任务：** [W015方案](tasks/W015-single-cell-analysis-entry.md#pm1-acceptance)已接收，[W016](tasks/W016-single-cell-analysis.md)负责首包实现及新旧合同兼容。资料在开始时显式选择，缺项随结果返回，补资料后新调用重认证；本地scope不隐含层级支持。当前新API尚未交付。
 
 **落实位置与现状：** 生产读取适配首交应覆盖缺资料及部分测试结果；正式body/extraction、mandatory checks与运行接入任务应覆盖替代证据、完整运行拒绝和证明失效。接口及状态应与R22/R25现有错误/验证合同衔接，并保持G1–G4/G5真实准入门。当前W005统一入口仅支持声明的synthetic范围，`body_context`仍必填，缺文件返回`RequiredBodyContextUnavailable`；本次需求登记不修改W003/W004样本、W005–W007实现或W008 A1–A8。准备后续任务时必须回查本项，不能直接把toy必填字段推广为全部生产格式要求。
 
