@@ -7,8 +7,8 @@
 | ID / 目标 | W014；把已定位器件、局部物理分量及网络证据连接起来，逐端核对 source CDL 的 D/G/S/B，并单独证明现行 synthetic 外部 body 关联 |
 | 里程碑 / 依赖 | M1 Stage 2；W007 source/device/net identities，W009 channel/terminal regions，W010 local graph，W011 channel identity/FIN，W013 net coverage。仍不完成整个M1 |
 | 授权 | 2026-11-13用户在W013验收后要求继续推进；沿用独立执行session、先具体方案及独立review、完成交PM的方式 |
-| 恢复 | 从main `00ee6c6f51b683a8aefa96a5415b7ca969778502`（W013验收补记）准备；执行分支 `codex/w014-terminal-body-relations`，接手该分支最新PM准备提交。产品冻结仍为W013的`2a45938`，不得带入W012 A2候选 |
-| 阶段 | **可执行：先方案与独立方案review，必须项关闭后在既定范围实施。** 未实现、未跑产品测试，PM准备不代替方案review |
+| 恢复 | 执行分支`codex/w014-terminal-body-relations`最新PM接收head；交付`6033537add14beadbbc441fdcfe5f6ef905ea948`，产品冻结`66f5b1e5369549ed8df361f89f099acfd2f39e17`。main仍`8f3f39562ed04d790c8d6c015f7c9b8742b6a3c4`；按独立合并前prompt继续，不重启执行或带入A2候选 |
+| 阶段 | **待验收：PM分支技术接收完成，待独立合并前复核。** 当前不代表最终验收或main集成，详见[PM1](#pm1-receipt) |
 | 允许写入 | v2内最小中立DTO、annotation/derive只读关系逻辑、必要normalization认证入口/codec及相关测试；本任务执行/方案区和`docs/tasks/W014/`。具体文件表由执行方案确定 |
 | 非目标 | 不改已验收fixture/答案、旧wire合同或历史证据；不实现全套工艺坐标、通用DRC引擎、color/pin-access全覆盖、跨cell routing、baseline/publication、ECO、Stage6或真实EDA。U06生产可选输入本轮只出具体方案，不改变现行reader必填body_context |
 | 架构依据 | 基线main的[architecture](../architecture.md) §2.3、3.3/3.6、4.5–4.7、5.6–5.9、11.2/11.5/11.9/11.15；[roadmap](../roadmap.md) R06/R07/R12/R16、[U06](../roadmap.md#production-body-evidence)；[验证复用](../collaboration/rules.md#verification-reuse) |
@@ -110,3 +110,18 @@ mandatory、真实LVS/生产准入、baseline/no_change或Stage6。此结论不�
 2026-11-13：PM对照架构、W011/W013实际接口、source CDL、现行physical/rules、oracle/body context及W004 helper，选择端子与外置body关系作为下一切片。U06本轮必须形成具体设计，但生产可选输入尚未授权为本轮实现范围。本次只准备任务和恢复入口，不改变runtime、fixture、旧协议或验收答案，未运行产品测试；只核文档链接、范围及Git身份。
 
 下一执行session按[执行prompt](W014/execution-prompt.md)先具体方案及独立review，再按门条件实施并交PM。完整M1/生产验收继续保留后续节点。
+
+
+<a id="pm1-receipt"></a>
+
+### PM1 分支技术接收
+
+PM核远端交付为`6033537add14beadbbc441fdcfe5f6ef905ea948`；读取任务要求、执行、方案/代码review、最终资源选择及U06设计。产品/测试/config对main仅15路径：5个新runtime模块、公开导出/typing配置及8个新测试/helper；fixture及旧codec未改。CR01–07/09–12关闭、CR08归因撤回和EG01工具关闭按原独立review采信，历史失败保持。
+
+本次实际执行`python -B docs/tasks/W014/pm-receipt-check.py`，exit0：[只读核对脚本](W014/pm-receipt-check.py)与[回执](W014/pm-receipt.json)核286项live/frozen Git/delivery Git/tar、81证据hash、21命令exit及stdout/stderr hash、两包各111 runtime字节。冻结为`66f5b1e5369549ed8df361f89f099acfd2f39e17`，source_id=`c7769fcbfb0312b93e4d44628c77ff21e273698a537eaba0e1454734b049d364`。没有新跑产品测试、typing、构建/安装或性能实验；原双1889、双65 typing、安装三路及独立关键反例按各自身份采信，不把文件核对冒作独立产品review。
+
+交付覆盖六个本地端＋两个独立context body关系；本地14/8/6及BN/BP unknown保持，八端比较、body几何/规则和原FIN差异分别存在。最终资源数据按R4选择及test-only delta链采信，新增wire约345KB，公开阶段耗时比同环境W013约1.133/1.031/1.093，峰值约196/492/204MiB；不是性能优化或最大输入证明。本次未重跑资源链。
+
+U06设计材料已接收作为后续任务依据：本地已知事实、父级/global关系、body物理证明分别表达；未选择上下文与错误已提供证据分开；人工声明不代替导通证明。后续可先收敛生产读取/分析入口，再处理选定profile的body证明与完整运行接入。当前不批准新的生产schema或宣称reader可省略body_context，亦不由设计文本放宽mandatory。具体生产入口/格式与资料调查仍待后续任务收敛。
+
+**仅完成分支技术接收，尚未最终验收或合main。** 下一独立session按[合并前review prompt](W014/independent-premerge-prompt.md)核A1–A9与关键body/DTO边界；无阻塞后PM再处理实际main集成和必要组合验证。现阶段不启动下一产品任务。
