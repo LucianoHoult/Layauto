@@ -1,12 +1,14 @@
 # 当前工作入口
 
-当前任务见[W015](tasks/W015-single-cell-analysis-entry.md)，最近完成节点见[W014 PM2](tasks/W014-terminal-body-relations.md#pm2-integration)，已完成节点见[W013 PM2](tasks/W013-net-annotation-coverage.md#pm2-integration)；W012 A2停止决定见[PM7](tasks/W012-capture-wire-performance.md#pm7-a2-stop)。详细决定、证据与review结论归任务文件。
+当前任务见[W016](tasks/W016-single-cell-analysis.md)，最近完成节点见[W014 PM2](tasks/W014-terminal-body-relations.md#pm2-integration)，已完成节点见[W013 PM2](tasks/W013-net-annotation-coverage.md#pm2-integration)；W012 A2停止决定见[PM7](tasks/W012-capture-wire-performance.md#pm7-a2-stop)。详细决定、证据与review结论归任务文件。
 
 ## 当前节点
 
-**W015单cell读取与分析入口已准备，当前执行范围为合同及实施准备。** 先完成实际body依赖调查、推荐入口/状态、S1–S7输入输出样张、兼容改造与第一实现包计划，经独立方案review后交PM；使用[执行prompt](tasks/W015/execution-prompt.md)，分支`codex/w015-single-cell-analysis-plan`。本轮不修改产品，现有完整reader仍必填body_context；不把方案交付当作生产入口可用。
+**W016单cell只读分析入口已准备，可进入产品实施。** 从实际文件生成本地分析和缺项结果，外部body可显式未选；旧完整读取合同不变。采用[W015 PM1](tasks/W015-single-cell-analysis-entry.md#pm1-acceptance)已接收方案，按[执行prompt](tasks/W016/execution-prompt.md)在`codex/w016-single-cell-analysis`推进。首包仍synthetic/flat/query必需，补资料后新调用重认证，无生产证明或修改许可。
 
-**W014已验收并通过[PR #70](https://github.com/LucianoHoult/Layauto/pull/70)合入main。** [PM2](tasks/W014-terminal-body-relations.md#pm2-integration)和[集成回执](tasks/W014/integration/receipt.json)记录实际merge三路公开组合及5项边界检查通过，剩余必须项0；原双1889等工程证据按冻结身份采信。六本地端＋两独立body关系已集成，保留FIN差异及本地body unknown。U06仍为设计，reader必填项未改；下一任务为W015合同及实施准备。
+**W015方案已验收并经PR72集成。** 核11个核心文件受审身份及284个未改产品文件，实际merge候选parser探针通过；[回执](tasks/W015/pm-receipt/README.md)记录采信与限制。新API尚未实现。
+
+**W014已验收并通过[PR #70](https://github.com/LucianoHoult/Layauto/pull/70)合入main。** [PM2](tasks/W014-terminal-body-relations.md#pm2-integration)和[集成回执](tasks/W014/integration/receipt.json)记录实际merge三路公开组合及5项边界检查通过，剩余必须项0；原双1889等工程证据按冻结身份采信。六本地端＋两独立body关系已集成，保留FIN差异及本地body unknown。U06仍为设计，reader必填项未改；下一任务为W016实施。
 
 **W013已验收并通过[PR #68](https://github.com/LucianoHoult/Layauto/pull/68)合入main。** [PM2](tasks/W013-net-annotation-coverage.md#pm2-integration)与[集成回执](tasks/W013/integration/receipt.json)记录实际merge三路公开组合和5项边界检查通过，剩余必须项0；R2双1731等工程证据按冻结身份采信。当前具备本地网络区域标注、覆盖与冲突草稿，正常本地body仍未知，007按现行合同拒绝。后续切片已定位W014；A2候选不集成。
 
@@ -38,7 +40,8 @@
 
 | 用途 | 恢复依据 |
 | --- | --- |
-| W015当前恢复 | codex/w015-single-cell-analysis-plan最新远端准备head；产品基线main 3b8d78902591bca32ec9b8ee5d3167d115e1a974，先执行方案A1–A7及独立review，交PM后再明确产品实施；不从A2候选派生 |
+| W016当前恢复 | codex/w016-single-cell-analysis最新远端准备head；方案merge d0bb5628384f3a9fec1fe87b6311b854996f574b，准备提交只改文档。按A1–A8实施、独立review后交PM |
+| W015历史恢复 | 交付a73713bc8ff7e1e2d4cc61ab93fbd3ace178753d；已由PR72及PM1验收集成，原分支保留，不重启方案prompt |
 | W014当前恢复 | 接手含PM2验收补记的最新main；产品merge f8280de44beacbca6b657627cbc5eed5f2b67bdd，已审head 39dba6f175fb02edab645756459403614a56b23f，冻结66f5b1e。原任务分支保留历史，后续另建分支，不重启旧prompt |
 | W013当前恢复 | 接手含PM2验收补记的最新main；产品merge088ed3c718eb5a0703511ff6b214274f30052ff1，已审head da90a793cc1d1e45ae7f2de26d9e98766191428d，冻结2a45938。原codex/w013-net-annotation-coverage保留历史，不再执行旧prompt；后续任务另建分支 |
 | W012 A2停止记录 | 原候选codex/w012-a2-private-typed-pack@6045d8f7e4d80e6d4bb794ed15717767a5e4cde0保留；[PM7](tasks/W012-capture-wire-performance.md#pm7-a2-stop)及停止回执，不作产品验收 |
@@ -89,7 +92,7 @@ W010/W011及W012 A1已验收集成，具有局部物理图及有限器件定位/
 
 W005已实现声明的synthetic文件读取组件，尚未验证真实生产方言或平台。后续可按实际支持范围准备由用户单向上传隔离服务器的测试包；无需等M1全闭环完成，也不将synthetic通过当正式生产准入。解析已有raw与实际调用Calibre获取query证据分别记录，前者不证明后者。
 
-用户2026-11-02新增的“生产环境不提供body tapcell时应正确处理”已登记为[U06需求](roadmap.md#production-body-evidence)。生产读取测试与body能力任务须区分无本地tap、无外部上下文、可信替代证据、完全缺证明及已提供但错误的资料，明确可继续范围和缺项。W014已交具体场景方案；W015正准备具体读取/分析入口合同及实施方案，当前统一入口仍要求body_context。首次生产测试准备和后续body任务派发前必须回查U06。
+用户2026-11-02新增的“生产环境不提供body tapcell时应正确处理”已登记为[U06需求](roadmap.md#production-body-evidence)。生产读取测试与body能力任务须区分无本地tap、无外部上下文、可信替代证据、完全缺证明及已提供但错误的资料，明确可继续范围和缺项。W014已交具体场景方案；W015具体合同已接收，W016开始实施准备，当前统一入口仍要求body_context。首次生产测试准备和后续body任务派发前必须回查U06。
 
 2026-11-03用户进一步明确：只提供待修改底层cell、tapcell与全局power rail定义在范围之外是实际使用场景。U06已补充本地已知端口/连接、上层net/电源关联与外部物理路径的区别，以及最小上下文和人工标注的证明边界；后续须考虑单cell分析/修改，不能仅用读取smoke覆盖此需求。开发负责先给出具体方案，当前无需用户逐项决策。
 
