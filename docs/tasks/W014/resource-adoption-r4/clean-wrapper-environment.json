@@ -1,0 +1,23 @@
+{
+  "classification": "explicit-command-override-delta-not-product-execution",
+  "baseline_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONPATH": "/workspace/Layauto",
+    "MPLCONFIGDIR": "/workspace/work/w014-env/mplconfig"
+  },
+  "clean_direct_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONPATH": "/workspace/Layauto",
+    "MYPY_CACHE_DIR": "/workspace/work/w014-mypy-development",
+    "MPLCONFIGDIR": "/workspace/work/w014-env/mplconfig"
+  },
+  "delta": {
+    "MYPY_CACHE_DIR": {
+      "baseline": null,
+      "clean_direct": "/workspace/work/w014-mypy-development"
+    }
+  },
+  "inspection": "All current runtime Python files contain no MYPY_CACHE_DIR read/reference; the resource argv runs no mypy. Interpreter, dependencies, capture bytes and original probe bytes were already checked identical.",
+  "baseline_command": "docs/tasks/W014/resources-early/w013-normal-direct.command.json",
+  "clean_direct_command": "docs/tasks/W014/resources-r4-direct-clean/run.command.json"
+}

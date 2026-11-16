@@ -11,6 +11,7 @@ from .effective import EffectiveGeometryResult, build_effective_geometry
 from .local_connectivity import LocalConnectivityResult, build_local_connectivity
 from .channel_identity import ChannelIdentityResult, build_channel_identity
 from .net_annotation import NetAnnotationResult, build_net_annotation
+from .terminal_relations import TerminalRelationsResult, build_terminal_relations
 
 __all__ = ['normalize', 'from_inputs_ready', 'from_parse_result', 'NormalizationInput', 'NormalizationResult',
            'GeometryInput', 'GeometryInputError', 'GeometryResult', 'build_geometry',
@@ -18,4 +19,5 @@ __all__ = ['normalize', 'from_inputs_ready', 'from_parse_result', 'Normalization
            'EffectiveGeometryResult', 'build_effective_geometry',
            'LocalConnectivityResult', 'build_local_connectivity',
            'ChannelIdentityResult', 'build_channel_identity',
-           'NetAnnotationResult', 'build_net_annotation']
+           'NetAnnotationResult', 'build_net_annotation',
+           'TerminalRelationsResult', 'build_terminal_relations']

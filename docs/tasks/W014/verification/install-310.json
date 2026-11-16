@@ -1,0 +1,27 @@
+{
+  "command": [
+    "/workspace/work/w014-final/clean-310/bin/python",
+    "-m",
+    "pip",
+    "install",
+    "--report",
+    "/workspace/Layauto/docs/tasks/W014/verification/install-310-report.json",
+    "/workspace/Layauto/docs/tasks/W014/verification/dist/layauto-0.2.0.tar.gz"
+  ],
+  "cwd": "/workspace/work/w014-final/installed-cwd",
+  "exit_code": 0,
+  "environment_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONPATH": "/workspace/work/w014-final/installed-cwd",
+    "PIP_CACHE_DIR": "/workspace/work/w014-final/pip-cache",
+    "MYPY_CACHE_DIR": "/workspace/work/w014-final/mypy-install-310",
+    "MPLCONFIGDIR": "/workspace/work/w014-final/mplconfig"
+  },
+  "started_at_utc": "2026-11-13T12:23:13.064693+00:00",
+  "finished_at_utc": "2026-11-13T12:23:24.187366+00:00",
+  "elapsed_seconds": 11.123,
+  "stdout": "install-310.stdout.txt",
+  "stdout_sha256": "2f71124933acaca92239a1424414fbbf68e452f35993cddea0b3dd415e4cc309",
+  "stderr": "install-310.stderr.txt",
+  "stderr_sha256": "acb54e480eed2b7cd8184c57bac5da5cbe9f32fa2e9ff2de7b8c99f1a0546020"
+}

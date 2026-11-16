@@ -1,0 +1,75 @@
+--- R2/test_w014_contracts.py
++++ final/test_w014_contracts.py
+@@ -59,6 +59,16 @@
+     assert restored.semantic_facts.target == accepted.semantic_facts.target
+     assert restored.semantic_facts.differences == accepted.semantic_facts.differences
+     assert codec.encode_record(restored) == wire
++    changed = dict(envelope.items())
++    outputs = dict(envelope['result'].items())
++    outputs['status'] = 'error'
++    changed['result'] = outputs
++    with pytest.raises(ValueError):
++        codec.decode_record(canonical_bytes(changed))
++    changed = dict(envelope.items())
++    changed['captured_input_wire'] = FrozenMap({'ref': accepted.input.value.ref.to_value()})
++    with pytest.raises(ValueError):
++        codec.decode_record(canonical_bytes(changed))
+ 
+ 
+ @pytest.mark.parametrize('field', ['relations', 'issues', 'channel_observations', 'body'])
+--- R2/test_w014_body_scope.py
++++ final/test_w014_body_scope.py
+@@ -111,16 +111,22 @@
+     assert len(relation.context_path['evidence_refs']) >= 2
+ 
+ 
+-def test_changed_gate_owner_is_rejected_at_the_real_public_boundary(tmp_path):
+-    from w007_cases import ready_copy
++def test_changed_gate_owner_is_rejected_by_w009_before_terminal_relations(tmp_path):
++    from w007_cases import ready_copy, read
+     from w009_cases import change_owner
+-    from w014_cases import build
++    from layauto_v2.normalization import (
++        build_geometry, build_effective_geometry, geometry_from_parse_result,
++    )
+     root = ready_copy(tmp_path)
+     change_owner(root, 'physical', lambda owner: owner['device_extraction_contract'].__setitem__(
+         'gate_operator', 'gate connects source and drain'))
+-    result = build(root)
++    geometry = build_geometry(geometry_from_parse_result(read(root)))
++    assert geometry.status == 'success'
++    result = build_effective_geometry(geometry)
+     assert result.status == 'error'
+-    assert any(issue.category == 'unsupported' and issue.source.uri == 'tech/physical.json'
++    assert result.input is geometry and result.completed == geometry.completed
++    assert any(issue.category == 'unsupported' and issue.code == 'UnsupportedRegionOperator'
++               and issue.source.uri == 'tech/physical.json'
+                and issue.source.field == '/device_extraction_contract/gate_operator' for issue in result.issues)
+ 
+ 
+@@ -153,3 +159,25 @@
+     assert paths['MP0']['body_edge_length_nm'] == 100
+     assert all(row['rail_edge_length_nm'] == 10 and row['chain_status'] == 'indeterminate'
+                for row in paths.values())
++
++
++def test_actual_local_opposite_body_overlap_is_a_rule_violation_without_erasing_contact(tmp_path):
++    from w005_cases import rebind
++    from w007_cases import ready_copy
++    from w009_cases import rewrite_geometry
++    from w014_cases import build, change_body
++    root = ready_copy(tmp_path)
++    rewrite_geometry(root, replace_layers={'BODY_N': [(0, 0, 120, 130)]})
++    def bind_actual_body(value):
++        next(row for row in value['local_bindings'] if row['layer'] == 'BODY_N')['bbox'] = [0, 0, 120, 130]
++    change_body(root, bind_actual_body)
++    rebind(root)
++    result = build(root)
++    assert result.status == 'error' and result.value is not None
++    assert any(issue.code == 'BodyOppositeTypeOverlap' for issue in result.issues)
++    assert any(row['domain'] == 'local' and row['positive_area_overlap'] is True
++               for row in result.value.body['body_pair_audits'])
++    assert all(path['chain_status'] == 'established' and path['rule_status'] == 'violation'
++               for path in result.value.body['paths'])
++    assert result.value.comparison_status == 'equal'
++    assert result.value.source_comparison_status == 'indeterminate'

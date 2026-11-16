@@ -1,0 +1,14 @@
+--- R4-R6/tests/contracts/test_w014_contracts.py
++++ R7/tests/contracts/test_w014_contracts.py
+@@ -143,7 +143,10 @@
+         reference = draft.derived.sources[0]
+     else:
+         seed = draft.channel_seeds[0] if where == 'channel' else draft.net_evidence[0]
+-        reference = seed.source
++        from layauto_v2.domain.source_location import ref_from_location
++        # A coordinate operand identifies the actual per-device/per-net raw
++        # response. ChannelSeed does not expose NetEvidence's source property.
++        reference = ref_from_location(seed.record['field_sources']['vertices_nm']['sources'][1])
+     binding = dict(draft.capture_binding.items())
+     binding['sources'] = tuple(row for row in binding['sources']
+                               if (row['uri'], row['sha256']) != (reference.uri, reference.sha256))

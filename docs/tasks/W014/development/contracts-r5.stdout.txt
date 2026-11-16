@@ -1,0 +1,33 @@
+............F
+=================================== FAILURES ===================================
+_____ test_neutral_malformed_selected_source_cell_has_explicit_value_error _____
+
+accepted = TerminalRelationsResult(input=LocalConnectivityResult(status='success', value=LocalConnectivityDraft(effective=Effecti...), name='VDD'),), support_status='established', schema_version='layauto-terminal-relations/1')), issues=()), issues=())
+
+    def test_neutral_malformed_selected_source_cell_has_explicit_value_error(accepted):
+        from layauto_v2.domain.identifiers import CellId
+        draft = accepted.value
+>       source = unchecked_replace(draft.source, selected_cell=CellId('absent-cell'))
+                                                               ^^^^^^^^^^^^^^^^^^^^^
+
+tests/contracts/test_w014_contracts.py:113: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<string>:4: in __init__
+    ???
+layauto_v2/domain/identifiers.py:31: in __post_init__
+    _name(self.name)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = 'absent-cell'
+
+    def _name(value: object) -> None:
+        _text(value, 'semantic name')
+        if not isinstance(value, str) or re.fullmatch(r'[A-Za-z_][A-Za-z0-9_]*', value) is None:
+>           raise ValueError('name is outside toy_literal_cdl/1 identifiers')
+E           ValueError: name is outside toy_literal_cdl/1 identifiers
+
+layauto_v2/domain/identifiers.py:23: ValueError
+=========================== short test summary info ============================
+FAILED tests/contracts/test_w014_contracts.py::test_neutral_malformed_selected_source_cell_has_explicit_value_error
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+1 failed, 12 passed in 260.98s (0:04:20)

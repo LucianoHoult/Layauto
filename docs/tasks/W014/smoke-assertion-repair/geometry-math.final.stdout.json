@@ -1,0 +1,509 @@
+{
+  "classification": "stdlib-raw-GDS-body-math-not-product-smoke",
+  "status": "passed",
+  "script_sha256": "046de7b6412100f5cdbbaf7f3083356e0dbfff4406bbc9f7aded9638f76f1ad3",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "nominal_tick_nm": 1,
+  "cases": {
+    "normal": {
+      "source_gds_sha256": "97cf8d88771ff97f2cf189f6ae6a2fdcce585fc14f93c93d0ecf32326b415429",
+      "raw_units_binding": [
+        {
+          "raw_hex": "3e4189374bc6a7f0",
+          "exact": "1152921504606847/1152921504606846976",
+          "nominal": "1/1000",
+          "ulp": "1/18446744073709551616"
+        },
+        {
+          "raw_hex": "3944b82fa09b5a53",
+          "exact": "19342813113834067/19342813113834066795298816",
+          "nominal": "1/1000000000",
+          "ulp": "1/19342813113834066795298816"
+        }
+      ],
+      "body_context_sha256": "bfeec36baf831f7c4e8ffe9cb7d37470807176afcb39ebb386ae786cf43aa039",
+      "boundary_record_count": 40,
+      "layer_counts": {
+        "BOUNDARY": 1,
+        "BODY_N": 1,
+        "BODY_P": 1,
+        "OD": 2,
+        "POLY": 1,
+        "FIN": 18,
+        "LI": 3,
+        "CONTACT": 4,
+        "VIA0": 3,
+        "GCONTACT": 1,
+        "M1": 4,
+        "MARKER": 1
+      },
+      "raw_FIN_qualified_counts": {
+        "MN0": 5,
+        "MP0": 7
+      },
+      "local_target_area_nm2_from_raw_rectangles": 35090,
+      "actives_nm": {
+        "MN0": [
+          20,
+          20,
+          100,
+          70
+        ],
+        "MP0": [
+          20,
+          110,
+          100,
+          180
+        ]
+      },
+      "active_margins_nm": {
+        "MN0": [
+          20,
+          20,
+          20,
+          20
+        ],
+        "MP0": [
+          20,
+          10,
+          20,
+          20
+        ]
+      },
+      "tap_margins_nm": {
+        "MN0": {
+          "body_margins_nm": [
+            8,
+            50,
+            8,
+            36
+          ],
+          "rail_margins_nm": [
+            8,
+            2,
+            8,
+            4
+          ]
+        },
+        "MP0": {
+          "body_margins_nm": [
+            8,
+            50,
+            8,
+            46
+          ],
+          "rail_margins_nm": [
+            8,
+            2,
+            8,
+            4
+          ]
+        }
+      },
+      "local_bindings": [
+        {
+          "id": "FRAME",
+          "layer": "BOUNDARY",
+          "bbox": [
+            0,
+            0,
+            160,
+            200
+          ]
+        },
+        {
+          "id": "BN",
+          "layer": "BODY_N",
+          "bbox": [
+            0,
+            0,
+            120,
+            90
+          ]
+        },
+        {
+          "id": "BP",
+          "layer": "BODY_P",
+          "bbox": [
+            0,
+            100,
+            120,
+            200
+          ]
+        },
+        {
+          "id": "MN",
+          "layer": "M1",
+          "bbox": [
+            0,
+            48,
+            45,
+            58
+          ]
+        },
+        {
+          "id": "MP",
+          "layer": "M1",
+          "bbox": [
+            0,
+            148,
+            45,
+            158
+          ]
+        }
+      ],
+      "external_shapes": [
+        {
+          "id": "BN.ext",
+          "layer": "BODY_N",
+          "bbox": [
+            -20,
+            0,
+            0,
+            90
+          ]
+        },
+        {
+          "id": "BP.ext",
+          "layer": "BODY_P",
+          "bbox": [
+            -20,
+            100,
+            0,
+            200
+          ]
+        },
+        {
+          "id": "MN.ext",
+          "layer": "M1",
+          "bbox": [
+            -20,
+            48,
+            0,
+            58
+          ]
+        },
+        {
+          "id": "MP.ext",
+          "layer": "M1",
+          "bbox": [
+            -20,
+            148,
+            0,
+            158
+          ]
+        },
+        {
+          "id": "TN.ext",
+          "layer": "BTAP_N",
+          "bbox": [
+            -12,
+            50,
+            -8,
+            54
+          ]
+        },
+        {
+          "id": "TP.ext",
+          "layer": "BTAP_P",
+          "bbox": [
+            -12,
+            150,
+            -8,
+            154
+          ]
+        }
+      ],
+      "associations": [
+        {
+          "device": "MN0",
+          "local_body": "BN",
+          "external_body": "BN.ext",
+          "tap": "TN.ext",
+          "external_rail": "MN.ext",
+          "local_rail": "MN",
+          "expected_semantic_rail": "VSS"
+        },
+        {
+          "device": "MP0",
+          "local_body": "BP",
+          "external_body": "BP.ext",
+          "tap": "TP.ext",
+          "external_rail": "MP.ext",
+          "local_rail": "MP",
+          "expected_semantic_rail": "VDD"
+        }
+      ]
+    },
+    "extraction-mismatch": {
+      "source_gds_sha256": "0c5af13a4311eafc2d21d54189e14e8e78eb4ca791a88132e963163ac52c53b7",
+      "raw_units_binding": [
+        {
+          "raw_hex": "3e4189374bc6a7f0",
+          "exact": "1152921504606847/1152921504606846976",
+          "nominal": "1/1000",
+          "ulp": "1/18446744073709551616"
+        },
+        {
+          "raw_hex": "3944b82fa09b5a53",
+          "exact": "19342813113834067/19342813113834066795298816",
+          "nominal": "1/1000000000",
+          "ulp": "1/19342813113834066795298816"
+        }
+      ],
+      "body_context_sha256": "665df9b05186c228d23208b89072005a6f555e0604ca225e3cba7fa55d1f9e1d",
+      "boundary_record_count": 40,
+      "layer_counts": {
+        "BOUNDARY": 1,
+        "BODY_N": 1,
+        "BODY_P": 1,
+        "OD": 2,
+        "POLY": 1,
+        "FIN": 18,
+        "LI": 3,
+        "CONTACT": 4,
+        "VIA0": 3,
+        "GCONTACT": 1,
+        "M1": 4,
+        "MARKER": 1
+      },
+      "raw_FIN_qualified_counts": {
+        "MN0": 4,
+        "MP0": 7
+      },
+      "local_target_area_nm2_from_raw_rectangles": 34634,
+      "actives_nm": {
+        "MN0": [
+          20,
+          20,
+          100,
+          64
+        ],
+        "MP0": [
+          20,
+          110,
+          100,
+          180
+        ]
+      },
+      "active_margins_nm": {
+        "MN0": [
+          20,
+          20,
+          20,
+          26
+        ],
+        "MP0": [
+          20,
+          10,
+          20,
+          20
+        ]
+      },
+      "tap_margins_nm": {
+        "MN0": {
+          "body_margins_nm": [
+            8,
+            50,
+            8,
+            36
+          ],
+          "rail_margins_nm": [
+            8,
+            2,
+            8,
+            4
+          ]
+        },
+        "MP0": {
+          "body_margins_nm": [
+            8,
+            50,
+            8,
+            46
+          ],
+          "rail_margins_nm": [
+            8,
+            2,
+            8,
+            4
+          ]
+        }
+      },
+      "local_bindings": [
+        {
+          "id": "FRAME",
+          "layer": "BOUNDARY",
+          "bbox": [
+            0,
+            0,
+            160,
+            200
+          ]
+        },
+        {
+          "id": "BN",
+          "layer": "BODY_N",
+          "bbox": [
+            0,
+            0,
+            120,
+            90
+          ]
+        },
+        {
+          "id": "BP",
+          "layer": "BODY_P",
+          "bbox": [
+            0,
+            100,
+            120,
+            200
+          ]
+        },
+        {
+          "id": "MN",
+          "layer": "M1",
+          "bbox": [
+            0,
+            48,
+            45,
+            58
+          ]
+        },
+        {
+          "id": "MP",
+          "layer": "M1",
+          "bbox": [
+            0,
+            148,
+            45,
+            158
+          ]
+        }
+      ],
+      "external_shapes": [
+        {
+          "id": "BN.ext",
+          "layer": "BODY_N",
+          "bbox": [
+            -20,
+            0,
+            0,
+            90
+          ]
+        },
+        {
+          "id": "BP.ext",
+          "layer": "BODY_P",
+          "bbox": [
+            -20,
+            100,
+            0,
+            200
+          ]
+        },
+        {
+          "id": "MN.ext",
+          "layer": "M1",
+          "bbox": [
+            -20,
+            48,
+            0,
+            58
+          ]
+        },
+        {
+          "id": "MP.ext",
+          "layer": "M1",
+          "bbox": [
+            -20,
+            148,
+            0,
+            158
+          ]
+        },
+        {
+          "id": "TN.ext",
+          "layer": "BTAP_N",
+          "bbox": [
+            -12,
+            50,
+            -8,
+            54
+          ]
+        },
+        {
+          "id": "TP.ext",
+          "layer": "BTAP_P",
+          "bbox": [
+            -12,
+            150,
+            -8,
+            154
+          ]
+        }
+      ],
+      "associations": [
+        {
+          "device": "MN0",
+          "local_body": "BN",
+          "external_body": "BN.ext",
+          "tap": "TN.ext",
+          "external_rail": "MN.ext",
+          "local_rail": "MN",
+          "expected_semantic_rail": "VSS"
+        },
+        {
+          "device": "MP0",
+          "local_body": "BP",
+          "external_body": "BP.ext",
+          "tap": "TP.ext",
+          "external_rail": "MP.ext",
+          "local_rail": "MP",
+          "expected_semantic_rail": "VDD"
+        }
+      ]
+    }
+  },
+  "only_drawn_bbox_difference": [
+    {
+      "layer": "OD",
+      "normal_bbox_nm": [
+        20,
+        20,
+        100,
+        70
+      ],
+      "mismatch_bbox_nm": [
+        20,
+        20,
+        100,
+        64
+      ]
+    }
+  ],
+  "captured_source_count_each": 31,
+  "changed_capture_uris": [
+    "body/context.json",
+    "query/header.json",
+    "query/normalized/device_regions.yaml",
+    "query/raw/device_info_Q17.txt",
+    "source.gds"
+  ],
+  "audit": [
+    "40 raw BOUNDARY records in each source",
+    "all body local bindings uniquely match actual raw GDS",
+    "only lower OD active changes; BODY_N/P, local rails and external bodies/taps/rails are unchanged",
+    "normal MN0 margins 20/20/20/20; mismatch 20/20/20/26; both min20",
+    "MP0 margins remain20/10/20/20; external tap min8/2 unchanged",
+    "R2 existing captured GDS hashes agree; no product chain rerun"
+  ],
+  "not_run": [
+    "reader",
+    "normalization",
+    "resource product chain",
+    "installed smoke",
+    "final matrices"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "status": "failed",
+  "source_id": "803b4c4f444f6c32f68966799d25fe8dffad31a914138633b0ed383eaa102bce",
+  "failure_case": "w014-normal-readback",
+  "not_run": [
+    "w014-extraction-mismatch"
+  ],
+  "completed_commands": {
+    "w014-normal-readback.command.json": 1,
+    "w013-normal-readback.command.json": 0,
+    "w013-normal-direct.command.json": 0,
+    "prepare-fixed-mismatch.command.json": 0,
+    "w014-normal-direct.command.json": 0,
+    "w013-extraction-mismatch.command.json": 0
+  },
+  "reason": "New W014 retained-storage guard rejected legal class-level init=False default kind fields on real W006 readback records. Original outputs and pre-fix source preserved; not counted as full three-route success.",
+  "snapshot_sha256": "1642be0ae8130e226b6de63c95b022b1423af8201fdfca014a41133199d50c1e"
+}

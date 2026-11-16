@@ -1,0 +1,38 @@
+{
+  "base": "40559e0186f7d80bb8a7f3256c900e0fadd66191",
+  "old_authentication_files": [
+    {
+      "path": "layauto_v2/normalization/local_connectivity_codec.py",
+      "unchanged": true,
+      "sha256": "3443d1a836c305ce36cf7c117234a18ae8f1b847724b203ed071213b60574619"
+    },
+    {
+      "path": "layauto_v2/normalization/channel_identity_codec.py",
+      "unchanged": true,
+      "sha256": "ef7f6188a15512d832fe8c92f9a55fb76c6012126c40f1050b51a8c6cdb9c161"
+    },
+    {
+      "path": "layauto_v2/normalization/net_annotation_codec.py",
+      "unchanged": true,
+      "sha256": "9204909f37f67ebafc5f9522d6ebd575f7c6b04cf6455825a456dc60f8bcc49e"
+    },
+    {
+      "path": "layauto_v2/domain/codec.py",
+      "unchanged": true,
+      "sha256": "498efd7d2cd8367bb660883b6e23cc302776d27cfbe487687ef6eab37773b1c7"
+    },
+    {
+      "path": "layauto_v2/normalization/geometry_input.py",
+      "unchanged": true,
+      "sha256": "11d6ff6aff23eaa4e2aa4203c0a97ce2f596a56ba345c7614edf8f6e02bddf30"
+    }
+  ],
+  "tracked_fixture_changes": [],
+  "new_runtime": {
+    "layauto_v2/derive/terminal_relations.py": "f3ff5334b0d29ccf818ad7b50a3c6983b4418b733a02c8a8db18a91477d54c4a",
+    "layauto_v2/domain/terminal_relations.py": "20f1b840091a77b04e39abce82ce2901af5bc68468b6c947cb6cfba2a9219779",
+    "layauto_v2/normalization/terminal_relations.py": "456f5421607812a6a65bc36d6d87b64c95322d2d52def37da4804a0a9acce27e",
+    "layauto_v2/normalization/terminal_relations_codec.py": "bd72e501c7f74383836e1e64c29413b3e6bf08c10e1c8d7fb95a3d61207f7924",
+    "layauto_v2/derive/body_relations.py": "be59c340a021d9a9a3f25fa97729a8f2040c769522c9d36cbda6595377cad485"
+  }
+}

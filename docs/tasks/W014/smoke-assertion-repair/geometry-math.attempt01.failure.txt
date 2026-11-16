@@ -1,0 +1,1 @@
+Preparation script failed before reading GDS/body: Fraction(str, str) raised TypeError("both arguments should be Rational instances"). The task-owned format stores numerator/denominator as text. Corrected the independent stdlib verifier to parse those exact integer tokens. No product code or smoke was executed.

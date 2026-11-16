@@ -1,0 +1,51 @@
+{
+  "source": "/workspace/Layauto/docs/tasks/W014/resource-clearance.json",
+  "sha256": "b9c699e9d2284fbc40a32641c98a89f4293e9c244ee50f203f5298f0153a2222",
+  "decision": {
+    "status": "passed",
+    "classification": "independent-resource-checkpoint-clearance-not-product-or-PM-acceptance",
+    "reviewer": "/root/plan_review",
+    "source_id": "c7769fcbfb0312b93e4d44628c77ff21e273698a537eaba0e1454734b049d364",
+    "freeze_commit": "66f5b1e5369549ed8df361f89f099acfd2f39e17",
+    "cases": [
+      "normal-direct",
+      "normal-readback",
+      "extraction-mismatch"
+    ],
+    "parallel_matrices_safe": true,
+    "matrix_workers": 2,
+    "resource_measured_source_id": "998aa8052b3a6c89e3f87e029134ef8f6601535616c8b327d5ada44a29351a84",
+    "reference_source_id": "803b4c4f444f6c32f68966799d25fe8dffad31a914138633b0ed383eaa102bce",
+    "selected_original_reports": {
+      "normal-direct": "docs/tasks/W014/resources-r4-direct-clean/w014-normal-direct.json",
+      "normal-readback": "docs/tasks/W014/resources-r4/w014-normal-readback.json",
+      "extraction-mismatch": "docs/tasks/W014/resources-r4/w014-extraction-mismatch.json"
+    },
+    "evidence": {
+      "final_sample_selection": "docs/tasks/W014/resource-adoption-r4/final-selection.json",
+      "resource_review": "docs/tasks/W014/resource-review.md",
+      "independent_resource_audit": "docs/tasks/W014/review-evidence/resource_r4_audit.stdout.json",
+      "independent_test_only_delta_audit": "docs/tasks/W014/review-evidence/candidate_r7_identity_audit.stdout.json",
+      "independent_freeze_and_targeted_audit": "docs/tasks/W014/review-evidence/resource_freeze_audit.stdout.json",
+      "frozen_source_manifest": "docs/tasks/W014/development/frozen-source.json",
+      "actual_remaining_command": "docs/tasks/W014/development/remaining-r7.command.json"
+    },
+    "adoption_basis": [
+      "598 independent checks close the three original selected R4 reports, commands, logs, inputs, environment, probe, complete W010 wire and unchanged W013 dependency bytes.",
+      "301 independent checks prove R4-to-final changes only one W014 test else branch; all runtime, config, input and resource probe bytes are unchanged.",
+      "300 independent freeze checks prove all 286 selected live and Git commit bytes, actual 80 passing suffix cases, and the disjoint 85 adopted plus 80 actual targeted scope.",
+      "Original overlapped R4 direct remains preserved and is excluded from primary timing; clean direct is selected at its own original path and hash."
+    ],
+    "scheduling_conditions": [
+      "Exactly two interpreter matrices; each pytest invocation remains serial.",
+      "No overlapping resource, capture, build, package installation or installed smoke chains during the matrices.",
+      "Build and the two clean installation/smoke phases follow matrices serially."
+    ],
+    "limits": [
+      "Observed limits are 16 GiB memory and four CPU equivalents; selected route peak is 491.91 MiB.",
+      "Two observed route peaks plus 2 GiB reserve are about 2.961 GiB; this is scheduling evidence, not a full-matrix or maximal-input upper bound.",
+      "New frozen source still requires dual full 1889-test matrices, typing, build and clean installed smoke evidence before final product review.",
+      "This receipt does not grant PM acceptance, production admission, baseline publication or a merge."
+    ]
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "fresh_processes": [
+    {
+      "hash_seed": "11",
+      "wire_sha256": "7eb57f9159d41d4168f937ee9f4b40196b05dc7d8c46e76d3117102dad605d7a",
+      "relation_ref": "b67493de25c3264b3876e194c7dd7c15a02c586877f8e8345a11b393ba666b71",
+      "wire_bytes": 2642
+    },
+    {
+      "hash_seed": "997",
+      "wire_sha256": "7eb57f9159d41d4168f937ee9f4b40196b05dc7d8c46e76d3117102dad605d7a",
+      "relation_ref": "b67493de25c3264b3876e194c7dd7c15a02c586877f8e8345a11b393ba666b71",
+      "wire_bytes": 2642
+    }
+  ],
+  "status": "passed"
+}

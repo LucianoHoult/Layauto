@@ -1,0 +1,41 @@
+{
+  "probe": "W014 retained nested leaf storage",
+  "results": [
+    {
+      "leaf": "source_ref",
+      "rejected": false,
+      "retains_alias": true,
+      "wire_ignores_alias_mutation": true
+    },
+    {
+      "leaf": "terminal",
+      "rejected": false,
+      "retains_alias": true,
+      "wire_ignores_alias_mutation": true
+    },
+    {
+      "leaf": "device_id",
+      "rejected": false,
+      "retains_alias": true,
+      "wire_ignores_alias_mutation": true
+    },
+    {
+      "leaf": "cell_id",
+      "rejected": false,
+      "retains_alias": true,
+      "wire_ignores_alias_mutation": true
+    },
+    {
+      "leaf": "net_id",
+      "rejected": false,
+      "retains_alias": true,
+      "wire_ignores_alias_mutation": true
+    },
+    {
+      "leaf": "node_ref",
+      "rejected": false,
+      "retains_alias": true,
+      "wire_ignores_alias_mutation": true
+    }
+  ]
+}

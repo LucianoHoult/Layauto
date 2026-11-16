@@ -1,0 +1,35 @@
+{
+  "probe": "W014 retained nested leaf storage",
+  "results": [
+    {
+      "leaf": "source_ref",
+      "rejected": true,
+      "error": "terminal record has missing or undeclared retained fields"
+    },
+    {
+      "leaf": "terminal",
+      "rejected": true,
+      "error": "terminal record has missing or undeclared retained fields"
+    },
+    {
+      "leaf": "device_id",
+      "rejected": true,
+      "error": "terminal record has missing or undeclared retained fields"
+    },
+    {
+      "leaf": "cell_id",
+      "rejected": true,
+      "error": "terminal record has missing or undeclared retained fields"
+    },
+    {
+      "leaf": "net_id",
+      "rejected": true,
+      "error": "terminal record has missing or undeclared retained fields"
+    },
+    {
+      "leaf": "node_ref",
+      "rejected": true,
+      "error": "terminal record has missing or undeclared retained fields"
+    }
+  ]
+}

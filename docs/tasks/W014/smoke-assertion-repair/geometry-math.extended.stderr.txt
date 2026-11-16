@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/workspace/Layauto/docs/tasks/W014/smoke-assertion-repair/verify_geometry.py", line 181, in <module>
+    main()
+  File "/workspace/Layauto/docs/tasks/W014/smoke-assertion-repair/verify_geometry.py", line 160, in main
+    assert set(normal_sources) == set(mismatch_sources) and len(normal_sources) == 31
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

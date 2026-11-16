@@ -1,0 +1,48 @@
+actual_normal_ready
+case_done=source_dialect
+case_done=local_schema
+case_done=derived_owner
+case_done=body_provenance
+case_done=net_evidence_omitted
+{
+  "codec_sha256": "08f172f7e80ea56afbaf7a4d19391f9d5d44ba6e2a450adb154c61932933148a",
+  "cases": [
+    {
+      "case": "source_dialect",
+      "rejected": true,
+      "error_type": "ValueError",
+      "message": "terminal result differs from complete captured reconstruction"
+    },
+    {
+      "case": "local_schema",
+      "rejected": true,
+      "error_type": "ValueError",
+      "message": "terminal result differs from complete captured reconstruction"
+    },
+    {
+      "case": "derived_owner",
+      "rejected": true,
+      "error_type": "ValueError",
+      "message": "terminal result differs from complete captured reconstruction"
+    },
+    {
+      "case": "body_provenance",
+      "rejected": true,
+      "error_type": "ValueError",
+      "message": "terminal result differs from complete captured reconstruction"
+    },
+    {
+      "case": "net_evidence_omitted",
+      "rejected": true,
+      "error_type": "ValueError",
+      "message": "terminal result differs from complete captured reconstruction"
+    },
+    {
+      "case": "neutral_missing_coverage",
+      "rejected": true,
+      "error_type": "ValueError",
+      "message": "terminal draft differs from complete neutral reconstruction"
+    }
+  ],
+  "elapsed_seconds": 102.89614935899999
+}

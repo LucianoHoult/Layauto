@@ -1,0 +1,126 @@
+body_source_sha256=02861e79c2f7a2563c62ebc96e3c04e63f0ed6453bcc6ab5451dac76aebe1df5
+shared_local_ready
+case_done=normal
+case_done=unknown_lvs
+case_done=mn_wrong_body_only
+case_done=raw_uri_selects_source_cdl
+case_done=global_wrong_top
+{
+  "runtime_body_sha256": "02861e79c2f7a2563c62ebc96e3c04e63f0ed6453bcc6ab5451dac76aebe1df5",
+  "cases": [
+    {
+      "case": "normal",
+      "coverage_lvs": "not_run",
+      "body_lvs": "not_run",
+      "paths": [
+        {
+          "device": "MN0",
+          "chain": "established",
+          "rule": "satisfied",
+          "observed": [
+            "VSS"
+          ]
+        },
+        {
+          "device": "MP0",
+          "chain": "established",
+          "rule": "satisfied",
+          "observed": [
+            "VDD"
+          ]
+        }
+      ],
+      "issues": []
+    },
+    {
+      "case": "unknown_lvs",
+      "coverage_lvs": "unknown",
+      "body_lvs": "unknown",
+      "paths": [
+        {
+          "device": "MN0",
+          "chain": "established",
+          "rule": "satisfied",
+          "observed": [
+            "VSS"
+          ]
+        },
+        {
+          "device": "MP0",
+          "chain": "established",
+          "rule": "satisfied",
+          "observed": [
+            "VDD"
+          ]
+        }
+      ],
+      "issues": []
+    },
+    {
+      "case": "mn_wrong_body_only",
+      "coverage_lvs": "not_run",
+      "body_lvs": "not_run",
+      "paths": [
+        {
+          "device": "MN0",
+          "chain": "indeterminate",
+          "rule": "indeterminate",
+          "observed": []
+        },
+        {
+          "device": "MP0",
+          "chain": "indeterminate",
+          "rule": "satisfied",
+          "observed": []
+        }
+      ],
+      "issues": [
+        "BodyTypeMismatch",
+        "BodyObjectBindingMismatch"
+      ]
+    },
+    {
+      "case": "raw_uri_selects_source_cdl",
+      "rejected": false,
+      "paths": [
+        {
+          "device": "MN0",
+          "chain": "indeterminate",
+          "rule": "satisfied",
+          "observed": []
+        },
+        {
+          "device": "MP0",
+          "chain": "indeterminate",
+          "rule": "satisfied",
+          "observed": []
+        }
+      ],
+      "issues": [
+        "BodySourceBindingMismatch"
+      ]
+    },
+    {
+      "case": "global_wrong_top",
+      "rejected": false,
+      "paths": [
+        {
+          "device": "MN0",
+          "chain": "indeterminate",
+          "rule": "satisfied",
+          "observed": []
+        },
+        {
+          "device": "MP0",
+          "chain": "indeterminate",
+          "rule": "satisfied",
+          "observed": []
+        }
+      ],
+      "issues": [
+        "BodySourceBindingMismatch"
+      ]
+    }
+  ],
+  "elapsed_seconds": 20.01836146400001
+}

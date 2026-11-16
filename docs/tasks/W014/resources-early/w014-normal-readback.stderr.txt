@@ -1,0 +1,35 @@
+Traceback (most recent call last):
+  File "/workspace/Layauto/docs/tasks/W014/resources-early/resource_probe.py", line 218, in <module>
+    main()
+  File "/workspace/Layauto/docs/tasks/W014/resources-early/resource_probe.py", line 155, in main
+    result = measure(prefix + '_build', lambda: builder(local))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/Layauto/docs/tasks/W014/resources-early/resource_probe.py", line 124, in measure
+    value = operation()
+            ^^^^^^^^^^^
+  File "/workspace/Layauto/docs/tasks/W014/resources-early/resource_probe.py", line 155, in <lambda>
+    result = measure(prefix + '_build', lambda: builder(local))
+                                                ^^^^^^^^^^^^^^
+  File "/workspace/Layauto/layauto_v2/normalization/terminal_relations.py", line 111, in build_terminal_relations
+    return TerminalRelationsResult(input)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<string>", line 5, in __init__
+  File "/workspace/Layauto/layauto_v2/normalization/terminal_relations.py", line 94, in __post_init__
+    _require_input(self.input)
+  File "/workspace/Layauto/docs/tasks/W014/resources-early/resource_probe.py", line 102, in wrapped
+    return original(*positional, **keywords)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/Layauto/layauto_v2/normalization/terminal_relations.py", line 41, in _require_input
+    validate_terminal_graph(input, local_connectivity_codec._ALL_TYPES)
+  File "/workspace/Layauto/layauto_v2/domain/terminal_relations.py", line 74, in validate_terminal_graph
+    check(value)
+  File "/workspace/Layauto/layauto_v2/domain/terminal_relations.py", line 72, in check
+    check(getattr(item, field.name))
+  File "/workspace/Layauto/layauto_v2/domain/terminal_relations.py", line 72, in check
+    check(getattr(item, field.name))
+  File "/workspace/Layauto/layauto_v2/domain/terminal_relations.py", line 72, in check
+    check(getattr(item, field.name))
+  [Previous line repeated 4 more times]
+  File "/workspace/Layauto/layauto_v2/domain/terminal_relations.py", line 70, in check
+    raise ValueError('terminal record has missing or undeclared retained fields')
+ValueError: terminal record has missing or undeclared retained fields

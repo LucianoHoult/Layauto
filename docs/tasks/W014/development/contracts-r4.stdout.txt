@@ -1,0 +1,51 @@
+................F
+=================================== FAILURES ===================================
+_ test_neutral_encoding_rejects_omitted_or_changed_correlated_outputs[channel_observations] _
+
+accepted = TerminalRelationsResult(input=LocalConnectivityResult(status='success', value=LocalConnectivityDraft(effective=Effecti...), name='VDD'),), support_status='established', schema_version='layauto-terminal-relations/1')), issues=()), issues=())
+field = 'channel_observations'
+
+    @pytest.mark.parametrize('field', ['relations', 'issues', 'channel_observations', 'body'])
+    def test_neutral_encoding_rejects_omitted_or_changed_correlated_outputs(accepted, field):
+        draft = accepted.value
+        if field in ('relations', 'issues'):
+            poisoned = () if field == 'relations' else (accepted.input.completed[0],)
+        else:
+            poisoned = FrozenMap({})
+        forged = unchecked_replace(draft, **{field: poisoned})
+        with pytest.raises(ValueError):
+>           codec.encode_record(forged)
+
+tests/contracts/test_w014_contracts.py:83: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+layauto_v2/normalization/terminal_relations_codec.py:134: in encode_record
+    rebuilt_draft = _validate_draft(record)
+                    ^^^^^^^^^^^^^^^^^^^^^^^
+layauto_v2/normalization/terminal_relations_codec.py:101: in _validate_draft
+    if canonical_bytes(draft.to_value()) != canonical_bytes(rebuilt.to_value()):
+                       ^^^^^^^^^^^^^^^^
+layauto_v2/derive/terminal_relations.py:301: in to_value
+    'issues': tuple(_value(issue) for issue in self.issues), 'coverage': self.coverage})
+                                                                         ^^^^^^^^^^^^^
+layauto_v2/derive/terminal_relations.py:283: in coverage
+    'terminal_comparison': self.comparison_status, 'channel_comparison': self.channel_comparison_status,
+                                                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+layauto_v2/derive/terminal_relations.py:259: in channel_comparison_status
+    mapping(self.channel_observations['coverage'])['source_comparison'])
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = FrozenMap(_entries=()), key = 'coverage'
+
+    def __getitem__(self, key: str) -> Value:
+        for k, value in self._entries:
+            if key == k:
+                return value
+>       raise KeyError(key)
+E       KeyError: 'coverage'
+
+layauto_v2/domain/codec.py:29: KeyError
+=========================== short test summary info ============================
+FAILED tests/contracts/test_w014_contracts.py::test_neutral_encoding_rejects_omitted_or_changed_correlated_outputs[channel_observations]
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+1 failed, 16 passed in 218.02s (0:03:38)

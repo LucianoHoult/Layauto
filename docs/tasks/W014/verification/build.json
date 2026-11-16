@@ -1,0 +1,25 @@
+{
+  "command": [
+    "/workspace/work/w014-env/dev312/bin/python",
+    "-m",
+    "build",
+    "--outdir",
+    "/workspace/Layauto/docs/tasks/W014/verification/dist"
+  ],
+  "cwd": "/workspace/work/w014-final/source",
+  "exit_code": 0,
+  "environment_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONPATH": "/workspace/work/w014-final/source",
+    "PIP_CACHE_DIR": "/workspace/work/w014-final/pip-cache",
+    "MYPY_CACHE_DIR": "/workspace/work/w014-final/mypy-build",
+    "MPLCONFIGDIR": "/workspace/work/w014-final/mplconfig"
+  },
+  "started_at_utc": "2026-11-13T12:23:06.647430+00:00",
+  "finished_at_utc": "2026-11-13T12:23:10.162440+00:00",
+  "elapsed_seconds": 3.515,
+  "stdout": "build.stdout.txt",
+  "stdout_sha256": "f2bcd7d45f90bf51202eeea2230b4dba31c9edd0f1c34367a0332221068dd3fc",
+  "stderr": "build.stderr.txt",
+  "stderr_sha256": "7b2888f78d7fa636ed83e6385e6be3fdaf145831d191ec5b2a189ea147e86505"
+}

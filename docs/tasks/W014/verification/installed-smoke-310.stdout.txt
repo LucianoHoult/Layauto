@@ -1,0 +1,87 @@
+{
+  "python": "3.10.22 (main, Oct  3 2026, 01:32:06) [Clang 22.1.3 ]",
+  "executable": "/workspace/work/w014-final/clean-310/bin/python",
+  "package": "/workspace/work/w014-final/clean-310/lib/python3.10/site-packages/layauto_v2/__init__.py",
+  "distribution_version": "0.2.0",
+  "cases": {
+    "normal-direct": {
+      "wire_bytes": 23451056,
+      "wire_sha256": "b77ad40fd3fa58f734bb69f0af77cc360bcd39042167f2c1a67bf45203cf7c72",
+      "compact_envelope_bytes": 660855,
+      "public_roundtrip_equal": true,
+      "public_result_digest_checked": true,
+      "build_seconds": 22.07700574900082,
+      "encode_seconds": 31.25321267199979,
+      "decode_seconds": 44.66257768700234,
+      "terminal_count": 8,
+      "local_terminal_count": 6,
+      "independent_body_count": 2,
+      "terminal_comparison": "equal",
+      "retained_MN0_fin_count": 5,
+      "retained_MN0_source_fin_count": 5,
+      "local_nodes_edges_components": [
+        14,
+        8,
+        6
+      ],
+      "unknown_local_body_components": 2,
+      "direct_annotation_nm2": 3170,
+      "uncovered_annotation_nm2": 31920
+    },
+    "normal-readback": {
+      "wire_bytes": 60092360,
+      "wire_sha256": "5a2bb6b86a86091743cbdc2056fd860db7a2d62e245fbb2cc10bc3484f0b6ff0",
+      "compact_envelope_bytes": 661503,
+      "public_roundtrip_equal": true,
+      "public_result_digest_checked": false,
+      "build_seconds": 40.225230148000264,
+      "encode_seconds": 45.8411586780021,
+      "decode_seconds": 84.18703798199931,
+      "terminal_count": 8,
+      "local_terminal_count": 6,
+      "independent_body_count": 2,
+      "terminal_comparison": "equal",
+      "retained_MN0_fin_count": 5,
+      "retained_MN0_source_fin_count": 5,
+      "local_nodes_edges_components": [
+        14,
+        8,
+        6
+      ],
+      "unknown_local_body_components": 2,
+      "direct_annotation_nm2": 3170,
+      "uncovered_annotation_nm2": 31920
+    },
+    "extraction-mismatch": {
+      "wire_bytes": 23451379,
+      "wire_sha256": "204d4aff450bf53121d6b91f93b3c3fdeda6187b65a20bc79ea9d9e07ca8a3c8",
+      "compact_envelope_bytes": 659706,
+      "public_roundtrip_equal": true,
+      "public_result_digest_checked": false,
+      "build_seconds": 21.438207475002855,
+      "encode_seconds": 26.54595524799879,
+      "decode_seconds": 43.67242141099996,
+      "terminal_count": 8,
+      "local_terminal_count": 6,
+      "independent_body_count": 2,
+      "terminal_comparison": "equal",
+      "retained_MN0_fin_count": 4,
+      "retained_MN0_source_fin_count": 5,
+      "local_nodes_edges_components": [
+        14,
+        8,
+        6
+      ],
+      "unknown_local_body_components": 2,
+      "direct_annotation_nm2": 3170,
+      "uncovered_annotation_nm2": 31464
+    }
+  },
+  "attempt_unchanged": true,
+  "checkpoint_unchanged": true,
+  "terminal_absent": true,
+  "limitations": [
+    "Finite synthetic D/G/S/B and external body draft; not complete extraction, mandatory-rule, production LVS assurance or a run terminal.",
+    "Installation-smoke mismatch URI is correctness-only; not fixed-URI performance evidence."
+  ]
+}

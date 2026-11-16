@@ -1,0 +1,15 @@
+START W005_read_inputs
+DONE W005_read_inputs 0.6503012949999629
+START W008_adapter_build
+DONE W008_adapter_build 0.33534877400006735
+START W009_build
+DONE W009_build 0.6491252990001612
+START W010_build
+DONE W010_build 9.33982746200013
+START W013_build
+DONE W013_build 12.934616535000032
+START W013_encode
+DONE W013_encode 14.468520896999962
+START W013_decode
+DONE W013_decode 27.229980051999974
+{"component": "w013", "case": "normal-direct", "wire_bytes": 23104092, "peak_kib": 206684}

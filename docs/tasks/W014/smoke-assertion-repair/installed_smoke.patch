@@ -1,0 +1,31 @@
+--- installed_smoke.before.py
++++ ../verification-tools/installed_smoke.py
+@@ -118,7 +118,7 @@
+     assert rows[('MN0', 'G')].target.ref != rows[('MP0', 'G')].target.ref
+     assert rows[('MN0', 'D')].node_refs != rows[('MN0', 'S')].node_refs
+     assert rows[('MP0', 'D')].node_refs != rows[('MP0', 'S')].node_refs
+-    check_body(draft.body, rows)
++    check_body(draft.body, rows, case)
+     assert draft.coverage['local_graph_union'] is False
+     assert draft.coverage['physical_pin_access_established'] is False
+     assert draft.coverage['production_matched_body_evidence'] is False
+@@ -196,7 +196,7 @@
+             'direct_annotation_nm2': 3170, 'uncovered_annotation_nm2': int(expected_total - 3170)}
+ 
+ 
+-def check_body(body: object, rows: dict[tuple[str, str], object]) -> None:
++def check_body(body: object, rows: dict[tuple[str, str], object], case: str) -> None:
+     """Exact independent body geometry witnesses, without a local graph union."""
+     from layauto_v2.domain.codec import FrozenMap
+     assert type(body) is FrozenMap
+@@ -211,7 +211,9 @@
+     assert {audit['domain'] for audit in body['body_pair_audits']} == {'local', 'external'}
+     assert all(audit['positive_area_overlap'] is False for audit in body['body_pair_audits'])
+     active_audits = {audit['device_id']['name']: audit for audit in body['active_audits']}
+-    assert active_audits['MN0']['margins_nm'] == (Fraction(20),) * 4
++    expected_mn0_margins = ((Fraction(20), Fraction(20), Fraction(20), Fraction(26))
++                            if case == 'extraction-mismatch' else (Fraction(20),) * 4)
++    assert active_audits['MN0']['margins_nm'] == expected_mn0_margins
+     assert active_audits['MP0']['margins_nm'] == (Fraction(20), Fraction(10), Fraction(20), Fraction(20))
+     assert all(type(margin) is Fraction for audit in body['tap_audits']
+                for name in ('body_margins_nm', 'rail_margins_nm') for margin in audit[name])

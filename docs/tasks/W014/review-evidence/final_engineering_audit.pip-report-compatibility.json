@@ -1,0 +1,8 @@
+{
+  "classification": "independent audit compatibility preparation, not product execution",
+  "prior_auditor_sha256": "73c6b9047fa0b0333c9856716b92b4c79615b0610b5bddc24dca67bd096cd0ed",
+  "updated_auditor_sha256": "3988fc522ea402db9e972a762f35dc7a19b68fd5d72eabe2a99b1a491600a184",
+  "observed_310_archive_info": "singular hash: sha256=<digest>",
+  "observed_312_archive_info": "singular hash plus hashes.sha256",
+  "change": "Require an explicit valid SHA-256 in either pip report format; if both exist, require equal values. No product evidence requirement removed."
+}

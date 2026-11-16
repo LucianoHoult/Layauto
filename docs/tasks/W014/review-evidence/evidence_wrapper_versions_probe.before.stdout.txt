@@ -1,0 +1,70 @@
+actual_neutral_ready
+case_done=body_evidence.schema_version
+case_done=body_evidence.parser_version
+case_done=derived.schema_version
+case_done=derived.parser_version
+case_done=local_rules.schema_version
+case_done=local_rules.parser_version
+{
+  "domain_sha256": "d7654ce54ab139f4be690d5616393cc503cd2bf1b660930273fece4bc8b09b89",
+  "codec_sha256": "08f172f7e80ea56afbaf7a4d19391f9d5d44ba6e2a450adb154c61932933148a",
+  "cases": [
+    {
+      "owner": "body_evidence",
+      "field": "schema_version",
+      "constructor_accepted": true,
+      "encode_accepted": true,
+      "wire_bytes": 1802430,
+      "wire_sha256": "04e5c764b35e14492078eb0e44f7085a075c72b87884222f32c5f050fb84f2c8",
+      "decode_accepted": false,
+      "decode_error": "ValueError",
+      "message": "invalid evidence discriminator/version"
+    },
+    {
+      "owner": "body_evidence",
+      "field": "parser_version",
+      "constructor_accepted": true,
+      "encode_accepted": true,
+      "wire_bytes": 1802436,
+      "wire_sha256": "c5627fb76db3ad73890cf45ccf12c659226cb14f0f6aa3c4c416e0eddea8b48e",
+      "decode_accepted": false,
+      "decode_error": "ValueError",
+      "message": "invalid evidence discriminator/version"
+    },
+    {
+      "owner": "derived",
+      "field": "schema_version",
+      "constructor_accepted": false,
+      "constructor_error": "ValueError",
+      "message": "invalid evidence discriminator/version"
+    },
+    {
+      "owner": "derived",
+      "field": "parser_version",
+      "constructor_accepted": false,
+      "constructor_error": "ValueError",
+      "message": "invalid evidence discriminator/version"
+    },
+    {
+      "owner": "local_rules",
+      "field": "schema_version",
+      "constructor_accepted": true,
+      "encode_accepted": true,
+      "wire_bytes": 1802423,
+      "decode_accepted": false,
+      "decode_error": "ValueError",
+      "message": "invalid evidence discriminator/version"
+    },
+    {
+      "owner": "local_rules",
+      "field": "parser_version",
+      "constructor_accepted": true,
+      "encode_accepted": true,
+      "wire_bytes": 1802432,
+      "decode_accepted": false,
+      "decode_error": "ValueError",
+      "message": "invalid evidence discriminator/version"
+    }
+  ],
+  "elapsed_seconds": 30.499593098999867
+}

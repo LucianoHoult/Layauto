@@ -1,0 +1,42 @@
+................................................................F
+=================================== FAILURES ===================================
+_______ test_changed_gate_owner_is_rejected_at_the_real_public_boundary ________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-0/test_changed_gate_owner_is_rej0')
+
+    def test_changed_gate_owner_is_rejected_at_the_real_public_boundary(tmp_path):
+        from w007_cases import ready_copy
+        from w009_cases import change_owner
+        from w014_cases import build
+        root = ready_copy(tmp_path)
+        change_owner(root, 'physical', lambda owner: owner['device_extraction_contract'].__setitem__(
+            'gate_operator', 'gate connects source and drain'))
+>       result = build(root)
+                 ^^^^^^^^^^^
+
+tests/contracts/test_w014_body_scope.py:121: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/contracts/w014_cases.py:23: in build
+    return build_terminal_relations(normal_local() if root == FIXTURE else build_local(root))
+                                                                           ^^^^^^^^^^^^^^^^^
+tests/contracts/w010_cases.py:26: in build_local
+    result = build_local_connectivity(build_effective(root))
+                                      ^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-agent/pytest-0/test_changed_gate_owner_is_rej0/input')
+
+    def build_effective(root=FIXTURE):
+        from layauto_v2.normalization import build_effective_geometry, build_geometry, geometry_from_parse_result
+        geometry = build_geometry(geometry_from_parse_result(read(root)))
+        assert geometry.status == 'success', geometry.issues
+        result = build_effective_geometry(geometry)
+>       assert result.status == 'success', result.issues
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: (EvidenceIssue(category='unsupported', code='UnsupportedRegionOperator', message='selected region operator/profile semantics are unsupported', source=SourceRef(uri='tech/physical.json', sha256='1adabd40be42680d819f7947012e13d31a8ce71c623c1fd892948e34b1fe913e', field='/device_extraction_contract/gate_operator', line=None, column=None, byte_offset=None, record_index=None)),)
+
+tests/contracts/w010_cases.py:20: AssertionError
+=========================== short test summary info ============================
+FAILED tests/contracts/test_w014_body_scope.py::test_changed_gate_owner_is_rejected_at_the_real_public_boundary
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+1 failed, 64 passed in 42.57s

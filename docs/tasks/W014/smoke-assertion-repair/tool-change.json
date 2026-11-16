@@ -1,0 +1,11 @@
+{
+  "reason": "Independent final specialization found unconditional normal MN0 margins in extraction-mismatch smoke.",
+  "original_sha256": "6bb0f70335fc6b0bbeb1090fec80521cc460f533dcb2fe25ca102657c34d3822",
+  "corrected_sha256": "25eea1ea828d1451c8ffcb5a9fd8d56a8131cb3048169e4a6713d5a72947257e",
+  "changed_only": "Case-aware exact MN0 four-side enclosure assertion; existing assertions retained.",
+  "not_run": [
+    "product chain",
+    "final matrix",
+    "installed smoke"
+  ]
+}

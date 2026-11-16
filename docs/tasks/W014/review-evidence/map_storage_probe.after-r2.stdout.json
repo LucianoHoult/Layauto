@@ -1,0 +1,29 @@
+{
+  "results": [
+    {
+      "shape": "extra",
+      "rejected": true,
+      "error": "terminal map has missing or undeclared retained fields"
+    },
+    {
+      "shape": "list_backing",
+      "rejected": true,
+      "error": "annotation map backing requires a native immutable tuple"
+    },
+    {
+      "shape": "duplicate_keys",
+      "rejected": true,
+      "error": "annotation map keys require unique exact text"
+    },
+    {
+      "shape": "missing_backing",
+      "rejected": true,
+      "error": "annotation map is missing immutable backing"
+    },
+    {
+      "shape": "cycle",
+      "rejected": true,
+      "error": "cyclic value in annotation graph"
+    }
+  ]
+}

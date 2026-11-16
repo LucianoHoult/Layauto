@@ -1,0 +1,10 @@
+{
+  "README.md": "a5c9dbc8628dee6d0c2c7da7e5cc09be5adb5d7ad06cf001cc8916ef79903974",
+  "adoption.json": "5d6ad0534c339682b0943a0b522420595ab8415246e81ed1b392ef6a26b6ed0d",
+  "build_final_selection.py": "5bbe005855d588fdb4423635f7fe556342f126c740eaead7215c54c0061be503",
+  "clean-wrapper-environment.json": "fe4435e343e4c7a05d1c3ce3674d300366696f3cab3f6698df0fa29be2964911",
+  "final-selection.json": "0781eef345f68dc713b47c98312de29175c1b2ea1a3150b6dc32077ea9b56132",
+  "suite-identity-audit/README.md": "36921244867ecfdf2e54e1f0b6ca64d89f74c21c97ca5e89e7b77b58caa97e60",
+  "suite-identity-audit/adoption.json": "ab59bfa5f3b9aff34570c75dd105f23e5f134c6941db3ccd2bc305c1f1ae4a23",
+  "suite-identity-audit/manifest.json": "f33492e59243721ca256c63aba647d572c44e3eab8c52615e2894eb654e04ad6"
+}
