@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/workspace/Layauto/docs/tasks/W015/evidence/coupling_probe.py", line 91, in <module>
+    main()
+  File "/workspace/Layauto/docs/tasks/W015/evidence/coupling_probe.py", line 88, in main
+    assert cases[name]['issues'] == [code], (name, cases[name])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('no_body_key', {'status': 'error', 'issues': ['MissingField'], 'completed': [], 'captured_uris': ['site_config.yaml']})

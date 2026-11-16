@@ -72,14 +72,20 @@
 
 ## 方案与决定（执行准备，PM接收）
 
-待执行填写：源码依赖调查、推荐接口/状态及候选样张、兼容方案、实施步骤、资源计划、
-架构需要补充的条款建议和未决项。架构建议放本目录提案，不改现行正文。
+执行候选已形成：[源码依赖与决定](W015/plan.md)、[入口合同](W015/entry-contract.md)、
+[S1–S7具体样张](W015/interface-examples.md)、[兼容实施与资源计划](W015/implementation-proposal.md)、
+[可派发实施prompt草案](W015/implementation-prompt.md)。新入口/格式尚未实施，待PM接收；
+架构建议仅存提案，现行完整read_inputs/W006、DTO/wire及mandatory不变。
 
 ## 执行结果（执行）
 
-未执行。接手者记录工作区/branch/完整起始SHA、已有改动保护、实际命令/环境、
-证据身份及A1–A7覆盖。按[默认验证复用](../collaboration/rules.md#verification-reuse)
-说明实跑/采信/未覆盖/补跑触发；本轮是方案交付，不要求产品最终双全量。
+2026-11-16：从指定分支起点`e7c92c03d0b48aa143259da4fc9fbedc382efee0`执行，
+启动工作区干净。已交候选Python API/请求/状态/来源合同、S1–S7与实际候选manifest/header、
+兼容文件/DTO/wire表、有限真实文件首包步骤、T01–T10、资源门及生产资料未知表。
+实跑旧reader/geometry及6个临时反例、候选输入生成和文档/来源检查；未改产品/正式测试/固定fixture，
+未跑无关双矩阵/构建/安装或大wire。首轮探针期望代码错误及失败保留，修后exit0。
+完整A1–A7定位、实跑/按身份采信/未覆盖/补跑触发与PM恢复点见[执行交接](W015/delivery.md)。
+具体方案冻结后交未参与设计reviewer，review结果由其独立填写，不以执行者自查代替。
 
 ## Review结论（reviewer）
 

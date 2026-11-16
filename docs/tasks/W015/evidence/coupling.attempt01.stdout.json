@@ -1,0 +1,251 @@
+{
+  "base": "e7c92c03d0b48aa143259da4fc9fbedc382efee0",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "command": "python -B docs/tasks/W015/evidence/coupling_probe.py",
+  "cases": {
+    "normal": {
+      "status": "success",
+      "issues": [],
+      "completed": [
+        "config",
+        "tech",
+        "policies",
+        "header",
+        "gds",
+        "source_cdl",
+        "target_cdl",
+        "body",
+        "query"
+      ],
+      "captured_uris": [
+        "site_config.yaml",
+        "tech.json",
+        "tech/drawn.json",
+        "tech/derived.json",
+        "tech/physical.json",
+        "tech/formats.json",
+        "tech/coordinate.json",
+        "tech/rules.json",
+        "export_policy.json",
+        "validation_policy.json",
+        "limitations.json",
+        "source.gds",
+        "source.cdl",
+        "target.cdl",
+        "query/header.json",
+        "body/context.json",
+        "query/dialect.json",
+        "query/requests.json",
+        "query/raw/iXref.temp",
+        "query/raw/nXref.temp",
+        "query/raw/net_names.txt",
+        "query/raw/device_info_Q17.txt",
+        "query/raw/device_info_Q93.txt",
+        "query/raw/net_shapes_n_a.txt",
+        "query/raw/net_shapes_n_y.txt",
+        "query/raw/net_shapes_n_lo.txt",
+        "query/raw/net_shapes_n_hi.txt",
+        "/workspace/Layauto/tests/fixtures/w003_m1/query/normalized/instance_xref.yaml",
+        "/workspace/Layauto/tests/fixtures/w003_m1/query/normalized/net_xref.yaml",
+        "/workspace/Layauto/tests/fixtures/w003_m1/query/normalized/device_regions.yaml",
+        "/workspace/Layauto/tests/fixtures/w003_m1/query/normalized/net_regions.yaml"
+      ]
+    },
+    "geometry": {
+      "status": "success",
+      "local_gds_sources": [
+        "source.gds"
+      ],
+      "body_role_arity": 2,
+      "body_not_drawn_source": true
+    },
+    "no_body_key": {
+      "status": "error",
+      "issues": [
+        "MissingField"
+      ],
+      "completed": [],
+      "captured_uris": [
+        "site_config.yaml"
+      ]
+    },
+    "missing_body_file": {
+      "status": "error",
+      "issues": [
+        "RequiredBodyContextUnavailable"
+      ],
+      "completed": [
+        "config",
+        "tech",
+        "policies"
+      ],
+      "captured_uris": [
+        "site_config.yaml",
+        "tech.json",
+        "tech/drawn.json",
+        "tech/derived.json",
+        "tech/physical.json",
+        "tech/formats.json",
+        "tech/coordinate.json",
+        "tech/rules.json",
+        "export_policy.json",
+        "validation_policy.json",
+        "limitations.json",
+        "source.gds",
+        "source.cdl",
+        "target.cdl",
+        "query/header.json"
+      ]
+    },
+    "malformed_body": {
+      "status": "error",
+      "issues": [
+        "InvalidDocumentSyntax"
+      ],
+      "completed": [
+        "config",
+        "tech",
+        "policies"
+      ],
+      "captured_uris": [
+        "site_config.yaml",
+        "tech.json",
+        "tech/drawn.json",
+        "tech/derived.json",
+        "tech/physical.json",
+        "tech/formats.json",
+        "tech/coordinate.json",
+        "tech/rules.json",
+        "export_policy.json",
+        "validation_policy.json",
+        "limitations.json",
+        "source.gds",
+        "source.cdl",
+        "target.cdl",
+        "query/header.json",
+        "body/context.json"
+      ]
+    },
+    "wrong_body_binding": {
+      "status": "error",
+      "issues": [
+        "BodySourceBindingMismatch"
+      ],
+      "completed": [
+        "config",
+        "tech",
+        "policies",
+        "header",
+        "gds",
+        "source_cdl",
+        "target_cdl"
+      ],
+      "captured_uris": [
+        "site_config.yaml",
+        "tech.json",
+        "tech/drawn.json",
+        "tech/derived.json",
+        "tech/physical.json",
+        "tech/formats.json",
+        "tech/coordinate.json",
+        "tech/rules.json",
+        "export_policy.json",
+        "validation_policy.json",
+        "limitations.json",
+        "source.gds",
+        "source.cdl",
+        "target.cdl",
+        "query/header.json",
+        "body/context.json",
+        "query/dialect.json",
+        "query/requests.json",
+        "query/raw/iXref.temp",
+        "query/raw/nXref.temp",
+        "query/raw/net_names.txt",
+        "query/raw/device_info_Q17.txt",
+        "query/raw/device_info_Q93.txt",
+        "query/raw/net_shapes_n_a.txt",
+        "query/raw/net_shapes_n_y.txt",
+        "query/raw/net_shapes_n_lo.txt",
+        "query/raw/net_shapes_n_hi.txt"
+      ]
+    },
+    "missing_body_and_invalid_gds": {
+      "status": "error",
+      "issues": [
+        "RequiredBodyContextUnavailable"
+      ],
+      "completed": [
+        "config",
+        "tech",
+        "policies"
+      ],
+      "captured_uris": [
+        "site_config.yaml",
+        "tech.json",
+        "tech/drawn.json",
+        "tech/derived.json",
+        "tech/physical.json",
+        "tech/formats.json",
+        "tech/coordinate.json",
+        "tech/rules.json",
+        "export_policy.json",
+        "validation_policy.json",
+        "limitations.json",
+        "source.gds",
+        "source.cdl",
+        "target.cdl",
+        "query/header.json"
+      ]
+    },
+    "body_enclosure": {
+      "status": "success",
+      "issues": [],
+      "completed": [
+        "config",
+        "tech",
+        "policies",
+        "header",
+        "gds",
+        "source_cdl",
+        "target_cdl",
+        "body",
+        "query"
+      ],
+      "captured_uris": [
+        "site_config.yaml",
+        "tech.json",
+        "tech/drawn.json",
+        "tech/derived.json",
+        "tech/physical.json",
+        "tech/formats.json",
+        "tech/coordinate.json",
+        "tech/rules.json",
+        "export_policy.json",
+        "validation_policy.json",
+        "limitations.json",
+        "source.gds",
+        "source.cdl",
+        "target.cdl",
+        "query/header.json",
+        "body/context.json",
+        "query/dialect.json",
+        "query/requests.json",
+        "query/raw/iXref.temp",
+        "query/raw/nXref.temp",
+        "query/raw/net_names.txt",
+        "query/raw/device_info_Q17.txt",
+        "query/raw/device_info_Q93.txt",
+        "query/raw/net_shapes_n_a.txt",
+        "query/raw/net_shapes_n_y.txt",
+        "query/raw/net_shapes_n_lo.txt",
+        "query/raw/net_shapes_n_hi.txt",
+        "/tmp/w015-sy1wgx1u/query/normalized/instance_xref.yaml",
+        "/tmp/w015-sy1wgx1u/query/normalized/net_xref.yaml",
+        "/tmp/w015-sy1wgx1u/query/normalized/device_regions.yaml",
+        "/tmp/w015-sy1wgx1u/query/normalized/net_regions.yaml"
+      ]
+    }
+  }
+}

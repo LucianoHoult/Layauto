@@ -1,0 +1,15 @@
+{
+  "classification": "candidate synthetic input only; not accepted by current runtime",
+  "source_header": {
+    "uri": "../../../../../tests/fixtures/w003_m1/query/header.json",
+    "sha256": "54bdbd338863397483e2871923dbbb7d517c4b34d94e67a0988f3f0dbd270bea"
+  },
+  "generator": "docs/tasks/W015/evidence/prepare_candidate_input.py",
+  "changes": [
+    "new explicit local header/run identity",
+    "local dependency closure only",
+    "original raw bytes and source hashes retained",
+    "target excluded; no body or policy selection"
+  ],
+  "observed_results_generated": false
+}
