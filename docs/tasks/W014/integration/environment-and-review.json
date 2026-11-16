@@ -1,0 +1,32 @@
+{
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "executable": "/workspace/venvs/layauto/bin/python",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "dependencies": {
+    "pytest": "9.2.0",
+    "PyYAML": "6.0.3"
+  },
+  "merge": "f8280de44beacbca6b657627cbc5eed5f2b67bdd",
+  "review_head": "39dba6f175fb02edab645756459403614a56b23f",
+  "review_material_sha256": {
+    "docs/tasks/W014/independent-premerge-engineering.json": "05ab46028881f4cb8145930e28faff6c0be61542db9a04705b5b9a5ee3931fd5",
+    "docs/tasks/W014/independent-premerge-engineering.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/tasks/W014/independent-premerge-engineering.stdout.txt": "514726c6c29afd7c8ac9c698c473e038b24886c4b6ed5fd447745b2a46ec832a",
+    "docs/tasks/W014/independent-premerge-probe.py": "c5cc976e84a453c090de9a91cbf1644e6a72ce480e95f8346505ce2e90e3906a",
+    "docs/tasks/W014/independent-premerge-probe.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/tasks/W014/independent-premerge-probe.stdout.txt": "0a32ffc3b7ec4f26620e84ca2082ffd76c8bbaa76e8465a6c593e98d30eec42a",
+    "docs/tasks/W014/independent-premerge-resource-after.stderr.txt": "3b1cdd2a8b2cf6d1490f1874439c807e215c65aa28407328be50577f3a1cd20e",
+    "docs/tasks/W014/independent-premerge-resource-after.stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/tasks/W014/independent-premerge-resource-final.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/tasks/W014/independent-premerge-resource-final.stdout.txt": "dcb380e122f160064f1026aa2ba23316db6f1bf902bf5091fde3f40ef93d98f8",
+    "docs/tasks/W014/independent-premerge-resource.py": "b5c3775bf29e61794d5a0ef235eb1b7851e5aa1c87f2ee35d823ed5f8fbf31c0",
+    "docs/tasks/W014/independent-premerge-resource.stderr.txt": "29826b871fefab36b6e7e6b91385b9abf82dcd95e55354f2add9618ac6e8bc72",
+    "docs/tasks/W014/independent-premerge-resource.stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/tasks/W014/independent-premerge-review.md": "efb8a5335454d2d6fde75f8fcab73781a2fd0cffd9b2c0dfdd3827284b5b6b54"
+  },
+  "adopted_review_engineering_checks": 838,
+  "historical_engineering_checks": 840,
+  "difference": "Two historical live installation trees unavailable to premerge reviewer; package/install original evidence adopted. PM did not recreate these trees.",
+  "ci_statuses": [],
+  "ci_pass_claimed": false
+}

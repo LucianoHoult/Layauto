@@ -7,8 +7,8 @@
 | ID / 目标 | W014；把已定位器件、局部物理分量及网络证据连接起来，逐端核对 source CDL 的 D/G/S/B，并单独证明现行 synthetic 外部 body 关联 |
 | 里程碑 / 依赖 | M1 Stage 2；W007 source/device/net identities，W009 channel/terminal regions，W010 local graph，W011 channel identity/FIN，W013 net coverage。仍不完成整个M1 |
 | 授权 | 2026-11-13用户在W013验收后要求继续推进；沿用独立执行session、先具体方案及独立review、完成交PM的方式 |
-| 恢复 | 执行分支`codex/w014-terminal-body-relations`最新PM接收head；交付`6033537add14beadbbc441fdcfe5f6ef905ea948`，产品冻结`66f5b1e5369549ed8df361f89f099acfd2f39e17`。main仍`8f3f39562ed04d790c8d6c015f7c9b8742b6a3c4`；按独立合并前prompt继续，不重启执行或带入A2候选 |
-| 阶段 | **待验收：PM分支技术接收完成，待独立合并前复核。** 当前不代表最终验收或main集成，详见[PM1](#pm1-receipt) |
+| 恢复 | 从含[PM2](#pm2-integration)验收补记的最新main恢复；产品merge为`f8280de44beacbca6b657627cbc5eed5f2b67bdd`，已审head为`39dba6f175fb02edab645756459403614a56b23f`，冻结为`66f5b1e5369549ed8df361f89f099acfd2f39e17`。原W014分支保留历史；后续任务另建分支，不从A2候选派生 |
+| 阶段 | **已验收并集成main。** PR #70实际merge三路公开组合及5项边界检查通过，剩余必须项0；范围及证据见[PM2](#pm2-integration) |
 | 允许写入 | v2内最小中立DTO、annotation/derive只读关系逻辑、必要normalization认证入口/codec及相关测试；本任务执行/方案区和`docs/tasks/W014/`。具体文件表由执行方案确定 |
 | 非目标 | 不改已验收fixture/答案、旧wire合同或历史证据；不实现全套工艺坐标、通用DRC引擎、color/pin-access全覆盖、跨cell routing、baseline/publication、ECO、Stage6或真实EDA。U06生产可选输入本轮只出具体方案，不改变现行reader必填body_context |
 | 架构依据 | 基线main的[architecture](../architecture.md) §2.3、3.3/3.6、4.5–4.7、5.6–5.9、11.2/11.5/11.9/11.15；[roadmap](../roadmap.md) R06/R07/R12/R16、[U06](../roadmap.md#production-body-evidence)；[验证复用](../collaboration/rules.md#verification-reuse) |
@@ -142,3 +142,20 @@ PM核远端交付为`6033537add14beadbbc441fdcfe5f6ef905ea948`；读取任务要
 U06设计材料已接收作为后续任务依据：本地已知事实、父级/global关系、body物理证明分别表达；未选择上下文与错误已提供证据分开；人工声明不代替导通证明。后续可先收敛生产读取/分析入口，再处理选定profile的body证明与完整运行接入。当前不批准新的生产schema或宣称reader可省略body_context，亦不由设计文本放宽mandatory。具体生产入口/格式与资料调查仍待后续任务收敛。
 
 **仅完成分支技术接收，尚未最终验收或合main。** 下一独立session按[合并前review prompt](W014/independent-premerge-prompt.md)核A1–A9与关键body/DTO边界；无阻塞后PM再处理实际main集成和必要组合验证。现阶段不启动下一产品任务。
+
+
+<a id="pm2-integration"></a>
+
+### PM2 最终验收与main集成
+
+**W014在当前synthetic八端与外置body关系范围内验收通过，剩余必须修正项0。** PM读取[独立合并前报告](W014/independent-premerge-review.md)及原审计结果，核交付`39dba6f175fb02edab645756459403614a56b23f`相对PM1仅新增review材料。286项冻结源码/测试/config字节不变，CR01–07/09–12关闭、CR08归因撤回及原失败保留，A1–A9在授权范围接收。
+
+通过[PR #70](https://github.com/LucianoHoult/Layauto/pull/70)合入main，实际merge为`f8280de44beacbca6b657627cbc5eed5f2b67bdd`，完整tree与已审head相同，无冲突或产品增量。原分支保留，不带入W012 A2候选。
+
+本次实跑：Python3.12.14在该merge checkout串行执行direct/readback/extraction-mismatch公开build/encode/decode，三路全部通过。八端=6本地＋2独立body，本地图14/8/6、BN/BP本地unknown及annotation覆盖/缺口保持；FIN mismatch仍4对source5，不能因八端一致变成完整source匹配。readback attempt/checkpoint不变、attempt仍unsealed且无terminal；direct另核public digest与伪造support status拒绝。5项正式边界回归通过，覆盖缺context/缺operator/错误body来源绑定的reader拒绝及新W014/旧W007依赖guard。实际argv、输出、环境、耗时与hash见[集成回执](W014/integration/receipt.json)及[复现说明](W014/integration/README.md)。
+
+原双3.10/3.12各1889、双typing65、build及双clean安装源码外三路smoke按冻结身份采信，未重复全量/typing/构建/安装或性能矩阵。本次从源码checkout导入，不冒称新clean安装。独立premerge工程838项与历史840项的差别为旧主机两处安装树即时核查，原包、安装来源与输出仍可追溯；PM未重建那些临时树。GitHub未返回CI状态，不记为CI通过。新URI/运行身份导致wire与历史固定样本不同，不作提速或最大输入保证；保留原R4资源证据的单样本限制。
+
+U06作为设计交付接收：缺外部资料时保留本地已知，明确父级/global与body证明缺项；错误已提供证据不降成unknown，人工预期不当物理证明。现reader仍必填body_context，新生产入口/profile/输入格式及受信替代证明尚未实施或批准。本验收不关闭完整M1、其余mandatory、通用PDK/S-D策略、真实EDA/LVS、baseline/no_change/publication/Stage6。
+
+下一步由PM对照剩余Stage2依赖准备后续切片，U06设计作为生产读取/分析入口的具体依据。当前只完成W014接收与集成，未启动下一产品任务；接手含本补记的最新main，不重启旧W014执行/review prompt。

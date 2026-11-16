@@ -25,7 +25,7 @@
 | 如何跨机器工作？ | [environment/remote-development.md](environment/remote-development.md)：运行位置、环境准备与代码交接 |
 | 以前讨论过什么？ | [旧工作流提案](proposals/v2-codex-development-workflow.md)：未采纳部分保留作候选；[历史 changelog](archive/changelog.md)：归档记录 |
 | 网络身份何时落到区域？ | [W013 PM2](tasks/W013-net-annotation-coverage.md#pm2-integration)：本地网络区域标注/覆盖/冲突草稿已验收集成；实际merge三路组合及5项边界检查通过，未知body与完整M1边界保留 |
-| 器件接线与外部body做到哪里？ | [W014 PM1](tasks/W014-terminal-body-relations.md#pm1-receipt)：八端关系及U06具体设计已交付，待[独立合并前review](tasks/W014/independent-premerge-prompt.md)，尚未最终验收或集成 |
+| 器件接线与外部body做到哪里？ | [W014 PM2](tasks/W014-terminal-body-relations.md#pm2-integration)：synthetic八端与外置body关系已验收集成，实际merge三路组合和5项边界检查通过；U06仍为具体设计，现reader必填body_context未改 |
 
 ## 读取架构的起点
 

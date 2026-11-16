@@ -1,0 +1,32 @@
+{
+  "status": "accepted_and_integrated",
+  "pr": "https://github.com/LucianoHoult/Layauto/pull/70",
+  "merge": "f8280de44beacbca6b657627cbc5eed5f2b67bdd",
+  "review": "39dba6f175fb02edab645756459403614a56b23f",
+  "identical_tree": true,
+  "source_id": "c7769fcbfb0312b93e4d44628c77ff21e273698a537eaba0e1454734b049d364",
+  "source_files_verified": 286,
+  "composition_cases": [
+    "normal-direct",
+    "normal-readback",
+    "extraction-mismatch"
+  ],
+  "boundary_tests_passed": 5,
+  "adopted": "Frozen dual 1889, dual typing65, build, dual clean-install three-route smoke; independent premerge review and resource evidence at their recorded identities.",
+  "limits": [
+    "Finite synthetic terminal and external-body scope; no full M1 or production/EDA assurance.",
+    "Source-tree integration check, not a fresh clean-install or performance matrix.",
+    "Paths differ from historical runs; wire hashes are not benchmark comparisons."
+  ],
+  "evidence_sha256": {
+    "README.md": "22a8891f2d3c44e3a0b6d4894913c4dd54be7cc49be10d681840524cf596487e",
+    "boundaries.command.json": "b699dcde840231377e18b8d544e77b4a8eae15e863cad0e39863c721a4054407",
+    "boundaries.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "boundaries.stdout.txt": "3f9154a76cc58f1b28c1e8acf5c51dc2f0a25ce073b847f0d80b5593920e7633",
+    "environment-and-review.json": "b24d80993a52b44502565465fb9eea4e6c4fd51280e6a08d2e2f051cf7822875",
+    "probe.command.json": "623bf48b28b1563abcb53eed3fbdc5474708c72355e00f56124c2008b5ee6139",
+    "probe.py": "bdaf1f87a823efdf3e2a96b3e572d6b4a9abd6cd3e27e17bf7d688af5556bfa2",
+    "probe.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "probe.stdout.jsonl": "7a493ac4f4d70942fe6868f2c7940efb1faa874c8c6e4751fa9ef04c14bc3117"
+  }
+}

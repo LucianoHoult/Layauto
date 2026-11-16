@@ -1,0 +1,17 @@
+{
+  "argv": [
+    "/workspace/venvs/layauto/bin/python",
+    "-B",
+    "docs/tasks/W014/integration/probe.py"
+  ],
+  "cwd": "/workspace/work/layauto-w014-integration",
+  "merge": "f8280de44beacbca6b657627cbc5eed5f2b67bdd",
+  "elapsed_seconds": 311.8280258178711,
+  "exit_code": 0,
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "stdout": "probe.stdout.jsonl",
+  "stderr": "probe.stderr.txt",
+  "script_sha256": "bdaf1f87a823efdf3e2a96b3e572d6b4a9abd6cd3e27e17bf7d688af5556bfa2",
+  "stdout_sha256": "7a493ac4f4d70942fe6868f2c7940efb1faa874c8c6e4751fa9ef04c14bc3117",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

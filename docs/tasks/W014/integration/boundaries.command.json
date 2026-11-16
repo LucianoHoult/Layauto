@@ -1,0 +1,22 @@
+{
+  "argv": [
+    "/workspace/venvs/layauto/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-p",
+    "no:cacheprovider",
+    "-q",
+    "tests/contracts/test_w014_relations.py::test_body_cases_rejected_by_reader_never_reach_w014",
+    "tests/contracts/test_w014_contracts.py::test_new_relation_modules_preserve_read_only_dependency_and_no_io_boundaries",
+    "tests/contracts/test_w007_contracts.py::test_normalization_and_new_domain_keep_pure_dependency_boundaries"
+  ],
+  "cwd": "/workspace/work/layauto-w014-integration",
+  "merge": "f8280de44beacbca6b657627cbc5eed5f2b67bdd",
+  "elapsed_seconds": 1.0792779870025697,
+  "exit_code": 0,
+  "stdout": "boundaries.stdout.txt",
+  "stdout_sha256": "3f9154a76cc58f1b28c1e8acf5c51dc2f0a25ce073b847f0d80b5593920e7633",
+  "stderr": "boundaries.stderr.txt",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}
