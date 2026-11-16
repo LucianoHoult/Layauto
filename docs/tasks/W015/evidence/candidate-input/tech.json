@@ -1,0 +1,54 @@
+{
+  "schema_version": "w004-tech-bundle/2",
+  "profile_id": "synthetic_static_fin_context_no_change_v2",
+  "classification": "synthetic",
+  "production_technology": null,
+  "owners": {
+    "drawn": {
+      "path": "../../../../../tests/fixtures/w003_m1/tech/drawn.json",
+      "keys": [
+        "layers"
+      ]
+    },
+    "derived": {
+      "path": "../../../../../tests/fixtures/w003_m1/tech/derived.json",
+      "keys": [
+        "derived_registry"
+      ]
+    },
+    "physical": {
+      "path": "../../../../../tests/fixtures/w003_m1/tech/physical.json",
+      "keys": [
+        "fin_count_profile",
+        "models",
+        "device_extraction_contract",
+        "body_context_profile",
+        "operators",
+        "capabilities",
+        "required_operator_refs"
+      ]
+    },
+    "formats": {
+      "path": "../../../../../tests/fixtures/w003_m1/tech/formats.json",
+      "keys": [
+        "geometry_capability",
+        "unit_scale_contract",
+        "cdl_dialect",
+        "limits"
+      ]
+    },
+    "coordinate": {
+      "path": "../../../../../tests/fixtures/w003_m1/tech/coordinate.json",
+      "keys": [
+        "coordinate_projection"
+      ]
+    },
+    "rules": {
+      "path": "../../../../../tests/fixtures/w003_m1/tech/rules.json",
+      "keys": [
+        "rules",
+        "mandatory_rule_policy"
+      ]
+    }
+  }
+}

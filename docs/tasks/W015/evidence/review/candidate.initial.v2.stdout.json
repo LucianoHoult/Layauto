@@ -1,0 +1,35 @@
+{
+  "hash_mismatches": [],
+  "closure_digest_matches": true,
+  "request_uri_mismatches": [
+    "query/raw/device_info_Q17.txt",
+    "query/raw/device_info_Q93.txt",
+    "query/raw/net_shapes_n_a.txt",
+    "query/raw/net_shapes_n_y.txt",
+    "query/raw/net_shapes_n_lo.txt",
+    "query/raw/net_shapes_n_hi.txt"
+  ],
+  "owner_paths_missing_from_manifest_root": [
+    "drawn",
+    "derived",
+    "physical",
+    "formats",
+    "coordinate",
+    "rules"
+  ],
+  "query_parser_only": {
+    "status": "error",
+    "code": "RequestBindingMismatch",
+    "category": "binding",
+    "source": "../../../../../tests/fixtures/w003_m1/query/requests.json",
+    "field": "/requests/0/path"
+  },
+  "input_identity": {
+    "manifest_sha256": "f1bcadfd94603896b2a94dc5cce599d1086811e59befe10204f682141cf309f6",
+    "header_sha256": "0d91454874122f74857c382dff906f9edcb0fd5ce29ea0a8b985acc3d66d9aa5"
+  },
+  "actual_candidate_owner_sources_used": false,
+  "mode": "initial",
+  "reviewed_initial_commit": "5a815f58584746986b344f7616786b6360986e42",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]"
+}

@@ -1,0 +1,11 @@
+{
+  "check": "documentation/source identity only",
+  "head": "a2d55dbf20c1b07b9f5ca3faddad9c6a8721637b",
+  "checked_source_test_config_files": 284,
+  "checked_local_markdown_links": 52,
+  "parsed_json_artifacts": 16,
+  "changed_paths_within_scope": 45,
+  "pm_sections_unchanged": true,
+  "product_diff_from_main": [],
+  "status": "passed"
+}

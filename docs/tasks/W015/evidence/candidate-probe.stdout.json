@@ -1,0 +1,1 @@
+{"candidate_only": true, "new_analysis_api_executed": false, "closure_entries": 13, "raw_entries": 9, "query_capabilities": ["device_regions", "instance_xref", "net_regions", "net_xref"], "gds_top": "INV_M1_SYNTH", "cdl_tops": ["INV_M1_SYNTH"], "tool": {"name": null, "version": null, "executed": false}, "body_selected": {"kind": "not_selected"}}

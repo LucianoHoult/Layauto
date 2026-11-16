@@ -72,22 +72,42 @@
 
 ## 方案与决定（执行准备，PM接收）
 
-待执行填写：源码依赖调查、推荐接口/状态及候选样张、兼容方案、实施步骤、资源计划、
-架构需要补充的条款建议和未决项。架构建议放本目录提案，不改现行正文。
+执行候选已形成：[源码依赖与决定](W015/plan.md)、[入口合同](W015/entry-contract.md)、
+[S1–S7具体样张](W015/interface-examples.md)、[兼容实施与资源计划](W015/implementation-proposal.md)、
+[可派发实施prompt草案](W015/implementation-prompt.md)。新入口/格式尚未实施，待PM接收；
+架构建议仅存提案，现行完整read_inputs/W006、DTO/wire及mandatory不变。
 
 ## 执行结果（执行）
 
-未执行。接手者记录工作区/branch/完整起始SHA、已有改动保护、实际命令/环境、
-证据身份及A1–A7覆盖。按[默认验证复用](../collaboration/rules.md#verification-reuse)
-说明实跑/采信/未覆盖/补跑触发；本轮是方案交付，不要求产品最终双全量。
+2026-11-16：从指定分支起点`e7c92c03d0b48aa143259da4fc9fbedc382efee0`执行，
+启动工作区干净。已交候选Python API/请求/状态/来源合同、S1–S7与实际候选manifest/header、
+兼容文件/DTO/wire表、有限真实文件首包步骤、T01–T10、资源门及生产资料未知表。
+实跑旧reader/geometry及6个临时反例、候选输入生成、现有parser对候选实际引用消费及文档/来源检查；
+未改产品/正式测试/固定fixture，
+未跑无关双矩阵/构建/安装或大wire。首轮探针期望代码错误及候选URI闭合失败均保留，修后exit0。
+完整A1–A7定位、实跑/按身份采信/未覆盖/补跑触发与PM恢复点见[执行交接](W015/delivery.md)。
+未参与设计reviewer已独立复核并关闭必须项，结果见下区及完整报告。
+review后仅补交接/文档检查，核心受审候选身份保持；提交推送原分支后交PM接收，不自行验收或实施。
 
 ## Review结论（reviewer）
 
-未执行。记录被审完整身份、直接核对的合同/源码/样张、独立检查和限制。
+2026-11-16：未参与设计的`/root/w015_independent_review`独立review方案初稿
+`5a815f58584746986b344f7616786b6360986e42`及修后冻结候选
+`a2d55dbf20c1b07b9f5ca3faddad9c6a8721637b`，**方案review通过，剩余必须项0**。
+[完整报告](W015/independent-review.md)保留原findings与修后独立复核，不替代PM接收/产品实施review。
 
 | Finding | 严重性、影响与依据 | 执行处理及版本 | 独立复核结论 |
 | --- | --- | --- | --- |
-| 尚未review | 不代表无finding | — | — |
+| F01 | must：原候选header raw URI与requests.path不符，tech owner路径相对根失效；独立实际parse_query返回RequestBindingMismatch | `bcb676944acbda8853b15c52777e06d76ba9a176`生成独立URI重定位tech/requests副本，原输入不改 | 最终候选13 closure/9 raw逐hash、6 owner/6 request URI与现parser消费闭合，关闭；原失败保留 |
+| F02 | must：同名LocalAnalysisReceipt同时列domain数据与重parse认证构造器，认证/依赖边界不唯一 | 同修复commit明确domain.LocalAnalysisEvidence/只读view和normalization.LocalAnalysisReceipt认证wrapper | 构造、结果ref/无权能view与不反向import parser明确，关闭 |
+| F03 | minor：W009检查误写为codec重建，实际仅closed graph+encode | 同修复commit修正文档 | AST/源码和最终文本一致，关闭 |
+| F04 | minor：资源门将历史build+encode+decode写成已测build+report，口径不可直接比较 | `a2d55dbf20c1b07b9f5ca3faddad9c6a8721637b`明确历史参照/同口径reference及无reference绝对门 | 独立核差异和原资源说明，关闭 |
+
+本次独立实跑原/修后候选来源与现query parser小型反例、284项产品/tests/config逐文件身份与
+关键源码/PM边界检查；未跑新分析API、双全量/typing/build/安装/大wire或资源benchmark。
+旧W014能力/矩阵按未改身份作基线，不冒记新入口通过。实跑/采信/未覆盖/补跑触发详见完整报告。
+S1–S7为候选synthetic，新产品仍需真实文件验收、旧DTO/wire parity、独立实现review与规范最终矩阵。
+仅可交PM接收方案，未自行验收、合main或启动实施。
 
 ## PM验收与交接（PM）
 
