@@ -7,7 +7,7 @@
     "source_cdl": "../../../../../tests/fixtures/w003_m1/source.cdl",
     "query_header": "local-header.json"
   },
-  "tech_ref": "../../../../../tests/fixtures/w003_m1/tech.json",
+  "tech_ref": "tech.json",
   "limitation_ref": "../../../../../tests/fixtures/w003_m1/limitations.json",
   "external_body": {
     "kind": "not_selected"

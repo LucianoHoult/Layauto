@@ -56,10 +56,10 @@ W014 `derive/body_relations.py::evaluate_body`又要求body来源出现在annota
 
 | 路径/符号 | 最小改动/旧责任保持 | 必须验证 |
 | --- | --- | --- |
-| `layauto_v2/domain/analysis.py`（新） | request/result/local receipt、facet/finding、external/manual状态；独立schema版本 | union非法组合、nested alias/forged字段、refs/角色完整性 |
+| `layauto_v2/domain/analysis.py`（新） | request/result、LocalAnalysisEvidence/LocalAnalysis只读view、facet/finding、external/manual状态；不持受信wrapper | union非法组合、nested alias/forged字段、refs/角色完整性 |
 | `layauto_v2/tech/analysis_schema.py`（新） | manifest/local header/manual封闭schema和跨字段校验；导入config的schema dispatch只增加新kind | 旧site/header拒新格式，新kind不调用validate_tech的宽松分支 |
 | `layauto_v2/importers/analysis_reader.py`（新）、`reader.py`、`config.py` | 新读取流程及shared acquisition/local-binding helpers；旧InputParser/read_inputs顺序与失败不改 | 真实文件、异常原样、一次获取、path/limits/symlink、所选证据错误 |
-| `normalization/analysis_input.py`（新） | 本地receipt重parse认证；独立external认证/诊断；不依赖repository | raw/tech/source/payload篡改、角色替换、URI alias/ref/hash/arity、错误completed可信边界 |
+| `normalization/analysis_input.py`（新） | LocalAnalysisReceipt认证wrapper构造器完整重parse Evidence；独立external认证/诊断；不依赖repository | raw/tech/source/payload篡改、角色替换、URI alias/ref/hash/arity、错误completed可信边界 |
 | `normalization/semantic.py`、`identity.py`及必要`_validation.py`helper | 提取source-only内核，旧完整validate_parse/KINDS不放宽 | 原source/target diff/ordered terminal/identity拒绝保持 |
 | `domain/analysis_annotation.py`、`state/analysis_annotation.py`（新） | 独立annotation binding/draft及等强完整重构校验 | 新capture binding不能冒旧normalization，report不能回灌 |
 | `annotation/net_regions.py::build_net_annotation_draft/overlay`、`derive/net_annotation.py`及`domain/net_annotation.py`/`state/annotation.py`内部helper | 纯算法提取到本owner内kernel；旧DTO构造器/schema/fields/version不变，新wrapper自己验证 | exact fragments/coverage/conflict，旧dto/wire/digest parity，native存储guard |
@@ -71,7 +71,9 @@ W014 `derive/body_relations.py::evaluate_body`又要求body来源出现在annota
 
 targets和classifications现由`annotation/net_regions.py::build_net_annotation_draft`构建；
 不得因提取helper而跨层import。新`domain/`不依赖importers/state，构造器的capture认证编排位于normalization；
-冻结neutral receipt数据形状位于domain。typed trusted边界采用normalization的认证wrapper，
+冻结LocalAnalysisEvidence和只读结果view位于domain；LocalAnalysisReceipt类仅位于normalization。
+AnalysisResult.local含view与receipt_ref，不持有/导入认证wrapper；裸Evidence/view本身均不具认证权能。
+首包不暴露receipt继续计算API，未来公开消费边界须重建认证wrapper。typed trusted边界采用normalization的认证wrapper，
 不能在domain内import解析器来取得认证。公共analyze_cell不暴露未认证结果构造捷径。
 
 ## 兼容矩阵

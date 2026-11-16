@@ -66,13 +66,13 @@ MP0 Y A VDD VDD TOY_P NFIN=7 NF=1 M=1 L=4n W=2n VT=toy
 request_status: completed
 scope: local cell INV_M1_SYNTH, flat, synthetic source_evidence
 local.source: ports [A,Y,VSS,VDD]; ordered source terminals as above [@cdl]
-local.channel_fin: available; MN0 measured=5/source=5, MP0 measured=7/source=7 [@gds,@query,@tech]
-local.terminals:
+local.facets.channel_fin: available; MN0 measured=5/source=5, MP0 measured=7/source=7 [@gds,@query,@tech]
+local.facets.terminals:
   MN0 D: expected Y, observed [Y], equal; G: A/[A]/equal; S: VSS/[VSS]/equal
   MP0 D: expected Y, observed [Y], equal; G: A/[A]/equal; S: VDD/[VDD]/equal
   MN0 B: expected VSS, observed [], support indeterminate, comparison indeterminate
   MP0 B: expected VDD, observed [], support indeterminate, comparison indeterminate
-local.annotation: available; all region coverage/gaps/unmatched seeds retained; BN/BP local net unknown
+local.facets.annotation: available; all region coverage/gaps/unmatched seeds retained; BN/BP local net unknown
 parent_global: unknown (instance, child-pin mapping, global/domain evidence absent)
 external_body: not_selected; assurance unknown; no local graph union
 manual_intent: not_selected

@@ -9,6 +9,7 @@
     "new explicit local header/run identity",
     "local dependency closure only",
     "original raw bytes and source hashes retained",
+    "candidate tech owner paths and requests raw paths explicitly relocated",
     "target excluded; no body or policy selection"
   ],
   "observed_results_generated": false

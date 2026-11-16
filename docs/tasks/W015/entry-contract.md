@@ -16,7 +16,7 @@ for finding in result.findings:
     display(finding)
 if result.local is not None:
     # rejected也可以保留经单独认证的local；逐项看availability与scope
-    display(result.local.source, result.local.observations)
+    display(result.local.source, result.local.facets)
 # completed也不能传给prepare_inputs、planner、transaction或exporter
 ```
 
@@ -75,22 +75,29 @@ manifest虽记录body/manual的选择URI，local认证不证明所选资料正�
 **迁移：** 旧`w004-query-header/2`不能直接喂给新入口；返回
 `unsupported/LegacyFullHeaderRequiresExplicitMigration`，旧入口对新版本同样拒绝。
 后续实施只为synthetic提供runtime外fixture准备脚本：保留原header/raw bytes和原身份，
-输出新local header和新manifest，使用明确新的synthetic header/run id，保留原header
+输出新local header和新manifest；跨目录时同步重定位独立副本tech bundle的owner路径、
+requests各raw path及header/manifest全部URI，更新真实闭包hash。原tech owner/raw本身不改，
+所有新引用相对analysis manifest根，requests.path必须逐条等于对应header.raw.uri；
+使用明确新的synthetic header/run id，保留原header
 `SourceRef`于迁移记录（不是新header的伪tool身份）；重新计算**实际**本地闭包和cache。
 解析raw输出引用新header id，原raw不改。原文件保持。不是从旧error ParseResult恢复成功，
 也不是把真实matched工具证据剪裁成更宽松的header；真实profile迁移尚不支持。
 
-新`LocalAnalysisReceipt(schema_version='layauto-local-analysis-receipt/1')`持有一个immutable
-capture table、role→source refs（包括第一次URI和获取时固定的alias映射）、解析记录和完整
-本地绑定。认证按新规则从**保留的实际bytes**重新解析GDS/CDL、tech、header及全部raw，
+新`domain.analysis.LocalAnalysisEvidence`是**未经认证、无能力授权**的中立冻结数据，持有
+一个immutable capture table、role→source refs（包括第一次URI和获取时固定的alias映射）、解析记录和完整
+本地绑定。`normalization.analysis_input.LocalAnalysisReceipt`是独立版本
+`layauto-local-analysis-receipt/1`的认证wrapper，构造器接收该Evidence并完整认证；
+domain只做形状/冻结/refs基本一致性，不import parser，也不以构造成功声称认证。
+认证wrapper按新规则从**保留的实际bytes**重新解析GDS/CDL、tech、header及全部raw，
 逐字段比对payload、SourceRef/field source/record source arity，核URI角色、hash/top、
 exact units、profile/operator、dependency closure、query xref/seed/limits/cache；不查磁盘，
 不凭hash集合挑角色，不只验证一个digest。alias表是获取事实；新角色不能仅凭alias表
 避开首获取URI/格式独特性和声明绑定检查。恶意同hash异角色/改payload/漏raw仍拒绝。
 
-local receipt仅在local解析+认证完成后存在；typed错误在此前则`local=None`，保留完成的
-证据但标`unavailable`，不把它们当几何/导通已认证。构造器及公开消费边界重新验证完整
-local receipt，不能只信私有布尔标志。外部body/manual各自保留真实bytes和绑定状态，
+成功的LocalAnalysisReceipt仅在local解析+认证完成后存在；typed错误在此前则`local=None`，保留完成的
+证据但标`unavailable`，不把它们当几何/导通已认证。认证wrapper构造器重新验证完整local evidence，不能只信私有布尔标志。
+首包只公开analyze_cell并返回中立只读view，不提供继续计算/持久化receipt API；未来若增加
+公开receipt消费入口，必须重新构造认证wrapper，不接受report或裸Evidence充当受信输入。外部body/manual各自保留真实bytes和绑定状态，
 不复制本地capture，也不成为local事实的认证前提。所选证据错误之后，local仍可成立，
 但整个请求不成功。`analysis/report` JSON仅是诊断view，不能decode回受信receipt。
 
@@ -100,7 +107,7 @@ local receipt，不能只信私有布尔标志。外部body/manual各自保留�
 
 | request_status | 条件 | 允许保留的local/事实 |
 | --- | --- | --- |
-| `completed` | 支持的请求全部执行完；无读取/格式/绑定/unsupported/致命计算错误、无所选body违例、无error级annotation问题 | 必需local receipt；所有规定本地facet已得到值或显式有据unknown。缺body/parent、正常coverage gap、source FIN mismatch、local T05 violation可以在此，但分别保留，绝不汇总clean |
+| `completed` | 支持的请求全部执行完；无读取/格式/绑定/unsupported/致命计算错误、无所选body违例、无error级annotation问题 | 内部必需已成功认证receipt，返回local事实view；所有规定本地facet已得到值或显式有据unknown。缺body/parent、正常coverage gap、source FIN mismatch、local T05 violation可以在此，但分别保留，绝不汇总clean |
 | `rejected` | 任一输入/绑定错误、选中body几何/规则违例，或本地channel/annotation计算error | findings必有error/violation原因；local仅当独立local认证已完成才保留；受影响facet可含诊断值，标error，不能当可认证测量 |
 | `unsupported` | 只有不支持的purpose/profile/input kind/header版本，没有上述rejected原因 | findings必有unsupported；能独立完成local认证则可保留。首包S5请求先完成local分析，再报告selected evidence不支持；禁止把未识别证据用于assurance |
 
@@ -113,7 +120,8 @@ local receipt，不能只信私有布尔标志。外部body/manual各自保留�
 `captures`（一次byte集合，report只列ref/大小，不含raw）、`local: LocalAnalysis|None`、
 `external_body`、`parent_global`、`manual_intent`、`findings`、`missing_context`、
 `blocked_operations`、`target_comparison='not_requested'`。不得有snapshot/commit/terminal指针。
-`LocalAnalysis`含receipt ref、source及facet，facet为
+`LocalAnalysis`是domain中立只读view，含receipt_ref（绑定实际Evidence的canonical digest）、source及`facets`（drawn/effective/local_graph/channel_fin/annotation/terminals），
+**不持有或import normalization wrapper**，构造view不获得认证能力；facet为
 `{status: available|error|not_evaluated, value, issues, dependencies, scope, evidence_refs}`；
 not_evaluated无value且必有依赖，error的value是明确诊断而非成功值。
 

@@ -36,20 +36,12 @@
         "sha256": "c07bba5e95ac83d5f9e72b5e5e9b134893bf70b8881fa76dbb5ab3cb28ca1666"
       },
       {
-        "uri": "../../../../../tests/fixtures/w003_m1/query/requests.json",
-        "sha256": "57f5f38cb3ec450fd1815ef88c618c03a9703690672348b313fa35fbce97bc62"
-      },
-      {
         "uri": "../../../../../tests/fixtures/w003_m1/source.cdl",
         "sha256": "c71f40728a979c918e083b924a3045cf53bece51dd837f9ae2834cf242776fa4"
       },
       {
         "uri": "../../../../../tests/fixtures/w003_m1/source.gds",
         "sha256": "97cf8d88771ff97f2cf189f6ae6a2fdcce585fc14f93c93d0ecf32326b415429"
-      },
-      {
-        "uri": "../../../../../tests/fixtures/w003_m1/tech.json",
-        "sha256": "edea25c124e275a8e2baa793a8a8f9954854f8cb69c52da50af65dd147d56f61"
       },
       {
         "uri": "../../../../../tests/fixtures/w003_m1/tech/coordinate.json",
@@ -77,11 +69,19 @@
       },
       {
         "uri": "analysis.json",
-        "sha256": "f1bcadfd94603896b2a94dc5cce599d1086811e59befe10204f682141cf309f6"
+        "sha256": "ad7742dca05601a0520ec25bbabd8edb4416d8fce354843b0bd56dbe14e1f03f"
+      },
+      {
+        "uri": "requests.json",
+        "sha256": "c42c46751e264cd4eee99e08561bd202132181d683a8308f572d0d7c430e2aa8"
+      },
+      {
+        "uri": "tech.json",
+        "sha256": "2da73d0b701b917ecf3a3b69de89949ccb7d95c6ed9fddece88bb7b0c5adc175"
       }
     ],
     "canonical_encoding": "UTF-8 sorted-key compact JSON, array sorted by uri, no LF",
-    "sha256": "47231b6ab7e4e27821ee754da2276b8f3a8d09b52ca03111537553ecc025564d"
+    "sha256": "a84c667b25d7abf8f1702ef42e68df732b1a75cb8c88875652b3ff3a9f8aaf21"
   },
   "tool": {
     "name": null,

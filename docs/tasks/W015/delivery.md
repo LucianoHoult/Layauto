@@ -24,8 +24,11 @@
 
 ## 验证复用与限制
 
-- 本次实跑：旧reader/geometry小型probe、输入候选materialize及来源/链接/JSON/样张/范围核查。
-  每项命令/结果见[evidence说明](evidence/README.md)。首轮探针错误断言及失败保留，修后exit0。
+- 本次实跑：旧reader/geometry小型probe、输入候选materialize、现有parser对候选引用的
+  consumption探针及来源/链接/JSON/样张/范围核查。
+  每项命令/结果见[evidence说明](evidence/README.md)。首轮耦合探针错误断言、
+  候选路径重定位失败均保留；修后均exit0。F01/F02执行处理为真实候选URI闭合及明确
+  domain中立数据/normalization认证wrapper，独立复核结论只由reviewer填写。
 - 按身份采信：本轮产品/runtime/tests/config与上述main逐文件不变；W014 PM2已集成能力、
   [集成原回执](../W014/integration/receipt.json)及[资源原记录](../W014/resource-review.md)
   只作旧产品行为/成本依据；不把历史双1889/typing/build/安装标成本轮执行或新分析入口通过。

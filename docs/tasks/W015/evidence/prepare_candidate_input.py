@@ -23,10 +23,18 @@ manifest = {
     'mode': 'dummy_fixture',
     'inputs': {'gds': uri(FIX / 'source.gds'), 'source_cdl': uri(FIX / 'source.cdl'),
                'query_header': 'local-header.json'},
-    'tech_ref': uri(FIX / 'tech.json'), 'limitation_ref': uri(FIX / 'limitations.json'),
+    'tech_ref': 'tech.json', 'limitation_ref': uri(FIX / 'limitations.json'),
     'external_body': {'kind': 'not_selected'},
 }
 write(DEST / 'analysis.json', manifest)
+bundle = json.loads((FIX / 'tech.json').read_text())
+for declaration in bundle['owners'].values():
+    declaration['path'] = uri(FIX / declaration['path'])
+write(DEST / 'tech.json', bundle)
+requests = json.loads((FIX / 'query/requests.json').read_text())
+for row in requests['requests']:
+    row['path'] = uri(FIX / row['path'])
+write(DEST / 'requests.json', requests)
 header = json.loads((FIX / 'query/header.json').read_text())
 header['schema_version'] = 'layauto-analysis-query-header/1'
 header['header_id'] = 'w015.candidate.synthetic.local.1'
@@ -37,8 +45,8 @@ for name in ('layout', 'source_netlist'):
 header['limitations_ref'] = uri(FIX / 'limitations.json')
 for row in header['raw']:
     row['uri'] = uri(FIX / row['uri'])
-paths = [DEST / 'analysis.json', FIX / 'source.gds', FIX / 'source.cdl', FIX / 'tech.json',
-         FIX / 'limitations.json', FIX / 'query/requests.json', FIX / 'query/dialect.json']
+paths = [DEST / 'analysis.json', FIX / 'source.gds', FIX / 'source.cdl', DEST / 'tech.json',
+         FIX / 'limitations.json', DEST / 'requests.json', FIX / 'query/dialect.json']
 paths += [FIX / 'tech' / (name + '.json') for name in
           ('drawn', 'derived', 'physical', 'formats', 'coordinate', 'rules')]
 entries = sorted([{'uri': uri(p), 'sha256': sha(p)} for p in paths], key=lambda x: x['uri'])
@@ -50,7 +58,8 @@ write(DEST / 'provenance.json', {
     'source_header': {'uri': uri(FIX / 'query/header.json'), 'sha256': sha(FIX / 'query/header.json')},
     'generator': 'docs/tasks/W015/evidence/prepare_candidate_input.py',
     'changes': ['new explicit local header/run identity', 'local dependency closure only',
-                'original raw bytes and source hashes retained', 'target excluded; no body or policy selection'],
+                'original raw bytes and source hashes retained',
+                'candidate tech owner paths and requests raw paths explicitly relocated', 'target excluded; no body or policy selection'],
     'observed_results_generated': False,
 })
 print(json.dumps({'candidate_only': True, 'local_dependencies': len(entries),
