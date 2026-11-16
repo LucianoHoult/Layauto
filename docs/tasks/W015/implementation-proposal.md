@@ -145,10 +145,12 @@ receipt观察重建次数。不产生大wire拷贝、不并行重链；记录估
 预计顶层正常一次分析的channel/annotation/body（若选）各一次，认证读后一次、公开重新消费
 一次；neutral内部防伪重构次数另列，不能混称总成本为一次。
 
-提议早期退回PM门（方案预算，不是既有性能承诺）：同机同输入串行时间或HWM超过旧W014
-公开build+report可比路径2倍、峰值>1GiB、report去重后>2倍capture bytes、或发现每facet
+提议早期退回PM门（方案预算，不是既有性能承诺）：取得同机同输入且明确同口径的reference后，串行时间或HWM超过reference 2倍、峰值>1GiB、report去重后>2倍capture bytes、或发现每facet
 复制完整capture/认证次数随facets增长，暂停扩包/最终矩阵，交调用图、测量/失败及缩包方案。
-没有可比旧路径时不得伪造倍率，使用绝对1GiB/重复capture/无界次数门并说明不足。
+原W014数值是build+encode+decode，不是已测build+report，与新分析/report不是天然同口径；
+它们仅作历史成本参照。没有同口径reference时不得套用倍率，使用绝对1GiB/重复capture/
+无界次数门并说明不足。另记录墙钟耗时；若串行单case超过120秒先交PM核scope及预算，
+此120秒是提议的人工检查触发值，不是产品时限或性能保证。
 通过门只允许继续工程，不代表性能优化、最大输入或生产支持。
 
 ## 最小生产资料调查表（不向外索取保密内容）
