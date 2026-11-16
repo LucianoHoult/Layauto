@@ -4,7 +4,7 @@
 
 ## 当前节点
 
-**W016单cell只读分析入口已准备，可进入产品实施。** 从实际文件生成本地分析和缺项结果，外部body可显式未选；旧完整读取合同不变。采用[W015 PM1](tasks/W015-single-cell-analysis-entry.md#pm1-acceptance)已接收方案，按[执行prompt](tasks/W016/execution-prompt.md)在`codex/w016-single-cell-analysis`推进。首包仍synthetic/flat/query必需，补资料后新调用重认证，无生产证明或修改许可。
+**W016正在实施，资源检查点已复核，可继续剩余功能。** 检查点`2608d84`仅连通内部本地链；PM按[资源决定](tasks/W016/pm-resource-decision.md)将纯报告体积优化后置，解除该倍率触发的暂停，内存/耗时/重复构建检查保留。执行从`codex/w016-single-cell-analysis`最新PM补记按[继续prompt](tasks/W016/resume-prompt.md)恢复；API/body/manual/端子、双侧兼容和最终矩阵尚未完成，未验收或合main。
 
 **W015方案已验收并经PR72集成。** 核11个核心文件受审身份及284个未改产品文件，实际merge候选parser探针通过；[回执](tasks/W015/pm-receipt/README.md)记录采信与限制。新API尚未实现。
 
@@ -40,7 +40,7 @@
 
 | 用途 | 恢复依据 |
 | --- | --- |
-| W016当前恢复 | codex/w016-single-cell-analysis最新远端准备head；方案merge d0bb5628384f3a9fec1fe87b6311b854996f574b，准备提交只改文档。按A1–A8实施、独立review后交PM |
+| W016当前恢复 | codex/w016-single-cell-analysis最新PM资源补记head；产品检查点2608d84b94f1a5a3011855f2839c7407c65cc3fd。按PM1及resume-prompt恢复剩余实施；main仍为准备版本，不合未完成产品 |
 | W015历史恢复 | 交付a73713bc8ff7e1e2d4cc61ab93fbd3ace178753d；已由PR72及PM1验收集成，原分支保留，不重启方案prompt |
 | W014当前恢复 | 接手含PM2验收补记的最新main；产品merge f8280de44beacbca6b657627cbc5eed5f2b67bdd，已审head 39dba6f175fb02edab645756459403614a56b23f，冻结66f5b1e。原任务分支保留历史，后续另建分支，不重启旧prompt |
 | W013当前恢复 | 接手含PM2验收补记的最新main；产品merge088ed3c718eb5a0703511ff6b214274f30052ff1，已审head da90a793cc1d1e45ae7f2de26d9e98766191428d，冻结2a45938。原codex/w013-net-annotation-coverage保留历史，不再执行旧prompt；后续任务另建分支 |

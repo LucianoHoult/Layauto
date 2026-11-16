@@ -8,7 +8,7 @@
 | 里程碑 / 依赖 | M1内既有组件的独立分析入口，承接W005–W014和已接收W015方案；不是完整Stage2/运行出口，不代替后续坐标、mandatory、baseline与Stage6 |
 | 授权 | 用户要求推进单cell分析并沿用独立执行session；W015交付后PM核具体方案、review及来源，按既定方向派发本实施包。内部实现自主推进，不重复询问D1 |
 | 基线 / 分支 | W015方案merge `d0bb5628384f3a9fec1fe87b6311b854996f574b`；产品仍等同W014验收main `3b8d78902591bca32ec9b8ee5d3167d115e1a974`。恢复`codex/w016-single-cell-analysis`最新远端准备head，后续准备仅文档 |
-| 阶段 / 阻塞 | **可执行：产品实施。** W015方案review必须项0；本任务仍需实现独立review及最终验证。当前没有必须用户再选的内部事项 |
+| 阶段 / 阻塞 | **执行中：资源检查点已复核，恢复剩余实施。** PM接受本次绝对成本，将纯报告体积优化后置，见[PM1](#pm1-resource-resume)。完整实现/review/最终矩阵尚未完成 |
 | 写入范围 | `layauto_v2/`内本方案涉及的analysis/domain/tech/importers/normalization/annotation/derive/state/reporting及必要public exports；新增/受影响tests、typing配置、README和本任务执行材料。按方案列最小文件表，非相关重构不纳入 |
 | 非目标 | 不改固定fixture/答案/历史证据；不改旧公开DTO/schema/wire/ref或完整运行要求；不支持任意层级/生产方言、无query模式、live EDA、可信LVS/窗口验证器、实际修改/发布、完整M1或新持久化wire |
 | 架构依据 | [architecture](../architecture.md) §2.2只读分析边界、2.3、3.6、5.6–5.9、11.10/11.13/11.15、12.1；[U06](../roadmap.md#production-body-evidence)、[W015 PM1](W015-single-cell-analysis-entry.md#pm1-acceptance)及下述已采纳方案 |
@@ -48,7 +48,9 @@
 按W015步骤先连通T01/S1认证与本地链，再annotation/端子/T06，随后body/manual。
 最早可运行就检查相应case，三case齐备后补齐对照，不等最终矩阵才测成本。
 PM采纳W015预算门：峰值>1GiB、每facet复制完整capture或认证次数无界增长，暂停扩包交PM；
-report去重后>2倍capture bytes也须说明构成并交PM。只有取得同机同输入**同口径**reference
+report去重后>2倍capture bytes须统计并解释构成；检查点2608d84已完成该项PM复核，
+按[本次处置](W016/pm-resource-decision.md)恢复实施，同一已解释倍率不再单独阻止扩包或最终矩阵，
+新绝对成本/增长问题仍交PM。只有取得同机同输入**同口径**reference
 后才使用耗时/HWM>2倍门；原W014 build+encode+decode不能当作新build+report基准。
 单case串行超过120秒先交测量、调用图和缩包建议，这是工程复核触发值，不是用户产品超时承诺。
 继续做不受阻的诊断/定向修正，不能用删测试或省认证掩盖成本，不重启W012 A2候选。
@@ -95,3 +97,20 @@ A1–A8测试选择、资源计数方式及相对已采纳方案的差异；无�
 
 W016仅完成任务准备，尚未实施/验收。执行session使用[完整prompt](W016/execution-prompt.md)，
 完成独立review及工程交付后回PM；不启动下一任务、合main或删除分支。
+
+
+<a id="pm1-resource-resume"></a>
+
+### PM1 资源检查点复核与恢复实施
+
+检查点`2608d84b94f1a5a3011855f2839c7407c65cc3fd`已推送。PM核293项源码/测试/config身份、
+现encoder和独立review，重算报告hash/字节/引用可达性及原单次日志；[回执](W016/pm-resource-review/receipt.json)
+保存实际核对与采信边界。本次未重跑产品或性能矩阵，亦未把58项定向测试/两处防伪复核当最终交付。
+
+报告235613 bytes（约230.1KiB）、原报告阶段0.025801秒、已测阶段合计2.058048秒、
+进程HWM约24.15MiB；尚缺完整API、body/manual/端子等。PM决定体积专项优化后置，解除
+本次仅由5.25倍触发的暂停，详见[资源决定](W016/pm-resource-decision.md)。内存/耗时/
+重复capture/无界重建门和全部正确性要求保持；完整三case与API成本仍须测量。
+
+下一执行session使用[继续prompt](W016/resume-prompt.md)，完成原A1–A8再交PM。
+未完成产品不合main、不验收；本次文档补记不改变检查点源码或原证据。
