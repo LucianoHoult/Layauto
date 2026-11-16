@@ -1,0 +1,28 @@
+{
+  "status": "passed",
+  "referenced_files": 25,
+  "measured_source": "998aa8052b3a6c89e3f87e029134ef8f6601535616c8b327d5ada44a29351a84",
+  "frozen_source": "c7769fcbfb0312b93e4d44628c77ff21e273698a537eaba0e1454734b049d364",
+  "exact_test_only_delta": [
+    "tests/contracts/test_w014_contracts.py"
+  ],
+  "unchanged_old_runtime": 106,
+  "cases": {
+    "normal-direct": {
+      "ratio": 1.1328995332570229,
+      "added_wire_bytes": 345944,
+      "peak_MiB": 196.3984375
+    },
+    "normal-readback": {
+      "ratio": 1.0310931939043975,
+      "added_wire_bytes": 345944,
+      "peak_MiB": 491.91015625
+    },
+    "extraction-mismatch": {
+      "ratio": 1.0931219698802361,
+      "added_wire_bytes": 344703,
+      "peak_MiB": 204.28515625
+    }
+  },
+  "new_benchmark": false
+}

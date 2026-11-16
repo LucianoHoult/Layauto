@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "<stdin>", line 10, in <module>
+  File "/workspace/Layauto/docs/tasks/W014/review-evidence/resource_r4_audit.py", line 135, in main
+    check(len(new_files) == 286 and all(sha(read(n)) == h for n, h in new_files.items()),
+  File "/workspace/Layauto/docs/tasks/W014/review-evidence/resource_r4_audit.py", line 41, in check
+    assert ok, label
+           ^^
+AssertionError: all 286 selected live bytes match measured source

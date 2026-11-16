@@ -1,0 +1,458 @@
+public W010 capture ready
+public W014 build/encode/decode passed
+false_claim passed
+tap_enclosure_zero passed
+orphan_tap passed
+wrong_MN_selection passed
+{
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "cases": {
+    "normal": {
+      "issues": [],
+      "terminals": {
+        "MN0.D": {
+          "status": "equal",
+          "observed": [
+            "Y"
+          ]
+        },
+        "MN0.G": {
+          "status": "equal",
+          "observed": [
+            "A"
+          ]
+        },
+        "MN0.S": {
+          "status": "equal",
+          "observed": [
+            "VSS"
+          ]
+        },
+        "MN0.B": {
+          "status": "equal",
+          "observed": [
+            "VSS"
+          ]
+        },
+        "MP0.D": {
+          "status": "equal",
+          "observed": [
+            "Y"
+          ]
+        },
+        "MP0.G": {
+          "status": "equal",
+          "observed": [
+            "A"
+          ]
+        },
+        "MP0.S": {
+          "status": "equal",
+          "observed": [
+            "VDD"
+          ]
+        },
+        "MP0.B": {
+          "status": "equal",
+          "observed": [
+            "VDD"
+          ]
+        }
+      },
+      "paths": {
+        "MN0": {
+          "chain_status": "established",
+          "rule_status": "satisfied",
+          "claim_status": "equal",
+          "active_enclosure_nm": "20",
+          "body_edge_length_nm": "90",
+          "rail_edge_length_nm": "10"
+        },
+        "MP0": {
+          "chain_status": "established",
+          "rule_status": "satisfied",
+          "claim_status": "equal",
+          "active_enclosure_nm": "10",
+          "body_edge_length_nm": "100",
+          "rail_edge_length_nm": "10"
+        }
+      }
+    },
+    "false_claim": {
+      "issues": [
+        "BodyTargetRailMismatch"
+      ],
+      "terminals": {
+        "MN0.D": {
+          "status": "equal",
+          "observed": [
+            "Y"
+          ]
+        },
+        "MN0.G": {
+          "status": "equal",
+          "observed": [
+            "A"
+          ]
+        },
+        "MN0.S": {
+          "status": "equal",
+          "observed": [
+            "VSS"
+          ]
+        },
+        "MN0.B": {
+          "status": "equal",
+          "observed": [
+            "VSS"
+          ]
+        },
+        "MP0.D": {
+          "status": "equal",
+          "observed": [
+            "Y"
+          ]
+        },
+        "MP0.G": {
+          "status": "equal",
+          "observed": [
+            "A"
+          ]
+        },
+        "MP0.S": {
+          "status": "equal",
+          "observed": [
+            "VDD"
+          ]
+        },
+        "MP0.B": {
+          "status": "equal",
+          "observed": [
+            "VDD"
+          ]
+        }
+      },
+      "paths": {
+        "MN0": {
+          "chain_status": "established",
+          "rule_status": "violation",
+          "claim_status": "mismatch",
+          "active_enclosure_nm": "20",
+          "body_edge_length_nm": "90",
+          "rail_edge_length_nm": "10"
+        },
+        "MP0": {
+          "chain_status": "established",
+          "rule_status": "satisfied",
+          "claim_status": "equal",
+          "active_enclosure_nm": "10",
+          "body_edge_length_nm": "100",
+          "rail_edge_length_nm": "10"
+        }
+      }
+    },
+    "tap_enclosure_zero": {
+      "issues": [
+        "BodyTapEnclosureFailure"
+      ],
+      "terminals": {
+        "MN0.D": {
+          "status": "equal",
+          "observed": [
+            "Y"
+          ]
+        },
+        "MN0.G": {
+          "status": "equal",
+          "observed": [
+            "A"
+          ]
+        },
+        "MN0.S": {
+          "status": "equal",
+          "observed": [
+            "VSS"
+          ]
+        },
+        "MN0.B": {
+          "status": "equal",
+          "observed": [
+            "VSS"
+          ]
+        },
+        "MP0.D": {
+          "status": "equal",
+          "observed": [
+            "Y"
+          ]
+        },
+        "MP0.G": {
+          "status": "equal",
+          "observed": [
+            "A"
+          ]
+        },
+        "MP0.S": {
+          "status": "equal",
+          "observed": [
+            "VDD"
+          ]
+        },
+        "MP0.B": {
+          "status": "equal",
+          "observed": [
+            "VDD"
+          ]
+        }
+      },
+      "paths": {
+        "MN0": {
+          "chain_status": "established",
+          "rule_status": "violation",
+          "claim_status": "equal",
+          "active_enclosure_nm": "20",
+          "body_edge_length_nm": "90",
+          "rail_edge_length_nm": "10"
+        },
+        "MP0": {
+          "chain_status": "established",
+          "rule_status": "satisfied",
+          "claim_status": "equal",
+          "active_enclosure_nm": "10",
+          "body_edge_length_nm": "100",
+          "rail_edge_length_nm": "10"
+        }
+      }
+    },
+    "orphan_tap": {
+      "issues": [
+        "BodyUniqueMatchFailure"
+      ],
+      "terminals": {
+        "MN0.D": {
+          "status": "equal",
+          "observed": [
+            "Y"
+          ]
+        },
+        "MN0.G": {
+          "status": "equal",
+          "observed": [
+            "A"
+          ]
+        },
+        "MN0.S": {
+          "status": "equal",
+          "observed": [
+            "VSS"
+          ]
+        },
+        "MN0.B": {
+          "status": "equal",
+          "observed": [
+            "VSS"
+          ]
+        },
+        "MP0.D": {
+          "status": "equal",
+          "observed": [
+            "Y"
+          ]
+        },
+        "MP0.G": {
+          "status": "equal",
+          "observed": [
+            "A"
+          ]
+        },
+        "MP0.S": {
+          "status": "equal",
+          "observed": [
+            "VDD"
+          ]
+        },
+        "MP0.B": {
+          "status": "equal",
+          "observed": [
+            "VDD"
+          ]
+        }
+      },
+      "paths": {
+        "MN0": {
+          "chain_status": "established",
+          "rule_status": "satisfied",
+          "claim_status": "equal",
+          "active_enclosure_nm": "20",
+          "body_edge_length_nm": "90",
+          "rail_edge_length_nm": "10"
+        },
+        "MP0": {
+          "chain_status": "established",
+          "rule_status": "satisfied",
+          "claim_status": "equal",
+          "active_enclosure_nm": "10",
+          "body_edge_length_nm": "100",
+          "rail_edge_length_nm": "10"
+        }
+      }
+    },
+    "wrong_MN_selection": {
+      "issues": [
+        "BodyTypeMismatch",
+        "BodyObjectBindingMismatch"
+      ],
+      "terminals": {
+        "MN0.D": {
+          "status": "equal",
+          "observed": [
+            "Y"
+          ]
+        },
+        "MN0.G": {
+          "status": "equal",
+          "observed": [
+            "A"
+          ]
+        },
+        "MN0.S": {
+          "status": "equal",
+          "observed": [
+            "VSS"
+          ]
+        },
+        "MN0.B": {
+          "status": "indeterminate",
+          "observed": []
+        },
+        "MP0.D": {
+          "status": "equal",
+          "observed": [
+            "Y"
+          ]
+        },
+        "MP0.G": {
+          "status": "equal",
+          "observed": [
+            "A"
+          ]
+        },
+        "MP0.S": {
+          "status": "equal",
+          "observed": [
+            "VDD"
+          ]
+        },
+        "MP0.B": {
+          "status": "equal",
+          "observed": [
+            "VDD"
+          ]
+        }
+      },
+      "paths": {
+        "MN0": {
+          "chain_status": "indeterminate",
+          "rule_status": "indeterminate",
+          "claim_status": "indeterminate",
+          "active_enclosure_nm": "20",
+          "body_edge_length_nm": "None",
+          "rail_edge_length_nm": "None"
+        },
+        "MP0": {
+          "chain_status": "established",
+          "rule_status": "satisfied",
+          "claim_status": "equal",
+          "active_enclosure_nm": "10",
+          "body_edge_length_nm": "100",
+          "rail_edge_length_nm": "10"
+        }
+      }
+    },
+    "exact_901_over_20": {
+      "issues": [
+        "BodyTargetRailMismatch"
+      ],
+      "terminals": {
+        "MN0.D": {
+          "status": "equal",
+          "observed": [
+            "Y"
+          ]
+        },
+        "MN0.G": {
+          "status": "equal",
+          "observed": [
+            "A"
+          ]
+        },
+        "MN0.S": {
+          "status": "equal",
+          "observed": [
+            "VSS"
+          ]
+        },
+        "MN0.B": {
+          "status": "indeterminate",
+          "observed": []
+        },
+        "MP0.D": {
+          "status": "equal",
+          "observed": [
+            "Y"
+          ]
+        },
+        "MP0.G": {
+          "status": "equal",
+          "observed": [
+            "A"
+          ]
+        },
+        "MP0.S": {
+          "status": "equal",
+          "observed": [
+            "VDD"
+          ]
+        },
+        "MP0.B": {
+          "status": "equal",
+          "observed": [
+            "VDD"
+          ]
+        }
+      },
+      "paths": {
+        "MN0": {
+          "chain_status": "indeterminate",
+          "rule_status": "indeterminate",
+          "claim_status": "indeterminate",
+          "active_enclosure_nm": "20",
+          "body_edge_length_nm": "90",
+          "rail_edge_length_nm": "10"
+        },
+        "MP0": {
+          "chain_status": "established",
+          "rule_status": "satisfied",
+          "claim_status": "equal",
+          "active_enclosure_nm": "10",
+          "body_edge_length_nm": "100",
+          "rail_edge_length_nm": "10"
+        }
+      }
+    }
+  },
+  "hashes": {
+    "domain/terminal_relations.py": "5bb96a063ed41d708ed5322c1cb95ee2f1ce868c53b4b7158fcf2bfe79b7a731",
+    "derive/terminal_relations.py": "f3ff5334b0d29ccf818ad7b50a3c6983b4418b733a02c8a8db18a91477d54c4a",
+    "derive/body_relations.py": "be59c340a021d9a9a3f25fa97729a8f2040c769522c9d36cbda6595377cad485",
+    "normalization/terminal_relations.py": "456f5421607812a6a65bc36d6d87b64c95322d2d52def37da4804a0a9acce27e",
+    "normalization/terminal_relations_codec.py": "08f172f7e80ea56afbaf7a4d19391f9d5d44ba6e2a450adb154c61932933148a"
+  },
+  "public_roundtrip": {
+    "bytes": 16130982,
+    "sha256": "20c96b097c5c1ce2537310f9e198296c0ffaa2f3f76abfe32da726d75090548b"
+  },
+  "retained_alias_rejected": true,
+  "status": "passed",
+  "elapsed_seconds": 78.289
+}

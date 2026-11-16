@@ -105,6 +105,23 @@ CR08的公开链缺口归因已撤回，EG01工具问题由实际双安装smoke�
 保留。U06仅具体设计，现reader的body_context必填未改；未声明完整M1、全部
 mandatory、真实LVS/生产准入、baseline/no_change或Stage6。此结论不代PM验收。
 
+### 独立合并前复核（2026-11-16）
+
+未参与W014方案/实现的独立session按指定prompt复核，**未发现新的必须修正项，
+可交PM执行main集成及必要组合验证**；不代最终验收。被审head为
+`716e7be1aa0e1042958f4e82eb081ae7a4f6e141`，base为`8f3f39562ed04d790c8d6c015f7c9b8742b6a3c4`；
+产品/测试/config仍等于冻结`66f5b1e5369549ed8df361f89f099acfd2f39e17`、source_id
+`c7769fcbfb0312b93e4d44628c77ff21e273698a537eaba0e1454734b049d364`。
+逐A1–A9判断及独立代码/来源/精确性核查见
+[独立合并前报告](W014/independent-premerge-review.md)。
+
+本次实际完成公开direct完整roundtrip及六类正常/错误/精确性变体和存储攻击断言，
+重新核286源/81证据hash/21命令/两包字节，并执行838项工程证据审计；原主机
+两处临时安装树不可用，未冒称重复即时核验。双1889/双typing65/build/双安装
+三路按完整身份采信。资源R4原选择及test-only delta由新有界脚本核闭合，原工具
+两次失败和修正保留；没有性能重测、重复双全量或复制大wire。剩余生产/完整M1
+限制和PM实际集成验证义务保持，未改PM阶段或验收段。
+
 ## PM验收与交接（PM）
 
 2026-11-13：PM对照架构、W011/W013实际接口、source CDL、现行physical/rules、oracle/body context及W004 helper，选择端子与外置body关系作为下一切片。U06本轮必须形成具体设计，但生产可选输入尚未授权为本轮实现范围。本次只准备任务和恢复入口，不改变runtime、fixture、旧协议或验收答案，未运行产品测试；只核文档链接、范围及Git身份。
