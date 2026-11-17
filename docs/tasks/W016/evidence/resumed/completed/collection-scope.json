@@ -1,0 +1,24 @@
+{
+  "source_manifest_sha256": "f99498abc0877bb918d7de88d66a5eda5d5591d41f8ce8102b04edc14826c052",
+  "full_tests_nodes": 1956,
+  "unit_contract_nodes": 1953,
+  "same_ordered_nodes_310_312": true,
+  "supplement_nodes": [
+    "tests/fixture_support/test_w004_body.py::W004BodyFixtureTests::test_existing_body_failures_keep_their_specific_cause",
+    "tests/fixture_support/test_w004_body.py::W004BodyFixtureTests::test_fractional_raw_rail_does_not_match_integer_local_rail",
+    "tests/fixture_support/test_w004_body.py::W004BodyFixtureTests::test_normal_body_associations"
+  ],
+  "collections": {
+    "collection-order-312.txt": "13097eaace4380b9dab19fb089d15a33cd2c5b27e28270d18a4810410f31af74",
+    "collection-all-312.txt": "66a1cce7e003024a33d1344de12badf7daad5661655e532b49e78faa34bba87c",
+    "collection-all-310.txt": "9845a27957194b87221feb6040e7290eef6d9cb8d6c1d3362b2e5a2151cbfcb2"
+  },
+  "note": "Two long invocations cover unit/contracts (1953). Same-frozen fixture_support supplement (3 per interpreter) closes the tests directory scope without rerunning the long suites.",
+  "root_default_collection_note": {
+    "count": 1957,
+    "outside_official_tests": "docs/tasks/W011/preflight/gate-demo01/test_w011_gate_fixture.py::test_gate_is_held_before_fixtures_and_during_body",
+    "source_sha256": "a465d04a3bbc84614965ca0c76aa862c3b87cef0f701bcd93a54315ca8a657d3",
+    "declared_scope": "\"\"\"Engineering guard probe only, outside official source/test snapshot.\"\"\"",
+    "reason": "Historical docs execution-plugin demo, requires its dedicated resource-lock/log options. Official current and W014 product matrices select tests/unit and tests/contracts; fixture_support is additionally covered here. No product test or configuration is removed."
+  }
+}

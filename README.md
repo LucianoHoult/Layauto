@@ -342,3 +342,43 @@ to use the configured Python and protect tracked legacy outputs.
 Do not treat `legacy_mvp/` as the v2 implementation baseline. Code may be
 reused only after it is moved into the v2 responsibility boundary described in
 `docs/architecture.md`.
+
+## Read-only single-cell analysis
+
+The independent synthetic flat-cell entry reads a versioned analysis manifest
+from actual files, authenticates captured bytes, and returns local source,
+exact geometry, connectivity, FIN measurements, annotation and terminal views:
+
+```python
+from pathlib import Path
+from layauto_v2.analysis import AnalysisRequest, analyze_cell
+
+result = analyze_cell(AnalysisRequest(Path("/inputs/analysis.json")))
+if result.local is not None:
+    measurements = result.local.facets.channel_fin
+    terminals = result.local.facets.terminals
+    # Inspect each facet's status, issues and dependencies before using its value.
+report_json = result.report_json
+```
+
+Use `layauto-cell-analysis-request/1` and `layauto-analysis-query-header/1` as
+specified in the [analysis input contract](docs/tasks/W015/entry-contract.md).
+GDS, source CDL, query/raw captures, all six tech owners and limitations are
+required. Synthetic inputs need explicit header migration; old full-run headers
+are rejected. Target, export/validation policy and body files are unnecessary
+when external body evidence is explicitly `not_selected`. A selected synthetic
+body context is authenticated and evaluated separately; manual declarations
+only describe expectations. Future evidence selectors return `unsupported`.
+
+`request_status` is `completed`, `rejected` or `unsupported`. A completed
+analysis may retain FIN mismatches, coverage gaps and local enclosure violations;
+missing body/parent/global context stays explicit. Selected bad evidence produces
+located findings while independently authenticated local facts remain available.
+The JSON report is a diagnostic view without a receipt decoder. New calls
+reacquire and authenticate inputs; previous results remain immutable.
+
+This entry creates no run, baseline, no-change decision or modification/export
+permission. It supports only the declared synthetic flat subset and required
+query mode. Production PDKs, EDA tools and arbitrary hierarchy remain unverified.
+Implementation review, resource measurements and verification are recorded in
+[W016](docs/tasks/W016-single-cell-analysis.md).

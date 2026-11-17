@@ -1,0 +1,74 @@
+........................................................................ [  3%]
+........................................................................ [  7%]
+........................................................................ [ 11%]
+........................................................................ [ 14%]
+........................................................................ [ 18%]
+......................F................................................. [ 22%]
+....................................F.....................
+=================================== FAILURES ===================================
+________________ test_importer_and_domain_dependency_direction _________________
+
+    def test_importer_and_domain_dependency_direction():
+        violations = []
+        for root in ('layauto_v2/importers', 'layauto_v2/domain', 'layauto_v2/tech'):
+            directory = REPO / root
+            if not directory.exists():
+                continue
+            for path in directory.rglob('*.py'):
+                tree = ast.parse(path.read_text(), filename=str(path))
+                for node in ast.walk(tree):
+                    imported = []
+                    if isinstance(node, ast.Import):
+                        imported = [a.name for a in node.names]
+                    elif isinstance(node, ast.ImportFrom):
+                        imported = [node.module or '']
+                    for module in imported:
+                        if module.startswith(('legacy_mvp', 'tests.support')):
+                            violations.append((str(path), module))
+                        if '/importers' in root and module.startswith(('layauto_v2.tooling', 'layauto_v2.state', 'layauto_v2.normalization', 'layauto_v2.pipeline')):
+                            violations.append((str(path), module))
+                        if '/domain' in root and module.startswith(('pathlib', 'io', 'os', 'subprocess', 'layauto_v2.importers', 'layauto_v2.tech')):
+                            violations.append((str(path), module))
+>       assert not violations
+E       AssertionError: assert not [('/workspace/Layauto/layauto_v2/domain/analysis.py', 'pathlib')]
+
+tests/contracts/test_w005_contracts.py:163: AssertionError
+_________________ test_precontext_module_dependency_boundaries _________________
+
+    def test_precontext_module_dependency_boundaries():
+        forbidden = {
+            'domain': ('pathlib', 'os', 'io', 'subprocess', 'layauto_v2.importers',
+                       'layauto_v2.tooling', 'layauto_v2.repository', 'layauto_v2.pipeline'),
+            'tooling': ('layauto_v2.importers', 'layauto_v2.repository', 'layauto_v2.pipeline'),
+            'importers': ('layauto_v2.tooling', 'layauto_v2.repository', 'layauto_v2.pipeline'),
+            'repository': ('layauto_v2.importers', 'layauto_v2.tooling', 'layauto_v2.transactions',
+                           'layauto_v2.pipeline', 'layauto_v2.planning', 'layauto_v2.constraints',
+                           'layauto_v2.export', 'layauto_v2.validation'),
+        }
+        violations = []
+        for owner, blocked in forbidden.items():
+            for path in (REPO / 'layauto_v2' / owner).glob('*.py'):
+                tree = ast.parse(path.read_text(), filename=str(path))
+                for node in ast.walk(tree):
+                    modules = []
+                    if isinstance(node, ast.Import):
+                        modules = [alias.name for alias in node.names]
+                    elif isinstance(node, ast.ImportFrom):
+                        modules = [node.module or '']
+                    for module in modules:
+                        if module.startswith(blocked + ('legacy_mvp', 'tests')):
+                            violations.append((path.name, module))
+>       assert violations == []
+E       AssertionError: assert [('analysis.py', 'pathlib')] == []
+E         
+E         Left contains one more item: ('analysis.py', 'pathlib')
+E         Use -v to get more diff
+
+tests/contracts/test_w006_boundaries.py:34: AssertionError
+=========================== short test summary info ============================
+FAILED tests/contracts/test_w005_contracts.py::test_importer_and_domain_dependency_direction
+FAILED tests/contracts/test_w006_boundaries.py::test_precontext_module_dependency_boundaries
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! KeyboardInterrupt !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+/tmp/w016-py312-real/lib/python3.12/site-packages/yaml/scanner.py:325: KeyboardInterrupt
+(to show a full traceback on KeyboardInterrupt use --full-trace)
+2 failed, 488 passed in 181.86s (0:03:01)

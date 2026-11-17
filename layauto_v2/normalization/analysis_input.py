@@ -1,6 +1,5 @@
 """Internal local authentication from captured bytes, with no filesystem access."""
 from dataclasses import dataclass
-from pathlib import Path
 
 from layauto_v2.domain.analysis import LocalAnalysisEvidence
 from layauto_v2.domain.codec import digest, FrozenMap
@@ -8,15 +7,7 @@ from layauto_v2.domain.evidence import SourceFile
 from layauto_v2.domain.terminal_relations import validate_terminal_graph
 from layauto_v2.domain.evidence import EvidenceRecord, SourceRef
 from layauto_v2.domain.results import EvidenceIssue
-from layauto_v2.importers.analysis_reader import AnalysisFiles, parse_analysis
-
-
-class _CapturedFiles(AnalysisFiles):
-    def path(self, uri: str) -> Path:
-        # Never resolve symlinks again: this is the acquisition-time alias table.
-        if uri not in self.paths:
-            raise ValueError('analysis alias is missing from acquisition facts')
-        return self.paths[uri]
+from layauto_v2.importers.analysis_reader import captured_analysis_files, parse_analysis
 
 
 @dataclass(frozen=True)
@@ -33,8 +24,7 @@ class LocalAnalysisReceipt:
         LocalAnalysisEvidence(**vars(evidence))
         if evidence.value is None or evidence.issues:
             raise ValueError('local receipt requires complete parse evidence')
-        files = _CapturedFiles(Path(evidence.root))
-        files.paths = {uri: Path(str(path)) for uri, path in evidence.aliases.items()}
+        files = captured_analysis_files(evidence.root, evidence.aliases)
         captures = {s.uri: s for s in evidence.captures}
         parser = parse_analysis(files, evidence.manifest_uri)
         try:

@@ -68,30 +68,52 @@ A1–A8测试选择、资源计数方式及相对已采纳方案的差异；无�
 
 ## 执行结果（执行）
 
-本轮已进入产品实施，但尚未交付完整入口。实际捕获/重parse认证、source/local/FIN及新annotation
-内部链已连通；早期去重诊断report触发资源门，两轮缩减后仍为235613/44873 bytes（5.25倍）。
-按任务门暂停body/manual/terminal/API扩包与最终矩阵，完成不受阻的定向防伪修正、58项回归和typing。
-实际源码范围、原失败/测量、未完成A1–A8及恢复点见[资源交接](W016/resource-checkpoint.md)，
-独立中间review见[review记录](W016/independent-review.md)。PM后续授权将本任务相关源码/测试/独立复核与证据提交推送为未完成检查点；
-本轮仅补资源核算和封包，不扩剩余功能、不放宽资源门，不自行验收或合main。
+按[继续prompt](W016/resume-prompt.md)从远端
+`6ca7b16cff0f953f9e7eacc834f88ac28e70abb6`恢复，完成公开API、body/manual、端子、
+facet/status与错误聚合、完整诊断及来源。纯体积优化依PM决定后置，其他资源门保持。
+最终298项runtime/tests/config冻结SHA-256：
+`f99498abc0877bb918d7de88d66a5eda5d5591d41f8ce8102b04edc14826c052`。
+实际文件/合同、A1–A8覆盖、原失败/修正及复用边界见[工程交付](W016/delivery.md)。
+
+三case完整公开调用约2.67/3.10/2.76秒、HWM约28.7–28.9MiB（Python3.12.14）；
+去重capture42395/45202/42395 bytes，完整未压缩report235792/259620/235838 bytes。
+获取与认证parse各一次、顶层各facet一次，中立完整重构计数另列；全部来源和诊断保留。
+四路同URI/bytes的旧完整DTO/ref/公开wire实际双侧逐bytes比较均通过，到最终冻结按
+未改动的相关旧producer/wrapper/codec及输入身份采信，不重复封装大wire。
+
+双3.10.22/3.12.14最终unit/contracts各1953 passed，另各3 fixture tests及8 subtests passed，
+每解释器精确覆盖正式tests全集1956节点，全部exit0；两长矩阵串行，pytest时间分别
+10798.06/7745.36秒。双typing各75源、双build、双clean安装源码外5case smoke均通过。
+[最终执行核对](W016/evidence/resumed/completed-validation-summary.json)绑定11项命令、原输出
+hash及298项源身份；独立工程review通过、must0，见下。原资源中断检查点及两轮全量原失败保持。
+
+本工程交付按授权以项目noreply身份提交推送原分支，核远端完整SHA交PM。
+未改PM要求/阶段/current-work，不自行验收、合main或删除分支；生产/EDA/隔离主机等未覆盖
+范围及补验触发条件在交付记录中明确。
 
 ## Review结论（reviewer）
 
-独立 reviewer `/root/w016_review` 完成当前**资源中断检查点**审查，未参与产品实施；
-不是 W016 完整实现通过。受审 293 个源码/测试/config 文件绑定
-[源码身份](W016/evidence/source-identity.json)，独立逐文件核对无差异；完整结论、
-原失败和可复用证据见[独立 review](W016/independent-review.md)。
+独立 reviewer `/root/w016_review` 未参与产品实施，完成代码、接口、旧兼容及最终工程证据核对，
+**工程 review 通过，未关闭 must 为0**。受审298个源码/测试/config文件逐hash匹配
+[completed冻结身份](W016/evidence/resumed/completed-source-identity.json)，manifest SHA
+`f99498abc0877bb918d7de88d66a5eda5d5591d41f8ce8102b04edc14826c052`。
+完整依据见[恢复实施review](W016/resumed-review.md)与[最终独立审计](W016/evidence/resumed-review/final-matrix-audit-r2.stdout.json)。
 
-| Finding | 严重性、影响与依据 | 执行处理及版本 | 独立复核 |
-| --- | --- | --- | --- |
-| R01 | must：初始 receipt 的 graph walk 未拒绝 nested SourceFile 额外可变字段；实际文件反例可重现 | 改用完整 native storage guard；绑定当前 source-identity | 实际文件反例现抛 ValueError，关闭该反例 |
-| R02 | must：新 annotation binding 不在旧 validate_members 重构注册表，draft/view 边界缺新 binding 语义重构 | 显式重构 binding，并在 to_value 重验；同一冻结身份 | forged scope/validity/version 及 to_value 共四断言通过，关闭该反例 |
-| 资源门 | 去重报告缩减后仍235613/44873=5.250663倍，超过2倍复核门；不是 raw/完整旧Result重复 | 执行保留构成及缩减前后输出，暂停body/manual扩包和最终矩阵 | 独立核报告hash、长度、1869对象及23 captures一致；交PM复核，不代验收 |
+| 范围 | 独立结论与证据边界 |
+| --- | --- |
+| 来源、状态、body/manual、纯度 | 恢复阶段R03–R10均已修正并独立复核；实际文件反例、原失败和修后输出保留。捕获后封锁文件系统调用仍完成完整认证、body/manual与端子计算，伪alias/root拒绝；没有放宽旧IO/可变state边界。 |
+| 旧接口兼容 | normal-direct/readback/FIN mismatch/错body四路完整DTO/ref与公开wire真实逐bytes相等；readback未seal、无terminal。基线完整decode已通过，候选decoder由最终codec回归覆盖；后续仅新分析入口/重放归属和测试变化，旧producer/codec按精确相关源身份复用。 |
+| 最终双版本矩阵 | 采信执行原实跑并独立核exit/hash/节点集合：3.12为1953 passed/7745.36s，3.10为1953 passed/10798.06s；两侧另各3项fixture_support通过，合计每解释器完整tests 1956项，无遗漏或重复。未重跑长矩阵。 |
+| typing/build/install | 双75模块typing、双wheel/sdist build及双clean源码外五case真实文件smoke通过；独立核各121个已安装runtime文件、产物载荷、实际环境依赖与原stdout/stderr hash。 |
+| 资源 | completed三case计时约2.674/3.100/2.760秒，HWM均不足30MiB；独立counted保留完整认证与中立构造次数。报告体积按PM1接受口径记录，未删来源/诊断省认证。 |
 
-独立实跑基线 normal-direct W007–W014 完整 DTO/wire roundtrip，仅基线准备，**未跑候选双侧parity**；
-唯一压缩快照已保留在任务 evidence。其余readback/mismatch/错body路径及最终双版本矩阵未跑。
-当前缺顶层API、terminal/body/manual、状态/异常聚合与完整A1–A8，不能提交为完成交付。
-执行的定向58项与typing按冻结身份采信；恢复后按实际改动和既定verification-reuse补验。
+早期R01（nested SourceFile额外可变字段）与R02（新annotation binding重构/to_value重验）
+在原检查点已独立关闭，原293文件身份、资源暂停、反例及失败证据继续保留于
+[历史独立review](W016/independent-review.md)，不改写历史为当时完整通过。
+恢复阶段两轮全量的原AST边界失败/中断也完整保留；窄接口登记和依赖修正后在最终冻结重新跑通。
+旧大wire不复制重复候选快照；本轮新基线gzip已临时归档，未来精确复核须按原提交和同URI输入重建，
+不能仅凭hash声称重新比较。生产PDK/方言、真实EDA运行、父级/global证明及隔离目标环境未验证。
+本结论支持按用户授权提交推送原W016分支交PM，**不代PM验收、不授权合并main**。
 
 ## PM验收与交接（PM）
 

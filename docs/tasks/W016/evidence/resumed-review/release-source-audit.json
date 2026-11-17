@@ -1,0 +1,15 @@
+{
+  "manifest": "docs/tasks/W016/evidence/resumed/release-source-identity.json",
+  "manifest_sha256": "dae9e716acb4e4f947db12779362c677615cdc12c03c0852fbf9cde3a69a977e",
+  "files_checked": 298,
+  "mismatches": [],
+  "delta_from_delivery": [
+    "layauto_v2/analysis.py",
+    "tests/unit/test_analysis_api.py"
+  ],
+  "normal_candidate_source_matches_delivery": true,
+  "normal_candidate_reuse_reason": "Only new public facade UTF-8 request preflight and new API test changed; neither imported by old_interface/candidate_parity chains. All old chain product producers, wrappers, codecs, configuration and input bytes identical.",
+  "unicode_probe_matches_release_facade": true,
+  "status": "passed",
+  "checked_at": "2026-11-17T01:42:47.576246+00:00"
+}

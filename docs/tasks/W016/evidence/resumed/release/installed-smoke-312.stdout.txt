@@ -1,0 +1,36 @@
+{
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "installed_package": "/tmp/w016-install-release-312/lib/python3.12/site-packages/layauto_v2/__init__.py",
+  "cases": [
+    {
+      "case": "no_body",
+      "status": "completed",
+      "source_comparison": "indeterminate",
+      "report_bytes": 235792
+    },
+    {
+      "case": "body",
+      "status": "completed",
+      "source_comparison": "indeterminate",
+      "report_bytes": 259620
+    },
+    {
+      "case": "mismatch",
+      "status": "completed",
+      "source_comparison": "mismatch",
+      "report_bytes": 235838
+    },
+    {
+      "case": "bad_body",
+      "status": "rejected",
+      "source_comparison": "indeterminate",
+      "report_bytes": 236883
+    },
+    {
+      "case": "manual",
+      "status": "completed",
+      "source_comparison": "indeterminate",
+      "report_bytes": 236808
+    }
+  ]
+}

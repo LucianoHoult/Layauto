@@ -48,6 +48,8 @@ MANIFEST = obj({
 def validate_analysis_payload(doc: FrozenMap, kind: str) -> None:
     if kind == 'analysis_manifest':
         MANIFEST(doc, '')
+    elif kind == 'analysis_manual':
+        MANUAL(doc, '')
     elif kind == 'analysis_header':
         HEADER(doc, '')
         _index(doc['raw'], 'uri', '/raw')
@@ -56,3 +58,10 @@ def validate_analysis_payload(doc: FrozenMap, kind: str) -> None:
         _unique(_array(_map(doc['query_unit'])['axis_order']), '/query_unit/axis_order')
     else:
         raise SchemaError('', 'unsupported analysis document kind', 'UnsupportedSchema')
+
+MANUAL = obj({
+    'schema_version': literal('layauto-manual-supply-declaration/1'),
+    'author': text, 'created_at': text, 'source_layout': FILE_REF, 'source_netlist': FILE_REF,
+    'cell': text, 'instance_hint': maybe(text),
+    'assertions': array(obj({'device': text, 'role': literal('B'), 'expected_supply_label': text}), nonempty=True),
+})

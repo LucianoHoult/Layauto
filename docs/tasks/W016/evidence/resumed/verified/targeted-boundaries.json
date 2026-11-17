@@ -1,0 +1,32 @@
+{
+  "label": "targeted-boundaries",
+  "command": [
+    "/tmp/w016-py312-real/bin/python",
+    "-m",
+    "pytest",
+    "-p",
+    "no:cacheprovider",
+    "tests/contracts/test_w005_contracts.py::test_importer_and_domain_dependency_direction",
+    "tests/contracts/test_w006_boundaries.py::test_precontext_module_dependency_boundaries",
+    "tests/unit/test_analysis_api.py",
+    "-q",
+    "-k",
+    "dependency_direction or dependency_boundaries or request_errors"
+  ],
+  "cwd": "/workspace/Layauto",
+  "driver_cwd": "/workspace/Layauto",
+  "started_at_utc": "2026-11-17T01:59:34.520367+00:00",
+  "finished_at_utc": "2026-11-17T01:59:35.157535+00:00",
+  "elapsed_seconds": 0.6371746270001495,
+  "exit_code": 0,
+  "source_manifest_sha256": "73cb080765e2e317f2f54269f8cd306ed5e352c8c21dd2ae575f8920db54fa7b",
+  "stdout": "targeted-boundaries.stdout.txt",
+  "stderr": "targeted-boundaries.stderr.txt",
+  "stdout_sha256": "becd1b6731c1671f17f168d941d27d057cfa6ada26dac2349ad2327c5da4d591",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "environment_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONUNBUFFERED": "1",
+    "MPLCONFIGDIR": "/tmp/w016-mplconfig"
+  }
+}

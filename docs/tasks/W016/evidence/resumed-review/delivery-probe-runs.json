@@ -1,0 +1,60 @@
+[
+  {
+    "name": "alias-closure.delivery",
+    "command": [
+      "/tmp/w016-py312-real/bin/python",
+      "/workspace/Layauto/docs/tasks/W016/evidence/resumed-review/alias_closure_probe.py",
+      "--root",
+      "/workspace/Layauto",
+      "--require-closed"
+    ],
+    "exit_code": 0,
+    "seconds": 1.8537605569999869
+  },
+  {
+    "name": "request-path.delivery",
+    "command": [
+      "/tmp/w016-py312-real/bin/python",
+      "/workspace/Layauto/docs/tasks/W016/evidence/resumed-review/request_path_probe.py",
+      "--root",
+      "/workspace/Layauto",
+      "--require-located"
+    ],
+    "exit_code": 0,
+    "seconds": 0.14585747000000993
+  },
+  {
+    "name": "selected-error-location.delivery",
+    "command": [
+      "/tmp/w016-py312-real/bin/python",
+      "/workspace/Layauto/docs/tasks/W016/evidence/resumed-review/selected_error_location_probe.py",
+      "--root",
+      "/workspace/Layauto",
+      "--require-equal"
+    ],
+    "exit_code": 0,
+    "seconds": 0.6135259740001402
+  },
+  {
+    "name": "selected-alias.delivery",
+    "command": [
+      "/tmp/w016-py312-real/bin/python",
+      "/workspace/Layauto/docs/tasks/W016/evidence/resumed-review/selected_alias_probe.py",
+      "--root",
+      "/workspace/Layauto"
+    ],
+    "exit_code": 0,
+    "seconds": 16.885321023000188
+  },
+  {
+    "name": "diagnostic-priority.delivery",
+    "command": [
+      "/tmp/w016-py312-real/bin/python",
+      "/workspace/Layauto/docs/tasks/W016/evidence/resumed-review/diagnostic_priority_probe.py",
+      "--root",
+      "/workspace/Layauto"
+    ],
+    "exit_code": 0,
+    "seconds": 5.759475846999976
+  }
+]

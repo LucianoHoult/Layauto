@@ -1,0 +1,14 @@
+{
+  "rows": [
+    {
+      "case": "relative_root",
+      "rejected": false
+    },
+    {
+      "case": "relative_raw_alias",
+      "rejected": true,
+      "error": "acquisition path must be absolute POSIX without NUL"
+    }
+  ],
+  "reader_sha256": "cb4ddc984cddc709829fb4434dbd5064cb282b215ac3ccbce5f508bdc8a31db9"
+}

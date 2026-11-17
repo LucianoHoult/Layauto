@@ -1,0 +1,23 @@
+{
+  "label": "mypy-310",
+  "command": [
+    "/tmp/w016-py310/bin/python",
+    "-m",
+    "mypy"
+  ],
+  "cwd": "/workspace/Layauto",
+  "started_at_utc": "2026-11-17T01:26:07.992779+00:00",
+  "finished_at_utc": "2026-11-17T01:26:08.180333+00:00",
+  "elapsed_seconds": 0.18773217699981615,
+  "exit_code": 0,
+  "source_manifest_sha256": "af23726d482621502c322ba207b610b49bf10881aaf856f55b208009e5d8bd50",
+  "stdout": "mypy-310.stdout.txt",
+  "stderr": "mypy-310.stderr.txt",
+  "stdout_sha256": "abcb6647b13baa8244d90bb839deeab7f27878b24d4a96ce9a221f280e0e8a6c",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "environment_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONUNBUFFERED": "1",
+    "MPLCONFIGDIR": "/tmp/w016-mplconfig"
+  }
+}

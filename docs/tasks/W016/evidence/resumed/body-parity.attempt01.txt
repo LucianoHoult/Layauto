@@ -1,0 +1,23 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+___________ test_same_source_body_geometry_paths_rules_and_terminals ___________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-6/test_same_source_body_geometry0')
+
+    def test_same_source_body_geometry_paths_rules_and_terminals(tmp_path):
+        root=copy_input(tmp_path)
+        old=build(root)
+        assert old.status=='success',old.issues
+        materialize(root,body=True)
+        new=analyze_cell(AnalysisRequest(root/'analysis.json'))
+>       assert new.request_status=='completed',new.findings
+E       AssertionError: (AnalysisFinding(category='binding', code='NormalizedCacheMismatch', source=SourceRef(uri='/tmp/pytest-of-agent/pytest...input/query/normalized/instance_xref.yaml#/',), severity='error', message='cache differs from reparsed raw evidence'),)
+E       assert 'rejected' == 'completed'
+E         
+E         - completed
+E         + rejected
+
+tests/contracts/test_analysis_body_parity.py:18: AssertionError
+=========================== short test summary info ============================
+FAILED tests/contracts/test_analysis_body_parity.py::test_same_source_body_geometry_paths_rules_and_terminals
+1 failed in 26.59s

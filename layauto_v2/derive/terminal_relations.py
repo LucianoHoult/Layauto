@@ -6,11 +6,14 @@ to normalization; neither this draft nor its comparisons publish layout state.
 from __future__ import annotations
 
 from dataclasses import dataclass, field, fields, is_dataclass
-from typing import Literal, cast
+from typing import TYPE_CHECKING, Literal, cast
+
+if TYPE_CHECKING:
+    from layauto_v2.state.analysis_annotation import AnalysisAnnotationDraft
 
 from layauto_v2.annotation.net_regions import build_net_annotation_draft
 from layauto_v2.domain.channel_identity import ChannelSeed
-from layauto_v2.domain.circuit import SemanticCircuitDraft, semantic_value
+from layauto_v2.domain.circuit import SemanticCircuitDraft, Terminal, semantic_value
 from layauto_v2.domain.codec import FrozenMap, canonical_bytes, digest
 from layauto_v2.domain.evidence import EvidenceRecord, SourceRef
 from layauto_v2.domain.geometry import evidence_value, mapping, sequence
@@ -148,21 +151,46 @@ def _observed(path: FrozenMap, source: SemanticCircuitDraft) -> tuple[NetId, ...
 def _relations(local: LocalConnectivityDraft, source: SemanticCircuitDraft,
                channels: ChannelIdentityDraft, annotation: AnnotationDraft,
                body: FrozenMap, binding_ref: TerminalRef) -> tuple[TerminalRelation, ...]:
+    return tuple(TerminalRelation(TerminalTarget(binding_ref, row.device_id, row.expected.role),
+                 row.expected, row.channel_ref, row.node_refs, row.component_refs, row.annotation_target_refs,
+                 row.local_observed_net_ids, row.evidence_refs, row.context_path, row.observed_net_ids,
+                 row.support_status) for row in terminal_operands(local, source, channels, annotation, body))
+
+
+@dataclass(frozen=True)
+class TerminalOperands:
+    device_id: DeviceId
+    expected: Terminal
+    channel_ref: RegionRef | None
+    node_refs: tuple[LocalRef, ...]
+    component_refs: tuple[LocalRef, ...]
+    annotation_target_refs: tuple[AnnotationRef, ...]
+    local_observed_net_ids: tuple[NetId, ...]
+    evidence_refs: tuple[AnnotationRef, ...]
+    context_path: FrozenMap | None
+    observed_net_ids: tuple[NetId, ...]
+    support_status: SupportStatus
+
+
+def terminal_operands(local: LocalConnectivityDraft, source: SemanticCircuitDraft,
+                      channels: ChannelIdentityDraft, annotation: AnnotationDraft | AnalysisAnnotationDraft,
+                      body: FrozenMap | None) -> tuple[TerminalOperands, ...]:
+    """Pure localization shared by separately authenticated wrappers."""
     selected = next(cell for cell in source.cells if cell.id == source.selected_cell)
     by_device = {row.device_id: row.channel_ref for row in channels.associations}
     topology = {row.channel_ref: row for row in channels.topology}
     summaries = {row.component_ref: row for row in annotation.components}
     all_nodes = tuple(node.ref for node in local.nodes)
     all_components = tuple(component.ref for component in local.components)
-    rows: list[TerminalRelation] = []
-    paths = _body_paths(body)
+    rows: list[TerminalOperands] = []
+    paths = () if body is None else _body_paths(body)
     for device in selected.devices:
         channel = by_device.get(device.id)
         physical = None if channel is None else topology.get(channel)
         path_matches = tuple(path for path in paths if path['device_id'] == identity_value(device.id))
-        if len(path_matches) != 1:
+        if body is not None and len(path_matches) != 1:
             raise ValueError('body paths must retain exactly one row per source device')
-        path = path_matches[0]
+        path = path_matches[0] if path_matches else None
         for expected in device.terminals:
             role = expected.role
             node_refs: tuple[LocalRef, ...] = ()
@@ -171,7 +199,7 @@ def _relations(local: LocalConnectivityDraft, source: SemanticCircuitDraft,
             observed: tuple[NetId, ...] = ()
             context: FrozenMap | None = None
             extra_evidence: tuple[AnnotationRef, ...] = ()
-            if role == 'B':
+            if role == 'B' and path is not None:
                 context = path
                 node_refs = _body_ref(path, 'local_body_node_ref', all_nodes)
                 component_refs = _body_ref(path, 'local_body_component_ref', all_components)
@@ -182,7 +210,7 @@ def _relations(local: LocalConnectivityDraft, source: SemanticCircuitDraft,
                                        if any(reference.to_value() == value for value in sequence(path['evidence_refs'])))
                 if len(extra_evidence) != len(sequence(path['evidence_refs'])):
                     raise ValueError('body path evidence does not close to the common annotation input')
-            elif physical is not None:
+            elif role != 'B' and physical is not None:
                 if role == 'D':
                     node_refs, component_refs = (physical.drain_node,), (physical.drain_component,)
                 elif role == 'S':
@@ -200,7 +228,7 @@ def _relations(local: LocalConnectivityDraft, source: SemanticCircuitDraft,
                                     | set(extra_evidence), key=lambda item: item.sha256))
             if role != 'B':
                 observed = local_nets
-            rows.append(TerminalRelation(TerminalTarget(binding_ref, device.id, role), expected, channel,
+            rows.append(TerminalOperands(device.id, expected, channel,
                          node_refs, component_refs, target_refs, local_nets, evidence, context, observed, support))
     return tuple(rows)
 

@@ -1,0 +1,9 @@
+{
+  "manifest": "docs/tasks/W016/evidence/resumed/delivery-source-identity.json",
+  "manifest_sha256": "a306a2ae0f5aee5c37734764378520f927846bcb7e08b9e97ce88245c7e01a6e",
+  "files_checked": 298,
+  "mismatches": [],
+  "manual_location_product_source_mismatches": [],
+  "status": "passed",
+  "checked_at": "2026-11-17T01:36:25.824889+00:00"
+}

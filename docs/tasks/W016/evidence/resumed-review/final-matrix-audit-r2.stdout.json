@@ -1,0 +1,230 @@
+{
+  "status": "passed",
+  "manifest_sha256": "f99498abc0877bb918d7de88d66a5eda5d5591d41f8ce8102b04edc14826c052",
+  "reviewer_method": "Read original completed command metadata/output hashes and full node coverage; independently rechecked all 298 source/test/config hashes, environments, build/install bytes and supporting evidence. No pytest or product/wire rerun.",
+  "matrices": [
+    {
+      "interpreter": "312",
+      "full_tests_passed": 1956,
+      "parts": [
+        {
+          "label": "pytest-312",
+          "command": [
+            "/tmp/w016-py312-real/bin/python",
+            "-m",
+            "pytest",
+            "-p",
+            "no:cacheprovider",
+            "tests/unit",
+            "tests/contracts",
+            "-q",
+            "--maxfail=1"
+          ],
+          "exit_code": 0,
+          "passed": 1953,
+          "subtests_passed": null,
+          "pytest_seconds": 7745.36,
+          "driver_seconds": 7747.786188836,
+          "stdout_sha256": "0c8035cdb172da372281b5e707753f3d2232fe70c91fc2086e07c74a7db277d9",
+          "stderr_empty": true,
+          "report_sha256": "b84c8bbec0e1d899bd8afb33bc7f4560e643a65ea9bb9b663c7cc8914144a76f"
+        },
+        {
+          "label": "fixture-support-312",
+          "command": [
+            "/tmp/w016-py312-real/bin/python",
+            "-m",
+            "pytest",
+            "-p",
+            "no:cacheprovider",
+            "tests/fixture_support",
+            "-q"
+          ],
+          "exit_code": 0,
+          "passed": 3,
+          "subtests_passed": 8,
+          "pytest_seconds": 0.1,
+          "driver_seconds": 0.36945561499942414,
+          "stdout_sha256": "742b554243abfeb54f90ec7bececb9f1012081ccd2fbd26e9a457ffff4356028",
+          "stderr_empty": true,
+          "report_sha256": "12dfeeabb3dc411c9803f1af0e41c551c07907b65723e4ff2dd899d0b5fe36bc"
+        }
+      ],
+      "disjoint_collection_union_verified": true
+    },
+    {
+      "interpreter": "310",
+      "full_tests_passed": 1956,
+      "parts": [
+        {
+          "label": "pytest-310",
+          "command": [
+            "/tmp/w016-py310/bin/python",
+            "-m",
+            "pytest",
+            "-p",
+            "no:cacheprovider",
+            "tests/unit",
+            "tests/contracts",
+            "-q",
+            "--maxfail=1"
+          ],
+          "exit_code": 0,
+          "passed": 1953,
+          "subtests_passed": null,
+          "pytest_seconds": 10798.06,
+          "driver_seconds": 10801.143035027999,
+          "stdout_sha256": "90ced411653911d7687fe52498be75524e5730175a840944abde1a972912a464",
+          "stderr_empty": true,
+          "report_sha256": "ed0de59667021a109a6467f65ba62e014a8941f06e32ee621dbd9086cb85bdd7"
+        },
+        {
+          "label": "fixture-support-310",
+          "command": [
+            "/tmp/w016-py310/bin/python",
+            "-m",
+            "pytest",
+            "-p",
+            "no:cacheprovider",
+            "tests/fixture_support",
+            "-q"
+          ],
+          "exit_code": 0,
+          "passed": 3,
+          "subtests_passed": 8,
+          "pytest_seconds": 0.11,
+          "driver_seconds": 0.41991720700025326,
+          "stdout_sha256": "6c77ad4ff84aa4bf05fbc86c27e23ad9f1d6bc201420cec0e1eee6010546d69e",
+          "stderr_empty": true,
+          "report_sha256": "afa4f173c771e8dae8f267d7670737257f2f5da10831fd4951d584cc5fdbbab6"
+        }
+      ],
+      "disjoint_collection_union_verified": true
+    }
+  ],
+  "supporting_engineering_audit": {
+    "status": "passed",
+    "scope": "Independent read-only metadata/actual installed and artifact byte audit; no product rerun.",
+    "manifest_sha256": "f99498abc0877bb918d7de88d66a5eda5d5591d41f8ce8102b04edc14826c052",
+    "source_files_checked": 298,
+    "collection": {
+      "full_nodes": 1956,
+      "long_suite_nodes": 1953,
+      "supplement_nodes": [
+        "tests/fixture_support/test_w004_body.py::W004BodyFixtureTests::test_existing_body_failures_keep_their_specific_cause",
+        "tests/fixture_support/test_w004_body.py::W004BodyFixtureTests::test_fractional_raw_rail_does_not_match_integer_local_rail",
+        "tests/fixture_support/test_w004_body.py::W004BodyFixtureTests::test_normal_body_associations"
+      ],
+      "same_ordered_full_nodes_both_interpreters": true,
+      "disjoint_union_exactly_full_tests": true
+    },
+    "execution_reports": [
+      {
+        "report": "pure-seams.json",
+        "sha256": "c6396d4568ed2ce8d8b93442c435ea312c89c85879deb020ff86febff5ce568e",
+        "exit_code": 0,
+        "original_output_hashes_match": true
+      },
+      {
+        "report": "mypy-310.json",
+        "sha256": "1a4c96cd90dae82afcd0aa9df168a3c62b6a6fe8853e9a7542332a69698cfabf",
+        "exit_code": 0,
+        "original_output_hashes_match": true
+      },
+      {
+        "report": "mypy-312.json",
+        "sha256": "2b4cf4b4bb7839e9c5f909d8f0fb947d35fedb3ff842d3071cea78cee60de90a",
+        "exit_code": 0,
+        "original_output_hashes_match": true
+      },
+      {
+        "report": "build-310.json",
+        "sha256": "e8bf89a8842dc74d231b752f913dcc0ece835474366145305d715886b634e8a2",
+        "exit_code": 0,
+        "original_output_hashes_match": true
+      },
+      {
+        "report": "build-312.json",
+        "sha256": "0a451d8d8a0f7d30d0bd70c130bff585bb55ff544d4ddb1d9b306614da147034",
+        "exit_code": 0,
+        "original_output_hashes_match": true
+      },
+      {
+        "report": "installed-smoke-310.json",
+        "sha256": "011371d71b7123b7e9d36dc9e682d6b6d32657f9df8d75a71f505ea59f3095b5",
+        "exit_code": 0,
+        "original_output_hashes_match": true
+      },
+      {
+        "report": "installed-smoke-312.json",
+        "sha256": "f893edcf9375fd6bf185b51bd2a9b4a26fb3f44440184f085facbd9677b654b6",
+        "exit_code": 0,
+        "original_output_hashes_match": true
+      }
+    ],
+    "environments": [
+      {
+        "version": "310",
+        "python": "3.10.22 (main, Oct  3 2026, 01:32:06) [Clang 22.1.3 ]",
+        "dependency_count": 31,
+        "current_environment_matches": true
+      },
+      {
+        "version": "312",
+        "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+        "dependency_count": 28,
+        "current_environment_matches": true
+      }
+    ],
+    "installations": [
+      {
+        "version": "310",
+        "runtime_files": 121,
+        "all_installed_bytes_match_frozen_source": true,
+        "outside_repository": true,
+        "installed_dependencies_match": true,
+        "five_actual_file_cases": true
+      },
+      {
+        "version": "312",
+        "runtime_files": 121,
+        "all_installed_bytes_match_frozen_source": true,
+        "outside_repository": true,
+        "installed_dependencies_match": true,
+        "five_actual_file_cases": true
+      }
+    ],
+    "build_artifacts_all_bytes_and_runtime_payloads_match": true,
+    "smoke_inputs_and_driver_match": true,
+    "resources": [
+      {
+        "case": "no-body",
+        "seconds": 2.673732829999608,
+        "hwm_kib": 29344,
+        "report_bytes": 235792,
+        "capture_bytes": 42395,
+        "source_inputs_dependencies_and_report_hash_match": true,
+        "expected_full_parse_and_neutral_build_counts": true
+      },
+      {
+        "case": "body",
+        "seconds": 3.0995349810000334,
+        "hwm_kib": 29508,
+        "report_bytes": 259620,
+        "capture_bytes": 45202,
+        "source_inputs_dependencies_and_report_hash_match": true,
+        "expected_full_parse_and_neutral_build_counts": true
+      },
+      {
+        "case": "mismatch",
+        "seconds": 2.760156461999941,
+        "hwm_kib": 29568,
+        "report_bytes": 235838,
+        "capture_bytes": 42395,
+        "source_inputs_dependencies_and_report_hash_match": true,
+        "expected_full_parse_and_neutral_build_counts": true
+      }
+    ]
+  },
+  "conclusion": "A8 engineering evidence complete on this frozen snapshot; no open must. This is independent engineering review, not PM acceptance or production/EDA assurance."
+}

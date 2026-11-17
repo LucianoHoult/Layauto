@@ -1,0 +1,24 @@
+{
+  "manifest": "docs/tasks/W016/evidence/resumed/completed-source-identity.json",
+  "manifest_sha256": "f99498abc0877bb918d7de88d66a5eda5d5591d41f8ce8102b04edc14826c052",
+  "files_checked": 298,
+  "mismatches": [],
+  "delta_from_verified": [
+    "layauto_v2/importers/analysis_reader.py",
+    "layauto_v2/normalization/analysis.py",
+    "layauto_v2/normalization/analysis_input.py",
+    "tests/contracts/test_w007_contracts.py",
+    "tests/unit/test_analysis_api.py"
+  ],
+  "noio_probe_all_product_hashes_match": true,
+  "independent_ast_tests": {
+    "exit_code": 0,
+    "result": "..........                                                               [100%]\n10 passed in 0.66s",
+    "stdout_sha256": "a8a3cf23db81eec51f6fbea169ec6148b0c67ee3c794c720709ecbc62af83f5b",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "coverage": "All 10 files in tests containing ast.parse; previous 11-test run also included actual acquisition/compute purity. Current run only static boundary checks."
+  },
+  "old_parity_reuse": "Only three new W016 analysis modules and two tests changed; no old producer/wrapper/codec or fixed parity input changed. Replay ownership transfer is exercised by actual captured no-IO/alias probe. Previous four complete exact comparisons are adopted by relevant-source identity.",
+  "status": "passed",
+  "checked_at": "2026-11-17T02:19:47.631274+00:00"
+}

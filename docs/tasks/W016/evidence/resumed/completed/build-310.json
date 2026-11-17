@@ -1,0 +1,27 @@
+{
+  "label": "build-310",
+  "command": [
+    "/tmp/w016-py310/bin/python",
+    "-m",
+    "build",
+    "--no-isolation",
+    "--outdir",
+    "/tmp/w016-build-completed-310"
+  ],
+  "cwd": "/workspace/Layauto",
+  "driver_cwd": "/workspace/Layauto",
+  "started_at_utc": "2026-11-17T02:17:30.829612+00:00",
+  "finished_at_utc": "2026-11-17T02:17:32.644456+00:00",
+  "elapsed_seconds": 1.814848250999603,
+  "exit_code": 0,
+  "source_manifest_sha256": "f99498abc0877bb918d7de88d66a5eda5d5591d41f8ce8102b04edc14826c052",
+  "stdout": "build-310.stdout.txt",
+  "stderr": "build-310.stderr.txt",
+  "stdout_sha256": "5963bf64e7c8ecd66097c6617eda68a3bb84cab4e8ba1c701ad0380fdf6a06be",
+  "stderr_sha256": "b181eea8a45f807f5fa1607f003eb1ae5363271ec186d4780a7fd3630cdea57e",
+  "environment_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONUNBUFFERED": "1",
+    "MPLCONFIGDIR": "/tmp/w016-mplconfig"
+  }
+}

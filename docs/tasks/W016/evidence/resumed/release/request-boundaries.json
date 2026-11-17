@@ -1,0 +1,30 @@
+{
+  "label": "request-boundaries",
+  "command": [
+    "/tmp/w016-py312-real/bin/python",
+    "-m",
+    "pytest",
+    "-p",
+    "no:cacheprovider",
+    "tests/unit/test_analysis_api.py",
+    "-q",
+    "-k",
+    "request_errors"
+  ],
+  "cwd": "/workspace/Layauto",
+  "driver_cwd": "/workspace/Layauto",
+  "started_at_utc": "2026-11-17T01:42:04.689742+00:00",
+  "finished_at_utc": "2026-11-17T01:42:05.070031+00:00",
+  "elapsed_seconds": 0.38029186800008574,
+  "exit_code": 0,
+  "source_manifest_sha256": "dae9e716acb4e4f947db12779362c677615cdc12c03c0852fbf9cde3a69a977e",
+  "stdout": "request-boundaries.stdout.txt",
+  "stderr": "request-boundaries.stderr.txt",
+  "stdout_sha256": "f203dff6e9e459f801eacdc4cecac3b3340ce05836a29727b17131671d18703f",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "environment_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONUNBUFFERED": "1",
+    "MPLCONFIGDIR": "/tmp/w016-mplconfig"
+  }
+}

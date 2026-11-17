@@ -1,0 +1,21 @@
+F.                                                                       [100%]
+=================================== FAILURES ===================================
+___________ test_partial_fin_keeps_diagnostic_and_real_dependencies ____________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-3/test_partial_fin_keeps_diagnos0')
+
+    def test_partial_fin_keeps_diagnostic_and_real_dependencies(tmp_path):
+        materialize(tmp_path)
+        append_rect(tmp_path,'FIN',(59,27,110,29))
+        rebind(tmp_path)
+        result=run(tmp_path)
+>       assert result.request_status=='rejected'
+E       AssertionError: assert 'unsupported' == 'rejected'
+E         
+E         - rejected
+E         + unsupported
+
+tests/unit/test_analysis_api.py:274: AssertionError
+=========================== short test summary info ============================
+FAILED tests/unit/test_analysis_api.py::test_partial_fin_keeps_diagnostic_and_real_dependencies
+1 failed, 1 passed, 39 deselected in 2.48s

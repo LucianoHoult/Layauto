@@ -1,0 +1,17 @@
+{
+  "command": [
+    "/tmp/w016-py312-real/bin/python",
+    "-m",
+    "pytest",
+    "-p",
+    "no:cacheprovider",
+    "tests/unit",
+    "tests/contracts",
+    "-q",
+    "--maxfail=1"
+  ],
+  "cwd": "/workspace/Layauto",
+  "started_at_utc": "2026-11-17T02:02:29.905571+00:00",
+  "source_manifest_sha256": "73cb080765e2e317f2f54269f8cd306ed5e352c8c21dd2ae575f8920db54fa7b",
+  "driver_sha256": "189c24bc917ef8168409d0b90a5119692e74446e10fa6b50ec07edb62fc815bc"
+}

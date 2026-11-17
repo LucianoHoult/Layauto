@@ -28,6 +28,8 @@ def diagnostic_json(facets: Mapping[str, object], captures: tuple[SourceFile, ..
             return {'sha256': hashlib.sha256(item).hexdigest(), 'bytes': len(item)}
         if type(item) is SourceRef:
             identity = (item.uri, item.sha256)
+            if identity not in capture_ids and item.sha256 is None:
+                return {'uri': item.uri, 'field': item.field}
             if identity not in capture_ids:
                 raise ValueError('report source is outside capture table')
             return {'capture': capture_ids[identity], **{f.name: getattr(item, f.name)

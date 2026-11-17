@@ -6,7 +6,7 @@ from layauto_v2.domain.acquisition import AcquisitionRequest, AcquisitionRespons
 from layauto_v2.domain.analysis import LocalAnalysisEvidence
 from layauto_v2.domain.codec import FrozenMap, canonical_bytes, freeze_map
 from layauto_v2.domain.evidence import EvidenceRecord, SourceFile
-from layauto_v2.domain.results import InputError
+from layauto_v2.domain.results import InputError, EvidenceIssue
 from layauto_v2.tech.analysis_schema import validate_analysis_payload
 from layauto_v2.tech.schema import SchemaError
 from ._access import mapping, sequence, string, integer
@@ -28,12 +28,38 @@ class AnalysisFiles(_Files):
         return present
 
 
+class _CapturedFiles(AnalysisFiles):
+    lookup: dict[str, Path]
+
+    def path(self, uri: str) -> Path:
+        # Never resolve symlinks again: this is the acquisition-time alias table.
+        if uri not in self.lookup:
+            raise ValueError('analysis alias is missing from acquisition facts')
+        self.paths[uri] = self.lookup[uri]
+        return self.lookup[uri]
+
+
+def captured_analysis_files(root: str, aliases: FrozenMap) -> AnalysisFiles:
+    """Pure acquisition-time path replay. Never resolve or read the filesystem."""
+    if type(root) is not str or not Path(root).is_absolute():
+        raise ValueError('captured analysis root requires an absolute native path')
+    if any(type(path) is not str or not Path(path).is_absolute() for path in aliases.values()):
+        raise ValueError('captured analysis aliases require absolute native paths')
+    files = _CapturedFiles(Path(root))
+    files.lookup = {uri: Path(str(path)) for uri, path in aliases.items()}
+    return files
+
+
 def _analysis_doc(source: SourceFile, kind: str, max_bytes: int = 1_000_000,
                   max_depth: int = 32) -> FrozenMap:
     doc = load_document(source, max_bytes=max_bytes, max_depth=max_depth)
     if kind == 'analysis_header' and doc.get('schema_version') == 'w004-query-header/2':
         raise InputError('unsupported', 'LegacyFullHeaderRequiresExplicitMigration',
                          'legacy full header requires explicit synthetic migration', source.ref())
+    if kind in ('analysis_header', 'analysis_manifest'):
+        expected = 'layauto-analysis-query-header/1' if kind == 'analysis_header' else 'layauto-cell-analysis-request/1'
+        if doc.get('schema_version') not in (None, expected):
+            raise InputError('unsupported', 'UnsupportedAnalysisSchemaVersion', 'unsupported independent analysis schema version', source.ref(field='/schema_version'))
     try:
         validate_analysis_payload(doc, kind)
     except SchemaError as exc:
@@ -188,3 +214,51 @@ def acquire_analysis(path: Path) -> LocalAnalysisEvidence:
     except StopIteration as done:
         result: LocalAnalysisEvidence = done.value
         return result
+
+
+def acquire_selections(evidence: LocalAnalysisEvidence) -> tuple[
+        tuple[SourceFile, ...], SourceFile | None, SourceFile | None,
+        tuple[EvidenceIssue, ...], FrozenMap]:
+    """Acquire selected external bytes once, independently from the local closure.
+
+    Unsupported kinds are never opened. Parsing/authentication is owned by
+    normalization and cannot add external shapes to the local capture scope.
+    """
+    files = AnalysisFiles(Path(evidence.root))
+    files.paths = {uri: Path(str(path)) for uri, path in evidence.aliases.items()}
+    files.files = {files.path(source.uri): source for source in evidence.captures}
+    selected: list[SourceFile | None] = []
+    issues: list[EvidenceIssue] = []
+    config = None if evidence.value is None else mapping(evidence.value['config'])
+    for field, kind in (('external_body', 'synthetic_context'), ('manual_intent', 'declaration')):
+        selection = None if config is None else config.get(field)
+        if not isinstance(selection, FrozenMap) or selection['kind'] != kind:
+            selected.append(None)
+            continue
+        parser = files.read(string(selection['uri']), missing_code='SelectedBodyUnavailable' if field == 'external_body' else 'SelectedManualUnavailable')
+        try:
+            try:
+                request = next(parser)
+                while True:
+                    request = parser.send(_component_acquire(request))
+            except StopIteration as done:
+                selected.append(done.value)
+                try:
+                    doc = load_document(done.value)
+                except InputError as exc:
+                    issues.append(exc.issue)
+                else:
+                    for key in ('source_gds', 'source_layout', 'source_netlist'):
+                        declaration = doc.get(key)
+                        if isinstance(declaration, FrozenMap) and isinstance(declaration.get('uri'), str):
+                            try:
+                                files.path(string(declaration['uri']))
+                            except InputError as exc:
+                                issues.append(EvidenceIssue(exc.issue.category, exc.issue.code, exc.issue.message,
+                                    done.value.ref(field='/' + key + '/uri')))
+
+        except InputError as exc:
+            issues.append(exc.issue)
+            selected.append(None)
+    return (tuple(files.files.values()), selected[0], selected[1], tuple(issues),
+            freeze_map({uri: str(path) for uri, path in files.paths.items()}))

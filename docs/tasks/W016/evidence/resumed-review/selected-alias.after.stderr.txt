@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/workspace/Layauto/docs/tasks/W016/evidence/resumed-review/selected_alias_probe.py", line 13, in <module>
+    materialize=runpy.run_path(str(root/'tests/unit/test_analysis_foundation.py'))['materialize']
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen runpy>", line 287, in run_path
+  File "<frozen runpy>", line 98, in _run_module_code
+  File "<frozen runpy>", line 88, in _run_code
+  File "/workspace/Layauto/tests/unit/test_analysis_foundation.py", line 7, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'

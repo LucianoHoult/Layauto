@@ -1,0 +1,36 @@
+{
+  "results": [
+    {
+      "path": "/",
+      "status": "rejected",
+      "codes": [
+        "InvalidAnalysisRequest"
+      ]
+    },
+    {
+      "path": "/tmp",
+      "status": "rejected",
+      "codes": [
+        "MissingInput"
+      ]
+    },
+    {
+      "path": "relative.json",
+      "status": "rejected",
+      "codes": [
+        "InvalidAnalysisRequest"
+      ]
+    },
+    {
+      "path": "/tmp/w016-review-no-manifest.json",
+      "status": "rejected",
+      "codes": [
+        "MissingInput"
+      ]
+    }
+  ],
+  "source_sha256": {
+    "layauto_v2/analysis.py": "9c6abbaafcc87c95ee5724b35ff28a48e725daf8bc9b2b369f0f21842d88cbd8",
+    "layauto_v2/importers/analysis_reader.py": "0f0972302bdb01b77297e25cf4c4c0bb279c69887844ed404617d0ae22d20da5"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "310/layauto-0.2.0-py3-none-any.whl": {
+    "bytes": 241370,
+    "sha256": "0c079e861d8d981b17c95353b4620b4a80095dbb46c87118813969cb3896b1fd"
+  },
+  "310/layauto-0.2.0.tar.gz": {
+    "bytes": 193390,
+    "sha256": "d1380c2a6f6d0307f3aeb72b7ec2e0ad89ba3d2712e3214399c12148d88c4c57"
+  },
+  "312/layauto-0.2.0-py3-none-any.whl": {
+    "bytes": 241370,
+    "sha256": "5738aa13e72a94fb21ef0f44125adbadb4b3eb514054f403a7109bd2bb300493"
+  },
+  "312/layauto-0.2.0.tar.gz": {
+    "bytes": 193383,
+    "sha256": "157297cad00bf963bec58f1473d90f4a41b15121fd01541cc3b4608a5f4f5fab"
+  }
+}
