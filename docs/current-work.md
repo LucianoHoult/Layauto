@@ -4,9 +4,9 @@
 
 ## 当前节点
 
-**W016正在实施，资源检查点已复核，可继续剩余功能。** 检查点`2608d84`仅连通内部本地链；PM按[资源决定](tasks/W016/pm-resource-decision.md)将纯报告体积优化后置，解除该倍率触发的暂停，内存/耗时/重复构建检查保留。执行从`codex/w016-single-cell-analysis`最新PM补记按[继续prompt](tasks/W016/resume-prompt.md)恢复；API/body/manual/端子、双侧兼容和最终矩阵尚未完成，未验收或合main。
+**W016 工程交付已复核，待补修 PM-01（P2）。** fa78b42 的正常无 body 分析通过，CDL/query 端口绑定错误与几何能力限制同时出现时会遗漏前者。下一步在原分支修复并独立复核。[PM2 与补修交接](tasks/W016/pm-delivery-review/decision.md)
 
-**W015方案已验收并经PR72集成。** 核11个核心文件受审身份及284个未改产品文件，实际merge候选parser探针通过；[回执](tasks/W015/pm-receipt/README.md)记录采信与限制。新API尚未实现。
+**W015方案已验收并经PR72集成。** 核11个核心文件受审身份及284个未改产品文件，实际merge候选parser探针通过；[回执](tasks/W015/pm-receipt/README.md)记录采信与限制。新 API 的实现与验收进度见上方 W016。
 
 **W014已验收并通过[PR #70](https://github.com/LucianoHoult/Layauto/pull/70)合入main。** [PM2](tasks/W014-terminal-body-relations.md#pm2-integration)和[集成回执](tasks/W014/integration/receipt.json)记录实际merge三路公开组合及5项边界检查通过，剩余必须项0；原双1889等工程证据按冻结身份采信。六本地端＋两独立body关系已集成，保留FIN差异及本地body unknown。U06仍为设计，reader必填项未改；下一任务为W016实施。
 
@@ -40,7 +40,7 @@
 
 | 用途 | 恢复依据 |
 | --- | --- |
-| W016当前恢复 | codex/w016-single-cell-analysis最新PM资源补记head；产品检查点2608d84b94f1a5a3011855f2839c7407c65cc3fd。按PM1及resume-prompt恢复剩余实施；main仍为准备版本，不合未完成产品 |
+| W016当前恢复 | codex/w016-single-cell-analysis 最新 PM2 补记。受审产品 fa78b42ae1dbcf74dfeaa7060ea3b4e66753a6e0。按 PM-01 修复并复核后交 PM |
 | W015历史恢复 | 交付a73713bc8ff7e1e2d4cc61ab93fbd3ace178753d；已由PR72及PM1验收集成，原分支保留，不重启方案prompt |
 | W014当前恢复 | 接手含PM2验收补记的最新main；产品merge f8280de44beacbca6b657627cbc5eed5f2b67bdd，已审head 39dba6f175fb02edab645756459403614a56b23f，冻结66f5b1e。原任务分支保留历史，后续另建分支，不重启旧prompt |
 | W013当前恢复 | 接手含PM2验收补记的最新main；产品merge088ed3c718eb5a0703511ff6b214274f30052ff1，已审head da90a793cc1d1e45ae7f2de26d9e98766191428d，冻结2a45938。原codex/w013-net-annotation-coverage保留历史，不再执行旧prompt；后续任务另建分支 |
@@ -92,7 +92,7 @@ W010/W011及W012 A1已验收集成，具有局部物理图及有限器件定位/
 
 W005已实现声明的synthetic文件读取组件，尚未验证真实生产方言或平台。后续可按实际支持范围准备由用户单向上传隔离服务器的测试包；无需等M1全闭环完成，也不将synthetic通过当正式生产准入。解析已有raw与实际调用Calibre获取query证据分别记录，前者不证明后者。
 
-用户2026-11-02新增的“生产环境不提供body tapcell时应正确处理”已登记为[U06需求](roadmap.md#production-body-evidence)。生产读取测试与body能力任务须区分无本地tap、无外部上下文、可信替代证据、完全缺证明及已提供但错误的资料，明确可继续范围和缺项。W014已交具体场景方案；W015具体合同已接收，W016开始实施准备，当前统一入口仍要求body_context。首次生产测试准备和后续body任务派发前必须回查U06。
+用户2026-11-02新增的“生产环境不提供body tapcell时应正确处理”已登记为[U06需求](roadmap.md#production-body-evidence)。生产读取测试与body能力任务须区分无本地tap、无外部上下文、可信替代证据、完全缺证明及已提供但错误的资料，明确可继续范围和缺项。W014已交具体场景方案；W015具体合同已接收，W016 分支的单 cell 分析入口已支持省略外部 body 资料，待补修 PM-01；原有完整运行入口仍要求 body_context。首次生产测试准备和后续body任务派发前必须回查U06。
 
 2026-11-03用户进一步明确：只提供待修改底层cell、tapcell与全局power rail定义在范围之外是实际使用场景。U06已补充本地已知端口/连接、上层net/电源关联与外部物理路径的区别，以及最小上下文和人工标注的证明边界；后续须考虑单cell分析/修改，不能仅用读取smoke覆盖此需求。开发负责先给出具体方案，当前无需用户逐项决策。
 

@@ -8,7 +8,7 @@
 | 里程碑 / 依赖 | M1内既有组件的独立分析入口，承接W005–W014和已接收W015方案；不是完整Stage2/运行出口，不代替后续坐标、mandatory、baseline与Stage6 |
 | 授权 | 用户要求推进单cell分析并沿用独立执行session；W015交付后PM核具体方案、review及来源，按既定方向派发本实施包。内部实现自主推进，不重复询问D1 |
 | 基线 / 分支 | W015方案merge `d0bb5628384f3a9fec1fe87b6311b854996f574b`；产品仍等同W014验收main `3b8d78902591bca32ec9b8ee5d3167d115e1a974`。恢复`codex/w016-single-cell-analysis`最新远端准备head，后续准备仅文档 |
-| 阶段 / 阻塞 | **执行中：资源检查点已复核，恢复剩余实施。** PM接受本次绝对成本，将纯报告体积优化后置，见[PM1](#pm1-resource-resume)。完整实现/review/最终矩阵尚未完成 |
+| 阶段 / 阻塞 | **待补修 PM-01（P2）。** 工程交付 fa78b42 的四组公开 API 对照中，复合错误丢失端口绑定诊断。见[PM2](#pm2-delivery-check) |
 | 写入范围 | `layauto_v2/`内本方案涉及的analysis/domain/tech/importers/normalization/annotation/derive/state/reporting及必要public exports；新增/受影响tests、typing配置、README和本任务执行材料。按方案列最小文件表，非相关重构不纳入 |
 | 非目标 | 不改固定fixture/答案/历史证据；不改旧公开DTO/schema/wire/ref或完整运行要求；不支持任意层级/生产方言、无query模式、live EDA、可信LVS/窗口验证器、实际修改/发布、完整M1或新持久化wire |
 | 架构依据 | [architecture](../architecture.md) §2.2只读分析边界、2.3、3.6、5.6–5.9、11.10/11.13/11.15、12.1；[U06](../roadmap.md#production-body-evidence)、[W015 PM1](W015-single-cell-analysis-entry.md#pm1-acceptance)及下述已采纳方案 |
@@ -136,3 +136,9 @@ W016仅完成任务准备，尚未实施/验收。执行session使用[完整prom
 
 下一执行session使用[继续prompt](W016/resume-prompt.md)，完成原A1–A8再交PM。
 未完成产品不合main、不验收；本次文档补记不改变检查点源码或原证据。
+
+<a id="pm2-delivery-check"></a>
+
+### PM2 首次工程交付复核
+
+PM 核对 fa78b42 工程证据并实跑四组公开入口对照。正常无 body 样本通过，组合错误路径新增阻塞项 PM-01。阶段为待补修，独立复核修正后交 PM 重新接收。资源决定沿用 PM1。[复核、证据与执行 prompt](W016/pm-delivery-review/decision.md)
