@@ -1,0 +1,20 @@
+{
+  "command": [
+    "/tmp/pm01-dev-312/bin/python",
+    "-m",
+    "pytest",
+    "tests",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "--maxfail=1"
+  ],
+  "cwd": "/workspace/Layauto",
+  "freeze_sha256": "ecbc677c16f839ff294ce2a79296479f630c58d5dc5ef65713096daed8fdbb02",
+  "started_utc": "2026-11-18T02:51:44.622485+00:00",
+  "exit_code": 0,
+  "elapsed_seconds": 10119.243062641,
+  "finished_utc": "2026-11-18T05:40:23.865547+00:00",
+  "stdout_sha256": "fd5124aa874cfe629bf9e2fd3fd4dd5dd630ac2def580a639fb22c19f71b29d5",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

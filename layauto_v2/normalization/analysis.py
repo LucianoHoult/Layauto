@@ -1,7 +1,7 @@
 """Pure orchestration of authenticated single-cell analysis. No filesystem IO."""
 from __future__ import annotations
 
-from dataclasses import fields
+from dataclasses import fields, replace
 from datetime import datetime
 from typing import cast
 
@@ -84,6 +84,11 @@ def analyze_local(receipt: LocalAnalysisReceipt) -> LocalAnalysis:
     except (RegionProblem, ContactProblem, InputError) as exc:
         name = 'drawn' if facets['drawn'].status == 'not_evaluated' else 'effective' if facets['effective'].status == 'not_evaluated' else 'local_graph'
         available(name, None, (exc.issue,))
+        # Identity admission ran independently of geometry. Its consumers are
+        # still blocked on the graph, but their source prerequisite was checked.
+        if semantic_issues:
+            for consumer in ('channel_fin', 'annotation'):
+                facets[consumer] = replace(facets[consumer], issues=semantic_issues)
         return LocalAnalysis(receipt.ref, source, AnalysisFacets(**facets))
     if identities is None:
         available('channel_fin', None, semantic_issues)

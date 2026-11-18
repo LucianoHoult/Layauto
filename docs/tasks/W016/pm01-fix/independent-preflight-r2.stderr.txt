@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/workspace/Layauto/docs/tasks/W016/pm01-fix/independent_engineering_audit.py", line 58, in <module>
+    assert actual['python'] == env['version'] and actual['dependencies'] == env['dependencies']
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

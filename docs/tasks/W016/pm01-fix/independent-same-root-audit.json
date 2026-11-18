@@ -1,0 +1,39 @@
+{
+  "status": "passed",
+  "baseline_commit": "c9081f1a11612450e7228840e541452a6d7f9c89",
+  "baseline_runtime_files_exact_commit_and_previous_freeze": 121,
+  "current_freeze_sha256": "ecbc677c16f839ff294ce2a79296479f630c58d5dc5ef65713096daed8fdbb02",
+  "method": "Read-only original command/output/script review and temporary baseline byte identity verification; report execution not repeated. Both producer subprocesses select their source package explicitly, use identical input paths and compare complete report bytes before reporting hashes.",
+  "script_sha256": "f84466911d1273d76b7567501575aaf445a53840d25910fe196edeea5cfa5fca",
+  "metadata_sha256": "44d1a9d0bdd30e68c7c2d33f20164bef98aedc653f782a31db310b3495ecd5b1",
+  "cases": {
+    "no_body": {
+      "identical": true,
+      "bytes": 235792,
+      "sha256": "2f8e45412c2ced18c18170e3bf25bb0a06897a775f266c309b95d6c8ee0c7365"
+    },
+    "body": {
+      "identical": true,
+      "bytes": 259620,
+      "sha256": "004b8e6486889213ba8e95aadedeaef6f8a8eac031788cf5c94bf51699d5126b"
+    },
+    "mismatch": {
+      "identical": true,
+      "bytes": 235838,
+      "sha256": "506f1d04d0d19bb79046630ffda057c902e40e5900bf43fdf61d17edb3592251"
+    }
+  },
+  "engineering_audit": {
+    "command": [
+      "python",
+      "docs/tasks/W016/pm01-fix/independent_engineering_audit.py",
+      "--root",
+      "/workspace/Layauto",
+      "--complete"
+    ],
+    "exit_code": 0,
+    "script_sha256": "4d4c77a04261d1ba2d1bb66c08fcc7ec0dd73867ccb66cb208e1d867c428d405",
+    "stdout_sha256": "e5687c8e9a7cf3b5f6940805ae9126b6ed81fe707507074336fee7a742c9db06",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "command": [
+    "/tmp/pm01-dev-312/bin/python",
+    "docs/tasks/W016/evidence/resumed/resource_probe.py",
+    "--case",
+    "mismatch",
+    "--root",
+    "/tmp/pm01-inputs/mismatch"
+  ],
+  "cwd": "/workspace/Layauto",
+  "freeze_sha256": "ecbc677c16f839ff294ce2a79296479f630c58d5dc5ef65713096daed8fdbb02",
+  "started_utc": "2026-11-18T10:02:20.195432+00:00",
+  "exit_code": 0,
+  "elapsed_seconds": 4.280793673999142,
+  "finished_utc": "2026-11-18T10:02:24.476180+00:00",
+  "stdout_sha256": "ef656ba57b0401d2b626320a99ad24bbbc364b07ad722d968a3f24d60614e69b",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

@@ -382,3 +382,67 @@ def test_captured_path_facts_cannot_be_forged_as_relative(tmp_path,kind):
         raw=next(k for k in evidence.aliases if '/raw/' in k)
         evidence=replace(evidence,aliases=FrozenMap({**dict(evidence.aliases),raw:'relative-raw.txt'}))
     with pytest.raises(ValueError):LocalAnalysisReceipt(evidence)
+
+
+@pytest.mark.parametrize(('pin_error', 'failed_stage', 'expected_status'), [
+    (False, 'drawn', 'unsupported'),
+    (True, None, 'rejected'),
+    (True, 'drawn', 'rejected'),
+    (True, 'effective', 'rejected'),
+    (True, 'local_graph', 'rejected'),
+])
+def test_independent_identity_and_geometry_diagnostics(tmp_path, pin_error, failed_stage, expected_status):
+    materialize(tmp_path)
+    if pin_error:
+        cdl = tmp_path / 'source.cdl'
+        pins = '.SUBCKT INV_M1_SYNTH A Y VSS VDD'
+        assert cdl.read_text().count(pins) == 1
+        cdl.write_text(cdl.read_text().replace(pins, '.SUBCKT INV_M1_SYNTH A Y VSS'))
+
+    expected = {}
+    if failed_stage == 'effective':
+        # A second gate stripe crosses the same active rectangle.
+        append_rect(tmp_path, 'POLY', (78, 10, 82, 190))
+        expected['AmbiguousGateStripe'] = ('source.gds', 'unsupported')
+    elif failed_stage:
+        if failed_stage == 'drawn':
+            uri, group, key = 'tech/formats.json', 'geometry_capability', 'comparator'
+            code = 'UnsupportedGeometryComparator'
+        else:
+            uri, group, key = 'tech/physical.json', 'operators', 'same_layer_contact/1'
+            code = 'UnsupportedLocalContactOperator'
+        owner = load(tmp_path / uri)
+        owner[group][key] = 'unsupported test variant'
+        write(tmp_path / uri, owner)
+        expected[code] = (uri, 'unsupported')
+    if pin_error:
+        expected['SourceTopIdentityMismatch'] = ('query/raw/iXref.temp', 'error')
+    rebind(tmp_path)
+
+    result = run(tmp_path)
+    assert result.request_status == expected_status
+    assert len(result.findings) == len(expected)
+    assert {f.code: (f.source.uri, f.severity) for f in result.findings} == expected
+    for finding in result.findings:
+        assert finding.source.sha256 == hashlib.sha256((tmp_path / finding.source.uri).read_bytes()).hexdigest()
+        if finding.code == 'SourceTopIdentityMismatch':
+            assert finding.source.line == 8
+
+    local = result.local
+    assert local.source.selected_cell.name == 'INV_M1_SYNTH'
+    stages = ('drawn', 'effective', 'local_graph')
+    for index, name in enumerate(stages):
+        facet = local.facets[name]
+        if failed_stage is None or index < stages.index(failed_stage):
+            assert facet.status == 'available' and facet.value is not None
+        elif name == failed_stage:
+            assert facet.status == 'error' and facet.value is None
+        else:
+            assert facet.status == 'not_evaluated' and facet.dependencies == (stages[index - 1],)
+    for name in ('channel_fin', 'annotation'):
+        facet = local.facets[name]
+        assert facet.value is None
+        if failed_stage:
+            assert facet.status == 'not_evaluated' and facet.dependencies == ('local_graph', 'source_identity')
+    assert local.facets.terminals.status == 'not_evaluated'
+    assert local.facets.terminals.dependencies == ('channel_fin', 'annotation')

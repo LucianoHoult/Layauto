@@ -1,0 +1,18 @@
+{
+  "command": [
+    "/tmp/pm01-dev-312/bin/python",
+    "-m",
+    "build",
+    "--no-isolation",
+    "--outdir",
+    "/tmp/pm01-build-312"
+  ],
+  "cwd": "/workspace/Layauto",
+  "freeze_sha256": "ecbc677c16f839ff294ce2a79296479f630c58d5dc5ef65713096daed8fdbb02",
+  "started_utc": "2026-11-18T02:53:24.177055+00:00",
+  "exit_code": 0,
+  "elapsed_seconds": 2.5326447780003036,
+  "finished_utc": "2026-11-18T02:53:26.709655+00:00",
+  "stdout_sha256": "c9b8d20ee13bf034e239913c142a6e4f5753083df6a09db9f754451abd2b9b59",
+  "stderr_sha256": "b181eea8a45f807f5fa1607f003eb1ae5363271ec186d4780a7fd3630cdea57e"
+}

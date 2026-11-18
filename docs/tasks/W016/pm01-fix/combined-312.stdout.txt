@@ -1,0 +1,30 @@
+{
+  "installed": "/tmp/pm01-clean-312/lib/python3.12/site-packages/layauto_v2/__init__.py",
+  "status": "rejected",
+  "findings": [
+    {
+      "code": "UnsupportedGeometryComparator",
+      "source": {
+        "uri": "tech/formats.json",
+        "sha256": "4ded3b119e344e24a798ef22a2593e16cdad16eade33e1afefc20906988cb9be",
+        "field": null,
+        "line": null,
+        "column": null,
+        "byte_offset": null,
+        "record_index": null
+      }
+    },
+    {
+      "code": "SourceTopIdentityMismatch",
+      "source": {
+        "uri": "query/raw/iXref.temp",
+        "sha256": "36bdbfb105e5e953740ea475b38a7022c671532990838c6040efcbf4dd92d074",
+        "field": null,
+        "line": 8,
+        "column": null,
+        "byte_offset": null,
+        "record_index": null
+      }
+    }
+  ]
+}

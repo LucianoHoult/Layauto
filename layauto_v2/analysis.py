@@ -81,9 +81,14 @@ def analyze_cell(request: AnalysisRequest) -> AnalysisResult:
     manual = selected_analysis(receipt, local, 'manual_intent', manual_capture, read_issues, aliases)
     terminals = analyze_terminals(local, external)
     local = replace(local, facets=replace(local.facets, terminals=terminals))
-    findings_list: list[AnalysisFinding] = []
-    for facet in (getattr(local.facets, f.name) for f in fields(AnalysisFacets)):
-        findings_list.extend(_finding(i, computation_error=facet.value is not None) for i in facet.issues)
+    # Multiple dependent facets can report the same source prerequisite.
+    # Keep each distinct located finding once in the request summary.
+    local_facets = (local.facets[field.name] for field in fields(AnalysisFacets))
+    findings_list = list(dict.fromkeys(
+        _finding(issue, computation_error=facet.value is not None)
+        for facet in local_facets
+        for issue in facet.issues
+    ))
     findings_list.extend(_finding(i, violation=external.status == 'evaluated' and i.category != 'unsupported') for i in external.issues)
     findings_list.extend(_finding(i) for i in manual.issues)
     # Source parameter differences and local T05 violations remain diagnostics;

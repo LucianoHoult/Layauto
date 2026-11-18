@@ -1,0 +1,52 @@
+[
+  {
+    "case": "normal",
+    "request_status": "completed",
+    "findings": [],
+    "fin": [
+      5,
+      7
+    ],
+    "equal_dgs": 6,
+    "indeterminate_body": 2,
+    "parent": "unknown"
+  },
+  {
+    "case": "pin_only",
+    "request_status": "rejected",
+    "findings": [
+      {
+        "code": "SourceTopIdentityMismatch",
+        "uri": "query/raw/iXref.temp",
+        "field": null
+      }
+    ]
+  },
+  {
+    "case": "geometry_only",
+    "request_status": "unsupported",
+    "findings": [
+      {
+        "code": "UnsupportedGeometryComparator",
+        "uri": "tech/formats.json",
+        "field": null
+      }
+    ]
+  },
+  {
+    "case": "both",
+    "request_status": "rejected",
+    "findings": [
+      {
+        "code": "UnsupportedGeometryComparator",
+        "uri": "tech/formats.json",
+        "field": null
+      },
+      {
+        "code": "SourceTopIdentityMismatch",
+        "uri": "query/raw/iXref.temp",
+        "field": null
+      }
+    ]
+  }
+]

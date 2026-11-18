@@ -1,0 +1,18 @@
+Using Python 3.10.22 environment at: /tmp/pm01-clean-310
+Resolved 14 packages in 20ms
+Prepared 1 package in 10ms
+Installed 14 packages in 20ms
+ + contourpy==1.3.2
+ + cycler==0.12.1
+ + fonttools==4.65.0
+ + kiwisolver==1.5.1
+ + layauto==0.2.0 (from file:///tmp/pm01-build-310/layauto-0.2.0-py3-none-any.whl)
+ + matplotlib==3.10.9
+ + numpy==2.2.6
+ + packaging==26.3
+ + pillow==12.3.0
+ + pyparsing==3.3.3
+ + python-dateutil==3.0.0
+ + pyyaml==6.0.3
+ + six==1.17.0
+ + tzdata==2026.6

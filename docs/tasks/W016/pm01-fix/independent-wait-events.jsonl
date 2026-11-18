@@ -1,0 +1,4 @@
+{"event": "waiting", "required": ["pytest-312", "pytest-310", "count-combined"], "utc": "2026-11-18T03:04:39.159678+00:00"}
+{"event": "completed", "label": "pytest-312", "exit_code": 0, "elapsed_seconds": 10119.243062641, "utc": "2026-11-18T05:40:42.886228+00:00"}
+{"event": "completed", "label": "pytest-310", "exit_code": 0, "elapsed_seconds": 15697.834564347, "utc": "2026-11-18T10:02:32.438235+00:00"}
+{"event": "completed", "label": "count-combined", "exit_code": 0, "elapsed_seconds": 4.112480814001174, "utc": "2026-11-18T10:04:02.441303+00:00"}
