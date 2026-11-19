@@ -37,7 +37,23 @@
 
 ## 方案、执行与 review
 
-执行者在本节追加方案、产物路径、版本和验证记录。独立 reviewer 追加受审版本、反例、findings 与处理。当前已有 PM 起点检查，A1–A5 待执行。
+### 执行交付（A1–A4，2026-11-19）
+
+从原分支 `15bfc855f8ee97c331b8c9f7a842a155455d8211` 的干净工作树开始，先复跑 PM 探针。15 层中当前有依据的周期坐标是 FIN 的 Y 中心 25+10k nm；实物只支持本 cell 观测窗。推荐在独立选择的 synthetic 模型中演示 LI 二维轴。逐层参数表、来源、API/返回、数学对照、资源成本及三项 PM 决策见[执行方案](W017/proposal.md)，下一包可直接派发[实施 prompt](W017/implementation-prompt.md)。
+
+| 项 | 材料与复现 |
+|---|---|
+| A1/A2 | [候选选择](W017/selection.json)、[候选声明与绑定](W017/candidate.json)、[逐层依据及推荐合同](W017/proposal.md) |
+| A3 | [单独数学输入](W017/math-input.json)、[原型入口](W017/run.py)、[纯换算及绑定](W017/model.py)、[S1–S4 实际输出](W017/samples.json) |
+| A4 | [资源实测](W017/resources.json)、[首包实施与回归 prompt](W017/implementation-prompt.md) |
+
+**本次实跑。** Python 3.12.14 / PyYAML 6.0.3，Linux x86_64。命令见方案 A3；PM preflight 和 W005→W008 主样本、W009 临时专例、候选选择/反例与资源探针均从实际文件启动。主图 40 条、W008 41 片；S2 四片覆盖 32 DBU²，S3 同格保留两块各 36 nm² 的有效 LI，S4 正常 LI 20 片。定向复算与文件比较在冻结交付上复核。
+
+**按身份采信与补测。** 基线中 `layauto_v2` tree 为 `40b37d7a908b5da877a3a618206ab417ef5a9021`，`tests` 为 `66792512857f4b0e877756552e99453538d9ff99`，正式 fixture 子树为 `c8b85527a7063f4d489f9af6d45fb61204389190`，`pyproject.toml` blob 为 `4b0a96516b34f047a4fc2fc2c04c127b60891281`。旧产品行为与已验收限制按 [W016 PM3](W016-single-cell-analysis.md#pm3-integration) 及其绑定的原始环境证据引用。本轮独立验证对象是方案、调查原型及列出的 fixtures；未跑产品双版本全量、安装或生产 PDK。候选内容、来源、单位、边界语义、依赖或合并树变化时补跑相关 S 例/反例及受影响组合；资源比较须同环境同口径，产品实施时按冻结源码完成最终矩阵。
+
+### A5 独立复核（2026-11-19）
+
+受审提交 `483d1965b115a45a07221e0f7af1214cac7bbe6f`，基线 `15bfc855f8ee97c331b8c9f7a842a155455d8211`。未参与设计的 reviewer 核对实际 10 文件 diff、逐层来源、哈希绑定、完整样张、资源与实施 prompt；独立从 GDS XY/UNITS 复算轨道、跨格和 CUT 同格孤岛，核对缺轴/错向与两项初稿反例。修后样张逐字节复现，R1（浮点查询）、R2（非法容器定位）已关闭，剩余必须项 0。产品实施合同的三项决定交 PM 接收。[复核结论、原反例、验证复用与限制](W017/review/README.md) · [独立复算](W017/review/recompute.py) · [修后反例](W017/review/counterexamples.py)
 
 ## PM 交接
 

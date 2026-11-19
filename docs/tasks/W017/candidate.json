@@ -1,0 +1,45 @@
+{
+  "schema": "w017-coordinate-proposal/1",
+  "classification": "synthetic",
+  "bindings": {
+    "tech.json": "edea25c124e275a8e2baa793a8a8f9954854f8cb69c52da50af65dd147d56f61",
+    "tech/drawn.json": "29b675eefb2e957f2519ffa1a9ec0eed57a6055ccfa3b0bbe85d7d00e8382428",
+    "tech/formats.json": "6ccf919d844b7336af97ab68f7e58c34908802ee79ef7cf3071e937a5396ec87",
+    "tech/coordinate.json": "651b4342abe40a3d7c1b808ba24ca2266381342411ab7aacc0e36a861a38f515",
+    "tech/physical.json": "b2e28e8464c450f0eed55d5e03464bfea1c6502ba29256d3376eb3d158c659af",
+    "source.gds": "97cf8d88771ff97f2cf189f6ae6a2fdcce585fc14f93c93d0ecf32326b415429"
+  },
+  "axes": {
+    "fin_y": {
+      "kind": "fin_centres_from_profile",
+      "dimension": "y",
+      "indices": [
+        0,
+        17
+      ]
+    },
+    "li_x": {
+      "kind": "regular_edges_dbu",
+      "dimension": "x",
+      "offset": 0,
+      "pitch": 20,
+      "cells": 8
+    },
+    "li_y": {
+      "kind": "regular_edges_dbu",
+      "dimension": "y",
+      "offset": 0,
+      "pitch": 10,
+      "cells": 20
+    }
+  },
+  "layers": {
+    "FIN": {
+      "track": "fin_y"
+    },
+    "LI": {
+      "x": "li_x",
+      "y": "li_y"
+    }
+  }
+}

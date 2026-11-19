@@ -1,0 +1,70 @@
+{
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "phase": "drawn_li + distinct cell count; excludes acquisition/bind/IO",
+  "source_gds_bytes": 2680,
+  "drawn_records": 40,
+  "li_records": 3,
+  "rows": [
+    {
+      "case": "selected",
+      "edits": [],
+      "sha256": "bda3a20d3c0d8863db7c42ef152194edda9e14fa9db31fd8d2a60cebf569b138",
+      "possible_cells": 160,
+      "occupied": 20,
+      "fragments": 20,
+      "elapsed_ns": 542669,
+      "python_peak_bytes": 4648
+    },
+    {
+      "case": "fine",
+      "edits": [
+        [
+          "axes/li_x/pitch",
+          1
+        ],
+        [
+          "axes/li_x/cells",
+          160
+        ],
+        [
+          "axes/li_y/pitch",
+          1
+        ],
+        [
+          "axes/li_y/cells",
+          200
+        ]
+      ],
+      "sha256": "f1a711ae19b7447d0e0ace27a3f99cb9b2169687be211ba1d149076bb5a1f194",
+      "possible_cells": 32000,
+      "occupied": 1110,
+      "fragments": 1110,
+      "elapsed_ns": 12299570,
+      "python_peak_bytes": 324464
+    },
+    {
+      "case": "large_empty_extent",
+      "edits": [
+        [
+          "axes/li_x/cells",
+          1000000000
+        ],
+        [
+          "axes/li_y/cells",
+          1000000000
+        ]
+      ],
+      "sha256": "6e2cf7cc1c107bd9f132e828f560a147ab1865cb034a815b8467431ff1bafc16",
+      "possible_cells": 1000000000000000000,
+      "occupied": 20,
+      "fragments": 20,
+      "elapsed_ns": 615510,
+      "python_peak_bytes": 4648
+    }
+  ],
+  "stress_full_rectangle": {
+    "status": "resource_limit",
+    "field": "fragments",
+    "value": 1000000000000000000
+  }
+}
