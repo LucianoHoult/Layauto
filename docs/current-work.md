@@ -4,7 +4,7 @@
 
 ## 当前节点
 
-**W017 已可交独立执行 session。** 先用实际 GDS 核对逐层坐标依据、跨格边界和缺轴场景，交付候选合同、可运行样张及实施方案。[任务与启动 prompt](tasks/W017-coordinate-occupancy-projection.md)
+**W017 方案已验收并经 PR #77 合入 main。** S1–S4 在实际合并提交逐字节复现。下一步确认首个只读坐标查询包的独立输入、FIN/LI 范围和结果语义，再派发实施。[PM 验收与三个推荐项](tasks/W017-coordinate-occupancy-projection.md#pm1-acceptance)
 
 **W016 单 cell 只读分析入口已验收并合入 main。** PM-01 已关闭。缺 tapcell 时可继续核对本地 D/G/S，B 和父级关系标为未知。当前处于 M1。[W016 PM3](tasks/W016-single-cell-analysis.md#pm3-integration)
 
@@ -42,7 +42,7 @@
 
 | 用途 | 恢复依据 |
 | --- | --- |
-| W017 当前恢复 | 从 `codex/w017-coordinate-occupancy-projection` 最新远端提交执行[任务](tasks/W017-coordinate-occupancy-projection.md)，基线 `0eba088`。 |
+| W017 当前恢复 | 从含 [W017 PM1](tasks/W017-coordinate-occupancy-projection.md#pm1-acceptance) 的 main 恢复。方案合并 `20c6f4d`，交付 `4ffec13`；原型及审阅材料留作下一包的验收对照。 |
 | W016 验收依据 | 从含 [PM3](tasks/W016-single-cell-analysis.md#pm3-integration) 的最新 main 恢复。产品合并 ef40ac4882c3207a1753723a367c21c331c53388，受审提交 2ef2c463241e7b62eddce5ca70071f61b6185392 |
 | W015历史恢复 | 交付a73713bc8ff7e1e2d4cc61ab93fbd3ace178753d；已由PR72及PM1验收集成，原分支保留，不重启方案prompt |
 | W014当前恢复 | 接手含PM2验收补记的最新main；产品merge f8280de44beacbca6b657627cbc5eed5f2b67bdd，已审head 39dba6f175fb02edab645756459403614a56b23f，冻结66f5b1e。原任务分支保留历史，后续另建分支，不重启旧prompt |

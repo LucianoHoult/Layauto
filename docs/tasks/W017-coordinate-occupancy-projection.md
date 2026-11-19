@@ -6,7 +6,7 @@
 | --- | --- |
 | 可观察目标 | 用已验收的单 cell 样本说明每一层的坐标参数从哪里来，并用可运行的样张展示轨道换算、矩形跨格、同格多片段和缺轴时的结果。交付足以安排首包产品实施的方案。 |
 | 里程碑与基线 | M1，Stage 2。基线为含 [W016 验收](W016-single-cell-analysis.md#pm3-integration)的 main `0eba088bc37b45f486ddcc6cfaf73d2ba862c3aa`。执行分支为 `codex/w017-coordinate-occupancy-projection`。 |
-| 范围与阶段 | **可执行。** 2026-11-19 用户同意推进此节点。独立执行 session 负责方案、候选输入和实算样张，未参与设计者负责独立复核。PM 接收后安排产品实施。 |
+| 范围与阶段 | **方案已验收，已通过 PR #77 集成。** A1–A5 及 R1/R2 已复核。首个产品包待用户确认使用方式后派发。[PM 验收与推荐](#pm1-acceptance) |
 | 写入范围 | 本任务的执行与 review 段，以及 `docs/tasks/W017/` 下的候选声明、样张、调查代码和证据。现有产品和正式 fixture 是这轮调查的基线。 |
 | 依据 | [架构](../architecture.md) §2.2–2.3、3.4–3.6、4.1–4.2、4.8、11.3、12.3、12.5；[MR-051/052 讨论](W003/manual-verification.md)；[W008 原边界](W008-geometry-base-occupancy.md)；[W009 有效几何](W009-effective-geometry-terminals.md)。 |
 
@@ -62,3 +62,23 @@
 ### 给独立执行 session 的 prompt
 
 > 以 Layauto v2 执行角色继续 W017。拉取 `codex/w017-coordinate-occupancy-projection` 的最新提交，从 `docs/tasks/W017-coordinate-occupancy-projection.md` 开始。先运行 PM 起点探针，再按 A1–A5 交付逐层参数来源、一套推荐坐标合同、S1–S4 可运行样张和首个产品实施 prompt。使用实际 GDS 和已绑定技术声明产生观测，单列候选假设与缺项，保留精确坐标和片段来源。安排未参与设计者独立复算并复核必须项。只在 W017 任务的执行/review 区及其材料目录写入，沿用项目 noreply 身份，提交推送原分支并核对远端完整 SHA，交 PM 接收。若涉及新的输入解释或对外格式，带具体样张、影响和推荐项交回，同时完成其余已授权工作。
+
+<a id="pm1-acceptance"></a>
+
+### PM1　方案验收与首包建议
+
+2026-11-19，PM 接收 A1–A5。受审方案提交为 `483d1965b115a45a07221e0f7af1214cac7bbe6f`，交付提交为 `4ffec136d37db25b6c9c37369612bb1e50dd7a5c`。两者之间的增量为独立复核材料及任务卡补记。[PR #77](https://github.com/LucianoHoult/Layauto/pull/77) 的实际合并提交 `20c6f4d159b0755a22cdce717b0c8b0bcc739ce0` 与交付提交拥有同一 Git tree。
+
+- **PM 实跑。** 用 Python 3.12.14 在交付提交和实际 main 合并提交分别运行 `python -B docs/tasks/W017/run.py`，输出与 S1–S4 样张逐字节相同，SHA-256 为 `14001206e42379b65ca3f321cfddc95bbe1f2c0a85d7aa740ba342664c957347`。两次运行独立 GDS 复算脚本，核到 FIN 中心及端点、S2 面积 12/12/4/4、S3 净面积 72，以及 LI 正常/移相/互换两轴节距为 20/23/16 片。S3 的 (4,1) 属于专例的 32×16 桶。[样张](W017/samples.json) · [独立复算](W017/review/recompute.py)
+- **问题和资源。** 在交付版重跑 reviewer 反例，R1/R2 关闭，剩余必须修正项 0。检查 15 层与 6 份来源绑定；重跑资源探针，正常、细格与大空域分别生成 20、1110、20 片，满窗所需 10¹⁸ 片在枚举前被拒。另用一行矩形实查原型的 10,000 片测试限额，所需 9,999、10,000 片的两例可完整枚举，10,001 片返回 `resource_limit`。此项覆盖单矩形边界，产品整次调用的总量预算和端到端耗时/峰值待实施验证。[反例](W017/review/counterexamples.py) · [原资源记录及测量口径](W017/resources.json)
+- **采信边界。** 已核对产品、正式测试/fixture 和 pyproject 与 W016 验收时的 Git 身份。既有矩阵按 W016 原范围采信。W017 的交付是方案和调查原型，正式 API、构建安装及真实生产验证属于后续。[W016 PM3](W016-single-cell-analysis.md#pm3-integration)
+
+**供用户确认的首包方案**
+
+| 对外决定 | PM 推荐及使用影响 |
+| --- | --- |
+| D1 怎样提供资料 | 坐标查询单独调用。调用者显式选一份模型文件，按 SHA-256 核对所选内容及其对应的版图和技术配置。首包绑定指定 GDS，换版图需重绑。沿用方案的 `project_coordinates(geometry_result, selection, requests, *, effective_result=None)` 形态，按需接 W009 同源有效区域；建议正式输入标识用 `layauto-coordinate-selection/1`、`layauto-coordinate-model/1`，查询结果留在本次调用。现有主路径依赖 W008 成功结果及其完整输入，包含 body context。W016 可继续单 cell 无 tapcell 分析；从该无 tapcell 入口直接发起新查询需另接其本地几何来源。 |
+| D2 首包能查什么 | 本样本 18 条 FIN 的 Y 中心及编号 0…17；调用者显式选定 LI 双轴后的精确矩形/有效片段覆盖。20×10 DBU 仅作可复现样例。其余层按实际能力显示缺轴或无需投影，并保留已读原几何。 |
+| D3 结果与限额 | 缺轴按层报告；声明无效或绑定错误时拒绝所选模型并定位原因；离轨保留相邻轨道和有符号偏差；越界给出状态并保留原坐标。建议首个 synthetic 工程包试行每次调用最多 10,000 个实际输出片段。按 record/region/piece 的总命中数预估，超限给出所需数量和限额，整次不交截断的占用结果。实施交付时验证多请求累计、上限附近和端到端资源，再评估更大输入。 |
+
+上述三项是下一包建议。新的输入、能力及对外错误语义由用户确认后，PM 再形成正式实施要求。给执行者的[现有 prompt](W017/implementation-prompt.md)仍是草案。
