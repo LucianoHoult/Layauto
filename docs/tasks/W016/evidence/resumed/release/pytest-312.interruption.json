@@ -1,0 +1,13 @@
+{
+  "source_manifest_sha256": "dae9e716acb4e4f947db12779362c677615cdc12c03c0852fbf9cde3a69a977e",
+  "driver_exit_code": 130,
+  "pytest_summary": "2 failed, 488 passed in 181.86s; interrupted intentionally after observed failures",
+  "failed_nodes": [
+    "tests/contracts/test_w005_contracts.py::test_importer_and_domain_dependency_direction",
+    "tests/contracts/test_w006_boundaries.py::test_precontext_module_dependency_boundaries"
+  ],
+  "reason": "domain/analysis.py imports pathlib contrary to unchanged dependency rules",
+  "interruption": "SIGINT was delivered to both driver and pytest; driver did not finish its normal metadata writer. This sidecar records the interruption, not a completed full-matrix result.",
+  "stdout_sha256": "2cf81bafafd056ff0e65c07486e82428cdec20994d65f23d86d9b95e8b5878aa",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

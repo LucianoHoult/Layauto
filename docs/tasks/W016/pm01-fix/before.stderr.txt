@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/workspace/Layauto/docs/tasks/W016/pm-delivery-review/public_checks.py", line 56, in <module>
+    assert cases[3]["request_status"] == "rejected" and expected_codes <= {f["code"] for f in cases[3]["findings"]}, "combined request must retain both independent findings and be rejected"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: combined request must retain both independent findings and be rejected

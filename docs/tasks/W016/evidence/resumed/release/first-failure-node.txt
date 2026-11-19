@@ -1,0 +1,1 @@
+tests/contracts/test_w008_capture_binding.py::test_body_source_roles_require_exact_selected_gds_reference[wrong_second]

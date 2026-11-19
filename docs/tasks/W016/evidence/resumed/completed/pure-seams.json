@@ -1,0 +1,38 @@
+{
+  "label": "pure-seams",
+  "command": [
+    "/tmp/w016-py312-real/bin/python",
+    "-m",
+    "pytest",
+    "-p",
+    "no:cacheprovider",
+    "tests/contracts/test_w005_contracts.py::test_importer_and_domain_dependency_direction",
+    "tests/contracts/test_w006_boundaries.py::test_precontext_module_dependency_boundaries",
+    "tests/contracts/test_w007_contracts.py::test_normalization_and_new_domain_keep_pure_dependency_boundaries",
+    "tests/contracts/test_w008_geometry.py::test_domain_state_dependency_direction_and_no_hidden_occupancy_owner",
+    "tests/contracts/test_w010_contracts.py::test_new_domain_and_state_keep_pure_dependency_direction",
+    "tests/contracts/test_w011_contracts.py::test_new_modules_have_named_dependency_and_io_guards",
+    "tests/contracts/test_w013_contracts.py::test_new_modules_keep_declared_dependency_and_no_io_boundaries",
+    "tests/contracts/test_w014_contracts.py::test_new_relation_modules_preserve_read_only_dependency_and_no_io_boundaries",
+    "tests/unit/test_analysis_api.py",
+    "-q",
+    "-k",
+    "dependency or boundaries or pure_modules or acquisition_once or captured_path"
+  ],
+  "cwd": "/workspace/Layauto",
+  "driver_cwd": "/workspace/Layauto",
+  "started_at_utc": "2026-11-17T02:17:20.483084+00:00",
+  "finished_at_utc": "2026-11-17T02:17:28.274070+00:00",
+  "elapsed_seconds": 7.790990589000103,
+  "exit_code": 0,
+  "source_manifest_sha256": "f99498abc0877bb918d7de88d66a5eda5d5591d41f8ce8102b04edc14826c052",
+  "stdout": "pure-seams.stdout.txt",
+  "stderr": "pure-seams.stderr.txt",
+  "stdout_sha256": "977a55b759ee390e435d22e286bd2999c9b2b2a8a38f5b8440647f209624699b",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "environment_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONUNBUFFERED": "1",
+    "MPLCONFIGDIR": "/tmp/w016-mplconfig"
+  }
+}

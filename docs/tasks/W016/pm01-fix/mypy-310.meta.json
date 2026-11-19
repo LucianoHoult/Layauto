@@ -1,0 +1,17 @@
+{
+  "command": [
+    "/tmp/pm01-dev-310/bin/python",
+    "-m",
+    "mypy",
+    "--cache-dir",
+    "/tmp/pm01-mypy-310"
+  ],
+  "cwd": "/workspace/Layauto",
+  "freeze_sha256": "ecbc677c16f839ff294ce2a79296479f630c58d5dc5ef65713096daed8fdbb02",
+  "started_utc": "2026-11-18T02:52:35.951300+00:00",
+  "exit_code": 0,
+  "elapsed_seconds": 4.267191219999859,
+  "finished_utc": "2026-11-18T02:52:40.218432+00:00",
+  "stdout_sha256": "abcb6647b13baa8244d90bb839deeab7f27878b24d4a96ce9a221f280e0e8a6c",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

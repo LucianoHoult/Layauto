@@ -1,0 +1,14 @@
+{
+  "manifest": "docs/tasks/W016/evidence/resumed/verified-source-identity.json",
+  "manifest_sha256": "73cb080765e2e317f2f54269f8cd306ed5e352c8c21dd2ae575f8920db54fa7b",
+  "files_checked": 298,
+  "mismatches": [],
+  "delta_from_release": [
+    "layauto_v2/analysis.py",
+    "layauto_v2/domain/analysis.py"
+  ],
+  "request_owner_probe_matches_all_product_source": true,
+  "old_parity_reuse": "Only new public AnalysisRequest class moved from new domain.analysis module to new facade; old pipeline does not import either new module and no old producer/wrapper/codec/input changed. All four exact comparison reports retained; no re-encoding repeated.",
+  "status": "passed",
+  "checked_at": "2026-11-17T02:00:13.827674+00:00"
+}

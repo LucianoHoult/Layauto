@@ -1,0 +1,17 @@
+{
+  "no_body": {
+    "identical": true,
+    "bytes": 235792,
+    "sha256": "2f8e45412c2ced18c18170e3bf25bb0a06897a775f266c309b95d6c8ee0c7365"
+  },
+  "body": {
+    "identical": true,
+    "bytes": 259620,
+    "sha256": "004b8e6486889213ba8e95aadedeaef6f8a8eac031788cf5c94bf51699d5126b"
+  },
+  "mismatch": {
+    "identical": true,
+    "bytes": 235838,
+    "sha256": "506f1d04d0d19bb79046630ffda057c902e40e5900bf43fdf61d17edb3592251"
+  }
+}

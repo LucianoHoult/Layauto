@@ -1,0 +1,287 @@
+{
+  "report_sha256": "958b5c97685f49c511720e6f019a61fb09295551b0df39669f8b96624b2da554",
+  "report_bytes": 235613,
+  "capture_bytes": 44873,
+  "capture_count": 23,
+  "historical_measurements": [
+    {
+      "log": "local-probe-report.stdout.txt",
+      "report_bytes": 262231,
+      "capture_bytes": 44873,
+      "ratio": 5.843848193791366,
+      "objects": 2021,
+      "stage_sum_seconds": 2.5178662609999947,
+      "report_seconds": 0.03848084399999152,
+      "hwm_kib": 26112,
+      "stages": [
+        {
+          "stage": "acquire",
+          "seconds": 0.26270440000001827,
+          "hwm_kib": 24320
+        },
+        {
+          "stage": "authenticate",
+          "seconds": 0.4689271909999775,
+          "hwm_kib": 26112
+        },
+        {
+          "stage": "source_identity",
+          "seconds": 0.02089769899998828,
+          "hwm_kib": 26112
+        },
+        {
+          "stage": "drawn",
+          "seconds": 0.1055523460000245,
+          "hwm_kib": 26112
+        },
+        {
+          "stage": "effective",
+          "seconds": 0.09116229399995746,
+          "hwm_kib": 26112
+        },
+        {
+          "stage": "local_graph",
+          "seconds": 0.2450254660000155,
+          "hwm_kib": 26112
+        },
+        {
+          "stage": "channel",
+          "seconds": 0.4355000980000341,
+          "hwm_kib": 26112
+        },
+        {
+          "stage": "annotation",
+          "seconds": 0.8496159229999876,
+          "hwm_kib": 26112
+        },
+        {
+          "stage": "diagnostic_report",
+          "seconds": 0.03848084399999152,
+          "hwm_kib": 26112
+        }
+      ]
+    },
+    {
+      "log": "local-probe-report-reduced.stdout.txt",
+      "report_bytes": 248542,
+      "capture_bytes": 44873,
+      "ratio": 5.5387872439997325,
+      "objects": 1956,
+      "stage_sum_seconds": 2.180574658000012,
+      "report_seconds": 0.024013112000034198,
+      "hwm_kib": 24724,
+      "stages": [
+        {
+          "stage": "acquire",
+          "seconds": 0.25726009400000294,
+          "hwm_kib": 22912
+        },
+        {
+          "stage": "authenticate",
+          "seconds": 0.37729220300002453,
+          "hwm_kib": 24724
+        },
+        {
+          "stage": "source_identity",
+          "seconds": 0.013839106999967044,
+          "hwm_kib": 24724
+        },
+        {
+          "stage": "drawn",
+          "seconds": 0.09243549600000733,
+          "hwm_kib": 24724
+        },
+        {
+          "stage": "effective",
+          "seconds": 0.06146391700002596,
+          "hwm_kib": 24724
+        },
+        {
+          "stage": "local_graph",
+          "seconds": 0.1936106699999982,
+          "hwm_kib": 24724
+        },
+        {
+          "stage": "channel",
+          "seconds": 0.38482258999999885,
+          "hwm_kib": 24724
+        },
+        {
+          "stage": "annotation",
+          "seconds": 0.7758374689999528,
+          "hwm_kib": 24724
+        },
+        {
+          "stage": "diagnostic_report",
+          "seconds": 0.024013112000034198,
+          "hwm_kib": 24724
+        }
+      ]
+    },
+    {
+      "log": "local-probe-report-sources.stdout.txt",
+      "report_bytes": 235613,
+      "capture_bytes": 44873,
+      "ratio": 5.250662982194193,
+      "objects": 1869,
+      "stage_sum_seconds": 2.058047605000013,
+      "report_seconds": 0.025800989999993362,
+      "hwm_kib": 24732,
+      "stages": [
+        {
+          "stage": "acquire",
+          "seconds": 0.23881759100004274,
+          "hwm_kib": 22912
+        },
+        {
+          "stage": "authenticate",
+          "seconds": 0.3469320659999653,
+          "hwm_kib": 24732
+        },
+        {
+          "stage": "source_identity",
+          "seconds": 0.012331510000024082,
+          "hwm_kib": 24732
+        },
+        {
+          "stage": "drawn",
+          "seconds": 0.06018391899999642,
+          "hwm_kib": 24732
+        },
+        {
+          "stage": "effective",
+          "seconds": 0.06098534400001654,
+          "hwm_kib": 24732
+        },
+        {
+          "stage": "local_graph",
+          "seconds": 0.19352828600000294,
+          "hwm_kib": 24732
+        },
+        {
+          "stage": "channel",
+          "seconds": 0.3730417709999756,
+          "hwm_kib": 24732
+        },
+        {
+          "stage": "annotation",
+          "seconds": 0.746426127999996,
+          "hwm_kib": 24732
+        },
+        {
+          "stage": "diagnostic_report",
+          "seconds": 0.025800989999993362,
+          "hwm_kib": 24732
+        }
+      ]
+    }
+  ],
+  "lexical_buckets": {
+    "fact_values": {
+      "bytes": 16204,
+      "percent": 6.8773794315254255
+    },
+    "graph_reference_tokens": {
+      "bytes": 38047,
+      "percent": 16.148090300620083
+    },
+    "identity_reference_values": {
+      "bytes": 11851,
+      "percent": 5.02985828455985
+    },
+    "presentation_keys_and_syntax": {
+      "bytes": 111202,
+      "percent": 47.19688641967973
+    },
+    "presentation_type_and_version_values": {
+      "bytes": 20417,
+      "percent": 8.665481106730104
+    },
+    "provenance_values": {
+      "bytes": 37892,
+      "percent": 16.082304456884806
+    }
+  },
+  "facet_storage": {
+    "annotation": {
+      "rows": 729,
+      "bytes": 97206,
+      "percent": 41.256636942783295
+    },
+    "channel_fin": {
+      "rows": 220,
+      "bytes": 33761,
+      "percent": 14.329005615140082
+    },
+    "shared_by_multiple_facets": {
+      "rows": 920,
+      "bytes": 99090,
+      "percent": 42.05625326276564
+    }
+  },
+  "outer_capture_root_and_array_syntax_bytes": 5556,
+  "duplicate_complete_table_rows": 0,
+  "repeated_provenance_strings": {
+    "distinct_repeated": 112,
+    "gross_repeated_bytes_after_first_occurrence": 30710,
+    "interpretation": "overlaps lexical buckets; not net savings; dictionary/ref overhead excluded",
+    "largest": [
+      {
+        "value": "c71f40728a979c918e083b924a3045cf53bece51dd837f9ae2834cf242776fa4",
+        "occurrences": 33,
+        "gross_repeated_bytes": 2112
+      },
+      {
+        "value": "../../../../../tests/fixtures/w003_m1/source.cdl",
+        "occurrences": 33,
+        "gross_repeated_bytes": 1600
+      },
+      {
+        "value": "../../../../../tests/fixtures/w003_m1/query/raw/net_shapes_n_lo.txt",
+        "occurrences": 23,
+        "gross_repeated_bytes": 1518
+      },
+      {
+        "value": "../../../../../tests/fixtures/w003_m1/query/raw/net_shapes_n_hi.txt",
+        "occurrences": 23,
+        "gross_repeated_bytes": 1518
+      },
+      {
+        "value": "../../../../../tests/fixtures/w003_m1/query/raw/net_shapes_n_a.txt",
+        "occurrences": 23,
+        "gross_repeated_bytes": 1496
+      },
+      {
+        "value": "../../../../../tests/fixtures/w003_m1/query/raw/net_shapes_n_y.txt",
+        "occurrences": 23,
+        "gross_repeated_bytes": 1496
+      },
+      {
+        "value": "38fdc36e1fcf3fe8651567b91d1ba7fd061b23d09e485da718d40b9e394ac339",
+        "occurrences": 23,
+        "gross_repeated_bytes": 1452
+      },
+      {
+        "value": "ccf7d35dc5d9340970737d9e94497fefaa2428af3780a92b59c1cd839dd479c3",
+        "occurrences": 23,
+        "gross_repeated_bytes": 1452
+      },
+      {
+        "value": "930681f091fa835ceac3948a44d629a086a0b38b65ad786b47eec6fe9ced3e44",
+        "occurrences": 23,
+        "gross_repeated_bytes": 1452
+      },
+      {
+        "value": "9a24daf5ceb930fc38406e8b6957c6b2618ba2b35f3b1e110dbea4278fe1199d",
+        "occurrences": 23,
+        "gross_repeated_bytes": 1452
+      }
+    ]
+  },
+  "caveats": [
+    "fact_values includes source declarations as well as derived values",
+    "provenance and identity/reference tokens include necessary information, not all duplication",
+    "zero duplicate table rows does not establish zero semantic duplication or zero repeated inline values",
+    "historical timings are single observations, not controlled performance comparisons"
+  ]
+}

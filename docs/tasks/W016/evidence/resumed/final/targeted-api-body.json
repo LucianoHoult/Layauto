@@ -1,0 +1,29 @@
+{
+  "label": "targeted-api-body",
+  "command": [
+    "/tmp/w016-py312-real/bin/python",
+    "-m",
+    "pytest",
+    "-p",
+    "no:cacheprovider",
+    "tests/unit/test_analysis_api.py",
+    "tests/unit/test_analysis_foundation.py",
+    "tests/contracts/test_analysis_body_parity.py",
+    "-q"
+  ],
+  "cwd": "/workspace/Layauto",
+  "started_at_utc": "2026-11-17T01:31:00.173280+00:00",
+  "finished_at_utc": "2026-11-17T01:33:05.528216+00:00",
+  "elapsed_seconds": 125.35494093600005,
+  "exit_code": 0,
+  "source_manifest_sha256": "af23726d482621502c322ba207b610b49bf10881aaf856f55b208009e5d8bd50",
+  "stdout": "targeted-api-body.stdout.txt",
+  "stderr": "targeted-api-body.stderr.txt",
+  "stdout_sha256": "02816d537a49f5764ddf9bb98f615cecc7e7a9b002e35dbdec42578b49295c1e",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "environment_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONUNBUFFERED": "1",
+    "MPLCONFIGDIR": "/tmp/w016-mplconfig"
+  }
+}

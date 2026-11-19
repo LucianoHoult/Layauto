@@ -1,0 +1,21 @@
+{
+  "command": [
+    "uv",
+    "pip",
+    "install",
+    "--offline",
+    "--python",
+    "/tmp/pm01-clean-312/bin/python",
+    "--constraint",
+    "/tmp/pm01-deps-312.txt",
+    "/tmp/pm01-build-312/layauto-0.2.0-py3-none-any.whl"
+  ],
+  "cwd": "/workspace/Layauto",
+  "freeze_sha256": "ecbc677c16f839ff294ce2a79296479f630c58d5dc5ef65713096daed8fdbb02",
+  "started_utc": "2026-11-18T02:53:26.846284+00:00",
+  "exit_code": 0,
+  "elapsed_seconds": 0.1524339540001165,
+  "finished_utc": "2026-11-18T02:53:26.998658+00:00",
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "95fa77d4ae948e252fe8f75d455c1f9f2f9bbaeee7d85005e57168f2aa884ee4"
+}

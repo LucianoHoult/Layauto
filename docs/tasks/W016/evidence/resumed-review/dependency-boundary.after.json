@@ -1,0 +1,23 @@
+{
+  "command": [
+    "/tmp/w016-py312-real/bin/python",
+    "-m",
+    "pytest",
+    "-p",
+    "no:cacheprovider",
+    "tests/contracts/test_w005_contracts.py::test_importer_and_domain_dependency_direction",
+    "tests/contracts/test_w006_boundaries.py::test_precontext_module_dependency_boundaries",
+    "-q"
+  ],
+  "cwd": "/workspace/Layauto",
+  "exit_code": 0,
+  "result": "2 passed in 0.23s",
+  "source_sha256": {
+    "layauto_v2/analysis.py": "8d92a1edc0b32c0e912a2037adf0de26a4685b5fa299dcee61f3b51a276bccd7",
+    "layauto_v2/domain/analysis.py": "3e2d43fd877a18751a3bc08cd09604463cedfdd1cf381e2034b4572d988c0db8",
+    "tests/contracts/test_w005_contracts.py": "dc4a6775ee1b8fe608fd3248fd309dfb133518589d2087cb87cc26c393532799",
+    "tests/contracts/test_w006_boundaries.py": "a9c25a72a26cd07da3e63ffb82109d27f6a2b98fe8d0f18d7d71ddd7a9e79ead"
+  },
+  "stdout_sha256": "7e15266061ed0d31aa89e2241ce9ed802cf0173def79bf29c0398d727932d5d2",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

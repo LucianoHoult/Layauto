@@ -1,0 +1,26 @@
+{
+  "scope": "internal reauthentication probe; no public receipt reuse boundary",
+  "captures": 23,
+  "rows": [
+    {
+      "consumption": 1,
+      "seconds_profiled": 1.1814205260000108,
+      "ref": "c8f816b21ede7a256ff94c707f431ef7dfd4df4c33775be1d3f9875b0ab5b0c5",
+      "parse_counts_cumulative": {
+        "parse_gds": 2,
+        "parse_cdl": 2,
+        "parse_query": 2
+      }
+    },
+    {
+      "consumption": 2,
+      "seconds_profiled": 1.1740538139999899,
+      "ref": "c8f816b21ede7a256ff94c707f431ef7dfd4df4c33775be1d3f9875b0ab5b0c5",
+      "parse_counts_cumulative": {
+        "parse_gds": 3,
+        "parse_cdl": 3,
+        "parse_query": 3
+      }
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+layauto_v2/analysis.py:28: error: Argument 5 to "AnalysisFinding" has incompatible type "str"; expected "Literal['error', 'unsupported', 'violation', 'mismatch', 'info']"  [arg-type]
+layauto_v2/analysis.py:56: error: Argument 1 to "AnalysisResult" has incompatible type "str"; expected "Literal['completed', 'rejected', 'unsupported']"  [arg-type]
+layauto_v2/analysis.py:95: error: Incompatible types in assignment (expression has type "tuple[str, str, str, str]", variable has type "tuple[str, str, str]")  [assignment]
+layauto_v2/analysis.py:99: error: Incompatible types in assignment (expression has type "tuple[str, ...]", variable has type "tuple[str, str, str]")  [assignment]
+layauto_v2/analysis.py:100: error: Argument 1 to "AnalysisResult" has incompatible type "str"; expected "Literal['completed', 'rejected', 'unsupported']"  [arg-type]
+Found 5 errors in 1 file (checked 75 source files)

@@ -1,0 +1,67 @@
+{
+  "cases": [
+    {
+      "original": {
+        "category": "parse",
+        "code": "InvalidDocumentSyntax",
+        "message": "while parsing a flow node\nexpected the node content, but found '<stream end>'\n  in \"<unicode string>\", line 1, column 2:\n    {\n     ^",
+        "source": {
+          "uri": "body/context.json",
+          "sha256": "021fb596db81e6d02bf3d2586ee3981fe519f275c0ac9ca76bbcf2ebb4097d96",
+          "field": null,
+          "line": 1,
+          "column": 2,
+          "byte_offset": null,
+          "record_index": null
+        }
+      },
+      "discovery": {
+        "category": "parse",
+        "code": "InvalidDocumentSyntax",
+        "message": "while parsing a flow node\nexpected the node content, but found '<stream end>'\n  in \"<unicode string>\", line 1, column 2:\n    {\n     ^",
+        "source": {
+          "uri": "body/context.json",
+          "sha256": "021fb596db81e6d02bf3d2586ee3981fe519f275c0ac9ca76bbcf2ebb4097d96",
+          "field": "/selected_bindings",
+          "line": null,
+          "column": null,
+          "byte_offset": null,
+          "record_index": null
+        }
+      },
+      "same_issue": false
+    },
+    {
+      "original": {
+        "category": "config",
+        "code": "DuplicateKey",
+        "message": "duplicate key: schema_version",
+        "source": {
+          "uri": "body/context.json",
+          "sha256": "9b22791a21c0126d79d457d620f8898ebba7511024f9d1d041d352d0845661e6",
+          "field": null,
+          "line": 1,
+          "column": 23,
+          "byte_offset": null,
+          "record_index": null
+        }
+      },
+      "discovery": {
+        "category": "config",
+        "code": "DuplicateKey",
+        "message": "duplicate key: schema_version",
+        "source": {
+          "uri": "body/context.json",
+          "sha256": "9b22791a21c0126d79d457d620f8898ebba7511024f9d1d041d352d0845661e6",
+          "field": "/selected_bindings",
+          "line": null,
+          "column": null,
+          "byte_offset": null,
+          "record_index": null
+        }
+      },
+      "same_issue": false
+    }
+  ],
+  "source_sha256": "341e4bf4b844ebc0d476a2ac836c264ba7a866a4b430126924c31cee16152e04"
+}

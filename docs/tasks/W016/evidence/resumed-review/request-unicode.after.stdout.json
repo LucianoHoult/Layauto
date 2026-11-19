@@ -1,0 +1,38 @@
+{
+  "cases": [
+    {
+      "path": "/tmp/\ud800.json",
+      "status": "rejected",
+      "findings": [
+        {
+          "code": "InvalidAnalysisRequest",
+          "uri": "<analysis-request>",
+          "field": "/manifest_path"
+        }
+      ]
+    },
+    {
+      "path": "/tmp/\udcff.json",
+      "status": "rejected",
+      "findings": [
+        {
+          "code": "InvalidAnalysisRequest",
+          "uri": "<analysis-request>",
+          "field": "/manifest_path"
+        }
+      ]
+    },
+    {
+      "path": "/tmp/\u5408\u6cd5-\u4e0d\u5b58\u5728-w016.json",
+      "status": "rejected",
+      "findings": [
+        {
+          "code": "MissingInput",
+          "uri": "\u5408\u6cd5-\u4e0d\u5b58\u5728-w016.json",
+          "field": null
+        }
+      ]
+    }
+  ],
+  "source_sha256": "ba9443da886bc6e8760c12e65e49831c3bae8de1af15d4912e75a760cea12f4b"
+}

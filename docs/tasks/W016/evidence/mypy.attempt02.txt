@@ -1,0 +1,2 @@
+layauto_v2/derive/body_relations.py:187: error: Argument 4 to "evaluate_body_operands" has incompatible type "set[tuple[Value, Value]]"; expected "set[tuple[object, object]]"  [arg-type]
+Found 1 error in 1 file (checked 68 source files)

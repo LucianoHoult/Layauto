@@ -1,0 +1,5 @@
+{
+  "exception": "UnicodeEncodeError",
+  "message": "'utf-8' codec can't encode character '\\ud800' in position 110: surrogates not allowed",
+  "facade_sha256": "14a0c55316f6c475e8f9c2e99423053c010d83a35ab0f06f511e7511afaba027"
+}

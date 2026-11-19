@@ -1,0 +1,45 @@
+{
+  "freeze_sha256": "ecbc677c16f839ff294ce2a79296479f630c58d5dc5ef65713096daed8fdbb02",
+  "versions": {
+    "312": {
+      "command": [
+        "/tmp/pm01-dev-312/bin/python",
+        "-m",
+        "pytest",
+        "tests",
+        "--collect-only",
+        "-q",
+        "-p",
+        "no:cacheprovider"
+      ],
+      "paths": {
+        "unit": 352,
+        "contracts": 1606,
+        "fixture_support": 3
+      },
+      "node_count": 1961,
+      "ordered_nodeids_utf8_lf_sha256": "844bf33b5047feb554bf730557af46019e66847e433c411dd620fc8f63616bb6",
+      "summary": "1961 tests collected in 2.51s"
+    },
+    "310": {
+      "command": [
+        "/tmp/pm01-dev-310/bin/python",
+        "-m",
+        "pytest",
+        "tests",
+        "--collect-only",
+        "-q",
+        "-p",
+        "no:cacheprovider"
+      ],
+      "paths": {
+        "unit": 352,
+        "contracts": 1606,
+        "fixture_support": 3
+      },
+      "node_count": 1961,
+      "ordered_nodeids_utf8_lf_sha256": "844bf33b5047feb554bf730557af46019e66847e433c411dd620fc8f63616bb6",
+      "summary": "1961 tests collected in 2.46s"
+    }
+  }
+}

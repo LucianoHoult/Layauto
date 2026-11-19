@@ -1,0 +1,3 @@
+layauto_v2/normalization/analysis_input.py:52: error: Incompatible types in assignment (expression has type "SourceFile", variable has type "Value")  [assignment]
+layauto_v2/normalization/analysis_input.py:53: error: Argument 1 to "send" of "Generator" has incompatible type "bool | int | str | bytes | Fraction | FrozenMap | tuple[Value, ...] | None"; expected "SourceFile | EvidenceIssue | bool"  [arg-type]
+Found 2 errors in 1 file (checked 68 source files)

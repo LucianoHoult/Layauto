@@ -1,0 +1,16 @@
+{
+  "command": [
+    "/tmp/pm01-dev-312/bin/python",
+    "docs/tasks/W016/pm01-fix/combined_cost.py",
+    "/tmp/pm01-inputs/combined",
+    "resource"
+  ],
+  "cwd": "/workspace/Layauto",
+  "freeze_sha256": "ecbc677c16f839ff294ce2a79296479f630c58d5dc5ef65713096daed8fdbb02",
+  "started_utc": "2026-11-18T10:02:24.542153+00:00",
+  "exit_code": 0,
+  "elapsed_seconds": 1.3553388710024592,
+  "finished_utc": "2026-11-18T10:02:25.897399+00:00",
+  "stdout_sha256": "71563fc4f3fd6366fca00fd275cb2ea2f7fc029fb5a7a687cfb13d08317c4cd1",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

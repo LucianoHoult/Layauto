@@ -8,7 +8,7 @@
 | 里程碑 / 依赖 | M1内既有组件的独立分析入口，承接W005–W014和已接收W015方案；不是完整Stage2/运行出口，不代替后续坐标、mandatory、baseline与Stage6 |
 | 授权 | 用户要求推进单cell分析并沿用独立执行session；W015交付后PM核具体方案、review及来源，按既定方向派发本实施包。内部实现自主推进，不重复询问D1 |
 | 基线 / 分支 | W015方案merge `d0bb5628384f3a9fec1fe87b6311b854996f574b`；产品仍等同W014验收main `3b8d78902591bca32ec9b8ee5d3167d115e1a974`。恢复`codex/w016-single-cell-analysis`最新远端准备head，后续准备仅文档 |
-| 阶段 / 阻塞 | **可执行：产品实施。** W015方案review必须项0；本任务仍需实现独立review及最终验证。当前没有必须用户再选的内部事项 |
+| 阶段 / 阻塞 | **待补修 PM-01（P2）。** 工程交付 fa78b42 的四组公开 API 对照中，复合错误丢失端口绑定诊断。见[PM2](#pm2-delivery-check) |
 | 写入范围 | `layauto_v2/`内本方案涉及的analysis/domain/tech/importers/normalization/annotation/derive/state/reporting及必要public exports；新增/受影响tests、typing配置、README和本任务执行材料。按方案列最小文件表，非相关重构不纳入 |
 | 非目标 | 不改固定fixture/答案/历史证据；不改旧公开DTO/schema/wire/ref或完整运行要求；不支持任意层级/生产方言、无query模式、live EDA、可信LVS/窗口验证器、实际修改/发布、完整M1或新持久化wire |
 | 架构依据 | [architecture](../architecture.md) §2.2只读分析边界、2.3、3.6、5.6–5.9、11.10/11.13/11.15、12.1；[U06](../roadmap.md#production-body-evidence)、[W015 PM1](W015-single-cell-analysis-entry.md#pm1-acceptance)及下述已采纳方案 |
@@ -48,7 +48,9 @@
 按W015步骤先连通T01/S1认证与本地链，再annotation/端子/T06，随后body/manual。
 最早可运行就检查相应case，三case齐备后补齐对照，不等最终矩阵才测成本。
 PM采纳W015预算门：峰值>1GiB、每facet复制完整capture或认证次数无界增长，暂停扩包交PM；
-report去重后>2倍capture bytes也须说明构成并交PM。只有取得同机同输入**同口径**reference
+report去重后>2倍capture bytes须统计并解释构成；检查点2608d84已完成该项PM复核，
+按[本次处置](W016/pm-resource-decision.md)恢复实施，同一已解释倍率不再单独阻止扩包或最终矩阵，
+新绝对成本/增长问题仍交PM。只有取得同机同输入**同口径**reference
 后才使用耗时/HWM>2倍门；原W014 build+encode+decode不能当作新build+report基准。
 单case串行超过120秒先交测量、调用图和缩包建议，这是工程复核触发值，不是用户产品超时承诺。
 继续做不受阻的诊断/定向修正，不能用删测试或省认证掩盖成本，不重启W012 A2候选。
@@ -66,19 +68,81 @@ A1–A8测试选择、资源计数方式及相对已采纳方案的差异；无�
 
 ## 执行结果（执行）
 
-未执行。记录工作区、起始完整SHA、保护的既有改动、源码/测试/config冻结身份、
-A1–A8实际结果、原命令/环境/输出/失败及资源限制，列实跑/采信/未覆盖/补跑触发。
-按授权以项目noreply身份提交推送原W016分支；不改PM要求/阶段/current-work，不自行合main。
+按[继续prompt](W016/resume-prompt.md)从远端
+`6ca7b16cff0f953f9e7eacc834f88ac28e70abb6`恢复，完成公开API、body/manual、端子、
+facet/status与错误聚合、完整诊断及来源。纯体积优化依PM决定后置，其他资源门保持。
+最终298项runtime/tests/config冻结SHA-256：
+`f99498abc0877bb918d7de88d66a5eda5d5591d41f8ce8102b04edc14826c052`。
+实际文件/合同、A1–A8覆盖、原失败/修正及复用边界见[工程交付](W016/delivery.md)。
+
+三case完整公开调用约2.67/3.10/2.76秒、HWM约28.7–28.9MiB（Python3.12.14）；
+去重capture42395/45202/42395 bytes，完整未压缩report235792/259620/235838 bytes。
+获取与认证parse各一次、顶层各facet一次，中立完整重构计数另列；全部来源和诊断保留。
+四路同URI/bytes的旧完整DTO/ref/公开wire实际双侧逐bytes比较均通过，到最终冻结按
+未改动的相关旧producer/wrapper/codec及输入身份采信，不重复封装大wire。
+
+双3.10.22/3.12.14最终unit/contracts各1953 passed，另各3 fixture tests及8 subtests passed，
+每解释器精确覆盖正式tests全集1956节点，全部exit0；两长矩阵串行，pytest时间分别
+10798.06/7745.36秒。双typing各75源、双build、双clean安装源码外5case smoke均通过。
+[最终执行核对](W016/evidence/resumed/completed-validation-summary.json)绑定11项命令、原输出
+hash及298项源身份；独立工程review通过、must0，见下。原资源中断检查点及两轮全量原失败保持。
+
+本工程交付按授权以项目noreply身份提交推送原分支，核远端完整SHA交PM。
+未改PM要求/阶段/current-work，不自行验收、合main或删除分支；生产/EDA/隔离主机等未覆盖
+范围及补验触发条件在交付记录中明确。
+
+### PM-01 补修交付
+
+从 PM2 提交 `c9081f1a11612450e7228840e541452a6d7f9c89` 复现后，修复几何提前退出时丢失来源诊断的问题。端口绑定错误和不支持比较器同时出现时，公开 API 返回 `rejected`，两项 finding 分别保留原文件来源。定向 8 项与独立 10 组实际文件复核通过。修后冻结的 Python 3.10.22、3.12.14 各通过 1961 项测试及 8 个子测试；双 typing、构建、干净安装和源码外六组 smoke 通过。四组公开调用资源实测见补修交付，提交原分支交 PM 重新接收。[补修交付](W016/pm01-fix/delivery.md) · [独立复核](W016/pm01-fix/review.md)
 
 ## Review结论（reviewer）
 
-未执行。绑定实际受审版本/相关快照，独立审来源/旧兼容/聚合状态/异常/资源，保留反例和修正复核。
+独立 reviewer `/root/w016_review` 未参与产品实施，完成代码、接口、旧兼容及最终工程证据核对，
+**工程 review 通过，未关闭 must 为0**。受审298个源码/测试/config文件逐hash匹配
+[completed冻结身份](W016/evidence/resumed/completed-source-identity.json)，manifest SHA
+`f99498abc0877bb918d7de88d66a5eda5d5591d41f8ce8102b04edc14826c052`。
+完整依据见[恢复实施review](W016/resumed-review.md)与[最终独立审计](W016/evidence/resumed-review/final-matrix-audit-r2.stdout.json)。
 
-| Finding | 严重性、影响与依据 | 执行处理及版本 | 独立复核 |
-| --- | --- | --- | --- |
-| 尚未review | 不代表无finding | — | — |
+| 范围 | 独立结论与证据边界 |
+| --- | --- |
+| 来源、状态、body/manual、纯度 | 恢复阶段R03–R10均已修正并独立复核；实际文件反例、原失败和修后输出保留。捕获后封锁文件系统调用仍完成完整认证、body/manual与端子计算，伪alias/root拒绝；没有放宽旧IO/可变state边界。 |
+| 旧接口兼容 | normal-direct/readback/FIN mismatch/错body四路完整DTO/ref与公开wire真实逐bytes相等；readback未seal、无terminal。基线完整decode已通过，候选decoder由最终codec回归覆盖；后续仅新分析入口/重放归属和测试变化，旧producer/codec按精确相关源身份复用。 |
+| 最终双版本矩阵 | 采信执行原实跑并独立核exit/hash/节点集合：3.12为1953 passed/7745.36s，3.10为1953 passed/10798.06s；两侧另各3项fixture_support通过，合计每解释器完整tests 1956项，无遗漏或重复。未重跑长矩阵。 |
+| typing/build/install | 双75模块typing、双wheel/sdist build及双clean源码外五case真实文件smoke通过；独立核各121个已安装runtime文件、产物载荷、实际环境依赖与原stdout/stderr hash。 |
+| 资源 | completed三case计时约2.674/3.100/2.760秒，HWM均不足30MiB；独立counted保留完整认证与中立构造次数。报告体积按PM1接受口径记录，未删来源/诊断省认证。 |
+
+早期R01（nested SourceFile额外可变字段）与R02（新annotation binding重构/to_value重验）
+在原检查点已独立关闭，原293文件身份、资源暂停、反例及失败证据继续保留于
+[历史独立review](W016/independent-review.md)，不改写历史为当时完整通过。
+恢复阶段两轮全量的原AST边界失败/中断也完整保留；窄接口登记和依赖修正后在最终冻结重新跑通。
+旧大wire不复制重复候选快照；本轮新基线gzip已临时归档，未来精确复核须按原提交和同URI输入重建，
+不能仅凭hash声称重新比较。生产PDK/方言、真实EDA运行、父级/global证明及隔离目标环境未验证。
+本结论支持按用户授权提交推送原W016分支交PM，**不代PM验收、不授权合并main**。
 
 ## PM验收与交接（PM）
 
 W016仅完成任务准备，尚未实施/验收。执行session使用[完整prompt](W016/execution-prompt.md)，
 完成独立review及工程交付后回PM；不启动下一任务、合main或删除分支。
+
+
+<a id="pm1-resource-resume"></a>
+
+### PM1 资源检查点复核与恢复实施
+
+检查点`2608d84b94f1a5a3011855f2839c7407c65cc3fd`已推送。PM核293项源码/测试/config身份、
+现encoder和独立review，重算报告hash/字节/引用可达性及原单次日志；[回执](W016/pm-resource-review/receipt.json)
+保存实际核对与采信边界。本次未重跑产品或性能矩阵，亦未把58项定向测试/两处防伪复核当最终交付。
+
+报告235613 bytes（约230.1KiB）、原报告阶段0.025801秒、已测阶段合计2.058048秒、
+进程HWM约24.15MiB；尚缺完整API、body/manual/端子等。PM决定体积专项优化后置，解除
+本次仅由5.25倍触发的暂停，详见[资源决定](W016/pm-resource-decision.md)。内存/耗时/
+重复capture/无界重建门和全部正确性要求保持；完整三case与API成本仍须测量。
+
+下一执行session使用[继续prompt](W016/resume-prompt.md)，完成原A1–A8再交PM。
+未完成产品不合main、不验收；本次文档补记不改变检查点源码或原证据。
+
+<a id="pm2-delivery-check"></a>
+
+### PM2 首次工程交付复核
+
+PM 核对 fa78b42 工程证据并实跑四组公开入口对照。正常无 body 样本通过，组合错误路径新增阻塞项 PM-01。阶段为待补修，独立复核修正后交 PM 重新接收。资源决定沿用 PM1。[复核、证据与执行 prompt](W016/pm-delivery-review/decision.md)

@@ -1,0 +1,26 @@
+{
+  "previous_product_commit": "fa78b42ae1dbcf74dfeaa7060ea3b4e66753a6e0",
+  "base": "c9081f1a11612450e7228840e541452a6d7f9c89",
+  "previous_freeze_sha256": "f99498abc0877bb918d7de88d66a5eda5d5591d41f8ce8102b04edc14826c052",
+  "new_freeze_sha256": "ecbc677c16f839ff294ce2a79296479f630c58d5dc5ef65713096daed8fdbb02",
+  "same_path_count": 298,
+  "changed_paths": [
+    "layauto_v2/analysis.py",
+    "layauto_v2/normalization/analysis.py",
+    "tests/unit/test_analysis_api.py"
+  ],
+  "original_pm_records": {
+    "docs/tasks/W016/pm-delivery-review/decision.md": "3d453078a6923862142677c874954eba50be1f6801e4779710fceb9b0fe367a1",
+    "docs/tasks/W016/pm-delivery-review/public_checks.stdout.json": "ee6631c9cd962c3e177d0846e114c12dd24e813ea7ad27ae4ca51a414456ff86",
+    "docs/tasks/W016/pm-delivery-review/public_checks.stderr.txt": "832efd27a1f14e9903dc04688742e26fe3e879f7a7a3b9670e4f3d91baf1d128",
+    "docs/tasks/W016/pm-delivery-review/evidence-check.json": "98e9d1fad0d25f9a7739c8062af0c9bfb3cb4ad11f78fda3081eee1abb29fe2e",
+    "docs/tasks/W016/pm-delivery-review/public_checks.py": "8cc63ddb97d2e624df05775067f7eab6f54e67cddaba03a9aa29b0f04982909b"
+  },
+  "parity_summary_sha256": "499f9752c04fd68a4e8df3fcf47dda2a038aa745d2f9d730e35a91bbcf5601a3",
+  "adopted_parity_reports": {
+    "docs/tasks/W016/evidence/resumed-review/candidate-normal-direct/report.json": "dcdb14ff21e1e4b2711e871976ac037d615ec44024cb2a316f936e39c6ace0e4",
+    "docs/tasks/W016/evidence/resumed-review/candidate-normal-readback-release/report.json": "e4bc04a3e960391739b1f3a559a868d4004b95ff5f976e1b4e21c179970d9c56",
+    "docs/tasks/W016/evidence/resumed-review/candidate-extraction-mismatch-release/report.json": "f9c02d4c924bc849e9ec0f75bbf61e94ae49101ace376ec4c563683df022f198",
+    "docs/tasks/W016/evidence/resumed-review/candidate-body-enclosure-release/report.json": "4ac4b645375b601c8b13dd5fcacc788b45c485f72fd63eb20d67e1f3e11b3078"
+  }
+}

@@ -1,0 +1,50 @@
+......F.                                                                 [100%]
+=================================== FAILURES ===================================
+_ test_independent_identity_and_geometry_diagnostics[True-effective-rejected] __
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-0/test_independent_identity_and_3')
+pin_error = True, failed_stage = 'effective', expected_status = 'rejected'
+
+    @pytest.mark.parametrize(('pin_error', 'failed_stage', 'expected_status'), [
+        (False, 'drawn', 'unsupported'),
+        (True, None, 'rejected'),
+        (True, 'drawn', 'rejected'),
+        (True, 'effective', 'rejected'),
+        (True, 'local_graph', 'rejected'),
+    ])
+    def test_independent_identity_and_geometry_diagnostics(tmp_path, pin_error, failed_stage, expected_status):
+        materialize(tmp_path)
+        if pin_error:
+            cdl = tmp_path / 'source.cdl'
+            pins = '.SUBCKT INV_M1_SYNTH A Y VSS VDD'
+            assert cdl.read_text().count(pins) == 1
+            cdl.write_text(cdl.read_text().replace(pins, '.SUBCKT INV_M1_SYNTH A Y VSS'))
+    
+        problems = {
+            'drawn': ('tech/formats.json', 'geometry_capability', 'comparator', 'UnsupportedGeometryComparator'),
+            'effective': ('tech/physical.json', 'operators', 'li_cut/1', 'UnsupportedRegionOperator'),
+            'local_graph': ('tech/physical.json', 'operators', 'same_layer_contact/1', 'UnsupportedLocalContactOperator'),
+        }
+        expected = {}
+        if failed_stage:
+            uri, group, key, code = problems[failed_stage]
+            owner = load(tmp_path / uri)
+            owner[group][key] = 'unsupported test variant'
+            write(tmp_path / uri, owner)
+            expected[code] = (uri, 'unsupported')
+        if pin_error:
+            expected['SourceTopIdentityMismatch'] = ('query/raw/iXref.temp', 'error')
+        rebind(tmp_path)
+    
+        result = run(tmp_path)
+        assert result.request_status == expected_status
+>       assert len(result.findings) == len(expected)
+E       assert 1 == 2
+E        +  where 1 = len((AnalysisFinding(category='config', code='RequiredOperatorUnavailable', source=SourceRef(uri='tech/physical.json', sha...required_operator_refs',), severity='error', message='required operators must resolve to the supported operator set'),))
+E        +    where (AnalysisFinding(category='config', code='RequiredOperatorUnavailable', source=SourceRef(uri='tech/physical.json', sha...required_operator_refs',), severity='error', message='required operators must resolve to the supported operator set'),) = AnalysisResult(request_status='rejected', request_ref=SourceRef(uri='analysis.json', sha256='2be56b53f75f26c5911274040...view/1"}', parent_global='unknown', target_comparison='not_requested', schema_version='layauto-cell-analysis-result/1').findings
+E        +  and   2 = len({'UnsupportedRegionOperator': ('tech/physical.json', 'unsupported'), 'SourceTopIdentityMismatch': ('query/raw/iXref.temp', 'error')})
+
+tests/unit/test_analysis_api.py:420: AssertionError
+=========================== short test summary info ============================
+FAILED tests/unit/test_analysis_api.py::test_independent_identity_and_geometry_diagnostics[True-effective-rejected]
+1 failed, 7 passed, 49 deselected in 11.92s

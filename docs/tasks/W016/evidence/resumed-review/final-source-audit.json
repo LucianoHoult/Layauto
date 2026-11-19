@@ -1,0 +1,8 @@
+{
+  "manifest": "docs/tasks/W016/evidence/resumed/final-source-identity.json",
+  "manifest_sha256": "af23726d482621502c322ba207b610b49bf10881aaf856f55b208009e5d8bd50",
+  "files_checked": 298,
+  "mismatches": [],
+  "status": "passed",
+  "checked_at": "2026-11-17T01:29:55.199925+00:00"
+}

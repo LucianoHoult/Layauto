@@ -1,0 +1,30 @@
+{
+  "label": "targeted-manual",
+  "command": [
+    "/tmp/w016-py312-real/bin/python",
+    "-m",
+    "pytest",
+    "-p",
+    "no:cacheprovider",
+    "tests/unit/test_analysis_api.py",
+    "-q",
+    "-k",
+    "manual"
+  ],
+  "cwd": "/workspace/Layauto",
+  "driver_cwd": "/workspace/Layauto",
+  "started_at_utc": "2026-11-17T01:36:11.519754+00:00",
+  "finished_at_utc": "2026-11-17T01:36:35.452336+00:00",
+  "elapsed_seconds": 23.93258924299994,
+  "exit_code": 0,
+  "source_manifest_sha256": "a306a2ae0f5aee5c37734764378520f927846bcb7e08b9e97ce88245c7e01a6e",
+  "stdout": "targeted-manual.stdout.txt",
+  "stderr": "targeted-manual.stderr.txt",
+  "stdout_sha256": "b6b117c56d7ef8b54c7445d18caff5789103c2c1da3f59e52c0a947b39abdca5",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "environment_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONUNBUFFERED": "1",
+    "MPLCONFIGDIR": "/tmp/w016-mplconfig"
+  }
+}

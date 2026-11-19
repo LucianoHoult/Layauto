@@ -1,0 +1,88 @@
+{
+  "status": "passed",
+  "baseline_commit": "efc881d461ce2c87370f6df402ac50ae43c094e8",
+  "release_manifest_sha256": "dae9e716acb4e4f947db12779362c677615cdc12c03c0852fbf9cde3a69a977e",
+  "routes": [
+    {
+      "case": "normal-direct",
+      "route": "direct",
+      "report": "docs/tasks/W016/evidence/resumed-review/candidate-normal-direct/report.json",
+      "report_sha256": "dcdb14ff21e1e4b2711e871976ac037d615ec44024cb2a316f936e39c6ace0e4",
+      "source_identity": "delivery (adopted by release-source-audit)",
+      "stages": [
+        "w005",
+        "w007",
+        "w008",
+        "w009",
+        "w010",
+        "w011",
+        "w013",
+        "w014"
+      ],
+      "complete_dto_and_public_wire_exact_bytes_equal": true,
+      "readback_unchanged_unsealed": false
+    },
+    {
+      "case": "normal-readback",
+      "route": "readback",
+      "report": "docs/tasks/W016/evidence/resumed-review/candidate-normal-readback-release/report.json",
+      "report_sha256": "e4bc04a3e960391739b1f3a559a868d4004b95ff5f976e1b4e21c179970d9c56",
+      "source_identity": "release",
+      "stages": [
+        "w007",
+        "w008",
+        "w009",
+        "w010",
+        "w011",
+        "w013",
+        "w014"
+      ],
+      "complete_dto_and_public_wire_exact_bytes_equal": true,
+      "readback_unchanged_unsealed": true
+    },
+    {
+      "case": "extraction-mismatch",
+      "route": "direct",
+      "report": "docs/tasks/W016/evidence/resumed-review/candidate-extraction-mismatch-release/report.json",
+      "report_sha256": "f9c02d4c924bc849e9ec0f75bbf61e94ae49101ace376ec4c563683df022f198",
+      "source_identity": "release",
+      "stages": [
+        "w005",
+        "w007",
+        "w008",
+        "w009",
+        "w010",
+        "w011",
+        "w013",
+        "w014"
+      ],
+      "complete_dto_and_public_wire_exact_bytes_equal": true,
+      "readback_unchanged_unsealed": false
+    },
+    {
+      "case": "body-enclosure",
+      "route": "direct",
+      "report": "docs/tasks/W016/evidence/resumed-review/candidate-body-enclosure-release/report.json",
+      "report_sha256": "4ac4b645375b601c8b13dd5fcacc788b45c485f72fd63eb20d67e1f3e11b3078",
+      "source_identity": "release",
+      "stages": [
+        "w005",
+        "w007",
+        "w008",
+        "w009",
+        "w010",
+        "w011",
+        "w013",
+        "w014"
+      ],
+      "complete_dto_and_public_wire_exact_bytes_equal": true,
+      "readback_unchanged_unsealed": false
+    }
+  ],
+  "method": "Complete DTO canonical bytes and actual public codec.encode_record bytes compared with == to independently generated baseline gzip content after verifying baseline length/hash. Baselines independently completed full decode/DTO equality. Candidate decoder covered by final frozen codec regressions; no duplicate candidate gzip retained.",
+  "limitations": [
+    "Synthetic same-URI inputs only.",
+    "Interrupted earlier readback attempt was not counted.",
+    "Full engineering pytest matrix pending at this review point."
+  ]
+}

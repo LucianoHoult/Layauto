@@ -1,0 +1,271 @@
+{
+  "moved_at": "2026-11-17T01:54:05.199056+00:00",
+  "reason": "Authorized after all four actual exact comparisons passed; omit new large baseline wire payloads from Git. Historical normal-direct tracked snapshots unchanged.",
+  "retention": "Temporary local files are not durable repository evidence. Future exact-byte rechecks must rebuild from original commit and same input preparation script/absolute URIs if archive unavailable; metadata hashes alone do not perform comparison.",
+  "files": [
+    {
+      "former_repository_path": "docs/tasks/W016/evidence/resumed-review/baseline-normal-readback-r2/w007.dto.gz",
+      "temporary_archive": "/tmp/w016-parity-archive/baseline-normal-readback-r2/w007.dto.gz",
+      "compressed_bytes": 250769,
+      "compressed_sha256": "1ebb0df4b1f71ca542205316acd09460ceec2fcd8c70073116501b4bbf5e07cf"
+    },
+    {
+      "former_repository_path": "docs/tasks/W016/evidence/resumed-review/baseline-normal-readback-r2/w007.wire.gz",
+      "temporary_archive": "/tmp/w016-parity-archive/baseline-normal-readback-r2/w007.wire.gz",
+      "compressed_bytes": 347403,
+      "compressed_sha256": "3fe0895d4614c8503bc2ea5c2c7397ab619e4648a523d6c0b43fb6a8a1de5611"
+    },
+    {
+      "former_repository_path": "docs/tasks/W016/evidence/resumed-review/baseline-normal-readback-r2/w008.dto.gz",
+      "temporary_archive": "/tmp/w016-parity-archive/baseline-normal-readback-r2/w008.dto.gz",
+      "compressed_bytes": 268362,
+      "compressed_sha256": "c1b89d751c8e7edda87fd037d205fa601013ce4f80f4be57c1c38275ac726636"
+    },
+    {
+      "former_repository_path": "docs/tasks/W016/evidence/resumed-review/baseline-normal-readback-r2/w008.wire.gz",
+      "temporary_archive": "/tmp/w016-parity-archive/baseline-normal-readback-r2/w008.wire.gz",
+      "compressed_bytes": 513998,
+      "compressed_sha256": "814b3f9af778a966f18c31eb907cadbd1bcc06c44e4944f0bbd56bd30e7eea58"
+    },
+    {
+      "former_repository_path": "docs/tasks/W016/evidence/resumed-review/baseline-normal-readback-r2/w009.dto.gz",
+      "temporary_archive": "/tmp/w016-parity-archive/baseline-normal-readback-r2/w009.dto.gz",
+      "compressed_bytes": 306606,
+      "compressed_sha256": "663c17b6b18f6707def233de1932dc6333f10291cb62d84f6ee11e1b8bc5be76"
+    },
+    {
+      "former_repository_path": "docs/tasks/W016/evidence/resumed-review/baseline-normal-readback-r2/w009.wire.gz",
+      "temporary_archive": "/tmp/w016-parity-archive/baseline-normal-readback-r2/w009.wire.gz",
+      "compressed_bytes": 872391,
+      "compressed_sha256": "b17518101972130e58a6b69e26f00478f67b8e5d385165c64ae0de08867ec226"
+    },
+    {
+      "former_repository_path": "docs/tasks/W016/evidence/resumed-review/baseline-normal-readback-r2/w010.dto.gz",
+      "temporary_archive": "/tmp/w016-parity-archive/baseline-normal-readback-r2/w010.dto.gz",
+      "compressed_bytes": 349195,
+      "compressed_sha256": "f6a038420668ddb3127a78220a79a0398bc9697f45bbc4ed705405016e8ae91c"
+    },
+    {
+      "former_repository_path": "docs/tasks/W016/evidence/resumed-review/baseline-normal-readback-r2/w010.wire.gz",
+      "temporary_archive": "/tmp/w016-parity-archive/baseline-normal-readback-r2/w010.wire.gz",
+      "compressed_bytes": 1508108,
+      "compressed_sha256": "108a4fef6c30f2545849a3128b8ed761b628d83fe53f3875f71abd1a8d220377"
+    },
+    {
+      "former_repository_path": "docs/tasks/W016/evidence/resumed-review/baseline-normal-readback-r2/w011.dto.gz",
+      "temporary_archive": "/tmp/w016-parity-archive/baseline-normal-readback-r2/w011.dto.gz",
+      "compressed_bytes": 650560,
+      "compressed_sha256": "d2bcab5fb0e64768add75538babd5b856b1901beabf540ed599802afc33bf72d"
+    },
+    {
+      "former_repository_path": "docs/tasks/W016/evidence/resumed-review/baseline-normal-readback-r2/w011.wire.gz",
+      "temporary_archive": "/tmp/w016-parity-archive/baseline-normal-readback-r2/w011.wire.gz",
+      "compressed_bytes": 2943400,
+      "compressed_sha256": "fc9873929007da0f9ec80dfb10f94a4db7653c3fdeb92690baa907b20b9ca70f"
+    },
+    {
+      "former_repository_path": "docs/tasks/W016/evidence/resumed-review/baseline-normal-readback-r2/w013.dto.gz",
+      "temporary_archive": "/tmp/w016-parity-archive/baseline-normal-readback-r2/w013.dto.gz",
+      "compressed_bytes": 368159,
+      "compressed_sha256": "e23eaf495ffb7c76f847e3516d25637231d624c0e752f1dfa361b3e1fbca8e34"
+    },
+    {
+      "former_repository_path": "docs/tasks/W016/evidence/resumed-review/baseline-normal-readback-r2/w013.wire.gz",
+      "temporary_archive": "/tmp/w016-parity-archive/baseline-normal-readback-r2/w013.wire.gz",
+      "compressed_bytes": 1529131,
+      "compressed_sha256": "6ab2c9cf8d18c8be3a053ee3dde2535048719d618855b55b7e92d5aff1400121"
+    },
+    {
+      "former_repository_path": "docs/tasks/W016/evidence/resumed-review/baseline-normal-readback-r2/w014.dto.gz",
+      "temporary_archive": "/tmp/w016-parity-archive/baseline-normal-readback-r2/w014.dto.gz",
+      "compressed_bytes": 420506,
+      "compressed_sha256": "4bd11b2f39ee1aaab923894650ee47c0ecae8bf684451b20e89c595e0e45a081"
+    },
+    {
+      "former_repository_path": "docs/tasks/W016/evidence/resumed-review/baseline-normal-readback-r2/w014.wire.gz",
+      "temporary_archive": "/tmp/w016-parity-archive/baseline-normal-readback-r2/w014.wire.gz",
+      "compressed_bytes": 1551543,
+      "compressed_sha256": "c01b407906ac1c545fa4f5de095f985c2756e4a392a5fb09273a4a51108a160f"
+    },
+    {
+      "former_repository_path": "docs/tasks/W016/evidence/resumed-review/baseline-extraction-mismatch/w005.dto.gz",
+      "temporary_archive": "/tmp/w016-parity-archive/baseline-extraction-mismatch/w005.dto.gz",
+      "compressed_bytes": 68345,
+      "compressed_sha256": "9727d51d74904adddb436401d2ad0e84d7fe8eb45fbc4a18028b61d3d7674e6c"
+    },
+    {
+      "former_repository_path": "docs/tasks/W016/evidence/resumed-review/baseline-extraction-mismatch/w007.dto.gz",
+      "temporary_archive": "/tmp/w016-parity-archive/baseline-extraction-mismatch/w007.dto.gz",
+      "compressed_bytes": 86489,
+      "compressed_sha256": "7d88272cf897e24ed2ddf915b3d3d681894e8c9fa655103c1efc3b2b49ef7efa"
+    },
+    {
+      "former_repository_path": "docs/tasks/W016/evidence/resumed-review/baseline-extraction-mismatch/w007.wire.gz",
+      "temporary_archive": "/tmp/w016-parity-archive/baseline-extraction-mismatch/w007.wire.gz",
+      "compressed_bytes": 122867,
+      "compressed_sha256": "3f0a0623283fd631f5dc608cf9855a8ac0e81efdc0992064ae8bd3dccb6ea1c8"
+    },
+    {
+      "former_repository_path": "docs/tasks/W016/evidence/resumed-review/baseline-extraction-mismatch/w008.dto.gz",
+      "temporary_archive": "/tmp/w016-parity-archive/baseline-extraction-mismatch/w008.dto.gz",
+      "compressed_bytes": 103900,
+      "compressed_sha256": "f823e05e3c5b6f31be80d8d856b0d9af22d9ae77cde6f2b5505244738c5be91d"
+    },
+    {
+      "former_repository_path": "docs/tasks/W016/evidence/resumed-review/baseline-extraction-mismatch/w008.wire.gz",
+      "temporary_archive": "/tmp/w016-parity-archive/baseline-extraction-mismatch/w008.wire.gz",
+      "compressed_bytes": 187900,
+      "compressed_sha256": "624ba0253446408bd486ab2a238f228aaf6a1262bd60464c1ca2cb42ee69223f"
+    },
+    {
+      "former_repository_path": "docs/tasks/W016/evidence/resumed-review/baseline-extraction-mismatch/w009.dto.gz",
+      "temporary_archive": "/tmp/w016-parity-archive/baseline-extraction-mismatch/w009.dto.gz",
+      "compressed_bytes": 141940,
+      "compressed_sha256": "0137097bd97b130ad4015323fb9eb7851c6111b4c656ba444473bc315a63ebdd"
+    },
+    {
+      "former_repository_path": "docs/tasks/W016/evidence/resumed-review/baseline-extraction-mismatch/w009.wire.gz",
+      "temporary_archive": "/tmp/w016-parity-archive/baseline-extraction-mismatch/w009.wire.gz",
+      "compressed_bytes": 350355,
+      "compressed_sha256": "281b42cf5109cab77636bed57ee32f93f918a961a065d8d59b0fef88f7127c2d"
+    },
+    {
+      "former_repository_path": "docs/tasks/W016/evidence/resumed-review/baseline-extraction-mismatch/w010.dto.gz",
+      "temporary_archive": "/tmp/w016-parity-archive/baseline-extraction-mismatch/w010.dto.gz",
+      "compressed_bytes": 184519,
+      "compressed_sha256": "4a31812a16ed19fd010b58f542be3dabae1561f44202f2a80affff34e0c32dbb"
+    },
+    {
+      "former_repository_path": "docs/tasks/W016/evidence/resumed-review/baseline-extraction-mismatch/w010.wire.gz",
+      "temporary_archive": "/tmp/w016-parity-archive/baseline-extraction-mismatch/w010.wire.gz",
+      "compressed_bytes": 626584,
+      "compressed_sha256": "a7d5409892c04ddd4a19f225e6b82d62f96228b99ea243331c4c7ecaa92eef77"
+    },
+    {
+      "former_repository_path": "docs/tasks/W016/evidence/resumed-review/baseline-extraction-mismatch/w011.dto.gz",
+      "temporary_archive": "/tmp/w016-parity-archive/baseline-extraction-mismatch/w011.dto.gz",
+      "compressed_bytes": 321576,
+      "compressed_sha256": "3a5b71d426d18c2b28e970139736933b5230d8151d7b9d5d3c99f137e643208b"
+    },
+    {
+      "former_repository_path": "docs/tasks/W016/evidence/resumed-review/baseline-extraction-mismatch/w011.wire.gz",
+      "temporary_archive": "/tmp/w016-parity-archive/baseline-extraction-mismatch/w011.wire.gz",
+      "compressed_bytes": 1242131,
+      "compressed_sha256": "786de02236c73cd812daaffe937d9bb42a853558b48b4ee4141280aa4bc60ccf"
+    },
+    {
+      "former_repository_path": "docs/tasks/W016/evidence/resumed-review/baseline-extraction-mismatch/w013.dto.gz",
+      "temporary_archive": "/tmp/w016-parity-archive/baseline-extraction-mismatch/w013.dto.gz",
+      "compressed_bytes": 204653,
+      "compressed_sha256": "7876b5af24a53f8751cfeaaf356a489140f9633a6fa8ead6d948de19829c98cd"
+    },
+    {
+      "former_repository_path": "docs/tasks/W016/evidence/resumed-review/baseline-extraction-mismatch/w013.wire.gz",
+      "temporary_archive": "/tmp/w016-parity-archive/baseline-extraction-mismatch/w013.wire.gz",
+      "compressed_bytes": 646589,
+      "compressed_sha256": "a429c7f2c973a3f9f6392eb182570ce28e1dd1584dba1e8390abc346e8dfd886"
+    },
+    {
+      "former_repository_path": "docs/tasks/W016/evidence/resumed-review/baseline-extraction-mismatch/w014.dto.gz",
+      "temporary_archive": "/tmp/w016-parity-archive/baseline-extraction-mismatch/w014.dto.gz",
+      "compressed_bytes": 255832,
+      "compressed_sha256": "3842fedfdf3ff5c196129a015fa6d45ca142227da2dd28ad9740c4e5521de2ea"
+    },
+    {
+      "former_repository_path": "docs/tasks/W016/evidence/resumed-review/baseline-extraction-mismatch/w014.wire.gz",
+      "temporary_archive": "/tmp/w016-parity-archive/baseline-extraction-mismatch/w014.wire.gz",
+      "compressed_bytes": 669467,
+      "compressed_sha256": "c3f7380b4d2e101af6ee9a8a19aa247a09341b1657fb9bfa77c2157041875de5"
+    },
+    {
+      "former_repository_path": "docs/tasks/W016/evidence/resumed-review/baseline-body-enclosure/w005.dto.gz",
+      "temporary_archive": "/tmp/w016-parity-archive/baseline-body-enclosure/w005.dto.gz",
+      "compressed_bytes": 68323,
+      "compressed_sha256": "6f8d403fe2db378ca4f9a238e2dff08363bab54cb81f49f91b772e5f5a279b50"
+    },
+    {
+      "former_repository_path": "docs/tasks/W016/evidence/resumed-review/baseline-body-enclosure/w007.dto.gz",
+      "temporary_archive": "/tmp/w016-parity-archive/baseline-body-enclosure/w007.dto.gz",
+      "compressed_bytes": 86447,
+      "compressed_sha256": "c6c52acc48546ba11f2165028af5af0772522f3661215b9dbaf61a67a6378eba"
+    },
+    {
+      "former_repository_path": "docs/tasks/W016/evidence/resumed-review/baseline-body-enclosure/w007.wire.gz",
+      "temporary_archive": "/tmp/w016-parity-archive/baseline-body-enclosure/w007.wire.gz",
+      "compressed_bytes": 122855,
+      "compressed_sha256": "930c9ff6117ce8ac9556c1062a1584873d503945006246e3ce87a3b8e503df57"
+    },
+    {
+      "former_repository_path": "docs/tasks/W016/evidence/resumed-review/baseline-body-enclosure/w008.dto.gz",
+      "temporary_archive": "/tmp/w016-parity-archive/baseline-body-enclosure/w008.dto.gz",
+      "compressed_bytes": 103856,
+      "compressed_sha256": "cd1b2dbef4bf3260268f243c7a162c2d908bc234d33671581c751b6cc7cc0879"
+    },
+    {
+      "former_repository_path": "docs/tasks/W016/evidence/resumed-review/baseline-body-enclosure/w008.wire.gz",
+      "temporary_archive": "/tmp/w016-parity-archive/baseline-body-enclosure/w008.wire.gz",
+      "compressed_bytes": 187881,
+      "compressed_sha256": "4e6257d9d154cd0e6c48fc767e70a6a7134caba45be7714f5bf27aed77bccc48"
+    },
+    {
+      "former_repository_path": "docs/tasks/W016/evidence/resumed-review/baseline-body-enclosure/w009.dto.gz",
+      "temporary_archive": "/tmp/w016-parity-archive/baseline-body-enclosure/w009.dto.gz",
+      "compressed_bytes": 141838,
+      "compressed_sha256": "62d2dbd02b23229307b4081888453ec7327c75261cf43af831bd2014c8725a47"
+    },
+    {
+      "former_repository_path": "docs/tasks/W016/evidence/resumed-review/baseline-body-enclosure/w009.wire.gz",
+      "temporary_archive": "/tmp/w016-parity-archive/baseline-body-enclosure/w009.wire.gz",
+      "compressed_bytes": 350260,
+      "compressed_sha256": "77a62c731daae75100913ecdcbdd8ae4f9e6fc92daf3f2c349b228a01b515c02"
+    },
+    {
+      "former_repository_path": "docs/tasks/W016/evidence/resumed-review/baseline-body-enclosure/w010.dto.gz",
+      "temporary_archive": "/tmp/w016-parity-archive/baseline-body-enclosure/w010.dto.gz",
+      "compressed_bytes": 184419,
+      "compressed_sha256": "06af04493b4251aefd851fbff5f07ffa0244a4c54c1994c3c9592487e624c04a"
+    },
+    {
+      "former_repository_path": "docs/tasks/W016/evidence/resumed-review/baseline-body-enclosure/w010.wire.gz",
+      "temporary_archive": "/tmp/w016-parity-archive/baseline-body-enclosure/w010.wire.gz",
+      "compressed_bytes": 626468,
+      "compressed_sha256": "50a64976d621140123ec7d3321d529271290d235086d5fb52294a9c26b39ebbd"
+    },
+    {
+      "former_repository_path": "docs/tasks/W016/evidence/resumed-review/baseline-body-enclosure/w011.dto.gz",
+      "temporary_archive": "/tmp/w016-parity-archive/baseline-body-enclosure/w011.dto.gz",
+      "compressed_bytes": 321392,
+      "compressed_sha256": "f47c5670c96aaee04020399ba0196138df7555a7dedac3b0f5ca60531eb3a7b4"
+    },
+    {
+      "former_repository_path": "docs/tasks/W016/evidence/resumed-review/baseline-body-enclosure/w011.wire.gz",
+      "temporary_archive": "/tmp/w016-parity-archive/baseline-body-enclosure/w011.wire.gz",
+      "compressed_bytes": 1242417,
+      "compressed_sha256": "ef595ff1e347bfd893c48d16a7e38976a9d29048ad3ee9d52a32160600b91e7e"
+    },
+    {
+      "former_repository_path": "docs/tasks/W016/evidence/resumed-review/baseline-body-enclosure/w013.dto.gz",
+      "temporary_archive": "/tmp/w016-parity-archive/baseline-body-enclosure/w013.dto.gz",
+      "compressed_bytes": 204363,
+      "compressed_sha256": "cff02a737c636c48a65141834c1b82e06cf6d570e12fe9a61e38bad8ecdd9f6b"
+    },
+    {
+      "former_repository_path": "docs/tasks/W016/evidence/resumed-review/baseline-body-enclosure/w013.wire.gz",
+      "temporary_archive": "/tmp/w016-parity-archive/baseline-body-enclosure/w013.wire.gz",
+      "compressed_bytes": 646449,
+      "compressed_sha256": "e0f80acc1faa6d380ce8a2c8846fbcaaa55eaf0b86f77befbcbb17a0ec66df16"
+    },
+    {
+      "former_repository_path": "docs/tasks/W016/evidence/resumed-review/baseline-body-enclosure/w014.dto.gz",
+      "temporary_archive": "/tmp/w016-parity-archive/baseline-body-enclosure/w014.dto.gz",
+      "compressed_bytes": 255677,
+      "compressed_sha256": "93745b6e0b7562ab0797e9c2de890e933c90c5c49c31ec1258940cccaf9bfa84"
+    },
+    {
+      "former_repository_path": "docs/tasks/W016/evidence/resumed-review/baseline-body-enclosure/w014.wire.gz",
+      "temporary_archive": "/tmp/w016-parity-archive/baseline-body-enclosure/w014.wire.gz",
+      "compressed_bytes": 669669,
+      "compressed_sha256": "159590d3b2728cb2d60e3a378f9999ef795691de3f6f9942de68a33fce18f32f"
+    }
+  ]
+}

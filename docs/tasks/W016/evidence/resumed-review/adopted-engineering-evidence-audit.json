@@ -1,0 +1,89 @@
+{
+  "reports": [
+    {
+      "report": "docs/tasks/W016/evidence/resumed/delivery/build-310.json",
+      "exit_code": 0,
+      "source_manifest_sha256": "a306a2ae0f5aee5c37734764378520f927846bcb7e08b9e97ce88245c7e01a6e",
+      "stdout_stderr_hashes_verified": true
+    },
+    {
+      "report": "docs/tasks/W016/evidence/resumed/delivery/build-312.json",
+      "exit_code": 0,
+      "source_manifest_sha256": "a306a2ae0f5aee5c37734764378520f927846bcb7e08b9e97ce88245c7e01a6e",
+      "stdout_stderr_hashes_verified": true
+    },
+    {
+      "report": "docs/tasks/W016/evidence/resumed/delivery/installed-smoke-310.json",
+      "exit_code": 0,
+      "source_manifest_sha256": "a306a2ae0f5aee5c37734764378520f927846bcb7e08b9e97ce88245c7e01a6e",
+      "stdout_stderr_hashes_verified": true
+    },
+    {
+      "report": "docs/tasks/W016/evidence/resumed/delivery/installed-smoke-312.json",
+      "exit_code": 0,
+      "source_manifest_sha256": "a306a2ae0f5aee5c37734764378520f927846bcb7e08b9e97ce88245c7e01a6e",
+      "stdout_stderr_hashes_verified": true
+    },
+    {
+      "report": "docs/tasks/W016/evidence/resumed/delivery/mypy-310.json",
+      "exit_code": 0,
+      "source_manifest_sha256": "a306a2ae0f5aee5c37734764378520f927846bcb7e08b9e97ce88245c7e01a6e",
+      "stdout_stderr_hashes_verified": true
+    },
+    {
+      "report": "docs/tasks/W016/evidence/resumed/delivery/mypy-312.json",
+      "exit_code": 0,
+      "source_manifest_sha256": "a306a2ae0f5aee5c37734764378520f927846bcb7e08b9e97ce88245c7e01a6e",
+      "stdout_stderr_hashes_verified": true
+    },
+    {
+      "report": "docs/tasks/W016/evidence/resumed/delivery/targeted-manual.json",
+      "exit_code": 0,
+      "source_manifest_sha256": "a306a2ae0f5aee5c37734764378520f927846bcb7e08b9e97ce88245c7e01a6e",
+      "stdout_stderr_hashes_verified": true
+    },
+    {
+      "report": "docs/tasks/W016/evidence/resumed/release/build-310.json",
+      "exit_code": 0,
+      "source_manifest_sha256": "dae9e716acb4e4f947db12779362c677615cdc12c03c0852fbf9cde3a69a977e",
+      "stdout_stderr_hashes_verified": true
+    },
+    {
+      "report": "docs/tasks/W016/evidence/resumed/release/build-312.json",
+      "exit_code": 0,
+      "source_manifest_sha256": "dae9e716acb4e4f947db12779362c677615cdc12c03c0852fbf9cde3a69a977e",
+      "stdout_stderr_hashes_verified": true
+    },
+    {
+      "report": "docs/tasks/W016/evidence/resumed/release/installed-smoke-310.json",
+      "exit_code": 0,
+      "source_manifest_sha256": "dae9e716acb4e4f947db12779362c677615cdc12c03c0852fbf9cde3a69a977e",
+      "stdout_stderr_hashes_verified": true
+    },
+    {
+      "report": "docs/tasks/W016/evidence/resumed/release/installed-smoke-312.json",
+      "exit_code": 0,
+      "source_manifest_sha256": "dae9e716acb4e4f947db12779362c677615cdc12c03c0852fbf9cde3a69a977e",
+      "stdout_stderr_hashes_verified": true
+    },
+    {
+      "report": "docs/tasks/W016/evidence/resumed/release/mypy-310.json",
+      "exit_code": 0,
+      "source_manifest_sha256": "dae9e716acb4e4f947db12779362c677615cdc12c03c0852fbf9cde3a69a977e",
+      "stdout_stderr_hashes_verified": true
+    },
+    {
+      "report": "docs/tasks/W016/evidence/resumed/release/mypy-312.json",
+      "exit_code": 0,
+      "source_manifest_sha256": "dae9e716acb4e4f947db12779362c677615cdc12c03c0852fbf9cde3a69a977e",
+      "stdout_stderr_hashes_verified": true
+    },
+    {
+      "report": "docs/tasks/W016/evidence/resumed/release/request-boundaries.json",
+      "exit_code": 0,
+      "source_manifest_sha256": "dae9e716acb4e4f947db12779362c677615cdc12c03c0852fbf9cde3a69a977e",
+      "stdout_stderr_hashes_verified": true
+    }
+  ],
+  "limitation": "Execution-agent evidence independently checked for identity and intact outputs; this reviewer did not rerun these checks. Full pytest matrices still pending."
+}

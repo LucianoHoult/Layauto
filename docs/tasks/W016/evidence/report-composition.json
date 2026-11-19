@@ -1,0 +1,158 @@
+{
+  "report_sha256": "958b5c97685f49c511720e6f019a61fb09295551b0df39669f8b96624b2da554",
+  "report_bytes": 235613,
+  "capture_bytes": 44873,
+  "ratio": 5.250662982194193,
+  "largest_groups": [
+    {
+      "group": "map:lexeme,line_1based,path,sha256,token_0based",
+      "count": 126,
+      "bytes": 25747
+    },
+    {
+      "group": "sequence",
+      "count": 584,
+      "bytes": 19864
+    },
+    {
+      "group": "record:DrawnRecord",
+      "count": 40,
+      "bytes": 13756
+    },
+    {
+      "group": "record:RecordClassification",
+      "count": 40,
+      "bytes": 11518
+    },
+    {
+      "group": "record:FinEvaluation",
+      "count": 36,
+      "bytes": 10230
+    },
+    {
+      "group": "map:derivation,sources",
+      "count": 122,
+      "bytes": 9581
+    },
+    {
+      "group": "map:bbox,byte_length,byte_offset,canonical_layer,datatype,element,layer,record_index,xy,xy_byte_offset,xy_record_index",
+      "count": 40,
+      "bytes": 8128
+    },
+    {
+      "group": "record:OccupantFragment",
+      "count": 41,
+      "bytes": 7298
+    },
+    {
+      "group": "record:RationalRect",
+      "count": 46,
+      "bytes": 6230
+    },
+    {
+      "group": "map:byte_offset,column,lexeme,line,sha256,uri",
+      "count": 31,
+      "bytes": 5934
+    },
+    {
+      "group": "record:LayerCoverage",
+      "count": 12,
+      "bytes": 5327
+    },
+    {
+      "group": "record:OccupantFragmentId",
+      "count": 41,
+      "bytes": 4756
+    },
+    {
+      "group": "record:GeometryRecordId",
+      "count": 40,
+      "bytes": 4560
+    },
+    {
+      "group": "record:ParameterComparison",
+      "count": 16,
+      "bytes": 4195
+    },
+    {
+      "group": "record:Rect",
+      "count": 62,
+      "bytes": 3681
+    },
+    {
+      "group": "map:json_pointer,lexeme,path,sha256",
+      "count": 22,
+      "bytes": 3670
+    },
+    {
+      "group": "record:TargetEvidence",
+      "count": 14,
+      "bytes": 3584
+    },
+    {
+      "group": "record:BaseCellId",
+      "count": 41,
+      "bytes": 3558
+    },
+    {
+      "group": "record:EnclosureSide",
+      "count": 16,
+      "bytes": 3554
+    },
+    {
+      "group": "record:ExactRegion",
+      "count": 16,
+      "bytes": 3528
+    },
+    {
+      "group": "record:AnnotationFragment",
+      "count": 14,
+      "bytes": 3284
+    },
+    {
+      "group": "map:sha256,uri",
+      "count": 23,
+      "bytes": 3143
+    },
+    {
+      "group": "record:AnnotationRef",
+      "count": 23,
+      "bytes": 2938
+    },
+    {
+      "group": "map:bbox_nm,derived_layer,geometry_kind,lvs_index,lvs_name,metadata_opaque,precision,quality,record_id,schematic_name,section_header_opaque,unit,vertices_nm",
+      "count": 8,
+      "bytes": 2792
+    },
+    {
+      "group": "map:bbox_nm,derived_layer,field_sources,geometry_kind,lvs_index,lvs_name,metadata_opaque,precision,quality,record_id,schematic_name,section_header_opaque,unit,vertices_nm",
+      "count": 8,
+      "bytes": 2704
+    },
+    {
+      "group": "record:LocalRef",
+      "count": 22,
+      "bytes": 2676
+    },
+    {
+      "group": "record:Parameter",
+      "count": 12,
+      "bytes": 2570
+    },
+    {
+      "group": "record:AnnotationTargetId",
+      "count": 14,
+      "bytes": 2446
+    },
+    {
+      "group": "record:RegionRef",
+      "count": 18,
+      "bytes": 2216
+    },
+    {
+      "group": "record:LayerPolicy",
+      "count": 15,
+      "bytes": 2105
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "kind": "incomplete-checkpoint-packaging",
+  "base": "efc881d461ce2c87370f6df402ac50ae43c094e8",
+  "source_manifest_sha256": "e567c32d18761d27eb66da2c61032017731b95e5779c09da9c16388e982975b5",
+  "source_test_config_unchanged_files": 293,
+  "product_retests_this_turn": false,
+  "new_measurement": "read-only UTF-8 accounting over retained report; no product computation",
+  "report_sha256": "958b5c97685f49c511720e6f019a61fb09295551b0df39669f8b96624b2da554",
+  "pm_requirements_and_acceptance_section_unchanged": true,
+  "checks": [
+    "resource accounting totals and report hash",
+    "checkpoint links resolve",
+    "git diff --check",
+    "no environment/cache/bytecode among unignored new files"
+  ],
+  "adopted": [
+    "58 targeted tests",
+    "68 configured mypy files and 7 explicitly checked new files",
+    "independent R01/R02 rechecks"
+  ],
+  "not_claimed": [
+    "A1-A8 complete",
+    "candidate parity",
+    "final dual-interpreter matrix",
+    "acceptance"
+  ],
+  "baseline_snapshot_stream_integrity_checked": 15,
+  "baseline_check_note": "gzip stream byte lengths and SHA-256 only; no product decode or parity rerun"
+}

@@ -1,0 +1,15 @@
+{
+  "command": [
+    "/tmp/w016-py310/bin/python",
+    "-m",
+    "pytest",
+    "-p",
+    "no:cacheprovider",
+    "tests/fixture_support",
+    "-q"
+  ],
+  "cwd": "/workspace/Layauto",
+  "started_at_utc": "2026-11-17T03:06:34.628507+00:00",
+  "source_manifest_sha256": "f99498abc0877bb918d7de88d66a5eda5d5591d41f8ce8102b04edc14826c052",
+  "driver_sha256": "827ded862d33ee9e9a8aa34e3f2bb4c2f7b0df0077dae902281e3ee76e6f7c2c"
+}

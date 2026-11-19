@@ -1,0 +1,13 @@
+{
+  "command": [
+    "/tmp/w016-install-completed-310/bin/python",
+    "-I",
+    "/tmp/w016-installed-smoke-completed.py",
+    "/tmp/w016-smoke-inputs",
+    "/workspace/Layauto"
+  ],
+  "cwd": "/tmp",
+  "started_at_utc": "2026-11-17T02:23:41.537283+00:00",
+  "source_manifest_sha256": "f99498abc0877bb918d7de88d66a5eda5d5591d41f8ce8102b04edc14826c052",
+  "driver_sha256": "827ded862d33ee9e9a8aa34e3f2bb4c2f7b0df0077dae902281e3ee76e6f7c2c"
+}

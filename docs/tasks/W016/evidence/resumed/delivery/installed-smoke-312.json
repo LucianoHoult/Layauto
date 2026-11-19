@@ -1,0 +1,26 @@
+{
+  "label": "installed-smoke-312",
+  "command": [
+    "/tmp/w016-install-delivery-312/bin/python",
+    "-I",
+    "/tmp/w016-installed-smoke-delivery.py",
+    "/tmp/w016-smoke-inputs",
+    "/workspace/Layauto"
+  ],
+  "cwd": "/tmp",
+  "driver_cwd": "/workspace/Layauto",
+  "started_at_utc": "2026-11-17T01:38:10.761084+00:00",
+  "finished_at_utc": "2026-11-17T01:38:23.974150+00:00",
+  "elapsed_seconds": 13.213070457999947,
+  "exit_code": 0,
+  "source_manifest_sha256": "a306a2ae0f5aee5c37734764378520f927846bcb7e08b9e97ce88245c7e01a6e",
+  "stdout": "installed-smoke-312.stdout.txt",
+  "stderr": "installed-smoke-312.stderr.txt",
+  "stdout_sha256": "0eb11456d3cb5383858a1d31b154f5b3d3bbd29284a2b975b79411fe8129ebca",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "environment_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONUNBUFFERED": "1",
+    "MPLCONFIGDIR": "/tmp/w016-mplconfig"
+  }
+}

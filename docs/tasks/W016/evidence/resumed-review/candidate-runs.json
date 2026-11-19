@@ -1,0 +1,44 @@
+[
+  {
+    "case": "normal-direct",
+    "command": [
+      "python",
+      "/workspace/Layauto/docs/tasks/W016/evidence/resumed-review/candidate_parity.py",
+      "--root",
+      "/workspace/Layauto",
+      "--site",
+      "/tmp/w016-parity-inputs/normal/site_config.yaml",
+      "--route",
+      "direct",
+      "--case",
+      "normal-direct",
+      "--out",
+      "/workspace/Layauto/docs/tasks/W016/evidence/resumed-review/candidate-normal-direct",
+      "--compare",
+      "/workspace/Layauto/docs/tasks/W016/evidence/review/baseline-normal-direct"
+    ],
+    "exit_code": 0,
+    "seconds": 98.94092226399994
+  },
+  {
+    "case": "normal-readback",
+    "command": [
+      "python",
+      "/workspace/Layauto/docs/tasks/W016/evidence/resumed-review/candidate_parity.py",
+      "--root",
+      "/workspace/Layauto",
+      "--site",
+      "/tmp/w016-parity-inputs/normal/site_config.yaml",
+      "--route",
+      "readback",
+      "--case",
+      "normal-readback",
+      "--out",
+      "/workspace/Layauto/docs/tasks/W016/evidence/resumed-review/candidate-normal-readback",
+      "--compare",
+      "/workspace/Layauto/docs/tasks/W016/evidence/resumed-review/baseline-normal-readback-r2"
+    ],
+    "exit_code": -15,
+    "seconds": 27.10845551599982
+  }
+]

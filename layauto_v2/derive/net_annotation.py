@@ -1,6 +1,8 @@
 """Recomputable summaries; net association never modifies physical components."""
 from __future__ import annotations
 
+from layauto_v2.domain.local_connectivity import ContactComponent
+
 from layauto_v2.domain.net_annotation import (
     AnnotationBinding, AnnotationFragment, NetComponentSummary, TargetEvidence, NET_TYPES, validate_annotation_graph,
 )
@@ -9,8 +11,14 @@ from layauto_v2.domain.net_annotation import (
 def summarize_components(binding: AnnotationBinding, targets: tuple[TargetEvidence, ...],
                          fragments: tuple[AnnotationFragment, ...]) -> tuple[NetComponentSummary, ...]:
     validate_annotation_graph((binding, targets, fragments), NET_TYPES)
+    return summarize_topology(binding.topology, targets, fragments)
+
+
+def summarize_topology(topology: tuple[ContactComponent, ...], targets: tuple[TargetEvidence, ...],
+                       fragments: tuple[AnnotationFragment, ...]) -> tuple[NetComponentSummary, ...]:
+    validate_annotation_graph((topology, targets, fragments), NET_TYPES)
     rows: list[NetComponentSummary] = []
-    for component in binding.topology:
+    for component in topology:
         selected = tuple(target for target in targets if target.component_ref == component.ref)
         refs = {target.ref for target in selected}
         covered = tuple(fragment for fragment in fragments if fragment.target_ref in refs and fragment.evidence_refs)

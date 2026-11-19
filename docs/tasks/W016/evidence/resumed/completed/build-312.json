@@ -1,0 +1,27 @@
+{
+  "label": "build-312",
+  "command": [
+    "/tmp/w016-py312-real/bin/python",
+    "-m",
+    "build",
+    "--no-isolation",
+    "--outdir",
+    "/tmp/w016-build-completed-312"
+  ],
+  "cwd": "/workspace/Layauto",
+  "driver_cwd": "/workspace/Layauto",
+  "started_at_utc": "2026-11-17T02:17:28.917695+00:00",
+  "finished_at_utc": "2026-11-17T02:17:30.766226+00:00",
+  "elapsed_seconds": 1.8485331739993853,
+  "exit_code": 0,
+  "source_manifest_sha256": "f99498abc0877bb918d7de88d66a5eda5d5591d41f8ce8102b04edc14826c052",
+  "stdout": "build-312.stdout.txt",
+  "stderr": "build-312.stderr.txt",
+  "stdout_sha256": "3d34b4a97be5f6d06df5558e38828b01208b7a80cc945cefef691c49cc952061",
+  "stderr_sha256": "b181eea8a45f807f5fa1607f003eb1ae5363271ec186d4780a7fd3630cdea57e",
+  "environment_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONUNBUFFERED": "1",
+    "MPLCONFIGDIR": "/tmp/w016-mplconfig"
+  }
+}

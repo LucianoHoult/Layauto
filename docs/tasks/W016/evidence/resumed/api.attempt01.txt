@@ -1,0 +1,8 @@
+
+==================================== ERRORS ====================================
+_______________ ERROR collecting tests/unit/test_analysis_api.py _______________
+tests/unit/test_analysis_api.py::test_request_errors_are_located: 'request' is a reserved name and cannot be used in @pytest.mark.parametrize
+=========================== short test summary info ============================
+ERROR tests/unit/test_analysis_api.py - Failed: tests/unit/test_analysis_api....
+!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
+1 error in 0.25s

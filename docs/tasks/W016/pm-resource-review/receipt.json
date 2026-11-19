@@ -1,0 +1,33 @@
+{
+  "reviewed_head": "2608d84b94f1a5a3011855f2839c7407c65cc3fd",
+  "kind": "PM retained-evidence audit; not a product performance rerun",
+  "source_test_config_files_verified": 293,
+  "report_bytes": 235613,
+  "report_sha256": "958b5c97685f49c511720e6f019a61fb09295551b0df39669f8b96624b2da554",
+  "capture_bytes": 44873,
+  "ratio": 5.250662982194193,
+  "capture_rows": 23,
+  "object_rows": 1869,
+  "duplicate_complete_rows": 0,
+  "unreachable_rows": 0,
+  "invalid_reference_count": 0,
+  "adopted_single_observation": {
+    "stage_sum_seconds": 2.058047605000013,
+    "report_seconds": 0.025800989999993362,
+    "process_hwm_bytes": 25325568
+  },
+  "limitations": [
+    "Single synthetic normal/no-body internal chain only.",
+    "Not public API end-to-end, not controlled benchmark, not production or maximum-input evidence.",
+    "No body/manual/terminals, final status, candidate parity or final matrix acceptance."
+  ],
+  "checked_evidence_sha256": {
+    "docs/tasks/W016/evidence/source-identity.json": "e567c32d18761d27eb66da2c61032017731b95e5779c09da9c16388e982975b5",
+    "docs/tasks/W016/evidence/local-diagnostic.json": "958b5c97685f49c511720e6f019a61fb09295551b0df39669f8b96624b2da554",
+    "docs/tasks/W016/evidence/local-probe-report-sources.stdout.txt": "05d4b242bf8b7c2de4d968ea549fd1e7d2f15327f5b2c6780cc8a67ba9cc8039",
+    "docs/tasks/W016/evidence/checkpoint-metrics.json": "3a813b7d51502107de8a603d281566ff61af49baaa9ac1ef07983e6a95124b2c",
+    "docs/tasks/W016/evidence/local-probe-counted.stdout.txt": "f8fcda0ee28f52d74b6114227107497bd5ce686ed3f4a4736545f8bbe6f66acc",
+    "layauto_v2/reporting/analysis.py": "ab29407ef372fa6570a35f4892107381d4345fc6453b8ffe72cdb78ea081e588",
+    "docs/tasks/W016/independent-review.md": "f7ed34975abce79b10c557547a12d53277180f695593d346a6bb6485acb5ef89"
+  }
+}

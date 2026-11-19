@@ -1,0 +1,30 @@
+{
+  "results": [
+    {
+      "case": "unused_alias",
+      "rejected": true,
+      "error": "analysis evidence differs from full-byte reparse"
+    },
+    {
+      "case": "wrong_gds_role",
+      "rejected": true,
+      "error": "analysis evidence differs from full-byte reparse"
+    },
+    {
+      "case": "missing_first_alias",
+      "rejected": true,
+      "error": "analysis alias is missing from acquisition facts"
+    },
+    {
+      "case": "relative_actual_path",
+      "rejected": true,
+      "error": "acquisition path must be absolute POSIX without NUL"
+    }
+  ],
+  "source_sha256": {
+    "layauto_v2/normalization/analysis_input.py": "0bf7d9838a33c3e9aaea23f6dfb3d4885d48bac916adbe2a266ca7ec31e7649a",
+    "layauto_v2/importers/analysis_reader.py": "d2f6089fd8e55e40a1aef9eb5d34a355e1fdcd312a7914df176bf68aa562407e",
+    "layauto_v2/domain/analysis.py": "6efea7e59fe74d89fd542ac940759518123015f042893fd15f5c0148edf5563f"
+  },
+  "input_manifest_sha256": "ad7742dca05601a0520ec25bbabd8edb4416d8fce354843b0bd56dbe14e1f03f"
+}

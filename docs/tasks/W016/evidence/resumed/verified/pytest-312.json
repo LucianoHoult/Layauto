@@ -1,0 +1,30 @@
+{
+  "label": "pytest-312",
+  "command": [
+    "/tmp/w016-py312-real/bin/python",
+    "-m",
+    "pytest",
+    "-p",
+    "no:cacheprovider",
+    "tests/unit",
+    "tests/contracts",
+    "-q",
+    "--maxfail=1"
+  ],
+  "cwd": "/workspace/Layauto",
+  "driver_cwd": "/workspace/Layauto",
+  "started_at_utc": "2026-11-17T02:02:29.905571+00:00",
+  "finished_at_utc": "2026-11-17T02:07:27.333981+00:00",
+  "elapsed_seconds": 297.42841526600023,
+  "exit_code": 1,
+  "source_manifest_sha256": "73cb080765e2e317f2f54269f8cd306ed5e352c8c21dd2ae575f8920db54fa7b",
+  "stdout": "pytest-312.stdout.txt",
+  "stderr": "pytest-312.stderr.txt",
+  "stdout_sha256": "c55a904b1e6e565b51957e89763a54ce3f72f80da27b68d95833382dc50c32ae",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "environment_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONUNBUFFERED": "1",
+    "MPLCONFIGDIR": "/tmp/w016-mplconfig"
+  }
+}

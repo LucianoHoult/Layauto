@@ -1,0 +1,28 @@
+{
+  "label": "fixture-support-312",
+  "command": [
+    "/tmp/w016-py312-real/bin/python",
+    "-m",
+    "pytest",
+    "-p",
+    "no:cacheprovider",
+    "tests/fixture_support",
+    "-q"
+  ],
+  "cwd": "/workspace/Layauto",
+  "driver_cwd": "/workspace/Layauto",
+  "started_at_utc": "2026-11-17T03:06:35.123317+00:00",
+  "finished_at_utc": "2026-11-17T03:06:35.492483+00:00",
+  "elapsed_seconds": 0.36945561499942414,
+  "exit_code": 0,
+  "source_manifest_sha256": "f99498abc0877bb918d7de88d66a5eda5d5591d41f8ce8102b04edc14826c052",
+  "stdout": "fixture-support-312.stdout.txt",
+  "stderr": "fixture-support-312.stderr.txt",
+  "stdout_sha256": "742b554243abfeb54f90ec7bececb9f1012081ccd2fbd26e9a457ffff4356028",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "environment_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONUNBUFFERED": "1",
+    "MPLCONFIGDIR": "/tmp/w016-mplconfig"
+  }
+}

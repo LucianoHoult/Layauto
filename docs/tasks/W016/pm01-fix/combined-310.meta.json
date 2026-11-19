@@ -1,0 +1,16 @@
+{
+  "command": [
+    "/tmp/pm01-clean-310/bin/python",
+    "-I",
+    "/tmp/pm01-installed-combined.py",
+    "/tmp/pm01-inputs/combined"
+  ],
+  "cwd": "/tmp",
+  "freeze_sha256": "ecbc677c16f839ff294ce2a79296479f630c58d5dc5ef65713096daed8fdbb02",
+  "started_utc": "2026-11-18T02:53:18.960381+00:00",
+  "exit_code": 0,
+  "elapsed_seconds": 1.471993325999847,
+  "finished_utc": "2026-11-18T02:53:20.432070+00:00",
+  "stdout_sha256": "0b45974491482956ae6acef264cc6ed7af0b34469dfedeb0d7c34cf6e71185e8",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

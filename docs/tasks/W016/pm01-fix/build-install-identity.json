@@ -1,0 +1,67 @@
+{
+  "310": {
+    "artifacts": {
+      "layauto-0.2.0-py3-none-any.whl": {
+        "bytes": 241868,
+        "sha256": "a05151cdc369a889263718b9f3a7ea6094892175de0e047afd630f25b9ec0435"
+      },
+      "layauto-0.2.0.tar.gz": {
+        "bytes": 193840,
+        "sha256": "7172ee9aa9a13dfe2e7251adfe3d050227027a3e2a307a854876e4490e0904b5"
+      }
+    },
+    "install": {
+      "packages": {
+        "PyYAML": "6.0.3",
+        "contourpy": "1.3.2",
+        "cycler": "0.12.1",
+        "fonttools": "4.65.0",
+        "kiwisolver": "1.5.1",
+        "layauto": "0.2.0",
+        "matplotlib": "3.10.9",
+        "numpy": "2.2.6",
+        "packaging": "26.3",
+        "pillow": "12.3.0",
+        "pyparsing": "3.3.3",
+        "python-dateutil": "3.0.0",
+        "six": "1.17.0",
+        "tzdata": "2026.6"
+      },
+      "path": "/tmp/pm01-clean-310/lib/python3.10/site-packages",
+      "version": "3.10.22 (main, Oct  3 2026, 01:32:06) [Clang 22.1.3 ]"
+    },
+    "runtime_files_verified": 121
+  },
+  "312": {
+    "artifacts": {
+      "layauto-0.2.0-py3-none-any.whl": {
+        "bytes": 241868,
+        "sha256": "ff93dcb64de056661d5a24577ad7a062bbffdfc0ae1dc489b26e11351f563179"
+      },
+      "layauto-0.2.0.tar.gz": {
+        "bytes": 193805,
+        "sha256": "5574e0e2225cde8104c8cbca49f287fb3296af48568760734c71bb0ec9219be9"
+      }
+    },
+    "install": {
+      "packages": {
+        "PyYAML": "6.0.3",
+        "contourpy": "1.4.0",
+        "cycler": "0.12.1",
+        "fonttools": "4.68.0",
+        "kiwisolver": "1.5.1",
+        "layauto": "0.2.0",
+        "matplotlib": "3.11.2",
+        "numpy": "2.5.5",
+        "packaging": "26.3",
+        "pillow": "13.0.0",
+        "pyparsing": "3.3.3",
+        "python-dateutil": "4.0.0",
+        "tzdata": "2026.6"
+      },
+      "path": "/tmp/pm01-clean-312/lib/python3.12/site-packages",
+      "version": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]"
+    },
+    "runtime_files_verified": 121
+  }
+}

@@ -60,11 +60,26 @@ def join_identities(input: NormalizationInput, source: SemanticCircuitDraft) -> 
 
 def _join_identities(input: NormalizationInput, source: SemanticCircuitDraft, progress: _JoinProgress) -> tuple[
         tuple[DeviceIdentity, ...], tuple[NetIdentity, ...], tuple[DeviceAnnotationSeed, ...], tuple[NetAnnotationSeed, ...]]:
-    header = mapping(input.value['header'])
-    query = mapping(input.value['query'])
-    physical = mapping(mapping(input.value['tech'])['physical'])
-    models = mapping(physical['models'])
     header_ref = next(record.sources[0] for record in input.parse.completed if record.kind == 'header')
+    return _join_source_operands(input.value, header_ref, source, progress)
+
+
+def join_source_operands(value: FrozenMap, header_ref: SourceRef, source: SemanticCircuitDraft) -> tuple[
+        tuple[DeviceIdentity, ...], tuple[NetIdentity, ...], tuple[DeviceAnnotationSeed, ...], tuple[NetAnnotationSeed, ...]]:
+    progress = _JoinProgress()
+    try:
+        return _join_source_operands(value, header_ref, source, progress)
+    except NormalizationError as exc:
+        exc.progress = progress
+        raise
+
+
+def _join_source_operands(value: FrozenMap, header_ref: SourceRef, source: SemanticCircuitDraft, progress: _JoinProgress) -> tuple[
+        tuple[DeviceIdentity, ...], tuple[NetIdentity, ...], tuple[DeviceAnnotationSeed, ...], tuple[NetAnnotationSeed, ...]]:
+    header = mapping(value['header'])
+    query = mapping(value['query'])
+    physical = mapping(mapping(value['tech'])['physical'])
+    models = mapping(physical['models'])
     selected = next(cell for cell in source.cells if cell.id == source.selected_cell)
     devices = {device.id.name: device for device in selected.devices}
     nets = {net.id.name: net for net in selected.nets}
