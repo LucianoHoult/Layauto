@@ -26,7 +26,7 @@
 | 以前讨论过什么？ | [旧工作流提案](proposals/v2-codex-development-workflow.md)：未采纳部分保留作候选；[历史 changelog](archive/changelog.md)：归档记录 |
 | 网络身份何时落到区域？ | [W013 PM2](tasks/W013-net-annotation-coverage.md#pm2-integration)：本地网络区域标注/覆盖/冲突草稿已验收集成；实际merge三路组合及5项边界检查通过，未知body与完整M1边界保留 |
 | 器件接线与外部body做到哪里？ | [W014 PM2](tasks/W014-terminal-body-relations.md#pm2-integration)：synthetic八端与外置body关系已验收集成，实际merge三路组合和5项边界检查通过；U06仍为具体设计，现reader必填body_context未改 |
-| 只提供底层cell如何开始分析？ | [W016](tasks/W016-single-cell-analysis.md)：实施独立只读入口；[W015方案](tasks/W015-single-cell-analysis-entry.md#pm1-acceptance)已接收，当前尚未交付新API |
+| 只提供底层cell如何开始分析？ | [W016 验收与集成](tasks/W016-single-cell-analysis.md#pm3-integration)已交付单 cell 只读入口。提供 GDS、source CDL、query 及技术配置后，可在缺外部 body 资料时读取本地结果 |
 
 ## 读取架构的起点
 
