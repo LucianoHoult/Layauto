@@ -1,10 +1,12 @@
 # 当前工作入口
 
-最近完成节点见[W016 PM3](tasks/W016-single-cell-analysis.md#pm3-integration)，前置方案见[W015 PM1](tasks/W015-single-cell-analysis-entry.md#pm1-acceptance)，已完成节点见[W013 PM2](tasks/W013-net-annotation-coverage.md#pm2-integration)；W012 A2停止决定见[PM7](tasks/W012-capture-wire-performance.md#pm7-a2-stop)。详细决定、证据与review结论归任务文件。
+当前任务见[W017 坐标与占用投影](tasks/W017-coordinate-occupancy-projection.md)。最近完成节点见[W016 PM3](tasks/W016-single-cell-analysis.md#pm3-integration)，前置方案见[W015 PM1](tasks/W015-single-cell-analysis-entry.md#pm1-acceptance)，已完成节点见[W013 PM2](tasks/W013-net-annotation-coverage.md#pm2-integration)；W012 A2停止决定见[PM7](tasks/W012-capture-wire-performance.md#pm7-a2-stop)。详细决定、证据与review结论归任务文件。
 
 ## 当前节点
 
-**W016 单 cell 只读分析入口已验收并合入 main。** PM-01 已关闭。缺 tapcell 时可继续核对本地 D/G/S，B 和父级关系标为未知。当前处于 M1，建议下一节点准备 Stage 2 工艺坐标与占用投影的任务范围及验收样例。[W016 PM3](tasks/W016-single-cell-analysis.md#pm3-integration)
+**W017 已可交独立执行 session。** 先用实际 GDS 核对逐层坐标依据、跨格边界和缺轴场景，交付候选合同、可运行样张及实施方案。[任务与启动 prompt](tasks/W017-coordinate-occupancy-projection.md)
+
+**W016 单 cell 只读分析入口已验收并合入 main。** PM-01 已关闭。缺 tapcell 时可继续核对本地 D/G/S，B 和父级关系标为未知。当前处于 M1。[W016 PM3](tasks/W016-single-cell-analysis.md#pm3-integration)
 
 **W015方案已验收并经PR72集成。** 核11个核心文件受审身份及284个未改产品文件，实际merge候选parser探针通过；[回执](tasks/W015/pm-receipt/README.md)记录采信与限制。新 API 的实现与验收进度见上方 W016。
 
@@ -40,7 +42,8 @@
 
 | 用途 | 恢复依据 |
 | --- | --- |
-| W016当前恢复 | 从含 [PM3](tasks/W016-single-cell-analysis.md#pm3-integration) 的最新 main 恢复。产品合并 ef40ac4882c3207a1753723a367c21c331c53388，受审提交 2ef2c463241e7b62eddce5ca70071f61b6185392 |
+| W017 当前恢复 | 从 `codex/w017-coordinate-occupancy-projection` 最新远端提交执行[任务](tasks/W017-coordinate-occupancy-projection.md)，基线 `0eba088`。 |
+| W016 验收依据 | 从含 [PM3](tasks/W016-single-cell-analysis.md#pm3-integration) 的最新 main 恢复。产品合并 ef40ac4882c3207a1753723a367c21c331c53388，受审提交 2ef2c463241e7b62eddce5ca70071f61b6185392 |
 | W015历史恢复 | 交付a73713bc8ff7e1e2d4cc61ab93fbd3ace178753d；已由PR72及PM1验收集成，原分支保留，不重启方案prompt |
 | W014当前恢复 | 接手含PM2验收补记的最新main；产品merge f8280de44beacbca6b657627cbc5eed5f2b67bdd，已审head 39dba6f175fb02edab645756459403614a56b23f，冻结66f5b1e。原任务分支保留历史，后续另建分支，不重启旧prompt |
 | W013当前恢复 | 接手含PM2验收补记的最新main；产品merge088ed3c718eb5a0703511ff6b214274f30052ff1，已审head da90a793cc1d1e45ae7f2de26d9e98766191428d，冻结2a45938。原codex/w013-net-annotation-coverage保留历史，不再执行旧prompt；后续任务另建分支 |

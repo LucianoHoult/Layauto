@@ -41,6 +41,8 @@ W012调查及[A1兼容hex优化](tasks/W012-capture-wire-performance.md#pm4-a1-i
 
 [W015](tasks/W015-single-cell-analysis-entry.md#pm1-acceptance)入口合同及实施方案已验收集成；[W016](tasks/W016-single-cell-analysis.md#pm3-integration)已验收集成独立只读分析入口，缺外部body时保留已认证本地事实。首包仅synthetic/flat、query必需，不替代剩余Stage2与M1闭环，也不代表真实PDK适配。
 
+[W017](tasks/W017-coordinate-occupancy-projection.md) 开始准备 Stage 2 的逐层工艺坐标与占用投影。先核实轴、节距和偏移的依据，用实际图形验证换算与边界，交付下一实现包的合同和样张。
+
 | 里程碑 | 可观察能力与代表输入→结果 | 依赖 / 退出验收 |
 | --- | --- | --- |
 | **M0：知道首个输入能否被接纳** | 从一套 source/target CDL、GDS、raw query、tech/model 资料，给出有出处的 profile/能力矩阵、样本限制和可执行闭环方案；证据不足有明确缺项与获取路径 | [W002](tasks/W002-first-input-admission.md)。工程出口：schema/共享接口/失败流及样本来源有独立 review；真实准入出口：Geometry/CDL/FinCount/DeviceExtraction/body/rules 与 query binding 可证明，不能只填 profile 名称。两种出口分别记录 |
