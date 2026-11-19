@@ -8,7 +8,7 @@
 | 里程碑 / 依赖 | M1内既有组件的独立分析入口，承接W005–W014和已接收W015方案；不是完整Stage2/运行出口，不代替后续坐标、mandatory、baseline与Stage6 |
 | 授权 | 用户要求推进单cell分析并沿用独立执行session；W015交付后PM核具体方案、review及来源，按既定方向派发本实施包。内部实现自主推进，不重复询问D1 |
 | 基线 / 分支 | W015方案merge `d0bb5628384f3a9fec1fe87b6311b854996f574b`；产品仍等同W014验收main `3b8d78902591bca32ec9b8ee5d3167d115e1a974`。恢复`codex/w016-single-cell-analysis`最新远端准备head，后续准备仅文档 |
-| 阶段 / 阻塞 | **待补修 PM-01（P2）。** 工程交付 fa78b42 的四组公开 API 对照中，复合错误丢失端口绑定诊断。见[PM2](#pm2-delivery-check) |
+| 阶段 / 阻塞 | **已验收并集成 main。** PM-01 已关闭，合并候选及实际合并版本的组合验证通过。见[PM3](#pm3-integration) |
 | 写入范围 | `layauto_v2/`内本方案涉及的analysis/domain/tech/importers/normalization/annotation/derive/state/reporting及必要public exports；新增/受影响tests、typing配置、README和本任务执行材料。按方案列最小文件表，非相关重构不纳入 |
 | 非目标 | 不改固定fixture/答案/历史证据；不改旧公开DTO/schema/wire/ref或完整运行要求；不支持任意层级/生产方言、无query模式、live EDA、可信LVS/窗口验证器、实际修改/发布、完整M1或新持久化wire |
 | 架构依据 | [architecture](../architecture.md) §2.2只读分析边界、2.3、3.6、5.6–5.9、11.10/11.13/11.15、12.1；[U06](../roadmap.md#production-body-evidence)、[W015 PM1](W015-single-cell-analysis-entry.md#pm1-acceptance)及下述已采纳方案 |
@@ -146,3 +146,26 @@ W016仅完成任务准备，尚未实施/验收。执行session使用[完整prom
 ### PM2 首次工程交付复核
 
 PM 核对 fa78b42 工程证据并实跑四组公开入口对照。正常无 body 样本通过，组合错误路径新增阻塞项 PM-01。阶段为待补修，独立复核修正后交 PM 重新接收。资源决定沿用 PM1。[复核、证据与执行 prompt](W016/pm-delivery-review/decision.md)
+
+<a id="pm3-integration"></a>
+
+### PM3 验收与 main 集成
+
+2026-11-19，PM 接收 W016 A1–A8，关闭 PM-01。适用范围为 synthetic、flat、query 必需的单 cell 只读分析。正常无外部 body 的样本测得 FIN 为 5 和 7，六个 D/G/S 端子与 source 一致，两个 B 端及父级连接仍待证明。人工声明用于记录预期。生产 PDK、真实 EDA 与隔离主机验证仍待对应环境完成。报告体积优化沿用 PM1 的决定。
+
+[PR #74](https://github.com/LucianoHoult/Layauto/pull/74) 的基线为 `efc881d461ce2c87370f6df402ac50ae43c094e8`，受审提交为 `2ef2c463241e7b62eddce5ca70071f61b6185392`，合并候选为 `e312ddc71d20468f8c49a08797a4c9eca2e8d7bd`，实际合并提交为 `ef40ac4882c3207a1753723a367c21c331c53388`。后三者的 Git tree 均为 `588e842c68ca3dd04dba1af608dee293e047067a`。
+
+| 核验位置 | PM 实跑或核对的证据 |
+| --- | --- |
+| 受审提交 | 原四组公开 API 复现通过。逐项核对修后冻结清单中 298 个文件以及工程索引的 21 份命令记录、退出状态和输出哈希。原 PM 材料及四路兼容报告的哈希匹配。 |
+| 合并候选，Python 3.12.14 | 在 `tests/unit/test_analysis_api.py` 实跑 10 项通过。覆盖 PM-01 单项与组合、无 body、有效外部 body、人工预期与重新读取、FIN 差异及旧接口边界。 |
+| 实际 main 合并版本，Python 3.12.14 | 运行 `python -B docs/tasks/W016/pm01-fix/independent_probe.py --root .`，10 组真实文件输入通过。核对三个几何阶段的组合错误、两项能力限制叠加、来源与依赖状态，以及先前调用结果的稳定性。[原输出](W016/integration/public-api.stdout.txt) |
+| 按冻结身份采信 | 3.10.22 和 3.12.14 各 1961 项、另各 8 个子测试通过，双 typing、构建、干净安装和源码外六组检查通过。旧接口四路逐字节比较按相关生产者及输入身份采信。[修后交付](W016/pm01-fix/delivery.md) · [独立复核](W016/pm01-fix/review.md) |
+
+可用以下命令复现合并候选的十项检查。
+
+```sh
+python -B -m pytest -p no:cacheprovider -q tests/unit/test_analysis_api.py -k 'independent_identity_and_geometry_diagnostics or no_body_end_to_end or body_preserves_local_and_supports_only_external_scope or manual_is_only_declared_expectation_and_reacquires or fin_four_against_five_is_completed_mismatch or new_analysis_values_are_rejected_by_old_boundaries'
+```
+
+下一节点建议回到 M1 的 Stage 2 工艺坐标与占用投影，先核对已声明的层方向、pitch、offset 和精确几何，再明确哪些区域可映射到轨道或网格。任务范围与验收样例待 PM 准备。
