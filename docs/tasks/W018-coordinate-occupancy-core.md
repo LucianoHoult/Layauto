@@ -2,7 +2,7 @@
 
 ## 任务要求（PM）
 
-M1，Stage 2。交付可被后续 Stage 2 组装代码调用的产品组件。起点是 W017 已集成的 main `504d9b07c08160d46a9aaa4fd3346a144ac5db32`，分支 `codex/w018-coordinate-occupancy-core`。当前阶段为内核可执行，产品实现待独立执行 session 交付。[架构 §2.3、§3.4–3.6、§11.3](../architecture.md) · [W017 来源及复算](W017/proposal.md)
+M1，Stage 2。交付可被后续 Stage 2 组装代码调用的产品组件。起点是 W017 已集成的 main `504d9b07c08160d46a9aaa4fd3346a144ac5db32`，分支 `codex/w018-coordinate-occupancy-core`。执行版已交付。PM 接收核验发现一项配置错误定位问题，当前待局部补修及复核。[PM1 接收与补修交接](#pm1-receipt)[架构 §2.3、§3.4–3.6、§11.3](../architecture.md) · [W017 来源及复算](W017/proposal.md)
 
 **从已有代码接起。** W008 已把认证的 drawn records 按各层图形边缘分格，并保留每个占用片段。本次从同一份精确几何及明确给出的逐层坐标参数出发，在选定坐标系下构建可重建的占用状态。复用已有矩形、单位绑定、来源引用和求交逻辑。W009 的有效区域与原始 drawn 几何分别标记来源。旧组件和消费者继续按原索引工作。同一几何保留一个权威来源，各种索引均能追溯到它。[坐标](../../layauto_v2/state/coordinate.py) · [占用](../../layauto_v2/state/occupancy.py) · [有效区域](../../layauto_v2/state/regions.py)
 
@@ -107,3 +107,40 @@ python -m pytest -q tests/contracts/test_w018_projection.py::test_cut_islands_sa
 | 3.12.14 | 1,995 passed，8 subtests passed | 3,840.87 s | 81 个源文件通过 | 同一组输入及预期通过 |
 
 **交 PM。** 建议接收 W018 A1–A5，剩余必须修正项 0。本次范围为显式声明的 synthetic flat-rectangle 工艺与只读内核。产品默认预算、W016 入口接入、生产 PDK 适配与 Stage 2 baseline 发布仍由后续任务负责。后续证据补记只涉及任务文档和原输出；按冻结清单和实际输入身份采信上述矩阵。PM 在实际合并版本补跑样例、S3 和旧 owner 兼容组合；产品、样例、正式测试、解释器或依赖变化时重新核定验证范围。[安装结果实数与回溯](W018/evidence/wheel-smoke.json)
+
+<a id="pm1-receipt"></a>
+
+### PM1 接收核验与补修交接
+
+PM 核验的分支交付为 `73a8eaab95c2090ceb8066fa35fb37cecdc53b1f`，冻结实现为 `186c426ea550a6941ead417cd640a86c37017ba5`。本次实跑 Python 3.12.14 的 W018 坐标、占用模型和配置至 GDS 合同测试共 34 项通过。仓库示例产生 48 片，按原始记录回查成功。复跑独立 GDS 探针得到 40 条源记录，CUT 两侧各 36 nm²、间隔 2 nm，并复现 R1 修正后的大分母用例。
+
+PM 实算 [冻结清单](W018/evidence/freeze.json) 310 项及[矩阵](W018/evidence/matrix.json)所列 6 份证据的 SHA-256，均匹配。两份原始全量日志末行均为 1,995 passed、8 subtests passed。双解释器全量、typing、构建与安装采信该冻结版本的交付证据。当前判断适用于 synthetic 样本和内核。
+
+**PM-01（P2，合并前修正）。** 在样例 LI 声明中保留有效的嵌套字段 `x_edges.pitch_dbu = 20`，并在 LI 下额外添加一个字面键 `"x_edges/pitch_dbu": 987`。从正式文件入口读入后，投影正确拒绝未知键并保留 40 条原几何、正确文件和哈希。但返回的字段位置是 `/coordinate_projection/layers/LI/x_edges/pitch_dbu`，按路径读取实际得到合法值 20。要定位被拒绝的字面键，字段位置应为 `/coordinate_projection/layers/LI/x_edges~1pitch_dbu`。此项影响 A4 的错误字段定位，正常坐标、面积与来源复算均通过。
+
+从仓库根目录可复现：
+
+```bash
+PYTHONPATH=tests/contracts python -B - <<'PYCODE'
+from pathlib import Path
+from tempfile import TemporaryDirectory
+from w005_cases import copy_input
+from w018_cases import select_projection, build_geometry_from_site
+from layauto_v2.normalization.projection import build_discrete_occupancy
+from layauto_v2.normalization.projection_model import ProjectionConfigError
+
+with TemporaryDirectory() as temp:
+    root = copy_input(Path(temp))
+    select_projection(root, mutate=lambda p: p["layers"]["LI"].update({"x_edges/pitch_dbu": 987}))
+    geometry = build_geometry_from_site(root)
+    try:
+        build_discrete_occupancy(geometry, fragment_budget=100)
+    except ProjectionConfigError as error:
+        print(error.issue.code, error.issue.message, error.issue.source.field)
+        print(len(error.geometry.layout.records))
+    else:
+        raise AssertionError("the unsupported field was accepted")
+PYCODE
+```
+
+**执行交接。** 在原 W018 分支局部修正错误字段的路径编码。为含 `/` 和 `~` 的字面键补定向回归。由独立 reviewer 从实际配置经产品入口复核，按返回路径从同一份输入读取被拒绝的键值，并对照原合法字段、来源 URI/hash 和保留的原几何。若调整公共 schema helper，加跑受影响的旧配置诊断。保留原复现及冻结矩阵，在补修回执中列明本次实跑及未覆盖范围。优先将局部修正与复核交回 PM，无需为本次回执重跑两套全量。
