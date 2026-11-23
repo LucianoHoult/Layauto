@@ -2,7 +2,7 @@
 
 ## 任务要求（PM）
 
-M1，Stage 2。交付可被后续 Stage 2 组装代码调用的产品组件。起点是 W017 已集成的 main `504d9b07c08160d46a9aaa4fd3346a144ac5db32`，分支 `codex/w018-coordinate-occupancy-core`。执行版已交付。PM 接收核验发现一项配置错误定位问题，当前待局部补修及复核。[PM1 接收与补修交接](#pm1-receipt)[架构 §2.3、§3.4–3.6、§11.3](../architecture.md) · [W017 来源及复算](W017/proposal.md)
+M1，Stage 2。交付可被后续 Stage 2 组装代码调用的产品组件。起点是 W017 已集成的 main `504d9b07c08160d46a9aaa4fd3346a144ac5db32`，分支 `codex/w018-coordinate-occupancy-core`。W018 已验收并合入 main，PM-01 已关闭。[PM2 集成验收](#pm2-integration) · [PM1 接收与补修交接](#pm1-receipt) · [架构 §2.3、§3.4–3.6、§11.3](../architecture.md) · [W017 来源及复算](W017/proposal.md)
 
 **从已有代码接起。** W008 已把认证的 drawn records 按各层图形边缘分格，并保留每个占用片段。本次从同一份精确几何及明确给出的逐层坐标参数出发，在选定坐标系下构建可重建的占用状态。复用已有矩形、单位绑定、来源引用和求交逻辑。W009 的有效区域与原始 drawn 几何分别标记来源。旧组件和消费者继续按原索引工作。同一几何保留一个权威来源，各种索引均能追溯到它。[坐标](../../layauto_v2/state/coordinate.py) · [占用](../../layauto_v2/state/occupancy.py) · [有效区域](../../layauto_v2/state/regions.py)
 
@@ -162,3 +162,28 @@ PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 python -B -m pytest -p no:cacheprovider -q \
 ```
 
 补修按 PM1 运行新增及受影响的测试。与原冻结实现相比，产品与正式测试仅变动 `layauto_v2/tech/schema.py` 和 `tests/contracts/test_w018_projection.py`。双解释器全量、typing、构建及干净安装证据仍对应原冻结提交 `186c426ea550a6941ead417cd640a86c37017ba5`；本次未重跑。后续若改动指针生成或把报错映射回捕获文件的路径，复跑上述回归和[独立配置反查](W018/pm01-review.md)。本次交 PM 验收。
+
+<a id="pm2-integration"></a>
+
+### PM2 集成验收
+
+**A1–A5 已验收，PM-01 已关闭，剩余必须修正项为 0。** [PR #79](https://github.com/LucianoHoult/Layauto/pull/79) 将交付 `ec866b69a170849496060e6a2c34be34465061e8` 合入 [main 的产品提交](https://github.com/LucianoHoult/Layauto/commit/ee603cfd122d0c095bf2517d6d16342d8a65e820)。合并结果与受审交付的 Git tree 均为 `1cb47971f1f5260a3a95b28543169ed515ec7ae7`。
+
+| 核验范围 | PM 实跑或核对的结果 |
+| --- | --- |
+| PM-01 补修 | 本次产品差异限于公共 schema 校验器组成未知字段路径时对字面键的编码。合并前 52 项受影响回归通过。在候选和实际合并版本上分别按错误指针读回 987、988、989。每次均保留合法格距 20、实际 URI、文件 SHA-256 和 40 条原始几何。[独立复核与运行命令](W018/pm01-review.md) |
+| 实际 main 上的配置、GDS 与来源回查 | 运行 `python -B -m docs.tasks.W018.example`。报告 15 层、40 条记录、48 片，其中 FIN 18、LI 20、M1 10。另有 2 层声明跳过、10 层缺声明。三个示例回查到的 GDS 字节偏移分别为 496、1648、2352。 |
+| 实际 main 上的独立几何检查 | 运行 `python -B docs/tasks/W018/review_probe.py`，48 组来源与占用合计 6050 DBU²。CUT 专例保留两块各 36 nm²、间隔 2 nm 的有效 LI，原始 LI/CUT 偏移为 182 和 246。大分母用例保留 30 个二维片和 18 条形状不适用诊断。 |
+| 实际 main 上的合同回归 | Python 3.12.14 下运行下方四个测试函数（含参数化），共 6 项通过。覆盖旧配置、字面键定位、累计片数超限及同格 CUT 几何来源。 |
+
+```sh
+python -B -m pytest -q -p no:cacheprovider \
+  tests/contracts/test_w018_projection.py::test_legacy_owner_retains_geometry_and_distinguishes_missing_from_skip \
+  tests/contracts/test_w018_projection.py::test_unknown_projection_key_pointer_resolves_to_rejected_value \
+  tests/contracts/test_w018_projection.py::test_cumulative_budget_rejects_before_any_cell_bounds \
+  tests/contracts/test_w018_projection.py::test_cut_islands_same_cell_loses_no_area_or_provenance
+```
+
+**证据范围。** 原双解释器各 1,995 项及 8 个子测试、typing、构建与安装对应 `186c426`。PM 核对原冻结清单中 310 项与 6 份索引证据的哈希，补修与原冻结版相差公共校验器及一份正式测试。补修定向证据对应 `61dc208`，交付及实际合并版本的产品和正式测试与该修正相同。本次 PM 在合并版本仅运行上列组合，双全量记录沿用其原受测版本。[原矩阵](W018/evidence/matrix.json)
+
+本次验收覆盖 synthetic 工艺与本地只读内核。下一节点建议把内核接入 W016 的 `analyze_cell`，先明确调用方如何查看占用、回查来源，以及缺声明和超预算时能取得哪些已有结果。Stage 2 完整状态和 M1 的输入到产物闭环仍待后续工作。
