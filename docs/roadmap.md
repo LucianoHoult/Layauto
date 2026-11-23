@@ -41,7 +41,7 @@ W012调查及[A1兼容hex优化](tasks/W012-capture-wire-performance.md#pm4-a1-i
 
 [W015](tasks/W015-single-cell-analysis-entry.md#pm1-acceptance)入口合同及实施方案已验收集成；[W016](tasks/W016-single-cell-analysis.md#pm3-integration)已验收集成独立只读分析入口，缺外部body时保留已认证本地事实。首包仅synthetic/flat、query必需，不替代剩余Stage2与M1闭环，也不代表真实PDK适配。
 
-[W017 方案](tasks/W017-coordinate-occupancy-projection.md#pm1-acceptance)已验收集成。15 层坐标来源、FIN 中心查询、显式 LI 格边和同格多片段均有可复核样张。正式 Stage 2 坐标组件待确认首包合同后实施。
+[W017 方案](tasks/W017-coordinate-occupancy-projection.md#pm1-acceptance)已验收集成。15 层坐标来源、FIN 中心查询、显式 LI 格边和同格多片段均有可复核样张。[W018](tasks/W018-coordinate-occupancy-core.md) 先交逐层工艺配置样例，再实施 Stage 2 坐标与占用内核。
 
 | 里程碑 | 可观察能力与代表输入→结果 | 依赖 / 退出验收 |
 | --- | --- | --- |

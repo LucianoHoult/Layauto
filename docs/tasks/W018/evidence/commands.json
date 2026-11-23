@@ -1,0 +1,450 @@
+{
+  "build-310": {
+    "cmd": [
+      "/workspace/work/w018-env/py310/bin/python",
+      "-m",
+      "build",
+      "--no-isolation",
+      "--outdir",
+      "/workspace/work/w018-env/186c426ea550a6941ead417cd640a86c37017ba5/dist-310"
+    ],
+    "cwd": "/workspace/work/w018-env/186c426ea550a6941ead417cd640a86c37017ba5/package-310",
+    "returncode": 0,
+    "started": "2026-11-23T02:29:30.288115+00:00",
+    "seconds": 2.465,
+    "output": "build-310.log",
+    "sha256": "4112ae52846180dcca6dfa6e0784a2b6dd58c66fdd06a8bdb300705b19ce10db",
+    "stored_output": "transcripts.tar.gz/build-310.log"
+  },
+  "build-312": {
+    "cmd": [
+      "/workspace/work/w018-env/py312/bin/python",
+      "-m",
+      "build",
+      "--no-isolation",
+      "--outdir",
+      "/workspace/work/w018-env/186c426ea550a6941ead417cd640a86c37017ba5/dist-312"
+    ],
+    "cwd": "/workspace/work/w018-env/186c426ea550a6941ead417cd640a86c37017ba5/package-312",
+    "returncode": 0,
+    "started": "2026-11-23T02:29:30.321049+00:00",
+    "seconds": 2.065,
+    "output": "build-312.log",
+    "sha256": "4fdab6db0b8fdb3cc6b5566285a1aca079abfa38200d5af3c575b677c7713c5e",
+    "stored_output": "transcripts.tar.gz/build-312.log"
+  },
+  "check-310": {
+    "cmd": [
+      "/workspace/work/w018-env/py310/bin/python",
+      "-m",
+      "pip",
+      "check"
+    ],
+    "cwd": "/workspace/work/w018-env/186c426ea550a6941ead417cd640a86c37017ba5/tree",
+    "returncode": 0,
+    "started": "2026-11-23T02:29:28.220118+00:00",
+    "seconds": 0.576,
+    "output": "check-310.log",
+    "sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09",
+    "stored_output": "transcripts.tar.gz/check-310.log"
+  },
+  "check-312": {
+    "cmd": [
+      "/workspace/work/w018-env/py312/bin/python",
+      "-m",
+      "pip",
+      "check"
+    ],
+    "cwd": "/workspace/work/w018-env/186c426ea550a6941ead417cd640a86c37017ba5/tree",
+    "returncode": 0,
+    "started": "2026-11-23T02:29:28.140485+00:00",
+    "seconds": 0.443,
+    "output": "check-312.log",
+    "sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09",
+    "stored_output": "transcripts.tar.gz/check-312.log"
+  },
+  "clean-check-310": {
+    "cmd": [
+      "/workspace/work/w018-env/186c426ea550a6941ead417cd640a86c37017ba5/installed-310/bin/python",
+      "-m",
+      "pip",
+      "check"
+    ],
+    "cwd": "/workspace/work/w018-env/186c426ea550a6941ead417cd640a86c37017ba5",
+    "returncode": 0,
+    "started": "2026-11-23T02:29:37.178868+00:00",
+    "seconds": 0.978,
+    "output": "clean-check-310.log",
+    "sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09",
+    "stored_output": "transcripts.tar.gz/clean-check-310.log"
+  },
+  "clean-check-312": {
+    "cmd": [
+      "/workspace/work/w018-env/186c426ea550a6941ead417cd640a86c37017ba5/installed-312/bin/python",
+      "-m",
+      "pip",
+      "check"
+    ],
+    "cwd": "/workspace/work/w018-env/186c426ea550a6941ead417cd640a86c37017ba5",
+    "returncode": 0,
+    "started": "2026-11-23T02:29:36.742382+00:00",
+    "seconds": 0.637,
+    "output": "clean-check-312.log",
+    "sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09",
+    "stored_output": "transcripts.tar.gz/clean-check-312.log"
+  },
+  "clean-deps-310": {
+    "cmd": [
+      "/workspace/work/w018-env/186c426ea550a6941ead417cd640a86c37017ba5/installed-310/bin/python",
+      "-m",
+      "pip",
+      "freeze",
+      "--all"
+    ],
+    "cwd": "/workspace/work/w018-env/186c426ea550a6941ead417cd640a86c37017ba5",
+    "returncode": 0,
+    "started": "2026-11-23T02:29:38.157075+00:00",
+    "seconds": 0.591,
+    "output": "clean-deps-310.log",
+    "sha256": "d5b975554c644285d28c05d4fc05bee97fd03da8c2303c7d54f9667dcd743ccf",
+    "stored_output": "transcripts.tar.gz/clean-deps-310.log"
+  },
+  "clean-deps-312": {
+    "cmd": [
+      "/workspace/work/w018-env/186c426ea550a6941ead417cd640a86c37017ba5/installed-312/bin/python",
+      "-m",
+      "pip",
+      "freeze",
+      "--all"
+    ],
+    "cwd": "/workspace/work/w018-env/186c426ea550a6941ead417cd640a86c37017ba5",
+    "returncode": 0,
+    "started": "2026-11-23T02:29:37.379227+00:00",
+    "seconds": 0.532,
+    "output": "clean-deps-312.log",
+    "sha256": "2544cfa0c97a30842b2d9719901f563b834f2ada10caf7a4c0c8dddc935ce140",
+    "stored_output": "transcripts.tar.gz/clean-deps-312.log"
+  },
+  "clean-env-310": {
+    "cmd": [
+      "/workspace/work/w018-env/py310/bin/python",
+      "-m",
+      "venv",
+      "/workspace/work/w018-env/186c426ea550a6941ead417cd640a86c37017ba5/installed-310"
+    ],
+    "cwd": "/workspace/work/w018-env/186c426ea550a6941ead417cd640a86c37017ba5",
+    "returncode": 0,
+    "started": "2026-11-23T02:29:32.753535+00:00",
+    "seconds": 4.215,
+    "output": "clean-env-310.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stored_output": "transcripts.tar.gz/clean-env-310.log"
+  },
+  "clean-env-312": {
+    "cmd": [
+      "/workspace/work/w018-env/py312/bin/python",
+      "-m",
+      "venv",
+      "/workspace/work/w018-env/186c426ea550a6941ead417cd640a86c37017ba5/installed-312"
+    ],
+    "cwd": "/workspace/work/w018-env/186c426ea550a6941ead417cd640a86c37017ba5",
+    "returncode": 0,
+    "started": "2026-11-23T02:29:32.386062+00:00",
+    "seconds": 3.982,
+    "output": "clean-env-312.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stored_output": "transcripts.tar.gz/clean-env-312.log"
+  },
+  "collect-310": {
+    "cmd": [
+      "/workspace/work/w018-env/py310/bin/python",
+      "-m",
+      "pytest",
+      "tests",
+      "-p",
+      "no:cacheprovider",
+      "--collect-only",
+      "-q"
+    ],
+    "cwd": "/workspace/work/w018-env/186c426ea550a6941ead417cd640a86c37017ba5/tree",
+    "returncode": 0,
+    "started": "2026-11-23T02:29:28.796826+00:00",
+    "seconds": 2.547,
+    "output": "collect-310.log",
+    "sha256": "f716c2c0950bf5ae20e7184dafaa1e1df4c475b60715f455d544f89251df65bc",
+    "stored_output": "transcripts.tar.gz/collect-310.log"
+  },
+  "collect-312": {
+    "cmd": [
+      "/workspace/work/w018-env/py312/bin/python",
+      "-m",
+      "pytest",
+      "tests",
+      "-p",
+      "no:cacheprovider",
+      "--collect-only",
+      "-q"
+    ],
+    "cwd": "/workspace/work/w018-env/186c426ea550a6941ead417cd640a86c37017ba5/tree",
+    "returncode": 0,
+    "started": "2026-11-23T02:29:28.583443+00:00",
+    "seconds": 2.495,
+    "output": "collect-312.log",
+    "sha256": "736cda540e0221b7fbdc50421b181b37afd2f69c9c9925ee447b2c3d5b06578e",
+    "stored_output": "transcripts.tar.gz/collect-312.log"
+  },
+  "dev-deps-310": {
+    "cmd": [
+      "/workspace/work/w018-env/py310/bin/python",
+      "-m",
+      "pip",
+      "freeze",
+      "--all"
+    ],
+    "cwd": "/workspace/work/w018-env/186c426ea550a6941ead417cd640a86c37017ba5/tree",
+    "returncode": 0,
+    "started": "2026-11-23T02:29:27.599725+00:00",
+    "seconds": 0.62,
+    "output": "dev-deps-310.log",
+    "sha256": "e50be2437d1793fbc9ba2567b4907f3419ba3ad9f86687b6c8e391db481bea5d",
+    "stored_output": "transcripts.tar.gz/dev-deps-310.log"
+  },
+  "dev-deps-312": {
+    "cmd": [
+      "/workspace/work/w018-env/py312/bin/python",
+      "-m",
+      "pip",
+      "freeze",
+      "--all"
+    ],
+    "cwd": "/workspace/work/w018-env/186c426ea550a6941ead417cd640a86c37017ba5/tree",
+    "returncode": 0,
+    "started": "2026-11-23T02:29:27.621739+00:00",
+    "seconds": 0.518,
+    "output": "dev-deps-312.log",
+    "sha256": "eadf60255b25d92cf58f65bb201e774855f6715aeaae496c874fbb2bb329c197",
+    "stored_output": "transcripts.tar.gz/dev-deps-312.log"
+  },
+  "mypy-310": {
+    "cmd": [
+      "/workspace/work/w018-env/py310/bin/python",
+      "-m",
+      "mypy",
+      "--cache-dir",
+      "/workspace/work/w018-env/186c426ea550a6941ead417cd640a86c37017ba5/mypy-310"
+    ],
+    "cwd": "/workspace/work/w018-env/186c426ea550a6941ead417cd640a86c37017ba5/tree",
+    "returncode": 0,
+    "started": "2026-11-23T02:29:27.667787+00:00",
+    "seconds": 2.62,
+    "output": "mypy-310.log",
+    "sha256": "3bce484934e38822ff7a68a9eb1d47d2dd53c92386f38d0dd24152acfb6fab7c",
+    "stored_output": "transcripts.tar.gz/mypy-310.log"
+  },
+  "mypy-312": {
+    "cmd": [
+      "/workspace/work/w018-env/py312/bin/python",
+      "-m",
+      "mypy",
+      "--cache-dir",
+      "/workspace/work/w018-env/186c426ea550a6941ead417cd640a86c37017ba5/mypy-312"
+    ],
+    "cwd": "/workspace/work/w018-env/186c426ea550a6941ead417cd640a86c37017ba5/tree",
+    "returncode": 0,
+    "started": "2026-11-23T02:29:27.635615+00:00",
+    "seconds": 2.685,
+    "output": "mypy-312.log",
+    "sha256": "3bce484934e38822ff7a68a9eb1d47d2dd53c92386f38d0dd24152acfb6fab7c",
+    "stored_output": "transcripts.tar.gz/mypy-312.log"
+  },
+  "pytest-310": {
+    "cmd": [
+      "/workspace/work/w018-env/py310/bin/python",
+      "-m",
+      "pytest",
+      "tests",
+      "-p",
+      "no:cacheprovider",
+      "-v",
+      "-p",
+      "xdist",
+      "-n",
+      "2",
+      "--dist",
+      "worksteal",
+      "--maxfail=1"
+    ],
+    "cwd": "/workspace/work/w018-env/186c426ea550a6941ead417cd640a86c37017ba5/tree",
+    "returncode": 0,
+    "started": "2026-11-23T02:29:31.346485+00:00",
+    "seconds": 5138.205,
+    "output": "pytest-310.log",
+    "sha256": "f8849aec7240e8cb8a1d692e2109e08bb92271a2750a8fdee30efc47eaea1ced",
+    "stored_output": "pytest-310.log.gz"
+  },
+  "pytest-312": {
+    "cmd": [
+      "/workspace/work/w018-env/py312/bin/python",
+      "-m",
+      "pytest",
+      "tests",
+      "-p",
+      "no:cacheprovider",
+      "-v",
+      "-p",
+      "xdist",
+      "-n",
+      "2",
+      "--dist",
+      "worksteal",
+      "--maxfail=1"
+    ],
+    "cwd": "/workspace/work/w018-env/186c426ea550a6941ead417cd640a86c37017ba5/tree",
+    "returncode": 0,
+    "started": "2026-11-23T02:29:31.080021+00:00",
+    "seconds": 3841.173,
+    "output": "pytest-312.log",
+    "sha256": "8ed8d27d03c580e21ba4d02ad8bf689b064a5487ad94bcede2196325cd97067d",
+    "stored_output": "pytest-312.log.gz"
+  },
+  "python-310": {
+    "cmd": [
+      "/workspace/work/w018-env/py310/bin/python",
+      "-VV"
+    ],
+    "cwd": "/workspace/work/w018-env/186c426ea550a6941ead417cd640a86c37017ba5/tree",
+    "returncode": 0,
+    "started": "2026-11-23T02:29:27.591258+00:00",
+    "seconds": 0.008,
+    "output": "python-310.log",
+    "sha256": "97545535693048b3a80725f6ad61fb565e795e0125ce182db8a0e589376e989d",
+    "stored_output": "transcripts.tar.gz/python-310.log"
+  },
+  "python-312": {
+    "cmd": [
+      "/workspace/work/w018-env/py312/bin/python",
+      "-VV"
+    ],
+    "cwd": "/workspace/work/w018-env/186c426ea550a6941ead417cd640a86c37017ba5/tree",
+    "returncode": 0,
+    "started": "2026-11-23T02:29:27.619188+00:00",
+    "seconds": 0.002,
+    "output": "python-312.log",
+    "sha256": "1136b347106711865de4555f802cbe2530f9f9a0802157234e7d833ee0465278",
+    "stored_output": "transcripts.tar.gz/python-312.log"
+  },
+  "smoke-310": {
+    "cmd": [
+      "/workspace/work/w018-env/186c426ea550a6941ead417cd640a86c37017ba5/installed-310/bin/python",
+      "-I",
+      "/workspace/work/w018-env/186c426ea550a6941ead417cd640a86c37017ba5/external/example.py",
+      "--site",
+      "/workspace/work/w018-env/186c426ea550a6941ead417cd640a86c37017ba5/external/input/site_config.yaml"
+    ],
+    "cwd": "/workspace/work/w018-env/186c426ea550a6941ead417cd640a86c37017ba5/external",
+    "returncode": 0,
+    "started": "2026-11-23T02:29:38.881323+00:00",
+    "seconds": 5.944,
+    "output": "smoke-310.log",
+    "sha256": "d670ff230ad7498b3b1f96605b1d0915280fa443938a8e3327725c3f8fab4eac",
+    "stored_output": "wheel-smoke.json"
+  },
+  "smoke-312": {
+    "cmd": [
+      "/workspace/work/w018-env/186c426ea550a6941ead417cd640a86c37017ba5/installed-312/bin/python",
+      "-I",
+      "/workspace/work/w018-env/186c426ea550a6941ead417cd640a86c37017ba5/external/example.py",
+      "--site",
+      "/workspace/work/w018-env/186c426ea550a6941ead417cd640a86c37017ba5/external/input/site_config.yaml"
+    ],
+    "cwd": "/workspace/work/w018-env/186c426ea550a6941ead417cd640a86c37017ba5/external",
+    "returncode": 0,
+    "started": "2026-11-23T02:29:38.146236+00:00",
+    "seconds": 3.523,
+    "output": "smoke-312.log",
+    "sha256": "d670ff230ad7498b3b1f96605b1d0915280fa443938a8e3327725c3f8fab4eac",
+    "stored_output": "wheel-smoke.json"
+  },
+  "smoke-prepare": {
+    "cmd": [
+      "/workspace/work/w018-env/py312/bin/python",
+      "-B",
+      "-c",
+      "\nimport sys\nfrom pathlib import Path\nsys.path.insert(0, str(Path.cwd()/'tests/contracts'))\nfrom w005_cases import copy_input\nfrom w018_cases import select_projection\nroot = copy_input(Path(sys.argv[1]))\nselect_projection(root)\nprint(root / 'site_config.yaml')\n",
+      "/workspace/work/w018-env/186c426ea550a6941ead417cd640a86c37017ba5/external"
+    ],
+    "cwd": "/workspace/work/w018-env/186c426ea550a6941ead417cd640a86c37017ba5/tree",
+    "returncode": 0,
+    "started": "2026-11-23T02:29:20.977575+00:00",
+    "seconds": 0.3,
+    "output": "smoke-prepare.log",
+    "sha256": "f7e0734d23bdb99bfb9c1fb88071fd89015d8ef4b107d10836d0522272c2b632",
+    "stored_output": "transcripts.tar.gz/smoke-prepare.log"
+  },
+  "wheel-identity-310": {
+    "cmd": [
+      "/workspace/work/w018-env/186c426ea550a6941ead417cd640a86c37017ba5/installed-310/bin/python",
+      "-I",
+      "-c",
+      "\nimport hashlib, json, pathlib, sys\nimport layauto_v2\ndist = pathlib.Path(layauto_v2.__file__).resolve().parent\nassert dist.is_relative_to(pathlib.Path(sys.prefix)) and not dist.is_relative_to(pathlib.Path(sys.argv[1]))\nsource = pathlib.Path(sys.argv[1]) / 'layauto_v2'\nitems = {p.relative_to(source).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest()\n         for p in source.rglob('*') if p.is_file() and p.suffix in ('.py', '.typed')}\nassert all(hashlib.sha256((dist/p).read_bytes()).hexdigest()==sha for p, sha in items.items())\nprint(json.dumps({'module_path': str(dist), 'source_equivalent_files': len(items), 'python': sys.version}))\n",
+      "/workspace/work/w018-env/186c426ea550a6941ead417cd640a86c37017ba5/tree"
+    ],
+    "cwd": "/workspace/work/w018-env/186c426ea550a6941ead417cd640a86c37017ba5",
+    "returncode": 0,
+    "started": "2026-11-23T02:29:38.748231+00:00",
+    "seconds": 0.033,
+    "output": "wheel-identity-310.log",
+    "sha256": "550c1cef0c6bf53a7d09950897d026fb5c0ae654f3d79281e794f3c49f4c3e1c",
+    "stored_output": "transcripts.tar.gz/wheel-identity-310.log"
+  },
+  "wheel-identity-312": {
+    "cmd": [
+      "/workspace/work/w018-env/186c426ea550a6941ead417cd640a86c37017ba5/installed-312/bin/python",
+      "-I",
+      "-c",
+      "\nimport hashlib, json, pathlib, sys\nimport layauto_v2\ndist = pathlib.Path(layauto_v2.__file__).resolve().parent\nassert dist.is_relative_to(pathlib.Path(sys.prefix)) and not dist.is_relative_to(pathlib.Path(sys.argv[1]))\nsource = pathlib.Path(sys.argv[1]) / 'layauto_v2'\nitems = {p.relative_to(source).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest()\n         for p in source.rglob('*') if p.is_file() and p.suffix in ('.py', '.typed')}\nassert all(hashlib.sha256((dist/p).read_bytes()).hexdigest()==sha for p, sha in items.items())\nprint(json.dumps({'module_path': str(dist), 'source_equivalent_files': len(items), 'python': sys.version}))\n",
+      "/workspace/work/w018-env/186c426ea550a6941ead417cd640a86c37017ba5/tree"
+    ],
+    "cwd": "/workspace/work/w018-env/186c426ea550a6941ead417cd640a86c37017ba5",
+    "returncode": 0,
+    "started": "2026-11-23T02:29:37.911420+00:00",
+    "seconds": 0.113,
+    "output": "wheel-identity-312.log",
+    "sha256": "4198b016c44538b4c0a66b0d64b4311162e4cd4c2984864ad30e377bb8e67b2c",
+    "stored_output": "transcripts.tar.gz/wheel-identity-312.log"
+  },
+  "wheel-install-310": {
+    "cmd": [
+      "uv",
+      "pip",
+      "install",
+      "--python",
+      "/workspace/work/w018-env/186c426ea550a6941ead417cd640a86c37017ba5/installed-310/bin/python",
+      "/workspace/work/w018-env/186c426ea550a6941ead417cd640a86c37017ba5/dist-310/layauto-0.2.0-py3-none-any.whl"
+    ],
+    "cwd": "/workspace/work/w018-env/186c426ea550a6941ead417cd640a86c37017ba5",
+    "returncode": 0,
+    "started": "2026-11-23T02:29:36.968788+00:00",
+    "seconds": 0.21,
+    "output": "wheel-install-310.log",
+    "sha256": "10ad752da64a47180eca98043231bae1203748a91369ac8b5529d256ab4ff847",
+    "stored_output": "transcripts.tar.gz/wheel-install-310.log"
+  },
+  "wheel-install-312": {
+    "cmd": [
+      "uv",
+      "pip",
+      "install",
+      "--python",
+      "/workspace/work/w018-env/186c426ea550a6941ead417cd640a86c37017ba5/installed-312/bin/python",
+      "/workspace/work/w018-env/186c426ea550a6941ead417cd640a86c37017ba5/dist-312/layauto-0.2.0-py3-none-any.whl"
+    ],
+    "cwd": "/workspace/work/w018-env/186c426ea550a6941ead417cd640a86c37017ba5",
+    "returncode": 0,
+    "started": "2026-11-23T02:29:36.368853+00:00",
+    "seconds": 0.373,
+    "output": "wheel-install-312.log",
+    "sha256": "da518aa1a64228688fcf18fadfcf1b5e434f894cbff7bde595620711aaba5421",
+    "stored_output": "transcripts.tar.gz/wheel-install-312.log"
+  }
+}

@@ -1,0 +1,37 @@
+# 可直接作为 W004 tech bundle 的 coordinate owner 选用。单位来自同包 formats，
+# 原点来自原 W003/W004 coordinate owner，局部坐标，1 canonical DBU = 1 nm。
+schema_version: w004-tech-owner/2
+coordinate_projection:
+  id: layauto-layer-discretization/1
+  classification: synthetic
+  units_ref: formats#/unit_scale_contract
+  frame_origin_nm: [0, 0]
+  layers:
+    FIN:
+      projection: 1d_track
+      index_axis: y
+      pitch_nm_ref: physical#/fin_count_profile/fin_pitch_nm
+      first_centre:
+        basis: lower_edge_plus_half_width
+        lower_edge_nm_ref: physical#/fin_count_profile/fin_lower_edge_offset_nm
+        width_nm_ref: physical#/fin_count_profile/fin_width_nm
+      # 下边偏移相对原点；首个编号 0 对应 24 + 2/2 = 25 nm。
+      index_range_inclusive: [0, 17]
+    LI:
+      projection: 2d_cells
+      # W017 样例。offset 相对原点，格边为 offset + i * pitch。
+      x_edges: {pitch_dbu: 20, offset_dbu: 0, cells: 8}
+      y_edges: {pitch_dbu: 10, offset_dbu: 0, cells: 20}
+    M1:
+      projection: 2d_cells
+      # PM 跨层样例。和 LI 同窗，各自使用自己的测试轴。
+      x_edges: {pitch_dbu: 16, offset_dbu: 0, cells: 10}
+      y_edges: {pitch_dbu: 20, offset_dbu: 0, cells: 10}
+    BOUNDARY: {projection: none}
+    MARKER:   {projection: none}
+
+# 主 GDS 中的记录数和资料完整性（仅作审阅，不作为输入数据）
+# FIN 18，LI 3，M1 4，两条跳过声明各 1。
+# 其余十层均缺声明，保留原几何。POLY 缺栅距及相位，其他层缺双轴。
+# BODY_N 1，BODY_P 1，OD 2，POLY 1，CUT 0，CONTACT 4，
+# VIA0 3，GCONTACT 1，BTAP_N 0，BTAP_P 0。共 15 层、40 条。

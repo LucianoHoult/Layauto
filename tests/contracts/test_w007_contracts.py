@@ -381,7 +381,15 @@ def test_normalization_and_new_domain_keep_pure_dependency_boundaries():
             # composes only the same immutable neutral drafts. The exception
             # is exact per new file/module/symbol; it grants no acquisition,
             # mutable state, repository or publication capability to old code.
-            analysis_seams = {
+            # W018 binds authenticated technology and calls the pure, local index.
+            component_seams = {
+                'projection_model.py': {
+                    'layauto_v2.state.projection_axes': {'EdgeAxis', 'CellGrid', 'TrackAxis'},
+                    'layauto_v2.state.projection_model': {'LayerProjection', 'ProjectionModel'},
+                },
+                'projection.py': {
+                    'layauto_v2.state.discrete_occupancy': {'OccupancyResult', 'build_discrete_occupancy'},
+                },
                 'analysis_input.py': {
                     'layauto_v2.importers.analysis_reader': {'captured_analysis_files', 'parse_analysis'},
                 },
@@ -396,12 +404,12 @@ def test_normalization_and_new_domain_keep_pure_dependency_boundaries():
                     'layauto_v2.state.local_connectivity': {'build_local_connectivity_draft', 'LocalConnectivityDraft'},
                 },
             }
-            allowed_analysis = (path.parent.name == 'normalization'
+            allowed_component = (path.parent.name == 'normalization'
                                 and isinstance(node, ast.ImportFrom) and node.level == 0
-                                and (symbols := analysis_seams.get(path.name, {}).get(node.module or '')) is not None
+                                and (symbols := component_seams.get(path.name, {}).get(node.module or '')) is not None
                                 and {alias.name for alias in node.names} <= symbols)
             if not (allowed_channel_local or allowed_decoder or allowed_geometry_decoder or allowed_geometry_state
-                    or allowed_effective_state or allowed_local_contact_state or allowed_net_annotation_state or allowed_analysis):
+                    or allowed_effective_state or allowed_local_contact_state or allowed_net_annotation_state or allowed_component):
                 violations.extend((str(path), module) for module in modules if module.startswith(forbidden))
         for node in ast.walk(tree):
             if isinstance(node, ast.Call) and isinstance(node.func, ast.Name):

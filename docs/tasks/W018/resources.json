@@ -1,0 +1,50 @@
+{
+  "reviewed_owner": {
+    "file_to_index": {
+      "elapsed_ms": 8557.498,
+      "python_peak_bytes": 7316372
+    },
+    "index_from_bound_model_and_layout": {
+      "elapsed_ms": 3.925,
+      "python_peak_bytes": 32610
+    },
+    "drawn_fragments": {
+      "FIN": 18,
+      "LI": 20,
+      "M1": 10
+    },
+    "occupied_cells": 48
+  },
+  "fine_li": {
+    "file_to_index": {
+      "elapsed_ms": 8307.849,
+      "python_peak_bytes": 7238840
+    },
+    "index_from_bound_model_and_layout": {
+      "elapsed_ms": 51.689,
+      "python_peak_bytes": 440774
+    },
+    "drawn_fragments": {
+      "FIN": 18,
+      "LI": 1110,
+      "M1": 10
+    },
+    "occupied_cells": 1138
+  },
+  "large_sparse_li": {
+    "file_to_index": {
+      "elapsed_ms": 8836.801,
+      "python_peak_bytes": 7520832
+    },
+    "index_from_bound_model_and_layout": {
+      "elapsed_ms": 3.051,
+      "python_peak_bytes": 32938
+    },
+    "drawn_fragments": {
+      "FIN": 18,
+      "LI": 20,
+      "M1": 10
+    },
+    "occupied_cells": 48
+  }
+}

@@ -113,7 +113,9 @@ def obj(required: dict[str, Check], optional: dict[str, Check] | None = None) ->
             return
         for key in value:
             if key not in required and key not in optional:
-                raise SchemaError(f'{path}/{key}', 'unknown field', 'UnknownKey')
+                # A literal member name occupies one JSON Pointer token (RFC 6901).
+                token = key.replace('~', '~0').replace('/', '~1')
+                raise SchemaError(f'{path}/{token}', 'unknown field', 'UnknownKey')
         for key in required:
             if key not in value:
                 raise SchemaError(f'{path}/{key}', 'required field missing', 'MissingField')
@@ -284,14 +286,39 @@ SCHEMAS['formats'] = obj({
         'floats_nan_inf_executable_tags': literal('reject'),
     }),
 })
-SCHEMAS['coordinate'] = obj({
-    'schema_version': OWNER_VERSION,
-    'coordinate_projection': obj({
-        'id': literal('w004-coordinate-example/2'), 'example_only': literal(True),
-        'is_complete_runtime_model': literal(False), 'unit_contract_ref': literal('formats.json#/unit_scale_contract'),
-        'frame_origin_nm': array(integer, length=2), 'purpose': text,
-    }),
-})
+# W005 captures the versioned owner. The layer-specific grammar is applied
+# when projecting so a bad declaration cannot discard authenticated drawn facts.
+LAYER_DISCRETIZATION = 'layauto-layer-discretization/1'
+_COORDINATE_EXAMPLE = 'w004-coordinate-example/2'
+
+
+def _layer_map(value: Value, path: str) -> None:
+    if not isinstance(value, FrozenMap):
+        raise SchemaError(path, 'expected a map of layer declarations')
+
+
+def _coordinate_projection(value: Value, path: str) -> None:
+    if not isinstance(value, FrozenMap):
+        raise SchemaError(path, 'expected coordinate projection object')
+    if 'id' not in value:
+        raise SchemaError(path + '/id', 'required field missing', 'MissingField')
+    version = value['id']
+    if version == LAYER_DISCRETIZATION:
+        obj({
+            'id': literal(LAYER_DISCRETIZATION), 'classification': literal('synthetic'),
+            'units_ref': text, 'frame_origin_nm': array(integer, length=2), 'layers': _layer_map,
+        })(value, path)
+    elif version == _COORDINATE_EXAMPLE:
+        obj({
+            'id': literal(_COORDINATE_EXAMPLE), 'example_only': literal(True),
+            'is_complete_runtime_model': literal(False), 'unit_contract_ref': literal('formats.json#/unit_scale_contract'),
+            'frame_origin_nm': array(integer, length=2), 'purpose': text,
+        })(value, path)
+    else:
+        raise SchemaError(path + '/id', 'unsupported coordinate projection version', 'UnsupportedSchema')
+
+
+SCHEMAS['coordinate'] = obj({'schema_version': OWNER_VERSION, 'coordinate_projection': _coordinate_projection})
 RULE_PARAMETERS = obj({}, {
     'margin_nm': natural, 'active_enclosure_nm': natural, 'enclosure_nm': natural,
     'min_distance_nm': natural, 'terminal_order': literal(('D', 'G', 'S', 'B')),
