@@ -43,3 +43,27 @@ M1，Stage 2。交付可被后续 Stage 2 组装代码调用的产品组件。�
 ## 执行、review 与 PM 验收
 
 执行者和 reviewer 分别追加受测版本、命令和独立结论。当前仅有 PM 任务交接。
+
+### 执行起点与配置核对
+
+起点 `e5ea3a08ff6ddd8f406b55067761e5a69627a420`。核对 drawn 的 15 项、formats 的单位合同、physical 的三个 FIN 参数、coordinate 原点及主 GDS 的 BOUNDARY/XY 后，将[样例](W018/layer-discretization.example.yaml)整理为工艺包可直接指定的完整 coordinate owner。沿用 bundle/owner v2，在 `coordinate_projection.id` 区分旧示例与 `layauto-layer-discretization/1`。新 owner 直接保存原点，将原审阅稿的十个缺项移入注释。正式路径从同一份 YAML 字节加载五项运行声明。二维 pitch、offset 和 cells 为显式 synthetic 参数。
+
+| 层 | 主 GDS 记录 | 坐标资料 | 层 | 主 GDS 记录 | 坐标资料 |
+| --- | ---: | --- | --- | ---: | --- |
+| BOUNDARY | 1 | 显式跳过 | BODY_N | 1 | 缺声明 |
+| BODY_P | 1 | 缺声明 | OD | 2 | 缺声明 |
+| POLY | 1 | 缺声明 | FIN | 18 | Y 中心轨 |
+| LI | 3 | X/Y 格边 | CUT | 0 | 缺声明 |
+| CONTACT | 4 | 缺声明 | VIA0 | 3 | 缺声明 |
+| GCONTACT | 1 | 缺声明 | BTAP_N | 0 | 缺声明 |
+| BTAP_P | 0 | 缺声明 | M1 | 4 | X/Y 格边 |
+| MARKER | 1 | 显式跳过 | 合计 | 40 | 15 层 |
+
+**实现前手算。** 样本 1 DBU = 1 nm。FIN 按 Y 编号，轨 k 的中心为 0 + 24 + 2/2 + 10k nm，k=0…17。首两轨 25、35 nm，末轨 195 nm；30 nm 距两轨分别为 +5、−5 nm。按实际中心回查编号，stream 次序不参与编号。轨号下界对应所声明的 first_centre。
+
+- LI 的 X 格边为 20i（i=0…8），Y 格边为 10j（j=0…20）。首记录 [28,34) × [30,55) 命中 (1,3)、(1,4)、(1,5)，高度 10、10、5。三条记录分别出 3、3、14 片，共 1110 DBU²。
+- M1 的 X 格边为 16i、Y 格边为 20j（i、j=0…10）。首记录 [0,45) × [48,58) 在 x=16、32 切开，格 (0,2)、(1,2)、(2,2) 的面积为 160、160、130。四条记录分别出 3、3、2、2 片，共 1340 DBU²。
+- S2 的 X 边 −6、4、14 和 Y 边 −3、1、5 将 [−2,6) × [−1,3) 切为宽 6、2，高 2、2 的四片，面积 12+12+4+4=32 DBU²。点 (4,1) 属 (1,1)，最大外边开。
+- S3 单独声明 32×16 DBU。LI [130,150) × [20,24) 扣除宽 2 的 CUT 相交部分后，左右宽各 9，面积各 36 nm²，间隙 2 nm；两片同落 (4,1)，保留各自 region/piece 与共同 drawn/CUT 来源。
+
+**实施路径。** W005 安全解析所选 tech owner，W008 认证捕获与 LayoutDraft，W009 提供同源 region、piece 与贡献者。配置/归一化负责校验和绑定；state 的纯坐标对象负责换算，离散占用持有双向索引，片段沿用 Rect.intersection、UnitBinding 和源 ID。开发先跑声明读取、W008/W009 组合、S1–S4 及错误/预算测试，冻结后以同一源码、样例和测试完成双解释器工程矩阵并交独立复核。

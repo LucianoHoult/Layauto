@@ -1,50 +1,37 @@
-# W018 首轮审阅稿：工艺包内的逐层投影配置片段。
-# 基于 tests/fixtures/w003_m1；owner#/path 引用该包指定 owner 的 JSON 字段。
-# 格式名和字段拼写供实施时核定。该文档可以单独阅读；随工艺包选择和加载。
-format: w018-layer-projection-example/1
-classification: synthetic
-units_ref: formats#/unit_scale_contract
-frame_origin_nm_ref: coordinate#/coordinate_projection/frame_origin_nm
+# 可直接作为 W004 tech bundle 的 coordinate owner 选用。单位来自同包 formats，
+# 原点来自原 W003/W004 coordinate owner，局部坐标，1 canonical DBU = 1 nm。
+schema_version: w004-tech-owner/2
+coordinate_projection:
+  id: layauto-layer-discretization/1
+  classification: synthetic
+  units_ref: formats#/unit_scale_contract
+  frame_origin_nm: [0, 0]
+  layers:
+    FIN:
+      projection: 1d_track
+      index_axis: y
+      pitch_nm_ref: physical#/fin_count_profile/fin_pitch_nm
+      first_centre:
+        basis: lower_edge_plus_half_width
+        lower_edge_nm_ref: physical#/fin_count_profile/fin_lower_edge_offset_nm
+        width_nm_ref: physical#/fin_count_profile/fin_width_nm
+      # 下边偏移相对原点；首个编号 0 对应 24 + 2/2 = 25 nm。
+      index_range_inclusive: [0, 17]
+    LI:
+      projection: 2d_cells
+      # W017 样例。offset 相对原点，格边为 offset + i * pitch。
+      x_edges: {pitch_dbu: 20, offset_dbu: 0, cells: 8}
+      y_edges: {pitch_dbu: 10, offset_dbu: 0, cells: 20}
+    M1:
+      projection: 2d_cells
+      # PM 跨层样例。和 LI 同窗，各自使用自己的测试轴。
+      x_edges: {pitch_dbu: 16, offset_dbu: 0, cells: 10}
+      y_edges: {pitch_dbu: 20, offset_dbu: 0, cells: 10}
+    BOUNDARY: {projection: none}
+    MARKER:   {projection: none}
 
-layers:
-  FIN:
-    projection: 1d_track
-    index_axis: y
-    pitch_nm_ref: physical#/fin_count_profile/fin_pitch_nm
-    first_centre:
-      basis: lower_edge_plus_half_width
-      lower_edge_nm_ref: physical#/fin_count_profile/fin_lower_edge_offset_nm
-      width_nm_ref: physical#/fin_count_profile/fin_width_nm
-    index_range_inclusive: [0, 17]  # 当前样本编号窗；中心 25 至 195 nm
-
-  LI:
-    projection: 2d_cells
-    # 两轴都是格边；offset 相对 frame origin。W017 显式 synthetic 样例。
-    x_edges: {pitch_dbu: 20, offset_dbu: 0, cells: 8}
-    y_edges: {pitch_dbu: 10, offset_dbu: 0, cells: 20}
-
-  M1:
-    projection: 2d_cells
-    # PM 为跨层验收选定的测试轴，窗口同为 [0,160) × [0,200) DBU。
-    # 参数刻意与 LI 不同，便于发现实现误用 LI 参数。生产数值待工艺提供。
-    x_edges: {pitch_dbu: 16, offset_dbu: 0, cells: 10}
-    y_edges: {pitch_dbu: 20, offset_dbu: 0, cells: 10}
-
-  BOUNDARY: {projection: none}
-  MARKER:   {projection: none}
-
-# 以下是本审阅稿的资料清单。对应层保留原层表及几何，当前无可用的工艺网格。
-# 这 10 条不是运行时投影声明。显式选定 2d_cells 后缺一根轴，属于配置错误。
-# 正常测试包只装载上面 5 项；review_only 用于核对 15 层的覆盖。
-review_only:
-  layers_without_grid_declaration:
-    POLY:    缺周期栅距和相位
-    BODY_N:  缺二维格边轴
-    BODY_P:  缺二维格边轴
-    OD:      缺二维格边轴
-    CUT:     缺二维格边轴
-    CONTACT: 缺二维格边轴
-    VIA0:    缺二维格边轴
-    GCONTACT: 缺二维格边轴
-    BTAP_N:  缺二维格边轴
-    BTAP_P:  缺二维格边轴
+# 主 GDS 中的记录数和资料完整性（仅作审阅，不作为输入数据）
+# FIN 18，LI 3，M1 4，两条跳过声明各 1。
+# 其余十层均缺声明，保留原几何。POLY 缺栅距及相位，其他层缺双轴。
+# BODY_N 1，BODY_P 1，OD 2，POLY 1，CUT 0，CONTACT 4，
+# VIA0 3，GCONTACT 1，BTAP_N 0，BTAP_P 0。共 15 层、40 条。
