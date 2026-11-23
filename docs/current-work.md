@@ -4,7 +4,7 @@
 
 ## 当前节点
 
-**W017 方案已验收并经 PR #77 合入 main。** S1–S4 在实际合并提交逐字节复现。W018 按用户确认的逐层工艺声明实施坐标和占用内核。生产适配以相同声明方式提供各层参数；公开查询入口及产品默认限额留待后续。[PM 验收与三个推荐项](tasks/W017-coordinate-occupancy-projection.md#pm1-acceptance)
+**W017 方案已验收并经 PR #77 合入 main。** S1–S4 在实际合并提交逐字节复现。W018 按用户确认的逐层工艺声明实施坐标和占用内核。生产适配以相同声明方式提供各层参数；公开查询入口及产品默认限额留待后续。[W017 三项决定更新](tasks/W017-coordinate-occupancy-projection.md#pm2-layer-decision) · [W018 首份配置样例](tasks/W018/layer-discretization.example.yaml)
 
 **W016 单 cell 只读分析入口已验收并合入 main。** PM-01 已关闭。缺 tapcell 时可继续核对本地 D/G/S，B 和父级关系标为未知。当前处于 M1。[W016 PM3](tasks/W016-single-cell-analysis.md#pm3-integration)
 
