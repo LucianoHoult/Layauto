@@ -144,3 +144,21 @@ PYCODE
 ```
 
 **执行交接。** 在原 W018 分支局部修正错误字段的路径编码。为含 `/` 和 `~` 的字面键补定向回归。由独立 reviewer 从实际配置经产品入口复核，按返回路径从同一份输入读取被拒绝的键值，并对照原合法字段、来源 URI/hash 和保留的原几何。若调整公共 schema helper，加跑受影响的旧配置诊断。保留原复现及冻结矩阵，在补修回执中列明本次实跑及未覆盖范围。优先将局部修正与复核交回 PM，无需为本次回执重跑两套全量。
+
+### PM-01 执行补修与定向验证
+
+从 PM1 交接提交 `dc82d2348a748d50d7de3886e999b1d198d0c1d1` 起步，受测修正为 `61dc2087b8d242cc01142cf79b9407486061219d`。公共闭合对象校验器在遇到未知字段时，只对该字面键的单个 JSON Pointer 段先编码 `~` 为 `~0`，再编码 `/` 为 `~1`。在 PM 反例中，字段位置现为 `/coordinate_projection/layers/LI/x_edges~1pitch_dbu`，解引用得到 987，合法嵌套路径仍读出 20。[修正与正式回归](https://github.com/LucianoHoult/Layauto/commit/61dc2087b8d242cc01142cf79b9407486061219d)
+
+三个新增用例在修前均复现错误。修后用实际捕获的 coordinate owner 字节解析返回指针，分别取回字面键 `x_edges/pitch_dbu`、`x_edges~1pitch_dbu`、`~1/pitch_dbu` 的错误值，并核对文件 URI、SHA-256 和保留的 40 条原几何记录。执行者在 Python 3.12.14、pytest 9.2.0、PyYAML 6.0.3 上定向实跑 **30 passed**，其中新增 3 项、已有 W018 配置错误定位 9 项、W005 与单 cell 分析配置回归 18 项。
+
+```sh
+PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 python -B -m pytest -p no:cacheprovider -q \
+  tests/contracts/test_w018_projection.py::test_unknown_projection_key_pointer_resolves_to_rejected_value \
+  tests/contracts/test_w018_projection.py::test_invalid_selected_declaration_keeps_located_source_and_raw_geometry \
+  tests/unit/test_w005_config.py::test_nested_unknown_keys_are_rejected \
+  tests/unit/test_w005_config.py::test_version_type_missing_and_exact_failures \
+  tests/unit/test_w005_unicode.py::test_decoded_key_still_reaches_closed_schema_validation \
+  tests/unit/test_analysis_foundation.py::test_bad_manifest_returns_located_issue
+```
+
+补修按 PM1 运行新增及受影响的测试。与原冻结实现相比，产品与正式测试仅变动 `layauto_v2/tech/schema.py` 和 `tests/contracts/test_w018_projection.py`。双解释器全量、typing、构建及干净安装证据仍对应原冻结提交 `186c426ea550a6941ead417cd640a86c37017ba5`；本次未重跑。后续若改动指针生成或把报错映射回捕获文件的路径，复跑上述回归和[独立配置反查](W018/pm01-review.md)。本次交 PM 验收。
