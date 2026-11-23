@@ -415,6 +415,9 @@ and Y 48–58 DBU. Run the [example](docs/tasks/W019/example.py) with
   `include_effective=True` in `OccupancyRequest` to include available W009
   region pieces alongside the drawn records. Budget for both views together.
   Effective fragments identify their region, piece and CUT contributors.
+  When receiving an index from another caller, check
+  `index.effective is not None` before interpreting an empty `view="effective"` lookup. The view
+  filter operates on the fragments included in that index.
 - Inspect `index.layers` for record counts and the layer's projection. An
   undeclared layer reports `missing_declaration`. An explicit skip reports
   `projection_none`. Use `index.diagnostics` for unprojected sources. On a

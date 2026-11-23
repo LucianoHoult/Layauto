@@ -28,6 +28,7 @@
 | 器件接线与外部body做到哪里？ | [W014 PM2](tasks/W014-terminal-body-relations.md#pm2-integration)：synthetic八端与外置body关系已验收集成，实际merge三路组合和5项边界检查通过；U06仍为具体设计，现reader必填body_context未改 |
 | 只提供底层cell如何开始分析？ | [W016 验收与集成](tasks/W016-single-cell-analysis.md#pm3-integration)已交付单 cell 只读入口。提供 GDS、source CDL、query 及技术配置后，可在缺外部 body 资料时读取本地结果 |
 | 如何核对层坐标和跨格投影？ | [W017 PM1](tasks/W017-coordinate-occupancy-projection.md#pm1-acceptance) 记录已验收的逐层来源、实算样张及待确认的首包使用方式。 |
+| 如何从单 cell 查格并找回 GDS 原线？ | [W019 公开调用示例](tasks/W019/example.py)和[执行记录](tasks/W019/delivery.md)给出 M1 线端、片数预算、CUT 来源及外部 body 对照。 |
 
 ## 读取架构的起点
 
