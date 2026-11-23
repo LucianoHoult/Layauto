@@ -33,7 +33,7 @@ M0 分开交付“工程输入/合同准备”和“真实 profile 证据准入�
 
 2026-11-09 准备的近期切片 [W011](tasks/W011-channel-identity-fin-count.md#pm2-integration)现已通过PR #65验收集成，承接 W007 identity/seeds、W009 channel 和 W010 local graph，落实 R01/R06/R11/R12 的 channel 身份关联、FIN 几何计量与有限 source 参数核对；详细阶段归任务文件。它不关闭完整 R07 annotation、R12 body、R16 mandatory 或 R21 extraction-aware no_change。其后仍按依赖补齐 net/body/坐标与规则、baseline 及 Stage 6 文件/终态；近期性能工作见下行W012，不提前冻结更远任务编号。
 
-用户随后明确要求将测试反馈效率与产品性能分别推进：[W012](tasks/W012-capture-wire-performance.md)已单列完整捕获/wire/重复重建成本，归R13/R27/R28的工程支撑；W011稳定基线确定后优先准备，扩大组合前处理。开发新增/受影响、最终双全量的安排归[协作规则](collaboration/rules.md)；少跑测试及互斥gate不能替代单次完整路径的性能改善。W012不新增物理能力或生产性能承诺，详细阶段/目标继续归任务文件。
+用户随后明确要求将测试反馈效率与产品性能分别推进：[W012](tasks/W012-capture-wire-performance.md)已单列完整捕获/wire/重复重建成本，归R13/R27/R28的工程支撑；W011稳定基线确定后优先准备，扩大组合前处理。子任务验证新增及受影响范围，阶段或里程碑集成时单独执行双版本全量，见[协作规则](collaboration/rules.md#verification-reuse)；少跑测试及互斥gate不能替代单次完整路径的性能改善。W012不新增物理能力或生产性能承诺，详细阶段/目标继续归任务文件。
 
 W012调查及[A1兼容hex优化](tasks/W012-capture-wire-performance.md#pm4-a1-integration)现已随PR #66验收集成。A2有限候选按[PM7](tasks/W012-capture-wire-performance.md#pm7-a2-stop)停止且不集成，[W013网络区域标注与覆盖](tasks/W013-net-annotation-coverage.md#pm2-integration)已通过PR #68验收集成，承接R06/R07与局部分量摘要。后续仍在方案/最早组合检查资源增长；残余结构成本不丢失、不把A2作为功能硬依赖，不启动新wire。完整body、坐标、mandatory规则、baseline和Stage6义务仍后续完成。
 
@@ -41,7 +41,7 @@ W012调查及[A1兼容hex优化](tasks/W012-capture-wire-performance.md#pm4-a1-i
 
 [W015](tasks/W015-single-cell-analysis-entry.md#pm1-acceptance)入口合同及实施方案已验收集成；[W016](tasks/W016-single-cell-analysis.md#pm3-integration)已验收集成独立只读分析入口，缺外部body时保留已认证本地事实。首包仅synthetic/flat、query必需，不替代剩余Stage2与M1闭环，也不代表真实PDK适配。
 
-[W017 方案](tasks/W017-coordinate-occupancy-projection.md#pm1-acceptance)已验收集成。15 层坐标来源、FIN 中心查询、显式 LI 格边和同格多片段均有可复核样张。[W018](tasks/W018-coordinate-occupancy-core.md#pm2-integration) 已集成逐层声明驱动的坐标与占用内核，可从占用片段回查 GDS 来源。下一节点建议接入 W016 单 cell 分析入口。
+[W017 方案](tasks/W017-coordinate-occupancy-projection.md#pm1-acceptance)已验收集成。15 层坐标来源、FIN 中心查询、显式 LI 格边和同格多片段均有可复核样张。[W018](tasks/W018-coordinate-occupancy-core.md#pm2-integration) 已集成逐层声明驱动的坐标与占用内核，可从占用片段回查 GDS 来源。[W019](tasks/W019-single-cell-occupancy-query.md) 将其接入 W016 单 cell 分析入口，供调用方查询每格的实际占用及 GDS 来源。
 
 | 里程碑 | 可观察能力与代表输入→结果 | 依赖 / 退出验收 |
 | --- | --- | --- |
