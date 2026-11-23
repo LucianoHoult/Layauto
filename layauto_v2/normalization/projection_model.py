@@ -1,13 +1,15 @@
-"""Bind the selected coordinate owner to authenticated W008 inputs, without IO."""
+"""Bind the selected coordinate owner to authenticated local geometry, without IO."""
 from __future__ import annotations
 
 from dataclasses import replace
 from typing import Literal, cast
 
 from layauto_v2.domain.codec import FrozenMap
+from layauto_v2.domain.evidence import EvidenceRecord
 from layauto_v2.domain.geometry import UnitBinding, integer, mapping, sequence
 from layauto_v2.domain.regions import validate_closed_graph
-from layauto_v2.domain.results import EvidenceIssue
+from layauto_v2.domain.results import EvidenceIssue, InputError
+from layauto_v2.state.layout_store import LayoutDraft
 from layauto_v2.state.projection_axes import CellGrid, EdgeAxis, TrackAxis
 from layauto_v2.state.projection_model import LayerProjection, ProjectionModel
 from layauto_v2.tech.projection import checked_layer, nm_parameter
@@ -59,9 +61,17 @@ def bind_projection_model(geometry: GeometryResult) -> ProjectionModel:
     if type(geometry) is not GeometryResult or geometry.status != 'success' or geometry.value is None:
         raise ValueError('coordinate binding requires a successful captured GeometryResult')
     validate_closed_graph(geometry, _INPUT_TYPES)
-    layout = geometry.value.layout
-    tech = mapping(geometry.input.value['tech'])
-    sources = next(record.sources for record in geometry.completed if record.kind == 'tech')
+    owner = next(record for record in geometry.completed if record.kind == 'tech')
+    try:
+        return _bind_model(geometry.value.layout, owner)
+    except InputError as exc:
+        raise ProjectionConfigError(exc.issue, geometry) from exc
+
+
+def _bind_model(layout: LayoutDraft, owner: EvidenceRecord) -> ProjectionModel:
+    """Both adapters supply the tech record from their own authenticated capture."""
+    tech = mapping(owner.payload['owners'])
+    sources = owner.sources
     projection = mapping(mapping(tech['coordinate'])['coordinate_projection'])
     x_nm, y_nm = map(integer, sequence(projection['frame_origin_nm']))
     origin = (x_nm, y_nm)
@@ -81,7 +91,6 @@ def bind_projection_model(geometry: GeometryResult) -> ProjectionModel:
                 row = checked_layer(value, path)
                 declarations[name] = _bind_layer(row, path, origin, layout.units, profile)
         except SchemaError as exc:
-            issue = EvidenceIssue('config', 'InvalidProjectionDeclaration', str(exc),
-                                  replace(sources[5], field=exc.path))
-            raise ProjectionConfigError(issue, geometry) from exc
+            raise InputError('config', 'InvalidProjectionDeclaration', str(exc),
+                             replace(sources[5], field=exc.path)) from exc
     return ProjectionModel(origin, declarations, layout.units.ref, sources)

@@ -382,3 +382,53 @@ permission. It supports only the declared synthetic flat subset and required
 query mode. Production PDKs, EDA tools and arbitrary hierarchy remain unverified.
 Implementation review, resource measurements and verification are recorded in
 [W016](docs/tasks/W016-single-cell-analysis.md).
+
+### Query process-grid occupancy
+
+Select the coordinate owner in the analysis manifest's tech bundle and bind its
+bytes in the local query header. Supply a fragment budget when requesting the
+index. One analysis can serve repeated cell, track, layer and record lookups.
+
+```python
+from pathlib import Path
+from layauto_v2.analysis import AnalysisRequest, OccupancyRequest, analyze_cell
+
+result = analyze_cell(AnalysisRequest(Path("/inputs/analysis.json")),
+                      occupancy=OccupancyRequest(fragment_budget=48))
+query = result.occupancy
+if query is not None and query.status == "success":
+    index = query.value
+    assert index is not None
+    fragment, = index.in_cell("M1", 2, 2, view="drawn")
+    record = fragment.source.record
+    pieces = index.for_record(record.id, view="drawn")
+    print(record.source.uri, record.source.byte_offset, fragment.rect.area)
+    print([p.rect.x1 - p.rect.x0 for p in pieces])
+```
+
+With the W018 sample owner this prints `source.gds 2352 130` and
+`[16, 16, 13]`. The final cell spans X 32–48 DBU. The wire covers X 32–45
+and Y 48–58 DBU. Run the [example](docs/tasks/W019/example.py) with
+`PYTHONPATH=. python docs/tasks/W019/example.py` to prepare a temporary sample.
+
+- Omit `occupancy` to use the original analysis and report. Select
+  `include_effective=True` in `OccupancyRequest` to include available W009
+  region pieces alongside the drawn records. Budget for both views together.
+  Effective fragments identify their region, piece and CUT contributors.
+- Inspect `index.layers` for record counts and the layer's projection. An
+  undeclared layer reports `missing_declaration`. An explicit skip reports
+  `projection_none`. Use `index.diagnostics` for unprojected sources. On a
+  declared layer, `in_cell("FIN", track)` queries a track and
+  `in_cell("M1", x, y)` queries a cell. An empty tuple in a requested view
+  means no indexed fragments at that valid location.
+- Inspect the query status independently of `result.request_status`.
+  `not_evaluated` gives the missing dependency and original issues.
+  `invalid_declaration` gives the coordinate field, URI and SHA-256.
+  `resource_limit` gives the total `required_fragments`, `budget` and
+  first `exceeded_at` source. Each of these outcomes has `value=None`.
+  A failed external body selection retains its diagnostics alongside any
+  independently available local occupancy.
+
+The optional JSON summary records the selected view scope, status, counts or
+diagnostics and model/source references. Budget and required count use hex
+strings there. The Python index retains the exact geometry and source objects.
