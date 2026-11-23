@@ -4,7 +4,7 @@
 
 ## 当前节点
 
-**当前分支任务为 [W019 单 cell 工艺网格占用查询](tasks/W019-single-cell-occupancy-query.md)。** 执行 session 从任务卡的启动指令继续；下一次双版本全量安排在入口集成后的阶段验收。
+**当前分支任务为 [W019 单 cell 工艺网格占用查询](tasks/W019-single-cell-occupancy-query.md)。** PM 已实核 W019 主样本与定向证据。当前待修正缺轴与有效几何算子同时出错时的诊断遗漏，执行 session 从 [PM1 补修交接](tasks/W019-single-cell-occupancy-query.md#pm1-receipt) 继续；双版本全量安排在入口集成后的阶段验收。
 
 **W018 已验收并通过 PR #79 合入 main。** PM-01 已关闭。实际合并版本复现了 15 层、40 条原始记录、48 个占用片段，也验证了旧配置、同格 CUT 两块几何和错误字段的准确定位。W019 承接 W016 单 cell 只读分析入口的占用查询。[PM2 集成验收](tasks/W018-coordinate-occupancy-core.md#pm2-integration)
 

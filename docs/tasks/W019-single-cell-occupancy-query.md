@@ -2,7 +2,7 @@
 
 ## 任务要求（PM）
 
-**阶段为可执行。** 本任务属于 M1 的 Stage 2。基线为已集成 W016、W018 的 main `0af9bfe18f9a8606d5b1cf3c707b8e75b28a064c`，执行分支为 `codex/w019-single-cell-occupancy-query`。执行 session 负责方案、实现和证据，独立 reviewer 复核，PM 负责验收和集成。
+**阶段为待补修。** PM 已核对交付，当前有 1 项合并前必须修正的问题。[PM1 接收与补修](#pm1-receipt) 本任务属于 M1 的 Stage 2。基线为已集成 W016、W018 的 main `0af9bfe18f9a8606d5b1cf3c707b8e75b28a064c`，执行分支为 `codex/w019-single-cell-occupancy-query`。执行 session 负责方案、实现和证据，独立 reviewer 复核，PM 负责验收和集成。
 
 用户从现有 `analyze_cell` 入口分析一份本地 flat cell 后，应能按层、轨道或格号读取实际覆盖，再从片段找回原始 GDS 记录，也能从源记录查回它覆盖的片段。外部 tapcell 继续由调用方选择。首包沿用 W016 已支持的 synthetic 输入、W018 随工艺包读取的逐层声明和显式片数预算。[W016 公开入口](../../layauto_v2/analysis.py) · [W018 验收](W018-coordinate-occupancy-core.md#pm2-integration) · [架构 §3.4–3.5](../architecture.md#34-grid-作为坐标系统)
 
@@ -50,3 +50,24 @@ W019 A1–A5 已逐项实跑。实际无外部 tapcell、选择有效 context �
 ## 执行 session 启动指令
 
 > 以执行角色在 codex/w019-single-cell-occupancy-query 上完成 W019 A1–A5。先给出公开入口的调用样例并做独立方案复核，再复用 W016 本地输入和 W018 占用内核实现查询。用真实文件核对有无外部 tapcell 的本地结果一致、M1 部分占格、CUT 同格多片、缺声明及超限。开发和交付跑新增及受影响项，完成类型检查、安装冒烟和独立代码复核。将实现、证据及完整 SHA 推回原分支交 PM 验收。
+
+<a id="pm1-receipt"></a>
+
+## PM1 接收与补修
+
+PM 于 2026-11-23 核查交付 `18ac5a7eabb7a0f9840601f4e0eade280522b3b2`。**待修正 1 项（P2），完成独立定向复核后再集成。** A1–A3 的主要结果成立。Python 3.12.14 下实跑公开示例、独立 GDS 探针和 W019 正式合同文件（11 项通过），覆盖 M1 的 16/16/13 DBU、三种外部 body 选择、CUT 同格两片及片数超限。核对了证据索引的 17 项 SHA-256，含归档内的 14 份原输出。执行侧 107 项通过和 82 个源文件类型检查通过按冻结实现 tree `44cf74fa56e08896fb834c8ce359d5638eac7d51` 采信。[原交付](W019/delivery.md) · [独立代码复核](W019/code-review.md)
+
+**PM-01：组合输入丢失可独立定位的坐标配置错误（A4）。** 同一请求中，M1 的二维声明缺少 `y_edges`，同时工艺不支持矩形差集算子。查询包含 effective 时只报告算子错误。删除请求里的 effective 选择后，原样的坐标文件才报告缺轴。两种选择都已认证同一份本地图形，共 40 条记录。坐标绑定只依赖该 layout 和已取得的工艺资料，可以独立给出结论。[A4 要求](#任务要求pm) · [单 cell 独立诊断约定](W015/entry-contract.md) · [两处前提检查](../../layauto_v2/normalization/analysis_occupancy.py)
+
+从仓库根目录运行 `python -B -m docs.tasks.W019.pm01_probe`。探针用临时副本重绑实际文件哈希，调用公开 API，对照错误代码、URI、字段、SHA-256 和报告。此交付的实跑结果如下。状态依次为原分析状态和占用查询状态。[可运行的探针](W019/pm01_probe.py)
+
+| 输入及查询 | 状态 | 公开结果中的诊断 |
+| --- | --- | --- |
+| 仅缺轴，drawn + effective | completed / invalid_declaration | InvalidProjectionDeclaration |
+| 仅算子不支持，drawn + effective | unsupported / not_evaluated | UnsupportedRegionOperator |
+| 两项同时出现，drawn + effective | unsupported / not_evaluated | 仅 UnsupportedRegionOperator；同时检查 JSON 报告也缺坐标诊断 |
+| 同一组合输入，仅 drawn | unsupported / invalid_declaration | InvalidProjectionDeclaration 与 UnsupportedRegionOperator |
+
+坐标诊断应指向 `tech/layer-discretization.yaml#/coordinate_projection/layers/M1/y_edges`，算子诊断应指向 `tech/physical.json#/operators/rectangle_set_difference~11`。每个来源 SHA-256 都以相应输入文件的实际字节核对。
+
+**补修交接。** 在原分支局部修复查询路径。请求占用且 drawn 已认证时，保留坐标声明检查和所选 effective 依赖各自可得的诊断。组合输入从公开结果和诊断报告均可找到两项原始原因，可定位至与单项输入相同的来源。受阻查询保留已认证的本地几何并给出无完整占用索引的状态。维持无查询调用、原分析顶层状态和仅 drawn 请求的既有语义。将组合输入与单项对照加入正式定向回归，由未参与修正者独立复核。按 [验证分工](../collaboration/rules.md#verification-reuse) 跑新增及受影响项，推回原分支。双解释器全量仍在实际集成后执行。
