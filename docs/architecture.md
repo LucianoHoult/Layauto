@@ -2305,6 +2305,8 @@ Rule loader 必须做跨字段 runtime validation：rule id唯一、layer可解�
 - drawn-patterning policy / optional `drawn_mask_color` interpretation：解释 canonical GDS layer/datatype 或 shape property，可参与工艺规则；独立 `display_color` 只服务 visualization / reports。
 - `derived_layer_refs`：只列出可作为 annotation evidence source 的 `calibre_layer_map.yaml` stable names，不重复声明 `carries`、mask、tolerance 或 trim policy。
 
+用于 Stage 2 坐标构建的工艺配置须在对应层条目显式声明投影类型，并按该类型提供参数或明确的工艺内引用。W018 首包处理一维轨道、二维格覆盖和不参与主占用。类型决定要校验的字段及采用的投影算法；缺项或不相容时报告对应层与字段。工艺适配负责给出声明，运行时不根据层名、tier 或版图外观另行推断维度。
+
 Grid topology 不应在 parser/grid factory 中硬编码。Projection model/axes与 electrical connects分别由 layer map提供，并做以下校验：
 
 - 对声明 orthogonal lattice 的 profile 才验证 `ortho(ortho(L)) == L` 与一横一竖；其它 layer可 bidirectional/off-track。

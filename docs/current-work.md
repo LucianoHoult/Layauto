@@ -1,10 +1,10 @@
 # 当前工作入口
 
-当前任务见[W017 坐标与占用投影](tasks/W017-coordinate-occupancy-projection.md)。最近完成节点见[W016 PM3](tasks/W016-single-cell-analysis.md#pm3-integration)，前置方案见[W015 PM1](tasks/W015-single-cell-analysis-entry.md#pm1-acceptance)，已完成节点见[W013 PM2](tasks/W013-net-annotation-coverage.md#pm2-integration)；W012 A2停止决定见[PM7](tasks/W012-capture-wire-performance.md#pm7-a2-stop)。详细决定、证据与review结论归任务文件。
+本分支当前任务见[W018 坐标与离散占用内核](tasks/W018-coordinate-occupancy-core.md)。最近完成节点见[W016 PM3](tasks/W016-single-cell-analysis.md#pm3-integration)，前置方案见[W015 PM1](tasks/W015-single-cell-analysis-entry.md#pm1-acceptance)，已完成节点见[W013 PM2](tasks/W013-net-annotation-coverage.md#pm2-integration)；W012 A2停止决定见[PM7](tasks/W012-capture-wire-performance.md#pm7-a2-stop)。详细决定、证据与review结论归任务文件。
 
 ## 当前节点
 
-**W017 方案已验收并经 PR #77 合入 main。** S1–S4 在实际合并提交逐字节复现。下一步确认首个只读坐标查询包的独立输入、FIN/LI 范围和结果语义，再派发实施。[PM 验收与三个推荐项](tasks/W017-coordinate-occupancy-projection.md#pm1-acceptance)
+**W017 方案已验收并经 PR #77 合入 main。** S1–S4 在实际合并提交逐字节复现。W018 按用户确认的逐层工艺声明实施坐标和占用内核。生产适配以相同声明方式提供各层参数；公开查询入口及产品默认限额留待后续。[PM 验收与三个推荐项](tasks/W017-coordinate-occupancy-projection.md#pm1-acceptance)
 
 **W016 单 cell 只读分析入口已验收并合入 main。** PM-01 已关闭。缺 tapcell 时可继续核对本地 D/G/S，B 和父级关系标为未知。当前处于 M1。[W016 PM3](tasks/W016-single-cell-analysis.md#pm3-integration)
 
