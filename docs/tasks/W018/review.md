@@ -35,3 +35,14 @@ Python 3.12.14 上的[独立探针](review_probe.py)使用独立 GDS reader 读�
 核对受审归档的产品树 `bd179818623ec58271a57fb38d8035e8fd41d48f`、测试树 `a321832ecfae5f68b6ed4ccff2ac0ae8c3776869`、pyproject blob `197d03c3c59499d76f6ca28d6049229d192c1d2f`。W003/W004 fixture 子树与起点相同，均为 `c8b85527a7063f4d489f9af6d45fb61204389190`。针对执行矩阵冻结 manifest 的 310 个文件逐个比对字节 SHA-256。核查 3.10.22 与 3.12.14 两边已结束的 mypy、构建、干净安装依赖检查、wheel 字节比对和源码外 smoke 的退出码及日志摘要。每侧 mypy 检查 81 个源文件，smoke 均返回 15 层、40 条记录、48 片及三个可回查的 GDS 偏移。产品复核完成时，双版本全量 pytest 仍在执行。
 
 复核覆盖 synthetic flat-rectangle 内核。生产 PDK、W016 无 tapcell 入口接入及 Stage 2 baseline 发布留给相应任务。源、样例、测试、依赖、捕获身份或实际合并行为变化时，按变化补跑定向检查；产品重新冻结时按仓库规则完成新版本工程矩阵。[验证复用规则](../../collaboration/rules.md#verification-reuse)
+
+### 双版本最终矩阵补核
+
+两次全量结束后，在 reviewer 自己从受审 SHA 导出的归档上，分别用 Python 3.10.22 和 3.12.14 重跑 `python -B -m pytest -p no:cacheprovider --collect-only -q tests`，两边均设置 `PYTEST_DISABLE_PLUGIN_AUTOLOAD=1`。各自收集 1995 个唯一节点，与该版本保存的收集清单逐行等同；有序清单 SHA-256 为 `87dc9e509e1773e0a9452eda9f9ea7e30b91b6b23a3732543f3ee72eb3640c5e`。独立解析两份原始执行日志的 worker 结果，用多重集逐一核对节点及运行次数；另外按父测试和 case 名复核了 8 项 body 子测试。[矩阵回执](evidence/matrix.json)
+
+| 解释器 | 完整测试 | pytest 耗时 | 解压后原始日志 SHA-256 |
+| --- | --- | ---: | --- |
+| Python 3.10.22 | 1995 个节点各通过一次，另 8 项子测试通过 | 5137.82 s | `f8849aec7240e8cb8a1d692e2109e08bb92271a2750a8fdee30efc47eaea1ced` |
+| Python 3.12.14 | 1995 个节点各通过一次，另 8 项子测试通过 | 3840.87 s | `8ed8d27d03c580e21ba4d02ad8bf689b064a5487ad94bcede2196325cd97067d` |
+
+冻结清单的 310 项与 reviewer 独立归档及测试结束后的执行树再次逐字节比对。27 条命令均为 exit 0，归档内容的 SHA-256 与命令回执、执行目录的原始输出一致。两个 wheel 及两个 sdist 的 SHA-256 均与各自构建实物相符。两版全量、typing、构建、干净安装和源码外 smoke 的执行证据可按上述身份用于本次交接，矩阵复核缺口为 0。[冻结清单](evidence/freeze.json) · [命令与输出身份](evidence/commands.json)

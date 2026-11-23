@@ -94,3 +94,16 @@ python -m pytest -q tests/contracts/test_w018_projection.py::test_cut_islands_sa
 | 样例 20×10 DBU | 20 / 48 | 3.925 / 32,610 | 8,557.498 / 7,316,372 |
 | 同窗细化到 1×1 DBU | 1,110 / 1,138 | 51.689 / 440,774 | 8,307.849 / 7,238,840 |
 | 原节距，每轴十亿格 | 20 / 48 | 3.051 / 32,938 | 8,836.801 / 7,520,832 |
+
+### A5 冻结验证与 PM 交接
+
+**开发期实跑。** Python 3.12.14 运行 W018 坐标、模型及端到端测试，加 W007 依赖边界，共 35 passed；针对共享读取和旧组件另跑 17 项，覆盖真实 site、闭包选择和缺项、W006 readback、W008 原分格与 owner 认证、W009 CUT 孤岛、W016 无 body 分析。配置校验开发回归 68 passed。独立 reviewer 用 3.10.22 跑 36 项定向检查，并直接解码 GDS，与逐 DBU 方块覆盖和来源逐项核对。冻结前发现的大有理数模型身份问题 R1 已修复并有持久回归。[复核报告与反例](W018/review.md)
+
+**最终实跑。** 从冻结提交 `186c426ea550a6941ead417cd640a86c37017ba5` 导出干净源码，两个解释器均运行完整 `tests/`，包含 fixture_support。收集顺序摘要均为 `87dc9e509e1773e0a9452eda9f9ea7e30b91b6b23a3732543f3ee72eb3640c5e`。每个通过节点与本侧收集结果一一对应。另分别运行 strict mypy、构建 wheel/sdist、在新 venv 中安装该 wheel、pip check 和源码目录外 `python -I` 实际读 GDS。两侧各有 127 个已安装运行时文件与冻结源逐字节相同。[矩阵与构建身份](W018/evidence/matrix.json) · [命令及原输出索引](W018/evidence/commands.json) · [冻结输入清单](W018/evidence/freeze.json)
+
+| Python | 全量 pytest | pytest 耗时 | strict mypy | 干净安装与源码外 smoke |
+| --- | --- | ---: | --- | --- |
+| 3.10.22 | 1,995 passed，8 subtests passed | 5,137.82 s | 81 个源文件通过 | 15 层、40 条、48 片及 3 个 GDS 来源通过 |
+| 3.12.14 | 1,995 passed，8 subtests passed | 3,840.87 s | 81 个源文件通过 | 同一组输入及预期通过 |
+
+**交 PM。** 建议接收 W018 A1–A5，剩余必须修正项 0。本次范围为显式声明的 synthetic flat-rectangle 工艺与只读内核。产品默认预算、W016 入口接入、生产 PDK 适配与 Stage 2 baseline 发布仍由后续任务负责。后续证据补记只涉及任务文档和原输出；按冻结清单和实际输入身份采信上述矩阵。PM 在实际合并版本补跑样例、S3 和旧 owner 兼容组合；产品、样例、正式测试、解释器或依赖变化时重新核定验证范围。[安装结果实数与回溯](W018/evidence/wheel-smoke.json)
