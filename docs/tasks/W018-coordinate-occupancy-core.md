@@ -67,3 +67,30 @@ M1，Stage 2。交付可被后续 Stage 2 组装代码调用的产品组件。�
 - S3 单独声明 32×16 DBU。LI [130,150) × [20,24) 扣除宽 2 的 CUT 相交部分后，左右宽各 9，面积各 36 nm²，间隙 2 nm；两片同落 (4,1)，保留各自 region/piece 与共同 drawn/CUT 来源。
 
 **实施路径。** W005 安全解析所选 tech owner，W008 认证捕获与 LayoutDraft，W009 提供同源 region、piece 与贡献者。配置/归一化负责校验和绑定；state 的纯坐标对象负责换算，离散占用持有双向索引，片段沿用 Rect.intersection、UnitBinding 和源 ID。开发先跑声明读取、W008/W009 组合、S1–S4 及错误/预算测试，冻结后以同一源码、样例和测试完成双解释器工程矩阵并交独立复核。
+
+### 执行交付与复现
+
+配置提交 `fb6010a87d7bb0f88c84fa95eb4d0c7c79b80a0c`。冻结产品、测试及演示提交 `186c426ea550a6941ead417cd640a86c37017ba5`。工艺包的 `owners.coordinate.path` 指向样例 YAML，文件 SHA-256 为 `fefb1bb72c15a131206f2885e1d9dc7ad98463aab676237a410a99d9c3d82890`。主图与专例使用已有 GDS；原 fixture 子树为 `c8b85527a7063f4d489f9af6d45fb61204389190`。演示在临时副本中更新工艺选择和现有捕获的闭包绑定。
+
+在仓库根目录用开发环境执行下列命令。第一条从文件构建占用，列出逐层实数和 FIN、LI、M1 各一个格的原记录、字节偏移及全部覆盖片数。第二条从专例 GDS 验证同格两片及 CUT 来源。
+
+```sh
+python -m docs.tasks.W018.example
+python -m pytest -q tests/contracts/test_w018_projection.py::test_cut_islands_same_cell_loses_no_area_or_provenance
+```
+
+**A1 与 A2。** 内部组装入口 `normalization.projection.build_discrete_occupancy(geometry, fragment_budget=..., effective=...)` 接受成功的 W008 结果，可选同一捕获的 W009 结果。工艺引用使用已认证的六个 owner；一维参数既可直接填写精确 nm，也可引用样例中的权威字段。一维声明的 `index_axis` 决定条带法向，`first_centre` 对应闭编号窗下界。二维坐标使用同包原点和 canonical DBU，格边偏移以原点为基准。换算物理点时将 `layout.units.canonical_tick_nm` 传给 CellGrid 的 `physical_to_index` 和 `index_to_physical`。[声明校验](../../layauto_v2/tech/projection.py) · [捕获绑定](../../layauto_v2/normalization/projection_model.py) · [坐标数学](../../layauto_v2/state/projection_axes.py)
+
+成功结果的 `value.layers` 将 drawn 计数和声明状态分列；`in_cell`、`for_layer`、`for_record` 支持 drawn/effective 视图。每片都有确切 Rect、单位引用、模型身份、源 record ID 与 GDS 位置，有效片另带 region、piece 与贡献者。占用以同一源对象建立只读索引；每次更换坐标，仍可回到 W008 layout 或 W009 region 重算。[构建入口](../../layauto_v2/normalization/projection.py) · [占用与查找](../../layauto_v2/state/discrete_occupancy.py)
+
+**A3 实测。** 主 GDS 的 40 条源记录形成原 W008 索引 41 片；新模型产生 FIN 18、LI 20、M1 10 片。LI (1,3) 为 [28,34) × [30,40)，回查字节偏移 1648 的原图得到 3 片。M1 (2,2) 为 [32,45) × [48,58)，源偏移 2352。测试以独立区间成员关系和面积验证每个已投影 record 的完整覆盖，包含边、顶点和同形异源记录。LI 移相后 23 片、互换轴节距后 16 片，W008 源几何相等。S2 在临时真实 GDS 中重建 32 DBU²；S3 格 (4,1) 内保留一个 drawn 和两个 effective，来自 LI 偏移 182 与 CUT 偏移 246，净面积 72 nm²。[端到端合同测试](../../tests/contracts/test_w018_projection.py) · [坐标边界测试](../../tests/unit/test_w018_axes.py)
+
+**A4 缺项与预算。** 旧 owner 的 15 层均报告缺声明。新版显式跳过与资料缺失各有独立状态，空层也有记录。对显式二维删除 LI 的 Y 轴，W008 保有 40 条几何，新投影返回含选定文件 URI、哈希和 `/coordinate_projection/layers/LI/y_edges` 的配置异常。离轨、形状不适用和部分越界逐来源留存原因。预算由调用方明示。主图预算 47 时返回所需总数 48、首次超限的来源和空占用结果，预算 48 可完整生成。在十亿乘十亿格的满窗反例上，先算得 10¹⁸ 片，调用格边求交之前即返回超限。
+
+冻结版 Python 3.12.14，运行 `python -B -m docs.tasks.W018.example --resources` 单次测量。时钟为 perf_counter，峰值为 tracemalloc 记录的 Python 分配。文件至占用含 W005 读取与 W008 认证；内核一列从已绑定模型和 layout 开始。两个范围均含 15 层和双向索引。测量与同机工程矩阵并行，毫秒数仅描述此次运行。[资源原始输出](W018/resources.json)
+
+| LI 配置 | LI 片 / 全图占用格 | 内核 ms / 峰值 bytes | 文件至占用 ms / 峰值 bytes |
+| --- | ---: | ---: | ---: |
+| 样例 20×10 DBU | 20 / 48 | 3.925 / 32,610 | 8,557.498 / 7,316,372 |
+| 同窗细化到 1×1 DBU | 1,110 / 1,138 | 51.689 / 440,774 | 8,307.849 / 7,238,840 |
+| 原节距，每轴十亿格 | 20 / 48 | 3.051 / 32,938 | 8,836.801 / 7,520,832 |
