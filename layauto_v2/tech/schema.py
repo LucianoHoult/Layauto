@@ -113,7 +113,9 @@ def obj(required: dict[str, Check], optional: dict[str, Check] | None = None) ->
             return
         for key in value:
             if key not in required and key not in optional:
-                raise SchemaError(f'{path}/{key}', 'unknown field', 'UnknownKey')
+                # A literal member name occupies one JSON Pointer token (RFC 6901).
+                token = key.replace('~', '~0').replace('/', '~1')
+                raise SchemaError(f'{path}/{token}', 'unknown field', 'UnknownKey')
         for key in required:
             if key not in value:
                 raise SchemaError(f'{path}/{key}', 'required field missing', 'MissingField')

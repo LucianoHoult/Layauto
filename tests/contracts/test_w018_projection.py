@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import hashlib
+import json
 from collections import Counter
 from dataclasses import FrozenInstanceError, replace
 from fractions import Fraction
@@ -154,6 +155,38 @@ def test_invalid_selected_declaration_keeps_located_source_and_raw_geometry(tmp_
     assert source.uri == COORDINATE_URI and source.sha256 == hashlib.sha256((root / COORDINATE_URI).read_bytes()).hexdigest()
     assert source.field == '/coordinate_projection/' + field
     assert len(geometry.value.layout.records) == 40 and len(geometry.value.fragments) == 41
+
+
+@pytest.mark.parametrize(('literal_key', 'encoded_token'), [
+    ('x_edges/pitch_dbu', 'x_edges~1pitch_dbu'),
+    ('x_edges~1pitch_dbu', 'x_edges~01pitch_dbu'),
+    ('~1/pitch_dbu', '~01~1pitch_dbu'),
+])
+def test_unknown_projection_key_pointer_resolves_to_rejected_value(tmp_path, literal_key, encoded_token):
+    root = copy_input(tmp_path)
+    select_projection(root, mutate=lambda model: model['layers']['LI'].update({literal_key: 987}))
+    geometry = build_geometry_from_site(root)
+    with pytest.raises(ProjectionConfigError) as caught:
+        build_discrete_occupancy(geometry, fragment_budget=100)
+    issue = caught.value.issue
+    assert issue.code == 'InvalidProjectionDeclaration'
+    assert issue.message == 'unknown field'
+    assert caught.value.geometry is geometry and len(geometry.value.layout.records) == 40
+    captured = next(item for item in geometry.input.parse.sources if item.uri == COORDINATE_URI)
+    assert issue.source.uri == captured.uri
+    assert issue.source.sha256 == hashlib.sha256(captured.data).hexdigest()
+    document = json.loads(captured.data)
+    assert document['coordinate_projection']['layers']['LI']['x_edges']['pitch_dbu'] == 20
+
+    # RFC 6901 decodes ~1 before ~0 so an escaped literal '~1' stays a single key token.
+    pointer = issue.source.field
+    assert pointer is not None
+    tokens = [token.replace('~1', '/').replace('~0', '~') for token in pointer.split('/')[1:]]
+    selected = document
+    for token in tokens:
+        selected = selected[token]
+    assert selected == 987
+    assert pointer == '/coordinate_projection/layers/LI/' + encoded_token
 
 
 def test_reader_detects_changed_selected_bytes_before_binding(tmp_path):
