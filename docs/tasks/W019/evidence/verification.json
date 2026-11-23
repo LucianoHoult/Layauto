@@ -121,5 +121,20 @@
     "cost.json": "fd7c7f6824f9e9ec3e28e188c9352dc85f9c92c04817311e13badc0e99040833",
     "main-sample.json": "17172b6a1d9234869df3fbab2967ad94ea38e22e16fba8afa0ee5ddd0be7a8ee"
   },
-  "scope": "New and impacted tests only. PM owns the dual-interpreter full suite after Stage 2 integration."
+  "scope": "New and impacted tests only. PM owns the dual-interpreter full suite after Stage 2 integration.",
+  "publication": {
+    "reason": "Recreated unpushed commits with the repository GitHub noreply address after GH007. Complete tree identity verified with git rev-parse and git diff --exit-code.",
+    "identical_trees": [
+      {
+        "local_verification_commit": "07605914bece908d24f5ff6a92cedb27b9d8d2f9",
+        "published_commit": "cbcf381bb8a11876c5cf2fc0673305483fdb5ea7",
+        "tree": "44cf74fa56e08896fb834c8ce359d5638eac7d51"
+      },
+      {
+        "local_verification_commit": "f48017456c74d6dbcdb64e5fd753f05620b3eabf",
+        "published_commit": "d9c1f7306f677cbbf160403541363950c66bc2d2",
+        "tree": "37751b18c0b14ed427a4b1de47ae35aab9d653dc"
+      }
+    ]
+  }
 }

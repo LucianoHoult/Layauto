@@ -2,6 +2,8 @@
 
 执行分支为 `codex/w019-single-cell-occupancy-query`。起点为 `d0b8540e0e06326f51f7fd4c56d3e43c7ca667c1`。方案复核先行，受测实现、测试、公开示例和成本探针随后冻结在 `07605914bece908d24f5ff6a92cedb27b9d8d2f9`，Git tree 为 `44cf74fa56e08896fb834c8ce359d5638eac7d51`。[方案复核](design-review.md) · [调用示例](example.py) · [公开接口说明](../../../README.md#query-process-grid-occupancy)
 
+发布实现为 `cbcf381bb8a11876c5cf2fc0673305483fdb5ea7`。GitHub 的邮箱隐私保护拒绝首次推送，改用仓库已有 noreply 地址后，逐字节核对了完整 Git tree。发布实现与受测实现共享上述同一 tree，包含相同的源码、测试、配置和示例。证据提交 `d9c1f7306f677cbbf160403541363950c66bc2d2` 同样保留本地点验的整套证据 tree。原始执行记录继续使用当时的实测身份。
+
 ## 公开入口实测
 
 | 验收项 | 临时样本的观察 |
