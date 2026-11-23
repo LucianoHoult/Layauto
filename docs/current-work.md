@@ -1,10 +1,10 @@
 # 当前工作入口
 
-本分支当前任务见[W018 坐标与离散占用内核](tasks/W018-coordinate-occupancy-core.md)。最近完成节点见[W016 PM3](tasks/W016-single-cell-analysis.md#pm3-integration)，前置方案见[W015 PM1](tasks/W015-single-cell-analysis-entry.md#pm1-acceptance)，已完成节点见[W013 PM2](tasks/W013-net-annotation-coverage.md#pm2-integration)；W012 A2停止决定见[PM7](tasks/W012-capture-wire-performance.md#pm7-a2-stop)。详细决定、证据与review结论归任务文件。
+最近完成[W018 坐标与离散占用内核](tasks/W018-coordinate-occupancy-core.md#pm2-integration)。单 cell 分析入口见[W016 PM3](tasks/W016-single-cell-analysis.md#pm3-integration)，前置方案见[W015 PM1](tasks/W015-single-cell-analysis-entry.md#pm1-acceptance)，已完成节点见[W013 PM2](tasks/W013-net-annotation-coverage.md#pm2-integration)；W012 A2停止决定见[PM7](tasks/W012-capture-wire-performance.md#pm7-a2-stop)。详细决定、证据与review结论归任务文件。
 
 ## 当前节点
 
-**W018 执行版已交回，当前待修正一项配置报错的字段位置。** 正常离散占用已复算；补修及定向复核后交 PM 决定集成。[PM1 与最小复现](tasks/W018-coordinate-occupancy-core.md#pm1-receipt)
+**W018 已验收并通过 PR #79 合入 main。** PM-01 已关闭。实际合并版本复现了 15 层、40 条原始记录、48 个占用片段，也验证了旧配置、同格 CUT 两块几何和错误字段的准确定位。下一节点建议将工艺坐标与占用查询接入 W016 单 cell 只读分析入口。[PM2 集成验收](tasks/W018-coordinate-occupancy-core.md#pm2-integration)
 
 **W017 方案已验收并经 PR #77 合入 main。** S1–S4 在实际合并提交逐字节复现。W018 按用户确认的逐层工艺声明实施坐标和占用内核。生产适配以相同声明方式提供各层参数；公开查询入口及产品默认限额留待后续。[W017 三项决定更新](tasks/W017-coordinate-occupancy-projection.md#pm2-layer-decision) · [W018 首份配置样例](tasks/W018/layer-discretization.example.yaml)
 
@@ -81,6 +81,7 @@
 | run身份、读取审计与输入失败终结 | W006已集成 |
 | 器件/网络语义、目标差异与query身份关联 | W007已集成 |
 | 几何事实与基础占用索引 | W008已验收并集成 |
+| 按工艺声明构建一维轨道和二维占用 | W018 已集成，当前覆盖 synthetic 样本；W016 分析入口接入待安排 |
 | CUT有效几何与channel/端区 | W009已验收集成，63项组合验证通过 |
 | 局部接触/connector/component及局部T05 | W010已验收集成；实际15项定向组合及direct/readback通过；外部body与完整mandatory规则未完成 |
 | channel 器件定位与 FIN 实测/有限参数核对 | W011已验收集成；正常5/7、mismatch 4对5、来源/范围及实际merge6项组合通过 |
