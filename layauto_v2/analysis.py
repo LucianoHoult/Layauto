@@ -11,18 +11,26 @@ from layauto_v2.domain.analysis import (
 from layauto_v2.domain.codec import FrozenMap
 from layauto_v2.domain.evidence import SourceRef
 from layauto_v2.domain.results import EvidenceIssue
-from layauto_v2.domain.geometry import mapping, sequence
+from layauto_v2.domain.geometry import mapping
 from layauto_v2.importers.analysis_reader import acquire_analysis, acquire_selections
 from layauto_v2.normalization.analysis_input import LocalAnalysisReceipt
 from layauto_v2.normalization.analysis import analyze_local, selected_analysis, analyze_terminals
-from layauto_v2.reporting.analysis import diagnostic_json
+from layauto_v2.normalization.analysis_occupancy import OccupancyRequest, OccupancyUnavailable, _project_local
+from layauto_v2.state.discrete_occupancy import OccupancyResult
+from layauto_v2.reporting.analysis import diagnostic_json, occupancy_summary
+
 
 @dataclass(frozen=True)
 class AnalysisRequest:
     manifest_path: Path
 
 
-__all__ = ['AnalysisRequest', 'analyze_cell']
+@dataclass(frozen=True)
+class CellAnalysisResult(AnalysisResult):
+    occupancy: OccupancyResult | OccupancyUnavailable | None = None
+
+
+__all__ = ['AnalysisRequest', 'OccupancyRequest', 'analyze_cell']
 
 _BLOCKED = ('full_run_admission', 'baseline', 'no_change', 'geometry_commit', 'export_publish', 'parent_voltage_exemption')
 _MISSING = ('parent_instance_mapping', 'global_voltage_domain', 'remaining_mandatory')
@@ -33,10 +41,19 @@ def _finding(issue: EvidenceIssue, *, violation: bool = False, computation_error
     return AnalysisFinding('violation' if violation else issue.category, issue.code, issue.source, (issue.source.uri + ('#' + issue.source.field if issue.source.field else ''),), severity, issue.message)
 
 
-def _finish(result: AnalysisResult) -> AnalysisResult:
+def _finish(result: CellAnalysisResult, request: OccupancyRequest | None,
+            receipt: LocalAnalysisReceipt | None = None,
+            issues: tuple[EvidenceIssue, ...] = ()) -> CellAnalysisResult:
     roots = {field.name: getattr(result, field.name) for field in fields(result)
-             if field.name not in ('report_json', 'captures')}
-    return replace(result, report_json=diagnostic_json(roots, result.captures))
+             if field.name not in ('report_json', 'captures', 'occupancy')}
+    query: OccupancyResult | OccupancyUnavailable | None = None
+    if request is not None:
+        if receipt is None or result.local is None:
+            query = OccupancyUnavailable('not_evaluated', ('local_authentication',), issues)
+        else:
+            query = _project_local(receipt, result.local, request)
+        roots['occupancy'] = occupancy_summary(request, query)
+    return replace(result, occupancy=query, report_json=diagnostic_json(roots, result.captures))
 
 
 def _valid_request(request: AnalysisRequest) -> bool:
@@ -51,18 +68,24 @@ def _valid_request(request: AnalysisRequest) -> bool:
     return True
 
 
-def analyze_cell(request: AnalysisRequest) -> AnalysisResult:
+def analyze_cell(request: AnalysisRequest, *, occupancy: OccupancyRequest | None = None) -> CellAnalysisResult:
     """Acquire once and analyze declared synthetic flat-cell evidence.
+
+    Select occupancy to index the local drawn and optionally effective geometry
+    within a caller-supplied budget. Inspect its status separately.
 
     Expected input failures return located diagnostics. Unexpected exceptions,
     KeyboardInterrupt and SystemExit propagate. completed denotes computation,
     never complete verification, a baseline or permission to modify/publish.
     """
+    if occupancy is not None and type(occupancy) is not OccupancyRequest:
+        raise TypeError('occupancy requires an OccupancyRequest')
     absent = SelectedAnalysis('not_selected', FrozenMap({'kind': 'not_selected'}))
     if not _valid_request(request):
         issue = EvidenceIssue('config', 'InvalidAnalysisRequest', 'requires an exact AnalysisRequest with an absolute manifest Path', SourceRef('<analysis-request>', field='/manifest_path'))
-        return _finish(AnalysisResult('rejected', issue.source, (), (), None, absent, absent,
-            (_finding(issue),), _MISSING + ('body_path_proof',), _BLOCKED, 'indeterminate', ''))
+        rejected = CellAnalysisResult('rejected', issue.source, (), (), None, absent, absent,
+            (_finding(issue),), _MISSING + ('body_path_proof',), _BLOCKED, 'indeterminate', '')
+        return _finish(rejected, occupancy, issues=(issue,))
     evidence = acquire_analysis(request.manifest_path)
     manifest = next((s.ref() for s in evidence.captures if s.uri == evidence.manifest_uri), SourceRef(str(request.manifest_path)))
     if evidence.value is None:
@@ -72,8 +95,10 @@ def analyze_cell(request: AnalysisRequest) -> AnalysisResult:
         def blocked_selection(name: str) -> SelectedAnalysis:
             selected = mapping(config.get(name, FrozenMap({'kind': 'not_selected'})))
             return absent if selected['kind'] == 'not_selected' else SelectedAnalysis('not_evaluated', selected, dependencies=('local_authentication',))
-        return _finish(AnalysisResult(status, manifest, evidence.captures, evidence.records, None,
-            blocked_selection('external_body'), blocked_selection('manual_intent'), findings, _MISSING + ('body_path_proof',), _BLOCKED, 'indeterminate', ''))
+        blocked = CellAnalysisResult(status, manifest, evidence.captures, evidence.records, None,
+            blocked_selection('external_body'), blocked_selection('manual_intent'), findings,
+            _MISSING + ('body_path_proof',), _BLOCKED, 'indeterminate', '')
+        return _finish(blocked, occupancy, issues=evidence.issues)
     captures, body_capture, manual_capture, read_issues, aliases = acquire_selections(evidence)
     receipt = LocalAnalysisReceipt(evidence)
     local = analyze_local(receipt)
@@ -121,5 +146,6 @@ def analyze_cell(request: AnalysisRequest) -> AnalysisResult:
         facet = local.facets[field.name]
         if facet.status == 'not_evaluated':
             missing += tuple(field.name + ':' + reason for reason in facet.dependencies)
-    return _finish(AnalysisResult(status, manifest, captures, evidence.records, local, external, manual,
-        tuple(findings_list), missing, _BLOCKED, comparison, ''))
+    result = CellAnalysisResult(status, manifest, captures, evidence.records, local, external, manual,
+        tuple(findings_list), missing, _BLOCKED, comparison, '')
+    return _finish(result, occupancy, receipt)

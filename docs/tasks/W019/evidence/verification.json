@@ -1,0 +1,140 @@
+{
+  "base": "d0b8540e0e06326f51f7fd4c56d3e43c7ca667c1",
+  "tested_commit": "07605914bece908d24f5ff6a92cedb27b9d8d2f9",
+  "tested_tree": "44cf74fa56e08896fb834c8ce359d5638eac7d51",
+  "frozen_paths": {
+    "layauto_v2": "7677c789e02f8060a2e69ff4cb15aca2e537ed6a",
+    "tests": "871084f90f8ddab230723021bf8f5b13ad7f829a",
+    "tests/fixtures/w003_m1": "c8b85527a7063f4d489f9af6d45fb61204389190",
+    "pyproject.toml": "197d03c3c59499d76f6ca28d6049229d192c1d2f",
+    "docs/tasks/W018/layer-discretization.example.yaml": "fed2eabdb1819eafa7d31e00b3ae4971879f4bc2",
+    "docs/tasks/W019": "07afefc6bdaff7a15133c8285b800c016ef4f0fd"
+  },
+  "source_verification": "316 tracked files matched git blobs at 07605914bece908d24f5ff6a92cedb27b9d8d2f9",
+  "environment": {
+    "python": "3.12.14",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "dev_packages": "transcripts.tar.gz/dev-dependencies.txt",
+    "wheel_environment_packages": "transcripts.tar.gz/wheel-dependencies.txt",
+    "build_backend": "setuptools==84.2.1 (both isolated builds; see build.log)"
+  },
+  "acquisition": "Temporary W016 manifests with actual W018 coordinate owner. All 23 primary input hashes are in main-sample.json.",
+  "fixed_cut_gds_sha256": "1f57cb548544c934827f49d3ffb181048efc55e02976ab7ebe66b43621a37ef2",
+  "commands": {
+    "pytest": {
+      "cwd": "/workspace/work/w019/frozen",
+      "command": "PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 /workspace/work/w019/dev/bin/python -m pytest -p no:cacheprovider -v tests/contracts/test_w019_analysis_occupancy.py tests/unit/test_analysis_api.py tests/contracts/test_analysis_body_parity.py tests/unit/test_w018_axes.py tests/unit/test_w018_model.py tests/contracts/test_w018_projection.py tests/contracts/test_w007_contracts.py::test_normalization_and_new_domain_keep_pure_dependency_boundaries",
+      "result_file": "pytest.log"
+    },
+    "mypy": {
+      "cwd": "/workspace/work/w019/frozen",
+      "command": "/workspace/work/w019/dev/bin/python -m mypy --no-incremental --cache-dir /workspace/work/w019/final-mypy",
+      "result_file": "mypy.log"
+    },
+    "build": {
+      "cwd": "/workspace/work/w019/frozen",
+      "command": "PIP_CACHE_DIR=/workspace/work/w019/pip-cache /workspace/work/w019/dev/bin/python -m build --outdir /workspace/work/w019/artifacts",
+      "result_file": "build.log"
+    },
+    "baseline": {
+      "cwd": "/workspace/work/w019/base",
+      "command": "PYTHONPATH=/workspace/work/w019/base /workspace/work/w019/dev/bin/python -c \"from layauto_v2.analysis import AnalysisRequest, analyze_cell; import layauto_v2, hashlib; from pathlib import Path; print(layauto_v2.__file__); r=analyze_cell(AnalysisRequest(Path('/workspace/work/w019/sample/analysis.json'))); print(r.request_status, len(r.report_json.encode()), hashlib.sha256(r.report_json.encode()).hexdigest())\"",
+      "result_file": "baseline.log"
+    },
+    "install": {
+      "cwd": "/workspace/work/w019",
+      "command": "PIP_CACHE_DIR=/workspace/work/w019/pip-cache /workspace/work/w019/clean/bin/python -I -m pip install /workspace/work/w019/artifacts/layauto-0.2.0-py3-none-any.whl",
+      "result_file": "install.log"
+    },
+    "check": {
+      "cwd": "/workspace/work/w019",
+      "command": "/workspace/work/w019/clean/bin/python -I -m pip check",
+      "result_file": "pip-check.log"
+    },
+    "where": {
+      "cwd": "/workspace/work/w019",
+      "command": "/workspace/work/w019/clean/bin/python -I -c \"from pathlib import Path; import layauto_v2, sys; p=Path(layauto_v2.__file__); print(p); assert p.is_relative_to(sys.prefix) and 'site-packages' in p.parts\"",
+      "result_file": "module.log"
+    },
+    "smoke": {
+      "cwd": "/workspace/work/w019",
+      "command": "/workspace/work/w019/clean/bin/python -I /workspace/work/w019/frozen/docs/tasks/W019/example.py /workspace/work/w019/sample/analysis.json",
+      "result_file": "smoke.log"
+    },
+    "cost": {
+      "cwd": "/workspace/work/w019",
+      "command": "/workspace/work/w019/clean/bin/python -I /workspace/work/w019/frozen/docs/tasks/W019/cost_probe.py /workspace/work/w019/sample/analysis.json",
+      "result_file": "cost.json"
+    },
+    "checkout_example": {
+      "cwd": "/workspace/work/w019/frozen",
+      "command": "PYTHONPATH=. /workspace/work/w019/dev/bin/python docs/tasks/W019/example.py",
+      "result_file": "checkout-example.log"
+    },
+    "sample": {
+      "cwd": "/workspace/Layauto",
+      "command": "PYTHONPATH=tests/support /workspace/work/w019/dev/bin/python -c \"from analysis_projection_inputs import projected_manifest; from pathlib import Path; print(projected_manifest(Path('/workspace/work/w019/sample')))\"",
+      "result_file": "main-sample.json"
+    },
+    "create_clean_venv": {
+      "cwd": "/workspace/Layauto",
+      "command": "/workspace/work/w019/dev/bin/python -m venv /workspace/work/w019/clean && /workspace/work/w019/clean/bin/python -I -c 'import importlib.util, sys; print(sys.prefix); assert importlib.util.find_spec(\"layauto_v2\") is None'",
+      "result_file": "empty-venv.log"
+    }
+  },
+  "results": {
+    "pytest": "107 passed in 194.99s (0:03:14)",
+    "passed_by_file": {
+      "tests/contracts/test_w019_analysis_occupancy.py": 11,
+      "tests/unit/test_analysis_api.py": 57,
+      "tests/contracts/test_analysis_body_parity.py": 1,
+      "tests/unit/test_w018_axes.py": 9,
+      "tests/unit/test_w018_model.py": 1,
+      "tests/contracts/test_w018_projection.py": 27,
+      "tests/contracts/test_w007_contracts.py": 1
+    },
+    "mypy": "Success: no issues found in 82 source files",
+    "installed_files": "128 package files identical to the frozen source",
+    "pip_check": "No broken requirements found.",
+    "isolated_public_smoke": "source.gds 2352 (32, 48, 45, 58) 130 [16, 16, 13]"
+  },
+  "built_artifacts_sha256": {
+    "layauto-0.2.0-py3-none-any.whl": "afb6d636f1fc2e9a9f9688585c82a399a09f473f3a5f52aa76833411db4d39a1",
+    "layauto-0.2.0.tar.gz": "c0004381dd9b8dd385a02bfa0f35e5a221ed2fbc62ca9b53f4a25b7fb724bdea"
+  },
+  "evidence_sha256": {
+    "baseline.log": "91016416c682ff39a567fef08cdcf533be4349eb31ca1851526001c3c105efdb",
+    "build.log": "bf5d9f564ff88ac16f386c75a44a95da5157d3691317a0da4d4f76e8c4770faf",
+    "checkout-example.log": "d8decff77337ef0b9cafc486e1ef2209bc7a086e3f2d27c7dbfd9bf406e78ca0",
+    "empty-venv.log": "17a6face9d077aaff7d8580673eea87bddc5bfa3cc76b5d77113e9e18714a704",
+    "install.log": "6c89e2ab21cd3fd0628e3ca22485833c3d134c60d7d6e39691a66716d6b04d95",
+    "installed-files.log": "09186a309be13d3458582d86888b18e26831d1644295941761a866c2791a5668",
+    "module.log": "aa8336bd4f481b1da001d3d81ad92f5e69af270c6b71f8c7a19aebba51728608",
+    "mypy.log": "ceb03ca8a771fe10fa91dfe4fbf19651b6414279728f06b02590702db4fb5286",
+    "pip-check.log": "35bb3d1e4d1d0091788acae77c6d707f1dfb81d2384e34fd54a205f9497ce313",
+    "pytest.log": "d5ee64d345adbcf723199862ce02f52854acdc453c5cdc36fa177a998e48f626",
+    "smoke.log": "d8decff77337ef0b9cafc486e1ef2209bc7a086e3f2d27c7dbfd9bf406e78ca0",
+    "source-check.log": "5f97874af678ccf8b0636cce514e18464848e0be67fb345d448ac4318782608e",
+    "dev-dependencies.txt": "9487dfa6a7652f793946198c9837c3f9d7c86601705dbcf60e1e481970d2207a",
+    "wheel-dependencies.txt": "c183b7ea3a820f84f470d51b9b2f49706bb0053ad5fb46a07a5d66e4b5cf0240",
+    "transcripts.tar.gz": "bec47936d47c4e25c2ced769cc64689c5921407569f4820c7128f8cd12192345",
+    "cost.json": "fd7c7f6824f9e9ec3e28e188c9352dc85f9c92c04817311e13badc0e99040833",
+    "main-sample.json": "17172b6a1d9234869df3fbab2967ad94ea38e22e16fba8afa0ee5ddd0be7a8ee"
+  },
+  "scope": "New and impacted tests only. PM owns the dual-interpreter full suite after Stage 2 integration.",
+  "publication": {
+    "reason": "Recreated unpushed commits with the repository GitHub noreply address after GH007. Complete tree identity verified with git rev-parse and git diff --exit-code.",
+    "identical_trees": [
+      {
+        "local_verification_commit": "07605914bece908d24f5ff6a92cedb27b9d8d2f9",
+        "published_commit": "cbcf381bb8a11876c5cf2fc0673305483fdb5ea7",
+        "tree": "44cf74fa56e08896fb834c8ce359d5638eac7d51"
+      },
+      {
+        "local_verification_commit": "f48017456c74d6dbcdb64e5fd753f05620b3eabf",
+        "published_commit": "d9c1f7306f677cbbf160403541363950c66bc2d2",
+        "tree": "37751b18c0b14ed427a4b1de47ae35aab9d653dc"
+      }
+    ]
+  }
+}

@@ -10,6 +10,26 @@ import json
 from typing import Mapping
 from layauto_v2.domain.codec import FrozenMap, digest
 from layauto_v2.domain.evidence import SourceFile, SourceRef, EvidenceRecord
+from layauto_v2.normalization.analysis_occupancy import OccupancyRequest, OccupancyUnavailable
+from layauto_v2.state.discrete_occupancy import OccupancyResult
+
+
+def occupancy_summary(request: OccupancyRequest,
+                      result: OccupancyResult | OccupancyUnavailable) -> dict[str, object]:
+    # Hex preserves even caller budgets beyond Python's decimal conversion limit.
+    summary: dict[str, object] = {
+        'status': result.status, 'fragment_budget_hex': hex(request.fragment_budget),
+        'include_effective': request.include_effective,
+    }
+    if isinstance(result, OccupancyUnavailable):
+        summary.update(dependencies=result.dependencies, issues=result.issues)
+    else:
+        summary.update(model_id=result.model.model_id, coordinate=result.model.coordinate_source,
+                       required_fragments_hex=hex(result.required_fragments))
+        if result.exceeded_at is not None:
+            source = result.exceeded_at
+            summary.update(exceeded_at=source.record_source, view=source.view, piece=source.piece_ref)
+    return summary
 
 
 def diagnostic_json(facets: Mapping[str, object], captures: tuple[SourceFile, ...]) -> str:
@@ -45,7 +65,7 @@ def diagnostic_json(facets: Mapping[str, object], captures: tuple[SourceFile, ..
             return identities[id(item)]
         if type(item) is tuple:
             rendered: object = [value(x) for x in item]
-        elif type(item) is FrozenMap:
+        elif type(item) is FrozenMap or type(item) is dict:
             rendered = {k: value(v) for k, v in item.items()}
         elif is_dataclass(item) and not isinstance(item, type):
             rendered = {'type': type(item).__name__, 'fields': {

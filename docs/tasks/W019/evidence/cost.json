@@ -1,0 +1,40 @@
+[
+  {
+    "phase": "no_query",
+    "elapsed_ms": 2698.165,
+    "distinct_paths": 23,
+    "calls": {
+      "read_bytes": 23,
+      "build_layout": 1,
+      "build_partition": 1,
+      "build_occupancy": 1,
+      "build_effective_draft": 1
+    },
+    "report_bytes": 235812,
+    "report_sha256": "1f89eadd7dff4faf923531d4b86d38d80ba60806626c6b80cf2a3086ffe2f821"
+  },
+  {
+    "phase": "analysis_and_first_cell",
+    "elapsed_ms": 2939.332,
+    "distinct_paths": 23,
+    "calls": {
+      "read_bytes": 23,
+      "build_layout": 1,
+      "build_partition": 1,
+      "build_occupancy": 1,
+      "build_effective_draft": 1,
+      "_bind_model": 1,
+      "build_discrete_occupancy": 1
+    },
+    "report_bytes": 236050,
+    "report_sha256": "cc008b50692478d4719091d9d739ef685754d17b014a0d5ab7291730a1e87602"
+  },
+  {
+    "phase": "1000_cell_and_reverse_queries",
+    "elapsed_ms": 2.477,
+    "distinct_paths": 0,
+    "calls": {},
+    "report_bytes": 236050,
+    "report_sha256": "cc008b50692478d4719091d9d739ef685754d17b014a0d5ab7291730a1e87602"
+  }
+]
