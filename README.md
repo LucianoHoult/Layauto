@@ -132,6 +132,27 @@ after process loss. Stage 2–6, real EDA and production admission remain outsid
 this entry. Requirements, review and validation are recorded in
 [W006](docs/tasks/W006-precontext-run-audit.md).
 
+## Assemble Stage 2 facts from a full-run checkpoint
+
+Pass the `InputsReady` from `prepare_inputs` and its repository to the read-only
+assembly. The caller supplies the combined drawn/effective fragment budget.
+For the W020 sample with the W018 layer declarations, 68 fragments suffice.
+
+```python
+from layauto_v2.pipeline import assemble_stage2
+
+if isinstance(result, InputsReady):
+    facts = assemble_stage2(repository, result, fragment_budget=68)
+    intent = facts.terminals.semantic_facts  # Source, independent target and typed differences
+    occupancy = facts.occupancy              # Retains the same layout and effective regions
+```
+
+The [runnable example](docs/tasks/W020/example.py) traces one LI fragment from
+GDS to its physical component and directly evidenced net. The attempt remains
+unsealed. Reproduction commands and verification are in
+[W020](docs/tasks/W020-stage2-baseline-readiness.md). The
+[readiness table](docs/tasks/W020/readiness.md) lists the remaining version 0 obligations.
+
 ## Semantic normalization component
 
 W007 consumes already captured W005 evidence. It produces an immutable source
