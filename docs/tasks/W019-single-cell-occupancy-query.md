@@ -2,7 +2,7 @@
 
 ## 任务要求（PM）
 
-**阶段为待补修。** PM 已核对交付，当前有 1 项合并前必须修正的问题。[PM1 接收与补修](#pm1-receipt) 本任务属于 M1 的 Stage 2。基线为已集成 W016、W018 的 main `0af9bfe18f9a8606d5b1cf3c707b8e75b28a064c`，执行分支为 `codex/w019-single-cell-occupancy-query`。执行 session 负责方案、实现和证据，独立 reviewer 复核，PM 负责验收和集成。
+**已合入 main，阶段全量回归运行中。** PM-01 已关闭。[PM2 集成核验](#pm2-integration) 本任务属于 M1 的 Stage 2。基线为已集成 W016、W018 的 main `0af9bfe18f9a8606d5b1cf3c707b8e75b28a064c`，执行分支为 `codex/w019-single-cell-occupancy-query`。执行 session 负责方案、实现和证据，独立 reviewer 复核，PM 负责验收和集成。
 
 用户从现有 `analyze_cell` 入口分析一份本地 flat cell 后，应能按层、轨道或格号读取实际覆盖，再从片段找回原始 GDS 记录，也能从源记录查回它覆盖的片段。外部 tapcell 继续由调用方选择。首包沿用 W016 已支持的 synthetic 输入、W018 随工艺包读取的逐层声明和显式片数预算。[W016 公开入口](../../layauto_v2/analysis.py) · [W018 验收](W018-coordinate-occupancy-core.md#pm2-integration) · [架构 §3.4–3.5](../architecture.md#34-grid-作为坐标系统)
 
@@ -88,3 +88,13 @@ PM 于 2026-11-23 核查交付 `18ac5a7eabb7a0f9840601f4e0eade280522b3b2`。**�
 修复提交的 Git tree 为 `5cf6ec15cf3171155f893cc06a3ab6495a5ad13d`。在其归档上用 CPython 3.12.14 实跑 W019 公开合同 12 项、W016 effective 及独立诊断回归 6 项，18 项全部通过。严格 mypy 通过 82 个源文件。sdist、wheel 构建通过，新 venv 从 wheel 安装后在源码目录外以 `python -I` 运行原探针通过。证据归档包含命令、原始输出、依赖、产物哈希及独立反例脚本 `pm01_extra_review.py`。[补修验证证据](W019/evidence/pm01-fix.tar.gz)
 
 独立 reviewer 的定向结论见[补修复核](W019/pm01-fix-review.md)。原交付中未改的 W018 绑定与分格内核证据按源身份采信。源码、输入或依赖变化时补跑相关路径，双解释器全量按 PM1 安排在实际集成后执行。本分支交 PM 重新验收。
+
+<a id="pm2-integration"></a>
+
+## PM2 集成核验
+
+补修产品提交为 `708c2a39c3d8a46514ac3aa2c01eb21aa334f9f7`。PM 核对交付版 `0429e49992be6cbdc207acb7c44c700a9673617f` 的产品与正式测试与该版一致，并核实补修归档中 11 份原始输出的 SHA-256。原始失败记录保留在 PM1。执行侧 18 项定向测试、82 个源文件的类型检查、构建及安装冒烟按该冻结身份采信。[补修复核](W019/pm01-fix-review.md)
+
+[PR #81](https://github.com/LucianoHoult/Layauto/pull/81) 已合入 main。实际产品提交为 [679ff05](https://github.com/LucianoHoult/Layauto/commit/679ff05acfdca48132a914898041c95a6b668905)，Git tree 为 `fc6e4f30dc4df0b85c09a51c5afbad51c3092197`，与受审交付相同。PM 在候选上执行 2 项定向合同回归，并在候选和实际合并版分别运行 PM1 公开探针及 M1 查询示例。两项诊断及其原始来源均保留，查询状态为 not_evaluated，40 条本地图形保留，M1 线端可查回偏移 2352，三格宽 16、16、13 DBU。
+
+阶段矩阵的两个独立干净工作区都检出上述实际产品提交。Python 3.10.22 和 3.12.14 各收集 2,010 个唯一节点，两份有序节点清单的 SHA-256 均为 `bb715d92a85369e09feb919e63301af0f6fabb9dcf2c6f0c08ac4bfd8b520c6c`。两侧正在运行整个 `tests/`，含 fixture_support。完整结果待回填。
