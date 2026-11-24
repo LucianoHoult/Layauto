@@ -1,0 +1,341 @@
+{
+  "task": "W020",
+  "base": "fd629b1a0afc7b8dedb3ea0da52c86c574a7b210",
+  "runtime_commit": "2ef3662032332533046b4c294e4a3d3e5e9ea5e7",
+  "tested_commit": "e95ce132eee16dd8599fee1013a5c030491160ff",
+  "tree": "81570b2fac513a1518cdddebda1da5c58b25decd",
+  "fixture": "tests/fixtures/w003_m1/site_config.yaml",
+  "coordinate_sample": "docs/tasks/W018/layer-discretization.example.yaml",
+  "c13_replacements": "tests/fixtures/w003_m1/failures/unsupported_target",
+  "python": "3.12.14",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "development_distributions": [
+    "ast_serialize==0.13.1",
+    "build==1.6.1",
+    "contourpy==1.4.0",
+    "cycler==0.12.1",
+    "fonttools==4.68.0",
+    "iniconfig==2.3.1",
+    "kiwisolver==1.5.1",
+    "librt==0.17.0",
+    "matplotlib==3.11.2",
+    "mypy==2.4.1",
+    "mypy_extensions==1.2.0",
+    "numpy==2.5.5",
+    "packaging==26.4",
+    "pathspec==1.1.1",
+    "pillow==13.0.0",
+    "pip==25.0.1",
+    "pluggy==1.7.0",
+    "Pygments==2.21.0",
+    "pyparsing==3.3.3",
+    "pyproject_hooks==1.3.3",
+    "pytest==9.2.0",
+    "python-dateutil==4.0.0",
+    "PyYAML==6.0.4",
+    "setuptools==84.2.1",
+    "types-PyYAML==6.0.12.20261122",
+    "typing_extensions==4.16.0",
+    "tzdata==2026.6",
+    "wheel==0.48.0"
+  ],
+  "test_env": {
+    "PYTEST_DISABLE_PLUGIN_AUTOLOAD": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "tests": {
+    "new_argv": "python -m pytest -p no:cacheprovider -v tests/contracts/test_w020_stage2.py",
+    "new": {
+      "result": "10 passed in 227.31s (0:03:47)",
+      "nodes": [
+        "tests/contracts/test_w020_stage2.py::test_each_interleaved_assembly_resolves_only_its_captured_inputs",
+        "tests/contracts/test_w020_stage2.py::test_equal_fin_counts_preserve_the_channel_length_obligation",
+        "tests/contracts/test_w020_stage2.py::test_annotation_trace_checks_exact_piece_membership_and_raw_source",
+        "tests/contracts/test_w020_stage2.py::test_scope_distinguishes_empty_missing_skipped_covered_and_body_context",
+        "tests/contracts/test_w020_stage2.py::test_readback_rejects_foreign_attempt_for_same_run_id",
+        "tests/contracts/test_w020_stage2.py::test_combined_fragment_budget_error_keeps_input_and_unchanged_attempt",
+        "tests/contracts/test_w020_stage2.py::test_unsupported_operators_preserve_located_issues[formats-geometry_capability-comparator-geometry-UnsupportedGeometryComparator]",
+        "tests/contracts/test_w020_stage2.py::test_unsupported_operators_preserve_located_issues[physical-operators-terminal_split/1-effective-UnsupportedRegionOperator]",
+        "tests/contracts/test_w020_stage2.py::test_unsupported_operators_preserve_located_issues[physical-operators-cross_layer_contact/1-local_connectivity-UnsupportedLocalContactOperator]",
+        "tests/contracts/test_w020_stage2.py::test_conflicting_query_keeps_graph_and_diagnostic_without_admitting_the_draft"
+      ]
+    },
+    "affected_argv": "PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 PYTHONDONTWRITEBYTECODE=1 /workspace/work/w020-venv/bin/python -m pytest -p no:cacheprovider -v \\\n    tests/contracts/test_w006_pipeline.py::test_f1_full_caller_request_ready_is_unsealed_and_all_refs_resolve \\\n    tests/contracts/test_w007_inputs.py::test_c13_retains_exact_channel_length_target_obligation_and_no_run_terminal \\\n    tests/contracts/test_w007_contracts.py::test_normalization_and_new_domain_keep_pure_dependency_boundaries \\\n    tests/contracts/test_w008_capture_binding.py::test_actual_w006_readback_is_equivalent_without_io_or_attempt_changes \\\n    tests/contracts/test_w008_capture_binding.py::test_wrong_run_readback_keeps_w007_receipt_rejection \\\n    tests/contracts/test_w018_projection.py::test_sample_identity_all_layers_and_both_directions \\\n    tests/contracts/test_w018_projection.py::test_legacy_owner_retains_geometry_and_distinguishes_missing_from_skip \\\n    tests/contracts/test_w018_projection.py::test_equal_drawn_geometry_with_different_capture_rejects_effective_result \\\n    tests/contracts/test_w014_relations.py::test_actual_caller_read_readback_keeps_attempt_checkpoint_and_empty_terminal \\\n    tests/contracts/test_w014_relations.py::test_target_only_intent_changes_do_not_change_source_terminal_observations \\\n    tests/contracts/test_w019_analysis_occupancy.py::test_public_cell_to_gds_and_track_queries",
+    "affected": {
+      "result": "15 passed in 145.63s (0:02:25)",
+      "nodes": [
+        "tests/contracts/test_w006_pipeline.py::test_f1_full_caller_request_ready_is_unsealed_and_all_refs_resolve",
+        "tests/contracts/test_w007_inputs.py::test_c13_retains_exact_channel_length_target_obligation_and_no_run_terminal",
+        "tests/contracts/test_w007_contracts.py::test_normalization_and_new_domain_keep_pure_dependency_boundaries",
+        "tests/contracts/test_w008_capture_binding.py::test_actual_w006_readback_is_equivalent_without_io_or_attempt_changes",
+        "tests/contracts/test_w008_capture_binding.py::test_wrong_run_readback_keeps_w007_receipt_rejection[0]",
+        "tests/contracts/test_w008_capture_binding.py::test_wrong_run_readback_keeps_w007_receipt_rejection[1]",
+        "tests/contracts/test_w008_capture_binding.py::test_wrong_run_readback_keeps_w007_receipt_rejection[2]",
+        "tests/contracts/test_w008_capture_binding.py::test_wrong_run_readback_keeps_w007_receipt_rejection[3]",
+        "tests/contracts/test_w008_capture_binding.py::test_wrong_run_readback_keeps_w007_receipt_rejection[4]",
+        "tests/contracts/test_w018_projection.py::test_sample_identity_all_layers_and_both_directions",
+        "tests/contracts/test_w018_projection.py::test_legacy_owner_retains_geometry_and_distinguishes_missing_from_skip",
+        "tests/contracts/test_w018_projection.py::test_equal_drawn_geometry_with_different_capture_rejects_effective_result",
+        "tests/contracts/test_w014_relations.py::test_actual_caller_read_readback_keeps_attempt_checkpoint_and_empty_terminal",
+        "tests/contracts/test_w014_relations.py::test_target_only_intent_changes_do_not_change_source_terminal_observations",
+        "tests/contracts/test_w019_analysis_occupancy.py::test_public_cell_to_gds_and_track_queries"
+      ]
+    }
+  },
+  "strict_typing": {
+    "argv": "python -m mypy --cache-dir /workspace/work/w020-mypy-cache",
+    "result": "Success: no issues found in 83 source files"
+  },
+  "examples": {
+    "layered": {
+      "sample_report_sha256": "26d9dac2282b50d3d47bf17dd192b1bf754bd317421a2f7168123d088e825dcd",
+      "cost": {
+        "case": "layered",
+        "python": "3.12.14",
+        "platform": "linux",
+        "prepare_seconds": 1.429,
+        "assembly_seconds": 51.201,
+        "prepare_through_report_seconds": 52.669,
+        "process_peak_rss_bytes": 418095104,
+        "report_bytes": 25801
+      },
+      "attempt_after": {
+        "phase": "unsealed",
+        "revision": 1,
+        "ref": "attempt:w020-layered:ce923c9133725780f19e9b71e667f7997368b4d567e40b6c4bf5d2d6209caa51"
+      },
+      "checkpoint": "checkpoint:w020-layered:3818bf9f727612e0967af7351f5f54af71fe2878572898348e29d5f4972ec32a",
+      "coordinate_owner": {
+        "uri": "tech/layer-discretization.yaml",
+        "sha256": "fefb1bb72c15a131206f2885e1d9dc7ad98463aab676237a410a99d9c3d82890"
+      },
+      "record_count": 40,
+      "fragments_by_view": {
+        "drawn": 48,
+        "effective": 20
+      },
+      "physical_nodes_edges_components": [
+        14,
+        8,
+        6
+      ],
+      "intent": {
+        "fins_per_finger": {
+          "MN0": {
+            "source": 5,
+            "target": 5,
+            "measured": 5
+          },
+          "MP0": {
+            "source": 7,
+            "target": 7,
+            "measured": 7
+          }
+        },
+        "stage4_differences": []
+      }
+    },
+    "original": {
+      "sample_report_sha256": "910b18f7dedc0697fad81491a995f4706dbc29e592ff4128f1186cef206aae20",
+      "cost": {
+        "case": "original",
+        "python": "3.12.14",
+        "platform": "linux",
+        "prepare_seconds": 1.591,
+        "assembly_seconds": 66.86,
+        "prepare_through_report_seconds": 68.458,
+        "process_peak_rss_bytes": 393277440,
+        "report_bytes": 11843
+      },
+      "attempt_after": {
+        "phase": "unsealed",
+        "revision": 1,
+        "ref": "attempt:w020-original:cc88b204d7f9837cd12bc9fc5f0180c73cceb0670a2d9b98878b58dc07cb095c"
+      },
+      "checkpoint": "checkpoint:w020-original:003a36829333096d190cca7387409d93f7c6416186647152894f4e6dd3396ec1",
+      "coordinate_owner": {
+        "uri": "tech/coordinate.json",
+        "sha256": "651b4342abe40a3d7c1b808ba24ca2266381342411ab7aacc0e36a861a38f515"
+      },
+      "record_count": 40,
+      "fragments_by_view": {
+        "drawn": 0,
+        "effective": 0
+      },
+      "physical_nodes_edges_components": [
+        14,
+        8,
+        6
+      ],
+      "intent": {
+        "fins_per_finger": {
+          "MN0": {
+            "source": 5,
+            "target": 5,
+            "measured": 5
+          },
+          "MP0": {
+            "source": 7,
+            "target": 7,
+            "measured": 7
+          }
+        },
+        "stage4_differences": []
+      }
+    },
+    "unsupported_target": {
+      "sample_report_sha256": "a935b29347a6a377e3649d8ca352916c139cd40728a78520a9587cd68d14b249",
+      "cost": {
+        "case": "unsupported_target",
+        "python": "3.12.14",
+        "platform": "linux",
+        "prepare_seconds": 1.613,
+        "assembly_seconds": 67.453,
+        "prepare_through_report_seconds": 69.105,
+        "process_peak_rss_bytes": 396525568,
+        "report_bytes": 27054
+      },
+      "attempt_after": {
+        "phase": "unsealed",
+        "revision": 1,
+        "ref": "attempt:w020-unsupported_target:8001c95008e89ff336c9d8d373a2d180dbd9ba451bb05e428b53438801bbaed3"
+      },
+      "checkpoint": "checkpoint:w020-unsupported_target:45157f2c72c13717e15f773b9698e5649c59990cad8d61eabb2902c11cd28901",
+      "coordinate_owner": {
+        "uri": "tech/layer-discretization.yaml",
+        "sha256": "fefb1bb72c15a131206f2885e1d9dc7ad98463aab676237a410a99d9c3d82890"
+      },
+      "record_count": 40,
+      "fragments_by_view": {
+        "drawn": 48,
+        "effective": 20
+      },
+      "physical_nodes_edges_components": [
+        14,
+        8,
+        6
+      ],
+      "intent": {
+        "fins_per_finger": {
+          "MN0": {
+            "source": 5,
+            "target": 5,
+            "measured": 5
+          },
+          "MP0": {
+            "source": 7,
+            "target": 7,
+            "measured": 7
+          }
+        },
+        "stage4_differences": [
+          {
+            "delta": "delta:95a5c129de7825777bc9ac9a7a624bf69f118314cd3b00101be84016a57e9bdd",
+            "op": "parameter_change",
+            "device": "MN0",
+            "axis": "channel_length",
+            "before": {
+              "token": "L",
+              "lexeme": "4n",
+              "unit": "metres",
+              "exact": "1/250000000",
+              "source": {
+                "uri": "source.cdl",
+                "sha256": "c71f40728a979c918e083b924a3045cf53bece51dd837f9ae2834cf242776fa4",
+                "line": 3,
+                "column": 39,
+                "byte_offset": 143
+              }
+            },
+            "after": {
+              "token": "L",
+              "lexeme": "5n",
+              "unit": "metres",
+              "exact": "1/200000000",
+              "source": {
+                "uri": "target.cdl",
+                "sha256": "eefd8edc72691fd1c1433b63bc94fad7482a7e71d81b2e16a6544d187cd43a07",
+                "line": 3,
+                "column": 39,
+                "byte_offset": 143
+              }
+            },
+            "required_capability": "resize:channel_length",
+            "obligations": [
+              "planner_admission_required"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "measurement_scope": "Single Linux process. Timed from prepare_inputs through JSON encoding (excluding fixture staging and stdout write). Assembly interval includes repository readback. ru_maxrss covers process lifetime. Concurrent load was not controlled.",
+  "first_example_source": {
+    "example_py_sha256": "522b163dbb4002a7b9e51ce5b9bb726301d0d47de489fac2d6c9ad1eeb20e192",
+    "candidate_change": "CR-02 corrected only the handling of unsuccessful prepare_inputs outcomes and the corresponding imports.",
+    "rerun": "Success paths use the same authenticated component code. On the same absolute staged input path, the candidate runner reproduced the full stored layered report byte-for-byte outside the checkout.",
+    "rerun_cost": {
+      "case": "layered",
+      "python": "3.12.14",
+      "platform": "linux",
+      "prepare_seconds": 1.535,
+      "assembly_seconds": 55.35,
+      "prepare_through_report_seconds": 56.927,
+      "process_peak_rss_bytes": 400306176,
+      "report_bytes": 25801
+    }
+  },
+  "example_argv": [
+    "PYTHONPATH=. python docs/tasks/W020/example.py --case layered --keep-input /workspace/work/w020-layered",
+    "env -u PYTHONPATH /workspace/work/w020-clean/bin/python /workspace/Layauto/docs/tasks/W020/example.py --case original --keep-input /workspace/work/w020-original",
+    "PYTHONPATH=. python docs/tasks/W020/example.py --case unsupported_target --keep-input /workspace/work/w020-unsupported_target"
+  ],
+  "packaging": {
+    "build_argv": "python -m build --outdir /workspace/work/w020-candidate-dist",
+    "build": "sdist, wheel built from sdist",
+    "wheel_sha256": "be9957a1642873e3002face5e4e46116df4b6d1648c1a5d40f8c13f326d87faf",
+    "sdist_sha256": "00d70682503a3e95a42d98da23959644df442a883bbfb66fa84c7b6887358f8b",
+    "wheel_runtime_files_verified": 129,
+    "clean_install": [
+      "python -m venv /workspace/work/w020-candidate-install",
+      "/workspace/work/w020-candidate-install/bin/python -m pip install /workspace/work/w020-candidate-dist/layauto-0.2.0-py3-none-any.whl",
+      "/workspace/work/w020-candidate-install/bin/python -Im pip check"
+    ],
+    "pip_check": "No broken requirements found.",
+    "outside_checkout_cwd": "/workspace/work",
+    "installed_smoke": "env -u PYTHONPATH /workspace/work/w020-candidate-install/bin/python /workspace/Layauto/docs/tasks/W020/example.py --case unsupported_target --keep-input /workspace/work/w020-candidate-challenge",
+    "installed_import_origin": "/workspace/work/w020-candidate-install/lib/python3.12/site-packages/layauto_v2/__init__.py",
+    "installed_smoke_cost": {
+      "case": "unsupported_target",
+      "python": "3.12.14",
+      "platform": "linux",
+      "prepare_seconds": 1.422,
+      "assembly_seconds": 54.675,
+      "prepare_through_report_seconds": 56.14,
+      "process_peak_rss_bytes": 398651392,
+      "report_bytes": 27054
+    },
+    "verified": "All runtime package files in the wheel, installed tree and source match. The installed challenge reproduced the typed target delta and its two sources, the FIN counts, VSS and the 130 DBU² M1 end."
+  },
+  "prior_stage": {
+    "commit": "679ff05acfdca48132a914898041c95a6b668905",
+    "result_source": "docs/tasks/W019/integration/stage-matrix.json",
+    "result_sha256": "0e44ed91967ea36fafef56a7d489923bc9ca844162f90d01ff5390c07564d608",
+    "scope": "Historical W019 matrix only. W020 targeted tests use the candidate above. The next dual-interpreter full suite belongs to stage integration."
+  },
+  "public_identity": {
+    "reason": "GitHub GH007 blocked the initial push. Recreated the unpublished commits with the existing GitHub noreply address. Each pair has exactly the same Git tree.",
+    "commits": [
+      {
+        "tested": "0ec047899c14d33307faebda173fb970ce5568f2",
+        "published": "2ef3662032332533046b4c294e4a3d3e5e9ea5e7",
+        "tree": "3cc598c112d2c3cb0150e9ad5abbfde57068b564"
+      },
+      {
+        "tested": "5fcf7e057734cf3faa63a43e4c448a5ef9797d43",
+        "published": "e95ce132eee16dd8599fee1013a5c030491160ff",
+        "tree": "81570b2fac513a1518cdddebda1da5c58b25decd"
+      }
+    ]
+  }
+}

@@ -28,6 +28,29 @@ PM 在上述 main 用临时副本分别运行了 W006 读取、仓库凭据回�
 
 执行者追加方案、实现身份、复现命令、A1–A5 结果和未覆盖范围。独立 reviewer 追加跨来源反例、发现及修正复核。推回本分支交 PM 验收，PM 负责集成。
 
+### 执行交付
+
+交付候选 `e95ce132eee16dd8599fee1013a5c030491160ff`，运行代码 `2ef3662032332533046b4c294e4a3d3e5e9ea5e7`，任务分支起点 `fd629b1a0afc7b8dedb3ea0da52c86c574a7b210`。先按[执行方案](W020/plan.md)用真实文件跑通见证并取得[独立方案复核](W020/plan-review.md)，再实施。[独立交付复核](W020/code-review.md)含局部标注缩短、跨仓捕获交换两个反例及发现处置。交 PM 验收，集成由 PM 安排。
+
+| 验收项 | 实际结果 |
+| --- | --- |
+| A1 | `assemble_stage2(repository, ready, fragment_budget=68)` 检查仓库 attempt、checkpoint 和对应的内容引用，由同一次回读构建 source、独立 target、layout、坐标和物理图。三种示例前后均为同一 attempt，`unsealed`、revision 1，无 terminal。 |
+| A2 | LI 原图偏移 1648，格 (1,3) 的 drawn/effective 片均为 (28,30)–(34,40) DBU。它经 CONTACT@1840 连到 OD，经 VIA0@2096 连到 M1，分量共 3 个节点。R04 精确覆盖整片的 60 DBU²；`nXref.temp` 第 11 行将 n_lo 对应到 source CDL 的 VSS。另核 M1 (2,2) 在偏移 2352 的 130 DBU² 线端。各跳的完整 ID、原始 XY、源文件哈希及字段位置见[一次完整输出](W020/evidence/layered.json)。 |
+| A3 | 两份同名 cell 从文件读入后移走输入树，在 A 的 parse 回读中完整组装 B，再继续 A。坐标、query、目标和 checkpoint 各自可查；移除 gate 标注后，物理图保持原有边和分量。串用另一仓库同 run ID 的 ready 被定位拒绝。W003 `unsupported_target` 的 MN0/MP0 源、目标及几何 FIN 均为 5/7，MN0 的 L 在 source.cdl 与 target.cdl 第 3 行第 39 列分别为 4n、5n；完整差异保留 `resize:channel_length` 及 `planner_admission_required`。 |
+| A4 | 原坐标配置 40 条原图、0 个投影片；逐层配置 48 个 drawn 片和 20 个 LI effective 片，可逐源还原 FIN、LI、M1 的 25 条原图。七个有原图的层仍缺声明。两条 B 端本地网络未知，独立只读 body context 支持各自的 synthetic 关联。[六类事实、分层覆盖和发布缺口](W020/readiness.md)列出具体阻断以及每个后续动作的验收输入。 |
+| A5 | 首次完整逐层组装 51.201 秒，实读到报告编码完成 52.669 秒，进程峰值 398.73 MiB，JSON 为 25,801 字节，未在报告中嵌套完整捕获。该次测量针对当前合成样本。受测命令、依赖、测试选择、安装及各输入变体的实测摘要见[验证回执](W020/evidence/verification.json)。 |
+
+在项目根目录使用装好开发依赖的 Python 3.10+ 复跑。命令依次执行逐层样本、原坐标对照、FIN 相同但目标不同的对照。stdout 为 JSON，stderr 为用时、进程峰值和报告字节数。加 `--keep-input 新目录` 可在该目录的 `input/` 逐项核对原始字节。输入目录和 run request 参与捕获身份；独立复跑可按记录位置、覆盖范围和字段来源核对。
+
+```sh
+PYTHONPATH=. python docs/tasks/W020/example.py
+PYTHONPATH=. python docs/tasks/W020/example.py --case original
+PYTHONPATH=. python docs/tasks/W020/example.py --case unsupported_target
+python -m pytest -q tests/contracts/test_w020_stage2.py
+```
+
+**验证分工。** Python 3.12.14 定向实跑新增 10 项、受影响的 W006/W007/W008/W014/W018/W019 合同 15 项，全部通过。严格类型检查覆盖 83 个源文件。sdist、wheel、干净安装依赖检查及安装版完整输入冒烟通过。W019 的[双版本阶段矩阵](W019/integration/stage-matrix.json)绑定 `679ff05acfdca48132a914898041c95a6b668905`，至 W020 起点的产品、测试及配置逐字节相同。其历史结果用于既有范围，W020 没有取得双版本全量结论。若代码、测试、相关输入、依赖或合并组合改变，先补跑受影响项；PM 在阶段集成版执行双版本全量。
+
 ## 执行 session 启动指令
 
 > 以执行角色在 `codex/w020-stage2-baseline-readiness` 完成 W020 A1–A5。先用真实完整运行输入列出跨组件取数示例，经独立方案复核后实现。交付可复跑的一条链，从原图查到占用、物理分量和网络标注，并找回原始来源。验证两次捕获不会串用、FIN 数相同仍能识别目标差异，列出发布第 0 版前还缺什么。按任务卡跑新增及受影响项并做独立代码复核。将实现、命令、结果与完整 SHA 推回原分支交 PM。
