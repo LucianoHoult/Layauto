@@ -71,3 +71,20 @@ PM 于 2026-11-23 核查交付 `18ac5a7eabb7a0f9840601f4e0eade280522b3b2`。**�
 坐标诊断应指向 `tech/layer-discretization.yaml#/coordinate_projection/layers/M1/y_edges`，算子诊断应指向 `tech/physical.json#/operators/rectangle_set_difference~11`。每个来源 SHA-256 都以相应输入文件的实际字节核对。
 
 **补修交接。** 在原分支局部修复查询路径。请求占用且 drawn 已认证时，保留坐标声明检查和所选 effective 依赖各自可得的诊断。组合输入从公开结果和诊断报告均可找到两项原始原因，可定位至与单项输入相同的来源。受阻查询保留已认证的本地几何并给出无完整占用索引的状态。维持无查询调用、原分析顶层状态和仅 drawn 请求的既有语义。将组合输入与单项对照加入正式定向回归，由未参与修正者独立复核。按 [验证分工](../collaboration/rules.md#verification-reuse) 跑新增及受影响项，推回原分支。双解释器全量仍在实际集成后执行。
+
+### PM-01 补修交付
+
+从 `7a984a15b484bdbb0cf70c5ecf4cdafd2dcf4775` 实跑 PM1 原探针，组合输入缺少坐标错误，退出码为 1。受测修复为 `708c2a39c3d8a46514ac3aa2c01eb21aa334f9f7`。只要 drawn 已认证，查询就使用同一次捕获的 layout 与工艺记录检查坐标声明。所选 effective 同时受阻时，占用结果保留两项依赖及各自的原始诊断。[原探针](W019/pm01_probe.py) · [正式回归](../../tests/contracts/test_w019_analysis_occupancy.py)
+
+组合输入的 `occupancy.issues` 和 JSON 报告的 occupancy 摘要均含下表两项。正式回归从报告引用找到捕获表，再把 URI、字段和文件字节哈希分别与单项输入比对。
+
+| 错误代码 | 来源与字段 | SHA-256 |
+| --- | --- | --- |
+| `InvalidProjectionDeclaration` | `tech/layer-discretization.yaml#/coordinate_projection/layers/M1/y_edges` | `77c8c5c79c6f135339c7a0948f7d2704eb84194ba78a222eaa0035b063f08163` |
+| `UnsupportedRegionOperator` | `tech/physical.json#/operators/rectangle_set_difference~11` | `6e61de7dec745b485734edd5f0ede049d69b09535386ad202930494680db13db` |
+
+组合请求的原分析状态仍为 `unsupported`，40 条本地图形全部保留。drawn + effective 查询为 `not_evaluated`，`value=None`。同一输入仅查 drawn 时，占用状态为 `invalid_declaration`，算子错误仍在原分析 findings 中。省略查询时，占用结果为 `None`。三种调用的本地分析结果、顶层状态和 findings 相等。
+
+修复提交的 Git tree 为 `5cf6ec15cf3171155f893cc06a3ab6495a5ad13d`。在其归档上用 CPython 3.12.14 实跑 W019 公开合同 12 项、W016 effective 及独立诊断回归 6 项，18 项全部通过。严格 mypy 通过 82 个源文件。sdist、wheel 构建通过，新 venv 从 wheel 安装后在源码目录外以 `python -I` 运行原探针通过。证据归档包含命令、原始输出、依赖、产物哈希及独立反例脚本 `pm01_extra_review.py`。[补修验证证据](W019/evidence/pm01-fix.tar.gz)
+
+独立 reviewer 的定向结论见[补修复核](W019/pm01-fix-review.md)。原交付中未改的 W018 绑定与分格内核证据按源身份采信。源码、输入或依赖变化时补跑相关路径，双解释器全量按 PM1 安排在实际集成后执行。本分支交 PM 重新验收。
