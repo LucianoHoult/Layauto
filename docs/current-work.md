@@ -1,10 +1,10 @@
 # 当前工作入口
 
-最近完成[W018 坐标与离散占用内核](tasks/W018-coordinate-occupancy-core.md#pm2-integration)。单 cell 分析入口见[W016 PM3](tasks/W016-single-cell-analysis.md#pm3-integration)，前置方案见[W015 PM1](tasks/W015-single-cell-analysis-entry.md#pm1-acceptance)，已完成节点见[W013 PM2](tasks/W013-net-annotation-coverage.md#pm2-integration)；W012 A2停止决定见[PM7](tasks/W012-capture-wire-performance.md#pm7-a2-stop)。详细决定、证据与review结论归任务文件。
+最近完成[W019 单 cell 工艺网格占用查询](tasks/W019-single-cell-occupancy-query.md#pm2-integration)，内核见[W018](tasks/W018-coordinate-occupancy-core.md#pm2-integration)。单 cell 分析入口见[W016 PM3](tasks/W016-single-cell-analysis.md#pm3-integration)，前置方案见[W015 PM1](tasks/W015-single-cell-analysis-entry.md#pm1-acceptance)，已完成节点见[W013 PM2](tasks/W013-net-annotation-coverage.md#pm2-integration)；W012 A2停止决定见[PM7](tasks/W012-capture-wire-performance.md#pm7-a2-stop)。详细决定、证据与review结论归任务文件。
 
 ## 当前节点
 
-**W019 已通过 PR #81 合入 main，PM-01 已关闭。** 两套解释器正在实际合并版上执行公开入口的阶段全量回归。[PM2 集成核验](tasks/W019-single-cell-occupancy-query.md#pm2-integration)
+**W019 已验收，通过 PR #81 合入 main。** PM-01 已关闭。Python 3.10.22、3.12.14 在实际合并版上各通过 2,010 项测试和 8 个子测试。下一步建议按 M1 无修改闭环所需事实梳理 Stage 2 基线的组装条件。[PM2 集成核验](tasks/W019-single-cell-occupancy-query.md#pm2-integration)
 
 **W018 已验收并通过 PR #79 合入 main。** PM-01 已关闭。实际合并版本复现了 15 层、40 条原始记录、48 个占用片段，也验证了旧配置、同格 CUT 两块几何和错误字段的准确定位。W019 承接 W016 单 cell 只读分析入口的占用查询。[PM2 集成验收](tasks/W018-coordinate-occupancy-core.md#pm2-integration)
 
@@ -83,7 +83,7 @@
 | run身份、读取审计与输入失败终结 | W006已集成 |
 | 器件/网络语义、目标差异与query身份关联 | W007已集成 |
 | 几何事实与基础占用索引 | W008已验收并集成 |
-| 按工艺声明构建一维轨道和二维占用 | W018 已集成，当前覆盖 synthetic 样本；W016 分析入口接入由 W019 承接 |
+| 按工艺声明构建一维轨道和二维占用 | W018 已集成，当前覆盖 synthetic 样本；W019 已接入 W016 分析入口并通过阶段回归 |
 | CUT有效几何与channel/端区 | W009已验收集成，63项组合验证通过 |
 | 局部接触/connector/component及局部T05 | W010已验收集成；实际15项定向组合及direct/readback通过；外部body与完整mandatory规则未完成 |
 | channel 器件定位与 FIN 实测/有限参数核对 | W011已验收集成；正常5/7、mismatch 4对5、来源/范围及实际merge6项组合通过 |

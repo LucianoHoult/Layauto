@@ -2,7 +2,7 @@
 
 ## 任务要求（PM）
 
-**已合入 main，阶段全量回归运行中。** PM-01 已关闭。[PM2 集成核验](#pm2-integration) 本任务属于 M1 的 Stage 2。基线为已集成 W016、W018 的 main `0af9bfe18f9a8606d5b1cf3c707b8e75b28a064c`，执行分支为 `codex/w019-single-cell-occupancy-query`。执行 session 负责方案、实现和证据，独立 reviewer 复核，PM 负责验收和集成。
+**W019 已验收并集成，公开入口阶段全量回归通过。** PM-01 已关闭。[PM2 集成核验](#pm2-integration) 本任务属于 M1 的 Stage 2。基线为已集成 W016、W018 的 main `0af9bfe18f9a8606d5b1cf3c707b8e75b28a064c`，执行分支为 `codex/w019-single-cell-occupancy-query`。执行 session 负责方案、实现和证据，独立 reviewer 复核，PM 负责验收和集成。
 
 用户从现有 `analyze_cell` 入口分析一份本地 flat cell 后，应能按层、轨道或格号读取实际覆盖，再从片段找回原始 GDS 记录，也能从源记录查回它覆盖的片段。外部 tapcell 继续由调用方选择。首包沿用 W016 已支持的 synthetic 输入、W018 随工艺包读取的逐层声明和显式片数预算。[W016 公开入口](../../layauto_v2/analysis.py) · [W018 验收](W018-coordinate-occupancy-core.md#pm2-integration) · [架构 §3.4–3.5](../architecture.md#34-grid-作为坐标系统)
 
@@ -97,4 +97,13 @@ PM 于 2026-11-23 核查交付 `18ac5a7eabb7a0f9840601f4e0eade280522b3b2`。**�
 
 [PR #81](https://github.com/LucianoHoult/Layauto/pull/81) 已合入 main。实际产品提交为 [679ff05](https://github.com/LucianoHoult/Layauto/commit/679ff05acfdca48132a914898041c95a6b668905)，Git tree 为 `fc6e4f30dc4df0b85c09a51c5afbad51c3092197`，与受审交付相同。PM 在候选上执行 2 项定向合同回归，并在候选和实际合并版分别运行 PM1 公开探针及 M1 查询示例。两项诊断及其原始来源均保留，查询状态为 not_evaluated，40 条本地图形保留，M1 线端可查回偏移 2352，三格宽 16、16、13 DBU。
 
-阶段矩阵的两个独立干净工作区都检出上述实际产品提交。Python 3.10.22 和 3.12.14 各收集 2,010 个唯一节点，两份有序节点清单的 SHA-256 均为 `bb715d92a85369e09feb919e63301af0f6fabb9dcf2c6f0c08ac4bfd8b520c6c`。两侧正在运行整个 `tests/`，含 fixture_support。完整结果待回填。
+阶段矩阵的两个独立干净工作区都检出上述实际产品提交。Python 3.10.22 和 3.12.14 各收集 2,010 个唯一节点，两份有序节点清单的 SHA-256 均为 `bb715d92a85369e09feb919e63301af0f6fabb9dcf2c6f0c08ac4bfd8b520c6c`。PM 在两边分别运行整个 `tests/`（含 fixture_support），逐一比对收集清单、实际通过的节点及子测试，均无遗漏或重复。
+
+| 实际合并版 | 完整回归 | pytest 耗时 |
+| --- | --- | ---: |
+| Python 3.10.22 | 2,010 项通过，8 个子测试通过 | 5092.80s |
+| Python 3.12.14 | 2,010 项通过，8 个子测试通过 | 3801.80s |
+
+运行命令为 `python -B -m pytest tests -p no:cacheprovider -p xdist -n 2 --dist worksteal -v --tb=short`，两边分别指定独立的临时目录。归档含两个解释器的完整命令、依赖版本、收集和执行日志。[阶段验证清单及哈希](W019/integration/stage-matrix.json) · [原始输出](W019/integration/stage-matrix.tar.gz)
+
+**PM 验收结果。** A1–A5 已接收，PM-01 已关闭，剩余必须修正项为 0。验收适用于已声明的 synthetic flat cell 及只读公开查询。M1 后续需把语义、几何、占用、标注和连通事实组装为一致的 Stage 2 基线，继续验证无修改输入到输出的闭环。真实生产 PDK 和真实 EDA 验证仍属后续范围。
