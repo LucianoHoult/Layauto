@@ -40,17 +40,22 @@ def _project_local(receipt: LocalAnalysisReceipt, local: LocalAnalysis,
         return OccupancyUnavailable('not_evaluated', ('drawn',), drawn.issues)
     assert isinstance(drawn.value, BaseOccupancy)
     layout = drawn.value.layout
-    effective = None
-    if request.include_effective:
-        facet = local.facets.effective
-        if facet.status != 'available':
-            return OccupancyUnavailable('not_evaluated', ('effective',), facet.issues)
-        assert isinstance(facet.value, EffectiveDraft)
-        effective = facet.value
+    facet = local.facets.effective
+    missing_effective = request.include_effective and facet.status != 'available'
+    # Coordinate binding only needs the authenticated layout and tech record.
     tech = next(record for record in receipt.evidence.records if record.kind == 'tech')
     try:
         model = _bind_model(layout, tech)
     except InputError as exc:
+        if missing_effective:
+            return OccupancyUnavailable('not_evaluated', ('effective', 'coordinate'),
+                                        (*facet.issues, exc.issue))
         return OccupancyUnavailable('invalid_declaration', ('coordinate',), (exc.issue,))
+    if missing_effective:
+        return OccupancyUnavailable('not_evaluated', ('effective',), facet.issues)
+    effective = None
+    if request.include_effective:
+        assert isinstance(facet.value, EffectiveDraft)
+        effective = facet.value
     return build_discrete_occupancy(layout, model, fragment_budget=request.fragment_budget,
                                     effective=effective)

@@ -199,3 +199,68 @@ def test_drawn_dependency_and_large_caller_budget(tmp_path):
     assert blocked.occupancy.dependencies == ('drawn',)
     issue, = blocked.occupancy.issues
     assert issue.code == 'UnsupportedGeometryComparator' and issue.source.uri == 'tech/formats.json'
+
+
+def reported_occupancy_issues(result):
+    report = json.loads(result.report_json)
+    objects = report['objects']
+    summary = objects[report['facets']['occupancy']['ref']]
+    assert summary['status'] == result.occupancy.status
+    assert tuple(objects[summary['dependencies']['ref']]) == result.occupancy.dependencies
+    locations = {}
+    for ref in objects[summary['issues']['ref']]:
+        issue = objects[ref['ref']]['fields']
+        source = issue['source']
+        capture = report['captures'][source['capture']]
+        locations[issue['code']] = (capture['uri'], source['field'], capture['sha256'])
+    return locations
+
+
+def test_independent_coordinate_and_effective_errors_keep_both_locations(tmp_path):
+    outcomes = {}
+    for case in ('axis', 'operator', 'combined'):
+        root = tmp_path / case
+        manifest = projected_manifest(root)
+        if case in ('axis', 'combined'):
+            coordinate = yaml.safe_load(SAMPLE.read_bytes())
+            del coordinate['coordinate_projection']['layers']['M1']['y_edges']
+            write(root / COORDINATE, coordinate)
+        if case in ('operator', 'combined'):
+            physical = root / 'tech/physical.json'
+            document = load(physical)
+            document['operators']['rectangle_set_difference/1'] = 'unsupported test operator'
+            write(physical, document)
+        rebind(root)
+
+        result = run(manifest, 100, effective=True)
+        query = result.occupancy
+        assert result.request_status == ('completed' if case == 'axis' else 'unsupported')
+        assert query.status == ('invalid_declaration' if case == 'axis' else 'not_evaluated')
+        assert query.value is None and len(result.local.facets.drawn.value.layout.records) == 40
+        issues = {}
+        for issue in query.issues:
+            source = issue.source
+            assert source.sha256 == hashlib.sha256((root / source.uri).read_bytes()).hexdigest()
+            issues[issue.code] = (source.uri, source.field, source.sha256)
+        assert reported_occupancy_issues(result) == issues
+        outcomes[case] = result, issues
+
+    _, axis = outcomes['axis']
+    _, operator = outcomes['operator']
+    combined, both = outcomes['combined']
+    assert set(axis) == {'InvalidProjectionDeclaration'}
+    assert axis['InvalidProjectionDeclaration'][:2] == (COORDINATE, '/coordinate_projection/layers/M1/y_edges')
+    assert set(operator) == {'UnsupportedRegionOperator'}
+    assert operator['UnsupportedRegionOperator'][:2] == ('tech/physical.json', '/operators/rectangle_set_difference~11')
+    assert both == axis | operator
+    assert set(combined.occupancy.dependencies) == {'effective', 'coordinate'}
+
+    manifest = tmp_path / 'combined/analysis.json'
+    drawn = run(manifest, 100)
+    plain = analyze_cell(AnalysisRequest(manifest))
+    assert plain.occupancy is None and 'occupancy' not in json.loads(plain.report_json)['facets']
+    assert plain.local == drawn.local == combined.local
+    assert plain.request_status == drawn.request_status == combined.request_status
+    assert plain.findings == drawn.findings == combined.findings
+    assert drawn.occupancy.status == 'invalid_declaration' and drawn.occupancy.value is None
+    assert reported_occupancy_issues(drawn) == axis
