@@ -1,4 +1,4 @@
-"""Process-local Stage 1 entry: inputs-ready handoff or published rejection.
+"""Process-local input preparation and read-only Stage 2 fact assembly.
 
 This is an internal pre-context slice, not a complete Stage 1–6 run.
 """
@@ -6,12 +6,12 @@ from __future__ import annotations
 
 import posixpath
 from pathlib import Path
-from typing import TypeAlias
+from typing import TYPE_CHECKING, TypeAlias, cast
 
 from layauto_v2.domain.codec import digest
 from layauto_v2.domain.evidence import EvidenceRecord, SourceFile, SourceRef
 from layauto_v2.domain.publication import (
-    AcquisitionEvent, InputCheckpoint, InputsReady, PipelineResult, PublicationUnavailable,
+    AcquisitionEvent, EvidenceAudit, InputCheckpoint, InputsReady, ParseAudit, PipelineResult, PublicationUnavailable,
     RunAttempt, RunRequest, StageFailure, ToolRunResult, exception_causes,
     safe_exception_message, safe_exception_type,
 )
@@ -19,6 +19,9 @@ from layauto_v2.domain.results import ParseResult
 from layauto_v2.importers.reader import InputParser
 from layauto_v2.repository import PublicationRepository, RepositoryConflict
 from layauto_v2.tooling import FixtureCapture
+
+if TYPE_CHECKING:
+    from layauto_v2.normalization.stage2 import Stage2Facts
 
 PrecontextResult: TypeAlias = InputsReady | PipelineResult | PublicationUnavailable
 
@@ -203,3 +206,25 @@ def prepare_inputs(repository: PublicationRepository, request: RunRequest) -> Pr
             # Diagnostics may not swallow or replace the original interruption.
             if interrupt is not None:
                 raise interrupt
+
+
+def assemble_stage2(repository: PublicationRepository, ready: InputsReady, *,
+                    fragment_budget: int) -> Stage2Facts:
+    """Assemble unpublished facts from the selected checkpoint, without reacquiring files."""
+    from layauto_v2.normalization.geometry_input import geometry_from_inputs_ready
+    from layauto_v2.normalization.stage2 import Stage2Facts
+
+    attempt = repository.load_attempt(ready.run_id)
+    if attempt != ready.attempt:
+        raise RepositoryConflict('ReadbackConflict', f'{ready.run_id}: inputs-ready differs from current attempt')
+    # InputsReady checks each ref's kind/run and the attempt checkpoint pointer.
+    # Repository.read verifies the stored kind/run/digest before returning content.
+    checkpoint = cast(InputCheckpoint, repository.read(ready.checkpoint_ref))
+    if (checkpoint.parse_ref != ready.parse_ref or checkpoint.tool_ref != ready.tool_ref
+            or checkpoint.evidence_refs != ready.evidence_refs or checkpoint.ready_value != ready.value):
+        raise RepositoryConflict('ReadbackConflict', f'{ready.checkpoint_ref.id}: inputs-ready differs from checkpoint')
+    parse = cast(ParseAudit, repository.read(ready.parse_ref))
+    tool = cast(ToolRunResult, repository.read(ready.tool_ref))
+    evidence = tuple(cast(EvidenceAudit, repository.read(ref)) for ref in ready.evidence_refs)
+    capture = geometry_from_inputs_ready(ready, checkpoint, parse, tool, evidence)
+    return Stage2Facts(capture, fragment_budget)
