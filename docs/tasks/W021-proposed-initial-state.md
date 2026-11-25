@@ -2,6 +2,8 @@
 
 ## 任务要求（PM）
 
+**当前状态为待补修。** PM 已复核候选的几何、标注和目标差异。合并前还有一项架构合同检查需要修正。[PM-01 复现与交接](#pm1-receipt)
+
 W021 是 M1、Stage 2 的产品开发任务。起点是已通过 [PR #83](https://github.com/LucianoHoult/Layauto/pull/83) 集成的 W020，产品提交为 `6cd6b14d41b9f4bc32b64ca62d0be6a731d98391`。执行分支为 `codex/w021-proposed-initial-state`，由独立执行 session 实施、独立 reviewer 复核、PM 验收。
 
 **交付一个后续初始化事务能直接消费的只读候选对象，及其逐项缺口。** 从一次 W020 完整运行组装的事实产生一个 `ProposedInitialState`。下游能读到起始几何、电路现状、占用、网络标注及物理连通，也能单独取得不可变的目标引用。来源相同、内容可复算、缺项可定位。依据为[架构 §2.3](../architecture.md#23-stage-2事实归一化与-layout-state-构建)、[状态职责](../architecture.md#113-state)、[初始化事务的输入](../architecture.md#118-transactions)与 [W020 发布缺口](W020/readiness.md)。
@@ -22,7 +24,7 @@ W021 是 M1、Stage 2 的产品开发任务。起点是已通过 [PR #83](https:
 
 ## 执行、复核与 PM 验收
 
-当前为 PM 派发。执行者追加代码版本、实际命令、A1–A5 结果及限制，独立 reviewer 追加反例及修正闭合。完整交付推回任务分支，交 PM 验收。
+执行和独立复核记录见下文。当前验收结论见 [PM1](#pm1-receipt)。
 
 ## 执行 session 启动指令
 
@@ -79,3 +81,35 @@ python -m venv /tmp/w21wheel
 ```
 
 实跑 W021 **4 passed**、W020 **10 passed**、W018 投影专项 **4 passed**，mypy 配置范围 84 文件和两处改动的显式检查均通过。sdist 与从 sdist 构建的 wheel 成功，干净安装 pip check 和隔离模式下完整调用通过。受测 wheel SHA-256 为 `ac1e5f8824e447b14340b0d0fba3b55fa504a39e7e904a1fab2be0f748097f05`。本轮按身份沿用 W020 未修改生产者与 W018 固定样本。若生产者、候选、输入、依赖或集成行为变更，补跑受影响范围。双解释器全量留到 Stage 2 首次正式发布的集成提交。
+
+<a id="pm1-receipt"></a>
+
+## PM1 接收与补修
+
+2026-11-25，PM 接收原分支交付 `ee072dd5a09c05e226f951d8d535473851206221`，核对产品提交 `5c923caeb3bdd317b452504c60293c0cf217e898` 及受审 tree `ae155bba3457f5cb53a6de0ee5a9b873715ae4e5`。交付版的产品、测试、配置及示例与该产品提交相同。剩余必须修正项 1（P2），待独立定向复核后再合并。
+
+**PM-01　验证范围漏掉了一条受影响的既有架构合同。** W007 的检查遍历 normalization 下的所有 Python 模块，按文件、模块及符号逐项限定允许访问的 state 类型。W021 的生产者 `normalization/initial_state.py` 新增了下表两条导入。它们符合任务卡 A1 的依赖方向，但当前检查未登记，因此实际运行失败。[产品导入](../../layauto_v2/normalization/initial_state.py) · [已有依赖检查](../../tests/contracts/test_w007_contracts.py) · [架构 §11.8](../architecture.md#118-transactions)
+
+| 模块 | W021 使用的只读类型 |
+| --- | --- |
+| `layauto_v2.state.discrete_occupancy` | `DiscreteOccupancy`、`ProjectionDiagnostic` |
+| `layauto_v2.state.mutation` | `LayerInitialization`、`ProjectionGap`、`ProposedInitialState`、`TargetContext` |
+
+在仓库根目录使用本项目 Python 环境复现：
+
+```sh
+PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 python -B -m pytest -p no:cacheprovider -q --tb=short tests/contracts/test_w007_contracts.py::test_normalization_and_new_domain_keep_pure_dependency_boundaries
+```
+
+| PM 实跑，Linux / CPython 3.12.14 | 结果 |
+| --- | --- |
+| 上一版 main `68dba6e` 与 W021 交付版运行同一条 W007 检查 | 基线通过；W021 失败，`assert violations == []` 报告上表两处模块。 |
+| W021 的 4 项新合同 | 4 项通过。含 LI 的 60 DBU²、R04 截短后直接标注变为 unknown 且物理分量和边相等、POLY 缺坐标参数、C13 目标 4n → 5n 以及两份捕获互换失败。 |
+| W005、W006、W008、W013 的相邻依赖方向检查 | 4 项通过，分别为 `test_importer_and_domain_dependency_direction`、`test_dependency_direction_and_no_builtin_hash_as_content_identity`、`test_domain_state_dependency_direction_and_no_hidden_occupancy_owner` 和 `test_new_modules_keep_declared_dependency_and_no_io_boundaries`。 |
+| 临时隔离副本中的修正试验 | 仅为 `initial_state.py` 登记表中 6 个类型后，原测试通过。再分别尝试额外导入同模块的 `build_discrete_occupancy` 或 repository 的 `PublicationRepository`，原测试均按预期失败。试验没有改动交付版本。 |
+
+执行侧 18 项定向结果、typing、构建及安装证据按上述产品身份采信。下一次双版本全量仍在 Stage 2 首次正式发布第 0 版的集成节点。
+
+**原执行 session 补修指令**
+
+> 在 `codex/w021-proposed-initial-state` 接续本节 PM-01。先复现 W007 依赖检查失败，再按既有按文件、模块和符号登记的方式，为 W021 生产者补齐上表六个类型。保持仓库和事务等依赖的原有限制。用原测试验证，另在临时副本验证额外导入仍被拒；请独立 reviewer 核查改动和反例。若改动仅限检查及证据，产品回归、构建、安装按原受测身份采信。将补修、命令、结果与完整 SHA 推回原分支，交 PM 重新验收。
