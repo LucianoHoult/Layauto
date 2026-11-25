@@ -1,10 +1,12 @@
 # 当前工作入口
 
-最近完成[W019 单 cell 工艺网格占用查询](tasks/W019-single-cell-occupancy-query.md#pm2-integration)，内核见[W018](tasks/W018-coordinate-occupancy-core.md#pm2-integration)。单 cell 分析入口见[W016 PM3](tasks/W016-single-cell-analysis.md#pm3-integration)，前置方案见[W015 PM1](tasks/W015-single-cell-analysis-entry.md#pm1-acceptance)，已完成节点见[W013 PM2](tasks/W013-net-annotation-coverage.md#pm2-integration)；W012 A2停止决定见[PM7](tasks/W012-capture-wire-performance.md#pm7-a2-stop)。详细决定、证据与review结论归任务文件。
+单 cell 公开查询见 [W019 单 cell 工艺网格占用查询](tasks/W019-single-cell-occupancy-query.md#pm2-integration)，内核见[W018](tasks/W018-coordinate-occupancy-core.md#pm2-integration)。单 cell 分析入口见[W016 PM3](tasks/W016-single-cell-analysis.md#pm3-integration)，前置方案见[W015 PM1](tasks/W015-single-cell-analysis-entry.md#pm1-acceptance)，已完成节点见[W013 PM2](tasks/W013-net-annotation-coverage.md#pm2-integration)；W012 A2停止决定见[PM7](tasks/W012-capture-wire-performance.md#pm7-a2-stop)。详细决定、证据与review结论归任务文件。
 
 ## 当前节点
 
-**当前派发 [W020 从同一次完整运行组装 Stage 2 初始状态所需事实](tasks/W020-stage2-baseline-readiness.md)。** 从完整运行核验过的输入串起几何、占用、网络标注和物理连通，交付可运行的例子及第 0 版快照的发布缺口。执行分支为 `codex/w020-stage2-baseline-readiness`。
+**当前派发 [W021 初始状态候选](tasks/W021-proposed-initial-state.md)。** 把 W020 的组装事实整理成后续初始化事务可直接读取的不可变候选，保留逐层缺项。执行分支为 `codex/w021-proposed-initial-state`。下一次双版本全量安排在 Stage 2 首次正式发布第 0 版的集成节点。
+
+**[W020](tasks/W020-stage2-baseline-readiness.md#pm-integration) 已验收并通过 PR #83 合入 main。** 已从完整输入将 GDS、精确占用、物理分量和网络标注串起。组装保持 attempt 为 unsealed；第 0 版待发布。
 
 **W019 已验收，通过 PR #81 合入 main。** PM-01 已关闭。Python 3.10.22、3.12.14 在实际合并版上各通过 2,010 项测试和 8 个子测试。该阶段回归供 W020 按受测版本采信。[PM2 集成核验](tasks/W019-single-cell-occupancy-query.md#pm2-integration)
 
@@ -91,7 +93,7 @@
 | channel 器件定位与 FIN 实测/有限参数核对 | W011已验收集成；正常5/7、mismatch 4对5、来源/范围及实际merge6项组合通过 |
 | 本地网络区域标注/精确覆盖/冲突 | W013已验收集成；实际merge三路公开组合及5项边界检查通过，body未知保持 |
 | 器件八端与synthetic外部body关联 | W014已验收集成；实际merge三路组合及5项边界检查通过，生产U06仍为设计 |
-| 完整工艺坐标/annotation/连通/body/提取状态与原子baseline | W020 核对同次运行的组装依据，正式发布第 0 版留待后续节点 |
+| 完整工艺坐标/annotation/连通/body/提取状态与原子baseline | W020 已核对同次运行的组装依据。W021 冻结候选，逐层初始化和第 0 版发布接续 |
 | 无变化的完整判定、只读GDS/CDL/JSON及报告/terminal | 后续Stage3–6组合；通过后才验收M1 |
 
 W010/W011及W012 A1已验收集成，具有局部物理图及有限器件定位/FIN计量，并已降低已定位的hex瞬时峰值；示例coordinate与32×16见证仍不能充当完整运行坐标。A2已停止、不集成；W013网络区域标注与覆盖草稿已验收集成。其资源证据见任务记录，后续继续在方案及最早组合检查序列化/重建成本，资源明显放大时交PM，不无限扩大状态链。W014器件端子/source网络比较与现行synthetic外部body关联已验收集成，U06具体方案已接收但生产入口未实现；之后仍需完整坐标、剩余标注与规则、原子baseline及运行输出组合；不把A1效果或FIN计数相等提升为完整M1/no_change。原drawn及W008 raw occupancy保持，外部body图形独立；生产输入/body任务派发前必须回查U06。

@@ -2,7 +2,7 @@
 
 ## 任务要求（PM）
 
-W020 属于 M1 的 Stage 2。基线为已集成 W019 的 main `17437dc38abd66224ea3153c393e5199b1d9bd57`，执行分支为 `codex/w020-stage2-baseline-readiness`。2026-11-24 用户确认继续推进。PM 已派发，执行与验收待完成。
+W020 属于 M1 的 Stage 2。基线为已集成 W019 的 main `17437dc38abd66224ea3153c393e5199b1d9bd57`，执行分支为 `codex/w020-stage2-baseline-readiness`。2026-11-24 用户确认继续推进。已验收并集成。[PM 集成核验](#pm-integration)
 
 **交付一条可运行的组装路径。** 给它一次完整运行已经读取并核验的输入，能从同一个 cell 的图形找到精确占用、物理区域、连通分量和已有网络标注，也能找回各自的输入依据。它应能指出哪些事实可供正式建立第 0 版快照使用、哪些仍缺少依据。第 0 版是后续规划和导出共同引用的起始版本。[架构 §2.3](../architecture.md#23-stage-2事实归一化与-layout-state-构建) · [M1 路线图](../roadmap.md)
 
@@ -54,3 +54,20 @@ python -m pytest -q tests/contracts/test_w020_stage2.py
 ## 执行 session 启动指令
 
 > 以执行角色在 `codex/w020-stage2-baseline-readiness` 完成 W020 A1–A5。先用真实完整运行输入列出跨组件取数示例，经独立方案复核后实现。交付可复跑的一条链，从原图查到占用、物理分量和网络标注，并找回原始来源。验证两次捕获不会串用、FIN 数相同仍能识别目标差异，列出发布第 0 版前还缺什么。按任务卡跑新增及受影响项并做独立代码复核。将实现、命令、结果与完整 SHA 推回原分支交 PM。
+
+<a id="pm-integration"></a>
+
+## PM 集成核验
+
+**W020 A1–A5 在 W003/W004 synthetic 范围验收。** [PR #83](https://github.com/LucianoHoult/Layauto/pull/83) 于 2026-11-25 合入 main。交付提交为 `752f1e5e0e52183e9d086d85a92ae097848e167c`，实际集成提交为 `6cd6b14d41b9f4bc32b64ca62d0be6a731d98391`。PR 候选与实际合并版的完整 tree 均等于交付版 `c8c7b437d90ec8b5238200414c296c1816247d55`。已核对发布版对应的两个受审 tree、默认报告与 W019 阶段矩阵的归档哈希。候选与交付版的 runtime、正式测试、配置、示例及其两个报告模块逐文件相同。
+
+| PM 实跑（Linux，Python 3.12.14） | 结果 |
+| --- | --- |
+| 交付版，默认 `example.py --keep-input` | 从保留的 GDS 中以大端记录长逐条读取 XY。LI@1648 与 (1,3) 相交 60 DBU²，M1@2352 与 (2,2) 相交 130 DBU²。CONTACT@1840 和 VIA0@2096 与各自两端均交叠 16 DBU²。R04 经 nXref 第 11 行对应 VSS。报告内 45 处来源的文件哈希均与实际输入字节一致。组装 47.369 秒，报告 25,801 字节。 |
+| 交付版，复跑[独立复核中的双仓探针](W020/code-review.md) | 同一请求两份捕获交叉使用均被拒绝。仅缩短 R04 直接标注，(1,3) 失去直接覆盖，正常版本同格为 VSS。两次组装的完整物理边和分量相等，各自仓库内容保持组装前的状态。 |
+| 实际合并版，`example.py --case unsupported_target --keep-input` | 重算同样的几何见证，47 处来源哈希与实际文件一致。源、目标和实测 FIN 对 MN0/MP0 均为 5/7；MN0 的目标长度差异 4n → 5n 保留。两次示例前后 attempt 均相等，保持 unsealed、revision 1。 |
+| 实际合并版，定向 pytest | `test_readback_rejects_foreign_attempt_for_same_run_id` 和 `test_normalization_and_new_domain_keep_pure_dependency_boundaries` 均通过。 |
+
+CR-01、CR-02 的处置可追至[独立代码复核](W020/code-review.md)。原 10 项新增与 15 项受影响合同、83 文件严格类型检查、构建及安装冒烟按[受测身份与环境](W020/evidence/verification.json)采信。双解释器全量安排在第 0 版首次正式发布的 Stage 2 集成节点。当前只验证合成样本的事实组装；正式初始化、原子发布、无修改判定和生产 PDK/LVS 各按其所属节点验证。
+
+下一项为 [W021 初始状态候选](W021-proposed-initial-state.md)。本轮的组装结果供其消费；缺失的 POLY 坐标仍保留具体用途与所需工艺声明。
