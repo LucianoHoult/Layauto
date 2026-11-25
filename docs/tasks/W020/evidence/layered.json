@@ -1,0 +1,810 @@
+{
+  "case": "layered",
+  "run_id": "w020-layered",
+  "before": {
+    "phase": "unsealed",
+    "revision": 1,
+    "ref": "attempt:w020-layered:ce923c9133725780f19e9b71e667f7997368b4d567e40b6c4bf5d2d6209caa51"
+  },
+  "after": {
+    "phase": "unsealed",
+    "revision": 1,
+    "ref": "attempt:w020-layered:ce923c9133725780f19e9b71e667f7997368b4d567e40b6c4bf5d2d6209caa51"
+  },
+  "checkpoint": "checkpoint:w020-layered:3818bf9f727612e0967af7351f5f54af71fe2878572898348e29d5f4972ec32a",
+  "parse": "parse:w020-layered:e9004315dfbd82ed7e19f64c708384df72bf81d12f963894ef426947b325be4f",
+  "tool": "tool_run:w020-layered:f2171d7363b47cbbcaf496a683829fad42bd0cdaa32e8c94492760d0ba584524",
+  "budget": 68,
+  "scope": {
+    "current_semantic": {
+      "source": {
+        "uri": "source.cdl",
+        "sha256": "c71f40728a979c918e083b924a3045cf53bece51dd837f9ae2834cf242776fa4"
+      },
+      "cell": "INV_M1_SYNTH",
+      "devices": [
+        "MN0",
+        "MP0"
+      ],
+      "nets": [
+        "A",
+        "VDD",
+        "VSS",
+        "Y"
+      ],
+      "semantic_digest": "b224a10510c6720f8ed7c255d86eef62bcbf401dce8e1788fe7c21bc84aaf2c8"
+    },
+    "immutable_target": {
+      "source": {
+        "uri": "target.cdl",
+        "sha256": "ddfd4713579743f578170efede62ce978a02680b42e5e2a6faeeb99016cff8db"
+      },
+      "cells": [
+        "INV_M1_SYNTH"
+      ],
+      "semantic_digest": "b224a10510c6720f8ed7c255d86eef62bcbf401dce8e1788fe7c21bc84aaf2c8",
+      "delta_ids": []
+    },
+    "geometry": {
+      "source": {
+        "uri": "source.gds",
+        "sha256": "97cf8d88771ff97f2cf189f6ae6a2fdcce585fc14f93c93d0ecf32326b415429"
+      },
+      "records": 40,
+      "canonical_tick_nm": 1,
+      "markers": [
+        {
+          "record_id": "721a69a03302c17807f9b84f271cb1ae20154b7b38d059cdb6f0e61168b9b2b4",
+          "bounds_dbu": [
+            145,
+            180,
+            150,
+            185
+          ],
+          "source": {
+            "uri": "source.gds",
+            "sha256": "97cf8d88771ff97f2cf189f6ae6a2fdcce585fc14f93c93d0ecf32326b415429",
+            "byte_offset": 2608,
+            "record_index": 201
+          },
+          "has_net_target": false
+        }
+      ]
+    },
+    "occupancy": {
+      "coordinate_source": {
+        "uri": "tech/layer-discretization.yaml",
+        "sha256": "fefb1bb72c15a131206f2885e1d9dc7ad98463aab676237a410a99d9c3d82890"
+      },
+      "unit_ref": "2daa4c4c1aa6a76dcd9c967761fafa1b6f21a5dcdaaf5d7b763f76b9f2b82d8e",
+      "model_id": "d354e491767deb271ee78b7d54852b3202147b7f236f199532281b408bfba476",
+      "layers": {
+        "BODY_N": {
+          "declaration": "missing_declaration",
+          "coordinate_field": "/coordinate_projection/layers/BODY_N",
+          "drawn_records": 1,
+          "drawn_reconstructed": 0,
+          "drawn_fragments": 0,
+          "drawn_diagnostics": {
+            "missing_declaration": 1
+          },
+          "effective_source_pieces": 0,
+          "effective_reconstructed": 0,
+          "effective_fragments": 0,
+          "effective_diagnostics": {}
+        },
+        "BODY_P": {
+          "declaration": "missing_declaration",
+          "coordinate_field": "/coordinate_projection/layers/BODY_P",
+          "drawn_records": 1,
+          "drawn_reconstructed": 0,
+          "drawn_fragments": 0,
+          "drawn_diagnostics": {
+            "missing_declaration": 1
+          },
+          "effective_source_pieces": 0,
+          "effective_reconstructed": 0,
+          "effective_fragments": 0,
+          "effective_diagnostics": {}
+        },
+        "BOUNDARY": {
+          "declaration": "projection_none",
+          "coordinate_field": "/coordinate_projection/layers/BOUNDARY",
+          "drawn_records": 1,
+          "drawn_reconstructed": 0,
+          "drawn_fragments": 0,
+          "drawn_diagnostics": {
+            "projection_none": 1
+          },
+          "effective_source_pieces": 0,
+          "effective_reconstructed": 0,
+          "effective_fragments": 0,
+          "effective_diagnostics": {}
+        },
+        "BTAP_N": {
+          "declaration": "missing_declaration",
+          "coordinate_field": "/coordinate_projection/layers/BTAP_N",
+          "drawn_records": 0,
+          "drawn_reconstructed": 0,
+          "drawn_fragments": 0,
+          "drawn_diagnostics": {},
+          "effective_source_pieces": 0,
+          "effective_reconstructed": 0,
+          "effective_fragments": 0,
+          "effective_diagnostics": {}
+        },
+        "BTAP_P": {
+          "declaration": "missing_declaration",
+          "coordinate_field": "/coordinate_projection/layers/BTAP_P",
+          "drawn_records": 0,
+          "drawn_reconstructed": 0,
+          "drawn_fragments": 0,
+          "drawn_diagnostics": {},
+          "effective_source_pieces": 0,
+          "effective_reconstructed": 0,
+          "effective_fragments": 0,
+          "effective_diagnostics": {}
+        },
+        "CONTACT": {
+          "declaration": "missing_declaration",
+          "coordinate_field": "/coordinate_projection/layers/CONTACT",
+          "drawn_records": 4,
+          "drawn_reconstructed": 0,
+          "drawn_fragments": 0,
+          "drawn_diagnostics": {
+            "missing_declaration": 4
+          },
+          "effective_source_pieces": 0,
+          "effective_reconstructed": 0,
+          "effective_fragments": 0,
+          "effective_diagnostics": {}
+        },
+        "CUT": {
+          "declaration": "missing_declaration",
+          "coordinate_field": "/coordinate_projection/layers/CUT",
+          "drawn_records": 0,
+          "drawn_reconstructed": 0,
+          "drawn_fragments": 0,
+          "drawn_diagnostics": {},
+          "effective_source_pieces": 0,
+          "effective_reconstructed": 0,
+          "effective_fragments": 0,
+          "effective_diagnostics": {}
+        },
+        "FIN": {
+          "declaration": "1d_track",
+          "coordinate_field": "/coordinate_projection/layers/FIN",
+          "drawn_records": 18,
+          "drawn_reconstructed": 18,
+          "drawn_fragments": 18,
+          "drawn_diagnostics": {},
+          "effective_source_pieces": 0,
+          "effective_reconstructed": 0,
+          "effective_fragments": 0,
+          "effective_diagnostics": {}
+        },
+        "GCONTACT": {
+          "declaration": "missing_declaration",
+          "coordinate_field": "/coordinate_projection/layers/GCONTACT",
+          "drawn_records": 1,
+          "drawn_reconstructed": 0,
+          "drawn_fragments": 0,
+          "drawn_diagnostics": {
+            "missing_declaration": 1
+          },
+          "effective_source_pieces": 0,
+          "effective_reconstructed": 0,
+          "effective_fragments": 0,
+          "effective_diagnostics": {}
+        },
+        "LI": {
+          "declaration": "2d_cells",
+          "coordinate_field": "/coordinate_projection/layers/LI",
+          "drawn_records": 3,
+          "drawn_reconstructed": 3,
+          "drawn_fragments": 20,
+          "drawn_diagnostics": {},
+          "effective_source_pieces": 3,
+          "effective_reconstructed": 3,
+          "effective_fragments": 20,
+          "effective_diagnostics": {}
+        },
+        "M1": {
+          "declaration": "2d_cells",
+          "coordinate_field": "/coordinate_projection/layers/M1",
+          "drawn_records": 4,
+          "drawn_reconstructed": 4,
+          "drawn_fragments": 10,
+          "drawn_diagnostics": {},
+          "effective_source_pieces": 0,
+          "effective_reconstructed": 0,
+          "effective_fragments": 0,
+          "effective_diagnostics": {}
+        },
+        "MARKER": {
+          "declaration": "projection_none",
+          "coordinate_field": "/coordinate_projection/layers/MARKER",
+          "drawn_records": 1,
+          "drawn_reconstructed": 0,
+          "drawn_fragments": 0,
+          "drawn_diagnostics": {
+            "projection_none": 1
+          },
+          "effective_source_pieces": 0,
+          "effective_reconstructed": 0,
+          "effective_fragments": 0,
+          "effective_diagnostics": {}
+        },
+        "OD": {
+          "declaration": "missing_declaration",
+          "coordinate_field": "/coordinate_projection/layers/OD",
+          "drawn_records": 2,
+          "drawn_reconstructed": 0,
+          "drawn_fragments": 0,
+          "drawn_diagnostics": {
+            "missing_declaration": 2
+          },
+          "effective_source_pieces": 6,
+          "effective_reconstructed": 0,
+          "effective_fragments": 0,
+          "effective_diagnostics": {
+            "missing_declaration": 6
+          }
+        },
+        "POLY": {
+          "declaration": "missing_declaration",
+          "coordinate_field": "/coordinate_projection/layers/POLY",
+          "drawn_records": 1,
+          "drawn_reconstructed": 0,
+          "drawn_fragments": 0,
+          "drawn_diagnostics": {
+            "missing_declaration": 1
+          },
+          "effective_source_pieces": 0,
+          "effective_reconstructed": 0,
+          "effective_fragments": 0,
+          "effective_diagnostics": {}
+        },
+        "VIA0": {
+          "declaration": "missing_declaration",
+          "coordinate_field": "/coordinate_projection/layers/VIA0",
+          "drawn_records": 3,
+          "drawn_reconstructed": 0,
+          "drawn_fragments": 0,
+          "drawn_diagnostics": {
+            "missing_declaration": 3
+          },
+          "effective_source_pieces": 0,
+          "effective_reconstructed": 0,
+          "effective_fragments": 0,
+          "effective_diagnostics": {}
+        }
+      }
+    },
+    "annotation": {
+      "derived_registry_source": {
+        "uri": "tech/derived.json",
+        "sha256": "0806468843e018c9dda461dc7c6c583773f63453392143ce6b6a92259a7ec1d9"
+      },
+      "validity": "source_evidence",
+      "net_evidence": 8,
+      "region_targets": 14,
+      "directly_covered_nm2": "3170",
+      "uncovered_nm2": "31920",
+      "conflict_nm2": "0"
+    },
+    "connectivity": {
+      "physical_source": {
+        "uri": "tech/physical.json",
+        "sha256": "b2e28e8464c450f0eed55d5e03464bfea1c6502ba29256d3376eb3d158c659af"
+      },
+      "rules_source": {
+        "uri": "tech/rules.json",
+        "sha256": "40ce0b76abb28c07ab734734a19d61e1259bc5aee42a8cf2c02fabb9e4457480"
+      },
+      "nodes": 14,
+      "edges": 8,
+      "components": 6,
+      "body_context_source": {
+        "uri": "body/context.json",
+        "sha256": "bfeec36baf831f7c4e8ffe9cb7d37470807176afcb39ebb386ae786cf43aa039"
+      },
+      "local_graph_union": false,
+      "production_matched_body_evidence": false,
+      "lvs_status": "not_run",
+      "body_terminals": [
+        {
+          "device": "MN0",
+          "local_components": [
+            "9139565f89e94aa4242ad8caef7fc2233c22db0336669355778e5a40d53fb17f"
+          ],
+          "local_observed_nets": [],
+          "context_field": "/associations/0",
+          "context_chain": "established",
+          "context_observed_nets": [
+            "VSS"
+          ]
+        },
+        {
+          "device": "MP0",
+          "local_components": [
+            "7d0c3129e51669e2858da8f43dfc6612a154f572479768250512f35b398fa4ea"
+          ],
+          "local_observed_nets": [],
+          "context_field": "/associations/1",
+          "context_chain": "established",
+          "context_observed_nets": [
+            "VDD"
+          ]
+        }
+      ]
+    }
+  },
+  "intent": {
+    "fins_per_finger": {
+      "MN0": {
+        "source": 5,
+        "target": 5,
+        "measured": 5
+      },
+      "MP0": {
+        "source": 7,
+        "target": 7,
+        "measured": 7
+      }
+    },
+    "stage4_differences": []
+  },
+  "trace": {
+    "record": {
+      "layer": "LI",
+      "top": "INV_M1_SYNTH",
+      "id": "1520c086fbd443225fd2361cc4ba4d38eda87d5f97edd5a0cf68a887f4ec11c5",
+      "source": {
+        "uri": "source.gds",
+        "sha256": "97cf8d88771ff97f2cf189f6ae6a2fdcce585fc14f93c93d0ecf32326b415429",
+        "byte_offset": 1648,
+        "record_index": 126
+      },
+      "stream_key": {
+        "element": "BOUNDARY",
+        "layer": 4,
+        "datatype": 0
+      },
+      "raw_xy": [
+        [
+          28,
+          30
+        ],
+        [
+          34,
+          30
+        ],
+        [
+          34,
+          55
+        ],
+        [
+          28,
+          55
+        ],
+        [
+          28,
+          30
+        ]
+      ],
+      "bounds_dbu": [
+        28,
+        30,
+        34,
+        55
+      ],
+      "area_dbu2": 150,
+      "layer_policy": {
+        "uri": "tech/drawn.json",
+        "sha256": "29b675eefb2e957f2519ffa1a9ec0eed57a6055ccfa3b0bbe85d7d00e8382428",
+        "field": "/layers/6"
+      }
+    },
+    "drawn": {
+      "indices": [
+        1,
+        3
+      ],
+      "cell_bounds_dbu": [
+        20,
+        30,
+        40,
+        40
+      ],
+      "bounds_dbu": [
+        28,
+        30,
+        34,
+        40
+      ],
+      "area_dbu2": 60,
+      "model_id": "d354e491767deb271ee78b7d54852b3202147b7f236f199532281b408bfba476",
+      "tick_nm": 1,
+      "unit_ref": "2daa4c4c1aa6a76dcd9c967761fafa1b6f21a5dcdaaf5d7b763f76b9f2b82d8e",
+      "unit_source": {
+        "uri": "tech/formats.json",
+        "sha256": "6ccf919d844b7336af97ab68f7e58c34908802ee79ef7cf3071e937a5396ec87",
+        "field": "/unit_scale_contract"
+      },
+      "coordinate": {
+        "uri": "tech/layer-discretization.yaml",
+        "sha256": "fefb1bb72c15a131206f2885e1d9dc7ad98463aab676237a410a99d9c3d82890",
+        "field": "/coordinate_projection/layers/LI"
+      }
+    },
+    "effective": {
+      "piece_ref": "58410be2bca3b623be7b57f1f19caa26bc7b601e5083ec09f502ace2492ea772",
+      "region_ref": "ba2d47b831631b57b9b974e767c079def342d08b8ac210ac3b1407f71cee9d36",
+      "piece_bounds_dbu": [
+        28,
+        30,
+        34,
+        55
+      ],
+      "bounds_dbu": [
+        28,
+        30,
+        34,
+        40
+      ],
+      "area_dbu2": 60,
+      "operator_ref": "4c801f36a53328811842ff57c48ee504b960e2d0c195d5f509afd5098401ef3a",
+      "operator": {
+        "uri": "tech/physical.json",
+        "sha256": "b2e28e8464c450f0eed55d5e03464bfea1c6502ba29256d3376eb3d158c659af",
+        "field": "/operators/rectangle_set_difference~11"
+      },
+      "contributors": []
+    },
+    "physical": {
+      "node_ref": "7fce9f6dfaf13a99f00b7431564f03882de82365c8c1be781c4237418d5a3a5f",
+      "component_ref": "656bd9b055f519897cb4f4e86da8a0f713eea6022d6a46cc6dec00fa814de16d",
+      "members": [
+        "362fce44efd9b8b1651e2fa38b35775cf1e9d53eca42168f6cfc1014c3280fb4",
+        "7fce9f6dfaf13a99f00b7431564f03882de82365c8c1be781c4237418d5a3a5f",
+        "9a9935a3d622b9e5f91cb501001bc6ca4bfc4549d62d8347d59db414f93c9d01"
+      ],
+      "operator": {
+        "uri": "tech/physical.json",
+        "sha256": "b2e28e8464c450f0eed55d5e03464bfea1c6502ba29256d3376eb3d158c659af",
+        "field": "/operators/cross_layer_contact~11"
+      },
+      "edges": [
+        {
+          "edge_ref": "9495b3f9f589abaf1a49581af48098d3714297ef179796c10c866aaef9222595",
+          "kind": "connector",
+          "endpoints": [
+            {
+              "node_ref": "362fce44efd9b8b1651e2fa38b35775cf1e9d53eca42168f6cfc1014c3280fb4",
+              "layer": "M1",
+              "region_ref": "e8199cd9cba7a46c23b3e332688ac4871b9e4854f26a67a5708a95cc47ae2757",
+              "source": {
+                "uri": "source.gds",
+                "sha256": "97cf8d88771ff97f2cf189f6ae6a2fdcce585fc14f93c93d0ecf32326b415429",
+                "byte_offset": 2352,
+                "record_index": 181
+              },
+              "overlaps": [
+                {
+                  "bounds_dbu": [
+                    29,
+                    50,
+                    33,
+                    54
+                  ],
+                  "area_dbu2": 16
+                }
+              ]
+            },
+            {
+              "node_ref": "7fce9f6dfaf13a99f00b7431564f03882de82365c8c1be781c4237418d5a3a5f",
+              "layer": "LI",
+              "region_ref": "ba2d47b831631b57b9b974e767c079def342d08b8ac210ac3b1407f71cee9d36",
+              "source": {
+                "uri": "source.gds",
+                "sha256": "97cf8d88771ff97f2cf189f6ae6a2fdcce585fc14f93c93d0ecf32326b415429",
+                "byte_offset": 1648,
+                "record_index": 126
+              },
+              "overlaps": [
+                {
+                  "bounds_dbu": [
+                    29,
+                    50,
+                    33,
+                    54
+                  ],
+                  "area_dbu2": 16
+                }
+              ]
+            }
+          ],
+          "source": {
+            "uri": "source.gds",
+            "sha256": "97cf8d88771ff97f2cf189f6ae6a2fdcce585fc14f93c93d0ecf32326b415429",
+            "byte_offset": 2096,
+            "record_index": 161
+          },
+          "connector_id": "f198c8fc33903f7c2ae85bf5a0565d1527dabb7a62c7241cdc164d2a004213a8",
+          "connector_layer": "VIA0",
+          "layer_policy": {
+            "uri": "tech/drawn.json",
+            "sha256": "29b675eefb2e957f2519ffa1a9ec0eed57a6055ccfa3b0bbe85d7d00e8382428",
+            "field": "/layers/9"
+          }
+        },
+        {
+          "edge_ref": "a7bc907668243fe20e3a9968fabb32b216537b4f97bc2e77feba078d62ed32a0",
+          "kind": "connector",
+          "endpoints": [
+            {
+              "node_ref": "7fce9f6dfaf13a99f00b7431564f03882de82365c8c1be781c4237418d5a3a5f",
+              "layer": "LI",
+              "region_ref": "ba2d47b831631b57b9b974e767c079def342d08b8ac210ac3b1407f71cee9d36",
+              "source": {
+                "uri": "source.gds",
+                "sha256": "97cf8d88771ff97f2cf189f6ae6a2fdcce585fc14f93c93d0ecf32326b415429",
+                "byte_offset": 1648,
+                "record_index": 126
+              },
+              "overlaps": [
+                {
+                  "bounds_dbu": [
+                    29,
+                    40,
+                    33,
+                    44
+                  ],
+                  "area_dbu2": 16
+                }
+              ]
+            },
+            {
+              "node_ref": "9a9935a3d622b9e5f91cb501001bc6ca4bfc4549d62d8347d59db414f93c9d01",
+              "layer": "OD",
+              "region_ref": "65e382cd53097f8e95d8beeca5d7754296537e511b916abb9ad4c0ea09064775",
+              "source": {
+                "uri": "source.gds",
+                "sha256": "97cf8d88771ff97f2cf189f6ae6a2fdcce585fc14f93c93d0ecf32326b415429",
+                "byte_offset": 304,
+                "record_index": 21
+              },
+              "overlaps": [
+                {
+                  "bounds_dbu": [
+                    29,
+                    40,
+                    33,
+                    44
+                  ],
+                  "area_dbu2": 16
+                }
+              ]
+            }
+          ],
+          "source": {
+            "uri": "source.gds",
+            "sha256": "97cf8d88771ff97f2cf189f6ae6a2fdcce585fc14f93c93d0ecf32326b415429",
+            "byte_offset": 1840,
+            "record_index": 141
+          },
+          "connector_id": "be308a9687e4369b8e5d4c302b7c959c00024d2522e8bbb1d5c64efafef388fe",
+          "connector_layer": "CONTACT",
+          "layer_policy": {
+            "uri": "tech/drawn.json",
+            "sha256": "29b675eefb2e957f2519ffa1a9ec0eed57a6055ccfa3b0bbe85d7d00e8382428",
+            "field": "/layers/8"
+          }
+        }
+      ]
+    },
+    "annotation": {
+      "target_ref": "2041fb98f1cb7258e752da5903422fb75a704cbfcad82c59fd1d380f3e4f3e75",
+      "fragment_ref": "d1822828b61129166329f891e62eb68b18ea73bc713678df556f1acf55afc2a6",
+      "component_ref": "656bd9b055f519897cb4f4e86da8a0f713eea6022d6a46cc6dec00fa814de16d",
+      "match_ref": "723a1469ee5d7a1d21b205feff9ac12193ede3f50bb9719598ead6d7b9bce98b",
+      "coverage_nm": [
+        [
+          28,
+          30,
+          34,
+          55
+        ]
+      ],
+      "covered_fragment_nm": [
+        [
+          28,
+          30,
+          34,
+          40
+        ]
+      ],
+      "covered_area_nm2": 60,
+      "evidence_ref": "93b861c24606ac9fb74df799f7dbe80f0d249451b63a29ef3baf17843af492ab",
+      "query_record": "R04",
+      "query_key": {
+        "header_id": "w004.synthetic.query.2",
+        "query_run_id": "w004.synthetic.query.2",
+        "database_id": null,
+        "kind": "net",
+        "identity": "n_lo",
+        "index": "3"
+      },
+      "query_rect_nm": [
+        28,
+        30,
+        34,
+        55
+      ],
+      "request_source": {
+        "uri": "query/requests.json",
+        "sha256": "57f5f38cb3ec450fd1815ef88c618c03a9703690672348b313fa35fbce97bc62",
+        "field": "/requests/4/record_ids/0"
+      },
+      "source_operands": {
+        "vertices_nm": [
+          {
+            "uri": "query/raw/net_shapes_n_lo.txt",
+            "sha256": "930681f091fa835ceac3948a44d629a086a0b38b65ad786b47eec6fe9ced3e44",
+            "line": 1,
+            "token_0based": 1
+          },
+          {
+            "uri": "query/raw/net_shapes_n_lo.txt",
+            "sha256": "930681f091fa835ceac3948a44d629a086a0b38b65ad786b47eec6fe9ced3e44",
+            "line": 7,
+            "token_0based": 0
+          },
+          {
+            "uri": "query/raw/net_shapes_n_lo.txt",
+            "sha256": "930681f091fa835ceac3948a44d629a086a0b38b65ad786b47eec6fe9ced3e44",
+            "line": 7,
+            "token_0based": 1
+          },
+          {
+            "uri": "query/raw/net_shapes_n_lo.txt",
+            "sha256": "930681f091fa835ceac3948a44d629a086a0b38b65ad786b47eec6fe9ced3e44",
+            "line": 8,
+            "token_0based": 0
+          },
+          {
+            "uri": "query/raw/net_shapes_n_lo.txt",
+            "sha256": "930681f091fa835ceac3948a44d629a086a0b38b65ad786b47eec6fe9ced3e44",
+            "line": 8,
+            "token_0based": 1
+          },
+          {
+            "uri": "query/raw/net_shapes_n_lo.txt",
+            "sha256": "930681f091fa835ceac3948a44d629a086a0b38b65ad786b47eec6fe9ced3e44",
+            "line": 9,
+            "token_0based": 0
+          },
+          {
+            "uri": "query/raw/net_shapes_n_lo.txt",
+            "sha256": "930681f091fa835ceac3948a44d629a086a0b38b65ad786b47eec6fe9ced3e44",
+            "line": 9,
+            "token_0based": 1
+          },
+          {
+            "uri": "query/raw/net_shapes_n_lo.txt",
+            "sha256": "930681f091fa835ceac3948a44d629a086a0b38b65ad786b47eec6fe9ced3e44",
+            "line": 10,
+            "token_0based": 0
+          },
+          {
+            "uri": "query/raw/net_shapes_n_lo.txt",
+            "sha256": "930681f091fa835ceac3948a44d629a086a0b38b65ad786b47eec6fe9ced3e44",
+            "line": 10,
+            "token_0based": 1
+          },
+          {
+            "uri": "query/dialect.json",
+            "sha256": "c07bba5e95ac83d5f9e72b5e5e9b134893bf70b8881fa76dbb5ab3cb28ca1666",
+            "field": "/geometry"
+          }
+        ],
+        "derived_layer": [
+          {
+            "uri": "query/raw/net_shapes_n_lo.txt",
+            "sha256": "930681f091fa835ceac3948a44d629a086a0b38b65ad786b47eec6fe9ced3e44",
+            "line": 4,
+            "token_0based": null
+          },
+          {
+            "uri": "tech/derived.json",
+            "sha256": "0806468843e018c9dda461dc7c6c583773f63453392143ce6b6a92259a7ec1d9",
+            "field": "/derived_registry/3"
+          }
+        ],
+        "lvs_index": [
+          {
+            "uri": "query/requests.json",
+            "sha256": "57f5f38cb3ec450fd1815ef88c618c03a9703690672348b313fa35fbce97bc62",
+            "field": "/requests/4/object"
+          },
+          {
+            "uri": "query/raw/net_names.txt",
+            "sha256": "6cc3977d84a42a43df548dd65b30b2d05d07b7aa32ab327b38f5f6b2fead06ab",
+            "line": 6,
+            "token_0based": null
+          }
+        ],
+        "schematic_name": [
+          {
+            "uri": "query/requests.json",
+            "sha256": "57f5f38cb3ec450fd1815ef88c618c03a9703690672348b313fa35fbce97bc62",
+            "field": "/requests/4/object"
+          },
+          {
+            "uri": "query/raw/nXref.temp",
+            "sha256": "0ad811405e3fc0893b5d97eba2a786dcbe97ba55b699480e8013734db7da80ad",
+            "line": 11,
+            "token_0based": 3
+          }
+        ]
+      },
+      "net_name": "VSS",
+      "net_id": "net:2cce3e574f5d952ba1fed51ea260954af4ae1e667ae407ca23815822409707fe",
+      "source_cdl": [
+        {
+          "uri": "source.cdl",
+          "sha256": "c71f40728a979c918e083b924a3045cf53bece51dd837f9ae2834cf242776fa4",
+          "line": 2,
+          "column": 26,
+          "byte_offset": 97
+        },
+        {
+          "uri": "source.cdl",
+          "sha256": "c71f40728a979c918e083b924a3045cf53bece51dd837f9ae2834cf242776fa4",
+          "line": 3,
+          "column": 9,
+          "byte_offset": 113
+        },
+        {
+          "uri": "source.cdl",
+          "sha256": "c71f40728a979c918e083b924a3045cf53bece51dd837f9ae2834cf242776fa4",
+          "line": 3,
+          "column": 13,
+          "byte_offset": 117
+        }
+      ]
+    },
+    "m1_line_end": {
+      "source": {
+        "uri": "source.gds",
+        "sha256": "97cf8d88771ff97f2cf189f6ae6a2fdcce585fc14f93c93d0ecf32326b415429",
+        "byte_offset": 2352,
+        "record_index": 181
+      },
+      "record_id": "980c3d7f556927ce881f29bc12554b4c353a994895edbe05bf43ee774cc5169c",
+      "indices": [
+        2,
+        2
+      ],
+      "cell_bounds_dbu": [
+        32,
+        40,
+        48,
+        60
+      ],
+      "bounds_dbu": [
+        32,
+        48,
+        45,
+        58
+      ],
+      "area_dbu2": 130,
+      "coordinate": {
+        "uri": "tech/layer-discretization.yaml",
+        "sha256": "fefb1bb72c15a131206f2885e1d9dc7ad98463aab676237a410a99d9c3d82890",
+        "field": "/coordinate_projection/layers/M1"
+      }
+    }
+  }
+}
