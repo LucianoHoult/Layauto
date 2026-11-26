@@ -43,7 +43,7 @@ W012调查及[A1兼容hex优化](tasks/W012-capture-wire-performance.md#pm4-a1-i
 
 [W017 方案](tasks/W017-coordinate-occupancy-projection.md#pm1-acceptance)已验收集成。15 层坐标来源、FIN 中心查询、显式 LI 格边和同格多片段均有可复核样张。[W018](tasks/W018-coordinate-occupancy-core.md#pm2-integration) 已集成逐层声明驱动的坐标与占用内核，可从占用片段回查 GDS 来源。[W019](tasks/W019-single-cell-occupancy-query.md#pm2-integration) 已将其接入 W016 单 cell 分析入口，实际合并版本通过双解释器阶段回归，可查询每格的实际占用及 GDS 来源。
 
-[W020](tasks/W020-stage2-baseline-readiness.md#pm-integration) 已串起同一次捕获的初始事实，[W021](tasks/W021-proposed-initial-state.md#pm2-integration) 已将其组成不可变候选。[W022](tasks/W022-layer-initialization-checks.md#pm2-integration) 已集成逐层原图、固定外框和占用校验。[W023](tasks/W023-atomic-baseline-publication.md) 负责在 Stage 2 首次登记第 0 版，或为新运行核对并复用已有版本。首次发布集成后做双解释器阶段全量。M1 随后仍需建立约束上下文、证明全部目标已满足、记录零修改并完成导出与回读。
+[W020](tasks/W020-stage2-baseline-readiness.md#pm-integration) 已串起同一次捕获的初始事实，[W021](tasks/W021-proposed-initial-state.md#pm2-integration) 已将其组成不可变候选。[W022](tasks/W022-layer-initialization-checks.md#pm2-integration) 已集成逐层原图、固定外框和占用校验。[W023](tasks/W023-atomic-baseline-publication.md#pm2-integration) 的首次原子发布、已有版本复用和双解释器阶段回归已通过。[W024](tasks/W024-stage3-rule-context.md) 开始建立 Stage 3 约束上下文并实算第一条金属间距规则。M1 随后还需核对适用规则和全部目标、记录零修改并完成导出与回读。
 
 | 里程碑 | 可观察能力与代表输入→结果 | 依赖 / 退出验收 |
 | --- | --- | --- |
@@ -183,7 +183,7 @@ W012调查及[A1兼容hex优化](tasks/W012-capture-wire-performance.md#pm4-a1-i
 
 - **W001 规划已验收：**独立 review 为 0 项实质 findings，PM 已核对被审身份、要求覆盖与限制；已验收文档原稿 `8482b68` 及集成记录 `156e62d` 已推送 GitHub main。详细状态和证据归任务文件，规划验收不等于产品实现授权。
 - **W002工程准备已验收：**真实准入出口仍缺E3所列材料；后续W003/W004已完成synthetic样本/profile/独立判据准备，W005/W006已有产品实现并集成。真实缺项不因这些工程进展自动关闭。
-- **W010局部物理图及独立T05包围事实已验收集成：**当前具备认证drawn/base、CUT/channel/端区及本地接触/connector/component草稿。W014有限八端/synthetic body关系亦已集成；完整工艺坐标、有效region投影、生产body/U06、完整器件/端口标注（W011有限FIN与W013本地net草稿已集成）、其余mandatory/lifecycle、原子baseline/no_change和Stage6保真交付仍须后续完成。具体阶段与恢复位置见current-work。
+- **W010局部物理图及独立T05包围事实已验收集成：**当前具备认证drawn/base、CUT/channel/端区及本地接触/connector/component草稿。W014有限八端/synthetic body关系亦已集成；W018–W023 已为当前 synthetic 能力补齐坐标、逐层校验和第 0 版原子发布。接下来核对规则与目标，完成无变化判定和 Stage 6 保真交付。生产 body/U06 另有准入范围。具体恢复位置见 [当前入口](current-work.md)。
 - W002 接收后只展开 M1 的近期实现包；共享状态/publication/物理解释方案先独立 review。M2–M4 保留能力目标、依赖和验收，不预写全部 helper/模块任务或承诺日历排期。
 
 | PM 核对 | 本规划的处理 | 尚不代表 |

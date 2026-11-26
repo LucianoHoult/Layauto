@@ -1,0 +1,38 @@
+{
+  "merge_commit": "1a18b1f2d351fa6049ac9c680b3a30365f71e334",
+  "tree": "8558857c114ebf4d37fb531d4f2a8f18346efa85",
+  "scope": "tests/",
+  "results": {
+    "310": {
+      "interpreter": "Python 3.10.22 (main, Oct  3 2026, 01:32:06) [Clang 22.1.3 ]",
+      "tests": 2051,
+      "subtests": 8,
+      "seconds": 7117.69,
+      "summary": "2051 passed, 8 subtests passed in 7116.90s (1:58:36)"
+    },
+    "312": {
+      "interpreter": "Python 3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+      "tests": 2051,
+      "subtests": 8,
+      "seconds": 5213.69,
+      "summary": "2051 passed, 8 subtests passed in 5213.17s (1:26:53)"
+    }
+  },
+  "ordered_collection_sha256": "fefd991b20824386e70e32beff59d4e82aa5a16d1b3281c02f82d8133f022e94",
+  "files_sha256": {
+    "310/collection.log": "4a406b85ba998a7c3e241f7fc072326491c2af0445c559c8da6cf63fb529f69d",
+    "310/packages.txt": "96bbd8b0501fc166dd831e56f9329797586766d2ab22c4ee87aeda2aaa9cd073",
+    "310/pytest.log": "fcade852e414e71b1e546e48b5374bc9c12da514bcfa5a01d935ab62f241cad1",
+    "310/python.txt": "17c163644c600c33fbc27ca3e7dfca93ba2a2c75b3407c319844c1fa1397a853",
+    "310/run.json": "76405e3427d92238cb106cd0b84885bb5a6da50a92162f016b4dc17dbce6cfe4",
+    "312/collection.log": "bd67c465d7f66a6dbabcc9fe5e7459b813ec26cdeca1d01a230855344b1cb77c",
+    "312/packages.txt": "5fd1aed7e73aa2d782d2d817f2480184901769095b454e484fed25e39739c14f",
+    "312/pytest.log": "8942ab919b4098163fa14a7dede023193c182dafdb819de7a532b12540ebcb77",
+    "312/python.txt": "1136b347106711865de4555f802cbe2530f9f9a0802157234e7d833ee0465278",
+    "312/run.json": "b37d8a025b2f01828e960bea4e36deb3d0f181a10ef3dd0933eec95865c9b840",
+    "check_matrix.py": "15fc9d10019ec490e899788fe5c766591d7fa2f88b1ce983867cc8ff3077f901",
+    "combination.log": "9bf50581e1b72c4267a5a9368236f043553c4e2432c713a308ff957a3850a215",
+    "run.py": "131054cd3c32e087a934a1f4b8fbe2fa9bdd98f6947d16c85a6459a13aaae45b"
+  },
+  "archive_sha256": "f458be55534cda21322d361c2995180c630e228c1ccb821bd9cc6290e4174f5c"
+}

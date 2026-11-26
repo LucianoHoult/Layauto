@@ -2,7 +2,7 @@
 
 ## 任务要求（PM）
 
-**阶段为待补修，归属 M1 的 Stage 2。** PM 在[合并前核验](#pm1-receipt)发现 1 项 P2，涉及已通过逐层检查的精确坐标写入快照。执行分支为 `codex/w023-atomic-baseline-publication`。以前置 [W021 候选](W021-proposed-initial-state.md#pm2-integration) 和 [W022 已验收的逐层校验](W022-layer-initialization-checks.md#pm2-integration) 为输入。执行 session 交付运行代码，独立 reviewer 复核方案与实现，PM 负责集成和阶段回归。
+**W023 已验收并合入 main，PM-01 已关闭。** 单进程 synthetic Stage 2 首次发布及双版本阶段验证已通过。[PM2 集成验收](#pm2-integration) · [原始复现](#pm1-receipt)执行分支为 `codex/w023-atomic-baseline-publication`。以前置 [W021 候选](W021-proposed-initial-state.md#pm2-integration) 和 [W022 已验收的逐层校验](W022-layer-initialization-checks.md#pm2-integration) 为输入。执行 session 交付运行代码，独立 reviewer 复核方案与实现，PM 负责集成和阶段回归。
 
 本次要让后续阶段能凭仓库里的版本号和引用，重新读到这次运行的起始版图。在已有的单进程仓库中完成。运行模式沿用当前支持的 `dummy_fixture / whole_intent`。架构依据为 [§2.3、§2.6、§3.8、§9.2、§11.8](../architecture.md)，样本与验收输入见 [W020 发布清单](W020/readiness.md)。本轮交付 `sealed_open` 的 Stage 2 交接。后续 M1 工作负责约束、目标闭合和导出。当前仓库只提供进程内原子性，样本覆盖 synthetic 范围。
 
@@ -136,3 +136,26 @@ PYTHONPATH="$repo_root/tests/contracts" "$release_dir/venv/bin/python" -B "$repo
 任务卡所列 W018、W023 模块边界和 W006 仓库检查共 58 项通过（0.86 秒）。另选的 W023 检查 8 项通过（192.16 秒），含两项新增回归。mypy 2.4.1 对三个改动的产品模块检查通过。起点与受测提交分别运行 W006 成功读入、失败终结的 19 条内容摘要核对，两者均为 `1e0656468ea09e373862f940eda7231c332b3145c5745dc01ef54860b15f2150`。[W006 字节核对命令](W023/verification.md#w006-既有-wire-身份)
 
 W018 模型算法、W022 逐层校验、W006 通用值编码、发布事务和仓库切换沿用起点源码。原交付中这些部分的其余证据按提交身份复用。若合并改变相关源码、样本或依赖，重跑对应合同。Python 3.10、3.12 双解释器全量与发布组合按原分工由 PM 在实际合并版执行。[原交付证据](W023/verification.md) · [PM-01 独立复核](W023/pm01-review.md)
+
+<a id="pm2-integration"></a>
+
+## PM2 合并与阶段验收
+
+**W023 A1–A5 已验收。** [PR #89](https://github.com/LucianoHoult/Layauto/pull/89) 合入 main，实际产品提交为 `1a18b1f2d351fa6049ac9c680b3a30365f71e334`。远端交付 `836cdb78753a6f55efebec53964f2e7839b96cf4`、PR 合并候选、实际合并版三者的完整 tree 均为 `8558857c114ebf4d37fb531d4f2a8f18346efa85`。产品、测试、配置与受测补修 `abfada28f492fbe1da685763731e31d792f9d0ba` 核对一致。独立 reviewer 的两组相近负分数、源码和受测身份见[复核记录](W023/pm01-review.md)。
+
+- 合并前，PM 在 CPython 3.12.14 默认 4,300 位限制下，复跑原始实际文件探针 `pm01_coordinates.py 2200`。15 层通过，312 片，分母为 4,401 位的轨心可从第 0 版按精确值读回。Python 3.10.22 的 W006 仓库及模块边界、W018 模型与 W023 模块边界检查合计 60 项通过。PM-01 关闭。
+- 在实际合并版，从 W003/W004 正常文件与 C14 替换文件分别初始化，得到两个可按引用读回的第 0 版，ECO 链均为空。正常输入重放得到原引用，新 run 复用成功。C14 的目标语义差异仍为 0，M1 线端移动了 1 DBU，占用由 312 变成 313 片。同样两条 GDS 记录（偏移 2480 和 2544）的最小间距从 5 nm 变成 4 nm。C14 尝试复用正常 head 收到 `BindingConflict`，拒绝前后仓库观测一致。[组合探针](W023/pm_integration.py)
+- 受测补修的 66 项定向、旧快照逐字节重编码、W006 原 19 条记录摘要及安装版检查按身份采信。两份阶段全量覆盖整个 `tests/`，含 fixture_support，各在独立干净的实际合并版工作区运行。两边的有序收集清单相同，按节点逐项核对通过数及子测试。[阶段清单及哈希](W023/integration/stage-matrix.json) · [命令、环境及完整原始输出](W023/integration/stage-matrix.tar.gz)
+
+| 解释器 | 正式用例 | 子测试 | 全量用时 |
+| --- | ---: | ---: | ---: |
+| Python 3.10.22 | 2,051 通过 | 8 通过 | 7117.69 秒 |
+| Python 3.12.14 | 2,051 通过 | 8 通过 | 5213.69 秒 |
+
+复跑合并版组合见下方命令。阶段回归命令和解释器路径见归档中的两份 `run.json`。
+
+```sh
+PYTHONPATH=.:tests/contracts python -B docs/tasks/W023/pm_integration.py
+```
+
+验收范围是单进程仓库、已声明的 synthetic profile 及 Stage 2 的 `sealed_open`。后续 [W024](W024-stage3-rule-context.md) 读取该版，建立约束上下文，先实际核验 T07。M1 后续仍需完成适用规则、独立目标义务、Stage 5 无修改判定和 Stage 6 导出回读。
