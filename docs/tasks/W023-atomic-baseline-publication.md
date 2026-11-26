@@ -32,13 +32,27 @@
 2. **已有 lineage。** B 请求 A 的 head。对 B 独立捕获的 URI 与实际 SHA-256（GDS、CDL、query/header/raw、body、全部 tech、配置与 policy）、版本化能力和模式做相容性核对。当前 synthetic header 本身绑定 target；同输入的新 run 可复用原版的不可变目标。run ID、创建键、绝对根路径、attempt/checkpoint/tool/parse/evidence 等 run 专属引用只用于本次追溯。加载原版并通过 seal_context 登记 B 的上下文、回执及 revision 2。B 不创建候选快照或再次初始化。改变有效坐标或 query 后重新绑定 header，拒绝 B 并保留其 revision 1、原审计、A 的 head/快照/事件。
 3. **所有权与观测。** snapshot 只冻结 §3.8 各权威组件及来源 ID，原格号、精确片段、region/node/component 与 annotation/evidence 引用贯通。目标与差异在独立不可变上下文中。新记录用封闭版本和内容摘要；旧 W006 字节与引用保留。重放先于 guard；比较故障前后完整仓库观测。两个 run 都读到空 head 后分别完成准备，从屏障同时提交，核对唯一版、落败方 checkpoint 及 revision。另用 C13、缺声明、越界和二维 POLY；串行对重型组装和发布/读回分别计时、记录 RSS 与持有体积。独立 reviewer 先核方案，再从仓库读者视角实查故障或并发及物理来源。
 
+方案在实现前由独立 reviewer 核对并接收。[方案复核](W023/plan-review.md)
+
 ## 执行结果（执行）
 
-待记录受测提交、实际输入、命令、资源实测及结果。
+受测产品提交为 `9f6fa09ce79c2b9c731c909b5a2e526a06e66c47`，执行分支为 `codex/w023-atomic-baseline-publication`。[复现命令、环境和验证分工](W023/verification.md) · [正常文件示例](W023/example.py)
+
+| 验收项 | 结果 |
+| --- | --- |
+| A1 | W003/W004 正常文件副本选择显式 W022 坐标并重绑。空 lineage 只发布一次 version 0；读者可释放候选，从 sealed_open/revision 2 的 attempt 读回 context、head、快照、独立目标与 InitializationEvent，ECO 提交数为 0。 |
+| A2 | 40 条原图、220 个 drawn 片和 92 个 effective 片。M1 (2,2) 读回 130 DBU²、GDS 偏移 2352。LI (1,3) 经 region/node 查物理分量，并由覆盖该片的 R04 追到 VSS。未知导体保留 suspect 标记，外部 body 保留 synthetic 范围，LVS 为 not_run。C13 读回当前 MN0 为 4n、目标 5n，并保留待处理差异。 |
+| A3 | 缺必投层声明、MARKER 越框、外来候选、预算不符、损坏或缺失的引用均被定位。失败后核对原审计和仓库观测。完整二维 POLY 允许占用通过，同时读出一维轨号不可用。 |
+| A4 | 切换前故障无新增记录。切换后丢失响应，用原请求重放取回原引用。变更同键内容、陈旧 revision 或 head 分别收到相应冲突。两个已读空 head 的 run 同时发布，只增加一版；落败方保留 revision 1 及 checkpoint。 |
+| A5 | 新 run 在另一绝对目录捕获相同文件，经 seal_context 复用原 head、快照与事件。实际更改 M1 坐标或 R04 query 后重绑，拒绝封存，原版可读。复用前也逐项解析初始运行的证据链。 |
+
+新增检查 12 项、受影响检查 129 项全部通过，mypy 检查 88 个源文件通过。独立 wheel 中测得组装 44.6967 秒、校验冻结 1.2269 秒、发布 1.3107 秒、完整读回 0.3983 秒；仓库新增持有 547,137 字节。[实测数据与输入身份](W023/evidence/readback.json)
+
+交付范围为单进程仓库、synthetic 输入、`dummy_fixture / whole_intent` 的 Stage 2。阶段双解释器全量和实际合并版发布组合由 PM 验收。
 
 ## Review 结论（reviewer）
 
-待独立 reviewer 记录范围、发现及复核结论。
+独立复核通过。受测实现 `9f6fa09ce79c2b9c731c909b5a2e526a06e66c47` 已修复候选预算与请求不一致、已有版本的原捕获链断裂仍可封存两项问题。独立探针逐项验证拒绝且无部分写入，确认切换后中断可重放；从 GDS 原字节独立核对全部 4 条 M1 原图和 10 个格片。剩余必须修正项为 0。[独立复核、版本及复跑命令](W023/code-review.md)
 
 ## PM 验收与交接（PM）
 

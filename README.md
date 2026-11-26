@@ -105,7 +105,7 @@ request = RunRequest(
 result = prepare_inputs(repository, request)
 if isinstance(result, InputsReady):
     assert result.attempt.phase == "unsealed"
-    parsed_inputs = result.value  # Handoff to a future Stage 2.
+    parsed_inputs = result.value  # Captured Stage 2 input.
 ```
 
 Callers may additionally supply `Selection(uri, declared_sha256)` in the
@@ -152,6 +152,30 @@ GDS to its physical component and directly evidenced net. The attempt remains
 unsealed. Reproduction commands and verification are in
 [W020](docs/tasks/W020-stage2-baseline-readiness.md). The
 [readiness table](docs/tasks/W020/readiness.md) lists the remaining version 0 obligations.
+
+## Publish or reuse a Stage 2 baseline
+
+With a ready checkpoint and a complete synthetic layer configuration, retain the
+Stage 2 request across retries. On a new lineage, publication installs version
+zero and seals the attempt in a single process-local repository switch.
+
+```python
+from layauto_v2.domain.publication import Stage2Request
+from layauto_v2.pipeline import publish_stage2
+
+publication = Stage2Request.from_ready(result, idempotency_key="baseline-001", fragment_budget=312)
+context = publish_stage2(repository, publication)
+head = repository.read(context.head_ref)
+snapshot = repository.read(head.snapshot_ref)
+target = repository.read(context.target_ref)
+```
+
+For a new run on that lineage, use `expected_state_head=context.head_ref.id` in
+its `RunRequest`, call `prepare_inputs`, then submit its own Stage 2 request.
+Matching bindings seal the new attempt against the original head. The
+[runnable example](docs/tasks/W023/example.py) prepares the complete W022 grid
+in a temporary copy of the normal W003/W004 sample. Commands and test evidence
+are in [W023](docs/tasks/W023-atomic-baseline-publication.md).
 
 ## Semantic normalization component
 

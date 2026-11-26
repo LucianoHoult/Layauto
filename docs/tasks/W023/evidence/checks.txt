@@ -1,0 +1,28 @@
+Tested commit 9f6fa09ce79c2b9c731c909b5a2e526a06e66c47
+
+W023 contracts and dependency boundary
+............                                                             [100%]
+12 passed in 301.34s (0:05:01)
+
+Affected checks
+........................................................................ [ 55%]
+.........................................................                [100%]
+129 passed in 167.91s (0:02:47)
+
+mypy
+Success: no issues found in 88 source files
+
+Full normal-file publication using installed pipeline.publish_stage2
+1 2 state_head:normal-public:e3ab1975db25d0c5205b2d9b2fae05834b889f5a6486c018cdf2875b4d547d2a snapshot:normal-public:98b2a552ebf3e04522a0d27f54f69abea82620543409fce4e75f2af6bc321c0f
+
+Installed package identity and artifacts
+installed_origin /tmp/w023-wheel/lib/python3.12/site-packages/layauto_v2 source/wheel/installed_files 132
+PyYAML 6.0.4
+6915c0ff4f2696241205adcacf2605bc1104b589c51e2999886f247f6b97e9c2 release-dist/layauto-0.2.0-py3-none-any.whl
+511cf6234d34cdb29e1e5c944757e0668bab0ca06aebecbb1aafaed064049d31 release-dist/layauto-0.2.0.tar.gz
+
+Original W006 wire identity
+19 1e0656468ea09e373862f940eda7231c332b3145c5745dc01ef54860b15f2150
+
+Tested W006 wire identity
+19 1e0656468ea09e373862f940eda7231c332b3145c5745dc01ef54860b15f2150
