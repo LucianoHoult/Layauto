@@ -2,7 +2,7 @@
 
 ## 任务要求（PM）
 
-**当前状态为待补修。** PM 已复核候选的几何、标注和目标差异。合并前还有一项架构合同检查需要修正。[PM-01 复现与交接](#pm1-receipt)
+**W021 已验收并合入 main。** PM-01 已关闭。[实际合并版核验](#pm2-integration) · [原始问题与复现](#pm1-receipt)
 
 W021 是 M1、Stage 2 的产品开发任务。起点是已通过 [PR #83](https://github.com/LucianoHoult/Layauto/pull/83) 集成的 W020，产品提交为 `6cd6b14d41b9f4bc32b64ca62d0be6a731d98391`。执行分支为 `codex/w021-proposed-initial-state`，由独立执行 session 实施、独立 reviewer 复核、PM 验收。
 
@@ -24,7 +24,7 @@ W021 是 M1、Stage 2 的产品开发任务。起点是已通过 [PR #83](https:
 
 ## 执行、复核与 PM 验收
 
-执行和独立复核记录见下文。当前验收结论见 [PM1](#pm1-receipt)。
+执行和独立复核记录见下文。最终验收见 [PM2](#pm2-integration)。
 
 ## 执行 session 启动指令
 
@@ -158,3 +158,22 @@ PY
 ```
 
 产品、输入、配置与 W021 受测提交相同，原 18 项定向测试、typing、构建和安装证据按 PM1 记录采信。本次新增证据覆盖漏跑的 W007 合同及负例，交 PM 重新验收。[独立补修复核](W021/code-review.md#pm-01)
+
+<a id="pm2-integration"></a>
+
+## PM2 补修接收与集成核验
+
+**2026-11-26，W021 A1–A5 在 W003/W004 synthetic 范围验收，PM-01 关闭。** [PR #85](https://github.com/LucianoHoult/Layauto/pull/85) 已合入 main，实际产品提交为 `565412819167cea6165486e5ee4b4319c6aca52f`。交付版 `ad8f1af99698c64c7d2f3c62f13eb96133759b5d`、PR 的合并候选和实际合并版的完整 tree 均为 `fc297794bbd41858585a86d333b8e32e8d35da2c`。
+
+| 核验 | PM 实测或采信依据 |
+| --- | --- |
+| 补修内容与边界 | `1347a2be2509820cc37ba746436126016af31498` 只在既有测试中为 `initial_state.py` 增加四行，按模块登记六个只读类型。交接补记只涉及文档。产品、配置、固定 fixture、W021 示例和 W021 正式合同与原受测产品 `5c923ca` 相同。 |
+| 交付版定向复跑 | Linux、Python 3.12.14。原先失败的 W007 依赖检查和相邻的 W008、W013 模块边界检查共 3 项通过。在三份逐次还原的临时变体中，同模块的额外函数、其他文件导入已登记的类型、生产者导入 repository 均被原测试定位拒绝。原失败记录见 [PM1](#pm1-receipt)。 |
+| 实际合并版组合验证 | 从实际合并提交运行下方命令，5 项通过（107.56 秒）。W021 合同使用真实文件并交叉核对两份同名捕获，覆盖 LI/VSS、R04 截短后的 unknown 和不变的物理边及分量、M1 末格、缺声明的 POLY、外部 body 范围，以及 MN0 的 4n → 5n 差异。候选构建前后仓库快照相等。 |
+| 证据复用与范围 | 原 18 项新增及受影响合同、类型检查、构建、干净安装按原产品身份采信。[补修独立复核](W021/code-review.md#pm-01) 保留基线、修正、反例。双解释器全量仍安排在首次正式发布第 0 版的集成节点。真实 PDK、生产 LVS 另按其节点验收。 |
+
+```sh
+PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 python -B -m pytest -p no:cacheprovider -q tests/contracts/test_w007_contracts.py::test_normalization_and_new_domain_keep_pure_dependency_boundaries tests/contracts/test_w021_initial_state.py
+```
+
+下一项 [W022](W022-layer-initialization-checks.md) 使用本候选做逐层初始化校验，之后由初始化事务原子发布第 0 版。
