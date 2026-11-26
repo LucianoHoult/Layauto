@@ -60,7 +60,7 @@ def _layers(index: DiscreteOccupancy) -> dict[str, LayerInitialization]:
 
 
 class _AssembledInitialState(ProposedInitialState):
-    __slots__ = ()
+    __slots__ = ('__weakref__',)
 
     def __init__(self, facts: Stage2Facts) -> None:
         if type(facts) is not Stage2Facts:
@@ -68,6 +68,7 @@ class _AssembledInitialState(ProposedInitialState):
         terminal = facts.terminals.value
         assert terminal is not None
         semantic = facts.terminals.semantic_facts
+        self._bind_origin(facts.repository_scope)
         object.__setattr__(self, 'current', semantic.source)
         object.__setattr__(self, 'target_context', TargetContext(semantic.target, semantic.differences))
         object.__setattr__(self, 'occupancy', facts.occupancy)

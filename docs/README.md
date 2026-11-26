@@ -29,6 +29,7 @@
 | 只提供底层cell如何开始分析？ | [W016 验收与集成](tasks/W016-single-cell-analysis.md#pm3-integration)已交付单 cell 只读入口。提供 GDS、source CDL、query 及技术配置后，可在缺外部 body 资料时读取本地结果 |
 | 如何核对层坐标和跨格投影？ | [W017 PM1](tasks/W017-coordinate-occupancy-projection.md#pm1-acceptance) 记录已验收的逐层来源、实算样张及待确认的首包使用方式。 |
 | 如何从单 cell 查格并找回 GDS 原线？ | [W019 公开调用示例](tasks/W019/example.py)和[执行记录](tasks/W019/delivery.md)给出 M1 线端、片数预算、CUT 来源及外部 body 对照。 |
+| 如何发布第 0 版或复用已有 head？ | [W023](tasks/W023-atomic-baseline-publication.md) 给出 Stage 2 入口、实际文件读回、失败与重放的复现步骤。 |
 
 ## 读取架构的起点
 

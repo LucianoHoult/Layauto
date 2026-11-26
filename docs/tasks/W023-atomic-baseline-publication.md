@@ -2,7 +2,7 @@
 
 ## 任务要求（PM）
 
-**阶段为可执行，归属 M1 的 Stage 2。** 执行分支为 `codex/w023-atomic-baseline-publication`。以前置 [W021 候选](W021-proposed-initial-state.md#pm2-integration) 和 [W022 已验收的逐层校验](W022-layer-initialization-checks.md#pm2-integration) 为输入。执行 session 交付运行代码，独立 reviewer 复核方案与实现，PM 负责集成和阶段回归。
+**阶段为待补修，归属 M1 的 Stage 2。** PM 在[合并前核验](#pm1-receipt)发现 1 项 P2，涉及已通过逐层检查的精确坐标写入快照。执行分支为 `codex/w023-atomic-baseline-publication`。以前置 [W021 候选](W021-proposed-initial-state.md#pm2-integration) 和 [W022 已验收的逐层校验](W022-layer-initialization-checks.md#pm2-integration) 为输入。执行 session 交付运行代码，独立 reviewer 复核方案与实现，PM 负责集成和阶段回归。
 
 本次要让后续阶段能凭仓库里的版本号和引用，重新读到这次运行的起始版图。在已有的单进程仓库中完成。运行模式沿用当前支持的 `dummy_fixture / whole_intent`。架构依据为 [§2.3、§2.6、§3.8、§9.2、§11.8](../architecture.md)，样本与验收输入见 [W020 发布清单](W020/readiness.md)。本轮交付 `sealed_open` 的 Stage 2 交接。后续 M1 工作负责约束、目标闭合和导出。当前仓库只提供进程内原子性，样本覆盖 synthetic 范围。
 
@@ -28,16 +28,111 @@
 
 ## 方案与决定（执行准备，PM 接收）
 
-待执行 session 填写方案、样张与 review 位置。
+1. **空 lineage。** A 用正常 target、W022 坐标和重绑 header 从 W006 取得 revision 1 的 checkpoint。Pipeline 从本仓库实际回读组装 W020/W021。初始化事务消费该候选，在同一对象上运行 W022；不足时返回层、原因与位置。事务冻结中立的版本化发布材料。仓库锁内先查该 operation/run/key 的完整请求摘要，再核对起始 head、phase、revision、模式、同一 checkpoint 及其可解析的审计和来源摘要。一次 root 切换发布 snapshot 0、InitializationEvent、head、context 及其回执，attempt 变为 sealed_open/revision 2，ECO 链为空。读者凭 head 和内容引用读回，原候选退出作用域。切换前中断所有新对象均不可见，切换后响应丢失按原请求读同一回执。
+2. **已有 lineage。** B 请求 A 的 head。对 B 独立捕获的 URI 与实际 SHA-256（GDS、CDL、query/header/raw、body、全部 tech、配置与 policy）、版本化能力和模式做相容性核对。当前 synthetic header 本身绑定 target；同输入的新 run 可复用原版的不可变目标。run ID、创建键、绝对根路径、attempt/checkpoint/tool/parse/evidence 等 run 专属引用只用于本次追溯。加载原版并通过 seal_context 登记 B 的上下文、回执及 revision 2。B 不创建候选快照或再次初始化。改变有效坐标或 query 后重新绑定 header，拒绝 B 并保留其 revision 1、原审计、A 的 head/快照/事件。
+3. **所有权与观测。** snapshot 只冻结 §3.8 各权威组件及来源 ID，原格号、精确片段、region/node/component 与 annotation/evidence 引用贯通。目标与差异在独立不可变上下文中。新记录用封闭版本和内容摘要；旧 W006 字节与引用保留。重放先于 guard；比较故障前后完整仓库观测。两个 run 都读到空 head 后分别完成准备，从屏障同时提交，核对唯一版、落败方 checkpoint 及 revision。另用 C13、缺声明、越界和二维 POLY；串行对重型组装和发布/读回分别计时、记录 RSS 与持有体积。独立 reviewer 先核方案，再从仓库读者视角实查故障或并发及物理来源。
+
+方案在实现前由独立 reviewer 核对并接收。[方案复核](W023/plan-review.md)
 
 ## 执行结果（执行）
 
-待记录受测提交、实际输入、命令、资源实测及结果。
+受测产品提交为 `9f6fa09ce79c2b9c731c909b5a2e526a06e66c47`，执行分支为 `codex/w023-atomic-baseline-publication`。[复现命令、环境和验证分工](W023/verification.md) · [正常文件示例](W023/example.py)
+
+| 验收项 | 结果 |
+| --- | --- |
+| A1 | W003/W004 正常文件副本选择显式 W022 坐标并重绑。空 lineage 只发布一次 version 0；读者可释放候选，从 sealed_open/revision 2 的 attempt 读回 context、head、快照、独立目标与 InitializationEvent，ECO 提交数为 0。 |
+| A2 | 40 条原图、220 个 drawn 片和 92 个 effective 片。M1 (2,2) 读回 130 DBU²、GDS 偏移 2352。LI (1,3) 经 region/node 查物理分量，并由覆盖该片的 R04 追到 VSS。未知导体保留 suspect 标记，外部 body 保留 synthetic 范围，LVS 为 not_run。C13 读回当前 MN0 为 4n、目标 5n，并保留待处理差异。 |
+| A3 | 缺必投层声明、MARKER 越框、外来候选、预算不符、损坏或缺失的引用均被定位。失败后核对原审计和仓库观测。完整二维 POLY 允许占用通过，同时读出一维轨号不可用。 |
+| A4 | 切换前故障无新增记录。切换后丢失响应，用原请求重放取回原引用。变更同键内容、陈旧 revision 或 head 分别收到相应冲突。两个已读空 head 的 run 同时发布，只增加一版；落败方保留 revision 1 及 checkpoint。 |
+| A5 | 新 run 在另一绝对目录捕获相同文件，经 seal_context 复用原 head、快照与事件。实际更改 M1 坐标或 R04 query 后重绑，拒绝封存，原版可读。复用前也逐项解析初始运行的证据链。 |
+
+新增检查 12 项、受影响检查 129 项全部通过，mypy 检查 88 个源文件通过。独立 wheel 中测得组装 44.6967 秒、校验冻结 1.2269 秒、发布 1.3107 秒、完整读回 0.3983 秒；仓库新增持有 547,137 字节。[实测数据与输入身份](W023/evidence/readback.json)
+
+交付范围为单进程仓库、synthetic 输入、`dummy_fixture / whole_intent` 的 Stage 2。阶段双解释器全量和实际合并版发布组合由 PM 验收。
 
 ## Review 结论（reviewer）
 
-待独立 reviewer 记录范围、发现及复核结论。
+独立复核通过。受测实现 `9f6fa09ce79c2b9c731c909b5a2e526a06e66c47` 已修复候选预算与请求不一致、已有版本的原捕获链断裂仍可封存两项问题。独立探针逐项验证拒绝且无部分写入，确认切换后中断可重放；从 GDS 原字节独立核对全部 4 条 M1 原图和 10 个格片。剩余必须修正项为 0。[独立复核、版本及复跑命令](W023/code-review.md)
 
 ## PM 验收与交接（PM）
 
-当前派发执行。首次发布和阶段全量尚待实施、集成及实跑。
+<a id="pm1-receipt"></a>
+
+### PM1 合并前核验与补修交接
+
+2026-11-26，PM 核对远端交付 `b5827d5ec1bd735a053ee26c46767612e1065952`。产品、测试、包配置和示例与受测提交 `9f6fa09ce79c2b9c731c909b5a2e526a06e66c47` 一致，后者的 tree 为 `5410ec3450c21bd55fedb1204bde59a506d48359`。执行及 reviewer 的正常发布、同请求重放、并发、重新绑定拒绝、安装和 R1/R2 复核记录按该身份采信。以下是 PM 另外实跑的边界。
+
+**PM-01（P2，阻止合并）**。一份有效坐标通过了 W022 的逐层检查，在 W023 写入快照时触发 `ValueError`。涉及 A1 公开发布和 A2 坐标保真。复现沿用 W018 已有的合法有理数示例，使用正常 W003/W004 输入和完整 W022 工艺配置的临时副本。只把无本地图形的 `BTAP_N` 声明为一维，重新绑定 header。原图、网络和目标文件保持原值。[PM 复现](W023/pm01_coordinates.py) · [W018 数值合同](../../tests/unit/test_w018_model.py) · [W018 独立复核](W018/review.md)
+
+令 `d = 10**2200`，下边缘为 `1/d` nm，宽度为 `1/(d+1)` nm。两项各自的分母都只有 2,201 位。首轨中心按下边缘加半宽精确求和，约分后的分母有 4,401 位。显式配置只有 8,783 字节，整个捕获仍为 312 个占用片段。
+
+1. Python 3.12.14 默认整数十进制转换限制为 4,300 位。W020/W021 构建成功，W022 全部 15 层通过，`BTAP_N` 准确标为 `no_local_records`。可读回的第 0 号轨中心与独立算出的分数精确相等。
+2. 从同一份 W006 捕获调用 `publish_stage2`，在 `PublicationRepository.initialize → _put(prepared.snapshot) → encode_record → domain.codec._wire` 对分母做 `str(...)` 时抛出 `ValueError: Exceeds the limit (4300 digits) for integer string conversion`。[快照中的坐标](../../layauto_v2/state/snapshot.py) · [当前编码](../../layauto_v2/domain/codec.py)
+3. 异常后 `load_head('L')` 为 `None`，attempt 仍为 `unsealed`、revision 1，仓库完整观测与发布前相等。此次失败发生在写入前，受影响的是合法输入的发布和回读。
+
+```sh
+PYTHONPATH=.:tests/contracts python -B docs/tasks/W023/pm01_coordinates.py 2
+PYTHONPATH=.:tests/contracts python -B docs/tasks/W023/pm01_coordinates.py 2200
+PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 python -B -m pytest -p no:cacheprovider -q \
+  tests/unit/test_w018_model.py tests/contracts/test_w023_boundaries.py tests/unit/test_w006_publication.py
+```
+
+作为对照，PM 在同一 Python 3.12.14 进程配置下用 `d = 10**2` 单独跑同一探针，15 层和 312 片通过，第 0 版发布成功，读回的中心精确等于 `151/10100` nm。PM 在 Python 3.10.22 实跑上述 W018、W023 模块边界及 W006 仓库检查，58 项通过。原交付的 12 项新增检查、129 项受影响检查及对 88 个源文件的类型检查见[执行记录](W023/verification.md)。阶段双解释器全量在补修通过并实际合入 main 后执行。
+
+**补修验收。** 请让快照的坐标在默认解释器设置下可以精确编码并读回。保留普通坐标的读取行为和既有 W006 字节合同。优先检查 W018 已有的可逆整数与有理数表达，将改动收在实际受影响的编码和读取路径。覆盖上面的两个公开输入和至少一个相近但不同的精确值，核对模型、发布版本和对应的实际坐标。给出精简的正式回归，请独立 reviewer 复算并核验往返读数。修正、实跑命令和复核结果推回 W023 原分支，交 PM 重新验收。
+
+## PM-01 补修与复验（执行）
+
+起点为 `14cf5deea749d3a734c596a4d707fdb4cf6775ca`，受测实现与正式回归为 `abfada28f492fbe1da685763731e31d792f9d0ba`，tree 为 `edacb111a94546f077f8f5d07ee2e6d2e681c02b`。以下两组对照先在起点运行，再用相同的 PM 探针复验。探针从实际样本文件捕获并发布，沿 context → head → snapshot 取回数值。[原始探针](W023/pm01_coordinates.py)
+
+| BTAP_N 输入 | 修正前 | 修正后 |
+| --- | --- | --- |
+| `d = 10**2`，配置 4,387 字节 | 发布第 0 版，首轨中心精确等于 `151/10100` nm | 同一精确值，第 0 版，attempt 为 `sealed_open` |
+| `d = 10**2200`，配置 8,783 字节 | 写快照时十进制转换抛出 `ValueError`。head 为空，attempt 为 `unsealed`、revision 1，发布前后仓库观测相等 | 由安装后的 wheel 发布第 0 版，读回中心精确等于 `1/d + 1/(2*(d+1))` nm，attempt 为 `sealed_open` |
+
+两组对照的 W022 检查均为 15 层通过、312 个占用片段，BTAP_N 均为 `no_local_records`。大分数的约分分母为 14,617 个二进制位、4,401 个十进制位。CPython 3.12.14 的十进制转换上限保持默认 4,300 位。开发环境使用 PyYAML 6.0.3，独立安装环境使用 6.0.4。
+
+新写入的快照使用 `layauto-baseline-snapshot/2`。原点、网格边、轨号按 W018 的带符号十六进制整数保存，轨道长度保存为约分后的分子与正分母。读者取得原有字段名、整数和 `Fraction`，跳过的层仍读作 `None`。读回时校验十六进制拼写、分母和约分。快照内容引用随新编码变化。已有 `layauto-baseline/1` 快照仍按原字节解析和重编码。两个 schema 的初始版号都是 0。[坐标编解码](../../layauto_v2/domain/snapshot_coordinates.py) · [记录版本分派](../../layauto_v2/domain/publication_codec.py)
+
+### 复现命令
+
+在仓库根目录使用项目开发虚拟环境。分别在上述起点与受测提交运行两条 PM 命令，即可对比失败和修正。第二条在起点上的预期退出码为 1，其余三次均为 0。
+
+```sh
+python -c 'import sys; print(sys.version, sys.get_int_max_str_digits())'
+PYTHONPATH=.:tests/contracts python -B docs/tasks/W023/pm01_coordinates.py 2
+PYTHONPATH=.:tests/contracts python -B docs/tasks/W023/pm01_coordinates.py 2200
+```
+
+定向合同在同一份正常样本中给两个空层分别声明小分数和大分数，核对 W018 模型身份、跟踪到的第 0 版及实际中心。另测旧式快照解码与逐字节重编码，以及拒绝未约分、非规范拼写和零分母。受影响的检查覆盖现有快照见证、两个 run 竞争、发布中断及重放、新 run 复用和实际重绑不相容。重型检查串行。[正式回归](../../tests/contracts/test_w023_publication.py)
+
+```sh
+export PYTEST_DISABLE_PLUGIN_AUTOLOAD=1
+python -B -m pytest -p no:cacheprovider -q tests/unit/test_w018_model.py \
+  tests/contracts/test_w023_boundaries.py tests/unit/test_w006_publication.py
+python -B -m pytest -p no:cacheprovider -q --tb=short tests/contracts/test_w023_publication.py \
+  -k 'publication_reads_exact or snapshot or baseline_wire or competition or new_run_seals or existing_head_rejects'
+python -m mypy layauto_v2/domain/publication.py layauto_v2/domain/publication_codec.py \
+  layauto_v2/domain/snapshot_coordinates.py
+```
+
+本次从受测提交的 git archive 构建 sdist 和 wheel，核对了源码、wheel 和安装目录的 133 个包文件，并在仓库外复跑大分数。命令中的开发环境需具备 build、setuptools 和 wheel。受测 wheel 的 SHA-256 为 `2b7c3b79385a6bc385bf164f76230f4cb3db19ffd508a6ae2fc69ae75a95e444`。
+
+```sh
+repo_root=$(pwd)
+release_dir=$(mktemp -d)
+mkdir "$release_dir/src"
+git archive abfada28f492fbe1da685763731e31d792f9d0ba | tar -x -C "$release_dir/src"
+python -m build --no-isolation --outdir "$release_dir/dist" "$release_dir/src"
+python -m venv "$release_dir/venv"
+"$release_dir/venv/bin/python" -m pip install "$release_dir"/dist/*.whl
+"$release_dir/venv/bin/python" -m pip check
+cd "$release_dir"
+PYTHONPATH="$repo_root/tests/contracts" "$release_dir/venv/bin/python" -B "$repo_root/docs/tasks/W023/pm01_coordinates.py" 2200
+```
+
+### 实跑结果与交接范围
+
+任务卡所列 W018、W023 模块边界和 W006 仓库检查共 58 项通过（0.86 秒）。另选的 W023 检查 8 项通过（192.16 秒），含两项新增回归。mypy 2.4.1 对三个改动的产品模块检查通过。起点与受测提交分别运行 W006 成功读入、失败终结的 19 条内容摘要核对，两者均为 `1e0656468ea09e373862f940eda7231c332b3145c5745dc01ef54860b15f2150`。[W006 字节核对命令](W023/verification.md#w006-既有-wire-身份)
+
+W018 模型算法、W022 逐层校验、W006 通用值编码、发布事务和仓库切换沿用起点源码。原交付中这些部分的其余证据按提交身份复用。若合并改变相关源码、样本或依赖，重跑对应合同。Python 3.10、3.12 双解释器全量与发布组合按原分工由 PM 在实际合并版执行。[原交付证据](W023/verification.md) · [PM-01 独立复核](W023/pm01-review.md)

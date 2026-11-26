@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 import re
-from dataclasses import dataclass, field
+from dataclasses import InitVar, dataclass, field
 from typing import Literal, TypeAlias
 
 from .codec import FrozenMap, digest, freeze_map
@@ -12,9 +12,11 @@ from .results import EvidenceIssue, ParseResult
 VERSION = 'layauto-precontext/1'
 ContentKind: TypeAlias = Literal['request', 'attempt', 'tool_run', 'parse', 'evidence',
                                   'stage_failure', 'checkpoint', 'run_record',
-                                  'closure', 'pipeline_result']
+                                  'closure', 'pipeline_result', 'snapshot', 'target_intent',
+                                  'initialization_event', 'state_head', 'sealed_context']
 KINDS = ('request', 'attempt', 'tool_run', 'parse', 'evidence', 'stage_failure',
-         'checkpoint', 'run_record', 'closure', 'pipeline_result')
+         'checkpoint', 'run_record', 'closure', 'pipeline_result', 'snapshot', 'target_intent',
+         'initialization_event', 'state_head', 'sealed_context')
 FailureCategory: TypeAlias = Literal['read', 'config', 'parse', 'unsupported', 'binding',
                                      'internal', 'interrupted', 'run_record_freeze']
 
@@ -160,18 +162,28 @@ class RunRequest:
 class RunAttempt:
     request: RunRequest
     revision: int = 0
-    phase: Literal['unsealed', 'terminal'] = 'unsealed'
+    phase: Literal['unsealed', 'sealed_open', 'terminal'] = 'unsealed'
     checkpoint_ref: ContentRef | None = None
     terminal_ref: ContentRef | None = None
     schema_version: str = VERSION
+    context_ref: ContentRef | None = field(default=None, kw_only=True)
     kind: Literal['attempt'] = field(default='attempt', init=False)
 
     def __post_init__(self) -> None:
-        _version(self.schema_version)
         if type(self.request) is not RunRequest:
             raise ValueError('attempt requires RunRequest')
         _revision(self.revision)
-        if self.phase not in ('unsealed', 'terminal'):
+        if self.phase == 'sealed_open':
+            if self.schema_version != BASELINE_VERSION or self.context_ref is None or self.checkpoint_ref is None:
+                raise ValueError('sealed attempt requires its version, checkpoint and context')
+            _ref(self.context_ref, self.run_id, ('sealed_context',))
+            if self.revision < 2:
+                raise ValueError('sealed attempt precedes checkpoint')
+        else:
+            _version(self.schema_version)
+            if self.context_ref is not None:
+                raise ValueError('unexpected sealed context')
+        if self.phase not in ('unsealed', 'sealed_open', 'terminal'):
             raise ValueError('unsupported attempt phase')
         if self.checkpoint_ref is not None:
             _ref(self.checkpoint_ref, self.run_id, ('checkpoint',))
@@ -598,5 +610,169 @@ class PublicationUnavailable:
             raise ValueError('pending failure/run mismatch')
 
 
-Content: TypeAlias = RunRequest | RunAttempt | ToolRunResult | ParseAudit | EvidenceAudit | StageFailure | InputCheckpoint | RunRecord | Stage5Closure | PipelineResult
-WireRecord: TypeAlias = Content | Selection | ContentRef | ExceptionCause | AcquisitionEvent | FinalizeFailureRequest | InputsReady | PublicationUnavailable | SourceFile | SourceRef | EvidenceRecord | EvidenceIssue | ParseResult
+BASELINE_VERSION = 'layauto-baseline/1'
+SNAPSHOT_VERSION = 'layauto-baseline-snapshot/2'
+
+
+@dataclass(frozen=True, slots=True)
+class Stage2Request:
+    """A deterministic publication recipe that the caller can retain across response loss."""
+    run_id: str
+    lineage_id: str
+    expected_revision: int
+    expected_state_head: str | None
+    checkpoint_ref: ContentRef
+    idempotency_key: str
+    fragment_budget: int
+    schema_version: str = BASELINE_VERSION
+
+    def __post_init__(self) -> None:
+        _text(self.run_id, 'run id')
+        _text(self.lineage_id, 'lineage')
+        _text(self.idempotency_key, 'idempotency key')
+        _revision(self.expected_revision)
+        _revision(self.fragment_budget)
+        _ref(self.checkpoint_ref, self.run_id, ('checkpoint',))
+        if self.expected_state_head is not None:
+            _text(self.expected_state_head, 'expected state head')
+        if self.schema_version != BASELINE_VERSION:
+            raise ValueError('unsupported Stage 2 publication recipe')
+
+    @classmethod
+    def from_ready(cls, ready: InputsReady, *, idempotency_key: str, fragment_budget: int) -> Stage2Request:
+        attempt = ready.attempt
+        return cls(ready.run_id, attempt.request.lineage_id, attempt.revision,
+                   attempt.request.expected_state_head, ready.checkpoint_ref, idempotency_key, fragment_budget)
+
+    @property
+    def operation(self) -> str:
+        return 'initialize' if self.expected_state_head is None else 'seal_context'
+
+
+@dataclass(frozen=True, slots=True)
+class BaselineSnapshot:
+    run_id: str
+    checkpoint_ref: ContentRef
+    binding: FrozenMap
+    state: FrozenMap
+    version: int = 0
+    schema_version: str = SNAPSHOT_VERSION
+    kind: Literal['snapshot'] = field(default='snapshot', init=False)
+
+    def __post_init__(self) -> None:
+        _ref(self.checkpoint_ref, self.run_id, ('checkpoint',))
+        if (self.schema_version not in (BASELINE_VERSION, SNAPSHOT_VERSION)
+                or type(self.version) is not int or self.version != 0):
+            raise ValueError('unsupported initial snapshot version')
+        if type(self.binding) is not FrozenMap or set(self.binding) != {
+                'sources', 'normalized_caches', 'evidence', 'value_digest', 'capability'}:
+            raise ValueError('invalid snapshot binding')
+        if type(self.state) is not FrozenMap or set(self.state) != {
+                'current', 'semantic_assurance', 'geometry', 'coordinates', 'layers', 'occupancy',
+                'connectivity', 'annotation', 'terminals', 'channels', 'body', 'body_sources', 'checks'}:
+            raise ValueError('incomplete baseline state')
+
+
+@dataclass(frozen=True, slots=True)
+class BaselineTarget:
+    run_id: str
+    checkpoint_ref: ContentRef
+    circuit: FrozenMap
+    differences: tuple[FrozenMap, ...]
+    schema_version: str = BASELINE_VERSION
+    kind: Literal['target_intent'] = field(default='target_intent', init=False)
+
+    def __post_init__(self) -> None:
+        _ref(self.checkpoint_ref, self.run_id, ('checkpoint',))
+        if self.schema_version != BASELINE_VERSION or type(self.circuit) is not FrozenMap:
+            raise ValueError('invalid baseline target')
+        _sequence(self, 'differences', FrozenMap)
+
+
+@dataclass(frozen=True, slots=True)
+class InitializationEvent:
+    run_id: str
+    lineage_id: str
+    checkpoint_ref: ContentRef
+    snapshot_ref: ContentRef
+    schema_version: str = BASELINE_VERSION
+    kind: Literal['initialization_event'] = field(default='initialization_event', init=False)
+
+    def __post_init__(self) -> None:
+        _text(self.lineage_id, 'lineage')
+        _ref(self.snapshot_ref, self.run_id, ('snapshot',))
+        _ref(self.checkpoint_ref, self.run_id, ('checkpoint',))
+        if self.schema_version != BASELINE_VERSION:
+            raise ValueError('unsupported initialization event')
+
+
+@dataclass(frozen=True, slots=True)
+class StateHead:
+    run_id: str
+    lineage_id: str
+    snapshot_ref: ContentRef
+    event_ref: ContentRef
+    target_ref: ContentRef
+    version: int = 0
+    eco_commits: tuple[ContentRef, ...] = ()
+    schema_version: str = BASELINE_VERSION
+    kind: Literal['state_head'] = field(default='state_head', init=False)
+
+    def __post_init__(self) -> None:
+        _text(self.lineage_id, 'lineage')
+        _ref(self.snapshot_ref, self.run_id, ('snapshot',))
+        _ref(self.event_ref, self.run_id, ('initialization_event',))
+        _ref(self.target_ref, self.run_id, ('target_intent',))
+        if (self.schema_version != BASELINE_VERSION or type(self.version) is not int
+                or self.version != 0 or type(self.eco_commits) is not tuple or self.eco_commits):
+            raise ValueError('a baseline head requires version zero and an empty ECO chain')
+
+
+@dataclass(frozen=True, slots=True)
+class SealedContext:
+    run_id: str
+    checkpoint_ref: ContentRef
+    head_ref: ContentRef
+    target_ref: ContentRef
+    binding_digest: str
+    schema_version: str = BASELINE_VERSION
+    kind: Literal['sealed_context'] = field(default='sealed_context', init=False)
+
+    def __post_init__(self) -> None:
+        _ref(self.checkpoint_ref, self.run_id, ('checkpoint',))
+        if type(self.head_ref) is not ContentRef or self.head_ref.kind != 'state_head':
+            raise ValueError('sealed context requires a state head')
+        _ref(self.target_ref, self.head_ref.run_id, ('target_intent',))
+        _sha(self.binding_digest)
+        if self.schema_version != BASELINE_VERSION:
+            raise ValueError('unsupported sealed context')
+
+
+# Only the initialization transaction issues prepared material. It is never decoded
+# from an external wire or retained as a second state owner.
+_PREPARED = object()
+
+
+@dataclass(frozen=True, slots=True)
+class PreparedBaseline:
+    _issuer: InitVar[object]
+    repository_scope: object
+    request: Stage2Request
+    snapshot: BaselineSnapshot
+    target: BaselineTarget
+
+    def __post_init__(self, _issuer: object) -> None:
+        if _issuer is not _PREPARED:
+            raise ValueError('baseline requires a checked initialization transaction')
+        if (self.request.operation != 'initialize' or self.snapshot.checkpoint_ref != self.request.checkpoint_ref
+                or self.target.checkpoint_ref != self.request.checkpoint_ref):
+            raise ValueError('prepared baseline mixes checkpoint references')
+
+    @classmethod
+    def _checked(cls, scope: object, request: Stage2Request, snapshot: BaselineSnapshot,
+                 target: BaselineTarget) -> PreparedBaseline:
+        return cls(_PREPARED, scope, request, snapshot, target)
+
+
+Content: TypeAlias = RunRequest | RunAttempt | ToolRunResult | ParseAudit | EvidenceAudit | StageFailure | InputCheckpoint | RunRecord | Stage5Closure | PipelineResult | BaselineSnapshot | BaselineTarget | InitializationEvent | StateHead | SealedContext
+WireRecord: TypeAlias = Content | Selection | ContentRef | ExceptionCause | AcquisitionEvent | FinalizeFailureRequest | InputsReady | PublicationUnavailable | SourceFile | SourceRef | EvidenceRecord | EvidenceIssue | ParseResult | Stage2Request

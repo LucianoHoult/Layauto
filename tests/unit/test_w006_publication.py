@@ -140,7 +140,7 @@ def test_unsupported_first_create_guards_leave_no_attempt_or_content(change, cod
     conflict(code, repository.create_attempt, request(**change))
     assert repository.snapshot().generation == 0
     assert not repository.snapshot().content_refs
-    for unavailable in ('seal_context', 'initialize', 'close_stage5', 'append_partial', 'finalize_pipeline'):
+    for unavailable in ('close_stage5', 'append_partial', 'finalize_pipeline'):
         assert not hasattr(repository, unavailable)
 
 

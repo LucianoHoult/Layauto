@@ -1,6 +1,6 @@
 """Process-local, single-root publication with operation-scoped idempotency.
 
-No file persistence, crash durability, state publication, or Stage 5 success
+No file persistence, crash durability, or Stage 5 success
 operations are provided. All public readers and writers use the same mutex;
 all content, attempt pointers and replay results switch in one root assignment.
 """
@@ -8,15 +8,17 @@ from __future__ import annotations
 
 from collections.abc import Callable, Iterator
 from contextlib import contextmanager
+from hashlib import sha256
 from dataclasses import dataclass, replace
 from threading import RLock
 from typing import cast
 
-from layauto_v2.domain.codec import digest
+from layauto_v2.domain.codec import FrozenMap, digest
 from layauto_v2.domain.evidence import EvidenceRecord, SourceRef
 from layauto_v2.domain.results import ParseResult
 from layauto_v2.domain.publication import (
-    Content, ContentRef, EvidenceAudit, FinalizeFailureRequest, InputCheckpoint,
+    BASELINE_VERSION, BaselineSnapshot, BaselineTarget, InitializationEvent, PreparedBaseline,
+    SealedContext, Stage2Request, StateHead, Content, ContentRef, EvidenceAudit, FinalizeFailureRequest, InputCheckpoint,
     InputsReady, ParseAudit, PipelineResult, RunAttempt, RunRecord,
     RunRecordFreezeFailureClosure, RunRequest, StageFailure, ToolRunResult,
     WithRunRecordClosure, exception_causes, safe_exception_message,
@@ -49,6 +51,7 @@ class _Root:
     contents: tuple[tuple[ContentRef, bytes], ...] = ()
     attempts: tuple[tuple[str, ContentRef], ...] = ()
     replays: tuple[_Replay, ...] = ()
+    heads: tuple[tuple[str, ContentRef], ...] = ()
 
 
 @dataclass(frozen=True)
@@ -58,12 +61,15 @@ class RepositorySnapshot:
     attempts: tuple[RunAttempt, ...]
     content_refs: tuple[ContentRef, ...]
     idempotency_count: int
+    heads: tuple[tuple[str, ContentRef], ...]
+    content_bytes: int
 
 
 class PublicationRepository:
     def __init__(self, *, fault_injector: Callable[[str], None] | None = None) -> None:
         self._lock = RLock()
         self._root = _Root()
+        self._scope = object()
         self._run_locks: dict[str, RLock] = {}
         self._fault_injector = fault_injector
 
@@ -78,9 +84,11 @@ class PublicationRepository:
         data = dict(root.contents).get(ref)
         if data is None:
             raise RepositoryConflict('RefConflict', f'unresolved content reference: {ref.id}')
+        if sha256(data).hexdigest() != ref.digest:
+            raise RepositoryConflict('RefConflict', f'{ref.id}: stored content digest mismatch')
         record = cast(Content, decode_record(data))
         if content_ref(record) != ref:
-            raise RepositoryConflict('RefConflict', 'stored content kind/run/digest mismatch')
+            raise RepositoryConflict('RefConflict', f'{ref.id}: stored content kind/run/digest mismatch')
         return record
 
     @classmethod
@@ -114,12 +122,16 @@ class PublicationRepository:
         return ref
 
     def _commit(self, root: _Root, contents: dict[ContentRef, bytes],
-                attempt: RunAttempt, replay: _Replay, point: str) -> None:
+                attempt: RunAttempt, replay: _Replay, point: str, *,
+                new_head: ContentRef | None = None) -> None:
         attempt_ref = self._put(contents, attempt)
         attempts = dict(root.attempts)
         attempts[attempt.run_id] = attempt_ref
+        heads = root.heads
+        if new_head is not None:
+            heads += ((attempt.request.lineage_id, new_head),)
         staged = _Root(root.generation + 1, tuple(contents.items()),
-                       tuple(attempts.items()), root.replays + (replay,))
+                       tuple(attempts.items()), root.replays + (replay,), heads)
         self._fault(point + '.before_switch')
         self._root = staged
         # This exception models response loss: the full result is already visible.
@@ -146,8 +158,7 @@ class PublicationRepository:
                 return replay
             if request.run_id in dict(root.attempts):
                 raise RepositoryConflict('RunConflict', 'proposed run id already belongs to another create request')
-            if request.expected_state_head is not None:
-                raise RepositoryConflict('HeadConflict', 'this pre-context repository has no state head')
+            self._check_head(root, request.lineage_id, request.expected_state_head)
             if request.requested_mode != 'dummy_fixture' or request.execution_mode != 'whole_intent':
                 raise RepositoryConflict('ModeConflict', 'unsupported acquisition/execution mode')
             contents = dict(root.contents)
@@ -216,7 +227,157 @@ class PublicationRepository:
             root = self._root
             return RepositorySnapshot(root.generation,
                                       tuple(self._attempt(root, run) for run, _ in root.attempts),
-                                      tuple(ref for ref, _ in root.contents), len(root.replays))
+                                      tuple(ref for ref, _ in root.contents), len(root.replays), root.heads,
+                                      sum(len(data) for _, data in root.contents))
+
+    @staticmethod
+    def _check_head(root: _Root, lineage: str, expected: str | None) -> ContentRef | None:
+        head = dict(root.heads).get(lineage)
+        if (None if head is None else head.id) != expected:
+            raise RepositoryConflict('HeadConflict', f'{lineage}: expected {expected}, found {head}')
+        return head
+
+    def load_head(self, lineage_id: str) -> ContentRef | None:
+        with self._lock:
+            return dict(self._root.heads).get(lineage_id)
+
+    def _stage2_replay(self, root: _Root, request: Stage2Request) -> SealedContext | None:
+        replay = self._replay(root, request.operation, request.run_id, request.idempotency_key,
+                              record_digest(request))
+        if replay is not None and not isinstance(replay, SealedContext):
+            raise RepositoryConflict('RefConflict', 'invalid Stage 2 receipt')
+        return replay
+
+    def replay_stage2(self, request: Stage2Request) -> SealedContext | None:
+        """Recover the result before a caller spends time rebuilding a checked candidate."""
+        with self._lock:
+            return self._stage2_replay(self._root, request)
+
+    def _stage2_base(self, root: _Root, request: Stage2Request) -> tuple[RunAttempt, InputCheckpoint]:
+        attempt = self._attempt(root, request.run_id)
+        self._guard(attempt, request.expected_revision)
+        if (request.lineage_id != attempt.request.lineage_id
+                or request.expected_state_head != attempt.request.expected_state_head):
+            raise RepositoryConflict('HeadConflict', 'Stage 2 differs from the requested starting lineage/head')
+        self._check_head(root, request.lineage_id, request.expected_state_head)
+        checkpoint = self._read(root, request.checkpoint_ref)
+        if (not isinstance(checkpoint, InputCheckpoint) or attempt.checkpoint_ref != request.checkpoint_ref
+                or checkpoint.outcome != 'inputs_ready' or checkpoint.revision != attempt.revision):
+            raise RepositoryConflict('CheckpointConflict', f'{request.checkpoint_ref.id}: expected current ready input')
+        return attempt, checkpoint
+
+    @classmethod
+    def _capture_binding(cls, root: _Root, checkpoint: InputCheckpoint,
+                         expected_sources: FrozenMap | None = None) -> FrozenMap:
+        tool = cls._read(root, checkpoint.tool_ref)
+        assert checkpoint.parse_ref is not None
+        parse = cls._read(root, checkpoint.parse_ref)
+        if (not isinstance(tool, ToolRunResult) or not isinstance(parse, ParseAudit)
+                or parse.tool_ref != checkpoint.tool_ref or parse.result.value != checkpoint.ready_value):
+            raise RepositoryConflict('RefConflict', f'{checkpoint.ref.id}: inconsistent tool/parse links')
+        evidence = []
+        for ref in checkpoint.evidence_refs:
+            audit = cls._read(root, ref)
+            if (not isinstance(audit, EvidenceAudit) or audit.tool_ref != checkpoint.tool_ref
+                    or audit.parse_ref != checkpoint.parse_ref):
+                raise RepositoryConflict('RefConflict', f'{ref.id}: inconsistent evidence links')
+            evidence.append(audit.evidence)
+        if tuple(evidence) != parse.result.completed or parse.result.sources != tool.sources:
+            raise RepositoryConflict('RefConflict', f'{checkpoint.ref.id}: inconsistent captured evidence')
+        sources = {s.uri: s.sha256 for s in tool.sources}
+        if expected_sources is not None and sources != expected_sources:
+            raise RepositoryConflict('BindingConflict', f'{checkpoint.ref.id}: foreign candidate source manifest')
+        # W005 probes optional normalized caches next to the header using absolute
+        # paths. Preserve the acquisition spelling in the audit and bind the cache
+        # role and bytes independently of a different run's working directory.
+        selected = {s.uri for e in evidence for s in e.sources}
+        caches = {e.uri for e in tool.events if e.operation == 'probe' and e.status == 'present'
+                  and e.uri in sources and e.uri not in selected}
+        return FrozenMap({'capability': 'dummy_fixture/whole_intent/stage2/1',
+                          'sources': {uri: sha for uri, sha in sources.items() if uri not in caches},
+                          'normalized_caches': {uri.rsplit('/', 1)[-1]: sources[uri] for uri in caches},
+                          'value_digest': digest(checkpoint.ready_value),
+                          'evidence': tuple(record_digest(e) for e in evidence)})
+
+    def stage2_binding(self, request: Stage2Request, ready: InputsReady, expected_sources: FrozenMap) -> FrozenMap:
+        with self._lock:
+            attempt, checkpoint = self._stage2_base(self._root, request)
+            if (attempt.ref != ready.attempt.ref or checkpoint.tool_ref != ready.tool_ref
+                    or checkpoint.parse_ref != ready.parse_ref or checkpoint.evidence_refs != ready.evidence_refs):
+                raise RepositoryConflict('ReadbackConflict', f'{request.checkpoint_ref.id}: inconsistent ready receipt')
+            binding = self._capture_binding(self._root, checkpoint, expected_sources)
+            if digest(ready.value) != binding['value_digest']:
+                raise RepositoryConflict('ReadbackConflict', f'{request.checkpoint_ref.id}: inconsistent ready value')
+            return binding
+
+    def initialize(self, request: Stage2Request, prepared: PreparedBaseline) -> SealedContext:
+        if type(prepared) is not PreparedBaseline or prepared.repository_scope is not self._scope:
+            raise RepositoryConflict('BindingConflict', 'prepared baseline belongs to another repository')
+        with self._lock:
+            root = self._root
+            replay = self._stage2_replay(root, request)
+            if request != prepared.request or request.operation != 'initialize':
+                raise RepositoryConflict('BindingConflict', 'prepared baseline belongs to a different request')
+            if replay is not None:
+                return replay
+            attempt, checkpoint = self._stage2_base(root, request)
+            if self._capture_binding(root, checkpoint) != prepared.snapshot.binding:
+                raise RepositoryConflict('BindingConflict', f'{request.checkpoint_ref.id}: baseline binding mismatch')
+            contents = dict(root.contents)
+            snapshot_ref = self._put(contents, prepared.snapshot)
+            target_ref = self._put(contents, prepared.target)
+            event_ref = self._put(contents, InitializationEvent(request.run_id, request.lineage_id,
+                                                               request.checkpoint_ref, snapshot_ref))
+            head = StateHead(request.run_id, request.lineage_id, snapshot_ref, event_ref, target_ref)
+            head_ref = self._put(contents, head)
+            return self._seal(root, contents, request, attempt, head_ref, target_ref,
+                              prepared.snapshot.binding, new_head=head_ref)
+
+    def seal_context(self, request: Stage2Request) -> SealedContext:
+        if request.operation != 'seal_context':
+            raise RepositoryConflict('HeadConflict', 'seal_context requires a requested state head')
+        with self._lock:
+            root = self._root
+            replay = self._stage2_replay(root, request)
+            if replay is not None:
+                return replay
+            attempt, checkpoint = self._stage2_base(root, request)
+            head_ref = dict(root.heads)[request.lineage_id]
+            head = self._read(root, head_ref)
+            if not isinstance(head, StateHead) or head.lineage_id != request.lineage_id:
+                raise RepositoryConflict('RefConflict', f'{head_ref.id}: wrong lineage')
+            snapshot = self._read(root, head.snapshot_ref)
+            event = self._read(root, head.event_ref)
+            target = self._read(root, head.target_ref)
+            if (not isinstance(snapshot, BaselineSnapshot) or not isinstance(event, InitializationEvent)
+                    or not isinstance(target, BaselineTarget) or event.snapshot_ref != head.snapshot_ref
+                    or event.lineage_id != head.lineage_id
+                    or not event.checkpoint_ref == snapshot.checkpoint_ref == target.checkpoint_ref):
+                raise RepositoryConflict('RefConflict', f'{head_ref.id}: inconsistent initialization links')
+            original = self._read(root, snapshot.checkpoint_ref)
+            if (not isinstance(original, InputCheckpoint) or original.outcome != 'inputs_ready'
+                    or self._capture_binding(root, original) != snapshot.binding):
+                raise RepositoryConflict('RefConflict', f'{snapshot.checkpoint_ref.id}: invalid original snapshot binding')
+            binding = self._capture_binding(root, checkpoint)
+            if snapshot.binding != binding:
+                old, new = snapshot.binding['sources'], binding['sources']
+                assert isinstance(old, FrozenMap) and isinstance(new, FrozenMap)
+                changed = sorted(uri for uri in old.keys() | new.keys() if old.get(uri) != new.get(uri))
+                reason = ', '.join(changed) or 'normalized evidence or capability'
+                raise RepositoryConflict('BindingConflict', f'{head_ref.id}: incompatible {reason}')
+            return self._seal(root, dict(root.contents), request, attempt, head_ref, head.target_ref, binding)
+
+    def _seal(self, root: _Root, contents: dict[ContentRef, bytes], request: Stage2Request,
+              attempt: RunAttempt, head_ref: ContentRef, target_ref: ContentRef, binding: FrozenMap,
+              *, new_head: ContentRef | None = None) -> SealedContext:
+        context = SealedContext(request.run_id, request.checkpoint_ref, head_ref, target_ref, digest(binding))
+        context_ref = self._put(contents, context)
+        updated = replace(attempt, revision=attempt.revision + 1, phase='sealed_open',
+                          schema_version=BASELINE_VERSION, context_ref=context_ref)
+        receipt = _Replay(request.operation, request.run_id, request.idempotency_key,
+                          record_digest(request), context_ref)
+        self._commit(root, contents, updated, receipt, request.operation, new_head=new_head)
+        return context
 
     @staticmethod
     def _source_ref(source: SourceRef, sources: dict[str, str]) -> None:
