@@ -3,8 +3,9 @@ from __future__ import annotations
 
 from abc import ABC, abstractmethod
 from collections.abc import Mapping
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Literal
+from weakref import ReferenceType, ref
 
 from layauto_v2.domain.circuit import SemanticCircuitDraft, TargetCircuit
 from layauto_v2.domain.codec import FrozenMap
@@ -54,6 +55,7 @@ class LayerInitialization:
 @dataclass(frozen=True, slots=True, init=False)
 class ProposedInitialState(ABC):
     """Producer-constructed draft. All geometry resolves through the occupancy's layout."""
+    _origin: tuple[ReferenceType[ProposedInitialState], object] = field(repr=False, compare=False)
     current: SemanticCircuitDraft
     target_context: TargetContext
     occupancy: DiscreteOccupancy
@@ -69,6 +71,14 @@ class ProposedInitialState(ABC):
     @abstractmethod
     def __init__(self) -> None:
         """Only the producer can supply a complete authenticated assembly."""
+
+    def _bind_origin(self, scope: object) -> None:
+        # A copied/substituted candidate cannot reuse the original object's attestation.
+        object.__setattr__(self, '_origin', (ref(self), scope))
+
+    def belongs_to(self, scope: object) -> bool:
+        origin = getattr(self, '_origin', None)
+        return origin is not None and origin[0]() is self and origin[1] is scope
 
     @property
     def layout(self) -> LayoutDraft:

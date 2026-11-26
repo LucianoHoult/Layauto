@@ -12,7 +12,7 @@ from layauto_v2.domain.codec import digest
 from layauto_v2.domain.evidence import EvidenceRecord, SourceFile, SourceRef
 from layauto_v2.domain.publication import (
     AcquisitionEvent, EvidenceAudit, InputCheckpoint, InputsReady, ParseAudit, PipelineResult, PublicationUnavailable,
-    RunAttempt, RunRequest, StageFailure, ToolRunResult, exception_causes,
+    RunAttempt, RunRequest, SealedContext, Stage2Request, StageFailure, ToolRunResult, exception_causes,
     safe_exception_message, safe_exception_type,
 )
 from layauto_v2.domain.results import ParseResult
@@ -143,6 +143,8 @@ def prepare_inputs(repository: PublicationRepository, request: RunRequest) -> Pr
             attempt = repository.load_attempt(request.run_id)
         except Exception as exc:
             return _unavailable(repository, request, 'read_attempt', exc)
+        if attempt.phase == 'sealed_open':
+            raise RepositoryConflict('TransitionConflict', 'Stage 2 already sealed this input checkpoint')
         if checkpoint is not None:
             return _resume(repository, request, checkpoint)
 
@@ -227,4 +229,30 @@ def assemble_stage2(repository: PublicationRepository, ready: InputsReady, *,
     tool = cast(ToolRunResult, repository.read(ready.tool_ref))
     evidence = tuple(cast(EvidenceAudit, repository.read(ref)) for ref in ready.evidence_refs)
     capture = geometry_from_inputs_ready(ready, checkpoint, parse, tool, evidence)
-    return Stage2Facts(capture, fragment_budget)
+    return Stage2Facts(capture, fragment_budget, repository._scope)
+
+
+def publish_stage2(repository: PublicationRepository, request: Stage2Request) -> SealedContext:
+    """Publish the captured baseline or seal this run against the requested head.
+
+    Keep the same request across retries. Disk files and the original candidate
+    are unnecessary after input capture.
+    """
+    from layauto_v2.normalization.initial_state import build_proposed_initial_state
+    from layauto_v2.transactions.initialization import InitializationTransaction
+
+    with repository.orchestration(request.run_id):
+        replay = repository.replay_stage2(request)
+        if replay is not None:
+            return replay
+        if request.expected_state_head is not None:
+            return InitializationTransaction.reuse(repository, request)
+        ready = repository.read_ready(request.run_id)
+        if ready is None:
+            raise RepositoryConflict('TransitionConflict', 'initialization requires an unsealed ready attempt')
+        if ready.checkpoint_ref != request.checkpoint_ref:
+            raise RepositoryConflict('RefConflict', f'{request.checkpoint_ref.id}: differs from current checkpoint')
+        if request.expected_revision != ready.attempt.revision:
+            raise RepositoryConflict('RevisionConflict', 'unexpected Stage 2 input revision')
+        facts = assemble_stage2(repository, ready, fragment_budget=request.fragment_budget)
+        return InitializationTransaction.initialize(repository, request, ready, build_proposed_initial_state(facts))

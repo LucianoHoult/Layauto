@@ -13,6 +13,7 @@ from .codec import FrozenMap, Value, canonical_bytes, decode, freeze
 from .evidence import EvidenceRecord, SourceFile, SourceRef
 from .results import EvidenceIssue, ParseResult
 from .publication import (
+    BaselineSnapshot, BaselineTarget, InitializationEvent, StateHead, SealedContext, Stage2Request,
     AcquisitionEvent, Content, ContentRef, EvidenceAudit, ExceptionCause,
     FinalizeFailureRequest, InputCheckpoint, InputsReady, ParseAudit, PipelineResult,
     PublicationUnavailable, RunAttempt, RunRecord, RunRecordFreezeFailureClosure,
@@ -21,6 +22,13 @@ from .publication import (
 
 # This is deliberately a wire-schema table, not an unrestricted dataclass codec.
 _SPEC: dict[str, tuple[Callable[..., object], tuple[str, ...]]] = {
+    'Stage2Request': (Stage2Request, ('run_id', 'lineage_id', 'expected_revision', 'expected_state_head', 'checkpoint_ref', 'idempotency_key', 'fragment_budget', 'schema_version')),
+    'SealedAttempt': (RunAttempt, ('request', 'revision', 'phase', 'checkpoint_ref', 'terminal_ref', 'context_ref', 'schema_version', 'kind')),
+    'BaselineSnapshot': (BaselineSnapshot, ('run_id', 'checkpoint_ref', 'binding', 'state', 'version', 'schema_version', 'kind')),
+    'BaselineTarget': (BaselineTarget, ('run_id', 'checkpoint_ref', 'circuit', 'differences', 'schema_version', 'kind')),
+    'InitializationEvent': (InitializationEvent, ('run_id', 'lineage_id', 'checkpoint_ref', 'snapshot_ref', 'schema_version', 'kind')),
+    'StateHead': (StateHead, ('run_id', 'lineage_id', 'snapshot_ref', 'event_ref', 'target_ref', 'version', 'eco_commits', 'schema_version', 'kind')),
+    'SealedContext': (SealedContext, ('run_id', 'checkpoint_ref', 'head_ref', 'target_ref', 'binding_digest', 'schema_version', 'kind')),
     'Selection': (Selection, ('uri', 'declared_sha256')),
     'ContentRef': (ContentRef, ('kind', 'run_id', 'digest')),
     'ExceptionCause': (ExceptionCause, ('exception_type', 'message')),
@@ -59,6 +67,8 @@ _CAPTURED_INPUT_RECORDS = frozenset({
 
 def _pack(value: object) -> Value:
     name = type(value).__name__
+    if type(value) is RunAttempt and value.phase == 'sealed_open':
+        name = 'SealedAttempt'
     spec = _SPEC.get(name)
     if spec is not None and type(value) is spec[0]:
         return FrozenMap({'record': name, 'fields': {key: _pack(getattr(value, key)) for key in spec[1]}})
@@ -100,7 +110,8 @@ def _unpack(value: Value) -> object:
     derived = {'sha256'} if name == 'SourceFile' else ({'kind'} if name in {
         'RunRequest', 'RunAttempt', 'ToolRunResult', 'ParseAudit', 'EvidenceAudit',
         'StageFailure', 'InputCheckpoint', 'RunRecord', 'WithRunRecordClosure',
-        'RunRecordFreezeFailureClosure', 'PipelineResult'} else set())
+        'RunRecordFreezeFailureClosure', 'PipelineResult', 'SealedAttempt', 'BaselineSnapshot',
+        'BaselineTarget', 'InitializationEvent', 'StateHead', 'SealedContext'} else set())
     if name in _CAPTURED_INPUT_RECORDS:
         record = constructor(**{key: val for key, val in decoded.items() if key not in derived})
     else:
@@ -138,6 +149,7 @@ def content_ref(record: Content) -> ContentRef:
     if not isinstance(record, (RunRequest, RunAttempt, ParseAudit, EvidenceAudit,
                                StageFailure, InputCheckpoint, RunRecord,
                                WithRunRecordClosure, RunRecordFreezeFailureClosure,
-                               PipelineResult, ToolRunResult)):
+                               PipelineResult, ToolRunResult, BaselineSnapshot, BaselineTarget,
+                               InitializationEvent, StateHead, SealedContext)):
         raise ValueError('record is not repository content')
     return ContentRef(record.kind, record.run_id, record_digest(record))

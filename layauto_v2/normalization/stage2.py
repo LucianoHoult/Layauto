@@ -32,6 +32,7 @@ class Stage2Facts:
 
     capture: InitVar[GeometryInput]
     fragment_budget: InitVar[int]
+    repository_scope: object | None = field(default=None, repr=False, compare=False)
     occupancy: DiscreteOccupancy = field(init=False, repr=False)
     terminals: TerminalRelationsResult = field(init=False, repr=False)
 
