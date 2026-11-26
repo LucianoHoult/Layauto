@@ -12,8 +12,9 @@ from typing import cast
 from .codec import FrozenMap, Value, canonical_bytes, decode, freeze
 from .evidence import EvidenceRecord, SourceFile, SourceRef
 from .results import EvidenceIssue, ParseResult
+from .snapshot_coordinates import coordinates_from_wire, coordinates_to_wire
 from .publication import (
-    BaselineSnapshot, BaselineTarget, InitializationEvent, StateHead, SealedContext, Stage2Request,
+    SNAPSHOT_VERSION, BaselineSnapshot, BaselineTarget, InitializationEvent, StateHead, SealedContext, Stage2Request,
     AcquisitionEvent, Content, ContentRef, EvidenceAudit, ExceptionCause,
     FinalizeFailureRequest, InputCheckpoint, InputsReady, ParseAudit, PipelineResult,
     PublicationUnavailable, RunAttempt, RunRecord, RunRecordFreezeFailureClosure,
@@ -71,7 +72,10 @@ def _pack(value: object) -> Value:
         name = 'SealedAttempt'
     spec = _SPEC.get(name)
     if spec is not None and type(value) is spec[0]:
-        return FrozenMap({'record': name, 'fields': {key: _pack(getattr(value, key)) for key in spec[1]}})
+        fields = {key: getattr(value, key) for key in spec[1]}
+        if isinstance(value, BaselineSnapshot) and value.schema_version == SNAPSHOT_VERSION:
+            fields['state'] = coordinates_to_wire(value.state)
+        return FrozenMap({'record': name, 'fields': {key: _pack(item) for key, item in fields.items()}})
     if isinstance(value, FrozenMap):
         return FrozenMap({'value': value})
     if isinstance(value, tuple):
@@ -106,6 +110,8 @@ def _unpack(value: Value) -> object:
     if set(body) != set(keys):
         raise ValueError(f'unknown/missing {name} fields')
     decoded = {key: _unpack(body[key]) for key in keys}
+    if constructor is BaselineSnapshot and decoded['schema_version'] == SNAPSHOT_VERSION:
+        decoded['state'] = coordinates_from_wire(decoded['state'])
     # Derived ids/discriminators are included in wire and checked after construction.
     derived = {'sha256'} if name == 'SourceFile' else ({'kind'} if name in {
         'RunRequest', 'RunAttempt', 'ToolRunResult', 'ParseAudit', 'EvidenceAudit',

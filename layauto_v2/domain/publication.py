@@ -611,6 +611,7 @@ class PublicationUnavailable:
 
 
 BASELINE_VERSION = 'layauto-baseline/1'
+SNAPSHOT_VERSION = 'layauto-baseline-snapshot/2'
 
 
 @dataclass(frozen=True, slots=True)
@@ -655,12 +656,13 @@ class BaselineSnapshot:
     binding: FrozenMap
     state: FrozenMap
     version: int = 0
-    schema_version: str = BASELINE_VERSION
+    schema_version: str = SNAPSHOT_VERSION
     kind: Literal['snapshot'] = field(default='snapshot', init=False)
 
     def __post_init__(self) -> None:
         _ref(self.checkpoint_ref, self.run_id, ('checkpoint',))
-        if self.schema_version != BASELINE_VERSION or type(self.version) is not int or self.version != 0:
+        if (self.schema_version not in (BASELINE_VERSION, SNAPSHOT_VERSION)
+                or type(self.version) is not int or self.version != 0):
             raise ValueError('unsupported initial snapshot version')
         if type(self.binding) is not FrozenMap or set(self.binding) != {
                 'sources', 'normalized_caches', 'evidence', 'value_digest', 'capability'}:

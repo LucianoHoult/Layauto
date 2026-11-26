@@ -2,21 +2,23 @@
 from collections import Counter
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import FrozenInstanceError, replace
+from fractions import Fraction
 from threading import Barrier
 
 import pytest
 import yaml
 
-from layauto_v2.domain.codec import FrozenMap
+from layauto_v2.domain.codec import FrozenMap, canonical_bytes, decode
 from layauto_v2.domain.publication import RunRequest
 from layauto_v2.domain.publication_codec import content_ref, decode_record, encode_record
 from layauto_v2.normalization.initial_state import build_proposed_initial_state
+from layauto_v2.normalization.projection_model import bind_projection_model
 from layauto_v2.pipeline import assemble_stage2, publish_stage2
 from layauto_v2.repository import PublicationRepository, RepositoryConflict
 from layauto_v2.transactions.initialization import InitializationRejected, InitializationTransaction
 from w005_cases import rebind, without_cache, write_json
 from w008_geometry_cases import edit_geometry
-from w018_cases import COORDINATE_URI
+from w018_cases import COORDINATE_URI, build_geometry_from_site
 from w023_cases import capture, sample
 
 
@@ -291,7 +293,6 @@ def test_bad_stored_digest_refuses_seal_without_changing_root(published, tmp_pat
 
 
 def test_baseline_wire_rejects_invalid_version_or_missing_owner(published):
-    from layauto_v2.domain.codec import canonical_bytes, decode
     repo, _, context, _ = published
     head = repo.read(context.head_ref)
     snapshot = repo.read(head.snapshot_ref)
@@ -306,3 +307,58 @@ def test_baseline_wire_rejects_invalid_version_or_missing_owner(published):
     with pytest.raises(ValueError):
         decode_record(canonical_bytes({'wire_schema': wire['wire_schema'],
                                        'value': {'record': 'SealedContext', 'fields': fields}}))
+
+
+def test_publication_reads_exact_small_and_large_track_centres(tmp_path):
+    root = sample(tmp_path)
+    denominators = {'BTAP_N': 10**2, 'BTAP_P': 10**2200}
+
+    def set_tracks(layers):
+        for name, d in denominators.items():
+            layers[name] = {'projection': '1d_track', 'index_axis': 'y', 'pitch_nm': 10,
+                            'index_range_inclusive': [0, 17],
+                            'first_centre': {'basis': 'lower_edge_plus_half_width',
+                                             'lower_edge_nm': {'numerator': '1', 'denominator': str(d)},
+                                             'width_nm': {'numerator': '1', 'denominator': str(d + 1)}}}
+
+    alter_grid(root, set_tracks)
+    model = bind_projection_model(build_geometry_from_site(root))
+    repo = PublicationRepository()
+    _, request = capture(repo, root, 'exact-coordinates')
+    context = publish_stage2(repo, request)
+    head = repo.read(context.head_ref)
+    snapshot = repo.read(head.snapshot_ref)
+    coords = snapshot.state['coordinates']
+    assert head.version == snapshot.version == 0 and coords['model_id'] == model.model_id
+    for name, d in denominators.items():
+        centre = coords['axes'][name]['first_centre_nm']
+        assert type(centre) is Fraction
+        assert centre == model.layers[name].centre(0) == Fraction(3 * d + 2, 2 * d * (d + 1))
+    assert type(coords['axes']['M1']['x_edges']['pitch_dbu']) is int
+    assert coords['axes']['BOUNDARY'] is None
+
+
+def test_snapshot_accepts_original_wire_and_rejects_noncanonical_coordinate(published):
+    repo, _, context, _ = published
+    snapshot = repo.read(repo.read(context.head_ref).snapshot_ref)
+    envelope = decode(encode_record(snapshot))
+    fields = envelope['value']['fields']
+
+    def wire(changes):
+        return canonical_bytes({**envelope, 'value': {'record': 'BaselineSnapshot',
+                                                      'fields': {**fields, **changes}}})
+
+    # Version 1 stored the entire state as a W006 exact payload map.
+    original = wire({'schema_version': {'scalar': 'layauto-baseline/1'}, 'state': {'value': snapshot.state}})
+    old = decode_record(original)
+    assert old.state == snapshot.state and encode_record(old) == original
+    assert type(old.state['coordinates']['axes']['POLY']['first_centre_nm']) is Fraction
+
+    state = fields['state']['value']
+    coords = state['coordinates']
+    axes = coords['axes']
+    for invalid in (('0x78', '0x2'), ('0X3c', '0x1'), ('0x3c', '0x0')):
+        track = {**axes['POLY'], 'first_centre_nm': invalid}
+        damaged = {**state, 'coordinates': {**coords, 'axes': {**axes, 'POLY': track}}}
+        with pytest.raises(ValueError):
+            decode_record(wire({'state': {'value': damaged}}))
