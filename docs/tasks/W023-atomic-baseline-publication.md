@@ -2,7 +2,7 @@
 
 ## 任务要求（PM）
 
-**阶段为可执行，归属 M1 的 Stage 2。** 执行分支为 `codex/w023-atomic-baseline-publication`。以前置 [W021 候选](W021-proposed-initial-state.md#pm2-integration) 和 [W022 已验收的逐层校验](W022-layer-initialization-checks.md#pm2-integration) 为输入。执行 session 交付运行代码，独立 reviewer 复核方案与实现，PM 负责集成和阶段回归。
+**阶段为待补修，归属 M1 的 Stage 2。** PM 在[合并前核验](#pm1-receipt)发现 1 项 P2，涉及已通过逐层检查的精确坐标写入快照。执行分支为 `codex/w023-atomic-baseline-publication`。以前置 [W021 候选](W021-proposed-initial-state.md#pm2-integration) 和 [W022 已验收的逐层校验](W022-layer-initialization-checks.md#pm2-integration) 为输入。执行 session 交付运行代码，独立 reviewer 复核方案与实现，PM 负责集成和阶段回归。
 
 本次要让后续阶段能凭仓库里的版本号和引用，重新读到这次运行的起始版图。在已有的单进程仓库中完成。运行模式沿用当前支持的 `dummy_fixture / whole_intent`。架构依据为 [§2.3、§2.6、§3.8、§9.2、§11.8](../architecture.md)，样本与验收输入见 [W020 发布清单](W020/readiness.md)。本轮交付 `sealed_open` 的 Stage 2 交接。后续 M1 工作负责约束、目标闭合和导出。当前仓库只提供进程内原子性，样本覆盖 synthetic 范围。
 
@@ -56,4 +56,27 @@
 
 ## PM 验收与交接（PM）
 
-当前派发执行。首次发布和阶段全量尚待实施、集成及实跑。
+<a id="pm1-receipt"></a>
+
+### PM1 合并前核验与补修交接
+
+2026-11-26，PM 核对远端交付 `b5827d5ec1bd735a053ee26c46767612e1065952`。产品、测试、包配置和示例与受测提交 `9f6fa09ce79c2b9c731c909b5a2e526a06e66c47` 一致，后者的 tree 为 `5410ec3450c21bd55fedb1204bde59a506d48359`。执行及 reviewer 的正常发布、同请求重放、并发、重新绑定拒绝、安装和 R1/R2 复核记录按该身份采信。以下是 PM 另外实跑的边界。
+
+**PM-01（P2，阻止合并）**。一份有效坐标通过了 W022 的逐层检查，在 W023 写入快照时触发 `ValueError`。涉及 A1 公开发布和 A2 坐标保真。复现沿用 W018 已有的合法有理数示例，使用正常 W003/W004 输入和完整 W022 工艺配置的临时副本。只把无本地图形的 `BTAP_N` 声明为一维，重新绑定 header。原图、网络和目标文件保持原值。[PM 复现](W023/pm01_coordinates.py) · [W018 数值合同](../../tests/unit/test_w018_model.py) · [W018 独立复核](W018/review.md)
+
+令 `d = 10**2200`，下边缘为 `1/d` nm，宽度为 `1/(d+1)` nm。两项各自的分母都只有 2,201 位。首轨中心按下边缘加半宽精确求和，约分后的分母有 4,401 位。显式配置只有 8,783 字节，整个捕获仍为 312 个占用片段。
+
+1. Python 3.12.14 默认整数十进制转换限制为 4,300 位。W020/W021 构建成功，W022 全部 15 层通过，`BTAP_N` 准确标为 `no_local_records`。可读回的第 0 号轨中心与独立算出的分数精确相等。
+2. 从同一份 W006 捕获调用 `publish_stage2`，在 `PublicationRepository.initialize → _put(prepared.snapshot) → encode_record → domain.codec._wire` 对分母做 `str(...)` 时抛出 `ValueError: Exceeds the limit (4300 digits) for integer string conversion`。[快照中的坐标](../../layauto_v2/state/snapshot.py) · [当前编码](../../layauto_v2/domain/codec.py)
+3. 异常后 `load_head('L')` 为 `None`，attempt 仍为 `unsealed`、revision 1，仓库完整观测与发布前相等。此次失败发生在写入前，受影响的是合法输入的发布和回读。
+
+```sh
+PYTHONPATH=.:tests/contracts python -B docs/tasks/W023/pm01_coordinates.py 2
+PYTHONPATH=.:tests/contracts python -B docs/tasks/W023/pm01_coordinates.py 2200
+PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 python -B -m pytest -p no:cacheprovider -q \
+  tests/unit/test_w018_model.py tests/contracts/test_w023_boundaries.py tests/unit/test_w006_publication.py
+```
+
+作为对照，PM 在同一 Python 3.12.14 进程配置下用 `d = 10**2` 单独跑同一探针，15 层和 312 片通过，第 0 版发布成功，读回的中心精确等于 `151/10100` nm。PM 在 Python 3.10.22 实跑上述 W018、W023 模块边界及 W006 仓库检查，58 项通过。原交付的 12 项新增检查、129 项受影响检查及对 88 个源文件的类型检查见[执行记录](W023/verification.md)。阶段双解释器全量在补修通过并实际合入 main 后执行。
+
+**补修验收。** 请让快照的坐标在默认解释器设置下可以精确编码并读回。保留普通坐标的读取行为和既有 W006 字节合同。优先检查 W018 已有的可逆整数与有理数表达，将改动收在实际受影响的编码和读取路径。覆盖上面的两个公开输入和至少一个相近但不同的精确值，核对模型、发布版本和对应的实际坐标。给出精简的正式回归，请独立 reviewer 复算并核验往返读数。修正、实跑命令和复核结果推回 W023 原分支，交 PM 重新验收。
