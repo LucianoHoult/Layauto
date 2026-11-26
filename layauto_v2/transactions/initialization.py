@@ -34,6 +34,8 @@ class InitializationTransaction:
     @staticmethod
     def prepare(repository: PublicationRepository, request: Stage2Request, ready: InputsReady,
                 candidate: ProposedInitialState) -> PreparedBaseline:
+        if candidate.occupancy.budget != request.fragment_budget:
+            raise RepositoryConflict('BindingConflict', 'candidate fragment budget differs from the publication request')
         attempt = ready.attempt
         readback = FrozenMap({'run_id': ready.run_id, 'request_digest': attempt.request.digest,
                               'attempt_digest': attempt.ref.digest, 'checkpoint_ref': _pointer(ready.checkpoint_ref),
@@ -43,7 +45,7 @@ class InitializationTransaction:
                 or candidate.annotation.binding.capture_binding != candidate.capture_binding):
             raise RepositoryConflict('BindingConflict', f'{request.checkpoint_ref.id}: foreign candidate or capture')
         sources = {text(mapping(s)['uri']): mapping(s)['sha256'] for s in sequence(candidate.capture_binding['sources'])}
-        binding = repository.stage2_binding(request, FrozenMap(sources))
+        binding = repository.stage2_binding(request, ready, FrozenMap(sources))
         checks = LayerInitializationChecks(candidate)
         if not checks.passed:
             raise InitializationRejected(checks)

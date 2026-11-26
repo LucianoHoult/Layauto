@@ -65,6 +65,9 @@ def published(tmp_path_factory):
     a2, ar2 = capture(other, root, 'A')
     assert ar2 == ar and a2 == a
     conflict('BindingConflict', InitializationTransaction.prepare, other, ar2, a2, ca)
+    conflict('BindingConflict', InitializationTransaction.prepare, repo, replace(ar, fragment_budget=0), a, ca)
+    conflict('ReadbackConflict', InitializationTransaction.prepare, repo, ar, replace(a, evidence_refs=()), ca)
+    conflict('ReadbackConflict', InitializationTransaction.prepare, repo, ar, replace(a, value=FrozenMap({})), ca)
     pa = InitializationTransaction.prepare(repo, ar, a, ca)
     pb = InitializationTransaction.prepare(repo, br, b, cb)
     del ca, cb

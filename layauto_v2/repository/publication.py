@@ -299,10 +299,16 @@ class PublicationRepository:
                           'value_digest': digest(checkpoint.ready_value),
                           'evidence': tuple(record_digest(e) for e in evidence)})
 
-    def stage2_binding(self, request: Stage2Request, expected_sources: FrozenMap) -> FrozenMap:
+    def stage2_binding(self, request: Stage2Request, ready: InputsReady, expected_sources: FrozenMap) -> FrozenMap:
         with self._lock:
-            _, checkpoint = self._stage2_base(self._root, request)
-            return self._capture_binding(self._root, checkpoint, expected_sources)
+            attempt, checkpoint = self._stage2_base(self._root, request)
+            if (attempt.ref != ready.attempt.ref or checkpoint.tool_ref != ready.tool_ref
+                    or checkpoint.parse_ref != ready.parse_ref or checkpoint.evidence_refs != ready.evidence_refs):
+                raise RepositoryConflict('ReadbackConflict', f'{request.checkpoint_ref.id}: inconsistent ready receipt')
+            binding = self._capture_binding(self._root, checkpoint, expected_sources)
+            if digest(ready.value) != binding['value_digest']:
+                raise RepositoryConflict('ReadbackConflict', f'{request.checkpoint_ref.id}: inconsistent ready value')
+            return binding
 
     def initialize(self, request: Stage2Request, prepared: PreparedBaseline) -> SealedContext:
         if type(prepared) is not PreparedBaseline or prepared.repository_scope is not self._scope:
