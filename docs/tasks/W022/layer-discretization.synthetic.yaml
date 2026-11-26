@@ -1,0 +1,76 @@
+# W022 逐层初始化的正例，供临时 W003/W004 synthetic 工艺包显式选择。
+# 坐标与工艺假设的来源见 W022 任务卡。生产使用时由工艺方提供自己的逐层配置。
+schema_version: w004-tech-owner/2
+coordinate_projection:
+  id: layauto-layer-discretization/1
+  classification: synthetic
+  units_ref: formats#/unit_scale_contract
+  frame_origin_nm: [0, 0]
+  layers:
+    FIN:
+      projection: 1d_track
+      index_axis: y
+      pitch_nm_ref: physical#/fin_count_profile/fin_pitch_nm
+      first_centre:
+        basis: lower_edge_plus_half_width
+        lower_edge_nm_ref: physical#/fin_count_profile/fin_lower_edge_offset_nm
+        width_nm_ref: physical#/fin_count_profile/fin_width_nm
+      # 下边偏移相对原点；首个编号 0 对应 24 + 2/2 = 25 nm。
+      index_range_inclusive: [0, 17]
+    LI:
+      projection: 2d_cells
+      # W017 样例。offset 相对原点，格边为 offset + i * pitch。
+      x_edges: {pitch_dbu: 20, offset_dbu: 0, cells: 8}
+      y_edges: {pitch_dbu: 10, offset_dbu: 0, cells: 20}
+    M1:
+      projection: 2d_cells
+      # PM 跨层样例。和 LI 同窗，各自使用自己的测试轴。
+      x_edges: {pitch_dbu: 16, offset_dbu: 0, cells: 10}
+      y_edges: {pitch_dbu: 20, offset_dbu: 0, cells: 10}
+    BOUNDARY: {projection: none}
+    MARKER:   {projection: none}
+    # W018 的垂直 POLY 测试给出合成栅轨。这里用相同的绝对轨道、原点为 0。
+    # -3 号轨的中心为 60 nm，-2 号为 69 nm。单条 GDS 栅形只能核对其中一个位置。
+    POLY:
+      projection: 1d_track
+      index_axis: x
+      pitch_nm: 9
+      first_centre: {basis: lower_edge_plus_half_width, lower_edge_nm: 58, width_nm: 4}
+      index_range_inclusive: [-3, 2]
+    # 以下九层显式选用与 LI 相同的合成测试格边。各层均可单独替换。
+    BODY_N:
+      projection: 2d_cells
+      x_edges: {pitch_dbu: 20, offset_dbu: 0, cells: 8}
+      y_edges: {pitch_dbu: 10, offset_dbu: 0, cells: 20}
+    BODY_P:
+      projection: 2d_cells
+      x_edges: {pitch_dbu: 20, offset_dbu: 0, cells: 8}
+      y_edges: {pitch_dbu: 10, offset_dbu: 0, cells: 20}
+    OD:
+      projection: 2d_cells
+      x_edges: {pitch_dbu: 20, offset_dbu: 0, cells: 8}
+      y_edges: {pitch_dbu: 10, offset_dbu: 0, cells: 20}
+    CUT:
+      projection: 2d_cells
+      x_edges: {pitch_dbu: 20, offset_dbu: 0, cells: 8}
+      y_edges: {pitch_dbu: 10, offset_dbu: 0, cells: 20}
+    CONTACT:
+      projection: 2d_cells
+      x_edges: {pitch_dbu: 20, offset_dbu: 0, cells: 8}
+      y_edges: {pitch_dbu: 10, offset_dbu: 0, cells: 20}
+    VIA0:
+      projection: 2d_cells
+      x_edges: {pitch_dbu: 20, offset_dbu: 0, cells: 8}
+      y_edges: {pitch_dbu: 10, offset_dbu: 0, cells: 20}
+    GCONTACT:
+      projection: 2d_cells
+      x_edges: {pitch_dbu: 20, offset_dbu: 0, cells: 8}
+      y_edges: {pitch_dbu: 10, offset_dbu: 0, cells: 20}
+    BTAP_N:
+      projection: 2d_cells
+      x_edges: {pitch_dbu: 20, offset_dbu: 0, cells: 8}
+      y_edges: {pitch_dbu: 10, offset_dbu: 0, cells: 20}
+    BTAP_P:
+      projection: 2d_cells
+      x_edges: {pitch_dbu: 20, offset_dbu: 0, cells: 8}
+      y_edges: {pitch_dbu: 10, offset_dbu: 0, cells: 20}
