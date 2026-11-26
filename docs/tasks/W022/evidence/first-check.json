@@ -1,0 +1,975 @@
+{
+  "python": "3.12.14",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "w018": {
+    "passed": false,
+    "layers": {
+      "BODY_N": {
+        "passed": false,
+        "drawn_offsets": [
+          176
+        ],
+        "drawn_matches": true,
+        "lifecycle": "frame_static",
+        "lifecycle_passed": true,
+        "policy_field": "/layers/1",
+        "frame_passed": true,
+        "frame_offset": 112,
+        "projection": "missing_declaration",
+        "coordinate_field": "/coordinate_projection/layers/BODY_N",
+        "availability": "missing_declaration",
+        "projection_passed": false,
+        "drawn_reconstructed": 0,
+        "effective_pieces": 0,
+        "effective_reconstructed": 0,
+        "fragments": {},
+        "projection_issues": [
+          "RequiredProjectionUnavailable"
+        ],
+        "gap": {
+          "operation": "initialize_layer_occupancy",
+          "required_fields": [
+            "projection"
+          ]
+        }
+      },
+      "BODY_P": {
+        "passed": false,
+        "drawn_offsets": [
+          240
+        ],
+        "drawn_matches": true,
+        "lifecycle": "frame_static",
+        "lifecycle_passed": true,
+        "policy_field": "/layers/2",
+        "frame_passed": true,
+        "frame_offset": 112,
+        "projection": "missing_declaration",
+        "coordinate_field": "/coordinate_projection/layers/BODY_P",
+        "availability": "missing_declaration",
+        "projection_passed": false,
+        "drawn_reconstructed": 0,
+        "effective_pieces": 0,
+        "effective_reconstructed": 0,
+        "fragments": {},
+        "projection_issues": [
+          "RequiredProjectionUnavailable"
+        ],
+        "gap": {
+          "operation": "initialize_layer_occupancy",
+          "required_fields": [
+            "projection"
+          ]
+        }
+      },
+      "BOUNDARY": {
+        "passed": true,
+        "drawn_offsets": [
+          112
+        ],
+        "drawn_matches": true,
+        "lifecycle": "frame_static",
+        "lifecycle_passed": true,
+        "policy_field": "/layers/0",
+        "frame_passed": true,
+        "frame_offset": 112,
+        "projection": "projection_none",
+        "coordinate_field": "/coordinate_projection/layers/BOUNDARY",
+        "availability": "projection_none",
+        "projection_passed": true,
+        "drawn_reconstructed": 0,
+        "effective_pieces": 0,
+        "effective_reconstructed": 0,
+        "fragments": {},
+        "projection_issues": [],
+        "gap": null
+      },
+      "BTAP_N": {
+        "passed": false,
+        "drawn_offsets": [],
+        "drawn_matches": true,
+        "lifecycle": "preserve_drawn",
+        "lifecycle_passed": true,
+        "policy_field": "/layers/11",
+        "frame_passed": true,
+        "frame_offset": 112,
+        "projection": "missing_declaration",
+        "coordinate_field": "/coordinate_projection/layers/BTAP_N",
+        "availability": "missing_declaration",
+        "projection_passed": false,
+        "drawn_reconstructed": 0,
+        "effective_pieces": 0,
+        "effective_reconstructed": 0,
+        "fragments": {},
+        "projection_issues": [
+          "RequiredProjectionUnavailable"
+        ],
+        "gap": {
+          "operation": "initialize_layer_occupancy",
+          "required_fields": [
+            "projection"
+          ]
+        }
+      },
+      "BTAP_P": {
+        "passed": false,
+        "drawn_offsets": [],
+        "drawn_matches": true,
+        "lifecycle": "preserve_drawn",
+        "lifecycle_passed": true,
+        "policy_field": "/layers/12",
+        "frame_passed": true,
+        "frame_offset": 112,
+        "projection": "missing_declaration",
+        "coordinate_field": "/coordinate_projection/layers/BTAP_P",
+        "availability": "missing_declaration",
+        "projection_passed": false,
+        "drawn_reconstructed": 0,
+        "effective_pieces": 0,
+        "effective_reconstructed": 0,
+        "fragments": {},
+        "projection_issues": [
+          "RequiredProjectionUnavailable"
+        ],
+        "gap": {
+          "operation": "initialize_layer_occupancy",
+          "required_fields": [
+            "projection"
+          ]
+        }
+      },
+      "CONTACT": {
+        "passed": false,
+        "drawn_offsets": [
+          1840,
+          1904,
+          1968,
+          2032
+        ],
+        "drawn_matches": true,
+        "lifecycle": "preserve_drawn",
+        "lifecycle_passed": true,
+        "policy_field": "/layers/8",
+        "frame_passed": true,
+        "frame_offset": 112,
+        "projection": "missing_declaration",
+        "coordinate_field": "/coordinate_projection/layers/CONTACT",
+        "availability": "missing_declaration",
+        "projection_passed": false,
+        "drawn_reconstructed": 0,
+        "effective_pieces": 0,
+        "effective_reconstructed": 0,
+        "fragments": {},
+        "projection_issues": [
+          "RequiredProjectionUnavailable"
+        ],
+        "gap": {
+          "operation": "initialize_layer_occupancy",
+          "required_fields": [
+            "projection"
+          ]
+        }
+      },
+      "CUT": {
+        "passed": false,
+        "drawn_offsets": [],
+        "drawn_matches": true,
+        "lifecycle": "preserve_drawn",
+        "lifecycle_passed": true,
+        "policy_field": "/layers/7",
+        "frame_passed": true,
+        "frame_offset": 112,
+        "projection": "missing_declaration",
+        "coordinate_field": "/coordinate_projection/layers/CUT",
+        "availability": "missing_declaration",
+        "projection_passed": false,
+        "drawn_reconstructed": 0,
+        "effective_pieces": 0,
+        "effective_reconstructed": 0,
+        "fragments": {},
+        "projection_issues": [
+          "RequiredProjectionUnavailable"
+        ],
+        "gap": {
+          "operation": "initialize_layer_occupancy",
+          "required_fields": [
+            "projection"
+          ]
+        }
+      },
+      "FIN": {
+        "passed": true,
+        "drawn_offsets": [
+          496,
+          560,
+          624,
+          688,
+          752,
+          816,
+          880,
+          944,
+          1008,
+          1072,
+          1136,
+          1200,
+          1264,
+          1328,
+          1392,
+          1456,
+          1520,
+          1584
+        ],
+        "drawn_matches": true,
+        "lifecycle": "frame_static",
+        "lifecycle_passed": true,
+        "policy_field": "/layers/5",
+        "frame_passed": true,
+        "frame_offset": 112,
+        "projection": "1d_track",
+        "coordinate_field": "/coordinate_projection/layers/FIN",
+        "availability": "reconstructed",
+        "projection_passed": true,
+        "drawn_reconstructed": 18,
+        "effective_pieces": 0,
+        "effective_reconstructed": 0,
+        "fragments": {
+          "drawn": 18
+        },
+        "projection_issues": [],
+        "gap": null
+      },
+      "GCONTACT": {
+        "passed": false,
+        "drawn_offsets": [
+          2288
+        ],
+        "drawn_matches": true,
+        "lifecycle": "preserve_drawn",
+        "lifecycle_passed": true,
+        "policy_field": "/layers/10",
+        "frame_passed": true,
+        "frame_offset": 112,
+        "projection": "missing_declaration",
+        "coordinate_field": "/coordinate_projection/layers/GCONTACT",
+        "availability": "missing_declaration",
+        "projection_passed": false,
+        "drawn_reconstructed": 0,
+        "effective_pieces": 0,
+        "effective_reconstructed": 0,
+        "fragments": {},
+        "projection_issues": [
+          "RequiredProjectionUnavailable"
+        ],
+        "gap": {
+          "operation": "initialize_layer_occupancy",
+          "required_fields": [
+            "projection"
+          ]
+        }
+      },
+      "LI": {
+        "passed": true,
+        "drawn_offsets": [
+          1648,
+          1712,
+          1776
+        ],
+        "drawn_matches": true,
+        "lifecycle": "preserve_drawn",
+        "lifecycle_passed": true,
+        "policy_field": "/layers/6",
+        "frame_passed": true,
+        "frame_offset": 112,
+        "projection": "2d_cells",
+        "coordinate_field": "/coordinate_projection/layers/LI",
+        "availability": "reconstructed",
+        "projection_passed": true,
+        "drawn_reconstructed": 3,
+        "effective_pieces": 3,
+        "effective_reconstructed": 3,
+        "fragments": {
+          "drawn": 20,
+          "effective": 20
+        },
+        "projection_issues": [],
+        "gap": null
+      },
+      "M1": {
+        "passed": true,
+        "drawn_offsets": [
+          2352,
+          2416,
+          2480,
+          2544
+        ],
+        "drawn_matches": true,
+        "lifecycle": "preserve_drawn",
+        "lifecycle_passed": true,
+        "policy_field": "/layers/13",
+        "frame_passed": true,
+        "frame_offset": 112,
+        "projection": "2d_cells",
+        "coordinate_field": "/coordinate_projection/layers/M1",
+        "availability": "reconstructed",
+        "projection_passed": true,
+        "drawn_reconstructed": 4,
+        "effective_pieces": 0,
+        "effective_reconstructed": 0,
+        "fragments": {
+          "drawn": 10
+        },
+        "projection_issues": [],
+        "gap": null
+      },
+      "MARKER": {
+        "passed": true,
+        "drawn_offsets": [
+          2608
+        ],
+        "drawn_matches": true,
+        "lifecycle": "preserve_drawn",
+        "lifecycle_passed": true,
+        "policy_field": "/layers/14",
+        "frame_passed": true,
+        "frame_offset": 112,
+        "projection": "projection_none",
+        "coordinate_field": "/coordinate_projection/layers/MARKER",
+        "availability": "projection_none",
+        "projection_passed": true,
+        "drawn_reconstructed": 0,
+        "effective_pieces": 0,
+        "effective_reconstructed": 0,
+        "fragments": {},
+        "projection_issues": [],
+        "gap": null
+      },
+      "OD": {
+        "passed": false,
+        "drawn_offsets": [
+          304,
+          368
+        ],
+        "drawn_matches": true,
+        "lifecycle": "preserve_drawn",
+        "lifecycle_passed": true,
+        "policy_field": "/layers/3",
+        "frame_passed": true,
+        "frame_offset": 112,
+        "projection": "missing_declaration",
+        "coordinate_field": "/coordinate_projection/layers/OD",
+        "availability": "missing_declaration",
+        "projection_passed": false,
+        "drawn_reconstructed": 0,
+        "effective_pieces": 6,
+        "effective_reconstructed": 0,
+        "fragments": {},
+        "projection_issues": [
+          "RequiredProjectionUnavailable"
+        ],
+        "gap": {
+          "operation": "initialize_layer_occupancy",
+          "required_fields": [
+            "projection"
+          ]
+        }
+      },
+      "POLY": {
+        "passed": false,
+        "drawn_offsets": [
+          432
+        ],
+        "drawn_matches": true,
+        "lifecycle": "frame_static",
+        "lifecycle_passed": true,
+        "policy_field": "/layers/4",
+        "frame_passed": true,
+        "frame_offset": 112,
+        "projection": "missing_declaration",
+        "coordinate_field": "/coordinate_projection/layers/POLY",
+        "availability": "missing_declaration",
+        "projection_passed": false,
+        "drawn_reconstructed": 0,
+        "effective_pieces": 0,
+        "effective_reconstructed": 0,
+        "fragments": {},
+        "projection_issues": [
+          "RequiredProjectionUnavailable"
+        ],
+        "gap": {
+          "operation": "initialize_gate_tracks",
+          "required_fields": [
+            "projection=1d_track",
+            "index_axis",
+            "pitch_nm or pitch_nm_ref",
+            "first_centre.basis=lower_edge_plus_half_width",
+            "first_centre.lower_edge_nm or lower_edge_nm_ref",
+            "first_centre.width_nm or width_nm_ref",
+            "index_range_inclusive"
+          ]
+        }
+      },
+      "VIA0": {
+        "passed": false,
+        "drawn_offsets": [
+          2096,
+          2160,
+          2224
+        ],
+        "drawn_matches": true,
+        "lifecycle": "preserve_drawn",
+        "lifecycle_passed": true,
+        "policy_field": "/layers/9",
+        "frame_passed": true,
+        "frame_offset": 112,
+        "projection": "missing_declaration",
+        "coordinate_field": "/coordinate_projection/layers/VIA0",
+        "availability": "missing_declaration",
+        "projection_passed": false,
+        "drawn_reconstructed": 0,
+        "effective_pieces": 0,
+        "effective_reconstructed": 0,
+        "fragments": {},
+        "projection_issues": [
+          "RequiredProjectionUnavailable"
+        ],
+        "gap": {
+          "operation": "initialize_layer_occupancy",
+          "required_fields": [
+            "projection"
+          ]
+        }
+      }
+    },
+    "gds": {
+      "uri": "source.gds",
+      "sha256": "97cf8d88771ff97f2cf189f6ae6a2fdcce585fc14f93c93d0ecf32326b415429"
+    },
+    "coordinate": {
+      "uri": "tech/layer-discretization.yaml",
+      "sha256": "fefb1bb72c15a131206f2885e1d9dc7ad98463aab676237a410a99d9c3d82890"
+    },
+    "model_id": "d354e491767deb271ee78b7d54852b3202147b7f236f199532281b408bfba476",
+    "drawn_owner": {
+      "uri": "tech/drawn.json",
+      "sha256": "29b675eefb2e957f2519ffa1a9ec0eed57a6055ccfa3b0bbe85d7d00e8382428"
+    },
+    "comparator": {
+      "uri": "tech/formats.json",
+      "sha256": "6ccf919d844b7336af97ab68f7e58c34908802ee79ef7cf3071e937a5396ec87",
+      "field": "/geometry_capability/comparator"
+    },
+    "lifecycle_operator": {
+      "uri": "tech/physical.json",
+      "sha256": "b2e28e8464c450f0eed55d5e03464bfea1c6502ba29256d3376eb3d158c659af",
+      "field": "/operators/lifecycle~11"
+    },
+    "frame_rule": {
+      "uri": "tech/rules.json",
+      "sha256": "40ce0b76abb28c07ab734734a19d61e1259bc5aee42a8cf2c02fabb9e4457480",
+      "field": "/rules/0"
+    },
+    "frame_dbu": [
+      0,
+      0,
+      160,
+      200
+    ],
+    "frame_identity": "ea3975ae3771c98e71bf744f76bce6ddd7b5529bc23a17086c8189c34edd3e62",
+    "attempt": "attempt:w022:f91f7bf386c727831d586704c3dec3736530ec379737f7c23e65b8905d3290cc",
+    "attempt_phase": "unsealed",
+    "checkpoint": "checkpoint:w022:e28c6e8dd939ca67ce37db5bd9ab6f57fc4f1a908e97bf6efb1fdb1c6904cde3",
+    "repository_unchanged": true,
+    "poly_track": null,
+    "m1_cell_2_2": {
+      "rect_dbu": [
+        32,
+        48,
+        45,
+        58
+      ],
+      "area_dbu2": 130,
+      "source_offset": 2352
+    },
+    "unknown_fragments": 6,
+    "unknown_conductor_policy": "suspect_conductor",
+    "body": {
+      "source": {
+        "uri": "body/context.json",
+        "sha256": "bfeec36baf831f7c4e8ffe9cb7d37470807176afcb39ebb386ae786cf43aa039"
+      },
+      "lvs": "not_run",
+      "local_graph_union": false
+    },
+    "target_delta": [
+      "MN0",
+      "channel_length",
+      "4n",
+      "5n"
+    ],
+    "first_check": {
+      "seconds_with_tracemalloc": 0.00682064900001933,
+      "retained_python_bytes": 12293,
+      "peak_python_bytes": 28969
+    }
+  },
+  "w022": {
+    "passed": true,
+    "layers": {
+      "BODY_N": {
+        "passed": true,
+        "drawn_offsets": [
+          176
+        ],
+        "drawn_matches": true,
+        "lifecycle": "frame_static",
+        "lifecycle_passed": true,
+        "policy_field": "/layers/1",
+        "frame_passed": true,
+        "frame_offset": 112,
+        "projection": "2d_cells",
+        "coordinate_field": "/coordinate_projection/layers/BODY_N",
+        "availability": "reconstructed",
+        "projection_passed": true,
+        "drawn_reconstructed": 1,
+        "effective_pieces": 0,
+        "effective_reconstructed": 0,
+        "fragments": {
+          "drawn": 54
+        },
+        "projection_issues": [],
+        "gap": null
+      },
+      "BODY_P": {
+        "passed": true,
+        "drawn_offsets": [
+          240
+        ],
+        "drawn_matches": true,
+        "lifecycle": "frame_static",
+        "lifecycle_passed": true,
+        "policy_field": "/layers/2",
+        "frame_passed": true,
+        "frame_offset": 112,
+        "projection": "2d_cells",
+        "coordinate_field": "/coordinate_projection/layers/BODY_P",
+        "availability": "reconstructed",
+        "projection_passed": true,
+        "drawn_reconstructed": 1,
+        "effective_pieces": 0,
+        "effective_reconstructed": 0,
+        "fragments": {
+          "drawn": 60
+        },
+        "projection_issues": [],
+        "gap": null
+      },
+      "BOUNDARY": {
+        "passed": true,
+        "drawn_offsets": [
+          112
+        ],
+        "drawn_matches": true,
+        "lifecycle": "frame_static",
+        "lifecycle_passed": true,
+        "policy_field": "/layers/0",
+        "frame_passed": true,
+        "frame_offset": 112,
+        "projection": "projection_none",
+        "coordinate_field": "/coordinate_projection/layers/BOUNDARY",
+        "availability": "projection_none",
+        "projection_passed": true,
+        "drawn_reconstructed": 0,
+        "effective_pieces": 0,
+        "effective_reconstructed": 0,
+        "fragments": {},
+        "projection_issues": [],
+        "gap": null
+      },
+      "BTAP_N": {
+        "passed": true,
+        "drawn_offsets": [],
+        "drawn_matches": true,
+        "lifecycle": "preserve_drawn",
+        "lifecycle_passed": true,
+        "policy_field": "/layers/11",
+        "frame_passed": true,
+        "frame_offset": 112,
+        "projection": "2d_cells",
+        "coordinate_field": "/coordinate_projection/layers/BTAP_N",
+        "availability": "no_local_records",
+        "projection_passed": true,
+        "drawn_reconstructed": 0,
+        "effective_pieces": 0,
+        "effective_reconstructed": 0,
+        "fragments": {},
+        "projection_issues": [],
+        "gap": null
+      },
+      "BTAP_P": {
+        "passed": true,
+        "drawn_offsets": [],
+        "drawn_matches": true,
+        "lifecycle": "preserve_drawn",
+        "lifecycle_passed": true,
+        "policy_field": "/layers/12",
+        "frame_passed": true,
+        "frame_offset": 112,
+        "projection": "2d_cells",
+        "coordinate_field": "/coordinate_projection/layers/BTAP_P",
+        "availability": "no_local_records",
+        "projection_passed": true,
+        "drawn_reconstructed": 0,
+        "effective_pieces": 0,
+        "effective_reconstructed": 0,
+        "fragments": {},
+        "projection_issues": [],
+        "gap": null
+      },
+      "CONTACT": {
+        "passed": true,
+        "drawn_offsets": [
+          1840,
+          1904,
+          1968,
+          2032
+        ],
+        "drawn_matches": true,
+        "lifecycle": "preserve_drawn",
+        "lifecycle_passed": true,
+        "policy_field": "/layers/8",
+        "frame_passed": true,
+        "frame_offset": 112,
+        "projection": "2d_cells",
+        "coordinate_field": "/coordinate_projection/layers/CONTACT",
+        "availability": "reconstructed",
+        "projection_passed": true,
+        "drawn_reconstructed": 4,
+        "effective_pieces": 0,
+        "effective_reconstructed": 0,
+        "fragments": {
+          "drawn": 4
+        },
+        "projection_issues": [],
+        "gap": null
+      },
+      "CUT": {
+        "passed": true,
+        "drawn_offsets": [],
+        "drawn_matches": true,
+        "lifecycle": "preserve_drawn",
+        "lifecycle_passed": true,
+        "policy_field": "/layers/7",
+        "frame_passed": true,
+        "frame_offset": 112,
+        "projection": "2d_cells",
+        "coordinate_field": "/coordinate_projection/layers/CUT",
+        "availability": "no_local_records",
+        "projection_passed": true,
+        "drawn_reconstructed": 0,
+        "effective_pieces": 0,
+        "effective_reconstructed": 0,
+        "fragments": {},
+        "projection_issues": [],
+        "gap": null
+      },
+      "FIN": {
+        "passed": true,
+        "drawn_offsets": [
+          496,
+          560,
+          624,
+          688,
+          752,
+          816,
+          880,
+          944,
+          1008,
+          1072,
+          1136,
+          1200,
+          1264,
+          1328,
+          1392,
+          1456,
+          1520,
+          1584
+        ],
+        "drawn_matches": true,
+        "lifecycle": "frame_static",
+        "lifecycle_passed": true,
+        "policy_field": "/layers/5",
+        "frame_passed": true,
+        "frame_offset": 112,
+        "projection": "1d_track",
+        "coordinate_field": "/coordinate_projection/layers/FIN",
+        "availability": "reconstructed",
+        "projection_passed": true,
+        "drawn_reconstructed": 18,
+        "effective_pieces": 0,
+        "effective_reconstructed": 0,
+        "fragments": {
+          "drawn": 18
+        },
+        "projection_issues": [],
+        "gap": null
+      },
+      "GCONTACT": {
+        "passed": true,
+        "drawn_offsets": [
+          2288
+        ],
+        "drawn_matches": true,
+        "lifecycle": "preserve_drawn",
+        "lifecycle_passed": true,
+        "policy_field": "/layers/10",
+        "frame_passed": true,
+        "frame_offset": 112,
+        "projection": "2d_cells",
+        "coordinate_field": "/coordinate_projection/layers/GCONTACT",
+        "availability": "reconstructed",
+        "projection_passed": true,
+        "drawn_reconstructed": 1,
+        "effective_pieces": 0,
+        "effective_reconstructed": 0,
+        "fragments": {
+          "drawn": 2
+        },
+        "projection_issues": [],
+        "gap": null
+      },
+      "LI": {
+        "passed": true,
+        "drawn_offsets": [
+          1648,
+          1712,
+          1776
+        ],
+        "drawn_matches": true,
+        "lifecycle": "preserve_drawn",
+        "lifecycle_passed": true,
+        "policy_field": "/layers/6",
+        "frame_passed": true,
+        "frame_offset": 112,
+        "projection": "2d_cells",
+        "coordinate_field": "/coordinate_projection/layers/LI",
+        "availability": "reconstructed",
+        "projection_passed": true,
+        "drawn_reconstructed": 3,
+        "effective_pieces": 3,
+        "effective_reconstructed": 3,
+        "fragments": {
+          "drawn": 20,
+          "effective": 20
+        },
+        "projection_issues": [],
+        "gap": null
+      },
+      "M1": {
+        "passed": true,
+        "drawn_offsets": [
+          2352,
+          2416,
+          2480,
+          2544
+        ],
+        "drawn_matches": true,
+        "lifecycle": "preserve_drawn",
+        "lifecycle_passed": true,
+        "policy_field": "/layers/13",
+        "frame_passed": true,
+        "frame_offset": 112,
+        "projection": "2d_cells",
+        "coordinate_field": "/coordinate_projection/layers/M1",
+        "availability": "reconstructed",
+        "projection_passed": true,
+        "drawn_reconstructed": 4,
+        "effective_pieces": 0,
+        "effective_reconstructed": 0,
+        "fragments": {
+          "drawn": 10
+        },
+        "projection_issues": [],
+        "gap": null
+      },
+      "MARKER": {
+        "passed": true,
+        "drawn_offsets": [
+          2608
+        ],
+        "drawn_matches": true,
+        "lifecycle": "preserve_drawn",
+        "lifecycle_passed": true,
+        "policy_field": "/layers/14",
+        "frame_passed": true,
+        "frame_offset": 112,
+        "projection": "projection_none",
+        "coordinate_field": "/coordinate_projection/layers/MARKER",
+        "availability": "projection_none",
+        "projection_passed": true,
+        "drawn_reconstructed": 0,
+        "effective_pieces": 0,
+        "effective_reconstructed": 0,
+        "fragments": {},
+        "projection_issues": [],
+        "gap": null
+      },
+      "OD": {
+        "passed": true,
+        "drawn_offsets": [
+          304,
+          368
+        ],
+        "drawn_matches": true,
+        "lifecycle": "preserve_drawn",
+        "lifecycle_passed": true,
+        "policy_field": "/layers/3",
+        "frame_passed": true,
+        "frame_offset": 112,
+        "projection": "2d_cells",
+        "coordinate_field": "/coordinate_projection/layers/OD",
+        "availability": "reconstructed",
+        "projection_passed": true,
+        "drawn_reconstructed": 2,
+        "effective_pieces": 6,
+        "effective_reconstructed": 6,
+        "fragments": {
+          "drawn": 48,
+          "effective": 72
+        },
+        "projection_issues": [],
+        "gap": null
+      },
+      "POLY": {
+        "passed": true,
+        "drawn_offsets": [
+          432
+        ],
+        "drawn_matches": true,
+        "lifecycle": "frame_static",
+        "lifecycle_passed": true,
+        "policy_field": "/layers/4",
+        "frame_passed": true,
+        "frame_offset": 112,
+        "projection": "1d_track",
+        "coordinate_field": "/coordinate_projection/layers/POLY",
+        "availability": "reconstructed",
+        "projection_passed": true,
+        "drawn_reconstructed": 1,
+        "effective_pieces": 0,
+        "effective_reconstructed": 0,
+        "fragments": {
+          "drawn": 1
+        },
+        "projection_issues": [],
+        "gap": null
+      },
+      "VIA0": {
+        "passed": true,
+        "drawn_offsets": [
+          2096,
+          2160,
+          2224
+        ],
+        "drawn_matches": true,
+        "lifecycle": "preserve_drawn",
+        "lifecycle_passed": true,
+        "policy_field": "/layers/9",
+        "frame_passed": true,
+        "frame_offset": 112,
+        "projection": "2d_cells",
+        "coordinate_field": "/coordinate_projection/layers/VIA0",
+        "availability": "reconstructed",
+        "projection_passed": true,
+        "drawn_reconstructed": 3,
+        "effective_pieces": 0,
+        "effective_reconstructed": 0,
+        "fragments": {
+          "drawn": 3
+        },
+        "projection_issues": [],
+        "gap": null
+      }
+    },
+    "gds": {
+      "uri": "source.gds",
+      "sha256": "97cf8d88771ff97f2cf189f6ae6a2fdcce585fc14f93c93d0ecf32326b415429"
+    },
+    "coordinate": {
+      "uri": "tech/layer-discretization.yaml",
+      "sha256": "cd25a045187c22d23040ea45363043b33b497d6318890a73a15782b293346009"
+    },
+    "model_id": "bb67a46b787847c2bb93c506a8640d2ee654fd50dff5d6ca8972ad98825aa4cf",
+    "drawn_owner": {
+      "uri": "tech/drawn.json",
+      "sha256": "29b675eefb2e957f2519ffa1a9ec0eed57a6055ccfa3b0bbe85d7d00e8382428"
+    },
+    "comparator": {
+      "uri": "tech/formats.json",
+      "sha256": "6ccf919d844b7336af97ab68f7e58c34908802ee79ef7cf3071e937a5396ec87",
+      "field": "/geometry_capability/comparator"
+    },
+    "lifecycle_operator": {
+      "uri": "tech/physical.json",
+      "sha256": "b2e28e8464c450f0eed55d5e03464bfea1c6502ba29256d3376eb3d158c659af",
+      "field": "/operators/lifecycle~11"
+    },
+    "frame_rule": {
+      "uri": "tech/rules.json",
+      "sha256": "40ce0b76abb28c07ab734734a19d61e1259bc5aee42a8cf2c02fabb9e4457480",
+      "field": "/rules/0"
+    },
+    "frame_dbu": [
+      0,
+      0,
+      160,
+      200
+    ],
+    "frame_identity": "ea3975ae3771c98e71bf744f76bce6ddd7b5529bc23a17086c8189c34edd3e62",
+    "attempt": "attempt:w022:eade6980b6c202c88010d1379e1b0cd4ce1eccda49780b17da8a2328568ed169",
+    "attempt_phase": "unsealed",
+    "checkpoint": "checkpoint:w022:f3535c765c8d81a3965475107636a007b0d5844a1f34f37f13f6d81a09ff6b1f",
+    "repository_unchanged": true,
+    "poly_track": {
+      "index": -3,
+      "centre_nm": 60,
+      "rect_dbu": [
+        58,
+        10,
+        62,
+        190
+      ],
+      "source_offset": 432
+    },
+    "m1_cell_2_2": {
+      "rect_dbu": [
+        32,
+        48,
+        45,
+        58
+      ],
+      "area_dbu2": 130,
+      "source_offset": 2352
+    },
+    "unknown_fragments": 6,
+    "unknown_conductor_policy": "suspect_conductor",
+    "body": {
+      "source": {
+        "uri": "body/context.json",
+        "sha256": "bfeec36baf831f7c4e8ffe9cb7d37470807176afcb39ebb386ae786cf43aa039"
+      },
+      "lvs": "not_run",
+      "local_graph_union": false
+    },
+    "target_delta": [
+      "MN0",
+      "channel_length",
+      "4n",
+      "5n"
+    ],
+    "first_check": {
+      "seconds_with_tracemalloc": 0.006776981999905729,
+      "retained_python_bytes": 8209,
+      "peak_python_bytes": 26241
+    }
+  }
+}
