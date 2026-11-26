@@ -4,7 +4,9 @@
 
 ## 当前节点
 
-**当前派发 [W022 发布前逐层初始化校验](tasks/W022-layer-initialization-checks.md)。** 从 W021 候选核对每层原图、固定外框和占用覆盖，并给出可回查的校验结果。执行分支为 `codex/w022-layer-initialization-checks`，双版本全量在首次正式发布第 0 版的集成提交上统一运行。
+**当前派发 [W023 发布并读回第 0 版初始状态](tasks/W023-atomic-baseline-publication.md)。** 执行分支为 `codex/w023-atomic-baseline-publication`。从已核验的候选出发，让快照、初始化事件、版本指针和运行上下文一起生效。已有版本按同一绑定核对后复用。首次正式发布集成后，由 PM 在该版本运行 Python 3.10、3.12 全量。
+
+**[W022 逐层初始化校验](tasks/W022-layer-initialization-checks.md#pm2-integration) 已通过 PR #87 合入 main。** POLY 按声明的一维或二维坐标核对占用，栅轨号是否可读单独报告。读入与逐层校验停在发布前。
 
 **[W021 初始状态候选](tasks/W021-proposed-initial-state.md#pm2-integration) 已验收并通过 PR #85 合入 main。** PM-01 已关闭。实际合并版通过 5 项组合检查，候选保留独立目标、来源及按层定位的缺项。
 
@@ -95,7 +97,7 @@
 | channel 器件定位与 FIN 实测/有限参数核对 | W011已验收集成；正常5/7、mismatch 4对5、来源/范围及实际merge6项组合通过 |
 | 本地网络区域标注/精确覆盖/冲突 | W013已验收集成；实际merge三路公开组合及5项边界检查通过，body未知保持 |
 | 器件八端与synthetic外部body关联 | W014已验收集成；实际merge三路组合及5项边界检查通过，生产U06仍为设计 |
-| 完整工艺坐标/annotation/连通/body/提取状态与原子baseline | W020、W021 已组装事实并冻结候选。W022 核对逐层初始化条件，之后由初始化事务发布第 0 版 |
+| 初始物理事实、逐层校验与第 0 版 | W020、W021 已组装事实并冻结候选，W022 已验收 synthetic 样本的逐层检查。W023 将初始状态、证据及其保证范围一并登记，供后续按版本读取 |
 | 无变化的完整判定、只读GDS/CDL/JSON及报告/terminal | 后续Stage3–6组合；通过后才验收M1 |
 
 W010/W011及W012 A1已验收集成，具有局部物理图及有限器件定位/FIN计量，并已降低已定位的hex瞬时峰值；示例coordinate与32×16见证仍不能充当完整运行坐标。A2已停止、不集成；W013网络区域标注与覆盖草稿已验收集成。其资源证据见任务记录，后续继续在方案及最早组合检查序列化/重建成本，资源明显放大时交PM，不无限扩大状态链。W014器件端子/source网络比较与现行synthetic外部body关联已验收集成，U06具体方案已接收但生产入口未实现；之后仍需完整坐标、剩余标注与规则、原子baseline及运行输出组合；不把A1效果或FIN计数相等提升为完整M1/no_change。原drawn及W008 raw occupancy保持，外部body图形独立；生产输入/body任务派发前必须回查U06。

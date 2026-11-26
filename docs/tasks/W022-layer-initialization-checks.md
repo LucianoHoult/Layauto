@@ -4,7 +4,7 @@
 
 ## 任务要求（PM）
 
-**当前状态为待补修。** 已声明二维网格的 POLY 能完整重建，但逐层校验仍将其投影判为失败。PM-01 经单变量输入复现。[PM 接收与补修](#pm1-receipt)
+**W022 已验收并合入 main，PM-01 已关闭。** 合成样本的逐层几何和占用可供初始化事务读取。[PM2 集成核验](#pm2-integration) · [原问题与反例](#pm1-receipt)
 
 **本轮交付运行代码。** 从 W021 的 `ProposedInitialState` 出发，对本次捕获的每个本地层回答三个问题：哪些原始几何应保留、哪些占用应能从原图或有效区域重建、各项是否有足够依据进入后续发布步骤。下游能直接读取通过的检查及带来源的缺项。任务属于 M1 的 Stage 2，执行分支为 `codex/w022-layer-initialization-checks`，产品基线为 W021 实际集成提交 `565412819167cea6165486e5ee4b4319c6aca52f`。[W021 验收](W021-proposed-initial-state.md#pm2-integration) · [架构 §2.3](../architecture.md#23-stage-2事实归一化与-layout-state-构建) · [逐层生命周期](../architecture.md#94-policy-controlled-geometry-finalization) · [初始化事务](../architecture.md#118-transactions)
 
@@ -53,7 +53,7 @@ rebind(root)
 
 ## 交接记录
 
-执行与独立复核记录见下文，最新验收结论见 [PM1](#pm1-receipt)。
+执行与独立复核记录见下文，最终验收结论见 [PM2](#pm2-integration)。
 
 ## 执行 session 启动指令
 
@@ -173,3 +173,28 @@ PYTHONPATH=.:tests/contracts python -B docs/tasks/W022/pm01_review_probe.py
 本次在 Linux、CPython 3.12.14 上跑完 13 项 W022 合同及 3 项模块边界检查，全部通过。mypy 对 85 个源文件检查通过。调用示例也分别从 W018、W022 的实际输入复跑，原有样张字段除运行身份与计时、内存测量外均吻合。探针修正前后的原始输出、测试节点及文件 SHA-256 已随分支保存。[执行证据](W022/evidence/pm01-verification.json)
 
 原有 54 项检查、前次构建和安装记录按其受测版本保留。W018/W021 生产者、输入合同、fixture 及包配置与补修起点相同；本次重跑覆盖了变更的判定、示例、正式回归与模块边界。PM-01 补修及独立复核已交 PM 重新验收。双解释器全量仍由第 0 版正式发布的集成节点执行。
+
+<a id="pm2-integration"></a>
+
+## PM2 补修接收与合并版验证
+
+**2026-11-26，PM 接收 W022 A1–A5，PM-01 关闭，剩余必须修正项 0。** [PR #87](https://github.com/LucianoHoult/Layauto/pull/87) 已合入 main，实际产品集成提交为 `9318027b4c66ca9d1c4f24ad8b9c4ebd47bd3cbd`。交付 `18934aa074c6dfaab79151447075a19bb78fa0a7`、PR 合并候选和实际合并版的完整 tree 均为 `8f9c4bef2363e12347f13750bedc67df9cf8f26b`。产品代码、测试及包配置与受测提交 `03bbecc06e2dab2f383ba2b8e262f621d754e2fc` 相同。PM 从检出文件重算并核对了[补修证据](W022/evidence/pm01-verification.json)中的全部 5 个 SHA-256。
+
+| PM 实跑（Linux，Python 3.12.14） | 结果 |
+| --- | --- |
+| 原二维 POLY 单变量反例 | 36 片的格号、边界逐片吻合，面积共 720 DBU²，GDS 偏移 432，投影和全部 15 层通过。 |
+| 已审分支的两个定向合同 | 2 项通过（106.23 秒）。一维 POLY 的 −3 号轨中心为 60 nm。将二维格的右边缘收至 60 DBU 后，延伸到 62 DBU 的栅收到 `outside_range`，定位到原记录，其余层通过。 |
+| 实际合并版、正常 source/target、W022 完整坐标 | 目标语义差异 0，15 层通过，40 条原图，220 个原图片段和 92 个有效片段。M1 格 (2,2) 的 130 DBU² 线端回指 GDS 偏移 2352。 |
+| 同一合并版、正常 source/target、W018 坐标 | 仅替换坐标配置并重绑输入。10 层缺必需声明，POLY 原图仍可查，缺项定位到坐标文件的 `/coordinate_projection/layers/POLY`。已知的 48 个原图片段、20 个有效片段和 M1 线端仍可用。 |
+
+两份合并版样本在 W020–W022 构建与校验前后的仓库快照相等，运行都停在 `unsealed`、revision 1。正常样本保留原 target，补修合同中的 C13 则保留 4n 和 5n 的目标差异。[合并版组合探针](W022/pm_integration.py)
+
+```sh
+PYTHONPATH=.:tests/contracts python -B docs/tasks/W022/pm01_probe.py
+PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 python -B -m pytest -p no:cacheprovider -q \
+  tests/contracts/test_w022_layer_checks.py::test_all_projected_sources_reconstruct_and_keep_record_region_piece_backlinks \
+  'tests/contracts/test_w022_layer_checks.py::test_poly_2d_occupancy_uses_its_declared_grid[ends_inside_gate]'
+PYTHONPATH=.:tests/contracts python -B docs/tasks/W022/pm_integration.py
+```
+
+按冻结代码采信补修的 13 项合同、3 项边界检查、85 个源文件 typing，以及独立 reviewer 的相移二维格 24 片、720 DBU² 和越界定位。原 54 项定向、构建和安装使用各自受测版本记录。W022 的验收范围是 synthetic 逐层校验。下一项 [W023](W023-atomic-baseline-publication.md) 负责原子发布第 0 版及已有版本复用。PM 在 W023 实际集成提交上做阶段双版本全量。
