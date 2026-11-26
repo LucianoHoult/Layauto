@@ -43,7 +43,7 @@ W012调查及[A1兼容hex优化](tasks/W012-capture-wire-performance.md#pm4-a1-i
 
 [W017 方案](tasks/W017-coordinate-occupancy-projection.md#pm1-acceptance)已验收集成。15 层坐标来源、FIN 中心查询、显式 LI 格边和同格多片段均有可复核样张。[W018](tasks/W018-coordinate-occupancy-core.md#pm2-integration) 已集成逐层声明驱动的坐标与占用内核，可从占用片段回查 GDS 来源。[W019](tasks/W019-single-cell-occupancy-query.md#pm2-integration) 已将其接入 W016 单 cell 分析入口，实际合并版本通过双解释器阶段回归，可查询每格的实际占用及 GDS 来源。
 
-[W020](tasks/W020-stage2-baseline-readiness.md#pm-integration) 已集成，从完整运行验证了 Stage 2 初始事实的来源和对应关系。[W021](tasks/W021-proposed-initial-state.md#pm2-integration) 的不可变候选已验收集成。[W022](tasks/W022-layer-initialization-checks.md) 核对各层几何保真、固定外框及适用的占用覆盖，以供后续原子发布第 0 版。M1 随后仍需建立约束上下文、证明全部目标已满足、记录零修改并完成导出与回读。
+[W020](tasks/W020-stage2-baseline-readiness.md#pm-integration) 已串起同一次捕获的初始事实，[W021](tasks/W021-proposed-initial-state.md#pm2-integration) 已将其组成不可变候选。[W022](tasks/W022-layer-initialization-checks.md#pm2-integration) 已集成逐层原图、固定外框和占用校验。[W023](tasks/W023-atomic-baseline-publication.md) 负责在 Stage 2 首次登记第 0 版，或为新运行核对并复用已有版本。首次发布集成后做双解释器阶段全量。M1 随后仍需建立约束上下文、证明全部目标已满足、记录零修改并完成导出与回读。
 
 | 里程碑 | 可观察能力与代表输入→结果 | 依赖 / 退出验收 |
 | --- | --- | --- |
