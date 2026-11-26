@@ -1,0 +1,128 @@
+{
+  "base": "a6c2f1e62e26b1f6fc5f934ed0cb61a2957b8600",
+  "tested_commit": "03bbecc06e2dab2f383ba2b8e262f621d754e2fc",
+  "tested_tree": "1d6030d68897b0f008ab9b797a8721246e6059e0",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "python": "3.12.14",
+  "distributions": {
+    "pytest": "9.2.0",
+    "mypy": "2.4.1",
+    "PyYAML": "6.0.3"
+  },
+  "sha256": {
+    "docs/tasks/W022/pm01_probe.py": "ee4a629e2c1e8baf1f12c5ae7bd1d63ef0b162c808a0769a4c4cc7df017ded7a",
+    "docs/tasks/W022/layer-discretization.synthetic.yaml": "cd25a045187c22d23040ea45363043b33b497d6318890a73a15782b293346009",
+    "tests/fixtures/w003_m1/source.gds": "97cf8d88771ff97f2cf189f6ae6a2fdcce585fc14f93c93d0ecf32326b415429",
+    "layauto_v2/state/layer_checks.py": "dc095fea748d31b91c0f0353b2ffb79ee898ba65f52169bb0dc961d5ee84ff09",
+    "docs/tasks/W022/pm01_review_probe.py": "a3aacc4e7fc82ec5cac0f0aec61ea4b13d83109cdd7e1dcd6a070aad891a5615"
+  },
+  "pm_probe": {
+    "command": "PYTHONPATH=.:tests/contracts python -B docs/tasks/W022/pm01_probe.py",
+    "before": {
+      "exit": 1,
+      "stdout": [
+        "POLY: 36 fragments, 720 DBU², record offset 432, 14 other layers passed",
+        "projection_passed = False overall = False projection_issues = ['GateTracksUnavailable']"
+      ],
+      "exception": "AssertionError: explicit 2D occupancy rejected"
+    },
+    "after": {
+      "exit": 0,
+      "stdout": [
+        "POLY: 36 fragments, 720 DBU², record offset 432, 14 other layers passed",
+        "projection_passed = True overall = True projection_issues = []"
+      ]
+    }
+  },
+  "pytest_environment": {
+    "PYTEST_DISABLE_PLUGIN_AUTOLOAD": "1"
+  },
+  "w022_contracts": [
+    {
+      "argv": [
+        "python",
+        "-B",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "-v",
+        "tests/contracts/test_w022_layer_checks.py",
+        "-k",
+        "complete_checks_bind or all_projected_sources or partial_retains or poly_2d_occupancy"
+      ],
+      "result": "5 passed, 8 deselected in 265.50s (0:04:25)",
+      "passed_nodes": [
+        "tests/contracts/test_w022_layer_checks.py::test_complete_checks_bind_capture_frame_and_both_owners",
+        "tests/contracts/test_w022_layer_checks.py::test_all_projected_sources_reconstruct_and_keep_record_region_piece_backlinks",
+        "tests/contracts/test_w022_layer_checks.py::test_partial_retains_supported_checks_and_single_capture",
+        "tests/contracts/test_w022_layer_checks.py::test_poly_2d_occupancy_uses_its_declared_grid[full_grid]",
+        "tests/contracts/test_w022_layer_checks.py::test_poly_2d_occupancy_uses_its_declared_grid[ends_inside_gate]"
+      ]
+    },
+    {
+      "argv": [
+        "python",
+        "-B",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "-v",
+        "tests/contracts/test_w022_layer_checks.py",
+        "-k",
+        "not (complete_checks_bind or all_projected_sources or partial_retains or poly_2d_occupancy)"
+      ],
+      "result": "8 passed, 5 deselected in 207.74s (0:03:27)",
+      "passed_nodes": [
+        "tests/contracts/test_w022_layer_checks.py::test_gate_between_declared_1d_tracks_has_no_track_number",
+        "tests/contracts/test_w022_layer_checks.py::test_outside_empty_required_layers_gate_and_marker_have_independent_verdicts",
+        "tests/contracts/test_w022_layer_checks.py::test_same_cell_cut_islands_in_complete_run",
+        "tests/contracts/test_w022_layer_checks.py::test_dropped_duplicate_and_substituted_frame_are_detected",
+        "tests/contracts/test_w022_layer_checks.py::test_unsupported_lifecycle_and_frame_rule_do_not_certify_layers",
+        "tests/contracts/test_w022_layer_checks.py::test_missing_required_tech_is_located_before_candidate[physical-<lambda>]",
+        "tests/contracts/test_w022_layer_checks.py::test_missing_required_tech_is_located_before_candidate[formats-<lambda>]",
+        "tests/contracts/test_w022_layer_checks.py::test_invalid_grid_field_keeps_projection_binder_error_and_geometry"
+      ]
+    }
+  ],
+  "boundary_checks": {
+    "nodes": [
+      "tests/contracts/test_w007_contracts.py::test_normalization_and_new_domain_keep_pure_dependency_boundaries",
+      "tests/contracts/test_w008_geometry.py::test_domain_state_dependency_direction_and_no_hidden_occupancy_owner",
+      "tests/contracts/test_w013_contracts.py::test_new_modules_keep_declared_dependency_and_no_io_boundaries"
+    ],
+    "result": "3 passed in 0.79s"
+  },
+  "mypy": "Success: no issues found in 85 source files",
+  "example": {
+    "command": "PYTHONPATH=.:tests/contracts python -B docs/tasks/W022/example.py",
+    "samples": {
+      "w018": {
+        "passed": false,
+        "poly_gate_track_numbers_available": false,
+        "poly_track": null,
+        "attempt_phase": "unsealed",
+        "repository_unchanged": true
+      },
+      "w022": {
+        "passed": true,
+        "poly_gate_track_numbers_available": true,
+        "poly_track": {
+          "index": -3,
+          "centre_nm": 60,
+          "rect_dbu": [
+            58,
+            10,
+            62,
+            190
+          ],
+          "source_offset": 432
+        },
+        "attempt_phase": "unsealed",
+        "repository_unchanged": true
+      }
+    }
+  },
+  "independent_review": "../pm01-review.md"
+}

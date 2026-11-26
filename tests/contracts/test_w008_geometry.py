@@ -455,7 +455,8 @@ print(r.value.ref.sha256)
 def test_domain_state_dependency_direction_and_no_hidden_occupancy_owner():
     import layauto_v2
     root = Path(layauto_v2.__file__).resolve().parent
-    paths = [root / 'domain/geometry.py', *(root / 'state' / name for name in ('coordinate.py', 'layout_store.py', 'occupancy.py'))]
+    state_modules = ('coordinate.py', 'layout_store.py', 'occupancy.py', 'layer_checks.py')
+    paths = [root / 'domain/geometry.py', *(root / 'state' / name for name in state_modules)]
     forbidden = ('layauto_v2.normalization', 'layauto_v2.importers', 'layauto_v2.pipeline',
                  'layauto_v2.repository', 'layauto_v2.transactions', 'legacy_mvp', 'tests',
                  'pathlib', 'subprocess', 'os', 'io')

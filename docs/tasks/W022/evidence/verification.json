@@ -1,0 +1,34 @@
+{
+  "base": "6581c250cf0d11b1869d96202d490a2d077ab9ea",
+  "runtime_and_contracts_commit": "1a576c8fa3f5afc25cbc9ab5ddc518ed21201574",
+  "tested_tree": "dc2e87f6e49e13a0e04d04378c3665d942982050",
+  "python": "Python 3.12.14",
+  "distributions": {
+    "build": "1.6.1",
+    "layauto": "0.2.0",
+    "matplotlib": "3.10.8",
+    "mypy": "2.4.1",
+    "numpy": "2.3.5",
+    "pytest": "9.2.0",
+    "PyYAML": "6.0.3",
+    "setuptools": "84.2.1",
+    "types-PyYAML": "6.0.12.20261122"
+  },
+  "synthetic_inputs": {
+    "tests/fixtures/w003_m1/source.gds": "97cf8d88771ff97f2cf189f6ae6a2fdcce585fc14f93c93d0ecf32326b415429",
+    "tests/fixtures/w003_m1/special/cut_islands/source.gds": "1f57cb548544c934827f49d3ffb181048efc55e02976ab7ebe66b43621a37ef2",
+    "docs/tasks/W018/layer-discretization.example.yaml": "fefb1bb72c15a131206f2885e1d9dc7ad98463aab676237a410a99d9c3d82890",
+    "docs/tasks/W022/layer-discretization.synthetic.yaml": "cd25a045187c22d23040ea45363043b33b497d6318890a73a15782b293346009"
+  },
+  "results": {
+    "w022_and_module_boundaries": "13 passed in 257.41s (0:04:17)",
+    "w020_w021_w018": "41 passed in 360.14s (0:06:00)",
+    "mypy": "Success: no issues found in 85 source files"
+  },
+  "boundary_negative_control": "In a temporary archive of the tested commit, adding a repository import to state/layer_checks.py made test_domain_state_dependency_direction_and_no_hidden_occupancy_owner fail and name that file and module.",
+  "build": {
+    "source": "git archive of the tested commit (layauto_v2 and pyproject.toml)",
+    "result": "sdist and wheel built; wheel installed in a separate venv with system site packages; python -I loaded the installed module, verified byte equality with tested source; pip check passed",
+    "wheel_sha256": "c4f0f141f019c0367412f2d0fccde3410e341301f9270e8556a87240accbf30a"
+  }
+}
