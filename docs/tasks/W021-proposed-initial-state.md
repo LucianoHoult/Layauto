@@ -113,3 +113,48 @@ PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 python -B -m pytest -p no:cacheprovider -q --tb
 **原执行 session 补修指令**
 
 > 在 `codex/w021-proposed-initial-state` 接续本节 PM-01。先复现 W007 依赖检查失败，再按既有按文件、模块和符号登记的方式，为 W021 生产者补齐上表六个类型。保持仓库和事务等依赖的原有限制。用原测试验证，另在临时副本验证额外导入仍被拒；请独立 reviewer 核查改动和反例。若改动仅限检查及证据，产品回归、构建、安装按原受测身份采信。将补修、命令、结果与完整 SHA 推回原分支，交 PM 重新验收。
+
+### PM-01 补修交付
+
+起点 `892eb3ac891b6da2654d293b1c0f904afa37a8c4`，补修提交 `1347a2be2509820cc37ba746436126016af31498`。在 W007 已有的 `component_seams` 表中为 `initial_state.py` 增加上表两个模块、六个符号。相对起点，该提交仅改动 `tests/contracts/test_w007_contracts.py` 的四行登记。[补修 diff](https://github.com/LucianoHoult/Layauto/commit/1347a2be2509820cc37ba746436126016af31498)
+
+| 实跑版本或临时改动 | W007 原测试结果 |
+| --- | --- |
+| 起点，未修改 | 1 failed。依赖检查在 `assert violations == []` 报告 initial_state.py 的 discrete_occupancy、mutation 两处导入。 |
+| 补修提交 | 1 passed。 |
+| 补修副本增加同模块的 build_discrete_occupancy | 1 failed。唯一违规来自 initial_state.py 的 layauto_v2.state.discrete_occupancy 导入。 |
+| 另一补修副本增加 PublicationRepository | 1 failed。唯一违规来自 initial_state.py 的 layauto_v2.repository 导入。 |
+
+Linux、CPython 3.12.14、pytest 9.2.0。在起点与补修提交的仓库根目录分别运行 PM1 节的原命令。临时反例可在补修提交根目录用相同环境复现，以下每轮均复制干净的产品与测试，检查原断言和违规文件、模块。
+
+```sh
+python - <<'PY'
+import os
+from pathlib import Path
+import shutil
+import subprocess
+import sys
+from tempfile import TemporaryDirectory
+
+node = 'tests/contracts/test_w007_contracts.py::test_normalization_and_new_domain_keep_pure_dependency_boundaries'
+for module, symbol in [('layauto_v2.state.discrete_occupancy', 'build_discrete_occupancy'),
+                       ('layauto_v2.repository', 'PublicationRepository')]:
+    with TemporaryDirectory() as tmp:
+        root = Path(tmp)
+        for name in ('layauto_v2', 'tests'):
+            shutil.copytree(name, root / name)
+        shutil.copy2('pyproject.toml', root)
+        source = root / 'layauto_v2/normalization/initial_state.py'
+        with source.open('a') as output:
+            print(f'\nfrom {module} import {symbol}', file=output)
+        result = subprocess.run([sys.executable, '-B', '-m', 'pytest', '-p', 'no:cacheprovider',
+                                 '-q', '--tb=short', node], cwd=root, capture_output=True, text=True,
+                                env={**os.environ, 'PYTEST_DISABLE_PLUGIN_AUTOLOAD': '1'})
+        print(symbol, result.stdout)
+        assert result.returncode == 1 and '1 failed' in result.stdout
+        assert 'assert violations == []' in result.stdout and str(source) in result.stdout
+        assert module in result.stdout
+PY
+```
+
+产品、输入、配置与 W021 受测提交相同，原 18 项定向测试、typing、构建和安装证据按 PM1 记录采信。本次新增证据覆盖漏跑的 W007 合同及负例，交 PM 重新验收。[独立补修复核](W021/code-review.md#pm-01)
