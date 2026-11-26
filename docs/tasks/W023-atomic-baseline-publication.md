@@ -28,7 +28,9 @@
 
 ## 方案与决定（执行准备，PM 接收）
 
-待执行 session 填写方案、样张与 review 位置。
+1. **空 lineage。** A 用正常 target、W022 坐标和重绑 header 从 W006 取得 revision 1 的 checkpoint。Pipeline 从本仓库实际回读组装 W020/W021。初始化事务消费该候选，在同一对象上运行 W022；不足时返回层、原因与位置。事务冻结中立的版本化发布材料。仓库锁内先查该 operation/run/key 的完整请求摘要，再核对起始 head、phase、revision、模式、同一 checkpoint 及其可解析的审计和来源摘要。一次 root 切换发布 snapshot 0、InitializationEvent、head、context 及其回执，attempt 变为 sealed_open/revision 2，ECO 链为空。读者凭 head 和内容引用读回，原候选退出作用域。切换前中断所有新对象均不可见，切换后响应丢失按原请求读同一回执。
+2. **已有 lineage。** B 请求 A 的 head。对 B 独立捕获的 URI 与实际 SHA-256（GDS、CDL、query/header/raw、body、全部 tech、配置与 policy）、版本化能力和模式做相容性核对。当前 synthetic header 本身绑定 target；同输入的新 run 可复用原版的不可变目标。run ID、创建键、绝对根路径、attempt/checkpoint/tool/parse/evidence 等 run 专属引用只用于本次追溯。加载原版并通过 seal_context 登记 B 的上下文、回执及 revision 2。B 不创建候选快照或再次初始化。改变有效坐标或 query 后重新绑定 header，拒绝 B 并保留其 revision 1、原审计、A 的 head/快照/事件。
+3. **所有权与观测。** snapshot 只冻结 §3.8 各权威组件及来源 ID，原格号、精确片段、region/node/component 与 annotation/evidence 引用贯通。目标与差异在独立不可变上下文中。新记录用封闭版本和内容摘要；旧 W006 字节与引用保留。重放先于 guard；比较故障前后完整仓库观测。两个 run 都读到空 head 后分别完成准备，从屏障同时提交，核对唯一版、落败方 checkpoint 及 revision。另用 C13、缺声明、越界和二维 POLY；串行对重型组装和发布/读回分别计时、记录 RSS 与持有体积。独立 reviewer 先核方案，再从仓库读者视角实查故障或并发及物理来源。
 
 ## 执行结果（执行）
 
