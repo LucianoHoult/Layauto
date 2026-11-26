@@ -383,6 +383,10 @@ def test_normalization_and_new_domain_keep_pure_dependency_boundaries():
             # mutable state, repository or publication capability to old code.
             # W018 binds authenticated technology and calls the pure, local index.
             component_seams = {
+                'initial_state.py': {
+                    'layauto_v2.state.discrete_occupancy': {'DiscreteOccupancy', 'ProjectionDiagnostic'},
+                    'layauto_v2.state.mutation': {'LayerInitialization', 'ProjectionGap', 'ProposedInitialState', 'TargetContext'},
+                },
                 'stage2.py': {
                     'layauto_v2.state.discrete_occupancy': {'DiscreteOccupancy', 'OccupancyResult'},
                 },

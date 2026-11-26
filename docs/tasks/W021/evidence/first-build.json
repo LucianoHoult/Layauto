@@ -1,0 +1,161 @@
+{
+  "python": "3.12.14",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "assembly_seconds": 55.90732503100003,
+  "candidate_seconds_traced": 0.006904283000039868,
+  "candidate_retained_python_bytes": 6784,
+  "candidate_peak_python_bytes": 10553,
+  "process_peak_rss_bytes": 265838592,
+  "attempt_before": "attempt:w021-example:c192e823b7553ced83a42cc600b6376c052877de50fde13ee1db71fa8de91cbe",
+  "attempt_after": "attempt:w021-example:c192e823b7553ced83a42cc600b6376c052877de50fde13ee1db71fa8de91cbe",
+  "checkpoint": "checkpoint:w021-example:c90e412a84f2844ad1346c1083846c23639acc8cdcfb6837583bbea6405cddc6",
+  "terminal": null,
+  "model_id": "d354e491767deb271ee78b7d54852b3202147b7f236f199532281b408bfba476",
+  "canonical_tick_nm": 1,
+  "li_cell_dbu2": [
+    60
+  ],
+  "delta": [
+    "MN0",
+    "channel_length",
+    "4n",
+    "5n"
+  ],
+  "layers": {
+    "BODY_N": {
+      "records": 1,
+      "lifecycle": "frame_static",
+      "projection": "missing_declaration",
+      "availability": "missing_declaration",
+      "drawn_reconstructed": 0,
+      "effective_reconstructed": 0,
+      "effective_pieces": 0
+    },
+    "BODY_P": {
+      "records": 1,
+      "lifecycle": "frame_static",
+      "projection": "missing_declaration",
+      "availability": "missing_declaration",
+      "drawn_reconstructed": 0,
+      "effective_reconstructed": 0,
+      "effective_pieces": 0
+    },
+    "BOUNDARY": {
+      "records": 1,
+      "lifecycle": "frame_static",
+      "projection": "projection_none",
+      "availability": "projection_none",
+      "drawn_reconstructed": 0,
+      "effective_reconstructed": 0,
+      "effective_pieces": 0
+    },
+    "BTAP_N": {
+      "records": 0,
+      "lifecycle": "preserve_drawn",
+      "projection": "missing_declaration",
+      "availability": "missing_declaration",
+      "drawn_reconstructed": 0,
+      "effective_reconstructed": 0,
+      "effective_pieces": 0
+    },
+    "BTAP_P": {
+      "records": 0,
+      "lifecycle": "preserve_drawn",
+      "projection": "missing_declaration",
+      "availability": "missing_declaration",
+      "drawn_reconstructed": 0,
+      "effective_reconstructed": 0,
+      "effective_pieces": 0
+    },
+    "CONTACT": {
+      "records": 4,
+      "lifecycle": "preserve_drawn",
+      "projection": "missing_declaration",
+      "availability": "missing_declaration",
+      "drawn_reconstructed": 0,
+      "effective_reconstructed": 0,
+      "effective_pieces": 0
+    },
+    "CUT": {
+      "records": 0,
+      "lifecycle": "preserve_drawn",
+      "projection": "missing_declaration",
+      "availability": "missing_declaration",
+      "drawn_reconstructed": 0,
+      "effective_reconstructed": 0,
+      "effective_pieces": 0
+    },
+    "FIN": {
+      "records": 18,
+      "lifecycle": "frame_static",
+      "projection": "1d_track",
+      "availability": "reconstructed",
+      "drawn_reconstructed": 18,
+      "effective_reconstructed": 0,
+      "effective_pieces": 0
+    },
+    "GCONTACT": {
+      "records": 1,
+      "lifecycle": "preserve_drawn",
+      "projection": "missing_declaration",
+      "availability": "missing_declaration",
+      "drawn_reconstructed": 0,
+      "effective_reconstructed": 0,
+      "effective_pieces": 0
+    },
+    "LI": {
+      "records": 3,
+      "lifecycle": "preserve_drawn",
+      "projection": "2d_cells",
+      "availability": "reconstructed",
+      "drawn_reconstructed": 3,
+      "effective_reconstructed": 3,
+      "effective_pieces": 3
+    },
+    "M1": {
+      "records": 4,
+      "lifecycle": "preserve_drawn",
+      "projection": "2d_cells",
+      "availability": "reconstructed",
+      "drawn_reconstructed": 4,
+      "effective_reconstructed": 0,
+      "effective_pieces": 0
+    },
+    "MARKER": {
+      "records": 1,
+      "lifecycle": "preserve_drawn",
+      "projection": "projection_none",
+      "availability": "projection_none",
+      "drawn_reconstructed": 0,
+      "effective_reconstructed": 0,
+      "effective_pieces": 0
+    },
+    "OD": {
+      "records": 2,
+      "lifecycle": "preserve_drawn",
+      "projection": "missing_declaration",
+      "availability": "missing_declaration",
+      "drawn_reconstructed": 0,
+      "effective_reconstructed": 0,
+      "effective_pieces": 6
+    },
+    "POLY": {
+      "records": 1,
+      "lifecycle": "frame_static",
+      "projection": "missing_declaration",
+      "availability": "missing_declaration",
+      "drawn_reconstructed": 0,
+      "effective_reconstructed": 0,
+      "effective_pieces": 0
+    },
+    "VIA0": {
+      "records": 3,
+      "lifecycle": "preserve_drawn",
+      "projection": "missing_declaration",
+      "availability": "missing_declaration",
+      "drawn_reconstructed": 0,
+      "effective_reconstructed": 0,
+      "effective_pieces": 0
+    }
+  }
+}
