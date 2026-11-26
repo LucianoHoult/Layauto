@@ -80,3 +80,59 @@ PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 python -B -m pytest -p no:cacheprovider -q \
 作为对照，PM 在同一 Python 3.12.14 进程配置下用 `d = 10**2` 单独跑同一探针，15 层和 312 片通过，第 0 版发布成功，读回的中心精确等于 `151/10100` nm。PM 在 Python 3.10.22 实跑上述 W018、W023 模块边界及 W006 仓库检查，58 项通过。原交付的 12 项新增检查、129 项受影响检查及对 88 个源文件的类型检查见[执行记录](W023/verification.md)。阶段双解释器全量在补修通过并实际合入 main 后执行。
 
 **补修验收。** 请让快照的坐标在默认解释器设置下可以精确编码并读回。保留普通坐标的读取行为和既有 W006 字节合同。优先检查 W018 已有的可逆整数与有理数表达，将改动收在实际受影响的编码和读取路径。覆盖上面的两个公开输入和至少一个相近但不同的精确值，核对模型、发布版本和对应的实际坐标。给出精简的正式回归，请独立 reviewer 复算并核验往返读数。修正、实跑命令和复核结果推回 W023 原分支，交 PM 重新验收。
+
+## PM-01 补修与复验（执行）
+
+起点为 `14cf5deea749d3a734c596a4d707fdb4cf6775ca`，受测实现与正式回归为 `abfada28f492fbe1da685763731e31d792f9d0ba`，tree 为 `edacb111a94546f077f8f5d07ee2e6d2e681c02b`。以下两组对照先在起点运行，再用相同的 PM 探针复验。探针从实际样本文件捕获并发布，沿 context → head → snapshot 取回数值。[原始探针](W023/pm01_coordinates.py)
+
+| BTAP_N 输入 | 修正前 | 修正后 |
+| --- | --- | --- |
+| `d = 10**2`，配置 4,387 字节 | 发布第 0 版，首轨中心精确等于 `151/10100` nm | 同一精确值，第 0 版，attempt 为 `sealed_open` |
+| `d = 10**2200`，配置 8,783 字节 | 写快照时十进制转换抛出 `ValueError`。head 为空，attempt 为 `unsealed`、revision 1，发布前后仓库观测相等 | 由安装后的 wheel 发布第 0 版，读回中心精确等于 `1/d + 1/(2*(d+1))` nm，attempt 为 `sealed_open` |
+
+两组对照的 W022 检查均为 15 层通过、312 个占用片段，BTAP_N 均为 `no_local_records`。大分数的约分分母为 14,617 个二进制位、4,401 个十进制位。CPython 3.12.14 的十进制转换上限保持默认 4,300 位。开发环境使用 PyYAML 6.0.3，独立安装环境使用 6.0.4。
+
+新写入的快照使用 `layauto-baseline-snapshot/2`。原点、网格边、轨号按 W018 的带符号十六进制整数保存，轨道长度保存为约分后的分子与正分母。读者取得原有字段名、整数和 `Fraction`，跳过的层仍读作 `None`。读回时校验十六进制拼写、分母和约分。快照内容引用随新编码变化。已有 `layauto-baseline/1` 快照仍按原字节解析和重编码。两个 schema 的初始版号都是 0。[坐标编解码](../../layauto_v2/domain/snapshot_coordinates.py) · [记录版本分派](../../layauto_v2/domain/publication_codec.py)
+
+### 复现命令
+
+在仓库根目录使用项目开发虚拟环境。分别在上述起点与受测提交运行两条 PM 命令，即可对比失败和修正。第二条在起点上的预期退出码为 1，其余三次均为 0。
+
+```sh
+python -c 'import sys; print(sys.version, sys.get_int_max_str_digits())'
+PYTHONPATH=.:tests/contracts python -B docs/tasks/W023/pm01_coordinates.py 2
+PYTHONPATH=.:tests/contracts python -B docs/tasks/W023/pm01_coordinates.py 2200
+```
+
+定向合同在同一份正常样本中给两个空层分别声明小分数和大分数，核对 W018 模型身份、跟踪到的第 0 版及实际中心。另测旧式快照解码与逐字节重编码，以及拒绝未约分、非规范拼写和零分母。受影响的检查覆盖现有快照见证、两个 run 竞争、发布中断及重放、新 run 复用和实际重绑不相容。重型检查串行。[正式回归](../../tests/contracts/test_w023_publication.py)
+
+```sh
+export PYTEST_DISABLE_PLUGIN_AUTOLOAD=1
+python -B -m pytest -p no:cacheprovider -q tests/unit/test_w018_model.py \
+  tests/contracts/test_w023_boundaries.py tests/unit/test_w006_publication.py
+python -B -m pytest -p no:cacheprovider -q --tb=short tests/contracts/test_w023_publication.py \
+  -k 'publication_reads_exact or snapshot or baseline_wire or competition or new_run_seals or existing_head_rejects'
+python -m mypy layauto_v2/domain/publication.py layauto_v2/domain/publication_codec.py \
+  layauto_v2/domain/snapshot_coordinates.py
+```
+
+本次从受测提交的 git archive 构建 sdist 和 wheel，核对了源码、wheel 和安装目录的 133 个包文件，并在仓库外复跑大分数。命令中的开发环境需具备 build、setuptools 和 wheel。受测 wheel 的 SHA-256 为 `2b7c3b79385a6bc385bf164f76230f4cb3db19ffd508a6ae2fc69ae75a95e444`。
+
+```sh
+repo_root=$(pwd)
+release_dir=$(mktemp -d)
+mkdir "$release_dir/src"
+git archive abfada28f492fbe1da685763731e31d792f9d0ba | tar -x -C "$release_dir/src"
+python -m build --no-isolation --outdir "$release_dir/dist" "$release_dir/src"
+python -m venv "$release_dir/venv"
+"$release_dir/venv/bin/python" -m pip install "$release_dir"/dist/*.whl
+"$release_dir/venv/bin/python" -m pip check
+cd "$release_dir"
+PYTHONPATH="$repo_root/tests/contracts" "$release_dir/venv/bin/python" -B "$repo_root/docs/tasks/W023/pm01_coordinates.py" 2200
+```
+
+### 实跑结果与交接范围
+
+任务卡所列 W018、W023 模块边界和 W006 仓库检查共 58 项通过（0.86 秒）。另选的 W023 检查 8 项通过（192.16 秒），含两项新增回归。mypy 2.4.1 对三个改动的产品模块检查通过。起点与受测提交分别运行 W006 成功读入、失败终结的 19 条内容摘要核对，两者均为 `1e0656468ea09e373862f940eda7231c332b3145c5745dc01ef54860b15f2150`。[W006 字节核对命令](W023/verification.md#w006-既有-wire-身份)
+
+W018 模型算法、W022 逐层校验、W006 通用值编码、发布事务和仓库切换沿用起点源码。原交付中这些部分的其余证据按提交身份复用。若合并改变相关源码、样本或依赖，重跑对应合同。Python 3.10、3.12 双解释器全量与发布组合按原分工由 PM 在实际合并版执行。[原交付证据](W023/verification.md) · [PM-01 独立复核](W023/pm01-review.md)
