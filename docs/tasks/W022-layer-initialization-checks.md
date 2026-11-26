@@ -1,5 +1,7 @@
 # W022 核对第 0 版发布前的逐层几何与占用
 
+[PM-01 补修交接与复现命令](#pm01-repair) · [补修独立复核](W022/pm01-review.md)
+
 ## 任务要求（PM）
 
 **当前状态为待补修。** 已声明二维网格的 POLY 能完整重建，但逐层校验仍将其投影判为失败。PM-01 经单变量输入复现。[PM 接收与补修](#pm1-receipt)
@@ -144,3 +146,30 @@ PYTHONPATH=.:tests/contracts python -B docs/tasks/W022/pm01_probe.py
 **原执行 session 启动指令**
 
 > 在 `codex/w022-layer-initialization-checks` 接续 W022 PM-01。先复跑 PM 的二维 POLY 单变量探针。按所声明的坐标类型判断占用是否完整，单独表达能否取得一维栅轨号。保留缺声明、越界与原一维正例，补正式定向回归。请独立 reviewer 用另一组格边及失败例复核后，将修正、证据和完整 SHA 推回原分支交 PM。当前验收范围到逐层初始化校验。
+
+<a id="pm01-repair"></a>
+
+## PM-01 补修交接
+
+起点 `a6c2f1e62e26b1f6fc5f934ed0cb61a2957b8600`。改动前原样运行 PM 单变量探针，36 个格片、720 DBU²、偏移 432 和其余 14 层的检查均通过。原程序随后报告 `GateTracksUnavailable`，投影与整包判定均为假，最后的断言退出码为 1。
+
+受测提交为 `03bbecc06e2dab2f383ba2b8e262f621d754e2fc`。下游从同一个 `LayerCheck` 读取两个结果。[判定实现](../../layauto_v2/state/layer_checks.py) · [定向合同](../../tests/contracts/test_w022_layer_checks.py)
+
+| 读数 | 含义与来源 |
+|---|---|
+| `projection_passed` | 按本层显式选择的坐标类型及 W021 的逐源重建结果判断占用。必投层缺声明或声明为 none 有 `projection_issues`。格边或轨道不覆盖原图时，`initialization.diagnostics` 给出原因与原记录。该读数参与整包判定。 |
+| `gate_track_numbers_available` | 对 gate 层，存在本地 drawn 栅且每条都已命中声明的一维轨道时为 True。二维、缺声明、没有本地栅或有栅未能定位时为 False。其它层返回 None。需要栅轨号的调用方可读该属性和 `initialization.projection.declaration`，再按需通过候选的占用索引反查轨号。POLY 缺声明时，W021 的 `gap` 仍保留栅轨操作名及所需字段。 |
+
+```sh
+PYTHONPATH=.:tests/contracts python -B docs/tasks/W022/pm01_probe.py
+PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 python -B -m pytest -p no:cacheprovider -q tests/contracts/test_w022_layer_checks.py
+PYTHONPATH=.:tests/contracts python -B docs/tasks/W022/pm01_review_probe.py
+```
+
+同一份 PM 探针在受测提交上退出码为 0。原来的 36 个片段、720 DBU² 和 GDS 偏移 432 全部吻合，坐标声明为 `2d_cells`，投影与整包均通过，一维栅轨号不可用。完整一维样例仍能回查中心 60 nm 的 −3 号轨。原 W018 缺 POLY 声明时，保真和外框检查通过，必需占用受阻，栅轨号不可用。
+
+独立 reviewer 从原始 GDS 复算了带相移的 11 × 17 DBU 格边。完整覆盖得到 24 片、720 DBU²；仅将 X 方向右边缘缩到 59 DBU 后，POLY 返回 `outside_range`，定位到原记录偏移 432。其余 14 层的格号、矩形、region、piece 和记录来源逐项相等，两次 attempt 均为 `unsealed`。独立复核剩余必须修正项为 0。[独立复核记录与输出](W022/pm01-review.md)
+
+本次在 Linux、CPython 3.12.14 上跑完 13 项 W022 合同及 3 项模块边界检查，全部通过。mypy 对 85 个源文件检查通过。调用示例也分别从 W018、W022 的实际输入复跑，原有样张字段除运行身份与计时、内存测量外均吻合。探针修正前后的原始输出、测试节点及文件 SHA-256 已随分支保存。[执行证据](W022/evidence/pm01-verification.json)
+
+原有 54 项检查、前次构建和安装记录按其受测版本保留。W018/W021 生产者、输入合同、fixture 及包配置与补修起点相同；本次重跑覆盖了变更的判定、示例、正式回归与模块边界。PM-01 补修及独立复核已交 PM 重新验收。双解释器全量仍由第 0 版正式发布的集成节点执行。
