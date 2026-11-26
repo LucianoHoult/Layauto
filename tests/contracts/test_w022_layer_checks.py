@@ -83,6 +83,8 @@ def test_all_projected_sources_reconstruct_and_keep_record_region_piece_backlink
                 assert all(f.region_ref == region.ref and f.contributors == region.contributors
                            and f in index.in_cell(f.layer, *f.indices, view='effective') for f in rows)
     poly, = index.in_cell('POLY', -3)
+    assert full.layers['POLY'].gate_track_numbers_available is True
+    assert full.layers['FIN'].gate_track_numbers_available is None
     assert poly.rect.bounds == (58, 10, 62, 190) and poly.source.record_source.byte_offset == 432
     assert index.model.layers['POLY'].centre(-3) == 60 and index.model.layers['POLY'].centre(-2) == 69
     m1, = index.in_cell('M1', 2, 2)
@@ -93,6 +95,7 @@ def test_partial_retains_supported_checks_and_single_capture(partial, full):
     assert not partial.passed and sum(not row.passed for row in partial.layers.values()) == 10
     poly = partial.layers['POLY']
     assert not poly.projection_passed and poly.lifecycle_passed and not poly.drawn_issues
+    assert poly.gate_track_numbers_available is False
     assert poly.sources == full.layers['POLY'].sources and poly.sources[0].byte_offset == 432
     assert poly.initialization.gap.operation == 'initialize_gate_tracks'
     assert 'pitch_nm or pitch_nm_ref' in poly.initialization.gap.required_fields
@@ -116,6 +119,64 @@ def test_partial_retains_supported_checks_and_single_capture(partial, full):
         delta, = state.target_context.differences
         assert (delta.operand_ref.name, delta.axis, delta.semantic_before.lexeme, delta.semantic_after.lexeme
                 ) == ('MN0', 'channel_length', '4n', '5n')
+
+
+@pytest.mark.parametrize('x_cells', [8, 3], ids=['full_grid', 'ends_inside_gate'])
+def test_poly_2d_occupancy_uses_its_declared_grid(tmp_path, full, x_cells):
+    root = sample(tmp_path, complete=True)
+    owner = root / COORDINATE_URI
+    doc = yaml.safe_load(owner.read_bytes())
+    layers = doc['coordinate_projection']['layers']
+    grid = layers['OD']
+    layers['POLY'] = {**grid, 'x_edges': {**grid['x_edges'], 'cells': x_cells}}
+    write_json(owner, doc)
+    rebind(root)
+
+    checks = check(root, 400)
+    gate = checks.layers['POLY']
+    row = gate.initialization
+    record, = (r for r in checks.candidate.layout.records if r.layer == 'POLY')
+    assert checks.candidate.layout == full.candidate.layout
+    assert all(layer.passed for name, layer in checks.layers.items() if name != 'POLY')
+    assert record.rect.bounds == (58, 10, 62, 190) and record.source.byte_offset == 432
+    assert gate.sources == (record.source,) and gate.lifecycle_passed and not gate.frame_issues
+    assert row.projection.projection == '2d_cells' and not gate.projection_issues
+    assert gate.gate_track_numbers_available is False
+    declaration = row.projection.declaration
+    assert (declaration.uri, declaration.sha256, declaration.field) == (
+        COORDINATE_URI, sha(owner), '/coordinate_projection/layers/POLY')
+
+    pieces = checks.candidate.occupancy.for_record(record.id, view='drawn')
+    if x_cells == 8:
+        # The x=60 edge bisects the strip. Each half occupies rows 1 through 18.
+        assert {(f.indices, f.rect.bounds) for f in pieces} == {
+            ((x, y), (left, 10 * y, right, 10 * (y + 1)))
+            for x, left, right in ((2, 58, 60), (3, 60, 62)) for y in range(1, 19)}
+        assert len(pieces) == 36 and sum(f.rect.area for f in pieces) == 720
+        assert row.availability == 'reconstructed' and row.drawn_reconstructed == 1 and not row.diagnostics
+        assert gate.projection_passed and gate.passed and checks.passed
+    else:
+        # The grid stops at x=60, two DBU short of the original right edge.
+        diagnostic, = row.diagnostics
+        assert diagnostic.status == 'outside_range' and diagnostic.source.record_source == record.source
+        assert row.availability == 'incomplete' and row.drawn_reconstructed == 0 and pieces == ()
+        assert not gate.projection_passed and not gate.passed and not checks.passed
+
+
+def test_gate_between_declared_1d_tracks_has_no_track_number(tmp_path):
+    root = sample(tmp_path, complete=True)
+    owner = root / COORDINATE_URI
+    doc = yaml.safe_load(owner.read_bytes())
+    # The first two centres become 59 and 68 nm. The captured strip stays at 60 nm.
+    doc['coordinate_projection']['layers']['POLY']['first_centre']['lower_edge_nm'] = 57
+    write_json(owner, doc)
+    rebind(root)
+    checks = check(root)
+    gate = checks.layers['POLY']
+    diagnostic, = gate.initialization.diagnostics
+    assert diagnostic.status == 'off_track' and diagnostic.source.record_source.byte_offset == 432
+    assert gate.lifecycle_passed and not gate.projection_passed and not checks.passed
+    assert gate.gate_track_numbers_available is False
 
 
 @pytest.fixture(scope='module')
@@ -142,8 +203,8 @@ def test_outside_empty_required_layers_gate_and_marker_have_independent_verdicts
     assert m1.lifecycle_passed and not m1.projection_passed and m1.initialization.drawn_reconstructed == 2
     assert [(d.status, d.source.record_source.byte_offset) for d in m1.initialization.diagnostics] == [
         ('outside_range', 2480), ('outside_range', 2544)]
-    assert gate.initialization.availability == 'reconstructed' and not gate.passed
-    assert gate.projection_issues[0].code == 'GateTracksUnavailable' and gate.lifecycle_passed
+    assert gate.initialization.availability == 'reconstructed' and gate.projection_passed and gate.passed
+    assert gate.gate_track_numbers_available is False
     for row, kind in ((empty, 'projection_none'), (missing, 'missing_declaration')):
         assert not row.sources and row.initialization.availability == kind
         assert not row.passed and row.projection_issues[0].code == 'RequiredProjectionUnavailable'

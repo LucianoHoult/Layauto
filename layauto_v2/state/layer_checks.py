@@ -101,16 +101,9 @@ def _bound_frame(layout: LayoutDraft, expected: dict[str, list[_Signature]],
 
 def _projection_issues(row: LayerInitialization) -> tuple[EvidenceIssue, ...]:
     kind = row.projection.projection
-    declaration = row.projection.declaration
-    if not row.policy.projected:
-        return ()
-    gate = row.policy.declaration['role'] == 'gate'
-    if kind in ('missing_declaration', 'projection_none'):
-        operation = 'initialize_gate_tracks' if gate else 'initialize_layer_occupancy'
-        return (EvidenceIssue('config', 'RequiredProjectionUnavailable', f'{operation}: {kind}', declaration),)
-    if gate and kind != '1d_track':
-        return (EvidenceIssue('config', 'GateTracksUnavailable', 'initialize_gate_tracks requires 1d_track',
-                              declaration),)
+    if row.policy.projected and kind in ('missing_declaration', 'projection_none'):
+        return (EvidenceIssue('config', 'RequiredProjectionUnavailable', f'initialize_layer_occupancy: {kind}',
+                              row.projection.declaration),)
     return ()
 
 
@@ -133,6 +126,15 @@ class LayerCheck:
     @property
     def projection_passed(self) -> bool:
         return not self.projection_issues and self.initialization.availability != 'incomplete'
+
+    @property
+    def gate_track_numbers_available(self) -> bool | None:
+        """Whether this gate layer has records, all on declared 1D tracks. None for other roles."""
+        row = self.initialization
+        if row.policy.declaration['role'] != 'gate':
+            return None
+        return (row.projection.projection == '1d_track' and row.projection.record_count > 0
+                and row.drawn_reconstructed == row.projection.record_count)
 
     @property
     def passed(self) -> bool:

@@ -51,9 +51,11 @@ def run(parent, complete):
         }
     m1, = index.in_cell('M1', 2, 2, view='drawn')
     gate = None
-    if complete:
-        poly, = index.in_cell('POLY', -3, view='drawn')
-        gate = {'index': -3, 'centre_nm': int(index.model.layers['POLY'].centre(-3)),
+    poly_tracks_available = checks.layers['POLY'].gate_track_numbers_available
+    if poly_tracks_available:
+        poly, = index.for_layer('POLY', view='drawn')
+        track, = poly.indices
+        gate = {'index': track, 'centre_nm': int(index.model.layers['POLY'].centre(track)),
                 'rect_dbu': poly.rect.bounds, 'source_offset': poly.source.record_source.byte_offset}
     delta, = state.target_context.differences
     frame = checks.layers['BOUNDARY'].frame
@@ -65,6 +67,7 @@ def run(parent, complete):
         'frame_dbu': frame.rect.bounds, 'frame_identity': frame.id.sha256,
         'attempt': repo.load_attempt('w022').ref.id, 'attempt_phase': repo.load_attempt('w022').phase,
         'checkpoint': repo.load_checkpoint('w022').ref.id, 'repository_unchanged': repo.snapshot() == before,
+        'poly_gate_track_numbers_available': poly_tracks_available,
         'poly_track': gate, 'm1_cell_2_2': {'rect_dbu': m1.rect.bounds, 'area_dbu2': m1.rect.area,
                                             'source_offset': m1.source.record_source.byte_offset},
         'unknown_fragments': sum(f.status == 'unknown' for f in state.annotation.fragments),
