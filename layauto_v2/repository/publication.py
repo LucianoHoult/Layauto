@@ -354,6 +354,10 @@ class PublicationRepository:
                     or event.lineage_id != head.lineage_id
                     or not event.checkpoint_ref == snapshot.checkpoint_ref == target.checkpoint_ref):
                 raise RepositoryConflict('RefConflict', f'{head_ref.id}: inconsistent initialization links')
+            original = self._read(root, snapshot.checkpoint_ref)
+            if (not isinstance(original, InputCheckpoint) or original.outcome != 'inputs_ready'
+                    or self._capture_binding(root, original) != snapshot.binding):
+                raise RepositoryConflict('RefConflict', f'{snapshot.checkpoint_ref.id}: invalid original snapshot binding')
             binding = self._capture_binding(root, checkpoint)
             if snapshot.binding != binding:
                 old, new = snapshot.binding['sources'], binding['sources']

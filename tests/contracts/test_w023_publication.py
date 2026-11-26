@@ -271,18 +271,21 @@ def test_c13_and_complete_two_dimensional_gate(tmp_path):
     assert len(gate) == 36 and sum((x1-x0)*(y1-y0) for x0,y0,x1,y1 in [f['rect'] for f in gate]) == 720
 
 
-def test_bad_stored_digest_refuses_seal_without_changing_root(published, tmp_path, monkeypatch):
+@pytest.mark.parametrize('damage', ['new_parse', 'original_evidence'])
+def test_bad_stored_digest_refuses_seal_without_changing_root(published, tmp_path, monkeypatch, damage):
     repo, _, original, _ = published
     root = sample(tmp_path)
-    ready, request = capture(repo, root, 'bad-digest', head=original.head_ref.id)
+    ready, request = capture(repo, root, 'bad-digest-' + damage, head=original.head_ref.id)
+    ref_to_damage = (ready.parse_ref if damage == 'new_parse'
+                     else repo.read(original.checkpoint_ref).evidence_refs[-1])
     # Fault injection in the backend, with all valid public refs left intact.
     clean_root = repo._root
     damaged = replace(clean_root, contents=tuple(
-        (ref, data + b' ' if ref == ready.parse_ref else data) for ref, data in clean_root.contents))
+        (ref, data + b' ' if ref == ref_to_damage else data) for ref, data in clean_root.contents))
     with monkeypatch.context() as fault:
         fault.setattr(repo, '_root', damaged)
         message = conflict('RefConflict', publish_stage2, repo, request)
-        assert ready.parse_ref.id in message and repo._root is damaged
+        assert ref_to_damage.id in message and repo._root is damaged
         assert repo.load_attempt(ready.run_id) == ready.attempt and repo.load_head('L') == original.head_ref
     assert repo.read(ready.parse_ref).result.status == 'success'
 
