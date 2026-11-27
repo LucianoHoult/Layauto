@@ -30,6 +30,7 @@
 | 如何核对层坐标和跨格投影？ | [W017 PM1](tasks/W017-coordinate-occupancy-projection.md#pm1-acceptance) 记录已验收的逐层来源、实算样张及待确认的首包使用方式。 |
 | 如何从单 cell 查格并找回 GDS 原线？ | [W019 公开调用示例](tasks/W019/example.py)和[执行记录](tasks/W019/delivery.md)给出 M1 线端、片数预算、CUT 来源及外部 body 对照。 |
 | 如何发布第 0 版或复用已有 head？ | [W023](tasks/W023-atomic-baseline-publication.md) 给出 Stage 2 入口、实际文件读回、失败与重放的复现步骤。 |
+| 如何从第 0 版检查金属间距并追到 GDS 原图？ | [W024](tasks/W024-stage3-rule-context.md) 给出规则目录、正常与 C14 的复跑入口及阈值见证。 |
 
 ## 读取架构的起点
 

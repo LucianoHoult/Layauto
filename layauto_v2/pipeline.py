@@ -1,18 +1,16 @@
-"""Process-local input preparation and read-only Stage 2 fact assembly.
-
-This is an internal pre-context slice, not a complete Stage 1–6 run.
-"""
+"""Prepare inputs, publish Stage 2 and open read-only Stage 3 checks."""
 from __future__ import annotations
 
 import posixpath
 from pathlib import Path
 from typing import TYPE_CHECKING, TypeAlias, cast
 
-from layauto_v2.domain.codec import digest
+from layauto_v2.domain.codec import FrozenMap, digest
 from layauto_v2.domain.evidence import EvidenceRecord, SourceFile, SourceRef
 from layauto_v2.domain.publication import (
-    AcquisitionEvent, EvidenceAudit, InputCheckpoint, InputsReady, ParseAudit, PipelineResult, PublicationUnavailable,
-    RunAttempt, RunRequest, SealedContext, Stage2Request, StageFailure, ToolRunResult, exception_causes,
+    AcquisitionEvent, BaselineSnapshot, BaselineTarget, ContentRef, EvidenceAudit, InitializationEvent,
+    InputCheckpoint, InputsReady, ParseAudit, PipelineResult, PublicationUnavailable,
+    RunAttempt, RunRequest, SealedContext, Stage2Request, StageFailure, StateHead, ToolRunResult, exception_causes,
     safe_exception_message, safe_exception_type,
 )
 from layauto_v2.domain.results import ParseResult
@@ -21,6 +19,7 @@ from layauto_v2.repository import PublicationRepository, RepositoryConflict
 from layauto_v2.tooling import FixtureCapture
 
 if TYPE_CHECKING:
+    from layauto_v2.constraints.drc_context import ConstraintContext
     from layauto_v2.normalization.stage2 import Stage2Facts
 
 PrecontextResult: TypeAlias = InputsReady | PipelineResult | PublicationUnavailable
@@ -256,3 +255,60 @@ def publish_stage2(repository: PublicationRepository, request: Stage2Request) ->
             raise RepositoryConflict('RevisionConflict', 'unexpected Stage 2 input revision')
         facts = assemble_stage2(repository, ready, fragment_budget=request.fragment_budget)
         return InitializationTransaction.initialize(repository, request, ready, build_proposed_initial_state(facts))
+
+
+def _constraint_owner(name: str, value: FrozenMap, snapshot: BaselineSnapshot,
+                      tool: ToolRunResult) -> EvidenceRecord:
+    """Resolve the actual role selected by this run's bundle, including renamed owners."""
+    from layauto_v2.domain.geometry import mapping, text
+    from layauto_v2.importers.config import load_document
+
+    owners = mapping(mapping(value['tech_bundle'])['owners'])
+    uri = text(mapping(owners[name])['path'])
+    expected = mapping(snapshot.binding['sources']).get(uri)
+    source = next((s for s in tool.sources if s.uri == uri), None)
+    if source is None or source.sha256 != expected:
+        raise RepositoryConflict('BindingConflict', f'{tool.run_id}: /owners/{name}/path has no bound capture of {uri}')
+    document = load_document(source)
+    if document != mapping(value['tech'])[name]:
+        raise RepositoryConflict('BindingConflict', f'{uri}: captured owner differs from sealed {name} evidence')
+    return EvidenceRecord(name, document, (source.ref(),))
+
+
+def open_constraint_context(repository: PublicationRepository, run_id: str,
+                            context_ref: ContentRef | None) -> ConstraintContext:
+    """Resolve only stored references. A reusing run keeps its own input audit and the original snapshot."""
+    from layauto_v2.constraints.drc_context import CheckedVersion, ConstraintContext
+    from layauto_v2.tech.rules import RuleCatalog
+
+    attempt = repository.load_attempt(run_id)
+    if attempt.phase != 'sealed_open':
+        raise RepositoryConflict('TransitionConflict', f'{run_id}: expected sealed_open, found {attempt.phase}')
+    if not isinstance(context_ref, ContentRef) or context_ref != attempt.context_ref:
+        supplied = context_ref.id if isinstance(context_ref, ContentRef) else 'missing context_ref'
+        raise RepositoryConflict('ReadbackConflict', f'{run_id}: {supplied} differs from attempt.context_ref')
+    # read() authenticates each ref's kind, run and digest. The immutable context
+    # chooses the version even if a later publication advances the lineage head.
+    sealed = cast(SealedContext, repository.read(context_ref))
+    head = cast(StateHead, repository.read(sealed.head_ref))
+    if (sealed.checkpoint_ref != attempt.checkpoint_ref or head.lineage_id != attempt.request.lineage_id
+            or sealed.target_ref != head.target_ref):
+        raise RepositoryConflict('BindingConflict', f'{context_ref.id}: inconsistent checkpoint, lineage or target')
+    snapshot = cast(BaselineSnapshot, repository.read(head.snapshot_ref))
+    event = cast(InitializationEvent, repository.read(head.event_ref))
+    target = cast(BaselineTarget, repository.read(head.target_ref))
+    if (event.snapshot_ref != head.snapshot_ref or event.lineage_id != head.lineage_id
+            or not event.checkpoint_ref == snapshot.checkpoint_ref == target.checkpoint_ref):
+        raise RepositoryConflict('BindingConflict', f'{sealed.head_ref.id}: inconsistent initialization links')
+    checkpoint = cast(InputCheckpoint, repository.read(sealed.checkpoint_ref))
+    value = checkpoint.ready_value
+    if (checkpoint.outcome != 'inputs_ready' or value is None or digest(value) != snapshot.binding['value_digest']
+            or sealed.binding_digest != digest(snapshot.binding)):
+        raise RepositoryConflict('BindingConflict', f'{sealed.checkpoint_ref.id}: input binding differs from {head.snapshot_ref.id}')
+
+    tool = cast(ToolRunResult, repository.read(checkpoint.tool_ref))
+    rules = _constraint_owner('rules', value, snapshot, tool)
+    physical = _constraint_owner('physical', value, snapshot, tool)
+    version = CheckedVersion(context_ref, sealed.checkpoint_ref, checkpoint.tool_ref, sealed.head_ref,
+                             head.snapshot_ref, snapshot.checkpoint_ref, snapshot.version)
+    return ConstraintContext._published(version, snapshot, RuleCatalog.from_owner(rules.payload, rules.sources[0]), physical)

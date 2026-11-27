@@ -177,6 +177,29 @@ Matching bindings seal the new attempt against the original head. The
 in a temporary copy of the normal W003/W004 sample. Commands and test evidence
 are in [W023](docs/tasks/W023-atomic-baseline-publication.md).
 
+## Check M1 spacing on a published version
+
+Use the checking run and its sealed context reference. The report retains the
+current run's input audit and the original snapshot reference when a head is reused.
+
+```python
+from layauto_v2.constraints import check_m1_spacing
+from layauto_v2.pipeline import open_constraint_context
+
+attempt = repository.load_attempt(context.run_id)
+view = open_constraint_context(repository, attempt.run_id, attempt.context_ref)
+report = check_m1_spacing(view)
+t07 = report.for_rule("T07.m1_spacing")
+for pair in t07.violations:
+    print(pair.distance_squared_nm2, t07.threshold_nm, pair.first.source, pair.second.source)
+```
+
+The report lists every rule in the bound deck. T07 measures all unordered M1
+pairs using exact rectangles and the selected physical operators. Other declared
+rules are pending unless a declaration conflict has been identified. The run
+stays sealed_open. The [file example](docs/tasks/W024/example.py) produces both
+the 5 nm normal report and the 4 nm C14 violation. [W024](docs/tasks/W024-stage3-rule-context.md)
+
 ## Semantic normalization component
 
 W007 consumes already captured W005 evidence. It produces an immutable source
