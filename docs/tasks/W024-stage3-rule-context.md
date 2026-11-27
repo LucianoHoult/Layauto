@@ -2,7 +2,7 @@
 
 ## 任务要求（PM）
 
-**阶段为 PM 验收待补修，归属 M1 的 Stage 3。** 当前有一项来源追溯问题，见[PM1 验收与补修](#pm1-receipt)。 执行分支 `codex/w024-stage3-rule-context`。输入是 [W023](W023-atomic-baseline-publication.md#pm2-integration) 已发布的 synthetic 第 0 版和已封存的上下文。目标是从该版直接回答“这条规则检查什么、实测多少、结果来自哪些图形和哪份工艺文件”。执行 session 交付产品代码，独立 reviewer 复核方案及实现，PM 验收。
+**W024 已验收，PM-01 已关闭。** [PR #91](https://github.com/LucianoHoult/Layauto/pull/91) 已合入 main，结果见[PM2 集成验收](#pm2-integration)。执行分支 `codex/w024-stage3-rule-context`。输入是 [W023](W023-atomic-baseline-publication.md#pm2-integration) 已发布的 synthetic 第 0 版和已封存的上下文。目标是从该版直接回答“这条规则检查什么、实测多少、结果来自哪些图形和哪份工艺文件”。执行 session 交付产品代码，独立 reviewer 复核方案及实现，PM 验收。
 
 [架构 §2.4、§8.1–8.8、§11](../architecture.md) 规定约束引擎读取 Stage 2 的几何、占用、坐标和连通。工艺包提供规则和适用条件。域、索引及用于检查的缓存可重建。当前阶段读入规则目录，并实现其中的 `T07.m1_spacing`。其它规则的执行、候选变化的传播与回滚、全目标判定、Stage 5 收口及 Stage 6 导出后续接续。
 
@@ -112,3 +112,23 @@ python -B docs/tasks/W024/review_probe.py docs/tasks/W024/evidence.json
 独立 reviewer 在原引用下换入另一条合法 checkpoint 的字节。原版内容被替换时，建版与复用均在打开时报告原版引用的摘要冲突。反向只替换复用记录，建版仍为 5 nm，复用定位到自身的损坏引用。完整记录时，建版读取一个 checkpoint 一次，复用对两个不同引用各读一次。三组对照前后均核对 root、head 和 attempt。[独立复核记录](W024/pm01-review.md) · [可复跑的损坏对照](W024/pm01_review_probe.py)
 
 在上述修复提交上，CPython 3.12.14、pytest 9.2.0、PyYAML 6.0.3 实跑 Stage 3 的 18 项定向检查（159.44 秒）和 W023 发布复用的 3 项检查（158.37 秒），合计 21 项全部通过。mypy 2.4.1 对 94 个源文件检查通过。原始 GDS 探针对既有正常与 C14 报告的 12 对距离复算通过，最近分别为 5 nm 和 4 nm。其余几何与工艺合同沿用原 W024 交付，合并若改变读取入口、仓库校验或样本，再补跑相应对照。本次修复和复核证据交 PM 重新验收。
+
+<a id="pm2-integration"></a>
+
+## PM2 集成验收
+
+**2026-11-27，W024 A1–A5 验收通过，PM-01 关闭。** 远端交付为 `3fa275f72afee6429ebccf8ac846157ee84df29d`，修复产品为 `c3112971a85fd14645fbda996d1574bdb79d70b4`。PM 核对二者的产品、测试和打包配置无差异，并核查了打开上下文时对两个 checkpoint 引用的处理。在交付提交上，原缺失探针的健康对照两次均为 5 nm。删除原版记录后，首次建版与复用均得到 `RefConflict`，两者都定位本次缺失的 `checkpoint:creator:2cde8b7039febcb45cb871c31aa70b0bbb18227eac60b221537cd7b39863acbd`。[原始问题和验收条件](#pm1-receipt) · [执行与独立复核](W024/pm01-review.md)
+
+[PR #91](https://github.com/LucianoHoult/Layauto/pull/91) 的实际合并提交为 `90dcd50817a087214bd27090094fb1b41497a5b8`。其双亲依次为 `1150605`、`3fa275f`；整棵 Git 树 `a2a9be4410bc7c2ba17f7c61771e92b5602e34cb` 与交付提交相同。PM 在该集成提交使用 Linux、Python 3.12.14 串行实跑以下两个组合探针。
+
+```sh
+PYTHONPATH=.:tests/contracts python -B docs/tasks/W024/review_probe.py docs/tasks/W024/evidence.json --published
+PYTHONPATH=.:tests/contracts python -B docs/tasks/W024/pm01_review_probe.py
+```
+
+| 组合 | 实测 |
+| --- | --- |
+| 文件 → 第 0 版 → 已封存上下文 → T07 | 对正常和 C14 重新捕获、发布、打开后求值。逐对对上两份 GDS 原字节计算的 12 个距离平方和状态。最近一对的偏移均为 2480 / 2544。正常为 5 nm、零违规；C14 为 4 nm、仅一对违规。跨用 C14 图形和正常版本身份被入口拒绝，查询保持只读。 |
+| 健康与损坏的两个 checkpoint | 健康时建版的同一引用读一次，复用对不同引用各读一次，均为 5 nm。用另一运行的合法字节替换建版记录时，两边均报建版引用的摘要冲突。反向只替换复用记录时，建版保持通过，复用定位自身的引用。三组对照中，仓库 root、head 和两个运行的 attempt 保持一致。 |
+
+执行侧修复后的 21 项受影响检查、94 个源文件的类型检查按受测源码和测试身份采信。原交付的 108 项检查及安装示例对应补修前的产品，支持其覆盖的几何、单位、工艺和未改入口行为；补修后的 checkpoint 路径由上表核验。本节点在 synthetic 单进程仓库验证第 0 版的 T07，10 条必需规则中其余 9 条仍待求值。双解释器全量按[验证分工](../collaboration/rules.md#verification-reuse)留到完整 mandatory 与无修改闭合的阶段集成。[下一任务 W025](W025-effective-li-spacing.md)
