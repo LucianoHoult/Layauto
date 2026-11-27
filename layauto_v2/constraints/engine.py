@@ -33,6 +33,8 @@ def _check(context: ConstraintContext, rule: RuleRecord) -> RuleCheck:
 
 def check_m1_spacing(context: ConstraintContext) -> RuleReport:
     """Evaluate the selected T07 declaration across the entire published cell."""
+    if type(context) is not ConstraintContext:
+        raise TypeError('T07 requires a published ConstraintContext from open_constraint_context')
     checks = tuple(_check(context, rule) for rule in context.catalog.rules)
     if not any(c.rule.id == M1_RULE for c in checks):
         source = replace(context.catalog.source, field='/rules')

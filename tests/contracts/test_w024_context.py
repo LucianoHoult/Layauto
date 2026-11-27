@@ -6,6 +6,7 @@ import weakref
 from dataclasses import FrozenInstanceError, replace
 from pathlib import Path
 from tempfile import TemporaryDirectory
+from types import SimpleNamespace
 from unittest.mock import patch
 
 import pytest
@@ -121,6 +122,10 @@ def test_reuse_crossed_missing_and_immutable_refs(published):
         with pytest.raises(RepositoryConflict, match='reuse.*attempt.context_ref') as caught:
             open_constraint_context(repo, 'reuse', ref)
         assert caught.value.code == 'ReadbackConflict'
+    mixed = SimpleNamespace(version=old, snapshot=ctx['c14'].snapshot,
+                            catalog=ctx['normal'].catalog, physical=ctx['normal'].physical)
+    with pytest.raises(TypeError, match='published ConstraintContext'):
+        check_m1_spacing(mixed)
     with pytest.raises(ValueError, match='_issuer'):
         replace(ctx['normal'], snapshot=ctx['c14'].snapshot)
     with pytest.raises(TypeError):
