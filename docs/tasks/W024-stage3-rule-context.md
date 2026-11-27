@@ -50,3 +50,7 @@ PM 在实际 W023 合并版用 400 片预算发布两份临时输入。正常版
 ```sh
 PYTHONPATH=.:tests/contracts python -B docs/tasks/W024/example.py
 ```
+
+[PM 交接与定向验证](W024/verification.md) · [两版完整报告](W024/evidence.json) · [从原始 GDS 独立复算](W024/review_probe.py)
+
+原分支上的产品提交为 `1828ec860b2bf5be71f56ed91bb9c68a8acc67bd`，其完整 Git tree 与受测修复版 `54554871c685cd06dae482ce95736ebb079c9c84` 一致。开发版与修复后的交付版分别通过 108 项新增及受影响检查，严格类型检查覆盖 94 个源文件。独立 reviewer 已从两份 GDS 原记录复算全部 12 个距离与逐对状态，并复核跨版本混用问题的修复。执行交付提交 PM 验收。

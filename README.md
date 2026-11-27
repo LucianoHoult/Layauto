@@ -28,7 +28,7 @@ sections relevant to the task.
 
 | Path | Purpose |
 |------|---------|
-| [`layauto_v2/`](layauto_v2/) | v2 input reading, pre-context audit, semantic normalization, exact drawn-base geometry/occupancy and effective-region drafts; later physical stages remain skeletons. |
+| [`layauto_v2/`](layauto_v2/) | v2 input capture and audit, semantic normalization, Stage 2 baseline publication, and read-only Stage 3 rule checks over published geometry. |
 | [`docs/architecture.md`](docs/architecture.md) | Active v2 architecture source: stage boundaries, fact sources, state ownership, planning, constraints, transactions, export, validation, and module boundaries. |
 
 ## Input reading component
