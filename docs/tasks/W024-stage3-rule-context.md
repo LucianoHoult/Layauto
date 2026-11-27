@@ -80,3 +80,35 @@ PYTHONPATH=.:tests/contracts python -B docs/tasks/W024/pm01_checkpoint.py
 ```
 
 **补修验收。** 在打开已封存的检查上下文时，确保返回给调用方的原版 checkpoint 可以按所给引用通过仓库校验；对与本次相同的引用复用已有读取。正常建版和正常复用继续使用各自的运行资料，保留原版来源。原版 checkpoint 缺失或内容摘要不符时，能在打开上下文时定位该引用，仓库保持只读。新增一项针对原版损坏的独立对照，与上述缺失及正常样本一同核实。按[验证分工](../collaboration/rules.md#verification-reuse)跑新增和受影响检查，交独立 reviewer 复核，再推回 W024 原分支申请 PM 重新验收。
+
+## PM-01 执行补修与复验
+
+起点为 `58698b964bf685a9830ded54490de0e00de709a0`。先运行 PM 的原探针，两次健康查询均为 5 nm。移除 `checkpoint:creator:7c697a1a882ac5c20a88b522407f040b0ade40d682e980869eacee870b999f26` 后，首次建版 run 报出该引用，复用 run 仍返回通过。探针以 `AssertionError: missing original checkpoint accepted by ['reuse']` 退出。
+
+修复提交为 `c3112971a85fd14645fbda996d1574bdb79d70b4`。Stage 3 打开入口已读取本次封存的 checkpoint。若快照引用的是另一条原版 checkpoint，入口在返回报告前再用仓库的 `read` 核实该原版记录。相同引用沿用本次读取。仓库校验记录字节的 SHA-256 和内容引用中的类型、run、摘要，缺失及损坏沿用带完整引用的 `RefConflict`。工艺 owner 仍从检查 run 自己的采集记录解析。[入口修正](https://github.com/LucianoHoult/Layauto/commit/c3112971a85fd14645fbda996d1574bdb79d70b4)
+
+在仓库根目录使用项目开发环境复跑。第一条为 PM 的缺失探针，第二条为独立 reviewer 的损坏对照。定向合同覆盖真实文件发布与复用、内容读取次数、损坏定位、源几何、跨版、只读和模块依赖。
+
+```sh
+export PYTEST_DISABLE_PLUGIN_AUTOLOAD=1
+PYTHONPATH=.:tests/contracts python -B docs/tasks/W024/pm01_checkpoint.py
+PYTHONPATH=.:tests/contracts python -B docs/tasks/W024/pm01_review_probe.py
+python -B -m pytest -q --tb=short -p no:cacheprovider \
+  tests/contracts/test_w024_context.py::test_open_reads_each_distinct_checkpoint_once \
+  tests/contracts/test_w024_context.py::test_open_rejects_unreadable_original_checkpoint \
+  tests/contracts/test_w024_context.py::test_rule_book_and_raw_gds_witnesses \
+  tests/contracts/test_w024_context.py::test_reuse_crossed_missing_and_immutable_refs \
+  tests/contracts/test_w024_context.py::test_changed_gds_cannot_reuse_normal_head \
+  tests/contracts/test_w024_boundaries.py tests/unit/test_w024_spacing.py
+python -B -m pytest -q --tb=short -p no:cacheprovider \
+  tests/contracts/test_w023_publication.py::test_new_run_seals_own_checkpoint_and_replays \
+  tests/contracts/test_w023_publication.py::test_bad_stored_digest_refuses_seal_without_changing_root
+python -m mypy
+python -B docs/tasks/W024/review_probe.py docs/tasks/W024/evidence.json
+```
+
+修复版重跑 PM 原探针，记录完整时两种运行各查 6 对，最近间距均为 5 nm。移除原版记录后，直接读取、建版 run 和复用 run 均得到 `RefConflict`，三者准确指出同一条缺失引用 `checkpoint:creator:9aee242f2066aa5ab07c4b8afe5bb1bc1920f7625ad9487fa0ab12aafeee91ca`。复用 run 自己的 checkpoint 仍可读取，各次查询均保持相应的仓库 root 和 head。每次复跑的临时输入目录不同，完整 checkpoint 摘要随之变化。
+
+独立 reviewer 在原引用下换入另一条合法 checkpoint 的字节。原版内容被替换时，建版与复用均在打开时报告原版引用的摘要冲突。反向只替换复用记录，建版仍为 5 nm，复用定位到自身的损坏引用。完整记录时，建版读取一个 checkpoint 一次，复用对两个不同引用各读一次。三组对照前后均核对 root、head 和 attempt。[独立复核记录](W024/pm01-review.md) · [可复跑的损坏对照](W024/pm01_review_probe.py)
+
+在上述修复提交上，CPython 3.12.14、pytest 9.2.0、PyYAML 6.0.3 实跑 Stage 3 的 18 项定向检查（159.44 秒）和 W023 发布复用的 3 项检查（158.37 秒），合计 21 项全部通过。mypy 2.4.1 对 94 个源文件检查通过。原始 GDS 探针对既有正常与 C14 报告的 12 对距离复算通过，最近分别为 5 nm 和 4 nm。其余几何与工艺合同沿用原 W024 交付，合并若改变读取入口、仓库校验或样本，再补跑相应对照。本次修复和复核证据交 PM 重新验收。
