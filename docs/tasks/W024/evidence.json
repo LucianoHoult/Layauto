@@ -1,0 +1,612 @@
+[
+  {
+    "run": "normal",
+    "phase": "sealed_open",
+    "version": 0,
+    "baseline_run": "normal",
+    "context": "sealed_context:normal:bb8e5173cfcff80e9316bbd548cecbc9da3a0fbddc843f68267d1173510dcb68",
+    "head": "state_head:normal:24eaf00988d3824aef7974378dce0194886bdd96c67e70c73a1d5b5d74c57ace",
+    "snapshot": "snapshot:normal:b49a1bb8d554dcba37fc21ba1d18ed4e7b5c76d5164c6e8b26c09d18f612e37e",
+    "checkpoint": "checkpoint:normal:a8b4469bd17ffab30b0e80f21136a7b467c5665ddab4a2bd62a6c1ca24c4c900",
+    "original_checkpoint": "checkpoint:normal:a8b4469bd17ffab30b0e80f21136a7b467c5665ddab4a2bd62a6c1ca24c4c900",
+    "tool": "tool_run:normal:b32fdee5720fe220349ff494924011d9d9403fe90f4a276e08399a76bdc34b98",
+    "context_seconds": 1.103156,
+    "t07_seconds": 0.000302,
+    "rule_owner": {
+      "uri": "tech/rules.json",
+      "sha256": "40ce0b76abb28c07ab734734a19d61e1259bc5aee42a8cf2c02fabb9e4457480",
+      "field": null,
+      "line": null,
+      "column": null,
+      "byte_offset": null,
+      "record_index": null
+    },
+    "owner_schema": "w004-tech-owner/2",
+    "mandatory_policy": {
+      "all_listed_rules_required": true,
+      "run_before_no_change_closure": true,
+      "missing_operator_or_context": "indeterminate_then_reject",
+      "predicate_execution_error": "error_then_reject",
+      "scope": "whole_cell",
+      "site_may_disable": false
+    },
+    "rules": [
+      {
+        "id": "T01.frame",
+        "scope": "all non-frame drawn records",
+        "predicate": "each bbox contained in sole BOUNDARY",
+        "relation_basis": "geometry_only",
+        "schema_version": "w003-toy-rule/1",
+        "unit": "nm",
+        "parameters": {
+          "margin_nm": 0
+        },
+        "source": {
+          "classification": "hand_authored_synthetic",
+          "version": "1"
+        },
+        "exact_evaluator_ref": "w003-toy-predicate/T01.frame/1",
+        "required_relation_assurance": "none",
+        "missing_context_policy": "reject_indeterminate",
+        "required": true,
+        "status": "pending",
+        "pointer": "/rules/0"
+      },
+      {
+        "id": "T02.fin_grid",
+        "scope": "all FIN",
+        "predicate": "exact width, pitch and phase from selected FIN profile; full fixture sequence from input/oracle",
+        "relation_basis": "geometry_only",
+        "schema_version": "w003-toy-rule/1",
+        "unit": "nm",
+        "parameters": {},
+        "source": {
+          "classification": "hand_authored_synthetic",
+          "version": "1"
+        },
+        "exact_evaluator_ref": "w003-toy-predicate/T02.fin_grid/1",
+        "required_relation_assurance": "none",
+        "missing_context_policy": "reject_indeterminate",
+        "required": true,
+        "profile_ref": "physical.json#/fin_count_profile",
+        "status": "pending",
+        "pointer": "/rules/1"
+      },
+      {
+        "id": "T03.recognition",
+        "scope": "all source/target devices and all recognized channels",
+        "predicate": "one stripe per active, full crossings, counts and L/W match CDL, NF=M=1, one-to-one and no reduction",
+        "relation_basis": "geometry_only",
+        "schema_version": "w003-toy-rule/1",
+        "unit": "nm",
+        "parameters": {},
+        "source": {
+          "classification": "hand_authored_synthetic",
+          "version": "1"
+        },
+        "exact_evaluator_ref": "w003-toy-predicate/T03.recognition/1",
+        "required_relation_assurance": "none",
+        "missing_context_policy": "reject_indeterminate",
+        "required": true,
+        "profile_ref": "physical.json#/fin_count_profile",
+        "status": "pending",
+        "pointer": "/rules/2"
+      },
+      {
+        "id": "T04.body",
+        "scope": "local active/body and separate read-only context body chain",
+        "predicate": "matching local body encloses active >=10; no opposite body positive-area overlap in either local or external domain; bound external tapcell context proves body association to target rail",
+        "relation_basis": "same_component",
+        "schema_version": "w004-toy-rule/2",
+        "unit": "nm",
+        "parameters": {
+          "active_enclosure_nm": 10
+        },
+        "source": {
+          "classification": "hand_authored_synthetic",
+          "version": "2"
+        },
+        "exact_evaluator_ref": "w004-toy-predicate/T04.body/2",
+        "required_relation_assurance": "exact_local_components_plus_bound_context_association",
+        "missing_context_policy": "reject_indeterminate",
+        "required": true,
+        "status": "pending",
+        "pointer": "/rules/3"
+      },
+      {
+        "id": "T05.contact_enclosure",
+        "scope": "local CONTACT,VIA0,GCONTACT; separately context BTAP_N/BTAP_P",
+        "predicate": "exactly one region on each side encloses connector >=1 nm on all sides",
+        "relation_basis": "geometry_only",
+        "schema_version": "w004-toy-rule/2",
+        "unit": "nm",
+        "parameters": {
+          "enclosure_nm": 1
+        },
+        "source": {
+          "classification": "hand_authored_synthetic",
+          "version": "2"
+        },
+        "exact_evaluator_ref": "w004-toy-predicate/T05.contact_enclosure/2",
+        "required_relation_assurance": "none",
+        "missing_context_policy": "reject_indeterminate",
+        "required": true,
+        "status": "pending",
+        "pointer": "/rules/4"
+      },
+      {
+        "id": "T06.li_spacing",
+        "scope": "local effective LI; dedicated cut-island specimen evaluated separately",
+        "predicate": "distance>=2 nm unless actual same-layer contact makes one region",
+        "relation_basis": "geometry_only",
+        "schema_version": "w003-toy-rule/1",
+        "unit": "nm",
+        "parameters": {
+          "min_distance_nm": 2
+        },
+        "source": {
+          "classification": "hand_authored_synthetic",
+          "version": "1"
+        },
+        "exact_evaluator_ref": "w003-toy-predicate/T06.li_spacing/1",
+        "required_relation_assurance": "none",
+        "missing_context_policy": "reject_indeterminate",
+        "required": true,
+        "status": "pending",
+        "pointer": "/rules/5"
+      },
+      {
+        "id": "T07.m1_spacing",
+        "scope": "all unordered pairs of M1 rectangles",
+        "predicate": "distance>=5 nm unless actual same-layer contact makes one region",
+        "relation_basis": "geometry_only",
+        "schema_version": "w003-toy-rule/1",
+        "unit": "nm",
+        "parameters": {
+          "min_distance_nm": 5
+        },
+        "source": {
+          "classification": "hand_authored_synthetic",
+          "version": "1"
+        },
+        "exact_evaluator_ref": "w003-toy-predicate/T07.m1_spacing/1",
+        "required_relation_assurance": "none",
+        "missing_context_policy": "reject_indeterminate",
+        "required": true,
+        "status": "pass",
+        "pointer": "/rules/6"
+      },
+      {
+        "id": "T08.terminal_graph",
+        "scope": "all device terminals and conductor components",
+        "predicate": "ordered D/G/S agree with local exact components; B uses separately proven context association; no union by labels",
+        "relation_basis": "same_component",
+        "schema_version": "w004-toy-rule/2",
+        "unit": "nm",
+        "parameters": {
+          "terminal_order": [
+            "D",
+            "G",
+            "S",
+            "B"
+          ]
+        },
+        "source": {
+          "classification": "hand_authored_synthetic",
+          "version": "2"
+        },
+        "exact_evaluator_ref": "w004-toy-predicate/T08.terminal_graph/2",
+        "required_relation_assurance": "exact_local_components_plus_bound_context_association",
+        "missing_context_policy": "reject_indeterminate",
+        "required": true,
+        "status": "pending",
+        "pointer": "/rules/7"
+      },
+      {
+        "id": "T09.lifecycle",
+        "scope": "local exported records and CDL only; context read-only bound input",
+        "predicate": "no_change preserves all declared semantics, drawn geometry and frame; empty ECO chain",
+        "relation_basis": "geometry_only",
+        "schema_version": "w003-toy-rule/1",
+        "unit": "nm",
+        "parameters": {
+          "ordered_eco_commit_count": 0
+        },
+        "source": {
+          "classification": "hand_authored_synthetic",
+          "version": "1"
+        },
+        "exact_evaluator_ref": "w003-toy-predicate/T09.lifecycle/1",
+        "required_relation_assurance": "none",
+        "missing_context_policy": "reject_indeterminate",
+        "required": true,
+        "status": "pending",
+        "pointer": "/rules/8"
+      },
+      {
+        "id": "T10.coverage",
+        "scope": "all drawn and effective regions",
+        "predicate": "retain every shape, disclose absent annotations, marker nonconducting, same-label islands not electrically shorted by label",
+        "relation_basis": "none",
+        "schema_version": "w003-toy-rule/1",
+        "unit": "nm",
+        "parameters": {
+          "unknown_nonconductor_policy": "preserve_disclose",
+          "disconnected_label_policy": "keep_separate_disclose"
+        },
+        "source": {
+          "classification": "hand_authored_synthetic",
+          "version": "1"
+        },
+        "exact_evaluator_ref": "w003-toy-predicate/T10.coverage/1",
+        "required_relation_assurance": "none",
+        "missing_context_policy": "reject_indeterminate",
+        "required": true,
+        "status": "pending",
+        "pointer": "/rules/9"
+      }
+    ],
+    "T07": {
+      "status": "pass",
+      "threshold_nm": 5,
+      "threshold_source": {
+        "uri": "tech/rules.json",
+        "sha256": "40ce0b76abb28c07ab734734a19d61e1259bc5aee42a8cf2c02fabb9e4457480",
+        "field": "/rules/6/parameters/min_distance_nm",
+        "line": null,
+        "column": null,
+        "byte_offset": null,
+        "record_index": null
+      },
+      "pair_count": 6,
+      "violation_count": 0,
+      "nearest": {
+        "dx_dbu": 5,
+        "dy_dbu": 0,
+        "nm_per_dbu": 1,
+        "distance_squared_nm2": 25,
+        "distance_nm": 5,
+        "status": "pass",
+        "records": [
+          {
+            "record_id": "62c159e19020b24e16aae83df72b88b1cd486c38a2fb00ff2c881362e76dec47",
+            "rect_dbu": [
+              80,
+              90,
+              110,
+              98
+            ],
+            "uri": "source.gds",
+            "sha256": "97cf8d88771ff97f2cf189f6ae6a2fdcce585fc14f93c93d0ecf32326b415429",
+            "field": null,
+            "line": null,
+            "column": null,
+            "byte_offset": 2544,
+            "record_index": 196
+          },
+          {
+            "record_id": "8a24ac1ac6cb881d69099b3a7360ef96ba3cb0c374e1a2d94c9b327d4b1f7299",
+            "rect_dbu": [
+              50,
+              90,
+              75,
+              98
+            ],
+            "uri": "source.gds",
+            "sha256": "97cf8d88771ff97f2cf189f6ae6a2fdcce585fc14f93c93d0ecf32326b415429",
+            "field": null,
+            "line": null,
+            "column": null,
+            "byte_offset": 2480,
+            "record_index": 191
+          }
+        ]
+      }
+    }
+  },
+  {
+    "run": "c14",
+    "phase": "sealed_open",
+    "version": 0,
+    "baseline_run": "c14",
+    "context": "sealed_context:c14:53c8252cf34bfac264b4d42b52dd9f8f58098499853cf940bdeb31a0005eb334",
+    "head": "state_head:c14:3aac9c04522fbd33176389ec870430cddefb727a35533b178cb7944968bf1620",
+    "snapshot": "snapshot:c14:a7df6485fa9b71bdfb7795d60d79a482cd4104c3c2129fb227eb7fb49e0642ae",
+    "checkpoint": "checkpoint:c14:fcee7a38305b6e80df94ec78910cc704ff98b52ff4b4cff79d79330c17cc5213",
+    "original_checkpoint": "checkpoint:c14:fcee7a38305b6e80df94ec78910cc704ff98b52ff4b4cff79d79330c17cc5213",
+    "tool": "tool_run:c14:58daad0f08a7be4db563d460d70d2dfc25b51756273b88bc91ee9585b8e19f79",
+    "context_seconds": 0.80964,
+    "t07_seconds": 0.00024,
+    "rule_owner": {
+      "uri": "tech/rules.json",
+      "sha256": "40ce0b76abb28c07ab734734a19d61e1259bc5aee42a8cf2c02fabb9e4457480",
+      "field": null,
+      "line": null,
+      "column": null,
+      "byte_offset": null,
+      "record_index": null
+    },
+    "owner_schema": "w004-tech-owner/2",
+    "mandatory_policy": {
+      "all_listed_rules_required": true,
+      "run_before_no_change_closure": true,
+      "missing_operator_or_context": "indeterminate_then_reject",
+      "predicate_execution_error": "error_then_reject",
+      "scope": "whole_cell",
+      "site_may_disable": false
+    },
+    "rules": [
+      {
+        "id": "T01.frame",
+        "scope": "all non-frame drawn records",
+        "predicate": "each bbox contained in sole BOUNDARY",
+        "relation_basis": "geometry_only",
+        "schema_version": "w003-toy-rule/1",
+        "unit": "nm",
+        "parameters": {
+          "margin_nm": 0
+        },
+        "source": {
+          "classification": "hand_authored_synthetic",
+          "version": "1"
+        },
+        "exact_evaluator_ref": "w003-toy-predicate/T01.frame/1",
+        "required_relation_assurance": "none",
+        "missing_context_policy": "reject_indeterminate",
+        "required": true,
+        "status": "pending",
+        "pointer": "/rules/0"
+      },
+      {
+        "id": "T02.fin_grid",
+        "scope": "all FIN",
+        "predicate": "exact width, pitch and phase from selected FIN profile; full fixture sequence from input/oracle",
+        "relation_basis": "geometry_only",
+        "schema_version": "w003-toy-rule/1",
+        "unit": "nm",
+        "parameters": {},
+        "source": {
+          "classification": "hand_authored_synthetic",
+          "version": "1"
+        },
+        "exact_evaluator_ref": "w003-toy-predicate/T02.fin_grid/1",
+        "required_relation_assurance": "none",
+        "missing_context_policy": "reject_indeterminate",
+        "required": true,
+        "profile_ref": "physical.json#/fin_count_profile",
+        "status": "pending",
+        "pointer": "/rules/1"
+      },
+      {
+        "id": "T03.recognition",
+        "scope": "all source/target devices and all recognized channels",
+        "predicate": "one stripe per active, full crossings, counts and L/W match CDL, NF=M=1, one-to-one and no reduction",
+        "relation_basis": "geometry_only",
+        "schema_version": "w003-toy-rule/1",
+        "unit": "nm",
+        "parameters": {},
+        "source": {
+          "classification": "hand_authored_synthetic",
+          "version": "1"
+        },
+        "exact_evaluator_ref": "w003-toy-predicate/T03.recognition/1",
+        "required_relation_assurance": "none",
+        "missing_context_policy": "reject_indeterminate",
+        "required": true,
+        "profile_ref": "physical.json#/fin_count_profile",
+        "status": "pending",
+        "pointer": "/rules/2"
+      },
+      {
+        "id": "T04.body",
+        "scope": "local active/body and separate read-only context body chain",
+        "predicate": "matching local body encloses active >=10; no opposite body positive-area overlap in either local or external domain; bound external tapcell context proves body association to target rail",
+        "relation_basis": "same_component",
+        "schema_version": "w004-toy-rule/2",
+        "unit": "nm",
+        "parameters": {
+          "active_enclosure_nm": 10
+        },
+        "source": {
+          "classification": "hand_authored_synthetic",
+          "version": "2"
+        },
+        "exact_evaluator_ref": "w004-toy-predicate/T04.body/2",
+        "required_relation_assurance": "exact_local_components_plus_bound_context_association",
+        "missing_context_policy": "reject_indeterminate",
+        "required": true,
+        "status": "pending",
+        "pointer": "/rules/3"
+      },
+      {
+        "id": "T05.contact_enclosure",
+        "scope": "local CONTACT,VIA0,GCONTACT; separately context BTAP_N/BTAP_P",
+        "predicate": "exactly one region on each side encloses connector >=1 nm on all sides",
+        "relation_basis": "geometry_only",
+        "schema_version": "w004-toy-rule/2",
+        "unit": "nm",
+        "parameters": {
+          "enclosure_nm": 1
+        },
+        "source": {
+          "classification": "hand_authored_synthetic",
+          "version": "2"
+        },
+        "exact_evaluator_ref": "w004-toy-predicate/T05.contact_enclosure/2",
+        "required_relation_assurance": "none",
+        "missing_context_policy": "reject_indeterminate",
+        "required": true,
+        "status": "pending",
+        "pointer": "/rules/4"
+      },
+      {
+        "id": "T06.li_spacing",
+        "scope": "local effective LI; dedicated cut-island specimen evaluated separately",
+        "predicate": "distance>=2 nm unless actual same-layer contact makes one region",
+        "relation_basis": "geometry_only",
+        "schema_version": "w003-toy-rule/1",
+        "unit": "nm",
+        "parameters": {
+          "min_distance_nm": 2
+        },
+        "source": {
+          "classification": "hand_authored_synthetic",
+          "version": "1"
+        },
+        "exact_evaluator_ref": "w003-toy-predicate/T06.li_spacing/1",
+        "required_relation_assurance": "none",
+        "missing_context_policy": "reject_indeterminate",
+        "required": true,
+        "status": "pending",
+        "pointer": "/rules/5"
+      },
+      {
+        "id": "T07.m1_spacing",
+        "scope": "all unordered pairs of M1 rectangles",
+        "predicate": "distance>=5 nm unless actual same-layer contact makes one region",
+        "relation_basis": "geometry_only",
+        "schema_version": "w003-toy-rule/1",
+        "unit": "nm",
+        "parameters": {
+          "min_distance_nm": 5
+        },
+        "source": {
+          "classification": "hand_authored_synthetic",
+          "version": "1"
+        },
+        "exact_evaluator_ref": "w003-toy-predicate/T07.m1_spacing/1",
+        "required_relation_assurance": "none",
+        "missing_context_policy": "reject_indeterminate",
+        "required": true,
+        "status": "violation",
+        "pointer": "/rules/6"
+      },
+      {
+        "id": "T08.terminal_graph",
+        "scope": "all device terminals and conductor components",
+        "predicate": "ordered D/G/S agree with local exact components; B uses separately proven context association; no union by labels",
+        "relation_basis": "same_component",
+        "schema_version": "w004-toy-rule/2",
+        "unit": "nm",
+        "parameters": {
+          "terminal_order": [
+            "D",
+            "G",
+            "S",
+            "B"
+          ]
+        },
+        "source": {
+          "classification": "hand_authored_synthetic",
+          "version": "2"
+        },
+        "exact_evaluator_ref": "w004-toy-predicate/T08.terminal_graph/2",
+        "required_relation_assurance": "exact_local_components_plus_bound_context_association",
+        "missing_context_policy": "reject_indeterminate",
+        "required": true,
+        "status": "pending",
+        "pointer": "/rules/7"
+      },
+      {
+        "id": "T09.lifecycle",
+        "scope": "local exported records and CDL only; context read-only bound input",
+        "predicate": "no_change preserves all declared semantics, drawn geometry and frame; empty ECO chain",
+        "relation_basis": "geometry_only",
+        "schema_version": "w003-toy-rule/1",
+        "unit": "nm",
+        "parameters": {
+          "ordered_eco_commit_count": 0
+        },
+        "source": {
+          "classification": "hand_authored_synthetic",
+          "version": "1"
+        },
+        "exact_evaluator_ref": "w003-toy-predicate/T09.lifecycle/1",
+        "required_relation_assurance": "none",
+        "missing_context_policy": "reject_indeterminate",
+        "required": true,
+        "status": "pending",
+        "pointer": "/rules/8"
+      },
+      {
+        "id": "T10.coverage",
+        "scope": "all drawn and effective regions",
+        "predicate": "retain every shape, disclose absent annotations, marker nonconducting, same-label islands not electrically shorted by label",
+        "relation_basis": "none",
+        "schema_version": "w003-toy-rule/1",
+        "unit": "nm",
+        "parameters": {
+          "unknown_nonconductor_policy": "preserve_disclose",
+          "disconnected_label_policy": "keep_separate_disclose"
+        },
+        "source": {
+          "classification": "hand_authored_synthetic",
+          "version": "1"
+        },
+        "exact_evaluator_ref": "w003-toy-predicate/T10.coverage/1",
+        "required_relation_assurance": "none",
+        "missing_context_policy": "reject_indeterminate",
+        "required": true,
+        "status": "pending",
+        "pointer": "/rules/9"
+      }
+    ],
+    "T07": {
+      "status": "violation",
+      "threshold_nm": 5,
+      "threshold_source": {
+        "uri": "tech/rules.json",
+        "sha256": "40ce0b76abb28c07ab734734a19d61e1259bc5aee42a8cf2c02fabb9e4457480",
+        "field": "/rules/6/parameters/min_distance_nm",
+        "line": null,
+        "column": null,
+        "byte_offset": null,
+        "record_index": null
+      },
+      "pair_count": 6,
+      "violation_count": 1,
+      "nearest": {
+        "dx_dbu": 4,
+        "dy_dbu": 0,
+        "nm_per_dbu": 1,
+        "distance_squared_nm2": 16,
+        "distance_nm": 4,
+        "status": "violation",
+        "records": [
+          {
+            "record_id": "0f40331730661bdac1a3849c9e23a979607678092d2cf07f502c833d5f1dbf6b",
+            "rect_dbu": [
+              50,
+              90,
+              75,
+              98
+            ],
+            "uri": "source.gds",
+            "sha256": "613e6cbb006ea0739d82bf55774755db7defbc7603435c14e8c04171724ae04f",
+            "field": null,
+            "line": null,
+            "column": null,
+            "byte_offset": 2480,
+            "record_index": 191
+          },
+          {
+            "record_id": "2123d4599b763a6de7d4967dc72b5678178c935787742ac151ac73fee90d9098",
+            "rect_dbu": [
+              79,
+              90,
+              110,
+              98
+            ],
+            "uri": "source.gds",
+            "sha256": "613e6cbb006ea0739d82bf55774755db7defbc7603435c14e8c04171724ae04f",
+            "field": null,
+            "line": null,
+            "column": null,
+            "byte_offset": 2544,
+            "record_index": 196
+          }
+        ]
+      }
+    }
+  }
+]

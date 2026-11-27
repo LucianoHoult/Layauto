@@ -2,7 +2,7 @@
 
 ## 任务要求（PM）
 
-**阶段为可执行，归属 M1 的 Stage 3。** 执行分支 `codex/w024-stage3-rule-context`。输入是 [W023](W023-atomic-baseline-publication.md#pm2-integration) 已发布的 synthetic 第 0 版和已封存的上下文。目标是从该版直接回答“这条规则检查什么、实测多少、结果来自哪些图形和哪份工艺文件”。执行 session 交付产品代码，独立 reviewer 复核方案及实现，PM 验收。
+**阶段为 PM 验收待补修，归属 M1 的 Stage 3。** 当前有一项来源追溯问题，见[PM1 验收与补修](#pm1-receipt)。 执行分支 `codex/w024-stage3-rule-context`。输入是 [W023](W023-atomic-baseline-publication.md#pm2-integration) 已发布的 synthetic 第 0 版和已封存的上下文。目标是从该版直接回答“这条规则检查什么、实测多少、结果来自哪些图形和哪份工艺文件”。执行 session 交付产品代码，独立 reviewer 复核方案及实现，PM 验收。
 
 [架构 §2.4、§8.1–8.8、§11](../architecture.md) 规定约束引擎读取 Stage 2 的几何、占用、坐标和连通。工艺包提供规则和适用条件。域、索引及用于检查的缓存可重建。当前阶段读入规则目录，并实现其中的 `T07.m1_spacing`。其它规则的执行、候选变化的传播与回滚、全目标判定、Stage 5 收口及 Stage 6 导出后续接续。
 
@@ -40,3 +40,75 @@ PM 在实际 W023 合并版用 400 片预算发布两份临时输入。正常版
 ## 执行 session 启动指令
 
 > 在 `codex/w024-stage3-rule-context` 执行 W024 A1–A5。从已发布第 0 版和绑定工艺建立只读约束上下文，列清本包 10 条规则，先实算 T07。用正常与 C14 的真实文件证明相同两条 M1 在 5 nm 时通过、4 nm 时违反，报告能追到规则和两条原图。先独立复核方案，再实现并跑新增及受影响测试。交独立代码复核后，将实现、样例和证据推回原分支交 PM。
+
+## 执行交付
+
+[受审方案](W024/plan.md) · [独立复核与原始发现](W024/review.md) · [可复跑示例](W024/example.py)
+
+从仓库根目录运行以下命令。示例先用实际文件发布两个第 0 版，移除临时输入后，通过本次 run 的封存引用读取工艺并执行 T07。JSON 给出全部规则的原声明和状态、snapshot、阈值字段、最近一对的两个原始记录位置，以及首次加载和求值各自的耗时。
+
+```sh
+PYTHONPATH=.:tests/contracts python -B docs/tasks/W024/example.py
+```
+
+[PM 交接与定向验证](W024/verification.md) · [两版完整报告](W024/evidence.json) · [从原始 GDS 独立复算](W024/review_probe.py)
+
+原分支上的产品提交为 `1828ec860b2bf5be71f56ed91bb9c68a8acc67bd`，其完整 Git tree 与受测修复版 `54554871c685cd06dae482ce95736ebb079c9c84` 一致。开发版与修复后的交付版分别通过 108 项新增及受影响检查，严格类型检查覆盖 94 个源文件。独立 reviewer 已从两份 GDS 原记录复算全部 12 个距离与逐对状态，并复核跨版本混用问题的修复。执行交付提交 PM 验收。
+
+<a id="pm1-receipt"></a>
+
+## PM1 验收与补修
+
+**2026-11-27，PM-01（P2）阻止合并。** 核对远端交付 `22b985d25d5181411fdc097d15967c57e2b6c454`。在此提交的 Python 3.12.14 环境中，PM 用仓库已有的 GDS 字节探针复算了两份样本各 6 对距离。阈值均为 5 nm。正常版最近 5 nm，C14 最近 4 nm 且仅一对违反。Python 3.10.22 另跑精确距离与依赖边界共 9 项，通过。交付版的产品、测试和包配置与已复核的产品提交 `1828ec860b2bf5be71f56ed91bb9c68a8acc67bd` 一致。执行侧的 108 项定向检查、94 个源文件的严格类型检查和安装证据见[执行记录](W024/verification.md)。
+
+**问题属于 A1 的必要引用和版号追溯。** 新运行复用已有 head 时，结果的 `version.original_checkpoint_ref` 对外提供原版的输入记录。两次运行均成功封存后，如果这条记录丢失，使用原运行打开上下文会准确报错，使用复用运行却仍能打开，T07 报告通过并返回已无法读取的原版引用。正常数据中的几何计算已核实。现象限于本次模拟的仓库记录缺失。[检查入口](../../layauto_v2/pipeline.py) · [可复跑的 PM 探针](W024/pm01_checkpoint.py)
+
+探针使用真实样本文件先建立第 0 版，再以新 run 复用，删除临时输入后才开始查询。两者最初均通过，共用 head/snapshot，各自的 checkpoint 不同。随后沿用 W023 的仓库故障注入方式，在隔离的内存仓库中仅移除建版 run 的 checkpoint，其余内容及引用完整。PM 实跑结果如下。
+
+| 读取对象 | 在同一个模拟故障下的实际结果 |
+| --- | --- |
+| 仓库直接读取原版 checkpoint | `RefConflict`，指出完整缺失引用 |
+| 原运行打开 Stage 3 上下文 | 同一 `RefConflict`、同一引用 |
+| 复用运行打开 Stage 3 上下文 | 成功；T07 给出 6 对、最小 5 nm、通过，报告仍引用缺失记录 |
+
+本次缺失引用为 `checkpoint:creator:3681781083ff053577cd10700447dc348c132a0cd0606ce76553cf2ba1b0cc12`。两次查询后仓库 root 和 head 保持原样。重新捕获时完整引用可随临时目录变化。以下命令从仓库根目录执行，最后一条在本交付提交结束于 `AssertionError: missing original checkpoint accepted by ['reuse']`。
+
+```sh
+python -B docs/tasks/W024/review_probe.py docs/tasks/W024/evidence.json
+PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 python -B -m pytest -p no:cacheprovider -q tests/unit/test_w024_spacing.py tests/contracts/test_w024_boundaries.py
+PYTHONPATH=.:tests/contracts python -B docs/tasks/W024/pm01_checkpoint.py
+```
+
+**补修验收。** 在打开已封存的检查上下文时，确保返回给调用方的原版 checkpoint 可以按所给引用通过仓库校验；对与本次相同的引用复用已有读取。正常建版和正常复用继续使用各自的运行资料，保留原版来源。原版 checkpoint 缺失或内容摘要不符时，能在打开上下文时定位该引用，仓库保持只读。新增一项针对原版损坏的独立对照，与上述缺失及正常样本一同核实。按[验证分工](../collaboration/rules.md#verification-reuse)跑新增和受影响检查，交独立 reviewer 复核，再推回 W024 原分支申请 PM 重新验收。
+
+## PM-01 执行补修与复验
+
+起点为 `58698b964bf685a9830ded54490de0e00de709a0`。先运行 PM 的原探针，两次健康查询均为 5 nm。移除 `checkpoint:creator:7c697a1a882ac5c20a88b522407f040b0ade40d682e980869eacee870b999f26` 后，首次建版 run 报出该引用，复用 run 仍返回通过。探针以 `AssertionError: missing original checkpoint accepted by ['reuse']` 退出。
+
+修复提交为 `c3112971a85fd14645fbda996d1574bdb79d70b4`。Stage 3 打开入口已读取本次封存的 checkpoint。若快照引用的是另一条原版 checkpoint，入口在返回报告前再用仓库的 `read` 核实该原版记录。相同引用沿用本次读取。仓库校验记录字节的 SHA-256 和内容引用中的类型、run、摘要，缺失及损坏沿用带完整引用的 `RefConflict`。工艺 owner 仍从检查 run 自己的采集记录解析。[入口修正](https://github.com/LucianoHoult/Layauto/commit/c3112971a85fd14645fbda996d1574bdb79d70b4)
+
+在仓库根目录使用项目开发环境复跑。第一条为 PM 的缺失探针，第二条为独立 reviewer 的损坏对照。定向合同覆盖真实文件发布与复用、内容读取次数、损坏定位、源几何、跨版、只读和模块依赖。
+
+```sh
+export PYTEST_DISABLE_PLUGIN_AUTOLOAD=1
+PYTHONPATH=.:tests/contracts python -B docs/tasks/W024/pm01_checkpoint.py
+PYTHONPATH=.:tests/contracts python -B docs/tasks/W024/pm01_review_probe.py
+python -B -m pytest -q --tb=short -p no:cacheprovider \
+  tests/contracts/test_w024_context.py::test_open_reads_each_distinct_checkpoint_once \
+  tests/contracts/test_w024_context.py::test_open_rejects_unreadable_original_checkpoint \
+  tests/contracts/test_w024_context.py::test_rule_book_and_raw_gds_witnesses \
+  tests/contracts/test_w024_context.py::test_reuse_crossed_missing_and_immutable_refs \
+  tests/contracts/test_w024_context.py::test_changed_gds_cannot_reuse_normal_head \
+  tests/contracts/test_w024_boundaries.py tests/unit/test_w024_spacing.py
+python -B -m pytest -q --tb=short -p no:cacheprovider \
+  tests/contracts/test_w023_publication.py::test_new_run_seals_own_checkpoint_and_replays \
+  tests/contracts/test_w023_publication.py::test_bad_stored_digest_refuses_seal_without_changing_root
+python -m mypy
+python -B docs/tasks/W024/review_probe.py docs/tasks/W024/evidence.json
+```
+
+修复版重跑 PM 原探针，记录完整时两种运行各查 6 对，最近间距均为 5 nm。移除原版记录后，直接读取、建版 run 和复用 run 均得到 `RefConflict`，三者准确指出同一条缺失引用 `checkpoint:creator:9aee242f2066aa5ab07c4b8afe5bb1bc1920f7625ad9487fa0ab12aafeee91ca`。复用 run 自己的 checkpoint 仍可读取，各次查询均保持相应的仓库 root 和 head。每次复跑的临时输入目录不同，完整 checkpoint 摘要随之变化。
+
+独立 reviewer 在原引用下换入另一条合法 checkpoint 的字节。原版内容被替换时，建版与复用均在打开时报告原版引用的摘要冲突。反向只替换复用记录，建版仍为 5 nm，复用定位到自身的损坏引用。完整记录时，建版读取一个 checkpoint 一次，复用对两个不同引用各读一次。三组对照前后均核对 root、head 和 attempt。[独立复核记录](W024/pm01-review.md) · [可复跑的损坏对照](W024/pm01_review_probe.py)
+
+在上述修复提交上，CPython 3.12.14、pytest 9.2.0、PyYAML 6.0.3 实跑 Stage 3 的 18 项定向检查（159.44 秒）和 W023 发布复用的 3 项检查（158.37 秒），合计 21 项全部通过。mypy 2.4.1 对 94 个源文件检查通过。原始 GDS 探针对既有正常与 C14 报告的 12 对距离复算通过，最近分别为 5 nm 和 4 nm。其余几何与工艺合同沿用原 W024 交付，合并若改变读取入口、仓库校验或样本，再补跑相应对照。本次修复和复核证据交 PM 重新验收。
