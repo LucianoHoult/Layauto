@@ -306,6 +306,10 @@ def open_constraint_context(repository: PublicationRepository, run_id: str,
             or sealed.binding_digest != digest(snapshot.binding)):
         raise RepositoryConflict('BindingConflict', f'{sealed.checkpoint_ref.id}: input binding differs from {head.snapshot_ref.id}')
 
+    # A reused head reports an additional checkpoint from the creating run.
+    # Authenticate that backlink before exposing it in CheckedVersion.
+    if snapshot.checkpoint_ref != sealed.checkpoint_ref:
+        repository.read(snapshot.checkpoint_ref)
     tool = cast(ToolRunResult, repository.read(checkpoint.tool_ref))
     rules = _constraint_owner('rules', value, snapshot, tool)
     physical = _constraint_owner('physical', value, snapshot, tool)

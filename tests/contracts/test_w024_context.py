@@ -110,6 +110,47 @@ def test_rule_book_and_raw_gds_witnesses(published, run, expected):
     assert repo.snapshot() == before
 
 
+@pytest.mark.parametrize('run', ['normal', 'reuse'])
+def test_open_reads_each_distinct_checkpoint_once(published, run):
+    repo, _ = published
+    attempt = repo.load_attempt(run)
+    original = repo.load_attempt('normal').checkpoint_ref
+    before = repo.snapshot()
+    with patch.object(PublicationRepository, '_read', wraps=PublicationRepository._read) as read:
+        ctx = open_constraint_context(repo, run, attempt.context_ref)
+    reads = (call.args[1] for call in read.call_args_list)
+    checkpoints = [ref for ref in reads if ref.kind == 'checkpoint']
+    assert set(checkpoints) == {attempt.checkpoint_ref, original}
+    assert len(checkpoints) == len(set(checkpoints))
+    assert ctx.version.checkpoint_ref == attempt.checkpoint_ref
+    assert ctx.version.original_checkpoint_ref == original
+    assert repo.snapshot() == before
+
+
+@pytest.mark.parametrize('damage,reason', [
+    ('missing', 'unresolved content reference'), ('digest', 'stored content digest mismatch'),
+])
+def test_open_rejects_unreadable_original_checkpoint(published, damage, reason):
+    repo, _ = published
+    original = repo.load_attempt('normal').checkpoint_ref
+    clean = repo._root
+    contents = dict(clean.contents)
+    if damage == 'missing':
+        del contents[original]
+    else:
+        contents[original] += b' '
+    damaged = replace(clean, contents=tuple(contents.items()))
+    with patch.object(repo, '_root', damaged):
+        before = repo.snapshot()
+        for run in ('normal', 'reuse'):
+            attempt = repo.load_attempt(run)
+            with pytest.raises(RepositoryConflict) as exc:
+                open_constraint_context(repo, run, attempt.context_ref)
+            assert exc.value.code == 'RefConflict'
+            assert reason in str(exc.value) and original.id in str(exc.value)
+        assert repo._root is damaged and repo.snapshot() == before
+
+
 def test_reuse_crossed_missing_and_immutable_refs(published):
     repo, ctx = published
     old, second, changed = (ctx[run].version for run in ('normal', 'reuse', 'c14'))
