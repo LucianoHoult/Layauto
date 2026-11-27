@@ -6,6 +6,8 @@
 
 依据为[架构 §2.4、§8、§11.7](../architecture.md)、[绑定的 T06 声明](../../tests/fixtures/w003_m1/tech/rules.json)和[物理算子](../../tests/fixtures/w003_m1/tech/physical.json)。有效区域由 Stage 2 产生，可沿版本中的 region、piece、原 LI 及 CUT 找回实际几何和来源。适用范围为当前 synthetic 工艺。后续节点承接其余八条规则、完整目标判定、零修改收口和导出。
 
+**与 Stage 5 的交接。** W025 交付 T06 和 T07 的只读求值能力。样例显式调用它们来验证测量与来源。M1 的正式运行由 Stage 5 在 Stage 4 确认目标已满足后，调用同一套检查器检查当前快照并决定能否收口。该调用链在后续 M1 集成任务实现。[架构 §2.6](../architecture.md#stage5-rule-invocation)
+
 ### 两个可手算的对照
 
 使用 W024 正常完整 cell 的两份临时副本。各自追加同一条 LI，矩形为 `(130,20)–(150,24)` nm。切口在 Y 方向穿过整条 LI，只改变它的右边缘。两份副本使用同一工艺规则和同一套 32×16 DBU 的 LI 索引格，重新绑定后分别发布，测量入口读取已封存的上下文。第一例坐标来自 W004 的[独立切割样本](../../tests/fixtures/w003_m1/special/cut_islands/spec.json)，其中另有一条远端 LI；该独立样本的三对间距有[手算答案](../../tests/fixtures/w003_m1/special/cut_islands/oracle.json)。完整 cell 中追加的两条记录位于 GDS 字节偏移 2672（LI）和 2736（CUT）；独立小样本对应的偏移为 182 和 246。完整 cell 和独立样本分别核对。
@@ -39,4 +41,4 @@ PYTHONPATH=.:tests/contracts python -B docs/tasks/W025/pm_inputs.py
 
 ## 执行 session 启动指令
 
-> 在 `codex/w025-effective-li-spacing` 按本卡执行 W025 A1–A5。复用 PM 的两份输入构造，先做独立方案复核，再实现从已发布第 0 版检查 CUT 后 LI 间距的公开入口。让同一份报告分别给出 T06、T07 和其余八项的状态。以 2 nm 等号通过、1 nm 违规、M1 仍为 5 nm 为主例，给出原 LI、CUT、区域及规则来源。跑新增和受影响检查，提交独立代码复核后推回原分支，交 PM 验收。
+> 在 `codex/w025-effective-li-spacing` 按本卡执行 W025 A1–A5。复用 PM 的两份输入构造，先做独立方案复核，再实现从已发布第 0 版检查 CUT 后 LI 间距的公开入口。通过显式调用在同一份报告中给出 T06、T07 和其余八项的状态，入口供后续 Stage 5 复用。以 2 nm 等号通过、1 nm 违规、M1 仍为 5 nm 为主例，给出原 LI、CUT、区域及规则来源。跑新增和受影响检查，提交独立代码复核后推回原分支，交 PM 验收。
