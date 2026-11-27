@@ -104,7 +104,7 @@ v2 采用连续 Stage 1–6。Query bundle归入 Stage 1；annotation refresh、
 | Stage 2 | 语义/空间归一化与状态构建 | 构建 current semantic state、immutable TargetCircuit / TargetIntent、几何 store、坐标系统、annotation state、occupancy / connectivity 与初始 views | 不做 ECO 修改，不复制多个权威几何源 |
 | Stage 3 | 约束上下文初始化 | 基于 Stage 2 的坐标系统、occupancy 与 connectivity 初始化 constraint engine、rule context、domain / trail | 不重新拥有 layout state，不规划修改，不提交状态 |
 | Stage 4 | 修改意图与候选规划 | 把 Stage 2 归一化后的 typed target intent 转换为 candidate plans | 不直接消费 raw diff / raw command，不绕过 state / grid 手工拼最终 bbox，不提前 side-effect |
-| Stage 5 | 可行性检查、事务提交与派生刷新 | 在 private overlay检查 base/annotation/lifecycle state，再由 repository CAS发布一个新 root | 不暴露半提交状态，不导出文件，不把 Python对象名当原子保证 |
+| Stage 5 | 可行性检查、事务提交与派生刷新 | 调用 Stage 3 的检查器。无修改时检查当前快照并收口，有修改时检查事务中的候选并按合同发布 | 不暴露半提交状态，不导出文件，不把 Python对象名当原子保证 |
 | Stage 6 | 导出、生产工具交互与验证 | 从 committed snapshot 导出 MVP artifacts，并按 policy 运行可选 production integration / signoff / report | 不 mutate Layauto AuthoritativeState，不把工具输出反向 patch 成事实 |
 
 Pipeline 入口必须先调用 `PublicationRepository.create_attempt(...)` 创建 **unsealed pre-context** `RunAttempt`，绑定 raw request descriptor/digest、入口可得的 input/config/policy selection digests 与 starting state head；它不能提前声称已得到 canonical target、tech 或 evidence。Stage 1/2 完成后才用 `seal_context(...)` 绑定 canonical TargetIntent、tech/evidence/capability content ids；新 lineage 可由 `initialize(..., sealed_context=...)` 在发布 baseline 时原子完成同一 seal。Unsealed attempt 只能记录 audit并 terminalize 为 pre-context failure，不得进入 Stage 4/5。这样 input/parser/normalization failure 与后续 mutation run 都有同一可恢复 run identity。
@@ -190,7 +190,7 @@ Stage 2 有两个互斥退出路径。新 lineage 走 baseline-only `Initializat
 
 ### 2.4 Stage 3：约束上下文初始化
 
-Stage 3 初始化“判断候选是否合法”所需的约束上下文。它读取 Stage 2 已经建立的 coordinate system、layout state、occupancy 与 connectivity，但不重新构建或拥有这些状态。
+Stage 3 绑定当前快照和工艺，准备检查现状或修改候选所需的规则与上下文。诊断和测试可以显式调用单条或组合规则。整轮运行的必需规则由 [Stage 5 调用](#stage5-rule-invocation)。它读取 Stage 2 已经建立的 coordinate system、layout state、occupancy 与 connectivity，但不重新构建或拥有这些状态。
 
 主要内容：
 
@@ -225,6 +225,13 @@ Unsupported intent 应在 Stage 4 显式失败。失败结果应说明：哪个 
 ### 2.6 Stage 5：可行性检查、事务提交与派生刷新
 
 Stage 5 是唯一可以把候选变成权威状态的阶段。
+
+<a id="stage5-rule-invocation"></a>
+
+Stage 5 统一调用 Stage 3 准备的检查器，读取哪一版几何取决于 Stage 4 的规划结果。
+
+- **无修改。** Stage 4 依据电路语义和版图提取结果确认目标已满足，返回 `NoChangePlanningResult`。本次运行尚无 ECO 提交时，Stage 5 在该结论对应的当前快照上，按本次绑定的工艺和策略执行适用的必需规则，记录各项结果。全部通过且收口时观察到的 head 仍指向受检版本，才按本节的 CAS 合同关闭为 `no_change`。发现违规、必需项待求值、无法判定或检查出错时，保留对应原因并阻止成功收口。此路径直接只读检查快照，ECO 提交链为空。
+- **有修改。** Stage 5 向同一套检查器提供事务内候选的只读视图，按 §8.1 确定受影响范围，在最终候选上验证必需规则和本次修改的目标条件。原版事实可供前后对照，发布以候选的验证结果为准。
 
 持久可见性的唯一 owner 是 `PublicationRepository`，不是 Python transaction object。它在同一 selected backend/transaction domain内拥有 state-lineage head与每个 `RunAttempt` 的 revision/context/stage5/terminal pointers，并只接受 `domain/publication.py` 的 canonical neutral DTO：
 
