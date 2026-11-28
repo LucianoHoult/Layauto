@@ -79,8 +79,9 @@ def inspect_sample(root: Path, run_id: str, all_evidence: bool = False):
 
     # Default output identifies every checked rule, both FIN measurements, and
     # the located observations or pairs behind every non-pass result.
-    targets = [o for o in planning.observations if o['kind'] == 'device_parameter'
-               and o['facts']['axis'] == 'fins_per_finger' and o['facts']['circuit'] == 'target']
+    targets = [o for o in planning.observations if o['kind'] == 'target_difference'
+               or (o['kind'] == 'device_parameter' and o['facts']['axis'] == 'fins_per_finger'
+                   and o['facts']['circuit'] == 'target')]
     rule_rows = []
     for check in rules.checks if rules else ():
         if all_evidence:
@@ -104,7 +105,7 @@ def inspect_sample(root: Path, run_id: str, all_evidence: bool = False):
         'planning_counts': Counter(o['kind'] for o in planning.observations),
         'planning_observations': planning.observations if all_evidence else targets,
         'planning_issues': planning.issues, 'rule_audit': record.rule_ref.id if record.rule_ref else None,
-        'rule_checks': rule_rows, 'failure': failure,
+        'rule_checks': rule_rows, 'rule_issues': rules.issues if rules else (), 'failure': failure,
         'seconds': {name: round(value, 6) for name, value in seconds.items()},
     }
 
