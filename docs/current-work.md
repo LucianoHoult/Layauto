@@ -4,7 +4,7 @@
 
 ## 当前节点
 
-**当前派发 [W025 从已发布版图测量 CUT 后的 LI 间距](tasks/W025-effective-li-spacing.md)。** 分支为 `codex/w025-effective-li-spacing`。第二条规则读取切割后的本地互连区域，在同一格内区分 2 nm 达标与 1 nm 违规。[两份可运行的输入](tasks/W025/pm_inputs.py)
+**当前派发 [W025 从已发布版图测量 CUT 后的 LI 间距](tasks/W025-effective-li-spacing.md)。** 分支为 `codex/w025-effective-li-spacing`。T06 与 T07 按[同一类最小间距规则](tasks/W025-effective-li-spacing.md#spacing-family)复用计算，先在 CUT 后 LI 上验证 2 nm 达标、1 nm 违规，并说明只改 CUT 时要重查哪些 LI。[两份可运行的输入](tasks/W025/pm_inputs.py)
 
 **[W024 已验收](tasks/W024-stage3-rule-context.md#pm2-integration)，经 PR #91 合入 main。** Stage 3 现在可从已发布的第 0 版实算 M1 金属间距。正常版 5 nm 通过，C14 的 4 nm 违规。PM-01 已关闭。
 
