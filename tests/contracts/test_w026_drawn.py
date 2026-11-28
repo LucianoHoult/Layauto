@@ -5,7 +5,7 @@ from docs.tasks.W022.review_probe import read_rectangles
 from layauto_v2.pipeline import publish_stage2
 from layauto_v2.repository import PublicationRepository
 from layauto_v2.transactions.initialization import InitializationRejected
-from w005_cases import sha
+from w005_cases import sha, without_cache
 from w008_geometry_cases import blocks, edit_geometry
 from w013_cases import rewrite_net_response
 from w023_cases import capture
@@ -16,7 +16,7 @@ from w025_cases import stage_spacing
 def test_normal_frame_fin_and_marker(normal_rules):
     _, report, _ = normal_rules
     frame, fins, coverage = (report.for_rule(k) for k in ('T01.frame', 'T02.fin_grid', 'T10.coverage'))
-    assert frame.status == fins.status == coverage.status == 'pass'
+    assert frame.status == fins.status == coverage.status == 'pass', (frame.issue, fins.issue, coverage.issue)
     assert len(frame.observations) == 39
     rail, = (o for o in frame.observations if o.facts['bbox_dbu'] == (0, 48, 45, 58))
     assert rail.facts['side_margins_nm'] == (0, 48, 115, 142)
@@ -56,7 +56,7 @@ def test_missing_edge_track_and_extra_unannotated_marker(tmp_path):
     assert failure.sources[0].field == '/coordinate_projection/layers/FIN'
     coverage = report.for_rule('T10.coverage')
     markers = [o for o in coverage.observations if o.kind == 'drawn_coverage' and o.facts['layer'] == 'MARKER']
-    assert coverage.status == 'pass'
+    assert coverage.status == 'pass', coverage.issue
     assert {m.facts['bbox_dbu'] for m in markers} == {(145, 180, 150, 185), (149, 160, 152, 166)}
     assert all(m.status == 'disclosed' and m.facts['has_conductor_node'] is False for m in markers)
 
@@ -77,6 +77,7 @@ def test_outside_frame_rejected_at_stage2(tmp_path):
 
 def test_same_label_islands_keep_their_physical_components(tmp_path):
     root = stage_spacing(tmp_path, 2)
+    without_cache(root)
     rewrite_net_response(root, 'n_a', [('toy_poly', (58, 10, 62, 190)),
                                        ('toy_m1', (50, 90, 75, 98)), ('toy_li', (130, 20, 150, 24))])
     _, report, _ = inspect_published(root, 'labelled-islands')

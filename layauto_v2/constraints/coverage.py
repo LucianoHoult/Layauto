@@ -114,7 +114,11 @@ def _annotation_inventory(annotation: FrozenMap, graph: FrozenMap, rule: RuleRec
         for evidence_ref in sequence(fragment['evidence_refs']):
             record = mapping(mapping(evidence[_id(evidence_ref)])['record'])
             fields = mapping(record['field_sources'])
-            refs.append(ref_from_location(mapping(sequence(mapping(fields['record_id'])['sources'])[0])))
+            for field in ('record_id', 'bbox_nm', 'schematic_name'):
+                for location in sequence(mapping(fields[field])['sources']):
+                    ref = ref_from_location(mapping(location))
+                    if ref not in refs:
+                        refs.append(ref)
         labels = tuple(mapping(n) for n in sequence(fragment['net_ids']))
         for net in labels:
             net_id = digest(net)
