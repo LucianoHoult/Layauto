@@ -91,7 +91,11 @@ def _parameters(device: FrozenMap, model: FrozenMap, counts: dict[str, tuple[int
     return tuple(result)
 
 
-def evaluate_recognition(ctx: ConstraintContext, rule: RuleRecord) -> RuleCheck:
+def recognition_observations(ctx: ConstraintContext) -> tuple[Observation, ...]:
+    """Compare published W011 device measurements with each bound CDL.
+
+    Planning and T03 consume these operands independently of the rule declaration.
+    """
     physical = ctx.physical
     profile = mapping(physical.payload['fin_count_profile'])
     extraction = mapping(physical.payload['device_extraction_contract'])
@@ -180,7 +184,11 @@ def evaluate_recognition(ctx: ConstraintContext, rule: RuleRecord) -> RuleCheck:
                     device = devices[name]
                     result.extend(_parameters(device, mapping(models[text(device['model'])]), counts,
                                               domain, name, channel, (*sources, *fin_sources)))
-        return observed(rule, tuple(result))
+        return tuple(result)
+
+
+def evaluate_recognition(ctx: ConstraintContext, rule: RuleRecord) -> RuleCheck:
+    return observed(rule, recognition_observations(ctx))
 
 
 def _body(ctx: ConstraintContext) -> FrozenMap:

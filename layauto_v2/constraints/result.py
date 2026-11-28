@@ -7,7 +7,7 @@ from typing import Literal
 
 from layauto_v2.domain.codec import FrozenMap
 from layauto_v2.domain.evidence import SourceRef
-from layauto_v2.domain.geometry import Rect
+from layauto_v2.domain.geometry import Rect, source_value
 from layauto_v2.tech.rules import RuleCatalog, RuleRecord
 from .drc_context import CheckedVersion
 
@@ -84,6 +84,10 @@ class Observation:
     status: Literal['pass', 'violation', 'disclosed']
     facts: FrozenMap
     sources: tuple[SourceRef, ...]
+
+    def to_value(self) -> FrozenMap:
+        return FrozenMap({'kind': self.kind, 'object_ids': self.object_ids, 'status': self.status,
+                          'facts': self.facts, 'sources': tuple(source_value(s) for s in self.sources)})
 
 
 @dataclass(frozen=True, slots=True)
