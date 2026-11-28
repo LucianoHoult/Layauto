@@ -41,6 +41,12 @@ def inspect(root: Path, expect_fixed: bool) -> None:
     if expect_fixed:
         assert failures == ['T08.terminal_graph'] and terminals.status == 'violation'
         assert not report.all_required_passed
+        fault, = (o for o in terminals.observations if o.status == 'violation')
+        assert fault.kind == 'local_net_connectivity' and fault.facts['declared_net'] == 'Y'
+        for endpoint in fault.facts['terminals']:
+            print(f"{endpoint['device']}.{endpoint['role']}", endpoint['component_ids'])
+        for source in fault.sources:
+            print(source)
     else:
         assert not failures and report.all_required_passed, 'the original false pass was not reproduced'
 

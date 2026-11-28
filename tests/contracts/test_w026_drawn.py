@@ -81,6 +81,7 @@ def test_same_label_islands_keep_their_physical_components(tmp_path):
     rewrite_net_response(root, 'n_a', [('toy_poly', (58, 10, 62, 190)),
                                        ('toy_m1', (50, 90, 75, 98)), ('toy_li', (130, 20, 150, 24))])
     _, report, _ = inspect_published(root, 'labelled-islands')
+    assert report.for_rule('T08.terminal_graph').status == 'pass'
     check = report.for_rule('T10.coverage')
     assert check.status == 'pass', check.issue
     islands, = (o for o in check.observations if o.kind == 'separate_label_islands')

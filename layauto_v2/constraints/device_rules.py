@@ -1,8 +1,8 @@
 """Recognition and electrical checks at the selected, immutable layout version."""
 from __future__ import annotations
 
-from collections import Counter
-from dataclasses import replace
+from collections import Counter, defaultdict
+from dataclasses import dataclass, replace
 from fractions import Fraction
 from itertools import combinations, product
 
@@ -287,6 +287,24 @@ def evaluate_body(ctx: ConstraintContext, rule: RuleRecord) -> RuleCheck:
         return observed(rule, tuple(result))
 
 
+@dataclass(frozen=True)
+class _LocalTerminal:
+    device: str
+    role: str
+    nodes: tuple[str, ...]
+    components: tuple[str, ...]
+    sources: tuple[SourceRef, ...]
+
+
+def _local_net_check(rule: RuleRecord, net: str, terminals: list[_LocalTerminal]) -> Observation:
+    components = tuple(sorted({c for terminal in terminals for c in terminal.components}))
+    endpoints = tuple({'device': t.device, 'role': t.role, 'node_ids': t.nodes, 'component_ids': t.components}
+                      for t in terminals)
+    return _observation('local_net_connectivity', (net, *components), len(components) == 1,
+                        {'declared_net': net, 'terminals': endpoints, 'component_ids': components},
+                        rule.location('relation_basis'), *(source for t in terminals for source in t.sources))
+
+
 def evaluate_terminals(ctx: ConstraintContext, rule: RuleRecord) -> RuleCheck:
     order = tuple(text(v) for v in sequence(mapping(rule.declaration['parameters'])['terminal_order']))
     with _at(ctx, '/terminals'):
@@ -308,6 +326,8 @@ def evaluate_terminals(ctx: ConstraintContext, rule: RuleRecord) -> RuleCheck:
         if set(by_terminal) != expected or len(rows) != len(expected):
             raise RuleGap('MissingTerminalRelation', 'expected exactly one W014 relation per declared terminal',
                           _snapshot_source(ctx, '/terminals'))
+        # Device and net names here are scoped to the circuit's selected cell.
+        local_nets: dict[str, list[_LocalTerminal]] = defaultdict(list)
         result = []
         for name, device in devices.items():
             terminals = _rows(device['terminals'])
@@ -329,6 +349,7 @@ def evaluate_terminals(ctx: ConstraintContext, rule: RuleRecord) -> RuleCheck:
                     raise RuleGap('UnboundTerminalComponent', f'{name}.{role} node lacks its bound component', source)
                 witness = [_snapshot_source(ctx, '/connectivity/components/' + c) for c in components]
                 witness.extend(_net_evidence(ctx, row['evidence_refs']))
+                declared = text(mapping(terminal['net_id'])['name'])
                 if role == 'B':
                     path = paths[name]
                     if row['context_path'] != path or path['chain_status'] != 'established':
@@ -336,16 +357,18 @@ def evaluate_terminals(ctx: ConstraintContext, rule: RuleRecord) -> RuleCheck:
                     actual = _names(path['observed_net_ids'])
                     witness.append(_source(path['association_source']))
                 else:
+                    local_nets[declared].append(_LocalTerminal(name, role, nodes, components, (source, *witness)))
                     actual = tuple(sorted({net for c in components for net in _names(summaries[c]['observed_net_ids'])}))
                 if not actual:
                     raise RuleGap('UnobservedTerminalNet', f'{name}.{role} has no observed net', witness[0])
                 if len(actual) > 1:
                     raise RuleGap('ConflictingTerminalNets', f'{name}.{role} has competing annotations {actual}',
                                   witness[0])
-                declared = text(mapping(terminal['net_id'])['name'])
                 result.append(_observation('terminal_relation', (name, role, *nodes, *components),
                     actual == (declared,), {'role': role, 'declared_net': declared, 'observed_nets': actual,
                     'domain': 'external_body_path' if role == 'B' else 'local_components',
                     'channel_id': _ref(row['channel_ref']), 'component_ids': components,
                     'evidence_ids': _refs(row['evidence_refs'])}, source, *witness))
+        result.extend(_local_net_check(rule, net, endpoints) for net, endpoints in local_nets.items()
+                      if len(endpoints) > 1)
         return observed(rule, tuple(result))
