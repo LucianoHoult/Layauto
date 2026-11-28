@@ -28,7 +28,7 @@ sections relevant to the task.
 
 | Path | Purpose |
 |------|---------|
-| [`layauto_v2/`](layauto_v2/) | v2 input capture and audit, semantic normalization, Stage 2 baseline publication, and read-only Stage 3 rule checks over published geometry. |
+| [`layauto_v2/`](layauto_v2/) | v2 input capture and audit, semantic normalization, Stage 2 baseline publication, whole-cell rule checks, and Stage 4/5 closure on a published layout. |
 | [`docs/architecture.md`](docs/architecture.md) | Active v2 architecture source: stage boundaries, fact sources, state ownership, planning, constraints, transactions, export, validation, and module boundaries. |
 
 ## Input reading component
@@ -240,6 +240,37 @@ for row in report.checks:
 T09 compares the bound original inputs, published geometry and circuit, and the
 selected head’s ordered ECO chain. Stage 6 verifies actual export files.
 See the [W026 task and reproduction commands](docs/tasks/W026-connector-enclosure.md).
+
+## Close Stage 5 on the published layout
+
+Keep the request made from the open attempt and its sealed context. Stage 4
+compares the normalized target with the current circuit and the physical
+measurements. When those goals are satisfied, Stage 5 evaluates the ten M1
+rules on that snapshot. A successful close records `no_change` against the
+checked head with an empty ECO chain.
+
+```python
+from layauto_v2.domain.publication import Stage5Request
+from layauto_v2.pipeline import run_stage5
+
+attempt = repository.load_attempt(context.run_id)
+request = Stage5Request.from_sealed(attempt, context, idempotency_key="close-001")
+closure = run_stage5(repository, request)
+if closure.closure_kind == "with_run_record":
+    record = repository.read(closure.run_record_ref)
+    planning = repository.read(record.planning_ref)
+    rules = repository.read(record.rule_ref) if record.rule_ref else None
+    print(record.status, record.final_snapshot_ref.id, planning.issues)
+    if rules:
+        print([(row["id"], row["status"]) for row in rules.checks])
+else:
+    print(repository.read(closure.freeze_failure_ref))
+```
+
+The attempt retains its closure reference in `stage5_closed`. Replaying the
+original request in the same repository returns that closure. The
+[W027 example](docs/tasks/W027/example.py) reads the stage, input locations,
+measurements and rule outcomes for the normal and failing samples.
 
 ## Semantic normalization component
 
