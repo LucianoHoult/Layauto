@@ -2,7 +2,7 @@
 
 ## 任务要求（PM）
 
-**阶段为执行中，PM 验收发现一项必须修正，见 [PM-01](#pm01)。** 归属 M1 的 Stage 3，沿用 `codex/w026-connector-enclosure` 分支和本任务卡路径。开发基线为 `96615e24391d9e5f593a9536d99dc0c1061b7409`。原 T05 专项在派发前扩为整包。一次交付当前 synthetic 工艺的十条必需规则，其中 [W025](W025-effective-li-spacing.md#pm2-integration) 已实现 T06/T07，本次新增 T01–T05、T08–T10。执行 session 组织一次独立方案复核和一次整包代码复核，同一分支交回 PM。
+**阶段为已验收。** [PM-01](#pm01) 的修正及 [main 组合验证](#pm2-integration)已完成。归属 M1 的 Stage 3，沿用 `codex/w026-connector-enclosure` 分支和本任务卡路径。开发基线为 `96615e24391d9e5f593a9536d99dc0c1061b7409`。原 T05 专项在派发前扩为整包。一次交付当前 synthetic 工艺的十条必需规则，其中 [W025](W025-effective-li-spacing.md#pm2-integration) 已实现 T06/T07，本次新增 T01–T05、T08–T10。执行 session 组织一次独立方案复核和一次整包代码复核，同一分支交回 PM。
 
 检查以[绑定的工艺声明及 mandatory_rule_policy](../../tests/fixtures/w003_m1/tech/rules.json)为准。Stage 3 只读已发布状态，提供完整规则入口，保留 W024 的 `check_m1_spacing` 和 W025 的 `check_spacing` 的原有行为。打开上下文时只准备数据，调用方显式请求时才求值。整轮无修改由 Stage 4 判定目标、Stage 5 在选定快照正式调用并收口，Stage 6 导出回读。M2 接入修改候选、约束传播和撤回。[架构分工](../architecture.md#stage5-rule-invocation)
 
@@ -107,3 +107,27 @@ python -m mypy --strict layauto_v2/constraints/device_rules.py
 正常版十条通过。原组合样本保持 T05、T07 两项违规，分别为 VN/LI 右边 −3 nm 和 M1 间距 4 nm（要求 5 nm），其他八项通过。各次检查前后的快照内容、head、attempt 和仓库状态一致。独立复核对另外两个切口直接遍历物理图边，结果及复现见[独立复核记录](W026/pm01_review.md)。
 
 Python 3.12.14 实跑上述 5 项定向回归，全部通过。覆盖正常 A/Y 互连和独立 B 链、Y 断路、逐端名称不符及跨角色 D/S 的声明互连、缺少栅端网络证据时的 indeterminate，以及允许的同名孤岛。受影响产品模块严格类型检查通过。其余 W026 验证按既有受测身份采信，双解释器全量留到阶段集成。待 PM 重新验收。
+
+<a id="pm2-integration"></a>
+
+## PM 集成验收
+
+交付 `ee4d51be21f7d15edc3aa27087b3669667388022` 与受审实现 `8a5513f42e9f20bcf1285cca2607796cf2f2156f` 的产品、测试及打包配置一致。PM 核对了补修 diff、W010 分量/W014 端子来源、新的按声明网分组和外部 B 端独立取证路径。合入提交 `176326e04a78c48dab0df5a5f6857961733c00cf` 的完整 Git tree 为 `93dc747ba15c5b809fee24e1163ceab0812fca5a`，与交付一致。[PR #97](https://github.com/LucianoHoult/Layauto/pull/97)
+
+合并前 PM 在 Python 3.12.14 运行原 3 nm 切口。仅 T08 违规，整包为假，诊断包含 Y、两个不同分量以及 source.cdl 第 3、4 行。另将切口上移至 Y=157–161 nm，独立遍历图边确认两漏极仍在同一分量。此时也有两个 Y 岛，T10 披露，十条通过。两例均保持只读。Python 3.10.22 上另通过 4 项模块边界检查，补修产品模块的严格类型检查通过。
+
+实际合并版的组合结果使用 [PM 复现脚本](W026/pm_integration.py)。脚本从每组实际输入发布一次，独立从 GDS 字节量出 VN/LI 余量和 M1 最近一对的间距，并遍历物理图检查两漏极可达性。报告包含十项，查询前后的仓库快照、head 和 attempt 相同。
+
+| 合并版实跑，Python 3.10.22 | VN 的 LI 余量 | M1 间距 | 两漏极可达 | 十条规则的结果 |
+| --- | --- | --- | --- | --- |
+| 正常 | 1 nm | 5 nm | 是 | 十条通过 |
+| C14 的 M1、C15 的 VN、PM 的输出 CUT 组合 | −3 nm | 4 nm | 否 | 仅 T05、T07、T08 违规，其余七条通过 |
+
+```sh
+# 修正版的原切口
+PYTHONPATH=.:tests/contracts python -B docs/tasks/W026/pm01_terminal_open.py --expect-fixed
+# 合并版组合
+PYTHONPATH=.:tests/contracts python -B docs/tasks/W026/pm_integration.py
+```
+
+**A1–A5 已验收，PM-01 关闭，剩余必须修正项为 0。** 原 48 项定向检查和补修 5 项各按所记受测版本采信；与补修相交的 T08、T10 及只读组合按上述命令实跑。范围为本次 synthetic 工艺的已发布快照。[W027](W027-no-change-closure.md) 在无修改关闭的实际集成版运行 Python 3.10/3.12 双全量。若输入合同、分量身份、规则组合或合并源码改变，按其影响重新验证。
