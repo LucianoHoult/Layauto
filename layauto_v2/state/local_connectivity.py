@@ -83,6 +83,11 @@ _T05 = FrozenMap({
 })
 
 
+def unsupported_enclosure_field(rule: FrozenMap) -> str | None:
+    """First field incompatible with the registered W010 enclosure predicate."""
+    return next((field for field, expected in _T05.items() if rule.get(field) != expected), None)
+
+
 def _check_owners(binding: LocalContactBinding) -> None:
     for owner, kind in ((binding.physical, 'physical'), (binding.drawn, 'drawn'), (binding.rules, 'rules')):
         try:
@@ -130,10 +135,10 @@ def _check_owners(binding: LocalContactBinding) -> None:
     if len(matches) != 1:
         raise contact_problem(binding.rules.sources[0], '/rules', 'local T05 rule must resolve uniquely')
     index, rule = matches[0]
-    for field, expected in _T05.items():
-        if rule.get(field) != expected:
-            raise contact_problem(binding.rules.sources[0], f'/rules/{index}/{field}',
-                                  'unsupported consumed local T05 enclosure semantics')
+    unsupported = unsupported_enclosure_field(rule)
+    if unsupported is not None:
+        raise contact_problem(binding.rules.sources[0], f'/rules/{index}/{unsupported}',
+                              'unsupported consumed local T05 enclosure semantics')
 
 
 def _require_effective(effective: EffectiveDraft) -> None:

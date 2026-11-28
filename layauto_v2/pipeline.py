@@ -279,6 +279,10 @@ def open_constraint_context(repository: PublicationRepository, run_id: str,
                             context_ref: ContentRef | None) -> ConstraintContext:
     """Resolve only stored references. A reusing run keeps its own input audit and the original snapshot."""
     from layauto_v2.constraints.drc_context import CheckedVersion, ConstraintContext
+    from layauto_v2.domain.geometry import mapping
+    from layauto_v2.domain.source_location import ref_from_location
+    from layauto_v2.normalization.semantic import build_source_operands
+    from layauto_v2.state.snapshot import current_value
     from layauto_v2.tech.rules import RuleCatalog
 
     attempt = repository.load_attempt(run_id)
@@ -315,4 +319,11 @@ def open_constraint_context(repository: PublicationRepository, run_id: str,
     physical = _constraint_owner('physical', value, snapshot, tool)
     version = CheckedVersion(context_ref, sealed.checkpoint_ref, checkpoint.tool_ref, sealed.head_ref,
                              head.snapshot_ref, snapshot.checkpoint_ref, snapshot.version)
-    return ConstraintContext._published(version, snapshot, RuleCatalog.from_owner(rules.payload, rules.sources[0]), physical)
+    # Reuse W007's interpretation of *this checking run's* original source CDL.
+    # Preparing its operand performs neither a comparison nor a rule invocation.
+    cdl = mapping(value['source_cdl'])
+    original = EvidenceRecord('source_cdl', cdl, (ref_from_location(mapping(cdl['source'])),))
+    source_circuit = build_source_operands(original, mapping(value['tech']), mapping(value['header']),
+                                          mapping(value['tech_bundle']))
+    return ConstraintContext._published(version, snapshot, RuleCatalog.from_owner(rules.payload, rules.sources[0]),
+                                        physical, value, current_value(source_circuit), target, head.eco_commits)

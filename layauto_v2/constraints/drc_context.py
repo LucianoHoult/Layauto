@@ -3,8 +3,9 @@ from __future__ import annotations
 
 from dataclasses import InitVar, dataclass
 
+from layauto_v2.domain.codec import FrozenMap
 from layauto_v2.domain.evidence import EvidenceRecord
-from layauto_v2.domain.publication import BaselineSnapshot, ContentRef
+from layauto_v2.domain.publication import BaselineSnapshot, BaselineTarget, ContentRef
 from layauto_v2.tech.rules import RuleCatalog
 
 
@@ -33,6 +34,10 @@ class ConstraintContext:
     snapshot: BaselineSnapshot
     catalog: RuleCatalog
     physical: EvidenceRecord
+    inputs: FrozenMap
+    source_circuit: FrozenMap
+    target: BaselineTarget
+    eco_commits: tuple[ContentRef, ...]
 
     def __post_init__(self, _issuer: object) -> None:
         if _issuer is not _PUBLISHED:
@@ -40,5 +45,6 @@ class ConstraintContext:
 
     @classmethod
     def _published(cls, version: CheckedVersion, snapshot: BaselineSnapshot, catalog: RuleCatalog,
-                   physical: EvidenceRecord) -> ConstraintContext:
-        return cls(_PUBLISHED, version, snapshot, catalog, physical)
+                   physical: EvidenceRecord, inputs: FrozenMap, source_circuit: FrozenMap,
+                   target: BaselineTarget, eco_commits: tuple[ContentRef, ...]) -> ConstraintContext:
+        return cls(_PUBLISHED, version, snapshot, catalog, physical, inputs, source_circuit, target, eco_commits)

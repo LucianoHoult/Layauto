@@ -219,6 +219,28 @@ if li.pairs:
 The [W025 example](docs/tasks/W025/example.py) publishes three synthetic inputs
 and prints the rule statuses, closest pairs, field locations and GDS sources.
 
+## Check the ten M1 rules on one published version
+
+Open the sealed view once and pass it to the Stage 3 whole-cell checker.
+
+```python
+from layauto_v2.constraints import check_rules
+
+report = check_rules(view)
+for row in report.checks:
+    print(report.version.snapshot_ref.id, row.rule.id, row.status, row.rule.source)
+    for observation in row.observations:
+        print(observation.object_ids, observation.status, observation.facts, observation.sources)
+    for pair in row.pairs:
+        print(pair.status, pair.distance_squared_nm2, pair.first.source, pair.second.source)
+    if row.issue:
+        print(row.issue, row.policy_action)
+```
+
+T09 compares the bound original inputs, published geometry and circuit, and the
+selected head’s ordered ECO chain. Stage 6 verifies actual export files.
+See the [W026 task and reproduction commands](docs/tasks/W026-connector-enclosure.md).
+
 ## Semantic normalization component
 
 W007 consumes already captured W005 evidence. It produces an immutable source

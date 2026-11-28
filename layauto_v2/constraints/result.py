@@ -5,6 +5,7 @@ from dataclasses import dataclass
 from math import isqrt
 from typing import Literal
 
+from layauto_v2.domain.codec import FrozenMap
 from layauto_v2.domain.evidence import SourceRef
 from layauto_v2.domain.geometry import Rect
 from layauto_v2.tech.rules import RuleCatalog, RuleRecord
@@ -76,6 +77,16 @@ class MissingRule:
 
 
 @dataclass(frozen=True, slots=True)
+class Observation:
+    """A located object-level measurement, relationship, or policy disclosure."""
+    kind: str
+    object_ids: tuple[str, ...]
+    status: Literal['pass', 'violation', 'disclosed']
+    facts: FrozenMap
+    sources: tuple[SourceRef, ...]
+
+
+@dataclass(frozen=True, slots=True)
 class RuleCheck:
     rule: RuleRecord | MissingRule
     status: RuleStatus
@@ -84,10 +95,18 @@ class RuleCheck:
     issue: RuleIssue | None = None
     policy_action: str | None = None
     operands: tuple[tuple[ShapeWitness, ...], ...] = ()
+    observations: tuple[Observation, ...] = ()
 
     @property
     def violations(self) -> tuple[PairMeasurement, ...]:
         return tuple(pair for pair in self.pairs if pair.status == 'violation')
+
+
+def observed(rule: RuleRecord, observations: tuple[Observation, ...]) -> RuleCheck:
+    if not observations:
+        raise RuleGap('MissingOperands', f'{rule.id} has no observations', rule.source)
+    status: RuleStatus = 'violation' if any(o.status == 'violation' for o in observations) else 'pass'
+    return RuleCheck(rule, status, observations=observations)
 
 
 @dataclass(frozen=True, slots=True)
@@ -95,6 +114,11 @@ class RuleReport:
     version: CheckedVersion
     catalog: RuleCatalog
     checks: tuple[RuleCheck, ...]
+
+    @property
+    def all_required_passed(self) -> bool:
+        """Whether every obligation in this report has an evaluated pass."""
+        return bool(self.checks) and all(check.status == 'pass' for check in self.checks)
 
     def for_rule(self, rule_id: str) -> RuleCheck:
         for check in self.checks:
