@@ -10,7 +10,7 @@ from layauto_v2.domain.policy import REQUIRED_M1_RULES
 from layauto_v2.domain.publication import AuditBinding, AuditIssue, RuleAudit
 from layauto_v2.tech.rules import RuleRecord
 
-from .result import Observation, PairMeasurement, RuleCheck, RuleReport, ShapeWitness
+from .result import PairMeasurement, RuleCheck, RuleReport, ShapeWitness
 
 
 def _shape(shape: ShapeWitness) -> FrozenMap:
@@ -27,11 +27,6 @@ def _pair(pair: PairMeasurement) -> FrozenMap:
                       'distance_squared_nm2': pair.distance_squared_nm2})
 
 
-def observation_value(item: Observation) -> FrozenMap:
-    return FrozenMap({'kind': item.kind, 'object_ids': item.object_ids, 'status': item.status,
-                      'facts': item.facts, 'sources': tuple(source_value(s) for s in item.sources)})
-
-
 def _row(check: RuleCheck) -> FrozenMap:
     rule, issue = check.rule, check.issue
     return FrozenMap({
@@ -42,7 +37,7 @@ def _row(check: RuleCheck) -> FrozenMap:
                                              'source': source_value(issue.source)},
         'pairs': tuple(_pair(pair) for pair in check.pairs),
         'operands': tuple(tuple(_shape(s) for s in pieces) for pieces in check.operands),
-        'observations': tuple(observation_value(item) for item in check.observations),
+        'observations': tuple(item.to_value() for item in check.observations),
     })
 
 
