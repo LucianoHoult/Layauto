@@ -54,3 +54,11 @@ PYTHONPATH=.:tests/contracts python -B docs/tasks/W025/pm_inputs.py
 ## 执行 session 启动指令
 
 > 在 `codex/w025-effective-li-spacing` 执行 W025 A1–A5。先按“本轮开发边界”写方案，说明如何选择原图或 CUT 后有效区域、复用精确间距计算，以及单改 CUT 时要重查哪些 LI；交独立 reviewer 复核后实施。保留 W024 公开入口，通过同一次只读调用取得 T06、T07 和其余八项的状态。验证 2 nm 等号通过、1 nm 违规，以及固定原图只把阈值改为 3 nm 后的判定。每例都能回查规则、LI、CUT 和几何见证。覆盖多块区域、错误声明及既有 T07 行为。开发、交付和 review 跑新增及受影响范围，按受测版本复用已有证据。推回原分支交 PM 验收。Stage 5 正式调用和 M2 候选传播各按路线图后续集成。
+
+### 执行方案（起点 879079ec）
+
+沿用 W024 的 open_constraint_context 认证一次 run、head、snapshot 和工艺。保留 check_m1_spacing 的 T07 单查；新增 check_spacing，在同一上下文按 catalog 顺序给出两个 RuleCheck 及其余声明的状态。按登记的 ID、exact_evaluator_ref、schema、scope 选择适配器，从声明读取 parameters.min_distance_nm，核对 predicate、nm、geometry_only/none 和绑定的 spacing/1、same_layer_contact/1；T06 另核对 CUT 差集语义。能力缺项沿用定位到字段的 policy 结果。
+
+T07 每个 drawn M1 BOUNDARY 是一个单矩形操作数。T06 从快照的 LI 原记录沿 effective_by_record 找到各独立 region，每个 region 以准确的 piece 矩形集合为操作数。共用全层无序对循环，对每对搜索 piece 的笛卡尔积，取最小闭矩形距离平方；零距离并列时优先保留实际发生正面积或正长度边接触的见证。点触距离为零，仍参与阈值比较。用 canonical_tick_nm 作精确平方换算，严格小于才违规。见证保留 region/piece、owner、CUT 和 GDS 位置、摘要；用报告的版本和 rule.location 回查快照、工艺字段。相同 owner、格号、标签均不消对。
+
+CUT 右缘从 141 移到 140 nm 时，原 LI（偏移 2672）的左块仍止于 139、面积 36，右块左界从 141 移到 140、面积从 36 增到 40 nm²。两侧身份和成对关系均需重取。未来局部重查应从新旧 CUT 的并集查所有相交 drawn LI，重建每个 owner 的全部旧/新 region（含消失、增生、分裂和合并）。按两版完整 region 的各块外扩本次阈值，查询所有相交格及边界，去重 region 后精确比较受影响区域彼此及与候选邻居。索引须覆盖旧/新状态；要更新全局最近值还须保留其余对的结果或重算。此次两份快照均直接查全层 5 个区域、10 对，作为完整性对照。

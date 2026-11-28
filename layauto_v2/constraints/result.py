@@ -18,6 +18,9 @@ class ShapeWitness:
     record_id: str
     rect: Rect
     source: SourceRef
+    region_id: str | None = None
+    piece_id: str | None = None
+    cuts: tuple[ShapeWitness, ...] = ()
 
 
 @dataclass(frozen=True, slots=True)
@@ -59,6 +62,12 @@ class RuleIssue:
     source: SourceRef
 
 
+class RuleGap(ValueError):
+    def __init__(self, code: str, message: str, source: SourceRef) -> None:
+        self.issue = RuleIssue(code, message, source)
+        super().__init__(message)
+
+
 @dataclass(frozen=True, slots=True)
 class MissingRule:
     """The requested ID and the location of the catalog that omitted it."""
@@ -74,6 +83,7 @@ class RuleCheck:
     threshold_nm: int | None = None
     issue: RuleIssue | None = None
     policy_action: str | None = None
+    operands: tuple[tuple[ShapeWitness, ...], ...] = ()
 
     @property
     def violations(self) -> tuple[PairMeasurement, ...]:
