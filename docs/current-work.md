@@ -4,7 +4,7 @@
 
 ## 当前节点
 
-**当前派发 [W026 从同一份已发布版图检查十条必需规则](tasks/W026-connector-enclosure.md)。** 沿用分支 `codex/w026-connector-enclosure`。T06/T07 沿用已验收实现，本次补齐另外八条。用正常快照和组合违规验证逐条报告，Stage 5 在后续集成时正式调用。[T05 已有的四个输入](tasks/W026/pm_inputs.py)
+**W026 正在补修 [PM-01 输出端断路误判](tasks/W026-connector-enclosure.md#pm01)。** 正常和 T05/T07 双违规样本已由 PM 复跑。新增反例中，两个标为 Y 的漏极已分属不同物理分量，T08 仍通过。本轮在 `codex/w026-connector-enclosure` 修正后重新验收。[可运行反例](tasks/W026/pm01_terminal_open.py)
 
 **[W025 已验收](tasks/W025-effective-li-spacing.md#pm2-integration)，经 PR #95 合入 main。** T06 的有效 LI 和 T07 的原始金属 M1 共用最小间距计算。CUT 后 2 nm 等号通过，1 nm 违规；固定 2 nm 几何、将阈值改为 3 nm 时同一对违规。
 

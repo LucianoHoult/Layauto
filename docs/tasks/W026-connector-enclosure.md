@@ -2,7 +2,7 @@
 
 ## 任务要求（PM）
 
-**阶段为可执行，归属 M1 的 Stage 3。** 沿用 `codex/w026-connector-enclosure` 分支和本任务卡路径。开发基线为 `96615e24391d9e5f593a9536d99dc0c1061b7409`。原 T05 专项在派发前扩为整包。一次交付当前 synthetic 工艺的十条必需规则，其中 [W025](W025-effective-li-spacing.md#pm2-integration) 已实现 T06/T07，本次新增 T01–T05、T08–T10。执行 session 组织一次独立方案复核和一次整包代码复核，同一分支交回 PM。
+**阶段为执行中，PM 验收发现一项必须修正，见 [PM-01](#pm01)。** 归属 M1 的 Stage 3，沿用 `codex/w026-connector-enclosure` 分支和本任务卡路径。开发基线为 `96615e24391d9e5f593a9536d99dc0c1061b7409`。原 T05 专项在派发前扩为整包。一次交付当前 synthetic 工艺的十条必需规则，其中 [W025](W025-effective-li-spacing.md#pm2-integration) 已实现 T06/T07，本次新增 T01–T05、T08–T10。执行 session 组织一次独立方案复核和一次整包代码复核，同一分支交回 PM。
 
 检查以[绑定的工艺声明及 mandatory_rule_policy](../../tests/fixtures/w003_m1/tech/rules.json)为准。Stage 3 只读已发布状态，提供完整规则入口，保留 W024 的 `check_m1_spacing` 和 W025 的 `check_spacing` 的原有行为。打开上下文时只准备数据，调用方显式请求时才求值。整轮无修改由 Stage 4 判定目标、Stage 5 在选定快照正式调用并收口，Stage 6 导出回读。M2 接入修改候选、约束传播和撤回。[架构分工](../architecture.md#stage5-rule-invocation)
 
@@ -58,3 +58,25 @@ PM 已在 W025 合并版 `f235e446` 用 Python 3.12.14 实跑以上四个输入�
 ## 执行包
 
 [实施前逐条方案](W026/plan.md) · [独立方案与代码复核](W026/review.md) · [定向证据和复现命令](W026/handoff.md) · [可运行整包示例](W026/example.py)
+
+<a id="pm01"></a>
+
+## PM-01　输出 Y 的两个漏极被切断，T08 仍报告通过
+
+**阻止合并。** PM 在交付提交 `9651ab9fe29ce3a38f6c7ddb4533d290c3451932` 用 Python 3.12.14 实跑了正常和双违规样本。正常版十条通过；双违规版仅 T05、T07 报错，分别为 VN 的 LI 侧余量 −3 nm 和 M1 实测 4 nm（要求 5 nm）。两版均成功发布，检查前后仓库、head 和 attempt 一致。另在 Python 3.10.22 上通过 4 项依赖边界检查；交付与最终受审实现 `017bf8d` 的产品、测试、打包配置一致。执行侧的 48 项检查和 16 文件 typing 见原交接。
+
+**单独改变什么。** 在正常输入的临时副本中，对偏移 1776 的竖直 LI 加一条横向 CUT `(83,78)–(91,81)` nm，然后重绑输入。它横跨 LI 的整个宽度 84–90 nm。下方 MN0.D 和上方 MP0.D 之间由此留下 3 nm 的空隙，原 CDL 和 raw query 仍分别将两端标为 Y。间距规则要求 2 nm，因此本例的 T06 通过。规则声明要求 T08 按 `same_component` 检查本地 D/G/S；正常设计中两个漏极同属输出分量 C_Y。[工艺声明](../../tests/fixtures/w003_m1/tech/rules.json) · [独立设计答案的端子表](../../tests/fixtures/w003_m1/independent-design-answer.json)
+
+**实际结果。** W014 冻结端子行给出两个不同的物理分量，T10 也披露 Y 的两个孤岛。但 T08 对两端各自比较分量上的标注名与 CDL 名，均为 Y，两条端子观察均通过；整包返回 `all_required_passed=True`。在这一版读取时，MN0.D 分量摘要始于 `6930355b`，MP0.D 的始于 `9086fa32`。复跑应比较同一次捕获中的分量关系。[产品求值路径](../../layauto_v2/constraints/device_rules.py) · [公开复现](W026/pm01_terminal_open.py)
+
+```sh
+PYTHONPATH=.:tests/contracts python -B docs/tasks/W026/pm01_terminal_open.py
+# 在修正版上运行
+PYTHONPATH=.:tests/contracts python -B docs/tasks/W026/pm01_terminal_open.py --expect-fixed
+```
+
+**补修验收。**
+
+1. 在已绑定电路和当前精确物理图之间核对本地端子的必需连接。此输入只应使 T08 为 `violation`，整包为假；诊断应给出网络、具体器件与端子、互不相连的分量和可复查的来源。分量的身份与连通性由现有图提供。用声明和端子关系选择检查对象，避免绑定到示例的器件名、网名或坐标。
+2. 正常版两漏极同分量时十条通过。保留已有 T08 名称不符和证据不足行为、外部 B 端的独立关联。T10 对没有本地端子互连义务的同名孤岛继续披露；该类孤岛本身允许存在。原双违规样本保留 T05/T07 两项，检查保持只读。
+3. 增加正式定向回归；独立 reviewer 用另一处会切断同一必需连接的 CUT 或等价真实输入复核，包括应通过的孤岛对照。仅实跑新增及受影响检查并记录受测身份，双解释器全量沿用阶段安排。修正、复核及证据推回原分支，交 PM 重新验收。
