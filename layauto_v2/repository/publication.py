@@ -1,8 +1,7 @@
 """Process-local, single-root publication with operation-scoped idempotency.
 
-No file persistence, crash durability, or Stage 5 success
-operations are provided. All public readers and writers use the same mutex;
-all content, attempt pointers and replay results switch in one root assignment.
+All public readers and writers use the same mutex.
+All content, attempt pointers and replay results switch in one root assignment.
 """
 from __future__ import annotations
 
@@ -11,10 +10,11 @@ from contextlib import contextmanager
 from hashlib import sha256
 from dataclasses import dataclass, replace
 from threading import RLock
-from typing import cast
+from typing import Literal, cast
 
 from layauto_v2.domain.codec import FrozenMap, digest
 from layauto_v2.domain.evidence import EvidenceRecord, SourceRef
+from layauto_v2.domain.policy import REQUIRED_M1_RULES
 from layauto_v2.domain.results import ParseResult
 from layauto_v2.domain.publication import (
     BASELINE_VERSION, BaselineSnapshot, BaselineTarget, InitializationEvent, PreparedBaseline,
@@ -22,7 +22,8 @@ from layauto_v2.domain.publication import (
     InputsReady, ParseAudit, PipelineResult, RunAttempt, RunRecord,
     RunRecordFreezeFailureClosure, RunRequest, StageFailure, ToolRunResult,
     WithRunRecordClosure, exception_causes, safe_exception_message,
-    safe_exception_type,
+    safe_exception_type, STAGE5_VERSION, AuditBinding, FailureCategory, PreparedStage5, Stage5Request,
+    Stage5RecordClosure, Stage5FreezeFailureClosure, Stage5RunRecord,
 )
 from layauto_v2.domain.publication_codec import (
     content_ref, decode_record, encode_record, record_digest,
@@ -378,6 +379,130 @@ class PublicationRepository:
                           record_digest(request), context_ref)
         self._commit(root, contents, updated, receipt, request.operation, new_head=new_head)
         return context
+
+    def _stage5_replay(self, root: _Root, request: Stage5Request) -> Stage5RecordClosure | Stage5FreezeFailureClosure | None:
+        if type(request) is not Stage5Request:
+            raise RepositoryConflict('RequestConflict', 'close_stage5 requires a validated Stage5Request')
+        replay = self._replay(root, request.operation, request.run_id, request.idempotency_key, record_digest(request))
+        if replay is not None and not isinstance(replay, (Stage5RecordClosure, Stage5FreezeFailureClosure)):
+            raise RepositoryConflict('RefConflict', 'invalid Stage 5 receipt')
+        return replay
+
+    def replay_stage5(self, request: Stage5Request) -> Stage5RecordClosure | Stage5FreezeFailureClosure | None:
+        """Return a recorded close before reopening inputs or evaluating any rule."""
+        with self._lock:
+            return self._stage5_replay(self._root, request)
+
+    def _stage5_base(self, root: _Root, request: Stage5Request, binding: AuditBinding) -> tuple[RunAttempt, StateHead]:
+        attempt = self._attempt(root, request.run_id)
+        if attempt.phase != 'sealed_open':
+            raise RepositoryConflict('TransitionConflict', f'{attempt.run_id}: expected sealed_open, found {attempt.phase}')
+        if attempt.revision != request.expected_revision:
+            raise RepositoryConflict('RevisionConflict', 'Stage 5 attempt revision differs')
+        if attempt.request.requested_mode != 'dummy_fixture' or attempt.request.execution_mode != 'whole_intent':
+            raise RepositoryConflict('ModeConflict', 'unsupported Stage 5 acquisition/execution mode')
+        if attempt.context_ref != request.context_ref or attempt.request.lineage_id != request.lineage_id:
+            raise RepositoryConflict('BindingConflict', 'Stage 5 request differs from the sealed attempt')
+        context = self._read(root, request.context_ref)
+        if (not isinstance(context, SealedContext) or context.checkpoint_ref != attempt.checkpoint_ref
+                or context.head_ref != request.expected_head_ref):
+            raise RepositoryConflict('BindingConflict', 'Stage 5 request differs from the sealed context')
+        head = self._read(root, context.head_ref)
+        if (not isinstance(head, StateHead) or head.lineage_id != request.lineage_id
+                or head.target_ref != context.target_ref or binding != AuditBinding(
+                    request.context_ref, context.target_ref, context.head_ref, head.snapshot_ref)):
+            raise RepositoryConflict('BindingConflict', 'Stage 5 audits refer to another target or layout version')
+        return attempt, head
+
+    @staticmethod
+    def _verify_stage5_audits(prepared: PreparedStage5) -> None:
+        planning, rules = prepared.planning, prepared.rules
+        if planning.issues:
+            if rules is not None:
+                raise RepositoryConflict('ResultConflict', 'rule evaluation follows a rejected plan')
+            return
+        if not planning.observations or rules is None:
+            raise RepositoryConflict('ResultConflict', 'closing requires both target proof and a formal rule invocation')
+        if rules.binding != planning.binding:
+            raise RepositoryConflict('BindingConflict', 'rule invocation and planning bind different publications')
+        if rules.issues:
+            return
+        ids = tuple(row.get('id') for row in rules.checks)
+        if (len(ids) != len(REQUIRED_M1_RULES) or any(name not in ids for name in REQUIRED_M1_RULES)
+                or any(row.get('status') != 'pass' for row in rules.checks)):
+            raise RepositoryConflict('ResultConflict', 'clean assessment requires a pass from each required rule')
+
+    def close_stage5(self, request: Stage5Request, prepared: PreparedStage5) -> Stage5RecordClosure | Stage5FreezeFailureClosure:
+        """Atomically freeze the completed checks and close a sealed whole-intent attempt."""
+        with self._lock:
+            root = self._root
+            replay = self._stage5_replay(root, request)
+            if (type(prepared) is not PreparedStage5 or prepared.repository_scope is not self._scope
+                    or prepared.request != request):
+                raise RepositoryConflict('BindingConflict', 'Stage 5 material belongs to a different repository or request')
+            planning, rules = prepared.planning, prepared.rules
+            if replay is not None:
+                # A direct close supplies material as well as a recipe. Both must
+                # match the winning operation, even after its response was lost.
+                if isinstance(replay, Stage5FreezeFailureClosure):
+                    saved = replay.completed
+                else:
+                    record = self._read(root, replay.run_record_ref)
+                    if not isinstance(record, Stage5RunRecord):
+                        raise RepositoryConflict('RefConflict', 'invalid Stage 5 RunRecord receipt')
+                    saved = (record.planning_ref,) + (() if record.rule_ref is None else (record.rule_ref,))
+                supplied = (content_ref(planning),) + (() if rules is None else (content_ref(rules),))
+                if supplied != saved:
+                    raise RepositoryConflict('IdempotencyConflict', 'same close request has different checked audits')
+                return replay
+
+            attempt, head = self._stage5_base(root, request, planning.binding)
+            self._verify_stage5_audits(prepared)
+            issues = planning.issues if rules is None else rules.issues
+            head_status: Literal['current', 'superseded'] = (
+                'current' if dict(root.heads).get(request.lineage_id) == request.expected_head_ref else 'superseded')
+            if not issues:
+                if head_status != 'current':
+                    raise RepositoryConflict('HeadConflict', 'lineage head advanced after target and rule evaluation')
+                if head.eco_commits:
+                    raise RepositoryConflict('ChainConflict', 'no_change requires an empty ECO chain')
+
+            contents = dict(root.contents)
+            planning_ref = self._put(contents, planning)
+            rule_ref = None if rules is None else self._put(contents, rules)
+            completed = (planning_ref,) + (() if rule_ref is None else (rule_ref,))
+            failure_ref = None
+            if issues:
+                issue = issues[0]
+                category: FailureCategory = 'planning' if rules is None else 'constraint'
+                if issue.causes:
+                    category = 'internal'
+                failure = StageFailure(request.run_id, category, issue.code, issue.message,
+                                       issue.sources[0], completed, issue.causes,
+                                       stage='stage4' if rules is None else 'stage5')
+                failure_ref = self._put(contents, failure)
+
+            closure: Stage5RecordClosure | Stage5FreezeFailureClosure
+            try:
+                self._fault('close_stage5.freeze')
+                record = Stage5RunRecord(request.run_id, planning.binding, planning_ref, rule_ref, failure_ref,
+                                         'no_change' if failure_ref is None else 'sealed_no_publication', head_status)
+                record_ref = self._put(contents, record)
+            except Exception as exc:
+                freeze_failure = StageFailure(request.run_id, 'run_record_freeze', 'RunRecordFreezeFailure',
+                                              safe_exception_message(exc), completed=completed,
+                                              causes=exception_causes(exc), stage='run_record_freeze')
+                freeze_ref = self._put(contents, freeze_failure)
+                closure = Stage5FreezeFailureClosure(request.run_id, freeze_ref, completed, failure_ref)
+            else:
+                closure = Stage5RecordClosure(request.run_id, record_ref)
+            closure_ref = self._put(contents, closure)
+            updated = replace(attempt, revision=attempt.revision + 1, phase='stage5_closed',
+                              closure_ref=closure_ref, schema_version=STAGE5_VERSION)
+            receipt = _Replay(request.operation, request.run_id, request.idempotency_key,
+                              record_digest(request), closure_ref)
+            self._commit(root, contents, updated, receipt, request.operation)
+            return closure
 
     @staticmethod
     def _source_ref(source: SourceRef, sources: dict[str, str]) -> None:
