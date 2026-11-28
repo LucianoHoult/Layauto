@@ -21,6 +21,8 @@ Operands = tuple[int, tuple[tuple[ShapeWitness, ...], ...]]
 def _at(context: ConstraintContext, path: str) -> Iterator[None]:
     try:
         yield
+    except RuleGap:
+        raise
     except (KeyError, ValueError) as exc:
         ref = context.version.snapshot_ref
         raise RuleGap('InvalidSnapshotOperand', str(exc), SourceRef(ref.id, ref.digest, field=path)) from exc
@@ -39,6 +41,12 @@ def _geometry(context: ConstraintContext) -> tuple[FrozenMap, int]:
 def _rect(value: object) -> Rect:
     x0, y0, x1, y1 = sequence(value)
     return Rect(integer(x0), integer(y0), integer(x1), integer(y1))
+
+
+def side_margins_nm(outer: Rect, inner: Rect, nm_per_dbu: int) -> tuple[int, ...]:
+    """Signed left, bottom, right and top margins in the canonical physical unit."""
+    margins = (inner.x0 - outer.x0, inner.y0 - outer.y0, outer.x1 - inner.x1, outer.y1 - inner.y1)
+    return tuple(margin * nm_per_dbu for margin in margins)
 
 
 def _drawn_layer(context: ConstraintContext, geometry: FrozenMap, layer_name: str,

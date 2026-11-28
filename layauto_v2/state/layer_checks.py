@@ -7,17 +7,18 @@ from dataclasses import dataclass, field, replace
 from types import MappingProxyType
 from typing import NamedTuple
 
+from layauto_v2.domain.codec import FrozenMap
 from layauto_v2.domain.evidence import EvidenceRecord, SourceRef
 from layauto_v2.domain.geometry import (
-    DrawnRecord, Rect, StreamLayerKey, integer, mapping, sequence, text,
+    DrawnRecord, Rect, StreamLayerKey, UnitBinding, integer, mapping, sequence, text,
 )
 from layauto_v2.domain.results import EvidenceIssue
 from .layout_store import LayoutDraft
 from .mutation import LayerInitialization, ProposedInitialState
 
-_LIFECYCLE = ('all preserve_drawn elements retain drawn signatures; frame_static also binds frame '
-              'signature; no prepublication_derived layer in this profile; operator DAG effective '
-              'geometry -> fragments -> contacts/body -> terminal graph -> mandatory rules')
+LIFECYCLE_OPERATOR = ('all preserve_drawn elements retain drawn signatures; frame_static also binds frame '
+                      'signature; no prepublication_derived layer in this profile; operator DAG effective '
+                      'geometry -> fragments -> contacts/body -> terminal graph -> mandatory rules')
 _FRAME_RULE = {
     'exact_evaluator_ref': 'w003-toy-predicate/T01.frame/1',
     'scope': 'all non-frame drawn records', 'predicate': 'each bbox contained in sole BOUNDARY',
@@ -27,7 +28,7 @@ _FRAME_RULE = {
 }
 
 
-class _Signature(NamedTuple):
+class DrawnSignature(NamedTuple):
     source: SourceRef
     top: str
     key: StreamLayerKey
@@ -36,35 +37,35 @@ class _Signature(NamedTuple):
     rect: Rect
 
     @classmethod
-    def from_record(cls, record: DrawnRecord) -> _Signature:
+    def from_record(cls, record: DrawnRecord) -> DrawnSignature:
         return cls(record.source, record.top, record.stream_key, record.layer, record.purpose, record.rect)
 
 
-def _source_signatures(layout: LayoutDraft) -> dict[str, list[_Signature]]:
+def source_signatures(gds: FrozenMap, source: SourceRef, drawn: FrozenMap,
+                      units: UnitBinding) -> dict[str, list[DrawnSignature]]:
     """Read the captured stream elements and selected mapping, independently of layout.records."""
     layers = {}
-    for value in sequence(layout.drawn.payload['layers']):
+    for value in sequence(drawn['layers']):
         declaration = mapping(value)
         stream = mapping(declaration['stream_key'])
         key = StreamLayerKey(text(stream['element']), integer(stream['layer']), integer(stream['datatype']))
         layers[key] = text(declaration['name']), text(declaration['purpose'])
-    gds = layout.gds
-    top = text(gds.payload['top'])
-    result: dict[str, list[_Signature]] = defaultdict(list)
-    for value in sequence(gds.payload['elements']):
+    top = text(gds['top'])
+    result: dict[str, list[DrawnSignature]] = defaultdict(list)
+    for value in sequence(gds['elements']):
         row = mapping(value)
         key = StreamLayerKey(text(row['element']), integer(row['layer']), integer(row['datatype']))
         name, purpose = layers[key]
-        bounds = (layout.units.source_to_canonical(integer(v)) for v in sequence(row['bbox']))
-        source = replace(gds.sources[0], byte_offset=integer(row['byte_offset']),
-                         record_index=integer(row['record_index']))
-        result[name].append(_Signature(source, top, key, name, purpose, Rect(*bounds)))
+        bounds = (units.source_to_canonical(integer(v)) for v in sequence(row['bbox']))
+        location = replace(source, byte_offset=integer(row['byte_offset']),
+                           record_index=integer(row['record_index']))
+        result[name].append(DrawnSignature(location, top, key, name, purpose, Rect(*bounds)))
     return result
 
 
-def _drawn_issues(expected: list[_Signature], records: list[DrawnRecord]) -> tuple[EvidenceIssue, ...]:
+def _drawn_issues(expected: list[DrawnSignature], records: list[DrawnRecord]) -> tuple[EvidenceIssue, ...]:
     source = Counter(expected)
-    actual = Counter(_Signature.from_record(record) for record in records)
+    actual = Counter(DrawnSignature.from_record(record) for record in records)
     missing = (EvidenceIssue('binding', 'MissingDrawnRecord', 'captured signature missing from layer', s.source)
                for s in (source - actual).elements())
     extra = (EvidenceIssue('binding', 'UnexpectedDrawnRecord', 'unexpected drawn signature on layer', s.source)
@@ -85,7 +86,7 @@ def _frame_rule(rules: EvidenceRecord) -> tuple[SourceRef, tuple[EvidenceIssue, 
     return ref, (EvidenceIssue('config', 'MissingFrameRule', 'T01.frame is required', ref),)
 
 
-def _bound_frame(layout: LayoutDraft, expected: dict[str, list[_Signature]],
+def _bound_frame(layout: LayoutDraft, expected: dict[str, list[DrawnSignature]],
                  records: dict[str, list[DrawnRecord]]) -> tuple[DrawnRecord | None, tuple[EvidenceIssue, ...]]:
     # T01.frame/1 names the sole BOUNDARY. A different enclosing polygon is insufficient.
     roles = [p for p in layout.policies if p.declaration['role'] == 'boundary']
@@ -93,7 +94,7 @@ def _bound_frame(layout: LayoutDraft, expected: dict[str, list[_Signature]],
         ref = replace(layout.drawn.sources[0], field='/layers')
         return None, (EvidenceIssue('binding', 'FrameRoleMismatch', 'expected one BOUNDARY role', ref),)
     captured, actual = expected['BOUNDARY'], records['BOUNDARY']
-    if len(captured) == len(actual) == 1 and captured[0] == _Signature.from_record(actual[0]):
+    if len(captured) == len(actual) == 1 and captured[0] == DrawnSignature.from_record(actual[0]):
         return actual[0], ()
     ref = captured[0].source if captured else layout.gds.sources[0]
     return None, (EvidenceIssue('binding', 'FrameBindingMismatch', 'expected the sole captured BOUNDARY', ref),)
@@ -160,11 +161,11 @@ class LayerInitializationChecks:
         physical = state.connectivity.binding.physical
         operator = replace(physical.sources[0], field='/operators/lifecycle~11')
         lifecycle_issues: tuple[EvidenceIssue, ...] = ()
-        if mapping(physical.payload['operators']).get('lifecycle/1') != _LIFECYCLE:
+        if mapping(physical.payload['operators']).get('lifecycle/1') != LIFECYCLE_OPERATOR:
             lifecycle_issues = (EvidenceIssue('unsupported', 'UnsupportedLifecycleOperator',
                                               'unsupported lifecycle/1 semantics', operator),)
         # The W005 owner schema requires lifecycle/1 in required_operator_refs.
-        expected = _source_signatures(layout)
+        expected = source_signatures(layout.gds.payload, layout.gds.sources[0], layout.drawn.payload, layout.units)
         actual: dict[str, list[DrawnRecord]] = defaultdict(list)
         for record in layout.records:
             actual[record.layer].append(record)

@@ -3,6 +3,7 @@ from __future__ import annotations
 
 from dataclasses import fields, is_dataclass
 
+from layauto_v2.domain.circuit import SemanticCircuitDraft
 from layauto_v2.domain.codec import FrozenMap, Value, freeze
 from layauto_v2.domain.geometry import source_value
 from .layer_checks import LayerInitializationChecks
@@ -24,6 +25,10 @@ def _value(value: object) -> Value:
     if is_dataclass(value):
         return _fields(value)
     return freeze(value)
+
+
+def current_value(circuit: SemanticCircuitDraft) -> FrozenMap:
+    return _fields(circuit)
 
 
 def target_values(candidate: ProposedInitialState) -> tuple[FrozenMap, tuple[FrozenMap, ...]]:
@@ -74,7 +79,7 @@ def snapshot_state(checks: LayerInitializationChecks) -> FrozenMap:
     index, graph = c.occupancy, c.connectivity
     model = index.model
     return FrozenMap({
-        'current': _fields(c.current), 'semantic_assurance': 'committed_unverified',
+        'current': current_value(c.current), 'semantic_assurance': 'committed_unverified',
         'geometry': _geometry(c),
         'coordinates': {'model_id': model.model_id, 'unit_id': model.unit_ref.sha256,
                         'tech_bundle': source_value(model.tech_sources[0]),
