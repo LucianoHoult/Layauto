@@ -43,7 +43,7 @@ W012调查及[A1兼容hex优化](tasks/W012-capture-wire-performance.md#pm4-a1-i
 
 [W017 方案](tasks/W017-coordinate-occupancy-projection.md#pm1-acceptance)已验收集成。15 层坐标来源、FIN 中心查询、显式 LI 格边和同格多片段均有可复核样张。[W018](tasks/W018-coordinate-occupancy-core.md#pm2-integration) 已集成逐层声明驱动的坐标与占用内核，可从占用片段回查 GDS 来源。[W019](tasks/W019-single-cell-occupancy-query.md#pm2-integration) 已将其接入 W016 单 cell 分析入口，实际合并版本通过双解释器阶段回归，可查询每格的实际占用及 GDS 来源。
 
-[W020](tasks/W020-stage2-baseline-readiness.md#pm-integration) 已串起同一次捕获的初始事实，[W021](tasks/W021-proposed-initial-state.md#pm2-integration) 已将其组成不可变候选。[W022](tasks/W022-layer-initialization-checks.md#pm2-integration) 已集成逐层原图、固定外框和占用校验。[W023](tasks/W023-atomic-baseline-publication.md#pm2-integration) 的首次原子发布、已有版本复用和双解释器阶段回归已通过。[W024](tasks/W024-stage3-rule-context.md#pm2-integration) 已从已发布快照核验第一条 Stage 3 规则 T07（金属 M1 间距）。[W025](tasks/W025-effective-li-spacing.md) 接续 T06，核对 CUT 后有效 LI 区域之间的精确间距。M1 随后还需核对适用规则和全部目标、记录零修改并完成导出与回读。
+[W020](tasks/W020-stage2-baseline-readiness.md#pm-integration) 已串起同一次捕获的初始事实，[W021](tasks/W021-proposed-initial-state.md#pm2-integration) 已将其组成不可变候选。[W022](tasks/W022-layer-initialization-checks.md#pm2-integration) 已集成逐层原图、固定外框和占用校验。[W023](tasks/W023-atomic-baseline-publication.md#pm2-integration) 的首次原子发布、已有版本复用和双解释器阶段回归已通过。[W024](tasks/W024-stage3-rule-context.md#pm2-integration) 已从已发布快照核验第一条 Stage 3 规则 T07（金属 M1 间距）。[W025](tasks/W025-effective-li-spacing.md#pm2-integration) 已将 T06 有效 LI 与 T07 原始金属接入同一间距检查。[W026](tasks/W026-connector-enclosure.md) 接续 T05 的本地连接件与外部 tap 包围检查。M1 随后还需核对适用规则和全部目标、记录零修改并完成导出与回读。
 
 | 里程碑 | 可观察能力与代表输入→结果 | 依赖 / 退出验收 |
 | --- | --- | --- |
