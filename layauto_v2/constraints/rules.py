@@ -6,6 +6,7 @@ from itertools import combinations, product
 
 from layauto_v2.domain.geometry import mapping
 from layauto_v2.domain.local_connectivity import CONSUMED_PHYSICAL
+from layauto_v2.domain.policy import LI_SPACING as LI_RULE, M1_SPACING as M1_RULE
 from layauto_v2.domain.regions import CONSUMED_PHYSICAL as REGION_PHYSICAL
 from layauto_v2.state.local_connectivity import same_layer_contact
 from layauto_v2.tech.rules import RuleRecord
@@ -13,8 +14,6 @@ from .drc_context import ConstraintContext
 from .operands import Operands, effective_li, metal
 from .result import PairMeasurement, RuleCheck, RuleGap, RuleStatus, ShapeWitness
 
-LI_RULE = 'T06.li_spacing'
-M1_RULE = 'T07.m1_spacing'
 _SCOPES = {
     LI_RULE: 'local effective LI; dedicated cut-island specimen evaluated separately',
     M1_RULE: 'all unordered pairs of M1 rectangles',

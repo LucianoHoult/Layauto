@@ -1,16 +1,19 @@
-"""Prepare inputs, publish Stage 2 and open read-only Stage 3 checks."""
+"""Orchestrate input capture, baseline publication and whole-intent Stage 4/5 closure."""
 from __future__ import annotations
 
 import posixpath
+from collections.abc import Callable
 from pathlib import Path
+from time import perf_counter
 from typing import TYPE_CHECKING, TypeAlias, cast
 
 from layauto_v2.domain.codec import FrozenMap, digest
 from layauto_v2.domain.evidence import EvidenceRecord, SourceFile, SourceRef
 from layauto_v2.domain.publication import (
-    AcquisitionEvent, BaselineSnapshot, BaselineTarget, ContentRef, EvidenceAudit, InitializationEvent,
+    AcquisitionEvent, AuditBinding, AuditIssue, BaselineSnapshot, BaselineTarget, ContentRef, EvidenceAudit, InitializationEvent,
     InputCheckpoint, InputsReady, ParseAudit, PipelineResult, PublicationUnavailable,
-    RunAttempt, RunRequest, SealedContext, Stage2Request, StageFailure, StateHead, ToolRunResult, exception_causes,
+    PlanningAudit, PreparedStage5, RuleAudit, RunAttempt, RunRequest, SealedContext, Stage2Request,
+    Stage5FreezeFailureClosure, Stage5RecordClosure, Stage5Request, StageFailure, StateHead, ToolRunResult, exception_causes,
     safe_exception_message, safe_exception_type,
 )
 from layauto_v2.domain.results import ParseResult
@@ -142,7 +145,7 @@ def prepare_inputs(repository: PublicationRepository, request: RunRequest) -> Pr
             attempt = repository.load_attempt(request.run_id)
         except Exception as exc:
             return _unavailable(repository, request, 'read_attempt', exc)
-        if attempt.phase == 'sealed_open':
+        if attempt.context_ref is not None:
             raise RepositoryConflict('TransitionConflict', 'Stage 2 already sealed this input checkpoint')
         if checkpoint is not None:
             return _resume(repository, request, checkpoint)
@@ -327,3 +330,71 @@ def open_constraint_context(repository: PublicationRepository, run_id: str,
                                           mapping(value['tech_bundle']))
     return ConstraintContext._published(version, snapshot, RuleCatalog.from_owner(rules.payload, rules.sources[0]),
                                         physical, value, current_value(source_circuit), target, head.eco_commits)
+
+
+def _internal_issue(exc: Exception, ref: ContentRef) -> AuditIssue:
+    return AuditIssue('InternalStageFailure', safe_exception_message(exc) or safe_exception_type(exc),
+                      (SourceRef(ref.id, ref.digest),), exception_causes(exc))
+
+
+def prepare_stage5(repository: PublicationRepository, request: Stage5Request, *,
+                   on_timing: Callable[[str, float], None] | None = None) -> PreparedStage5:
+    """Plan on the sealed snapshot, then invoke the mandatory whole-cell checker once.
+
+    The optional observer receives elapsed seconds for each stage reached. Timings
+    are external measurements and do not participate in the canonical receipt.
+    """
+    from layauto_v2.constraints import check_rules
+    from layauto_v2.constraints.audit import freeze_rule_audit
+    from layauto_v2.planning import plan_no_change
+
+    if type(request) is not Stage5Request:
+        raise RepositoryConflict('RequestConflict', 'preparation requires a Stage5Request')
+    attempt = repository.load_attempt(request.run_id)
+    if attempt.phase != 'sealed_open':
+        raise RepositoryConflict('TransitionConflict', f'{request.run_id}: expected a sealed open attempt')
+    if request.expected_revision != attempt.revision:
+        raise RepositoryConflict('RevisionConflict', 'Stage 5 request uses a stale attempt revision')
+    if request.context_ref != attempt.context_ref or request.lineage_id != attempt.request.lineage_id:
+        raise RepositoryConflict('BindingConflict', 'Stage 5 request differs from the sealed run')
+    sealed = cast(SealedContext, repository.read(request.context_ref))
+    if sealed.head_ref != request.expected_head_ref:
+        raise RepositoryConflict('HeadConflict', 'Stage 5 request selects a different head from its context')
+    head = cast(StateHead, repository.read(sealed.head_ref))
+    binding = AuditBinding(request.context_ref, sealed.target_ref, sealed.head_ref, head.snapshot_ref)
+
+    started = perf_counter()
+    try:
+        view = open_constraint_context(repository, request.run_id, request.context_ref)
+        plan = plan_no_change(view, binding)
+        planning = plan.audit
+    except RepositoryConflict:
+        raise
+    except Exception as exc:
+        planning = PlanningAudit(binding, (), (_internal_issue(exc, binding.snapshot_ref),))
+    if on_timing is not None:
+        on_timing('planning', perf_counter() - started)
+    rules = None
+    if not planning.issues:
+        started = perf_counter()
+        try:
+            report = check_rules(view)
+            if report.version != view.version or report.catalog != view.catalog:
+                raise RepositoryConflict('BindingConflict', 'rule report differs from the selected run, version or catalog')
+            rules = freeze_rule_audit(binding, report)
+        except RepositoryConflict:
+            raise
+        except Exception as exc:
+            rules = RuleAudit(binding, (), (_internal_issue(exc, binding.context_ref),))
+        if on_timing is not None:
+            on_timing('rules', perf_counter() - started)
+    return PreparedStage5._checked(repository._scope, request, planning, rules)
+
+
+def run_stage5(repository: PublicationRepository, request: Stage5Request) -> Stage5RecordClosure | Stage5FreezeFailureClosure:
+    """Run Stage 4 and close Stage 5, or return the original closure on replay."""
+    with repository.orchestration(request.run_id):
+        replay = repository.replay_stage5(request)
+        if replay is not None:
+            return replay
+        return repository.close_stage5(request, prepare_stage5(repository, request))

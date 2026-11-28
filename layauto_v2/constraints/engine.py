@@ -4,6 +4,7 @@ from __future__ import annotations
 from collections.abc import Callable, Mapping
 from dataclasses import replace
 
+from layauto_v2.domain import policy
 from layauto_v2.domain.geometry import text
 from layauto_v2.domain.publication import safe_exception_message, safe_exception_type
 from layauto_v2.tech.rules import RuleRecord
@@ -15,7 +16,7 @@ from .drc_context import ConstraintContext
 from .enclosure import evaluate_enclosure
 from .lifecycle import evaluate_lifecycle
 from .result import MissingRule, RuleCheck, RuleGap, RuleIssue, RuleReport
-from .rules import LI_RULE, M1_RULE, evaluate_li, evaluate_m1
+from .rules import evaluate_li, evaluate_m1
 
 Evaluator = Callable[[ConstraintContext, RuleRecord], RuleCheck]
 
@@ -66,25 +67,25 @@ def _report(context: ConstraintContext, evaluators: Mapping[str, Evaluator], *,
 
 def check_m1_spacing(context: ConstraintContext) -> RuleReport:
     """Evaluate only T07, preserving the W024 report."""
-    return _report(context, {M1_RULE: evaluate_m1})
+    return _report(context, {policy.M1_SPACING: evaluate_m1})
 
 
 def check_spacing(context: ConstraintContext) -> RuleReport:
     """Evaluate T06 and T07 against the same published version and bound deck."""
-    return _report(context, {LI_RULE: evaluate_li, M1_RULE: evaluate_m1})
+    return _report(context, {policy.LI_SPACING: evaluate_li, policy.M1_SPACING: evaluate_m1})
 
 
 def check_rules(context: ConstraintContext) -> RuleReport:
     """Evaluate the M1 obligations once on the explicitly selected publication."""
     return _report(context, {
-        'T01.frame': evaluate_frame,
-        'T02.fin_grid': evaluate_fin,
-        'T03.recognition': evaluate_recognition,
-        'T04.body': evaluate_body,
-        'T05.contact_enclosure': evaluate_enclosure,
-        LI_RULE: evaluate_li,
-        M1_RULE: evaluate_m1,
-        'T08.terminal_graph': evaluate_terminals,
-        'T09.lifecycle': evaluate_lifecycle,
-        'T10.coverage': evaluate_coverage,
+        policy.FRAME: evaluate_frame,
+        policy.FIN_GRID: evaluate_fin,
+        policy.RECOGNITION: evaluate_recognition,
+        policy.BODY: evaluate_body,
+        policy.CONTACT_ENCLOSURE: evaluate_enclosure,
+        policy.LI_SPACING: evaluate_li,
+        policy.M1_SPACING: evaluate_m1,
+        policy.TERMINAL_GRAPH: evaluate_terminals,
+        policy.LIFECYCLE: evaluate_lifecycle,
+        policy.COVERAGE: evaluate_coverage,
     }, complete=True)
