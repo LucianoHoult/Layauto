@@ -200,6 +200,25 @@ rules are pending unless a declaration conflict has been identified. The run
 stays sealed_open. The [file example](docs/tasks/W024/example.py) produces both
 the 5 nm normal report and the 4 nm C14 violation. [W024](docs/tasks/W024-stage3-rule-context.md)
 
+To evaluate T06 and T07 together, pass the same open view to `check_spacing`.
+Each LI operand contains the pieces of one CUT-effective region. Each measured
+pair identifies its two nearest pieces, their drawn owners and contributing CUTs.
+
+```python
+from layauto_v2.constraints import check_spacing
+
+report = check_spacing(view)
+li = report.for_rule("T06.li_spacing")
+metal = report.for_rule("T07.m1_spacing")
+if li.pairs:
+    nearest = min(li.pairs, key=lambda p: p.distance_squared_nm2)
+    print(nearest.distance_squared_nm2, nearest.first.piece_id, nearest.second.piece_id)
+    print(nearest.first.source, nearest.first.cuts, li.rule.location("parameters/min_distance_nm"))
+```
+
+The [W025 example](docs/tasks/W025/example.py) publishes three synthetic inputs
+and prints the rule statuses, closest pairs, field locations and GDS sources.
+
 ## Semantic normalization component
 
 W007 consumes already captured W005 evidence. It produces an immutable source

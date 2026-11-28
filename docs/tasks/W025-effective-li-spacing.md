@@ -54,3 +54,38 @@ PYTHONPATH=.:tests/contracts python -B docs/tasks/W025/pm_inputs.py
 ## 执行 session 启动指令
 
 > 在 `codex/w025-effective-li-spacing` 执行 W025 A1–A5。先按“本轮开发边界”写方案，说明如何选择原图或 CUT 后有效区域、复用精确间距计算，以及单改 CUT 时要重查哪些 LI；交独立 reviewer 复核后实施。保留 W024 公开入口，通过同一次只读调用取得 T06、T07 和其余八项的状态。验证 2 nm 等号通过、1 nm 违规，以及固定原图只把阈值改为 3 nm 后的判定。每例都能回查规则、LI、CUT 和几何见证。覆盖多块区域、错误声明及既有 T07 行为。开发、交付和 review 跑新增及受影响范围，按受测版本复用已有证据。推回原分支交 PM 验收。Stage 5 正式调用和 M2 候选传播各按路线图后续集成。
+
+### 执行方案（起点 879079ec）
+
+沿用 W024 的 open_constraint_context 认证一次 run、head、snapshot 和工艺。保留 check_m1_spacing 的 T07 单查；新增 check_spacing，在同一上下文按 catalog 顺序给出两个 RuleCheck 及其余声明的状态。按登记的 ID、exact_evaluator_ref、schema、scope 选择适配器，从声明读取 parameters.min_distance_nm，核对 predicate、nm、geometry_only/none 和绑定的 spacing/1、same_layer_contact/1；T06 另核对 CUT 差集语义。能力缺项沿用定位到字段的 policy 结果。
+
+T07 每个 drawn M1 BOUNDARY 是一个单矩形操作数。T06 从快照的 LI 原记录沿 effective_by_record 找到各独立 region，每个 region 以准确的 piece 矩形集合为操作数。共用全层无序对循环，对每对搜索 piece 的笛卡尔积，取最小闭矩形距离平方；零距离并列时优先保留实际发生正面积或正长度边接触的见证。点触距离为零，仍参与阈值比较。用 canonical_tick_nm 作精确平方换算，严格小于才违规。见证保留 region/piece、owner、CUT 和 GDS 位置、摘要；用报告的版本和 rule.location 回查快照、工艺字段。相同 owner、格号、标签均不消对。
+
+CUT 右缘从 141 移到 140 nm 时，原 LI（偏移 2672）的左块仍止于 139、面积 36，右块左界从 141 移到 140、面积从 36 增到 40 nm²。两侧身份和成对关系均需重取。未来局部重查应从新旧 CUT 的并集查所有相交 drawn LI，重建每个 owner 的全部旧/新 region（含消失、增生、分裂和合并）。按两版完整 region 的各块外扩本次阈值，查询所有相交格及边界，去重 region 后精确比较受影响区域彼此及与候选邻居。索引须覆盖旧/新状态；要更新全局最近值还须保留其余对的结果或重算。此次两份快照均直接查全层 5 个区域、10 对，作为完整性对照。
+
+### 实施与验证交接
+
+实现与测试提交为 `d1252db5eec5236c5eee438181caa5f7698a4e50`。运行[公开示例](W025/example.py)可从每份临时完整输入发布第 0 版，删除临时目录，再从同一上下文查询两条规则。报告的 `for_rule` 按规则 ID 取结果，`operands` 保留各区域全部分块，`pairs` 保留每对最近分块，`violations` 列出不达标对。两侧见证的 `source` 指向 drawn 记录；`region_id`、`piece_id` 和 `cuts` 可结合报告版本查证有效边界与 CUT 来源。示例打印 GDS 字节偏移、摘要及 `tech/rules.json` 内的阈值字段，本组 T06/T07 分别为 `/rules/5/parameters/min_distance_nm` 和 `/rules/6/parameters/min_distance_nm`。
+
+| CUT 右缘（nm） | T06 实测 / 阈值（nm） | T06 状态和违规对数 | T07 实测 / 阈值（nm） | 首次打开上下文（s） | 组合求值（ms） |
+| ---: | ---: | --- | --- | ---: | ---: |
+| 141 | 2 / 2 | pass，0 | 5 / 5，pass | 1.271355 | 1.151 |
+| 140 | 1 / 2 | violation，1 | 5 / 5，pass | 0.883231 | 0.983 |
+| 141 | 2 / 3 | violation，1 | 5 / 5，pass | 0.848112 | 0.964 |
+
+每组均有 10 对 LI、6 对 M1、8 条 pending。后两组仅原 LI（2672）经 CUT（2736）分出的左右两块违规；第一、三组连两端 region 和 piece 的 ID 都相同。T07 最近两条原 M1 位于偏移 2480、2544。计时取同次运行中发布完成后的两个单次墙钟区间，含同时运行其他定向检查的主机负载。对缺项样本，将 T06 scope 改为仅含带标签区域并重新封存，得到 indeterminate、具体 scope 字段及绑定的 indeterminate_then_reject，T07 仍通过。三组及缺项均检查 attempt 和仓库查询前后相等。
+
+[独立 reviewer 的方案与代码复核、全对复算表](W025/review.md)记录了两条公开路径的实际调用链、同名 LI 和另一份 L 形样本。[独立探针](W025/review_gds.py)以真实 GDS 坐标和单位计算，再与公开结果对比。供 PM 在集成版本按风险复跑；当前等待 PM 验收。
+
+在仓库根目录复现本次新增与受影响范围（Linux，CPython 3.12.14，PyYAML 6.0.3，pytest 9.2.0，mypy 2.4.1）：
+
+```sh
+python -B -m pytest -p no:cacheprovider -q tests/unit/test_w02{4,5}_spacing.py tests/contracts/test_w024*.py tests/contracts/test_w025_effective_li.py
+python -m mypy layauto_v2/constraints
+PYTHONPATH=.:tests/contracts python -B docs/tasks/W025/example.py
+PYTHONPATH=.:tests/contracts:docs/tasks/W024 python -B docs/tasks/W025/review_gds.py --published --notch
+```
+
+**实跑结果。** W025 几何单测 5 项、公开发布合同 5 项，W024 单查、错误路径、跨版本认证及模块依赖等 28 项，合计 **38 项通过**。联合收集也取得 38 项。受影响的 constraints 包共 6 个源文件通过 strict mypy。pytest 的外部 anyio 插件报告一个 pytest 10 API 弃用提醒。除实施前方案外，reviewer 已在上述产品提交上完成原图复算及调用链检查，复核证据提交为 `f9c4fd1`。
+
+**采信与集成边界。** 与 W024 修复产品 `c311297` 比对，pipeline、state、domain、tech 和固定 fixtures 无差异；沿用 [W024 已验收记录](W024-stage3-rule-context.md#pm2-integration)作为这些生产者的基线，本次对变更的查询路径使用上述新实测。若合并改变绑定、几何、缺项行为或输入，须补跑对应定向合同与独立原图探针。双解释器全量由 PM 留在完整 mandatory 与零修改收口的阶段集成。Stage 5 正式调用与 M2 事务内候选重查按原路线图推进。
