@@ -130,6 +130,22 @@ def test_interrupt_before_switch_response_loss_and_same_key_content(baselines, m
         changed_report = pipeline.prepare_stage5(repo, req)
     assert changed_report.rules.issues and not prepared.rules.issues
 
+    # A fault hook can re-enter the same process's RLock at the switch.
+    # Its successful mutation must survive the competing outer publication.
+    nested = RunRequest('nested', 'independent-lineage', 'create', str(missing_site))
+
+    def reenter(point):
+        if point == 'close_stage5.before_switch':
+            repo.create_attempt(nested)
+
+    with monkeypatch.context() as patch:
+        patch.setattr(repo, '_fault_injector', reenter)
+        conflict('RootConflict', repo.close_stage5, req, prepared)
+    assert repo.load_attempt(nested.run_id).request == nested and repo.load_attempt(req.run_id) == attempt
+    assert repo.replay_stage5(req) is None
+    assert repo.snapshot().generation == before.generation + 1
+    before = repo.snapshot()
+
     faults = {'close_stage5.before_switch': KeyboardInterrupt, 'close_stage5.after_switch': OSError}
 
     def inject(point):
