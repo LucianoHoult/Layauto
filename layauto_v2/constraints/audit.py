@@ -63,4 +63,8 @@ def freeze_rule_audit(binding: AuditBinding, report: RuleReport) -> RuleAudit:
         if counts[rule_id] != 1:
             issues.append(AuditIssue('IncompleteRuleReport', f'{rule_id}: expected one result, found {counts[rule_id]}',
                                      (catalog,)))
+    for check in report.checks:
+        if check.rule.id not in REQUIRED_M1_RULES:
+            issues.append(AuditIssue('UnexpectedRuleResult', f'{check.rule.id} is outside the bound M1 rule package',
+                                     (check.rule.source,)))
     return RuleAudit(binding, tuple(_row(check) for check in report.checks), tuple(issues))
