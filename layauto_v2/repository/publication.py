@@ -134,6 +134,9 @@ class PublicationRepository:
         staged = _Root(root.generation + 1, tuple(contents.items()),
                        tuple(attempts.items()), root.replays + (replay,), heads)
         self._fault(point + '.before_switch')
+        # Fault hooks can re-enter this RLock and complete another publication.
+        if self._root is not root:
+            raise RepositoryConflict('RootConflict', 'repository changed during publication')
         self._root = staged
         # This exception models response loss: the full result is already visible.
         self._fault(point + '.after_switch')
