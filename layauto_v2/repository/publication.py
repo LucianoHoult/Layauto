@@ -490,7 +490,6 @@ class PublicationRepository:
                 self._fault('close_stage5.freeze')
                 record = Stage5RunRecord(request.run_id, planning.binding, planning_ref, rule_ref, failure_ref,
                                          'no_change' if failure_ref is None else 'sealed_no_publication', head_status)
-                record_ref = self._put(contents, record)
             except Exception as exc:
                 freeze_failure = StageFailure(request.run_id, 'run_record_freeze', 'RunRecordFreezeFailure',
                                               safe_exception_message(exc), completed=completed,
@@ -498,6 +497,8 @@ class PublicationRepository:
                 freeze_ref = self._put(contents, freeze_failure)
                 closure = Stage5FreezeFailureClosure(request.run_id, freeze_ref, completed, failure_ref)
             else:
+                # Construction succeeded. A storage failure must abort the entire close.
+                record_ref = self._put(contents, record)
                 closure = Stage5RecordClosure(request.run_id, record_ref)
             closure_ref = self._put(contents, closure)
             updated = replace(attempt, revision=attempt.revision + 1, phase='stage5_closed',
