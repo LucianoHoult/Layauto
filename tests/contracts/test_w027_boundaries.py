@@ -5,7 +5,7 @@ from threading import Barrier
 
 import pytest
 
-from layauto_v2 import pipeline
+from layauto_v2 import constraints, pipeline
 from layauto_v2.constraints import engine
 from layauto_v2.domain.publication import RunRequest, Stage5Request
 from layauto_v2.domain.publication_codec import content_ref, encode_record
@@ -177,6 +177,41 @@ def test_interrupt_before_switch_response_loss_and_same_key_content(baselines, m
     advanced = repo.snapshot()
     assert repo.replay_stage5(req) == repo.close_stage5(req, prepared) == pipeline.run_stage5(repo, req) == closure
     assert repo.snapshot() == advanced
+
+
+
+def test_formal_report_must_belong_to_this_run_and_cover_every_obligation(baselines, monkeypatch):
+    repo, req, context = reusing(baselines, 'report-reuse')
+    _, original, _ = baselines[1]['normal']
+    check_rules = constraints.check_rules
+    old_view = pipeline.open_constraint_context(repo, original.run_id, original.context_ref)
+    old_pass = check_rules(old_view)
+    assert old_pass.all_required_passed and old_pass.version.head_ref == context.head_ref
+    assert old_pass.version.context_ref != req.context_ref
+    before = repo.snapshot()
+
+    with monkeypatch.context() as patch:
+        patch.setattr(constraints, 'check_rules', lambda view: old_pass)
+        conflict('BindingConflict', pipeline.run_stage5, repo, req)
+    assert before == repo.snapshot()
+
+    # Model an incomplete response from the formal checker on the correct
+    # version: one returned obligation is pending and another row is absent.
+    def incomplete(view):
+        report = check_rules(view)
+        rows = tuple(replace(row, status='pending', observations=()) if row.rule.id == 'T05.contact_enclosure' else row
+                     for row in report.checks if row.rule.id != 'T07.m1_spacing')
+        return replace(report, checks=rows)
+
+    monkeypatch.setattr(constraints, 'check_rules', incomplete)
+    closure = pipeline.run_stage5(repo, req)
+    record = repo.read(closure.run_record_ref)
+    audit = repo.read(record.rule_ref)
+    assert record.status == 'sealed_no_publication' and repo.read(record.failure_ref).stage == 'stage5'
+    assert sum(row['status'] == 'pass' for row in audit.checks) == 8
+    assert any(issue.code == 'RequiredRuleNotPassed' and 'T05.contact_enclosure' in issue.message for issue in audit.issues)
+    assert any(issue.code == 'IncompleteRuleReport' and 'T07.m1_spacing' in issue.message for issue in audit.issues)
+    assert repo.load_head(req.lineage_id) == old_pass.version.head_ref
 
 
 def test_concurrent_close_accepts_one_key(baselines):
