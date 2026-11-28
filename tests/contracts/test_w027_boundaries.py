@@ -7,7 +7,7 @@ import pytest
 
 from layauto_v2 import constraints, pipeline
 from layauto_v2.constraints import engine
-from layauto_v2.domain.publication import RunRequest, Stage5Request
+from layauto_v2.domain.publication import RunRequest, Stage5Request, Stage5RunRecord
 from layauto_v2.domain.publication_codec import content_ref, encode_record
 from layauto_v2.repository import PublicationRepository, RepositoryConflict
 from w023_cases import capture, sample
@@ -129,6 +129,21 @@ def test_interrupt_before_switch_response_loss_and_same_key_content(baselines, m
         patch.setattr(engine, 'evaluate_m1', break_evaluator)
         changed_report = pipeline.prepare_stage5(repo, req)
     assert changed_report.rules.issues and not prepared.rules.issues
+
+    # The record was successfully constructed. A write failure aborts the
+    # transaction; it must not create the exceptional no-RunRecord closure.
+    store = repo._put
+
+    def unavailable(contents, record):
+        if isinstance(record, Stage5RunRecord):
+            raise OSError('store run record')
+        return store(contents, record)
+
+    with monkeypatch.context() as patch:
+        patch.setattr(repo, '_put', unavailable)
+        with pytest.raises(OSError, match='store run record'):
+            repo.close_stage5(req, prepared)
+    assert repo.snapshot() == before and repo.replay_stage5(req) is None
 
     # A fault hook can re-enter the same process's RLock at the switch.
     # Its successful mutation must survive the competing outer publication.
