@@ -135,6 +135,10 @@ def _recognition_issue(obs: Observation) -> AuditIssue:
     axis = text(obs.facts['axis'])
     code = 'ExtractionCountMismatch' if axis == 'fins_per_finger' else 'ExtractionValueMismatch'
     measured = sequence(obs.facts['measured'])
+    if not measured:
+        return AuditIssue('MissingExtractionFact',
+                          f'{obs.object_ids[0]}.{axis} has no measured value for {text(obs.facts["circuit"])}',
+                          obs.sources)
     declared = str(obs.facts['declared'])
     message = (f'{obs.object_ids[0]}.{axis} measured {measured}, {text(obs.facts["circuit"])} '
                f'declared {declared} {text(obs.facts["unit"])}')

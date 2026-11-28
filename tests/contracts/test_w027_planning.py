@@ -6,11 +6,19 @@ import pytest
 from layauto_v2.constraints.drc_context import ConstraintContext
 from layauto_v2.domain.publication import AuditBinding
 from layauto_v2.domain.publication_codec import content_ref
+from layauto_v2.pipeline import open_constraint_context, publish_stage2
 from layauto_v2.planning import NoChangePlanningResult, RejectedPlanningResult, plan_no_change
-from layauto_v2.repository import RepositoryConflict
+from layauto_v2.repository import PublicationRepository, RepositoryConflict
 from w005_cases import rebind
-from w023_cases import sample
-from w026_cases import inspect_published
+from w009_cases import rewrite_geometry
+from w023_cases import capture, sample
+
+
+def open_sample(root, run_id):
+    repository = PublicationRepository()
+    _, request = capture(repository, root, run_id, lineage=run_id, budget=400)
+    publish_stage2(repository, request)
+    return open_constraint_context(repository, run_id, repository.load_attempt(run_id).context_ref)
 
 
 def binding(view):
@@ -47,7 +55,7 @@ def test_empty_delta_list_cannot_hide_an_undeclared_semantic_change(tmp_path):
     path = root / 'target.cdl'
     path.write_text(path.read_text().replace('.SUBCKT INV_M1_SYNTH A Y', '.SUBCKT INV_M1_SYNTH Y A'))
     rebind(root)
-    view, _, _ = inspect_published(root, 'semantic-only')
+    view = open_sample(root, 'semantic-only')
     assert {d['op_type'] for d in view.target.differences} == {'ports_change', 'net_membership_change'}
     ledger_missing = replace(view.target, differences=())
     probe = ConstraintContext._published(view.version, view.snapshot, view.catalog, view.physical,
@@ -58,3 +66,16 @@ def test_empty_delta_list_cannot_hide_an_undeclared_semantic_change(tmp_path):
     assert any('ports' in issue.message for issue in result.audit.issues)
     for issue in result.audit.issues:
         assert {s.uri for s in issue.sources} == {'source.cdl', 'target.cdl'}
+
+
+def test_zero_fins_distinguishes_absent_width_from_measured_count(tmp_path):
+    root = sample(tmp_path)
+    rewrite_geometry(root, replace_layers={'FIN': ((10, 194, 110, 196),)})
+    view = open_sample(root, 'zero-fins')
+    result = plan_no_change(view, binding(view))
+    assert isinstance(result, RejectedPlanningResult)
+    widths = [o for o in result.audit.observations if o['kind'] == 'device_parameter' and o['facts']['axis'] == 'fin_width']
+    assert len(widths) == 4 and all(o['facts']['measured'] == () for o in widths)
+    assert {issue.code for issue in result.audit.issues} == {'ExtractionCountMismatch', 'MissingExtractionFact'}
+    for issue in result.audit.issues:
+        assert 'source.gds' in {s.uri for s in issue.sources}
