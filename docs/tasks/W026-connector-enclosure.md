@@ -80,3 +80,30 @@ PYTHONPATH=.:tests/contracts python -B docs/tasks/W026/pm01_terminal_open.py --e
 1. 在已绑定电路和当前精确物理图之间核对本地端子的必需连接。此输入只应使 T08 为 `violation`，整包为假；诊断应给出网络、具体器件与端子、互不相连的分量和可复查的来源。分量的身份与连通性由现有图提供。用声明和端子关系选择检查对象，避免绑定到示例的器件名、网名或坐标。
 2. 正常版两漏极同分量时十条通过。保留已有 T08 名称不符和证据不足行为、外部 B 端的独立关联。T10 对没有本地端子互连义务的同名孤岛继续披露；该类孤岛本身允许存在。原双违规样本保留 T05/T07 两项，检查保持只读。
 3. 增加正式定向回归；独立 reviewer 用另一处会切断同一必需连接的 CUT 或等价真实输入复核，包括应通过的孤岛对照。仅实跑新增及受影响检查并记录受测身份，双解释器全量沿用阶段安排。修正、复核及证据推回原分支，交 PM 重新验收。
+
+### PM-01 补修交接
+
+受测产品提交为 `8a5513f42e9f20bcf1285cca2607796cf2f2156f`。T08 用当前选定 cell 的 CDL 端子构造本地互连要求。两个及以上本地端子声明在同一网络时，`local_net_connectivity` 观察列出每个器件、端序角色、物理节点和分量，逐一关联到已发布图。端子上的网络标注、外部 B 链及 T10 的同名孤岛披露各自保留。
+
+在起点 `b42f77cf87ea41f640769d7e28e4336977fb5b65` 按上文第一条命令实跑，复现了已断路而整包通过。修正版仍使用同一输入。检查后可从 `report.for_rule('T08.terminal_graph').observations` 取出 `local_net_connectivity`，通过 `facts['terminals']` 查看逐端分量，`sources` 反查两处 CDL 声明、查询、快照分量和规则的 `relation_basis`。公开复现命令会打印这些来源。
+
+```sh
+PYTHONPATH=.:tests/contracts python -B docs/tasks/W026/pm01_terminal_open.py --expect-fixed
+PYTHONPATH=.:tests/contracts python -B docs/tasks/W026/pm01_review_probe.py
+PYTHONPATH=.:tests/contracts python -B docs/tasks/W026/example.py normal combined
+python -B -m pytest -q tests/contracts/test_w026_devices.py tests/contracts/test_w026_drawn.py -k 'local_gate_and_drain or cut_between_output or declared_drain or missing_gate_net or same_label_islands'
+python -m mypy --strict layauto_v2/constraints/device_rules.py
+```
+
+**任务卡切口实测。** 追加 CUT 的 GDS 偏移为 2672。版本 0 中仅 T08 为 `violation`，整包 `all_required_passed=False`。T06 实测 3 nm、T10 披露两个 Y 孤岛，两项均通过。两个漏极各自的分量仍观察到标签 Y。诊断的 CDL 来源及受检图中的分量如下。
+
+| 网络 | 端子 | 原始声明 | 已发布图的物理分量 |
+| --- | --- | --- | --- |
+| Y | MN0.D | source.cdl 第 3 行 | `6930355b3d18c2a47526b44c8e199eb3ca5ef94fe81378f7b68e8e1d6221d056` |
+| Y | MP0.D | source.cdl 第 4 行 | `9086fa32563ecef7503527f506910e0bf6caab473f0f193dcf7d2b4970502db7` |
+
+该次受检快照 SHA-256 为 `2cf72074997d1358ab25da5d36e8f61cd4516e0b7776975b2d421db29f76ef6e`。分量可在这份快照的 `/connectivity/components/<分量摘要>` 读回，判定声明位于 `tech/rules.json#/rules/7/relation_basis`。
+
+正常版十条通过。原组合样本保持 T05、T07 两项违规，分别为 VN/LI 右边 −3 nm 和 M1 间距 4 nm（要求 5 nm），其他八项通过。各次检查前后的快照内容、head、attempt 和仓库状态一致。独立复核对另外两个切口直接遍历物理图边，结果及复现见[独立复核记录](W026/pm01_review.md)。
+
+Python 3.12.14 实跑上述 5 项定向回归，全部通过。覆盖正常 A/Y 互连和独立 B 链、Y 断路、逐端名称不符及跨角色 D/S 的声明互连、缺少栅端网络证据时的 indeterminate，以及允许的同名孤岛。受影响产品模块严格类型检查通过。其余 W026 验证按既有受测身份采信，双解释器全量留到阶段集成。待 PM 重新验收。
