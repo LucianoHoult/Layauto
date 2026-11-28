@@ -397,4 +397,14 @@ def run_stage5(repository: PublicationRepository, request: Stage5Request) -> Sta
         replay = repository.replay_stage5(request)
         if replay is not None:
             return replay
-        return repository.close_stage5(request, prepare_stage5(repository, request))
+        try:
+            prepared = prepare_stage5(repository, request)
+        except RepositoryConflict as exc:
+            # A caller with an already prepared receipt can close directly
+            # between our initial replay lookup and the sealed-context read.
+            if exc.code == 'TransitionConflict':
+                replay = repository.replay_stage5(request)
+                if replay is not None:
+                    return replay
+            raise
+        return repository.close_stage5(request, prepared)

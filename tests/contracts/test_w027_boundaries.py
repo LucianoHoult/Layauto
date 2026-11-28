@@ -256,6 +256,23 @@ def test_formal_report_must_belong_to_this_run_and_cover_every_obligation(baseli
     assert repo.load_head(req.lineage_id) == old_pass.version.head_ref
 
 
+def test_pipeline_recovers_a_direct_close_between_lookup_and_preparation(baselines, monkeypatch):
+    repo, req, _ = reusing(baselines, 'direct-close')
+    prepare = pipeline.prepare_stage5
+    prepared = prepare(repo, req)
+    before = repo.snapshot()
+
+    def competing_close(repository, request):
+        with ThreadPoolExecutor(max_workers=1) as pool:
+            pool.submit(repo.close_stage5, req, prepared).result(timeout=30)
+        return prepare(repository, request)
+
+    monkeypatch.setattr(pipeline, 'prepare_stage5', competing_close)
+    closure = pipeline.run_stage5(repo, req)
+    assert closure == repo.read(repo.load_attempt(req.run_id).closure_ref)
+    assert repo.snapshot().generation == before.generation + 1
+
+
 def test_concurrent_close_accepts_one_key(baselines):
     repo, req, _ = reusing(baselines, 'race')
     requests = (req, replace(req, idempotency_key='second'))
