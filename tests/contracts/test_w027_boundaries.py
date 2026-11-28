@@ -7,7 +7,7 @@ import pytest
 
 from layauto_v2 import constraints, pipeline
 from layauto_v2.constraints import engine
-from layauto_v2.domain.publication import RunRequest, Stage5Request, Stage5RunRecord
+from layauto_v2.domain.publication import ContentRef, RunRequest, Stage5Request, Stage5RunRecord
 from layauto_v2.domain.publication_codec import content_ref, encode_record
 from layauto_v2.repository import PublicationRepository, RepositoryConflict
 from w023_cases import capture, sample
@@ -51,6 +51,17 @@ def change_live_head(repo, lineage, replacement, patch):
     heads = dict(repo._root.heads)
     heads[lineage] = replacement
     patch.setattr(repo, '_root', replace(repo._root, heads=tuple(heads.items())))
+
+
+def test_unsealed_attempt_cannot_close_stage5():
+    repo = PublicationRepository()
+    attempt = repo.create_attempt(RunRequest('open', 'L', 'create', '/fixture/site.yaml'))
+    request = Stage5Request(attempt.run_id, 'L', attempt.revision,
+                            ContentRef('sealed_context', attempt.run_id, '0' * 64),
+                            ContentRef('state_head', attempt.run_id, '0' * 64), 'close')
+    before = repo.snapshot()
+    conflict('TransitionConflict', pipeline.run_stage5, repo, request)
+    assert repo.snapshot() == before and repo.replay_stage5(request) is None
 
 
 def test_checked_material_is_bound_to_this_repository_run_and_version(baselines, monkeypatch):
