@@ -2,7 +2,7 @@
 
 ## 任务要求（PM）
 
-**阶段为可执行，归属 M1 的 Stage 3。** 执行分支为 `codex/w025-effective-li-spacing`。在 [W024 的只读规则上下文](W024-stage3-rule-context.md#pm2-integration) 上实现第二条规则 `T06.li_spacing`。给定一个已发布的第 0 版，下游应能看到本地互连层（LI）在切割后还剩哪些区域、最近的两个区域相距多少、是否达到本次工艺规定的最小间距。执行 session 实施，独立 reviewer 核对方案和代码，PM 验收。
+**W025 已验收，已通过 [PR #95](https://github.com/LucianoHoult/Layauto/pull/95) 合入 main。** 归属 M1 的 Stage 3，见[PM 集成验收](#pm2-integration)。 执行分支为 `codex/w025-effective-li-spacing`。在 [W024 的只读规则上下文](W024-stage3-rule-context.md#pm2-integration) 上实现第二条规则 `T06.li_spacing`。给定一个已发布的第 0 版，下游应能看到本地互连层（LI）在切割后还剩哪些区域、最近的两个区域相距多少、是否达到本次工艺规定的最小间距。执行 session 实施，独立 reviewer 核对方案和代码，PM 验收。
 
 依据为[架构 §2.4、§8、§11.7](../architecture.md)、[绑定的 T06 声明](../../tests/fixtures/w003_m1/tech/rules.json)和[物理算子](../../tests/fixtures/w003_m1/tech/physical.json)。有效区域由 Stage 2 产生，可沿版本中的 region、piece、原 LI 及 CUT 找回实际几何和来源。适用范围为当前 synthetic 工艺。后续节点承接其余八条规则、完整目标判定、零修改收口和导出。
 
@@ -89,3 +89,22 @@ PYTHONPATH=.:tests/contracts:docs/tasks/W024 python -B docs/tasks/W025/review_gd
 **实跑结果。** W025 几何单测 5 项、公开发布合同 5 项，W024 单查、错误路径、跨版本认证及模块依赖等 28 项，合计 **38 项通过**。联合收集也取得 38 项。受影响的 constraints 包共 6 个源文件通过 strict mypy。pytest 的外部 anyio 插件报告一个 pytest 10 API 弃用提醒。除实施前方案外，reviewer 已在上述产品提交上完成原图复算及调用链检查，复核证据提交为 `f9c4fd1`。
 
 **采信与集成边界。** 与 W024 修复产品 `c311297` 比对，pipeline、state、domain、tech 和固定 fixtures 无差异；沿用 [W024 已验收记录](W024-stage3-rule-context.md#pm2-integration)作为这些生产者的基线，本次对变更的查询路径使用上述新实测。若合并改变绑定、几何、缺项行为或输入，须补跑对应定向合同与独立原图探针。双解释器全量由 PM 留在完整 mandatory 与零修改收口的阶段集成。Stage 5 正式调用与 M2 事务内候选重查按原路线图推进。
+
+<a id="pm2-integration"></a>
+
+## PM 集成验收
+
+**W025 A1–A5 通过，剩余必须修正项为 0。** 交付 `128a68a8326a38b1930206b82de645bc10aac178` 的产品、测试和打包配置与受审实现 `d1252db5eec5236c5eee438181caa5f7698a4e50` 一致。PM 审阅了实际 diff、两条公开入口、取数和求值路径。组合查询与 W024 的 T07 单查共用距离平方、实际同层接触和阈值判断。合并前另实跑 GDS 对照和 L 形公开发布探针。L 形外框距邻居 2 nm，有效几何距邻居 4 nm，选中右下分块与邻居的实际最近边。[独立原图核对](W025/review.md)
+
+[PR #95](https://github.com/LucianoHoult/Layauto/pull/95) 的实际合并提交为 `f235e44605723ca206afd361b145ec030475d3b1`，整树 `a6d3b425a7fb67df55f32e37748136abe729abdc` 与交付提交相同。PM 在该版本以 Python 3.12.14 从三组完整文件重新发布，逐对比对公开报告和独立 GDS 测量，合计 30 对 LI、18 对 M1。T06 在 2/2 nm、1/2 nm、2/3 nm（实测/阈值）三例中违规数为 0、1、1；最近 LI 对回指偏移 2672 的原 LI 和 2736 的 CUT。T07 三次最近间距均为 5 nm、全部通过。每次查询后仓库观测和封存的 attempt 相同。组合报告列出其余八条待求值规则；旧入口仍只执行 T07。
+
+```sh
+# 实际合并版本
+PYTHONPATH=.:tests/contracts:docs/tasks/W024 python -B docs/tasks/W025/review_gds.py --published
+# 合并前在同一源码树单列核对
+PYTHONPATH=.:tests/contracts:docs/tasks/W024 python -B docs/tasks/W025/review_gds.py --notch
+PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 python -B -m pytest -p no:cacheprovider -q tests/unit/test_w025_spacing.py tests/unit/test_w024_spacing.py tests/contracts/test_w024_boundaries.py
+python -m mypy layauto_v2
+```
+
+PM 实跑的定向几何/模块边界在 Python 3.10.22 上共 14 项通过；mypy 2.4.1 严格类型检查覆盖整包 134 个源文件。执行侧 38 项定向检查的完整范围见前述交付记录，按身份采信。联合收集的测试文件重名问题在交付树中已处理。当前结果限于本包 synthetic 已发布快照的静态间距检查；双解释器全量安排在完整 mandatory 与无修改收口的阶段集成，M2 承接真实候选的局部传播。下一项为 [W026 连接件包围](W026-connector-enclosure.md)。
