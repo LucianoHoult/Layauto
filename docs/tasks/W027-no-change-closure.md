@@ -33,3 +33,14 @@ PM 在 W026 合并版 `176326e` 以 Python 3.12.14 实跑 C16。该输入能发�
 ## 执行指令
 
 > 沿用独立执行 session，在 `codex/w027-no-change-closure` 按 A1–A5 交付正常无修改和对应失败路径。先独立复核方案，复用已发布事实和 W026 十条检查，按绑定版本原子关闭本次运行，并独立复核实现。把实现、复现命令、实测范围、证据及完整 SHA 推回原分支，交 PM 集成。真实修改及候选传播在 M2；导出产物与运行终态在 Stage 6。
+
+## 执行交付
+
+分支从 `b94c03e83fe16b7037a103e1c76e24e14a5a2f56` 开始。A1 的独立复核在实施前完成。A2–A4 的最终实现与测试提交为 `86cafe8f06b622d22f80b4b8f35d4ec50beb7579`。正常样本从仓库读回 `stage5_closed`、受检的第 0 版、十条通过及空 ECO 链。目标拒绝和规则拒绝各自保留实际到达阶段的审计。PM 可依照交接中的命令在实际合并版验收。
+
+| 验收项 | 分支内材料 |
+| --- | --- |
+| A1 | [方案](W027/plan.md) · [实施前独立复核](W027/plan-review.md) |
+| A2、A3 | [正常和失败样例](W027/example.py) · [按原始 CDL 和 GDS 独立核值的合同](../../tests/contracts/test_w027_cases.py) · [规划边界](../../tests/contracts/test_w027_planning.py) |
+| A4 | [版本、竞争、存储、冻结与重放合同](../../tests/contracts/test_w027_boundaries.py) · [旧记录内容地址](../../tests/unit/test_w027_wire_compatibility.py) |
+| A5 | [复现命令、检查范围及耗时](W027/handoff.md) · [仓库读回证据](W027/sample-results.jsonl) · [独立代码复核与问题复验](W027/code-review.md) |
