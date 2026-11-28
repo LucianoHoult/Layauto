@@ -1,4 +1,4 @@
-"""Explicit, closed tagged wire codec for the pre-context contracts.
+"""Explicit, closed tagged wire codec for run, audit and snapshot contracts.
 
 Every record type has a fixed field list. User payload maps are opaque exact
 values, so a payload resembling a record tag cannot be decoded as a record.
@@ -15,7 +15,9 @@ from .results import EvidenceIssue, ParseResult
 from .snapshot_coordinates import coordinates_from_wire, coordinates_to_wire
 from .publication import (
     SNAPSHOT_VERSION, BaselineSnapshot, BaselineTarget, InitializationEvent, StateHead, SealedContext, Stage2Request,
-    AcquisitionEvent, Content, ContentRef, EvidenceAudit, ExceptionCause,
+    AcquisitionEvent, AuditBinding, AuditIssue, Content, ContentRef, EvidenceAudit, ExceptionCause,
+    PlanningAudit, RuleAudit, Stage5FreezeFailureClosure, Stage5RecordClosure, Stage5Request,
+    Stage5RunRecord,
     FinalizeFailureRequest, InputCheckpoint, InputsReady, ParseAudit, PipelineResult,
     PublicationUnavailable, RunAttempt, RunRecord, RunRecordFreezeFailureClosure,
     RunRequest, Selection, StageFailure, ToolRunResult, WireRecord, WithRunRecordClosure,
@@ -23,6 +25,21 @@ from .publication import (
 
 # This is deliberately a wire-schema table, not an unrestricted dataclass codec.
 _SPEC: dict[str, tuple[Callable[..., object], tuple[str, ...]]] = {
+    'Stage5Request': (Stage5Request, ('run_id', 'lineage_id', 'expected_revision', 'context_ref',
+                                      'expected_head_ref', 'idempotency_key', 'schema_version')),
+    'Stage5ClosedAttempt': (RunAttempt, ('request', 'revision', 'phase', 'checkpoint_ref', 'terminal_ref',
+                                         'context_ref', 'closure_ref', 'schema_version', 'kind')),
+    'AuditBinding': (AuditBinding, ('context_ref', 'target_ref', 'head_ref', 'snapshot_ref')),
+    'AuditIssue': (AuditIssue, ('code', 'message', 'sources', 'causes')),
+    'PlanningAudit': (PlanningAudit, ('binding', 'observations', 'issues', 'schema_version', 'kind')),
+    'RuleAudit': (RuleAudit, ('binding', 'checks', 'issues', 'schema_version', 'kind')),
+    'Stage5RunRecord': (Stage5RunRecord, ('run_id', 'binding', 'planning_ref', 'rule_ref', 'failure_ref',
+                                          'status', 'head_status_at_finalization', 'ordered_commit_ids',
+                                          'schema_version', 'kind')),
+    'Stage5RecordClosure': (Stage5RecordClosure, ('run_id', 'run_record_ref', 'closure_kind', 'schema_version', 'kind')),
+    'Stage5FreezeFailureClosure': (Stage5FreezeFailureClosure, ('run_id', 'freeze_failure_ref', 'completed',
+                                                                'original_failure_ref', 'closure_kind',
+                                                                'schema_version', 'kind')),
     'Stage2Request': (Stage2Request, ('run_id', 'lineage_id', 'expected_revision', 'expected_state_head', 'checkpoint_ref', 'idempotency_key', 'fragment_budget', 'schema_version')),
     'SealedAttempt': (RunAttempt, ('request', 'revision', 'phase', 'checkpoint_ref', 'terminal_ref', 'context_ref', 'schema_version', 'kind')),
     'BaselineSnapshot': (BaselineSnapshot, ('run_id', 'checkpoint_ref', 'binding', 'state', 'version', 'schema_version', 'kind')),
@@ -70,6 +87,8 @@ def _pack(value: object) -> Value:
     name = type(value).__name__
     if type(value) is RunAttempt and value.phase == 'sealed_open':
         name = 'SealedAttempt'
+    elif type(value) is RunAttempt and value.phase == 'stage5_closed':
+        name = 'Stage5ClosedAttempt'
     spec = _SPEC.get(name)
     if spec is not None and type(value) is spec[0]:
         fields = {key: getattr(value, key) for key in spec[1]}
@@ -117,7 +136,8 @@ def _unpack(value: Value) -> object:
         'RunRequest', 'RunAttempt', 'ToolRunResult', 'ParseAudit', 'EvidenceAudit',
         'StageFailure', 'InputCheckpoint', 'RunRecord', 'WithRunRecordClosure',
         'RunRecordFreezeFailureClosure', 'PipelineResult', 'SealedAttempt', 'BaselineSnapshot',
-        'BaselineTarget', 'InitializationEvent', 'StateHead', 'SealedContext'} else set())
+        'BaselineTarget', 'InitializationEvent', 'StateHead', 'SealedContext', 'Stage5ClosedAttempt',
+        'PlanningAudit', 'RuleAudit', 'Stage5RunRecord', 'Stage5RecordClosure', 'Stage5FreezeFailureClosure'} else set())
     if name in _CAPTURED_INPUT_RECORDS:
         record = constructor(**{key: val for key, val in decoded.items() if key not in derived})
     else:
@@ -156,6 +176,7 @@ def content_ref(record: Content) -> ContentRef:
                                StageFailure, InputCheckpoint, RunRecord,
                                WithRunRecordClosure, RunRecordFreezeFailureClosure,
                                PipelineResult, ToolRunResult, BaselineSnapshot, BaselineTarget,
-                               InitializationEvent, StateHead, SealedContext)):
+                               InitializationEvent, StateHead, SealedContext, PlanningAudit,
+                               RuleAudit, Stage5RunRecord, Stage5RecordClosure, Stage5FreezeFailureClosure)):
         raise ValueError('record is not repository content')
     return ContentRef(record.kind, record.run_id, record_digest(record))

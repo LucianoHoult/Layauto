@@ -1,4 +1,4 @@
-"""Closed, immutable contracts for the process-local pre-context slice (no IO)."""
+"""Immutable run, audit and snapshot contracts for process-local publication."""
 from __future__ import annotations
 
 import re
@@ -10,15 +10,17 @@ from .evidence import EvidenceRecord, SourceFile, SourceRef
 from .results import EvidenceIssue, ParseResult
 
 VERSION = 'layauto-precontext/1'
+STAGE5_VERSION = 'layauto-stage5/1'
 ContentKind: TypeAlias = Literal['request', 'attempt', 'tool_run', 'parse', 'evidence',
                                   'stage_failure', 'checkpoint', 'run_record',
                                   'closure', 'pipeline_result', 'snapshot', 'target_intent',
-                                  'initialization_event', 'state_head', 'sealed_context']
+                                  'initialization_event', 'state_head', 'sealed_context',
+                                  'planning_audit', 'rule_audit']
 KINDS = ('request', 'attempt', 'tool_run', 'parse', 'evidence', 'stage_failure',
          'checkpoint', 'run_record', 'closure', 'pipeline_result', 'snapshot', 'target_intent',
-         'initialization_event', 'state_head', 'sealed_context')
+         'initialization_event', 'state_head', 'sealed_context', 'planning_audit', 'rule_audit')
 FailureCategory: TypeAlias = Literal['read', 'config', 'parse', 'unsupported', 'binding',
-                                     'internal', 'interrupted', 'run_record_freeze']
+                                     'internal', 'interrupted', 'run_record_freeze', 'planning', 'constraint']
 
 
 def _text(value: object, label: str) -> None:
@@ -162,19 +164,21 @@ class RunRequest:
 class RunAttempt:
     request: RunRequest
     revision: int = 0
-    phase: Literal['unsealed', 'sealed_open', 'terminal'] = 'unsealed'
+    phase: Literal['unsealed', 'sealed_open', 'stage5_closed', 'terminal'] = 'unsealed'
     checkpoint_ref: ContentRef | None = None
     terminal_ref: ContentRef | None = None
     schema_version: str = VERSION
     context_ref: ContentRef | None = field(default=None, kw_only=True)
+    closure_ref: ContentRef | None = field(default=None, kw_only=True)
     kind: Literal['attempt'] = field(default='attempt', init=False)
 
     def __post_init__(self) -> None:
         if type(self.request) is not RunRequest:
             raise ValueError('attempt requires RunRequest')
         _revision(self.revision)
-        if self.phase == 'sealed_open':
-            if self.schema_version != BASELINE_VERSION or self.context_ref is None or self.checkpoint_ref is None:
+        if self.phase in ('sealed_open', 'stage5_closed'):
+            version = BASELINE_VERSION if self.phase == 'sealed_open' else STAGE5_VERSION
+            if self.schema_version != version or self.context_ref is None or self.checkpoint_ref is None:
                 raise ValueError('sealed attempt requires its version, checkpoint and context')
             _ref(self.context_ref, self.run_id, ('sealed_context',))
             if self.revision < 2:
@@ -183,7 +187,13 @@ class RunAttempt:
             _version(self.schema_version)
             if self.context_ref is not None:
                 raise ValueError('unexpected sealed context')
-        if self.phase not in ('unsealed', 'sealed_open', 'terminal'):
+        if (self.phase == 'stage5_closed') != (self.closure_ref is not None):
+            raise ValueError('Stage 5 phase/closure pointer mismatch')
+        if self.closure_ref is not None:
+            _ref(self.closure_ref, self.run_id, ('closure',))
+            if self.revision < 3:
+                raise ValueError('Stage 5 closure must follow context seal')
+        if self.phase not in ('unsealed', 'sealed_open', 'stage5_closed', 'terminal'):
             raise ValueError('unsupported attempt phase')
         if self.checkpoint_ref is not None:
             _ref(self.checkpoint_ref, self.run_id, ('checkpoint',))
@@ -363,7 +373,7 @@ class StageFailure:
     source: SourceRef | None = None
     completed: tuple[ContentRef, ...] = ()
     causes: tuple[ExceptionCause, ...] = ()
-    stage: Literal['stage1', 'run_record_freeze'] = 'stage1'
+    stage: Literal['stage1', 'stage4', 'stage5', 'run_record_freeze'] = 'stage1'
     schema_version: str = VERSION
     kind: Literal['stage_failure'] = field(default='stage_failure', init=False)
 
@@ -372,15 +382,20 @@ class StageFailure:
         for name in ('run_id', 'code', 'message'):
             _text(getattr(self, name), name)
         if self.category not in ('read', 'config', 'parse', 'unsupported', 'binding',
-                                 'internal', 'interrupted', 'run_record_freeze'):
+                                 'internal', 'interrupted', 'run_record_freeze', 'planning', 'constraint'):
             raise ValueError('invalid failure category')
-        if self.stage not in ('stage1', 'run_record_freeze'):
-            raise ValueError('invalid pre-context failure stage')
+        if ((self.category == 'planning' and self.stage != 'stage4')
+                or (self.category == 'constraint' and self.stage != 'stage5')):
+            raise ValueError('failure category does not match the failed stage')
+        if self.stage not in ('stage1', 'stage4', 'stage5', 'run_record_freeze'):
+            raise ValueError('invalid failure stage')
         if (self.stage == 'run_record_freeze') != (self.category == 'run_record_freeze'):
             raise ValueError('freeze failure stage/category mismatch')
         if self.source is not None and type(self.source) is not SourceRef:
             raise ValueError('invalid failure source')
-        _refs(self, 'completed', self.run_id)
+        kinds = ('tool_run', 'parse', 'evidence') if self.stage == 'stage1' else (
+            'tool_run', 'parse', 'evidence', 'planning_audit', 'rule_audit')
+        _refs(self, 'completed', self.run_id, kinds)
         _sequence(self, 'causes', ExceptionCause)
         if self.category in ('internal', 'interrupted', 'run_record_freeze') and not self.causes:
             raise ValueError('unexpected failure must preserve exception causes')
@@ -514,9 +529,6 @@ class RunRecordFreezeFailureClosure:
         _refs(self, 'completed', self.run_id)
         if self.failure_ref == self.freeze_failure_ref:
             raise ValueError('freeze failure must retain the separate original failure')
-
-
-Stage5Closure: TypeAlias = WithRunRecordClosure | RunRecordFreezeFailureClosure
 
 
 @dataclass(frozen=True)
@@ -774,5 +786,224 @@ class PreparedBaseline:
         return cls(_PREPARED, scope, request, snapshot, target)
 
 
-Content: TypeAlias = RunRequest | RunAttempt | ToolRunResult | ParseAudit | EvidenceAudit | StageFailure | InputCheckpoint | RunRecord | Stage5Closure | PipelineResult | BaselineSnapshot | BaselineTarget | InitializationEvent | StateHead | SealedContext
-WireRecord: TypeAlias = Content | Selection | ContentRef | ExceptionCause | AcquisitionEvent | FinalizeFailureRequest | InputsReady | PublicationUnavailable | SourceFile | SourceRef | EvidenceRecord | EvidenceIssue | ParseResult | Stage2Request
+@dataclass(frozen=True, slots=True)
+class Stage5Request:
+    run_id: str
+    lineage_id: str
+    expected_revision: int
+    context_ref: ContentRef
+    expected_head_ref: ContentRef
+    idempotency_key: str
+    schema_version: str = STAGE5_VERSION
+
+    def __post_init__(self) -> None:
+        for name in ('run_id', 'lineage_id', 'idempotency_key'):
+            _text(getattr(self, name), name)
+        _revision(self.expected_revision)
+        _ref(self.context_ref, self.run_id, ('sealed_context',))
+        if type(self.expected_head_ref) is not ContentRef or self.expected_head_ref.kind != 'state_head':
+            raise ValueError('Stage 5 requires the observed head')
+        if self.schema_version != STAGE5_VERSION:
+            raise ValueError('unsupported Stage 5 request')
+
+    @classmethod
+    def from_sealed(cls, attempt: RunAttempt, context: SealedContext, *, idempotency_key: str) -> Stage5Request:
+        from .publication_codec import content_ref
+        if (attempt.phase != 'sealed_open' or attempt.context_ref is None
+                or content_ref(context) != attempt.context_ref or context.checkpoint_ref != attempt.checkpoint_ref):
+            raise ValueError('request requires the context sealed by this attempt')
+        return cls(attempt.run_id, attempt.request.lineage_id, attempt.revision,
+                   attempt.context_ref, context.head_ref, idempotency_key)
+
+    @property
+    def operation(self) -> str:
+        return 'close_stage5'
+
+
+@dataclass(frozen=True, slots=True)
+class AuditBinding:
+    """The checking run can reuse an older run's head, target and snapshot."""
+    context_ref: ContentRef
+    target_ref: ContentRef
+    head_ref: ContentRef
+    snapshot_ref: ContentRef
+
+    def __post_init__(self) -> None:
+        if type(self.context_ref) is not ContentRef or self.context_ref.kind != 'sealed_context':
+            raise ValueError('expected the checking context')
+        if type(self.head_ref) is not ContentRef or self.head_ref.kind != 'state_head':
+            raise ValueError('expected the observed head')
+        _ref(self.target_ref, self.head_ref.run_id, ('target_intent',))
+        _ref(self.snapshot_ref, self.head_ref.run_id, ('snapshot',))
+
+    @property
+    def run_id(self) -> str:
+        return self.context_ref.run_id
+
+
+@dataclass(frozen=True, slots=True)
+class AuditIssue:
+    code: str
+    message: str
+    sources: tuple[SourceRef, ...]
+    causes: tuple[ExceptionCause, ...] = ()
+
+    def __post_init__(self) -> None:
+        _text(self.code, 'issue code')
+        _text(self.message, 'issue message')
+        _sequence(self, 'sources', SourceRef)
+        _sequence(self, 'causes', ExceptionCause)
+        if not self.sources:
+            raise ValueError('a planning or rule issue requires a source')
+
+
+@dataclass(frozen=True, slots=True)
+class PlanningAudit:
+    binding: AuditBinding
+    observations: tuple[FrozenMap, ...]
+    issues: tuple[AuditIssue, ...]
+    schema_version: str = STAGE5_VERSION
+    kind: Literal['planning_audit'] = field(default='planning_audit', init=False)
+
+    def __post_init__(self) -> None:
+        if self.schema_version != STAGE5_VERSION or type(self.binding) is not AuditBinding:
+            raise ValueError('invalid planning audit binding/version')
+        _sequence(self, 'observations', FrozenMap)
+        _sequence(self, 'issues', AuditIssue)
+        if not self.observations and not self.issues:
+            raise ValueError('a planning audit requires evidence or a diagnosed failure')
+
+    @property
+    def run_id(self) -> str:
+        return self.binding.run_id
+
+
+@dataclass(frozen=True, slots=True)
+class RuleAudit:
+    binding: AuditBinding
+    checks: tuple[FrozenMap, ...]
+    issues: tuple[AuditIssue, ...]
+    schema_version: str = STAGE5_VERSION
+    kind: Literal['rule_audit'] = field(default='rule_audit', init=False)
+
+    def __post_init__(self) -> None:
+        if self.schema_version != STAGE5_VERSION or type(self.binding) is not AuditBinding:
+            raise ValueError('invalid rule audit binding/version')
+        _sequence(self, 'checks', FrozenMap)
+        _sequence(self, 'issues', AuditIssue)
+        for row in self.checks:
+            _text(row.get('id'), 'rule id')
+            if row.get('status') not in ('pass', 'violation', 'pending', 'indeterminate', 'error'):
+                raise ValueError('invalid rule check status')
+        if not self.issues and (not self.checks or any(row.get('status') != 'pass' for row in self.checks)):
+            raise ValueError('unproven rule checks require a diagnosed failure')
+
+    @property
+    def run_id(self) -> str:
+        return self.binding.run_id
+
+
+@dataclass(frozen=True, slots=True)
+class PreparedStage5:
+    """A checked process-local receipt, issued only by the Stage 4/5 pipeline."""
+    _issuer: InitVar[object]
+    repository_scope: object
+    request: Stage5Request
+    planning: PlanningAudit
+    rules: RuleAudit | None
+
+    def __post_init__(self, _issuer: object) -> None:
+        if _issuer is not _PREPARED:
+            raise ValueError('Stage 5 requires a checked decision from the pipeline')
+        if (type(self.request) is not Stage5Request or type(self.planning) is not PlanningAudit
+                or self.request.context_ref != self.planning.binding.context_ref
+                or self.request.expected_head_ref != self.planning.binding.head_ref):
+            raise ValueError('planning audit and request must address the same sealed version')
+        if (self.rules is None) != bool(self.planning.issues):
+            raise ValueError('Stage 5 rule audit requires successful planning')
+        if self.rules is not None and (type(self.rules) is not RuleAudit or self.rules.binding != self.planning.binding):
+            raise ValueError('rule audit must refer to the planning version')
+
+    @classmethod
+    def _checked(cls, scope: object, request: Stage5Request, planning: PlanningAudit,
+                 rules: RuleAudit | None) -> PreparedStage5:
+        return cls(_PREPARED, scope, request, planning, rules)
+
+
+@dataclass(frozen=True, slots=True)
+class Stage5RunRecord:
+    run_id: str
+    binding: AuditBinding
+    planning_ref: ContentRef
+    rule_ref: ContentRef | None
+    failure_ref: ContentRef | None
+    status: Literal['no_change', 'sealed_no_publication']
+    head_status_at_finalization: Literal['current', 'superseded']
+    ordered_commit_ids: tuple[ContentRef, ...] = ()
+    schema_version: str = STAGE5_VERSION
+    kind: Literal['run_record'] = field(default='run_record', init=False)
+
+    def __post_init__(self) -> None:
+        if (self.schema_version != STAGE5_VERSION or type(self.binding) is not AuditBinding
+                or self.run_id != self.binding.run_id):
+            raise ValueError('Stage 5 RunRecord requires its checking run and version')
+        if type(self.ordered_commit_ids) is not tuple or self.ordered_commit_ids:
+            raise ValueError('whole-intent close without publication requires an empty ECO chain')
+        _ref(self.planning_ref, self.run_id, ('planning_audit',))
+        if self.rule_ref is not None:
+            _ref(self.rule_ref, self.run_id, ('rule_audit',))
+        if self.failure_ref is not None:
+            _ref(self.failure_ref, self.run_id, ('stage_failure',))
+        if self.head_status_at_finalization not in ('current', 'superseded'):
+            raise ValueError('invalid observation of the live head')
+        if self.status == 'no_change':
+            if self.failure_ref is not None or self.rule_ref is None or self.head_status_at_finalization != 'current':
+                raise ValueError('no_change requires rule evidence on the current head')
+        elif self.status != 'sealed_no_publication' or self.failure_ref is None:
+            raise ValueError('a failed Stage 4/5 run requires its StageFailure')
+
+    @property
+    def final_snapshot_ref(self) -> ContentRef:
+        return self.binding.snapshot_ref
+
+
+@dataclass(frozen=True, slots=True)
+class Stage5RecordClosure:
+    run_id: str
+    run_record_ref: ContentRef
+    closure_kind: Literal['with_run_record'] = 'with_run_record'
+    schema_version: str = STAGE5_VERSION
+    kind: Literal['closure'] = field(default='closure', init=False)
+
+    def __post_init__(self) -> None:
+        if self.schema_version != STAGE5_VERSION or self.closure_kind != 'with_run_record':
+            raise ValueError('invalid Stage 5 record closure')
+        _ref(self.run_record_ref, self.run_id, ('run_record',))
+
+
+@dataclass(frozen=True, slots=True)
+class Stage5FreezeFailureClosure:
+    run_id: str
+    freeze_failure_ref: ContentRef
+    completed: tuple[ContentRef, ...]
+    original_failure_ref: ContentRef | None
+    closure_kind: Literal['run_record_freeze_failure'] = 'run_record_freeze_failure'
+    schema_version: str = STAGE5_VERSION
+    kind: Literal['closure'] = field(default='closure', init=False)
+
+    def __post_init__(self) -> None:
+        if self.schema_version != STAGE5_VERSION or self.closure_kind != 'run_record_freeze_failure':
+            raise ValueError('invalid Stage 5 freeze-failure closure')
+        _ref(self.freeze_failure_ref, self.run_id, ('stage_failure',))
+        _refs(self, 'completed', self.run_id, ('planning_audit', 'rule_audit'))
+        if tuple(ref.kind for ref in self.completed) not in (('planning_audit',), ('planning_audit', 'rule_audit')):
+            raise ValueError('freeze failure must retain the completed Stage 4/5 audits')
+        if self.original_failure_ref is not None:
+            _ref(self.original_failure_ref, self.run_id, ('stage_failure',))
+            if self.original_failure_ref == self.freeze_failure_ref:
+                raise ValueError('freeze failure must retain the separate original failure')
+
+
+Stage5Closure: TypeAlias = WithRunRecordClosure | RunRecordFreezeFailureClosure | Stage5RecordClosure | Stage5FreezeFailureClosure
+Content: TypeAlias = RunRequest | RunAttempt | ToolRunResult | ParseAudit | EvidenceAudit | StageFailure | InputCheckpoint | RunRecord | Stage5Closure | PipelineResult | BaselineSnapshot | BaselineTarget | InitializationEvent | StateHead | SealedContext | PlanningAudit | RuleAudit | Stage5RunRecord
+WireRecord: TypeAlias = Content | Selection | ContentRef | ExceptionCause | AcquisitionEvent | FinalizeFailureRequest | InputsReady | PublicationUnavailable | SourceFile | SourceRef | EvidenceRecord | EvidenceIssue | ParseResult | Stage2Request | Stage5Request | AuditBinding | AuditIssue
